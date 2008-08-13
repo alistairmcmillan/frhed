@@ -94,6 +94,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\BinTrans.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\diagbox.cpp
 # End Source File
 # Begin Source File
@@ -151,17 +155,16 @@ SOURCE=.\precomp.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Simparr.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\toolbar.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=.\BinTrans.cpp
-# PROP Exclude_From_Build 1
-# End Source File
 # Begin Source File
 
 SOURCE=.\BinTrans.h
@@ -224,11 +227,6 @@ SOURCE=..\RAWIO32\RAWIO32.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Simparr.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Simparr.h
 # End Source File
 # Begin Source File
@@ -260,24 +258,20 @@ SOURCE=.\Script1.rc
 SOURCE=.\Toolbar.bmp
 # End Source File
 # End Group
-# Begin Group "Text Files"
+# Begin Group "Docs"
 
 # PROP Default_Filter "txt"
 # Begin Source File
 
-SOURCE=.\Bugs.txt
+SOURCE=..\Docs\Bugs.txt
 # End Source File
 # Begin Source File
 
-SOURCE=.\History.txt
+SOURCE=..\Docs\History.txt
 # End Source File
 # Begin Source File
 
-SOURCE=.\Readme.txt
-# End Source File
-# Begin Source File
-
-SOURCE=.\Todo.txt
+SOURCE=..\Docs\Readme.txt
 # End Source File
 # End Group
 # End Target

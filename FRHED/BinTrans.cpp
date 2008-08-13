@@ -1,4 +1,6 @@
 #include "precomp.h"
+#include "hexwnd.h"
+#include "Simparr.h"
 #include "BinTrans.h"
 
 //-------------------------------------------------------------------

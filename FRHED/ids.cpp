@@ -1,6 +1,5 @@
 #include "precomp.h"
 #include "ids.h"
-#include "hexwnd.h"
 
 
 //Members

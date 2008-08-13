@@ -1,7 +1,7 @@
 #ifndef BinTrans_h
 #define BinTrans_h
 
-#include "simparr.h"
+class SimpleString;
 
 //-------------------------------------------------------------------
 class Text2BinTranslator : public SimpleString

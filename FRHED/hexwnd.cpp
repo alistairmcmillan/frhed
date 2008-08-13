@@ -4,13 +4,13 @@
 #include <shlwapi.h>
 #include <ctype.h>
 #include "toolbar.h"
-#include "resource.h"
 #include "hexwnd.h"
+#include "resource.h"
+#include "BinTrans.h"
 #include "gktools.h"
 #include "PhysicalDrive.h"
 #include "PMemoryBlock.h"
-#include "simparr.cpp"
-#include "BinTrans.cpp"
+
 /*In the following headers:
 	ULONG m_cRefCount; //The reference count that all objects based on IUnknown must have
 	//The following have to do with the automatic destruction IUnknown::Release is supposed to do

@@ -1,6 +1,7 @@
 #ifndef hexwnd_h
 #define hexwnd_h
 
+#include "Simparr.h"
 #include "IDT.h"
 
 // This is frhed vCURRENT_VERSION.SUB_RELEASE_NO
@@ -72,7 +73,6 @@ typedef struct
 
 //--------------------------------------------------------------------------------------------
 // Global variables.
-#include "simparr.h"
 
 HRESULT ResolveIt( HWND hwnd, LPCSTR lpszLinkFile, LPSTR lpszPath );
 DWORD GetLongPathNameWin32(LPCSTR lpszShortPath,LPSTR lpszLongPath, DWORD cchBuffer);
