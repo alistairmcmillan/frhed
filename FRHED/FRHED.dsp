@@ -243,7 +243,7 @@ SOURCE=.\version.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\icon1.ico
+SOURCE=.\res\icon1.ico
 # End Source File
 # Begin Source File
 
@@ -255,7 +255,7 @@ SOURCE=.\Script1.rc
 # End Source File
 # Begin Source File
 
-SOURCE=.\Toolbar.bmp
+SOURCE=.\res\Toolbar.bmp
 # End Source File
 # End Group
 # Begin Group "Docs"
