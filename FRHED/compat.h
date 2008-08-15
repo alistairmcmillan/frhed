@@ -36,10 +36,6 @@
 WINGDIAPI UINT WINAPI GetEnhMetaFileBits(HENHMETAFILE, UINT, LPBYTE);
 #endif
 
-#ifndef _wopen
-int _wopen(const wchar_t*, int, ...);
-#endif
-
 #ifndef _wremove
 int _wremove (const wchar_t*);
 #endif
