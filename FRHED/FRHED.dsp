@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 version.lib comctl32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib shlwapi.lib /nologo /subsystem:windows /machine:I386 /ALIGN:16384
+# ADD LINK32 version.lib comctl32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib shlwapi.lib htmlhelp.lib /nologo /subsystem:windows /machine:I386 /ALIGN:16384
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "frhed - Win32 Debug"
@@ -78,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 imagehlp.lib version.lib shell32.lib shlwapi.lib comctl32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /incremental:no /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 imagehlp.lib version.lib shell32.lib shlwapi.lib comctl32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib ole32.lib oleaut32.lib uuid.lib htmlhelp.lib /nologo /subsystem:windows /incremental:no /debug /machine:I386 /pdbtype:sept
 # SUBTRACT LINK32 /nodefaultlib
 
 !ENDIF 
@@ -194,6 +194,10 @@ SOURCE=.\ids.h
 # Begin Source File
 
 SOURCE=.\idt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\InvokeHtmlHelp.h
 # End Source File
 # Begin Source File
 

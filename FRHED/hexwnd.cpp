@@ -1,3 +1,28 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  hexwnd.cpp
+ *
+ * @brief Implementation of the hex window.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 //============================================================================================
 // Frhed main definition file.
 #include "precomp.h"
@@ -10,6 +35,7 @@
 #include "gktools.h"
 #include "PhysicalDrive.h"
 #include "PMemoryBlock.h"
+#include "InvokeHtmlHelp.h"
 
 /*In the following headers:
 	ULONG m_cRefCount; //The reference count that all objects based on IUnknown must have
@@ -19,8 +45,6 @@
 #include "idt.h"
 #include "ids.h"
 #include "ido.h"
-
-BOOL ShowHtmlHelp( UINT uCommand, DWORD dwData, HWND hParentWindow );
 
 //Pabs inserted
 //When in use HexEditorWindow::paint will use a memory dc to prevent flicker
@@ -3223,21 +3247,12 @@ int HexEditorWindow::initmenupopup( WPARAM w, LPARAM l )
 // Handler on window closing.
 int HexEditorWindow::close ()
 {
-//Pabs changed - restructured so that help file is always closed on exit & the user can save&exit, exit | not exit if file changed
 	if( m_iFileChanged == TRUE )
 	{
 		int res = MessageBox (hwnd, "Do you want to save your changes?", "Exit", MB_YESNOCANCEL | MB_ICONQUESTION);
 		if( res == IDCANCEL || ( res == IDYES && !( bFileNeverSaved ? CMD_save_as() : CMD_save() ) ) )//User doesn't want to quit or User wants to save and the save was unsuccessful
 			return 0;//Don't exit
-//		if( MessageBox (hwnd, "File was changed! Exit anyway?", "Exit", MB_YESNO | MB_ICONQUESTION) == IDNO )
-//			return 0;
 	}
-//	else
-//	{
-	// If help was open close it.
-	ShowHtmlHelp(HELP_QUIT, 0, hwnd);
-//	}
-//end
 
 	// Store window position for next startup.
 	WINDOWPLACEMENT wndpl;
