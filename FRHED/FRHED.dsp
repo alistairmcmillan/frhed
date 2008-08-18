@@ -23,6 +23,8 @@ CFG=frhed - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -96,6 +98,10 @@ SOURCE=.\BinTrans.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\clipboard.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\diagbox.cpp
 # End Source File
 # Begin Source File
@@ -166,6 +172,10 @@ SOURCE=.\toolbar.cpp
 # Begin Source File
 
 SOURCE=.\BinTrans.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\clipboard.h
 # End Source File
 # Begin Source File
 

@@ -36,6 +36,7 @@
 #include "PhysicalDrive.h"
 #include "PMemoryBlock.h"
 #include "InvokeHtmlHelp.h"
+#include "clipboard.h"
 
 /*In the following headers:
 	ULONG m_cRefCount; //The reference count that all objects based on IUnknown must have
@@ -63,6 +64,15 @@
 	#endif
 #endif
 //end
+
+//CF_RTF defined in Richedit.h, but we don't include it cause that would be overkill
+#ifndef CF_RTF
+	#define CF_RTF TEXT("Rich Text Format")
+#endif
+
+const CLIPFORMAT CF_BINARYDATA = (CLIPFORMAT)RegisterClipboardFormat("BinaryData");
+const CLIPFORMAT CF_RICH_TEXT_FORMAT = (CLIPFORMAT)RegisterClipboardFormat(CF_RTF);
+
 
 IPhysicalDrive* Drive = NULL;
 PMemoryBlock Track;
@@ -157,7 +167,6 @@ char bPasteBinary, bPasteUnicode;
 //end
 
 // RK: function by pabs.
-void MessageCopyBox(HWND hWnd, LPTSTR lpText, LPCTSTR lpCaption, UINT uType, HWND hwnd);
 char contextpresent();
 char unknownpresent();
 char oldpresent();
@@ -170,8 +179,6 @@ This recursively deletes subkeys of the key and then
 returns the return value of RegDeleteKey(basekey,keynam)*/
 LONG RegDeleteWinNTKey(HKEY basekey, char keynam[]);
 
-
-void TextToClipboard( char* pcText, HWND hwnd );
 
 BOOL CALLBACK EnumWindowsProc( HWND hwnd, LPARAM lParam )
 {
@@ -1677,7 +1684,7 @@ int HexEditorWindow::command (int cmd)
 				buf2 += sprintf (buf2, "\nNot enough space for double size value.\n");
 //end
 			}//Pabs replaced NULL w hwnd
-			MessageCopyBox (hwnd, buf, "Floating point values", MB_ICONINFORMATION, hwnd);
+			MessageCopyBox (hwnd, buf, "Floating point values", MB_ICONINFORMATION);
 			break;//end
 		}
 
@@ -6495,7 +6502,7 @@ int HexEditorWindow::CMD_properties ()
 	}
 	sprintf (buf2, "\nNumber of hexdump lines: %d.\n", iNumlines);
 	strcat (buf, buf2);//Pabs replaced NULL w hwnd
-	MessageCopyBox (hwnd, buf, "File properties", MB_ICONINFORMATION, hwnd);
+	MessageCopyBox (hwnd, buf, "File properties", MB_ICONINFORMATION);
 	return 1;//end
 }
 
@@ -6707,7 +6714,7 @@ BOOL CALLBACK ChooseDiffDlgProc (HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 						SendMessage(hwndList,LB_GETTEXT,i,(LPARAM)&buf[sumlen-len-1]);//get the string & add it to the end of the buffer
 						strcat(buf,"\r\n");//add '\r\n' to the end of the line - this is '\r\n' rather than '\n' so that it can be pasted into notepad & dos programs
 					}//end of the loop
-					TextToClipboard(buf,hwndHex);//copy the stuff to the clip ( this function needs work to clean it up )(len=1+strlen)
+					TextToClipboard(hwndHex, buf);//copy the stuff to the clip ( this function needs work to clean it up )(len=1+strlen)
 					free(buf);//free the buffer mem
 					return TRUE;//yes we did process the message
 				}
@@ -10675,22 +10682,6 @@ void HexEditorWindow::CMD_saveselas(){
 			MessageBox (hwnd, "Could not save file.", "Save as", MB_OK | MB_ICONERROR);
 	}
 	repaint ();
-}
-
-void MessageCopyBox(HWND hWnd, LPTSTR lpText, LPCTSTR lpCaption, UINT uType, HWND hwnd)
-{
-	int len=strlen(lpText);//get the # bytes needed to store the string (not counting '\0')
-	//& get where we have to put a '\0' character later
-	// RK: Added "?" to end of string.
-	strcat(lpText,"\nDo you want the above output to be copied to the clipboard?\n");
-	if(IDYES==MessageBox (hWnd, lpText, lpCaption, MB_YESNO | uType))
-	{
-		//user wants to copy output
-		lpText[len]=0;//Remove the line added above
-		//Pabs removed & replaced with TextToClipboard
-		TextToClipboard( lpText, hwnd );
-	}
-//user doesn't want to copy output
 }
 
 void eatwhite(FILE*f){
