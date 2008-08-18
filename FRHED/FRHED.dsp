@@ -159,6 +159,10 @@ SOURCE=.\precomp.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\regtools.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Simparr.cpp
 # End Source File
 # Begin Source File
@@ -236,6 +240,10 @@ SOURCE=.\precomp.h
 # Begin Source File
 
 SOURCE=..\RAWIO32\RAWIO32.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\regtools.h
 # End Source File
 # Begin Source File
 
