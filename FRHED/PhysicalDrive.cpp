@@ -1,67 +1,48 @@
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  PhysicalDrive.cpp
+ *
+ * @brief Drive/partition information class implementations.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "physicaldrive.h"
 #include <assert.h>
 #include "pdrive95.h"
 #include "pdrivent.h"
 
-WINDOWS_VERSION RefreshWindowsVersion()
+IPhysicalDrive *CreatePhysicalDriveInstance()
 {
-	OSVERSIONINFOEX osvi;
-	BOOL bOsVersionInfoEx;
-
-	ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
-	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-	if( !(bOsVersionInfoEx = GetVersionEx( (OSVERSIONINFO*) &osvi)) )
-	{
-		osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
-		if( !GetVersionEx( (OSVERSIONINFO*) &osvi) )
-			return IS_WINDOWS_UNKNOWN;
-	}
+	OSVERSIONINFO osvi;
+	ZeroMemory(&osvi, sizeof osvi);
+	osvi.dwOSVersionInfoSize = sizeof osvi;
+	if (!GetVersionEx(&osvi))
+		osvi.dwPlatformId = 0;
 	switch (osvi.dwPlatformId)
 	{
 	case VER_PLATFORM_WIN32_NT:
-		if( osvi.dwMajorVersion <= 4 )
-			return IS_WINDOWS_NT;
-
-		if( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0 )
-			return IS_WINDOWS_2000;
-
-		if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1 )
-			return IS_WINDOWS_XP;
-
-		return IS_WINDOWS_NT;
-
-	case VER_PLATFORM_WIN32_WINDOWS:
-		if(osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 0)
-			return IS_WINDOWS_95;
-
-		if(osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 10)
-		{
-			if( osvi.szCSDVersion[1] == 'A' )
-				return IS_WINDOWS_98SE;
-			return IS_WINDOWS_98;
-		}
-		if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 90)
-			return IS_WINDOWS_ME;
-
-		return IS_WINDOWS_95;
-	}
-	return IS_WINDOWS_UNKNOWN;
-}
-
-static WINDOWS_VERSION wv;
-
-IPhysicalDrive* CreatePhysicalDriveInstance()
-{
-	wv = RefreshWindowsVersion();
-	if( (wv == IS_WINDOWS_NT) || (wv == IS_WINDOWS_2000) || (wv == IS_WINDOWS_XP) )
-	{
 		return new PNtPhysicalDrive;
-	}
-	else
-	{
+	case VER_PLATFORM_WIN32_WINDOWS:
 		return new P9xPhysicalDrive;
 	}
+	return 0;
 }
 
 PString PartitionInfo::GetNameAsString()
