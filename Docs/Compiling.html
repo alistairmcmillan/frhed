@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Compiling.html</title>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+</head>
+<body>
+<h2>Compiling Frhed</h2>
+
+<h3>Table of Contents</h3>
+<ol>
+  <li><a href="#GettingSources">Getting Sources</a></li>
+  <li><a href="#Environment">Environment</a></li>
+  <li><a href="#ProjectFiles">Project Files</a></li>
+  <li><a href="#Compiling">Compiling</a></li>
+ </ol>
+
+<h3><a name="GettingSources">Getting Sources</a></h3>
+<p>
+Currently there are no source releases to download. So sources are only available
+from SourceForge Subversion repository.
+</p>
+
+<p>Instruction to accessing Frhed Subversion repository can be fround
+<a href="https://sourceforge.net/svn/?group_id=236485">here</a>. In short,
+checkout from url <a href="https://frhed.svn.sourceforge.net/svnroot/frhed/trunk">
+https://frhed.svn.sourceforge.net/svnroot/frhed/trunk</a>. 
+</p>
+
+<h3><a name="Environment">Environment</a></h3>
+<h4>Supported Compilers</h4>
+<ul>
+  <li>Visual Studio 6 + Service Pack 6</li>
+  <li>Visual Studio 2003.Net + Service Pack 1</li>
+  <li>Visual Studio 2005 (Service Pack 1 recommended)</li>
+  <li>Visual Studio 2008</li>
+</ul>
+
+<h4>Needed libraries</h4>
+Frhed uses <code>htmlhelp</code> library to show HTML help files in help viewer.
+The HtmlHelp library is available as a part of <i>HTML Help Workshop</i> and as
+part of <i>Platform SDK</i> (PSDK).</p>
+
+<p>For VS 6 it is recommended to install HTML Help Workshop. It can be downloaded
+from Microsoft: <a href="http://www.microsoft.com/downloads/details.aspx?familyid=00535334-c8a6-452f-9aa0-d597d16580cc&displaylang=en">
+HTML Help Workshop</a>. After installing HTML Help Workshop you must add its
+<code>include</code> and <code>lib</code> -folders to Visual Studio settings as
+additional include- and library-file folders.</p>
+
+<p>For VS2003 and later PSDK comes with them. If you didn't install it, use Visual
+Studio installer to install it. Or download it from from Microsoft.</p>
+
+<h3><a name="ProjectFiles">Project Files</a></h3>
+<p>The sources contain solution and project files for Visual Studio 6. But later
+Visual Studio versions convert those files to new format.</p>
+
+<p>Frhed consist of two projects:
+<ul>
+  <li>Frhed - the main project</li>
+  <li>rawio32 - I/O utility project</li>
+</ul>
+
+The <code>Frhed</code> project is dependent on <code>rawio32</code> project.
+</p>
+
+<h3><a name="Compiling">Compile</a></h3>
+<p>To compile Frhed:
+<ul>
+  <li>Open <code>FRHED.dsw</code> solution file to Visual Studio</li>
+  <li>Select the <code>frhed</code> project</li>
+  <li>Select <code>Rebuild all</code> to compile
+</ul>
+</p>
+
+</body>
+</html>
