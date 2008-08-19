@@ -38,6 +38,17 @@ https://frhed.svn.sourceforge.net/svnroot/frhed/trunk</a>.
 </ul>
 
 <h4>Needed libraries</h4>
+<p>Platform SDK (PSDK) or Windows SDK is needed for compiling.
+<ol>
+  <li>For VS 6 the Platform SDK February 2003 is recommended, later ones might
+   not work properly. <a href="http://www.microsoft.com/msdownload/platformsdk/sdkupdate/psdk-full.htm">
+   Download and install</a>.</li>
+  <li>For VS2003.Net and later</strong>: Platform SDK Windows 2003 SP1 or later
+    is recommended. <a href="http://www.microsoft.com/downloads/details.aspx?familyid=0BAF2B35-C656-4969-ACE8-E4C0C0716ADB">
+    Download and install</a>.</li>
+</ol>
+</p>
+
 Frhed uses <code>htmlhelp</code> library to show HTML help files in help viewer.
 The HtmlHelp library is available as a part of <i>HTML Help Workshop</i> and as
 part of <i>Platform SDK</i> (PSDK).</p>
@@ -47,9 +58,6 @@ from Microsoft: <a href="http://www.microsoft.com/downloads/details.aspx?familyi
 HTML Help Workshop</a>. After installing HTML Help Workshop you must add its
 <code>include</code> and <code>lib</code> -folders to Visual Studio settings as
 additional include- and library-file folders.</p>
-
-<p>For VS2003 and later PSDK comes with them. If you didn't install it, use Visual
-Studio installer to install it. Or download it from from Microsoft.</p>
 
 <h3><a name="ProjectFiles">Project Files</a></h3>
 <p>The sources contain solution and project files for Visual Studio 6. But later
