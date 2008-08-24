@@ -1,3 +1,4 @@
+# coding=iso-8859-15
 import string, codecs, sys
 
 try:
