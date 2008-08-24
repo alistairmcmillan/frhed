@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Manual.html</title>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+</head>
+<body>
+<h2>Building Frhed Manual</h2>
+
+<h3>Table of Contents</h3>
+<ol>
+  <li><a href="#Tools">Tools</a></li>
+  <li><a href="#Files">Files</a></li>
+  <li><a href="#Building">Building</a></li>
+ </ol>
+
+<h3><a name="Tools">Tools</a></h3>
+<p>
+To build the manual (CHM) file, you'll need:
+<ul>
+  <li>Python - <a href="http://www.python.org/">http://www.python.org/</a></li>
+  <li>pydocgen - a Python script to generate documentation from HTML file,
+    included in the project. pydocgen <a href="http://www.p-nand-q.com/python/pydocgen.html">
+	homepage</a></li>
+  <li>HTML Help Workshop - part of the Platform SDK</li>
+</ul>
+</p>
+
+<h3><a name="Files">Files</a></h3>
+<p>
+Manual files are in <code>HELP</code> -subfolder. Important files are:
+<ul>
+  <li><code>frhed.htm</code> - manual source file in HTML format</li>
+  <li><code>frhed.cfg</code> - pydocgen configuration file</li>
+  <li><code>pydocgen.py</code> - pydocgen script</li>
+  <li><code>htmlhelpgen.py</code> - part of pydocgen script</li>
+</ul>
+</p>
+
+<h3><a name="Building">Building</a></h3>
+<p>
+The manual is build in two phases:
+<ol>
+  <li>HTML help project and sources are created from HTML sources.</li>
+  <li>HTML help project is compiled into HTML help file (<code>.chm</code>)
+</ol>
+</p>
+
+<p> 
+The first phase is done by running <code>pydocgen</code> script from the command
+line:<br>
+<code>python pydocgen.py frhed.cfg</code><br>
+This creates HTML help project into <code>/BuildTmp/html</code> -folder. After
+running the script you need to copy all the image and CSS files from
+<code>/HELP</code> folder to the <code>/BuildTmp/html</code> -folder.
+</p>
+
+<p>
+The second phase is done by starting HTML Help Workshop and opening
+<code>/BuildTmp/html/frhed.hhp</code> file into it. Then just compile the file.
+</p>
+
+</body>
+</html>
