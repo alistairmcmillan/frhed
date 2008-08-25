@@ -51,15 +51,29 @@ The manual is build in two phases:
 The first phase is done by running <code>pydocgen</code> script from the command
 line:<br>
 <code>python pydocgen.py frhed.cfg</code><br>
-This creates HTML help project into <code>/BuildTmp/html</code> -folder. After
+This creates HTML help project into <code>/BuildTmp/help</code> -folder. After
 running the script you need to copy all the image and CSS files from
-<code>/HELP</code> folder to the <code>/BuildTmp/html</code> -folder.
+<code>/HELP</code> folder to the <code>/BuildTmp/help</code> -folder.
 </p>
 
 <p>
 The second phase is done by starting HTML Help Workshop and opening
-<code>/BuildTmp/html/frhed.hhp</code> file into it. Then just compile the file.
+<code>/BuildTmp/help/frhed.hhp</code> file into it. Then just compile the file.
 </p>
+
+<h4>Using the batch file</h4>
+<p>There is a <code>build.bat</code> batch file which takes care of all phases
+in building the manual. The patch file requires that Help Compiler
+(<code>hhc.exe</code>) and Python are found from PATH.
+</p>
+
+<p>To add <code>hhc.exe</code> to the PATH you can add Platform SDK / Help
+Workshop folder to your PATH. Or you can <code>vcvars32.bat</code> batch file
+from Visual Studio binary folder to setup Visual Studio paths. Opening
+Visual Studio Command Prompt runs this batch automatically.</p>
+
+<p>After the batch file finishes, the <code>frhed.chm</code> help file is in
+<code>/Build/help</code> folder.</p>
 
 </body>
 </html>
