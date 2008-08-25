@@ -65,7 +65,7 @@ Section "ProgramFiles" SEC01
 SectionEnd
 
 Section "Documentation" SEC02
-  File "..\HELP\frhed.chm"
+  File "..\Build\HELP\frhed.chm"
   CreateShortCut "$SMPROGRAMS\Frhed\Help.lnk" "$INSTDIR\frhed.chm"
 SectionEnd
 
