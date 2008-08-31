@@ -54,6 +54,16 @@ InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 ShowUnInstDetails show
 
+; Prevent running two instances of the installer
+Function .onInit
+ System::Call 'kernel32::CreateMutexA(i 0, i 0, t "FrhedInstaller") i .r1 ?e'
+ Pop $R0
+
+ StrCmp $R0 0 +3
+   MessageBox MB_OK|MB_ICONEXCLAMATION "The installer is already running."
+   Abort
+FunctionEnd
+
 Section "ProgramFiles" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
