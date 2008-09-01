@@ -1,17 +1,31 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  BinTrans.cpp
+ *
+ * @brief Text to binary converter class implementation.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "hexwnd.h"
-#include "Simparr.h"
 #include "BinTrans.h"
-
-//-------------------------------------------------------------------
-char Text2BinTranslator::cTranslateAnsiToOem( char c )
-{
-	char sbuf[2], dbuf[2];
-	sbuf[0]=c;
-	sbuf[1]=0;
-	CharToOemBuff( sbuf, dbuf, 1 );
-	return dbuf[0];
-}
 
 //-------------------------------------------------------------------
 // Find char c from pointer to array src on, return it's position.
@@ -378,9 +392,8 @@ int Text2BinTranslator::iCreateBcTranslation( char* dest, char* src, int srclen,
 				case ANSI_SET:
 					dest[di++] = src[i];
 					break;
-
 				case OEM_SET:
-					dest[di++] = cTranslateAnsiToOem (src[i]);
+					CharToOemBuff(&src[i], &dest[di++], 1);
 					break;
 				}
 			}
@@ -399,12 +412,6 @@ Text2BinTranslator::Text2BinTranslator( char* ps )
 }
 
 //-------------------------------------------------------------------
-Text2BinTranslator::Text2BinTranslator()
-{
-	SimpleString::SimpleString();
-}
-
-//-------------------------------------------------------------------
 int Text2BinTranslator::bCompareBin( Text2BinTranslator& tr2, int charmode, int binmode )
 {
 	SimpleArray<char> sa1, sa2;
@@ -412,3 +419,47 @@ int Text2BinTranslator::bCompareBin( Text2BinTranslator& tr2, int charmode, int 
 	tr2.GetTrans2Bin( sa2, charmode, binmode );
 	return ( sa1 == sa2 );
 }
+
+//-------------------------------------------------------------------
+// Translate an array of bytes to a text string using special syntax.
+// Return: Length of string including zero-byte.
+int Text2BinTranslator::iTranslateBytesToBC (char* pd, unsigned char* src, int srclen)
+{
+	int i, k = 0;
+	char buf[16];
+	for (i=0; i<srclen; i++)
+	{
+		if (src[i] == '<')
+		{
+			pd[k++] = '\\';
+			pd[k++] = '<';
+		}
+		else if( src[i] == '\\' )
+		{
+			pd[k++] = '\\';
+			pd[k++] = '\\';
+		}
+		else if (src[i] >= 32 && src[i] < 127)
+		{
+			pd[k++] = src[i];
+		}
+		else if( src[i]==10 || src[i]==13 )
+		{
+			pd[k++] = src[i];
+		}
+		else
+		{
+			pd[k++] = '<';
+			pd[k++] = 'b';
+			pd[k++] = 'h';
+			pd[k++] = ':';
+			sprintf (buf, "%2.2x", src[i]);
+			pd[k++] = buf[0];
+			pd[k++] = buf[1];
+			pd[k++] = '>';
+		}
+	}
+	pd[k] = '\0';
+	return k+1;
+}
+
