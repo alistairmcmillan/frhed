@@ -13,11 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// German (Germany) resources
+// English (U.S.) resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
-LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
 #endif //_WIN32
 
@@ -1274,7 +1274,7 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "040704b0"
+        BLOCK "040904e4"
         BEGIN
             VALUE "Comments", "Homepage: http://www.kibria.de, http://zip.to/pabs3\0"
             VALUE "CompanyName", "(c) Raihan Kibria 2000\0"
@@ -1292,7 +1292,7 @@ BEGIN
     END
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0x407, 1200
+        VALUE "Translation", 0x409, 1200
     END
 END
 
@@ -1349,7 +1349,7 @@ BEGIN
     ID_DISK_GOTOLASTTRACK   "Goto last sector"
 END
 
-#endif    // German (Germany) resources
+#endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
