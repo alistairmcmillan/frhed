@@ -5,12 +5,14 @@
  *
  */
 // ID line follows -- this is updated by SVN
-// $Id: $
+// $Id$
 
 #ifndef simplearr_h
 #define simplearr_h
 
 #define ARR_EMPTY -1
+
+#include <string.h>
 
 template<class T> class SimpleArray
 {
@@ -24,16 +26,20 @@ public:
 	{
 		return m_pT;
 	}
+	operator const T*() const
+	{
+		return m_pT;
+	}
 	int InsertAt(int nIndex, T argT, int nCount = 1);
-	void InsertAtRef(int nIndex, T& argT, int nCount = 1);
+	void InsertAtRef(int nIndex, const T& argT, int nCount = 1);
 	int InsertAtGrow(int nIndex, T argT, int nCount = 1);
-	void InsertAtGrowRef(int nIndex, T& argT, int nCount = 1);
-	int InsertAtGrow (int nIndex, T* pT, int nSrcIndex, int nCount);
+	void InsertAtGrowRef(int nIndex, const T& argT, int nCount = 1);
+	int InsertAtGrow (int nIndex, const T* pT, int nSrcIndex, int nCount);
 	int RemoveAt(int nIndex, int nCount = 1);
 	void SetAtGrow(int nIndex, T argT);
-	int SetAtGrowRef(int nIndex, T& argT);
+	int SetAtGrowRef(int nIndex, const T& argT);
 	void SetAt(int nIndex, T argT);
-	void SetAtRef(int nIndex, T& argT);
+	void SetAtRef(int nIndex, const T& argT);
 	T GetAt(int nIndex);
 	T& GetRefAt(int nIndex);
 	int GetSize();
@@ -45,11 +51,11 @@ public:
 	T& operator[](int nIndex) {return m_pT[nIndex];}
 	SimpleArray<T>& operator=(SimpleArray<T>& spa);
 	void ClearAll();
-	int blContainsRef(T& argT);
+	int blContainsRef(const T& argT);
 	int blContains(T argT);
 	int nContainsAt(T argT);
 	int blIsEmpty();
-	void AppendRef(T& argT);
+	void AppendRef(const T& argT);
 	void Append(T argT);
 	void Exchange(int nIndex1, int nIndex2);
 	int blCompare(SimpleArray<T>& spa);
@@ -59,8 +65,8 @@ public:
 	void SetUpperBound(int upbnd);
 	int AppendArray( T* pSrc, int srclen );
 	int ExpandToSize();
-	int CopyFrom( int index, T* pSrc, int srclen );
-	int Replace( int ToReplaceIndex, int ToReplaceLength, T* pReplaceWith, int ReplaceWithLength );
+	int CopyFrom( int index, const T* pSrc, int srclen );
+	int Replace( int ToReplaceIndex, int ToReplaceLength, const T* pReplaceWith, int ReplaceWithLength );
 
 protected:
 	int AddSpace (int nExtend);
@@ -146,7 +152,7 @@ template<class T> int SimpleArray<T>::InsertAtGrow(int nIndex, T argT, int nCoun
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::InsertAtGrow (int nIndex, T* pT, int nSrcIndex, int nCount)
+template<class T> int SimpleArray<T>::InsertAtGrow (int nIndex, const T* pT, int nSrcIndex, int nCount)
 {
 	if(nIndex<0 || nCount<1)
 		return FALSE;
@@ -179,7 +185,7 @@ template<class T> int SimpleArray<T>::InsertAtGrow (int nIndex, T* pT, int nSrcI
 }
 
 //-------------------------------------------------------------------
-template<class T> void SimpleArray<T>::InsertAtGrowRef(int nIndex, T& argT, int nCount)
+template<class T> void SimpleArray<T>::InsertAtGrowRef(int nIndex, const T& argT, int nCount)
 {
 	if(nIndex<0 || nCount<1) return;
 	int i;
@@ -239,7 +245,7 @@ template<class T> int SimpleArray<T>::InsertAt( int nIndex, T argT, int nCount )
 }
 
 //-------------------------------------------------------------------
-template<class T> void SimpleArray<T>::InsertAtRef(int nIndex, T& argT, int nCount)
+template<class T> void SimpleArray<T>::InsertAtRef(int nIndex, const T& argT, int nCount)
 {
 	if(nIndex < 0 || nIndex > m_nUpperBound)
 		return;
@@ -293,7 +299,7 @@ template<class T> void SimpleArray<T>::SetAtGrow(int nIndex, T argT)
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::SetAtGrowRef(int nIndex, T& argT)
+template<class T> int SimpleArray<T>::SetAtGrowRef(int nIndex, const T& argT)
 {
 	if(nIndex < 0)
 		return FALSE;
@@ -322,7 +328,7 @@ template<class T> void SimpleArray<T>::SetAt(int nIndex, T argT)
 }
 
 //-------------------------------------------------------------------
-template<class T> void SimpleArray<T>::SetAtRef(int nIndex, T& argT)
+template<class T> void SimpleArray<T>::SetAtRef(int nIndex, const T& argT)
 {
 	if(nIndex >= 0 && nIndex < m_nSize)
 	{
@@ -439,7 +445,7 @@ template<class T> void SimpleArray<T>::ClearAll()
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::blContainsRef(T& argT)
+template<class T> int SimpleArray<T>::blContainsRef(const T& argT)
 {
 	int i;
 	for(i = 0; i <= m_nUpperBound; i++)
@@ -497,7 +503,7 @@ template<class T> SimpleArray<T>& SimpleArray<T>::operator=( SimpleArray<T>& spa
 }
 
 //-------------------------------------------------------------------
-template<class T> void SimpleArray<T>::AppendRef(T& argT)
+template<class T> void SimpleArray<T>::AppendRef(const T& argT)
 {
 	SetAt(m_nUpperBound+1, argT);
 }
@@ -604,7 +610,7 @@ template<class T> int SimpleArray<T>::ExpandToSize()
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::CopyFrom( int index, T* pSrc, int srclen )
+template<class T> int SimpleArray<T>::CopyFrom( int index, const T* pSrc, int srclen )
 {
 	if( m_nSize - index >= srclen )
 	{
@@ -620,27 +626,8 @@ template<class T> int SimpleArray<T>::CopyFrom( int index, T* pSrc, int srclen )
 		return FALSE;
 }
 
-// A string class.
-class SimpleString : public SimpleArray<char>
-{
-public:
-	int IsEmpty();
-	SimpleString operator+( SimpleString& str1 );
-	SimpleString();
-	SimpleString( char* ps );
-	int AppendString( char* ps );
-	int SetToString( char* ps );
-	char* operator=( char* ps );
-	SimpleString& operator=( SimpleString str );
-	char* operator+=( char* ps );
-	int StrLen();
-	void Clear();
-};
 
-SimpleString operator+( SimpleString ps1, char* ps2 );
-SimpleString operator+( char* ps1, SimpleString ps2 );
-
-template<class T> int SimpleArray<T>::Replace( int ToReplaceIndex, int ToReplaceLength, T* pReplaceWith, int ReplaceWithLength )
+template<class T> int SimpleArray<T>::Replace( int ToReplaceIndex, int ToReplaceLength, const T* pReplaceWith, int ReplaceWithLength )
 {
 	if( m_pT != NULL && ToReplaceLength > 0 )
 	{
@@ -695,5 +682,25 @@ template<class T> int SimpleArray<T>::Replace( int ToReplaceIndex, int ToReplace
 		return FALSE;
 	}
 }
+
+// A string class.
+class SimpleString : public SimpleArray<char>
+{
+public:
+	int IsEmpty();
+	SimpleString operator+( const SimpleString& str1 );
+	SimpleString();
+	SimpleString( const char* ps );
+	int AppendString( const char* ps );
+	int SetToString( const char* ps );
+	SimpleString& operator=( const char* ps );
+	SimpleString& operator=( const SimpleString &str );
+	SimpleString& operator+=( const char* ps );
+	int StrLen();
+	void Clear();
+};
+
+SimpleString operator+( const SimpleString &ps1, const char* ps2 );
+SimpleString operator+( const char* ps1, const SimpleString &ps2 );
 
 #endif // simplearr_h
