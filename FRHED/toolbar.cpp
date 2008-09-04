@@ -3,11 +3,11 @@
 #include "resource.h"
 
 #define IMAGEWIDTH 16
-#define IMAGEHEIGHT 17
+#define IMAGEHEIGHT 16
 #define BUTTONWIDTH 0
 #define BUTTONHEIGHT 0
 
-TBBUTTON tbButtons[] = // Array defining the toolbar buttons
+static const TBBUTTON tbButtons[] = // Array defining the toolbar buttons
 {
 	{  0, IDM_NEW,                   TBSTATE_ENABLED, TBSTYLE_BUTTON, 0, 0 },
 	{  1, IDM_OPEN,                  TBSTATE_ENABLED, TBSTYLE_BUTTON, 0, 0 },
@@ -28,58 +28,21 @@ TBBUTTON tbButtons[] = // Array defining the toolbar buttons
 	{ 12, ID_DISK_GOTOLASTTRACK,     0,               TBSTYLE_BUTTON, 0, 0 }
 };
 
-LRESULT SetTooltipText(HINSTANCE hInst, HWND hWnd, LPARAM lParam)
+HWND CreateTBar(HWND hWnd, HINSTANCE hInst)
 {
-	UNREFERENCED_PARAMETER( hWnd );
-	LPTOOLTIPTEXT lpToolTipText;
-	static char szBuffer[64];
-
-	lpToolTipText = (LPTOOLTIPTEXT)lParam;
-	if ((lpToolTipText->hdr.code == TTN_NEEDTEXTA) ||
-		(lpToolTipText->hdr.code == TTN_NEEDTEXTW))
-	{
-		LoadString(hInst,
-		lpToolTipText->hdr.idFrom, // string ID == command ID
-		szBuffer,
-		sizeof(szBuffer));
-
-		lpToolTipText->lpszText = szBuffer;
-	}
-	return 0;
-}
-
-void EnableDriveButtons(HWND hWndToolBar, BOOL bEnable)
-{
-	int IDS[] = { ID_DISK_GOTOFIRSTTRACK, ID_DISK_GOTONEXTTRACK, ID_DISK_GOTOPREVIOUSTRACK, ID_DISK_GOTOLASTTRACK, -1 };
-
-	for( int i = 0; IDS[i] != -1; i++ )
-	{
-		int iCurrentFlags = (int)SendMessage(hWndToolBar, TB_GETSTATE, IDS[i], 0L);
-
-		if( bEnable )
-			iCurrentFlags |= TBSTATE_ENABLED;
-		else
-			iCurrentFlags &= ~TBSTATE_ENABLED;
-
-		SendMessage(hWndToolBar, TB_SETSTATE, IDS[i], MAKELPARAM(iCurrentFlags, 0));
-	}
-}
-
-HWND CreateTBar(HINSTANCE hInst, HWND hWnd, UINT idBitmap)
-{
-	HWND hWndToolBar = CreateToolbarEx(hWnd,
-		WS_CHILD | WS_VISIBLE | TBSTYLE_TOOLTIPS | TBSTYLE_FLAT | TBSTYLE_WRAPABLE,
+	HWND hwndToolBar = CreateToolbarEx(hWnd,
+		WS_CHILD | WS_VISIBLE | CCS_NORESIZE |
+		TBSTYLE_TOOLTIPS | TBSTYLE_FLAT | TBSTYLE_WRAPABLE,
 		0,
-		sizeof(tbButtons)/sizeof(TBBUTTON),
+		RTL_NUMBER_OF(tbButtons) - 4,
 		hInst,
-		idBitmap,
+		IDB_TOOLBAR,
 		tbButtons,
-		sizeof(tbButtons)/sizeof(TBBUTTON),
+		RTL_NUMBER_OF(tbButtons),
 		BUTTONWIDTH,
 		BUTTONHEIGHT,
 		IMAGEWIDTH,
 		IMAGEHEIGHT,
 		sizeof(TBBUTTON));
-
-	return hWndToolBar;
+	return hwndToolBar;
 }

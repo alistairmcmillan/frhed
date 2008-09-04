@@ -26,13 +26,30 @@ typedef struct _MEMORY_CODING_DESCRIPTION
 EXTERN_C LPMEMORY_CODING_DESCRIPTION WINAPI GetMemoryCodings();
 typedef LPMEMORY_CODING_DESCRIPTION (WINAPI* LPFNGetMemoryCodings)();
 
-#include "PhysicalDrive.h"
 extern PartitionInfo* SelectedPartitionInfo;
 
 BOOL WINAPI GetMemoryCoding( HINSTANCE hInstance, HWND hParent, LPMEMORY_CODING p, LPCSTR lpszDlls );
-BOOL WINAPI GetDriveNameDialog( HINSTANCE hInstance, HWND hParent );
 
+class EncodeDecodeDialog : public HexEditorWindow
+{
+public:
+	enum { IDD = IDD_ENCODE_DECODE_DIALOG };
+	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
+};
 
-BOOL WINAPI GotoTrackDialog( HINSTANCE hInstance, HWND hParent );
+class OpenDriveDialog : public HexEditorWindow
+{
+public:
+	enum { IDD = IDD_OPEN_DRIVE_DIALOG };
+	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
+};
+
+class GotoTrackDialog : public HexEditorWindow
+{
+public:
+	enum { IDD = IDD_GOTO_TRACK_DIALOG };
+	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
+};
+
 
 #endif // gktools_h

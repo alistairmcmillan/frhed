@@ -31,159 +31,137 @@
 #include "hexwnd.h"
 #include "toolbar.h"
 
+static const char szMainClass[] = "frhed wndclass";
+static const char szHexClassA[] = "hekseditA_" CURRENT_VERSION "." SUB_RELEASE_NO "." BUILD_NO;
+static const char szHexClassW[] = "hekseditW_" CURRENT_VERSION "." SUB_RELEASE_NO "." BUILD_NO;
+
 HINSTANCE hMainInstance;
-LRESULT CALLBACK MainWndProc (HWND, UINT, WPARAM, LPARAM);
-LRESULT CALLBACK HexWndProc (HWND, UINT, WPARAM, LPARAM);
+
+LRESULT CALLBACK MainWndProc(HWND, UINT, WPARAM, LPARAM);
+
+static BOOL NTAPI IsNT()
+{
+	OSVERSIONINFO osvi;
+	ZeroMemory(&osvi, sizeof osvi);
+	osvi.dwOSVersionInfoSize = sizeof osvi;
+	if (!GetVersionEx(&osvi))
+		osvi.dwPlatformId = 0;
+	return osvi.dwPlatformId == VER_PLATFORM_WIN32_NT;
+}
+
+static BOOL CALLBACK WndEnumProcCountInstances(HWND hwnd, LPARAM lParam)
+{
+	char buf[64];
+	if (GetClassName(hwnd, buf, 64) != 0)
+		if (strcmp(buf, szMainClass) == 0)
+			++*(int *)lParam;
+	return TRUE;
+}
 
 //--------------------------------------------------------------------------------------------
 // WinMain: the starting point.
-int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, char* szCmdLine, int iCmdShow)
+
+static HWND hwndMain = 0;
+static HWND hwndHex = 0;
+static HWND hwndToolBar = 0;
+static HWND hwndStatusBar = 0;
+static HexEditorWindow *pHexWnd = 0;
+
+int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *szCmdLine, int)
 {
-	UNREFERENCED_PARAMETER( hPrevInstance );
-	UNREFERENCED_PARAMETER( iCmdShow );
+	OleInitialize(NULL);
+	InitCommonControls();
 
-//Pabs inserted
-#ifdef _DEBUG
-	MessageBox(NULL,"This program has been built in development/debug mode.\nTo disable this message please obtain a release version or disable line 32 of \"main.cpp\"","frhed",MB_OK);
-#endif
-//end
-
-	hMainInstance = hInstance;
+	hMainInstance = LoadLibrary("heksedit.dll");
 
 	// Register window class and open window.
-	HACCEL hAccel;
 
 	MSG msg;
-	WNDCLASSEX wndclass;
 
-	Zero(wndclass);
-	wndclass.cbSize = sizeof(wndclass);
-	wndclass.style = CS_HREDRAW | CS_VREDRAW;
-	wndclass.lpfnWndProc = HexWndProc;
-	wndclass.hInstance = hInstance;
-	wndclass.hCursor = NULL;
-	wndclass.lpszClassName = szHexClass;
+	WNDCLASS wndclass;
+	ZeroMemory(&wndclass, sizeof wndclass);
 
-	RegisterClassEx (&wndclass);
-
-//Register the main window class
-
-	wndclass.cbSize = sizeof (wndclass);
+	//Register the main window class
 	wndclass.style = CS_HREDRAW | CS_VREDRAW;
 	wndclass.lpfnWndProc = MainWndProc;
-	wndclass.hIcon = LoadIcon (hInstance, MAKEINTRESOURCE (IDI_ICON1));
-	wndclass.hCursor = LoadCursor( NULL, IDC_ARROW );
-	wndclass.lpszMenuName = MAKEINTRESOURCE (IDR_MAINMENU);
+	wndclass.hIcon = LoadIcon(hIconInstance, MAKEINTRESOURCE(IDI_ICON1));
+	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wndclass.hInstance = hMainInstance;
+	wndclass.lpszMenuName = MAKEINTRESOURCE(IDR_MAINMENU);
 	wndclass.lpszClassName = szMainClass;
-//Pabs changed - cast required to compile in mscv++6-stricter compliance with ansi
-	wndclass.hIconSm =(HICON) LoadImage (hInstance, MAKEINTRESOURCE (IDI_ICON1), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
-//end
 
-	RegisterClassEx (&wndclass);
+	RegisterClass(&wndclass);
 
-	OleInitialize(NULL);
+	int iInstCount = 0;
+	EnumWindows(WndEnumProcCountInstances, (LPARAM)&iInstCount);
 
-	hwndMain = CreateWindow (szMainClass,
-		"frhed window",
-		WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
-		hexwnd.iWindowX,
-		hexwnd.iWindowY,
-		hexwnd.iWindowWidth,
-		hexwnd.iWindowHeight,
-		NULL,
-		NULL,
-		hInstance,
-		NULL);
+	CreateWindow(szMainClass, 0, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
+		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+		NULL, NULL, hMainInstance, NULL);
 
-	hwndHex = CreateWindowEx(WS_EX_CLIENTEDGE, szHexClass,
-		NULL,
-		WS_TABSTOP | WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL,
-		10,
-		10,
-		100,
-		100,
-		hwndMain,
-		NULL,
-		hInstance,
-		NULL);
+	// Read in the last saved preferences.
+	pHexWnd->iInstCount = iInstCount;
+	pHexWnd->read_ini_data();
 
-	/*The if prevents the window from being resized to 0x0
-	 it becomes just a title bar*/
-	if( hexwnd.iWindowX != CW_USEDEFAULT ){
-		//Prevent window creep when Taskbar is at top or left of screen
+	// The if prevents the window from being resized to 0x0 it becomes just a title bar
+	if (pHexWnd->iWindowX != CW_USEDEFAULT)
+	{
+		// Prevent window creep when Taskbar is at top or left of screen
 		WINDOWPLACEMENT wp;
-		wp.length = sizeof(wp);
-		GetWindowPlacement( hwndMain, &wp );
-		wp.showCmd = hexwnd.iWindowShowCmd;
-		wp.rcNormalPosition.left = hexwnd.iWindowX;
-		wp.rcNormalPosition.top = hexwnd.iWindowY;
-		wp.rcNormalPosition.right = hexwnd.iWindowWidth + hexwnd.iWindowX;
-		wp.rcNormalPosition.bottom = hexwnd.iWindowHeight + hexwnd.iWindowY;
-		SetWindowPlacement( hwndMain, &wp );
+		wp.length = sizeof wp;
+		GetWindowPlacement(hwndMain, &wp);
+		wp.showCmd = pHexWnd->iWindowShowCmd;
+		wp.rcNormalPosition.left = pHexWnd->iWindowX;
+		wp.rcNormalPosition.top = pHexWnd->iWindowY;
+		wp.rcNormalPosition.right = pHexWnd->iWindowWidth + pHexWnd->iWindowX;
+		wp.rcNormalPosition.bottom = pHexWnd->iWindowHeight + pHexWnd->iWindowY;
+		SetWindowPlacement(hwndMain, &wp);
 	}
+	ShowWindow(hwndMain, pHexWnd->iWindowShowCmd);
+	UpdateWindow(hwndMain);
 
-	ShowWindow( hwndMain, hexwnd.iWindowShowCmd );
-	UpdateWindow (hwndMain);
-
-	if( szCmdLine != NULL && strlen( szCmdLine ) != 0 )
+	if (*szCmdLine != '\0')
 	{
 		// Command line not empty: open a file on startup.
-
-		// BoW Patch: Remove any " by filtering the command line
-		char sz[MAX_PATH];
-		char* p = szCmdLine;
-		strncpy( sz, szCmdLine, sizeof( sz ) );
+		char *p = szCmdLine;
+		char *q = szCmdLine;
 		DWORD dwStart = 0, dwLength = 0, dwEnd = 0; // MF cmd line parms
-		TCHAR *pPathStart = NULL; // MF cmd line parms
-		for( int i = 0; i < MAX_PATH; ++i )
+		while ((*p = *q) != '\0')
 		{
-			char c = sz[i];
-			if( c == 0 )
+			switch (*q++)
 			{
-				*p = 0;
-				break;
-			}
-			else if( c != '"' )
-			{
-			// MF cmd line parms start again
-			if (c == '/') // switch coming up
-			{
-				switch (sz[i + 1])
+			case '/': // switch coming up
+				switch (*q)
 				{
-					case 'S': // Start offset
-					case 's':
-						dwStart = strtoul(sz + i + 2, &pPathStart, 0);
-						if (pPathStart)
-							i = pPathStart - sz;
+				case 'S': // Start offset
+				case 's':
+					dwStart = strtoul(++q, &q, 0);
 					break;
-					case 'L': // Length of selection
-					case 'l':
-						dwLength = strtoul(sz + i + 2, &pPathStart, 0);
-						if (pPathStart)
-							i = pPathStart - sz;
+				case 'L': // Length of selection
+				case 'l':
+					dwLength = strtoul(++q, &q, 0);
 					break;
-					case 'E': // End of selection
-					case 'e':
-						dwEnd = strtoul(sz + i + 2, &pPathStart, 0);
-						if (pPathStart)
-							i = pPathStart - sz;
+				case 'E': // End of selection
+				case 'e':
+					dwEnd = strtoul(++q, &q, 0);
 					break;
 				}
-			}
-			else // MF cmd line parms end
-				*p++ = c;
+				// fall through
+			case '"':
+				break;
+			default:
+				++p;
+				break;
 			}
 		}
 		if (dwLength)
 			dwEnd = dwStart + dwLength - 1;
-		// end of patch
-
 		char lpszPath[MAX_PATH];
-		HRESULT hres = ResolveIt( hwndMain, szCmdLine, lpszPath );
-		if( SUCCEEDED( hres ) )
+		HRESULT hres = pHexWnd->ResolveIt(szCmdLine, lpszPath);
+		if (SUCCEEDED(hres))
 		{
 			// Trying to open a link file: decision by user required.
-			int ret = MessageBox( hwndMain,
+			int ret = MessageBox(hwndMain,
 				"You are trying to open a link file.\n"
 				"Click on Yes if you want to open the file linked to,\n"
 				"or click on No if you want to open the link file itself.\n"
@@ -192,10 +170,10 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, char* szCmdLin
 			switch( ret )
 			{
 			case IDYES:
-				hexwnd.load_file( lpszPath );
+				pHexWnd->load_file(lpszPath);
 				break;
 			case IDNO:
-				hexwnd.load_file( szCmdLine );
+				pHexWnd->load_file(szCmdLine);
 				break;
 			case IDCANCEL:
 				break;
@@ -203,130 +181,137 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, char* szCmdLin
 		}
 		else
 		{
-			hexwnd.load_file( szCmdLine );
+			pHexWnd->load_file(szCmdLine);
 		}
-		if (dwEnd) hexwnd.CMD_setselection(dwStart, dwEnd);
+		if (dwEnd)
+			pHexWnd->CMD_setselection(dwStart, dwEnd);
 	}
 
-	hAccel = LoadAccelerators (hInstance, MAKEINTRESOURCE (IDR_ACCELERATOR1));
-
-	while (GetMessage (&msg, NULL, 0, 0))
+	while (GetMessage(&msg, NULL, 0, 0))
 	{
-		if (!TranslateAccelerator (hwndMain, hAccel, &msg))
+		if (!pHexWnd->translate_accelerator(&msg))
 		{
-			TranslateMessage (&msg);
-			DispatchMessage (&msg);
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
 		}
 	}
 
+	FreeLibrary(hMainInstance);
 	OleUninitialize();
-
+	_CrtDumpMemoryLeaks();
 	return msg.wParam;
 }
 
 //--------------------------------------------------------------------------------------------
 // The main window procedure.
-LRESULT CALLBACK MainWndProc( HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam )
+LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
-	switch (iMsg) {
-		case WM_CREATE:
-			hwndMain = hwnd;
-			InitCommonControls ();
-			hwndStatusBar = CreateStatusWindow (
-				CCS_BOTTOM | WS_CHILD | WS_VISIBLE | SBARS_SIZEGRIP,
-				"Ready", hwnd, 2);
-			DragAcceptFiles( hwndMain, TRUE ); // Accept files dragged into main window.
-			hwndToolBar = CreateTBar(hMainInstance,hwnd,IDB_TOOLBAR);
+	switch (iMsg)
+	{
+	case WM_CREATE:
+		hwndMain = hwnd;
+		DragAcceptFiles(hwnd, TRUE); // Accept files dragged into main window.
+		hwndToolBar = CreateTBar(hwnd, hMainInstance);
+		SendMessage(hwndToolBar, CCM_SETUNICODEFORMAT, TRUE, 0);
+		hwndHex = CreateWindowEx(WS_EX_CLIENTEDGE,
+			IsNT() ? szHexClassW : szHexClassA, 0,
+			WS_TABSTOP | WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL,
+			10, 10, 100, 100, hwnd, 0, hMainInstance, 0);
+		pHexWnd = (HexEditorWindow *)GetWindowLong(hwndHex, GWL_USERDATA);
+		hwndStatusBar = CreateStatusWindow(
+			CCS_BOTTOM | WS_CHILD | WS_VISIBLE | SBARS_SIZEGRIP,
+			"Ready", hwnd, 2);
+		pHexWnd->hwndMain = hwnd;
+		pHexWnd->hwndToolBar = hwndToolBar;
+		pHexWnd->hwndStatusBar = hwndStatusBar;
+		pHexWnd->bSaveIni = TRUE;
+		pHexWnd->bCenterCaret = TRUE;
+		pHexWnd->load_lang((LANGID)GetThreadLocale());
+		pHexWnd->set_wnd_title();
 		return 0;
-		case WM_COMMAND: return SendMessage(hwndHex, iMsg, wParam, lParam);
-		case WM_SETFOCUS: SetFocus(hwndHex); break;
-		case WM_CLOSE: return SendMessage(hwndHex, iMsg, wParam, lParam);
-		case WM_INITMENUPOPUP: hexwnd.initmenupopup( wParam, lParam ); return 0;
-		case WM_DROPFILES: return SendMessage(hwndHex, iMsg, wParam, lParam);
-
-		case WM_SIZE:{
-			SendMessage(hwndStatusBar, WM_SIZE, 0 , 0); //Moves status bar back to the bottom
-			SendMessage(hwndToolBar, WM_SIZE, 0 , 0); //Moves tool bar back to the top
-
+	case WM_COMMAND:
+		pHexWnd->command(LOWORD(wParam));
+		break;
+	case WM_DROPFILES:
+		pHexWnd->dropfiles(reinterpret_cast<HDROP>(wParam));
+		break;
+	case WM_SETFOCUS:
+		SetFocus(hwndHex);
+		break;
+	case WM_CLOSE: 
+		if (!pHexWnd->close())
+			return 0;
+		break;
+	case WM_INITMENUPOPUP:
+		pHexWnd->initmenupopup(wParam, lParam);
+		break;
+	case WM_SIZE:
+		{
+			int cx = GET_X_LPARAM(lParam);
+			int cy = GET_Y_LPARAM(lParam);
+			RECT rect;
+			// Adjust tool bar width so buttons will wrap accordingly.
+			MoveWindow(hwndToolBar, 0, 0, cx, 0, TRUE);
+			// Set tool bar height to bottom of last button plus some padding.
+			if (int n = SendMessage(hwndToolBar, TB_BUTTONCOUNT, 0, 0))
+			{
+				SendMessage(hwndToolBar, TB_GETITEMRECT, n - 1, (LPARAM)&rect);
+				MoveWindow(hwndToolBar, 0, 0, cx, rect.bottom + 2, TRUE);
+			}
+			GetWindowRect(hwndToolBar, &rect);
+			int cyToolBar = rect.bottom - rect.top;
+			// Moves status bar back to the bottom
+			SendMessage(hwndStatusBar, WM_SIZE, 0, 0);
+			GetWindowRect(hwndStatusBar, &rect);
+			int cyStatusBar = rect.bottom - rect.top;
 			//--------------------------------------------
 			// Set statusbar divisions.
-			int statbarw;
-			statbarw = LOWORD(lParam);
-			// Allocate an array for holding the right edge coordinates.
-			HLOCAL hloc = LocalAlloc (LHND, sizeof(int) * 3);
-			int* lpParts = (int*) LocalLock(hloc);
-
-			// Calculate the right edge coordinate for each part, and
-			// copy the coordinates to the array.
-			lpParts[0] = statbarw*4/6;
-			lpParts[1] = statbarw*5/6;
-			lpParts[2] = statbarw;
-
-			// Tell the status window to create the window parts.
-
-			SendMessage (hwndStatusBar, SB_SETPARTS, (WPARAM) 3, (LPARAM) lpParts);
-
-			// Free the array, and return.
-			LocalUnlock(hloc);
-			LocalFree(hloc);
-
-			RECT rect;
-			GetClientRect(hwndToolBar, &rect);
-			int iToolbarHeight = rect.bottom - rect.top;
-			GetClientRect(hwndStatusBar, &rect);
-
-			MoveWindow(hwndHex, 0, iToolbarHeight, LOWORD(lParam), HIWORD(lParam)-rect.bottom-iToolbarHeight, TRUE);
-			break;
+			// Calculate the right edge coordinate for each part
+			int parts[] = { MulDiv(cx, 4, 6), MulDiv(cx, 5, 6), cx };
+			SendMessage(hwndStatusBar, SB_SETPARTS, RTL_NUMBER_OF(parts), (LPARAM)parts);
+			MoveWindow(hwndHex, 0, cyToolBar, cx, cy - cyToolBar - cyStatusBar, TRUE);
 		}
-
-		case WM_NOTIFY:{
-			//See if someone sent us invalid data
-			HWND h;
-			UINT code;
-			try{
-				//Attempt to dereference
-				NMHDR& pn = *(NMHDR*)lParam;
-				h = pn.hwndFrom;
-				code = pn.code;
-			}
-			catch(...){ return 0; }
-
-			if( h == hwndStatusBar )
+		break;
+	case WM_NOTIFY:
+		{
+			NMHDR *pn = (NMHDR *)lParam;
+			HWND hwndFrom = pn->hwndFrom;
+			UINT code = pn->code;
+			if (hwndFrom == hwndStatusBar)
 			{
-				if( (code == NM_CLICK) || (code == NM_RCLICK) )
-					hexwnd.status_bar_click( code == NM_CLICK );
+				if (code == NM_CLICK || code == NM_RCLICK)
+					pHexWnd->status_bar_click(code == NM_CLICK);
 			}
-			else if( h == hwndToolBar )
+			else if (hwndFrom == hwndToolBar)
 			{
-				if( (code == TBN_GETINFOTIPA) || (code == TBN_GETINFOTIPW) )
+				if (code == TBN_GETINFOTIPW)
 				{
-					try{
-						if(code == TBN_GETINFOTIPA){
-							NMTBGETINFOTIPA& pi = *(NMTBGETINFOTIPA*) lParam;
-							LoadStringA(hMainInstance,pi.iItem,pi.pszText,pi.cchTextMax);
-						} else {
-							NMTBGETINFOTIPW& pi = *(NMTBGETINFOTIPW*) lParam;
-							LoadStringW(hMainInstance,pi.iItem,pi.pszText,pi.cchTextMax);
-						}
+					NMTBGETINFOTIPW *pi = (NMTBGETINFOTIPW *)lParam;
+					if (BSTR text = pHexWnd->load_string(pi->iItem))
+					{
+						StrCpyNW(pi->pszText, text, pi->cchTextMax);
+						pHexWnd->free_string(text);
 					}
-					catch(...){}
 				}
 			}
 		}
-		return 0;
-
-		case WM_DESTROY:
-			DragAcceptFiles( hwndMain, FALSE );
+		break;
+	case WM_DESTROY:
+		{
+			// Store window position for next startup.
+			WINDOWPLACEMENT wndpl;
+			wndpl.length = sizeof(WINDOWPLACEMENT);
+			GetWindowPlacement(hwnd, &wndpl);
+			pHexWnd->iWindowShowCmd = wndpl.showCmd;
+			pHexWnd->iWindowX = wndpl.rcNormalPosition.left;
+			pHexWnd->iWindowY = wndpl.rcNormalPosition.top;
+			pHexWnd->iWindowWidth = wndpl.rcNormalPosition.right - pHexWnd->iWindowX;
+			pHexWnd->iWindowHeight = wndpl.rcNormalPosition.bottom - pHexWnd->iWindowY;
+			pHexWnd->save_ini_data();
+			DragAcceptFiles(hwndMain, FALSE);
 			PostQuitMessage(0);
-		return 0;
-
+		}
+		break;
 	}
 	return DefWindowProc(hwnd, iMsg, wParam, lParam );
 }
-
-// The hex window procedure.
-LRESULT CALLBACK HexWndProc( HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam )
-{
-	return hexwnd.OnWndMsg( hwnd, iMsg, wParam, lParam );
-}
-//============================================================================================

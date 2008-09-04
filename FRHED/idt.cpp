@@ -6,22 +6,186 @@
 /*The #ifndef __CYGWIN__s are there because cygwin/mingw doesn't yet have
 certain APIs in their import libraries. Specifically _wremove, _wopen & GetEnhMetaFileBits.*/
 
-template<class T>void swap(T& x, T& y){
-	T temp = x;
-	x = y;
-	y = temp;
+class DragDropDlg
+{
+public:
+	enum { IDD = IDD_DRAGDROP };
+	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
+	DWORD allowable_effects;
+	bool effect;
+	UINT numformatetcs;
+	FORMATETC *formatetcs;
+	UINT numformats;
+	UINT *formats;
+};
+
+//TODO: update such that when the IDataObject changes the list box is re-created
+INT_PTR DragDropDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
+{
+	switch (m)
+	{
+	case WM_INITDIALOG:
+		{
+			CheckDlgButton( h, effect ? IDC_COPY : IDC_MOVE, TRUE );
+			if( !(allowable_effects & DROPEFFECT_MOVE) )
+				EnableWindow( GetDlgItem( h, IDC_MOVE ), FALSE );
+			if( !(allowable_effects & DROPEFFECT_COPY) )
+				EnableWindow( GetDlgItem( h, IDC_COPY ), FALSE );
+			HWND list = GetDlgItem(h, IDC_LIST);
+			if (numformatetcs && formatetcs)
+			{
+				LVCOLUMN col;
+				ZeroMemory(&col, sizeof col);
+				ListView_InsertColumn(list, 0, &col);
+				char szFormatName[100];
+				UINT i;
+				for (i = 0 ; i < numformatetcs ; i++)
+				{
+					CLIPFORMAT temp = formatetcs[i].cfFormat;
+					LVITEM lvi;
+					lvi.lParam = lvi.iItem = i;
+					lvi.iSubItem = 0;
+					lvi.pszText = szFormatName;
+					// For registered formats, get the registered name.
+					if (!GetClipboardFormatName(temp, szFormatName, sizeof szFormatName))
+					{
+						//Get the name of the standard clipboard format.
+						switch (temp)
+						{
+							#define CASE(a) case a: lvi.pszText = #a; break;
+								CASE(+CF_TEXT)
+								CASE(CF_BITMAP) CASE(CF_METAFILEPICT) CASE(CF_SYLK)
+								CASE(CF_DIF) CASE(CF_TIFF) CASE(CF_OEMTEXT)
+								CASE(CF_DIB) CASE(CF_PALETTE) CASE(CF_PENDATA)
+								CASE(CF_RIFF) CASE(CF_WAVE) CASE(CF_UNICODETEXT)
+								CASE(CF_ENHMETAFILE) CASE(CF_HDROP) CASE(CF_LOCALE)
+								CASE(CF_OWNERDISPLAY) CASE(CF_DSPTEXT)
+								CASE(CF_DSPBITMAP) CASE(CF_DSPMETAFILEPICT)
+								CASE(CF_DSPENHMETAFILE) CASE(CF_PRIVATEFIRST)
+								CASE(CF_PRIVATELAST) CASE(CF_GDIOBJFIRST)
+								CASE(CF_GDIOBJLAST) CASE(CF_DIBV5)
+							#undef CASE
+							default:
+								if (temp >= CF_PRIVATEFIRST && temp <= CF_PRIVATELAST)
+								{
+									sprintf(szFormatName, "CF_PRIVATE_%d", temp - CF_PRIVATEFIRST);
+								}
+								else if (temp >= CF_GDIOBJFIRST && temp <= CF_GDIOBJLAST)
+								{
+									sprintf(szFormatName, "CF_GDIOBJ_%d", temp - CF_GDIOBJFIRST);
+								}
+								//Format ideas for future: hex number, system/msdn constant, registered format, WM_ASKFORMATNAME, tickbox for delay rendered or not*/
+								/*else if(temp>0xC000&&temp<0xFFFF)
+								{
+									sprintf(szFormatName,"CF_REGISTERED%d",temp-0xC000);
+								}*/
+								else
+								{
+									sprintf(szFormatName, "0x%.8x", temp);
+								}
+							break;
+						}
+					}
+					//Insert into the list
+					lvi.mask = LVIF_TEXT | LVIF_PARAM;
+					if (*lvi.pszText == '+')
+					{
+						++lvi.pszText;
+						lvi.mask = LVIF_TEXT | LVIF_PARAM | LVIF_STATE;
+						lvi.state = lvi.stateMask = LVIS_SELECTED;
+					}
+					ListView_InsertItem(list, &lvi);
+				}
+				ListView_SetColumnWidth(list, 0, LVSCW_AUTOSIZE_USEHEADER);
+			}
+		}
+		return TRUE;
+	case WM_COMMAND:
+		switch (LOWORD(w))
+		{
+		case IDOK:
+			{
+				effect = !IsDlgButtonChecked(h, IDC_MOVE);
+				HWND list = GetDlgItem(h, IDC_LIST);
+				numformats = ListView_GetSelectedCount(list);
+				if (numformats)
+				{
+					formats = (UINT*)malloc(numformats * sizeof *formats);
+					if (formats == 0)
+					{
+						MessageBox(h, "Not enough memory", "Drag-drop", MB_ICONERROR);
+						return TRUE;
+					}
+					LVITEM temp;
+					ZeroMemory(&temp, sizeof temp);
+					temp.mask = LVIF_PARAM;
+					temp.iItem = -1;
+					for (UINT i = 0 ; i < numformats ; i++)
+					{
+						temp.iItem = ListView_GetNextItem(list, temp.iItem, LVNI_SELECTED);
+						ListView_GetItem(list, &temp);
+						formats[i] = temp.lParam;
+					}
+				}
+				EndDialog (h, 1);
+			}
+			return TRUE;
+		case IDCANCEL:
+			EndDialog(h, -1);
+			return TRUE;
+		case IDC_UP:
+		case IDC_DOWN:
+			{
+				HWND list = GetDlgItem(h, IDC_LIST);
+				LVITEM item[2];
+				ZeroMemory(item, sizeof item);
+				//If anyone knows a better way to swap two items please send a patch
+				item[0].iItem = ListView_GetNextItem(list, (UINT)-1, LVNI_SELECTED);
+				if(item[0].iItem==-1) item[0].iItem = ListView_GetNextItem(list, (UINT)-1, LVNI_FOCUSED);
+				if(item[0].iItem==-1)
+				{
+					MessageBox(h, "Select an item to move.", "Drag-drop", MB_OK);
+					SetFocus(list);
+					return TRUE;
+				}
+				item[0].mask = LVIF_TEXT|LVIF_PARAM|LVIF_STATE;
+				item[0].stateMask = (UINT)-1;
+				char text[2][100];
+				item[0].pszText = text[0];
+				item[0].cchTextMax = sizeof(text[0]);
+				item[1] = item[0];
+				item[1].pszText = text[1];
+				if(LOWORD(w)==IDC_UP){
+					if(item[1].iItem==0) item[1].iItem=numformatetcs-1;
+					else item[1].iItem--;
+				} else {
+					if( (UINT)item[1].iItem==numformatetcs-1 ) item[1].iItem = 0;
+					else item[1].iItem++;
+				}
+				ListView_GetItem(list, &item[0]);
+				ListView_GetItem(list, &item[1]);
+				swap(item[0].iItem,item[1].iItem);
+				item[0].state |= LVIS_FOCUSED|LVIS_SELECTED;
+				item[1].state &= ~(LVIS_FOCUSED|LVIS_SELECTED);
+				ListView_SetItem(list, &item[0]);
+				ListView_SetItem(list, &item[1]);
+				SetFocus(list);
+			}
+			return TRUE;
+		}
+		return FALSE;
+	}
+	return FALSE;
 }
 
 //Members
-CDropTarget::CDropTarget( bool delself, CDropTarget** p )
+CDropTarget::CDropTarget(HexEditorWindow &hexwnd)
+: hexwnd(hexwnd)
 {
 #ifdef _DEBUG
 	printf("IDropTarget::IDropTarget\n");
-	if( !p ) printf("IDropTarget constructed without pthis\n");
 #endif //_DEBUG
 	m_cRefCount = 0;
-	deleteself = delself;
-	pthis = p;
 }
 
 CDropTarget::~CDropTarget()
@@ -31,7 +195,7 @@ CDropTarget::~CDropTarget()
 	if( m_cRefCount != 0 )
 		printf("Deleting %s too early 0x%x.m_cRefCount = %d\n", "IDropTarget", this, m_cRefCount);
 #endif //_DEBUG
-	if( pthis ) *pthis = NULL;
+	hexwnd.target = NULL;
 }
 
 
@@ -68,7 +232,7 @@ STDMETHODIMP_(ULONG) CDropTarget::Release( void )
 #ifdef _DEBUG
 	printf("IDropTarget::Release\n");
 #endif //_DEBUG
-	if( --m_cRefCount == 0 && deleteself ) delete this;
+	if( --m_cRefCount == 0) delete this;
 	return m_cRefCount;
 }
 
@@ -82,20 +246,22 @@ STDMETHODIMP CDropTarget::DragEnter( IDataObject* pDataObject, DWORD grfKeyState
 	pDataObj = pDataObject;
 	pDataObject->AddRef();
 	hdrop_present = false;
-	if( hexwnd.prefer_CF_HDROP ){
+	if (hexwnd.prefer_CF_HDROP)
+	{
 		FORMATETC fe = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, 0xffffffff };
-		if( S_OK == pDataObject->QueryGetData( &fe ) ){
+		STGMEDIUM stm;
+		if (S_OK == pDataObject->QueryGetData(&fe))
+		{
 			hdrop_present = true;
-			*pdwEffect = DROPEFFECT_NONE;
+			*pdwEffect = DROPEFFECT_COPY;
 			return S_OK;
-		} else {
-			STGMEDIUM stm;
-			if( S_OK == pDataObject->GetData( &fe, &stm ) ){
-				hdrop_present = true;
-				ReleaseStgMedium( &stm );
-				*pdwEffect = DROPEFFECT_NONE;
-				return S_OK;
-			}
+		}
+		else if (S_OK == pDataObject->GetData(&fe, &stm))
+		{
+			hdrop_present = true;
+			ReleaseStgMedium(&stm);
+			*pdwEffect = DROPEFFECT_COPY;
+			return S_OK;
 		}
 	}
 
@@ -118,23 +284,30 @@ STDMETHODIMP CDropTarget::DragOver( DWORD grfKeyState, POINTL pt, DWORD* pdwEffe
 	//And only if the source supports it
 	//but in read-only mode we accept drag-drop loading (CF_HDROP)
 	//this is handled by OLE it seems if the window is DragAcceptFiles( hwnd, TRUE )
-	if( hdrop_present || hexwnd.bReadOnly ){
+	if (hexwnd.bReadOnly)
 		*pdwEffect = DROPEFFECT_NONE;
-	}
-	else if( grfKeyState & MK_CONTROL )
-		*pdwEffect = dwOKEffects & DROPEFFECT_COPY ? DROPEFFECT_COPY : ( dwOKEffects & DROPEFFECT_MOVE ? DROPEFFECT_MOVE : DROPEFFECT_NONE );
+	else if (hdrop_present)
+		*pdwEffect = DROPEFFECT_COPY;
+	else if (grfKeyState & MK_CONTROL)
+		*pdwEffect =
+			dwOKEffects & DROPEFFECT_COPY ? DROPEFFECT_COPY :
+			dwOKEffects & DROPEFFECT_MOVE ? DROPEFFECT_MOVE :
+			DROPEFFECT_NONE;
 	else
-		*pdwEffect = dwOKEffects & DROPEFFECT_MOVE ? DROPEFFECT_MOVE : ( dwOKEffects & DROPEFFECT_COPY ? DROPEFFECT_COPY : DROPEFFECT_NONE );
+		*pdwEffect =
+			dwOKEffects & DROPEFFECT_MOVE ? DROPEFFECT_MOVE :
+			dwOKEffects & DROPEFFECT_COPY ? DROPEFFECT_COPY :
+			DROPEFFECT_NONE;
 
-	POINT p = {pt.x, pt.y};
-	ScreenToClient(hexwnd.hwnd,&p);
+	POINT p = { pt.x, pt.y };
+	ScreenToClient(hexwnd.hwnd, &p);
 	hexwnd.iMouseX = p.x;
 	hexwnd.iMouseY = p.y;
 
-	if( *pdwEffect == DROPEFFECT_NONE ) HideCaret( hexwnd.hwnd );
-	else hexwnd.set_drag_caret( p.x, p.y, *pdwEffect == DROPEFFECT_COPY, !!(grfKeyState & MK_SHIFT) );
-
-	hexwnd.dragging = true;
+	if (hdrop_present || *pdwEffect == DROPEFFECT_NONE)
+		HideCaret(hexwnd.hwnd);
+	else
+		hexwnd.set_drag_caret(p.x, p.y, *pdwEffect == DROPEFFECT_COPY, (grfKeyState & MK_SHIFT) != 0);
 
 	hexwnd.fix_scroll_timers(p.x,p.y);
 
@@ -151,18 +324,15 @@ STDMETHODIMP CDropTarget::DragLeave ( void )
 	//1. recreate the editing caret whenever the mouse leaves the client area
 	//2. rather than have the caret disappear whenever the mouse leaves the client area (until set_focus is called)
 	//#2 would just call CreateCaret
-	CreateCaret( hexwnd.hwnd, NULL, hexwnd.cxChar, hexwnd.cyChar );
-	hexwnd.set_caret_pos ();
-	if( GetFocus() == hexwnd.hwnd )
-		ShowCaret( hexwnd.hwnd );
+	CreateCaret(hexwnd.hwnd, NULL, hexwnd.cxChar, hexwnd.cyChar);
+	hexwnd.set_caret_pos();
+	if (GetFocus() == hexwnd.hwnd)
+		ShowCaret(hexwnd.hwnd);
 
 	hexwnd.kill_scroll_timers();
 
-	/*lbuttonup will reset this
-	but we need it on for the benefit
-	of keydown when the user presses esc*/
-	hexwnd.dragging = true;
-	if( pDataObj ){
+	if (pDataObj)
+	{
 		pDataObj->Release();
 		pDataObj = NULL;
 	}
@@ -188,80 +358,112 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 	pDataObj = NULL;
 	DragLeave();
 
-	bool copying = *pdwEffect & DROPEFFECT_COPY ? true : false ;
+	bool copying = (*pdwEffect & DROPEFFECT_COPY) != 0;
 
-	hexwnd.bDroppedHere = TRUE;
+	size_t totallen = 0;
+	BYTE *data = NULL;
+	bool gotdata = false;
 
-	if( /*Internal data*/ hexwnd.bMoving ){
-		if( ((LastKeyState|grfKeyState)&(MK_MBUTTON|MK_RBUTTON)) || hexwnd.always_pick_move_copy ){
+	UINT *formats = NULL;
+	UINT numformats = 0;
+
+	FORMATETC *fel = NULL;
+	UINT numfe = 0;
+
+	bool NeedToChooseFormat = true;
+	int IndexOfDataToInsert = -1;
+	bool NeedToChooseMoveorCopy = (LastKeyState | grfKeyState) & (MK_MBUTTON | MK_RBUTTON) || hexwnd.always_pick_move_copy;
+
+	if (hexwnd.dragging) // Internal data
+	{
+		hexwnd.dragging = FALSE;
+		if (NeedToChooseMoveorCopy)
+		{
 			HMENU hm = CreatePopupMenu();
 			InsertMenu( hm, 0, MF_BYPOSITION|MF_STRING, 1, "Move" );
 			InsertMenu( hm, 1, MF_BYPOSITION|MF_STRING, 2, "Copy" );
 			InsertMenu( hm, 2, MF_BYPOSITION|MF_SEPARATOR, 0, 0 );
 			InsertMenu( hm, 3, MF_BYPOSITION|MF_STRING, 0, "Cancel" );
 			BOOL mi = TrackPopupMenuEx( hm, TPM_NONOTIFY|TPM_RIGHTBUTTON|TPM_RETURNCMD, pt.x, pt.y, hexwnd.hwnd, NULL );
-			DestroyMenu( hm );
-			if( mi == 0 ){ pDataObject->Release(); *pdwEffect = DROPEFFECT_NONE; return S_OK;  }
-			copying = ( mi == 1 ? false : true );
+			DestroyMenu(hm);
+			if (mi == 0)
+			{
+				pDataObject->Release();
+				*pdwEffect = DROPEFFECT_NONE;
+				return S_OK;
+			}
+			copying = mi != 1;
 		}
-		iMove1stEnd = hexwnd.iStartOfSelection;
-		iMove2ndEndorLen = hexwnd.iEndOfSelection;
-		if( iMove1stEnd > iMove2ndEndorLen ) swap( iMove1stEnd, iMove2ndEndorLen );
-		if( !copying && hexwnd.new_pos > iMove2ndEndorLen ) hexwnd.new_pos += iMove1stEnd - iMove2ndEndorLen - 1;
+		int iMove1stEnd = hexwnd.iGetStartOfSelection();
+		int iMove2ndEndorLen = hexwnd.iGetEndOfSelection();
+		if (!copying && hexwnd.new_pos > iMove2ndEndorLen)
+			hexwnd.new_pos += iMove1stEnd - iMove2ndEndorLen - 1;
 		iMovePos = hexwnd.new_pos;
 		iMoveOpTyp = copying ? OPTYP_COPY : OPTYP_MOVE;
-		if( /*Overwrite*/ grfKeyState&MK_SHIFT ){
+		if (grfKeyState & MK_SHIFT) // Overwrite
+		{
 			int len = iMove2ndEndorLen - iMove1stEnd + 1;
-			if( copying ){
+			if (copying)
+			{
 				//Just [realloc &] memmove
-				int upper = 1+hexwnd.DataArray.GetUpperBound();
-				if( /*Need more space*/ iMovePos+len > upper ){
-					if( hexwnd.DataArray.SetSize( iMovePos+len ) ){
+				if (iMovePos + len > hexwnd.DataArray.GetLength()) // Need more space
+				{
+					if (hexwnd.DataArray.SetSize(iMovePos + len))
+					{
 						hexwnd.DataArray.ExpandToSize();
-						memmove(&hexwnd.DataArray[iMovePos],&hexwnd.DataArray[iMove1stEnd],len);
+						memmove(&hexwnd.DataArray[iMovePos], &hexwnd.DataArray[iMove1stEnd], len);
 					}
-				} else /*Enough space*/ {
-					memmove(&hexwnd.DataArray[iMovePos],&hexwnd.DataArray[iMove1stEnd],len);
 				}
-			} else /*Moving*/ {
-				if( /*Forward*/ iMovePos > iMove1stEnd ){
-					hexwnd.CMD_move_copy( 1, 0 );
+				else // Enough space
+				{
+					memmove(&hexwnd.DataArray[iMovePos], &hexwnd.DataArray[iMove1stEnd], len);
+				}
+			}
+			else //Moving
+			{
+				if (iMovePos > iMove1stEnd) //Forward
+				{
+					hexwnd.CMD_move_copy(iMove1stEnd, iMove2ndEndorLen, 0);
 					hexwnd.DataArray.RemoveAt(iMovePos+len,len);
-				} else /*Backward*/ {
+				}
+				else //Backward
+				{
 					memmove(&hexwnd.DataArray[iMovePos],&hexwnd.DataArray[iMove1stEnd],len);
 					hexwnd.DataArray.RemoveAt((iMovePos-iMove1stEnd>=len?iMove1stEnd:iMovePos+len),len);
 				}
 			}
 			hexwnd.iStartOfSelection = iMovePos;
 			hexwnd.iEndOfSelection = iMovePos+len-1;
-			hexwnd.m_iFileChanged = hexwnd.bFilestatusChanged = hexwnd.bSelected = TRUE;
-			hexwnd.update_for_new_datasize();
-		} else /*Insert*/ hexwnd.CMD_move_copy( 1 );
-	} else /*External data*/ {
+			hexwnd.iFileChanged = hexwnd.bFilestatusChanged = hexwnd.bSelected = TRUE;
+			hexwnd.resize_window();
+		}
+		else // Insert
+		{
+			hexwnd.CMD_move_copy(iMove1stEnd, iMove2ndEndorLen, 1);
+		}
+	}
+	else // External data
+	{
+		STGMEDIUM stm;
 
 		HRESULT err = E_UNEXPECTED;
 
 		//Get the formats enumerator
-		IEnumFORMATETC* iefe = NULL;
+		IEnumFORMATETC *iefe = 0;
 		pDataObject->EnumFormatEtc( DATADIR_GET, &iefe );
-		if( !iefe ){
+		if (iefe == 0)
+		{
 #ifdef _DEBUG
 			printf("Unable to create a drag-drop data enumerator\n");
 #endif //_DEBUG
 			goto ERR;
 		}
-		try{
-			iefe->Reset();
-		}
-		catch(...){
-			goto ERR;
-		}
+		iefe->Reset();
 
 		//Get the available formats
-		FORMATETC* fel;fel = NULL;
-		UINT numfe;numfe = 0;
-		for(;;){
-			void* temp = realloc( fel, ( numfe + 1 ) * sizeof(FORMATETC) );
+		for(;;)
+		{
+			void *temp = realloc(fel, ( numfe + 1 ) * sizeof(FORMATETC));
 			if( temp != NULL ){
 				fel = (FORMATETC*) temp;
 				temp = NULL;
@@ -277,70 +479,73 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 				goto ERR_ENUM;
 			}
 		}
-
+		UINT i;
 		/*Check which format should be inserted according to user preferences*/
-		bool NeedToChooseFormat;NeedToChooseFormat = true;
-		int IndexOfDataToInsert;IndexOfDataToInsert = -1;
-		if( numfe == 0 ){
+		if (numfe == 0)
+		{
 			MessageBox( hexwnd.hwnd, "No data to insert", "Drag-drop", MB_OK );
 			err = S_OK;
 			*pdwEffect = DROPEFFECT_NONE;
 			goto ERR_ENUM;
-		} else if( numfe == 1 ){
-			IndexOfDataToInsert = 0;
-		} else if( hexwnd.prefer_CF_HDROP ){
-			for( UINT i=0; i < numfe; i++ ){
-				if( fel[i].cfFormat == CF_HDROP ){
+		}
+		if (hexwnd.prefer_CF_HDROP)
+		{
+			for (i = 0 ; i < numfe ; i++)
+			{
+				if (fel[i].cfFormat == CF_HDROP)
+				{
 					//Return no effect & let shell32 handle it
-					hexwnd.dontdrop = false;
+					if (S_OK == pDataObject->GetData(&fel[i], &stm))
+					{
+						hexwnd.dropfiles((HDROP)stm.hGlobal);
+					}
 					err = S_OK;
 					*pdwEffect = DROPEFFECT_NONE;
 					goto ERR_ENUM;
 				}
 			}
-		} else if( hexwnd.prefer_CF_BINARYDATA ){
-			for( UINT i=0; i < numfe; i++ ){
-				if( fel[i].cfFormat == CF_BINARYDATA ){
-					NeedToChooseFormat = false;
-					IndexOfDataToInsert = i;
-					break;
-				}
-			}
-		} else if( hexwnd.prefer_CF_TEXT ){
-			for( UINT i=0; i < numfe; i++ ){
-				if( fel[i].cfFormat == CF_TEXT ){
+		}
+		if (numfe == 1)
+		{
+			IndexOfDataToInsert = 0;
+		}
+		else if (hexwnd.prefer_CF_BINARYDATA)
+		{
+			for (i = 0 ; i < numfe ; i++)
+			{
+				if (fel[i].cfFormat == CF_BINARYDATA)
+				{
 					NeedToChooseFormat = false;
 					IndexOfDataToInsert = i;
 					break;
 				}
 			}
 		}
-
-		UINT* formats;formats = NULL;
-		UINT numformats;numformats = 0;
-		bool NeedToChooseMoveorCopy;
-		NeedToChooseMoveorCopy = ( ( ( (LastKeyState|grfKeyState) & ( MK_MBUTTON | MK_RBUTTON ) ) ) || hexwnd.always_pick_move_copy ) ? true : false;
-		if( NeedToChooseFormat == false && NeedToChooseMoveorCopy == true ){
-			HMENU hm = CreatePopupMenu();
-			InsertMenu( hm, 0, MF_BYPOSITION|MF_STRING, 1, "Move" );
-			InsertMenu( hm, 1, MF_BYPOSITION|MF_STRING, 2, "Copy" );
-			InsertMenu( hm, 2, MF_BYPOSITION|MF_SEPARATOR, 0, 0 );
-			InsertMenu( hm, 3, MF_BYPOSITION|MF_STRING, 0, "Cancel" );
-			BOOL mi = TrackPopupMenuEx( hm, TPM_NONOTIFY|TPM_RIGHTBUTTON|TPM_RETURNCMD, pt.x, pt.y, hexwnd.hwnd, NULL );
-			DestroyMenu( hm );
-			if( mi == 0 ){ hexwnd.dontdrop = true; err = S_OK; *pdwEffect = DROPEFFECT_NONE; goto ERR_ENUM; }
-			copying = ( mi == 1 ? false : true );
-		} else if( NeedToChooseFormat ) {
-			DROPPARAMS params;
+		else if (hexwnd.prefer_CF_TEXT)
+		{
+			for (i = 0 ; i < numfe ; i++ )
+			{
+				if (fel[i].cfFormat == CF_TEXT)
+				{
+					NeedToChooseFormat = false;
+					IndexOfDataToInsert = i;
+					break;
+				}
+			}
+		}
+		if (NeedToChooseFormat)
+		{
+			dialog<DragDropDlg> params;
 			params.allowable_effects = dwOKEffects & ( DROPEFFECT_COPY | DROPEFFECT_MOVE );
 			params.effect = copying;
 			params.formatetcs = fel;
 			params.numformatetcs = numfe;
 			params.formats = NULL;
 			params.numformats = 0;
-			int ret = DialogBoxParam( hexwnd.hInstance, MAKEINTRESOURCE(IDD_DRAGDROP), hexwnd.hwnd, (DLGPROC) DragDropDlgProc, (LPARAM)&params );
-			if( ret < 0 ){//An error occured or the user canceled the operation
-				hexwnd.dontdrop = true;
+			int ret = params.DoModal(hexwnd.hwnd);
+			if (ret < 0)
+			{
+				//An error occured or the user canceled the operation
 				err = S_OK;
 				*pdwEffect = DROPEFFECT_NONE;
 				goto ERR_ENUM;
@@ -349,29 +554,39 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 			formats = params.formats;
 			copying = params.effect;
 		}
+		else if (NeedToChooseMoveorCopy)
+		{
+			HMENU hm = CreatePopupMenu();
+			InsertMenu( hm, 0, MF_BYPOSITION|MF_STRING, 1, "Move" );
+			InsertMenu( hm, 1, MF_BYPOSITION|MF_STRING, 2, "Copy" );
+			InsertMenu( hm, 2, MF_BYPOSITION|MF_SEPARATOR, 0, 0 );
+			InsertMenu( hm, 3, MF_BYPOSITION|MF_STRING, 0, "Cancel" );
+			BOOL mi = TrackPopupMenuEx( hm, TPM_NONOTIFY|TPM_RIGHTBUTTON|TPM_RETURNCMD, pt.x, pt.y, hexwnd.hwnd, NULL );
+			DestroyMenu( hm );
+			if (mi == 0)
+			{
+				err = S_OK;
+				*pdwEffect = DROPEFFECT_NONE;
+				goto ERR_ENUM;
+			}
+			copying = mi != 1;
+		}
 
-		if( IndexOfDataToInsert >= 0 && formats == NULL){
+		if (IndexOfDataToInsert >= 0 && formats == NULL) {
 			formats = (UINT*)&IndexOfDataToInsert;
 			numformats = 1;
 		}
 
-
-		FORMATETC fe;
-		STGMEDIUM stm;
-		int ret;
-		size_t totallen;totallen = 0;
-		BYTE* data;data = NULL;
-		bool gotdata;gotdata = false;
 		//for each selected format
-		UINT i;
-		for(i = 0;i<numformats;i++){
-			fe = fel[formats[i]];
+		for (i = 0 ; i < numformats ; i++)
+		{
+			FORMATETC fe = fel[formats[i]];
 			/*It is important that when debugging (with M$VC at least) you do not step __into__ the below GetData call
 			  If you do the app providing the data source will die & GetData will return OLE_E_NOTRUNNING or E_FAIL
 			  The solution is to step over the call
 			  It is also possible that a debugger will be opened & attach itself to the data provider
 			*/
-			if ( (ret = pDataObject->GetData( &fe, &stm )) == S_OK )
+			if (pDataObject->GetData(&fe, &stm) == S_OK)
 			{
 				//Get len
 				size_t len = 0;
@@ -436,12 +651,11 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 				//Get data
 				switch( stm.tymed ){
 					case TYMED_HGLOBAL:{
-						LPVOID pmem = GlobalLock( stm.hGlobal );
-						if( pmem ){
-							try{ memcpy( data, pmem, len ); }
-							catch(...){}
+						if (LPVOID pmem = GlobalLock(stm.hGlobal))
+						{
+							memcpy(data, pmem, len);
 							gotdata = true;
-							GlobalUnlock( stm.hGlobal );
+							GlobalUnlock(stm.hGlobal);
 						}
 					} break;
 #ifndef __CYGWIN__
@@ -475,15 +689,12 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 						}
 					} break;//HBITMAP
 					case TYMED_MFPICT:{
-						METAFILEPICT*pMFP=(METAFILEPICT*)GlobalLock( stm.hMetaFilePict );
-						if( pMFP ){
-							try{
-								memcpy( data, pMFP, sizeof(*pMFP) );
-								GetMetaFileBitsEx( pMFP->hMF, len - sizeof(*pMFP), &data[sizeof(*pMFP)] );
-								GlobalUnlock( stm.hMetaFilePict );
-								gotdata = true;
-							}
-							catch(...){}
+						if (METAFILEPICT *pMFP = (METAFILEPICT *)GlobalLock(stm.hMetaFilePict))
+						{
+							memcpy(data, pMFP, sizeof *pMFP);
+							GetMetaFileBitsEx( pMFP->hMF, len - sizeof(*pMFP), &data[sizeof(*pMFP)] );
+							GlobalUnlock( stm.hMetaFilePict );
+							gotdata = true;
 						}
 					} break;//HMETAFILE
 #ifndef __CYGWIN__
@@ -520,9 +731,9 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 						len = *(DWORD*)data;
 						DataToInsert += 4;
 					} else if( fe.cfFormat == CF_TEXT || fe.cfFormat == CF_OEMTEXT ){
-						try { len = strlen( (char*)data ); } catch(...){}
+						len = strlen( (char*)data );
 					} else if( fe.cfFormat == CF_UNICODETEXT ){
-						try { len = sizeof(wchar_t)*wcslen( (wchar_t*)data ); } catch(...){}
+						len = sizeof(wchar_t)*wcslen( (wchar_t*)data );
 					}
 
 					//Insert/overwrite data into DataArray
@@ -551,16 +762,19 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 		} //for each selected format
 
 		//Release the data
-		free( data ); data = NULL;
-		if( IndexOfDataToInsert < 0 ){
+		free(data);
+		data = NULL;
+		if (IndexOfDataToInsert < 0) {
 			free( formats ); formats = NULL;
 		}
 
-		if(gotdata){
+		if (gotdata)
+		{
 			hexwnd.iStartOfSelection = hexwnd.new_pos;
 			hexwnd.iEndOfSelection = hexwnd.new_pos + totallen - 1;
-			hexwnd.m_iFileChanged = hexwnd.bFilestatusChanged = hexwnd.bSelected = TRUE;
-			hexwnd.update_for_new_datasize();
+			hexwnd.iFileChanged = hexwnd.bFilestatusChanged = hexwnd.bSelected = TRUE;
+			hexwnd.resize_window();
+			hexwnd.synch_sibling();
 		}
 
 		*pdwEffect = copying  ? DROPEFFECT_COPY : DROPEFFECT_MOVE;

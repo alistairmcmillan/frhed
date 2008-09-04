@@ -24,7 +24,6 @@
 // $Id$
 
 #include "precomp.h"
-#include <stdio.h>
 #include <htmlhelp.h>
 
 /** @brief HtmlHelp file to open from Frhed program folder. */

@@ -1,7 +1,6 @@
 #include "precomp.h"
 #include "physicaldrive.h"
 #include "PDriveNT.h"
-#include <assert.h>
 
 BOOL PNtPhysicalDrive::GetDriveLayout( LPBYTE lpbMemory, DWORD dwSize )
 {
@@ -53,11 +52,7 @@ BOOL PNtPhysicalDrive::GetDriveGeometryEx( DISK_GEOMETRY_EX* lpDG, DWORD dwSize 
 
 BOOL PNtPhysicalDrive::Open( int iDrive )
 {
-	if(m_hDevice != INVALID_HANDLE_VALUE)
-	{
-		CloseHandle( m_hDevice );
-		m_hDevice = INVALID_HANDLE_VALUE;
-	}
+	Close();
 
 	CHAR szPath[256];
 	sprintf( szPath, "\\\\.\\PhysicalDrive%d", iDrive );
@@ -100,10 +95,7 @@ PNtPhysicalDrive::PNtPhysicalDrive()
 
 PNtPhysicalDrive::~PNtPhysicalDrive()
 {
-	if( m_hDevice != INVALID_HANDLE_VALUE )
-	{
-		CloseHandle( m_hDevice );
-	}
+	Close();
 } // ~PNtPhysicalDrive()
 
 BOOL PNtPhysicalDrive::IsOpen()

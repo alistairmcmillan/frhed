@@ -26,9 +26,13 @@
 // Needed to include
 // DISK_GEOMETRY_EX, PARTITION_INFORMATION_EX
 // and couple of others from WinIoCtl.h
-#define _WIN32_WINNT 0x0500
+#define _WIN32_WINNT 0x0501
 
 #include <windows.h>
+#include <windowsx.h>
+#include <crtdbg.h>
+#include <assert.h>
+#include <tchar.h>
 #include <io.h>
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -36,9 +40,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <commctrl.h>
-#include <objbase.h>
+#include <shlwapi.h>
 #include <shlobj.h>
 #include <limits.h>
 #include "gtools.h"
-#include "compat.h"
-#define Zero(a) memset(&(a),0,sizeof(a))
