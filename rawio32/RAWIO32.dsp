@@ -1,24 +1,24 @@
 # Microsoft Developer Studio Project File - Name="RAWIO32" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
-# ** DO NOT EDIT **
+# ** NICHT BEARBEITEN **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
 CFG=RAWIO32 - Win32 Debug
-!MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE use the Export Makefile command and run
+!MESSAGE Dies ist kein gültiges Makefile. Zum Erstellen dieses Projekts mit NMAKE
+!MESSAGE verwenden Sie den Befehl "Makefile exportieren" und führen Sie den Befehl
 !MESSAGE 
 !MESSAGE NMAKE /f "RAWIO32.mak".
 !MESSAGE 
-!MESSAGE You can specify a configuration when running NMAKE
-!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE Sie können beim Ausführen von NMAKE eine Konfiguration angeben
+!MESSAGE durch Definieren des Makros CFG in der Befehlszeile. Zum Beispiel:
 !MESSAGE 
 !MESSAGE NMAKE /f "RAWIO32.mak" CFG="RAWIO32 - Win32 Debug"
 !MESSAGE 
-!MESSAGE Possible choices for configuration are:
+!MESSAGE Für die Konfiguration stehen zur Auswahl:
 !MESSAGE 
-!MESSAGE "RAWIO32 - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "RAWIO32 - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "RAWIO32 - Win32 Release" (basierend auf  "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "RAWIO32 - Win32 Debug" (basierend auf  "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -39,7 +39,7 @@ RSC=rc.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\Build\Release"
-# PROP Intermediate_Dir "..\BuildTmp\Release"
+# PROP Intermediate_Dir "..\BuildTmp\RAWIO32\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
@@ -66,7 +66,7 @@ LINK32=link.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\Build\Debug"
-# PROP Intermediate_Dir "..\BuildTmp\Debug"
+# PROP Intermediate_Dir "..\BuildTmp\RAWIO32\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
