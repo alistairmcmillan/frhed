@@ -13,3 +13,4 @@ Frhed 1.3.1
    - refactor dialog code to own files and classes
    - make frhed translatable, translations use gettext PO files
   Add heksedit.dll to the installer
+  Add 48x48 icon
