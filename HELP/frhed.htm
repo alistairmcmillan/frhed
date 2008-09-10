@@ -158,10 +158,11 @@ the modified sources.
 
 <!------------------------------------------------------------------------------------------------->
 <h1><a name="#installation">Installation</a></h1>
-<p>Starting with version 1.1, frhed uses the self extracting <a href="http://www.nullsoft.com/free/nsis/">Nullsoft "SuperPIMP" Install System</a>,
-which is a setup program familiar to anyone who has ever run Winamp.</p>
+<p>Frhed uses the <a href="http://www.nullsoft.com/free/nsis/">Nullsoft
+Scriptable Install System</a>. To install Frhed, just run the installer
+executable.</p>
 
-<p>frhed supports normal Windows uninstall behaviour as found in the Control Panel.</p>
+<p>Frhed supports normal Windows uninstall behaviour as found in the Control Panel.</p>
 
 <!------------------------------------------------------------------------------------------------->
 <h1><a name="#binary-files">Binary Files</a></h1>
@@ -216,7 +217,7 @@ giving us the number "11" in our decimal system.</p>
 from 0 to 15. A packet of 8 bits is called a "byte", and <b>these</b> are what the file contains.
 Each byte can describe a number from 0 to 255.
 So, a file is a list (or "array") of "bytes", with each byte at a certain index or "offset".
-These bytes are what frhed displays in the middle of the screen, but in yet another different
+These bytes are what Frhed displays in the middle of the screen, but in yet another different
 number system: the "hexadecimal" system, which is a system with the base 16. So there are 16
 digits, the normal ones from 0 to 9, and additionally the letters "a" through "f" with following
 values:</p>
@@ -231,8 +232,8 @@ f = 15</p>
 <p>So the "hex" (short for "hexadecimal") number "f14a" means: "10 times 1 + 4 times 16 + 1 time
 16&times;16(=256) + 15 times 16&times;256(=4096)", giving a value of 61770 in decimal. The point of using
 hex numbers is that values of up to 255 (maximum value of a byte) can be described by employing
-up to 2 hexadecimal digits, which gives a neat and ordered output on hex editors such as frhed.
-On the right side of the frhed window there are "normal" letters, punctuation symbols and so on.
+up to 2 hexadecimal digits, which gives a neat and ordered output on hex editors such as Frhed.
+On the right side of the Frhed window there are "normal" letters, punctuation symbols and so on.
 This is because each byte can be seen as an index to a symbol in a "character set". This means
 that the computer stores for example the letter "a" as a number with the value 97 ("61" in hex
 notation), the comma "," as a number 44 and so on. So if you write a text on the computer and
@@ -260,14 +261,14 @@ the apostrophe.</p>
 
 <!------------------------------------------------------------------------------------------------->
 <h2><a name="#file-new">Creating new files</a></h2>
-<p>If frhed is started without parameters or with a nonexistant filename as parameter,
+<p>If Frhed is started without parameters or with a nonexistant filename as parameter,
 then it starts with a new, empty file that is untitled. If a file is already loaded, then
 choose <dfn>File/New</dfn> from the menu. If a file is already loaded and it has been changed, then
 you will be prompted if you want to save the changes.</p>
 
 <!------------------------------------------------------------------------------------------------->
 <h2><a name="#file-open">Opening files</a></h2>
-<p>If frhed is started with command line parameters, then the whole string following the
+<p>If Frhed is started with command line parameters, then the whole string following the
 program name is considered to be the name of the file to open.</p>
 
 <p><b>Examples</b>:</p>
@@ -278,14 +279,14 @@ program name is considered to be the name of the file to open.</p>
 </p>
 
 <p><b>Note</b>: If you put a link to frhed.exe into the "SendTo"-Folder in your Windows main
-directory then you can open any file from the Explorer with frhed by choosing frhed
+directory then you can open any file from the Explorer with Frhed by choosing Frhed
 from the "Send To"-item in the file's context menu.</p>
 
 <p>You can also choose <dfn>File/Open</dfn> from the menu. If a file is already loaded and it has
 been changed, then you will be prompted if you want to lose the changes, save the changes
 or cancel the request.</p>
 
-<p>A file can also be dragged (for instance from the Windows Explorer window) into frhed's
+<p>A file can also be dragged (for instance from the Windows Explorer window) into Frhed's
 window to open it. If several files were dragged, then you must choose which one to open.</p>
 
 <p>You may also select a file from the MRU list to open.</p>
@@ -299,12 +300,12 @@ read-only mode will be engaged.</p>
 choose the <dfn>File/Open partially</dfn> command. First you will have to choose the file you want to open in a
 File-Open-dialog. Then you must enter the offset from which the file will be loaded
 and how many bytes to load, or you can check the "Open partially from end of file"-radiobutton
-if you want to load data from the end of the file. Also you may have frhed display the offsets
+if you want to load data from the end of the file. Also you may have Frhed display the offsets
 relative to the start of the file instead of relative to the start of the loaded block. Note,
 however, that so far the rest of the program uses offsets relative to start of the loaded block.
 </p>
 
-<p>frhed will now be in partially-opened-mode, which means that whenever you choose the <dfn>File/Save</dfn> command,
+<p>Frhed will now be in partially-opened-mode, which means that whenever you choose the <dfn>File/Save</dfn> command,
 the data will be written back to the position they were loaded from. This mode is indicated by
 a letter "P" in the window title after the file name.</p>
 
@@ -349,28 +350,28 @@ dialog will be initialized so that the whole file will be dumped, if there is no
 selected, or they will be such that the current selection will be dumped.</p>
 
 <p>Also you have the option of just outputting the hex bytes on a single line
-- just uncheck the "Export like frhed display" check box.</p>
+- just uncheck the "Export like Frhed display" check box.</p>
 
 <p>Also you have the option of outputting an RTF hexdump of the lines. The RTF is output
-by frhed as follows:</p>
+by Frhed as follows:</p>
 
 <ul>
 <li>The file that was hexdumped in the document properties as the Title.</li>
 <li>A Times New Roman 20pt paragraph containing the file name of the file that was hexdumped.</li>
 <li>Each line of hexdump, with the selection or current byte highlighted as per the display colours.</li>
 <li>Bookmarks are both highlighted and put into the document. The bookmark name is that same as
-what you gave frhed, unless you didn't give a name, in which case the name will be the offset of the
+what you gave Frhed, unless you didn't give a name, in which case the name will be the offset of the
 bookmark in decimal. The document bookmarks will be in the same place as the caret.</li>
 <li>The separators are put in a single group together and are simple lines as per the display settings.</li>
 <li>Limitations: the RTF output is not perfect in these ways:<br>
 For the chars Microsoft Word will convert some into underscores (generally the control characters up to 0x20).
-This is only apparent in OEM mode since in ANSI mode frhed translates these chars into periods (.).<br>
+This is only apparent in OEM mode since in ANSI mode Frhed translates these chars into periods (.).<br>
 Microsoft Word will alter the bookmark names by replacing non-alphanumerics
 with underscores, place "BM" in front of bookmarks that begin with a number and hide bookmarks
 beginning with underscores (can still view them with "Hidden bookmarks" checked).<br>
 If your display is running at anything less than 24 bit colour you may not get the colours you expect for the
-caret. This is because at lower bit levels the InvertRect function (which frhed uses to invert the caret in the window)
-works differently than just inverting the bits of colours as it does at 24-bit &amp; as frhed does in
+caret. This is because at lower bit levels the InvertRect function (which Frhed uses to invert the caret in the window)
+works differently than just inverting the bits of colours as it does at 24-bit &amp; as Frhed does in
 generating the inverted colour for RTF export. If someone finds out how InvertRect works at lower bit
 levels please let me (Pabs) know.<br>
 The bookmarks border takes up space (at least on Word2000) which means that subsequent characters on the same line
@@ -379,7 +380,7 @@ one with &amp; one without a bookmark. There is little that can be done about th
 The separators will not always be sized or positioned exactly. There is not much that can be done about this since
 it is hard to know the exact size in twips the word processor will display the text at. An alternative to this might
 be to use tables, which might not work and might also solve the bookmark problem.<br>
-At some fonts &amp; sizes (esp. OEM &amp; ANSI 9, ANSI 10) frhed cannot determine the correct font name the
+At some fonts &amp; sizes (esp. OEM &amp; ANSI 9, ANSI 10) Frhed cannot determine the correct font name the
 system chose &amp; this will cause Word to use the wrong font, often this will be Times New Roman. This may or may not
 be true depending on whether or not the font mapper for your system uses one font for all sizes and the fonts you have installed.
 Unfortunately Word ignores the other font hints that can be determined; character set, variable/monospaced and font family.</li>
@@ -405,17 +406,17 @@ have a backup anyway.</p>
 version of the display &amp; the other is all the hex digits on one line.</p>
 
 
-<p>The frhed will try to determine the type by looking for characters that are
-not whitespace or hexdigits and you will be asked to verify the frhed's findings.</p>
+<p>The Frhed will try to determine the type by looking for characters that are
+not whitespace or hexdigits and you will be asked to verify the Frhed's findings.</p>
 
-<p>If you decide it is in the frhed display format then you will be asked if you
+<p>If you decide it is in the Frhed display format then you will be asked if you
 want the display settings found in the file to replace current ones.  If so,
-frhed can determine the offset length, the number of bytes per line, if the
+Frhed can determine the offset length, the number of bytes per line, if the
 offset length should be automatically adjusted and possibly if the data is
 ANSI/OEM from its contents.  If any of these cannot be determined their
 settings will remain the same.</p>
 
-<p>frhed will also notify you if the character and hex data do not agree with each
+<p>Frhed will also notify you if the character and hex data do not agree with each
 other or the offsets are invalid and you may choose to ignore any more of these notices.</p>
 
 <p>If illegal characters are found in the hexdata section or the data ends unexpectedly
@@ -424,12 +425,12 @@ the data that has already been found or cancelling the operation.</p>
 
 <p>Also if the first offset found is not zero you can insert that amount of null bytes
 at the start of the file and if you choose not to and you chose to alter relevant
-display settings then frhed will display offsets relative to the first offset found.</p>
+display settings then Frhed will display offsets relative to the first offset found.</p>
 
-<p>If you decide it is not in the frhed display format then frhed will go through the
+<p>If you decide it is not in the Frhed display format then Frhed will go through the
 file filtering out whitespace and adding each hex digit found as a nibble (If odd
 no's of hex digits are present then '0' will be the last nibble).
-If other characters are found frhed will complain and give you the option of ignoring
+If other characters are found Frhed will complain and give you the option of ignoring
 the any other illegal characters that are found.</p>
 
 <p>If the file access permissions don't allow writing or open-read-only mode is on then
@@ -503,7 +504,7 @@ Choose with the <a href="#options-binary-mode">Options/Binary mode</a> command.<
 <ul>
 <li>character set: "ANSI" or "OEM".</li>
 <li>entering mode: "OVR" for overwriting or "INS" for inserting on keyboard input. If
-frhed is in read-only mode, then there will be a "READ" here.</li>
+Frhed is in read-only mode, then there will be a "READ" here.</li>
 <li>binary mode: "L" for Little-endian or "B" for Big-endian.</li>
 </ul>
 
@@ -598,18 +599,18 @@ notation. For backward relative jumps start with "-" (minus) as the first charac
 <p>To jump to the start of the line press Home or End for the end of the line.
 To jump directly to the end of the file press Ctrl+End, for the beginning Ctrl+Home.</p>
 
-<p>frhed can find text and binary values in a file. Choose <dfn>Edit/Find</dfn> to do this.
+<p>Frhed can find text and binary values in a file. Choose <dfn>Edit/Find</dfn> to do this.
 In the dialog you can choose if the case of the text parts of the find string are to be
-ignored and the find direction. To encode binary values, frhed uses a special syntax. Example:</p>
+ignored and the find direction. To encode binary values, Frhed uses a special syntax. Example:</p>
 
 <pre>Here is the findstring&lt;bd:0&gt;FloatValue&lt;fl:-14.56&gt;</pre>
 
-<p>This will cause frhed to search for a string "Here is the findstring." followed by a
+<p>This will cause Frhed to search for a string "Here is the findstring." followed by a
 zero-byte, then the text "FloatValue" and a 4-byte float with the value -14.56.</p>
 
 <p>Note that coded binary values will also be transformed by the "match case" option of the Find
 command, so if you search for a byte with the hex value of 0x41 (this is the upper-case letter "A")
-with the match-case option disabled, then frhed will also find bytes with the hex value 0x61
+with the match-case option disabled, then Frhed will also find bytes with the hex value 0x61
 (the lower-case letter "a"). Therefore you should always search for discrete binary values with
 case-matching enabled or you might not get correct results.
 Please see <a href="#special-syntax">Using the special syntax</a> for further information.</p>
@@ -655,22 +656,22 @@ and the menu item will be checked.</p>
 <!------------------------------------------------------------------------------------------------->
 <h2><a name="#using-the-mouse">Using the mouse</a></h2>
 
-<p>frhed implements OLE drag-drop to allow you to move data in a file,
-between frhed instances and even between frhed and other applications.
+<p>Frhed implements OLE drag-drop to allow you to move data in a file,
+between Frhed instances and even between Frhed and other applications.
 It follows similar standards to most OLE apps, but when dropping and
 there is more than one format you must choose which format(s) to insert
 and you need to specify which format(s) to transfer before you can drag
 data to other apps. To specify the formats to use and how to use them
-for OLE Drag-drop choose <a href="#options-ole-dragndrop">Options/OLE Drag-drop</a>. Currently frhed can output
-"BinaryData" (used for transfers between frhed instances), both types
+for OLE Drag-drop choose <a href="#options-ole-dragndrop">Options/OLE Drag-drop</a>. Currently Frhed can output
+"BinaryData" (used for transfers between Frhed instances), both types
 of hexdump as CF_TEXT, the special syntax as CF_TEXT and Rich Text
 Format for pasting properly formatted &amp; coloured hexdumps into
 wordprocessors</p>
 
 <p>When moving or copying data around in the file you don't have to choose which
-format as frhed just does what you wanted.</p>
+format as Frhed just does what you wanted.</p>
 
-<p>When you drag data over frhed a flashing cursor shows where the data will
+<p>When you drag data over Frhed a flashing cursor shows where the data will
 be inserted.</p>
 
 <p>Below is a summary of the keys that can be used to control the drag
@@ -923,7 +924,7 @@ forward or backward* to move or copy the block.</p>
 
 <!------------------------------------------------------------------------------------------------->
 <h2><a name="#edit-compare">The <dfn>Edit/Compare from current offset</dfn> command</a></h2>
-<p>If you need to compare two files then load one into frhed and choose this
+<p>If you need to compare two files then load one into Frhed and choose this
 command. You will first be prompted to choose the file to compare with.
 Choose a file and then the OK button. Comparison will occur from the current caret offset.</p>
 
@@ -963,8 +964,8 @@ WORD version
 DWORD filelength
 </pre>
 
-<p>This sample template file named "sample.tpl" is included in the frhed directory. When the command
-is chosen from the menu you will be prompted to choose the template file you want to apply. frhed will
+<p>This sample template file named "sample.tpl" is included in the Frhed directory. When the command
+is chosen from the menu you will be prompted to choose the template file you want to apply. Frhed will
 then load that file and use the code in it to give you a structured "interpretation" of the data in the
 currently loaded file, starting at the current byte. The result will be displayed in the edit-box of a
 dialog, from where you can copy the result to the clipboard if necessary. The result looks like this:</p>
@@ -1017,7 +1018,7 @@ choose the editor in the <a href="#options-settings">Options/View Settings</a> d
 
 <ul>
 <li>Only Harddisks are supported. CD-ROMs and Floppys are not supported (yet).</li>
-<li>Access is read-only. Write-access is planned for a future version of frhed.</li>
+<li>Access is read-only. Write-access is planned for a future version of Frhed.</li>
 <li><b>Windows NT</b>: You must have administrative privileges to access the physical harddisk data.</li>
 <li><b>Windows 95</b>: You must have extended interrupt 13 enabled. 
 <a href="http://uranus.it.swin.edu.au/~jn/linux/ex2fs95.htm">Read more about this here (external link)</a>.</li>
@@ -1141,21 +1142,21 @@ doesn't offer these.</p>
 <table>
 <tr><th colspan="2">General</th></tr>
 <tr><td>Option</td><td>Effect</td></tr>
-<tr><td>Enable drop input</td><td>This allows you to drop data onto frhed from other programs or other frhed instances.</td></tr>
-<tr><td>Enable drag output</td><td>This allows you to drag data from frhed to other programs or other frhed instances.</td></tr>
-<tr><td>Enable scroll-delaying for drag-drop</td><td>During a drag-drop operation if you move the mouse near the outside of the window frhed can either begin scrolling immediately or delay for an interval and then start scrolling. The delay is determined by Windows and if it doesn't seem to delay scrolling at all you should turn this off.</td></tr>
-<tr><td>Enable scroll-delaying for selecting</td><td>As for drag-drop, but applies to when frhed is selecting.</td></tr>
+<tr><td>Enable drop input</td><td>This allows you to drop data onto Frhed from other programs or other Frhed instances.</td></tr>
+<tr><td>Enable drag output</td><td>This allows you to drag data from Frhed to other programs or other Frhed instances.</td></tr>
+<tr><td>Enable scroll-delaying for drag-drop</td><td>During a drag-drop operation if you move the mouse near the outside of the window Frhed can either begin scrolling immediately or delay for an interval and then start scrolling. The delay is determined by Windows and if it doesn't seem to delay scrolling at all you should turn this off.</td></tr>
+<tr><td>Enable scroll-delaying for selecting</td><td>As for drag-drop, but applies to when Frhed is selecting.</td></tr>
 <tr><td>Always give the opportunity to change between move and copy after a drop.</td><td>Normally you Move data with the left mouse button and Copy by combining with Ctrl. If you use the right or middle mouse button a menu will popup on a drop to give you the opportunity to pick move or copy. This option allows you to always have this menu popup even when you use the left mouse button.</td></tr>
 <tr><th colspan="2">Input</th></tr>
-<tr><td>CF_HDROP opens the files dropped.</td><td>When you drop files from explorer normally frhed will bring up a list of formats to drop. With this enabled frhed will instead open the file dropped or ask you which file you want to open for multiple files. Overrides the next two.</td></tr>
-<tr><td>Drop "BinaryData" if present</td><td>"BinaryData" is used to transfer data between frhed instances. Check this if you want to automatically drop this when it is present. Overrides CF_TEXT.</td></tr>
+<tr><td>CF_HDROP opens the files dropped.</td><td>When you drop files from explorer normally Frhed will bring up a list of formats to drop. With this enabled Frhed will instead open the file dropped or ask you which file you want to open for multiple files. Overrides the next two.</td></tr>
+<tr><td>Drop "BinaryData" if present</td><td>"BinaryData" is used to transfer data between Frhed instances. Check this if you want to automatically drop this when it is present. Overrides CF_TEXT.</td></tr>
 <tr><td>Drop CF_TEXT if present</td><td>CF_TEXT is the standard format used for transferring text. Check this if you want to automatically drop this when it is present.</td></tr>
 <tr><th colspan="2">Output</th></tr>
-<tr><td>Drag "BinaryData"</td><td>"BinaryData" is used to transfer data between frhed instances. Check this if you want to be able to do this.</td></tr>
+<tr><td>Drag "BinaryData"</td><td>"BinaryData" is used to transfer data between Frhed instances. Check this if you want to be able to do this.</td></tr>
 <tr><td>Drag CF_TEXT as:</td><td>CF_TEXT is the standard format used for transferring text. Check this if you want to </td></tr>
 <tr><td>Hexdump/Special syntax (&lt;bh:ff&gt;...)</td><td>Choose Hexdump to output either of
 the formats output by <a href="#export-as-hexdump">File/Export as Hexdump</a>.
-Choose Special syntax to output the bytes as frhed's <a href="#special-syntax">special syntax format</a>.</td></tr>
+Choose Special syntax to output the bytes as Frhed's <a href="#special-syntax">special syntax format</a>.</td></tr>
 <tr><td>display (else digits)</td><td>Check for a hexdump like the display, uncheck for the bytes as hex on a single line.</td></tr>
 <tr><td>Drag "Rich Text Format" (as hexdump)</td><td>This allows you to drag a full colour hexdump, with bookmarks, separators and selection to wordprocessors such as <a href="http://www.openoffice.org">OpenOffice</a>, <a href="http://www.abisource.com">AbiWord</a> and <a href="http://www.microsoft.com">MS Word</a>.</td></tr>
 </table>
@@ -1213,7 +1214,7 @@ The list will be highlighted, if possible.</p>
 <h2><a name="#misc-crypt">The <dfn>Misc/Encode Decode</dfn> command</a></h2>
 <p>This command will open a dialog, where you can encode/decode data using a cryptographic algorithm.
 The cryptographic algorithms are implemented in the FRHEDX.DLL. You can write your own extension DLL 
-to implement alternate algorithms; please check the frhed sourcecode for more details.</p>
+to implement alternate algorithms; please check the Frhed sourcecode for more details.</p>
 
 <!------------------------------------------------------------------------------------------------->
 <h1><a name="#special-syntax">Using the special syntax</a></h1>
@@ -1282,13 +1283,13 @@ unsigned from 0 to 4,294,967,295</p>
 
 <!------------------------------------------------------------------------------------------------->
 <h1><a name="#registry-menu">The Registry Menu</a></h1>
-<p>The registry menu contains items related to methods of launching frhed,
-the registry data, relations with previous versions of frhed and different
-instances of frhed.</p>
+<p>The registry menu contains items related to methods of launching Frhed,
+the registry data, relations with previous versions of Frhed and different
+instances of Frhed.</p>
 
 <p>Of course if you are a power user you will probably prefer to do all of the below yourself.</p>
 
-<p>I (Pabs) am thinking of merging all/most of this into an &quot;frhed manager&quot; - email me if you think it is a good idea.</p>
+<p>I (Pabs) am thinking of merging all/most of this into an &quot;Frhed manager&quot; - email me if you think it is a good idea.</p>
 
 <ul>
 <li><a href="#in-all-context">In all context menu</a></li>
@@ -1296,16 +1297,16 @@ instances of frhed.</p>
 <li><a href="#default-in-unknown">Is default in unknown context</a></li>
 <li><a href="#save-ini">Save ini when required</a></li>
 <li><a href="#change-inst">Change instance</a></li>
-<li><a href="#remove-frhed">Remove frhed</a></li>
+<li><a href="#remove-frhed">Remove Frhed</a></li>
 <li><a href="#upgrade">Upgrade</a></li>
-<li><a href="#shortcuts">Shortcuts to frhed</a></li>
+<li><a href="#shortcuts">Shortcuts to Frhed</a></li>
 </ul>
 
 <!------------------------------------------------------------------------------------------------->
 <h2><a name="#in-all-context">In all context menu</a></h2>
 <p>When checked this item indicates that in the context menu of all files
-there appears an item named &quot;Open in frhed&quot; which will launch
-frhed with the file opened.</p>
+there appears an item named &quot;Open in Frhed&quot; which will launch
+Frhed with the file opened.</p>
 
 <!------------------------------------------------------------------------------------------------->
 <h2><a name="#in-unknown-context">In unknown context menu</a></h2>
@@ -1317,52 +1318,52 @@ of unregistered files and that these files generally have an
 
 <!------------------------------------------------------------------------------------------------->
 <h2><a name="#default-in-unknown">Is default in unknown context</a></h2>
-<p>When this item is checked the &quot;Open in frhed&quot; command for
+<p>When this item is checked the &quot;Open in Frhed&quot; command for
 unregistered files becomes the default action when double clicking or
 pressing enter on these files in explorer.  This may not work properly
 but it should.  The reason a similar option was not provided for the all
 context is that then you would not be able to open your files with the
 proper applications.  It is not recommended but if you wish you may do
 this yourself - just set the default value in the key &quot;HKEY_CLASSES_ROOT\*\shell&quot;
-to &quot;Open in frhed&quot;.  This is disabled if the above option is
+to &quot;Open in Frhed&quot;.  This is disabled if the above option is
 not checked.  Unchecking the above option unchecks and disables this one.</p>
 
 <!------------------------------------------------------------------------------------------------->
 <h2><a name="#save-ini">Save ini when required</a></h2>
-<p>When this item is unchecked frhed will not save data to the registry
+<p>When this item is unchecked Frhed will not save data to the registry
 when it normally does.  It does this on exit and at other times -
 see the source where the function save_ini_data is called.  This option
-was added so that the <dfn>Registry/Remove frhed</dfn> item could work properly.</p>
+was added so that the <dfn>Registry/Remove Frhed</dfn> item could work properly.</p>
 
 <!------------------------------------------------------------------------------------------------->
 <h2><a name="#change-inst">Change instance</a></h2>
 <p>Allows the user to switch from one set of instance options to another
 and to specify the instance number to save to on exit and at other times.
-Note that if 2 or more instances of frhed are open at once the options you
+Note that if 2 or more instances of Frhed are open at once the options you
 save on exit may be overwritten.  If you enter a non-existent instance
 number that instance will be written to the registry with current values
 and current values will stay the same.  This option is always enabled so
 that you may reload instance options at any time.</p>
 
 <!------------------------------------------------------------------------------------------------->
-<h2><a name="#remove-frhed">Remove frhed</a></h2>
-<p>Removes, in this order, registered links to frhed, both context menu
+<h2><a name="#remove-frhed">Remove Frhed</a></h2>
+<p>Removes, in this order, registered links to Frhed, both context menu
 entries, registry entries for the current version and registry entries
 for old versions.  This option requires an initial confirmation and
 confirmations for each removal operation that is required.  If the user
 removes those of the links, context menu entries and or registry entries
 for the current version that are present they are given instructions on
-how to totally remove frhed from their computer and asked to email the
+how to totally remove Frhed from their computer and asked to email the
 author. This option is disabled if none of the above are present. Previous
-versions of frhed are ignored.</p>
+versions of Frhed are ignored.</p>
 
 <!------------------------------------------------------------------------------------------------->
 <h2><a name="#upgrade">Upgrade</a></h2>
-<p>This brings up a dialog box that can be used to upgrade frhed.</p>
+<p>This brings up a dialog box that can be used to upgrade Frhed.</p>
 
 <p>To help you decide which version to upgrade from you can browse the
 versions &amp; instances, using the data list, MRU list, link list and the
-'fake' frhed display window to find the instance you are looking for
+'fake' Frhed display window to find the instance you are looking for
 and show you various properties of the selected instance.</p>
 
 <p>This dialog allows the following:</p>
@@ -1383,13 +1384,13 @@ previous versions.  It is recommended that you use the upgrade dialog or
 the shortcut manager (next section) to (automatically) update links after
 you have manually edited the registry.</p>
 
-<p>Note that versions of frhed before v1.0.154 used ini files and therefore
+<p>Note that versions of Frhed before v1.0.154 used ini files and therefore
 you cannot upgrade from them without manually entering their data into the
 registry or converting the ini files to reg files.</p>
 
 <!------------------------------------------------------------------------------------------------->
-<h2><a name="#shortcuts">Shortcuts to frhed</a></h2>
-<p>This is a link manager specific to frhed.  All links to frhed created
+<h2><a name="#shortcuts">Shortcuts to Frhed</a></h2>
+<p>This is a link manager specific to Frhed.  All links to Frhed created
 by this have the filename &quot;frhed.lnk&quot;. You can add new links
 by specifying paths to put them in, move existing links to new paths, delete
 links one at a time, reload the list of links from the registry, find links
@@ -1410,12 +1411,19 @@ All values in this key that contain strings are loaded into the list of links af
 
 <ul>
 <li>The link manager tries to keep the registry &amp; file system up to date as much as possible and if you delete a link from explorer &amp; load the link manager the all items in the registry will be recreated.</li>
-<li>Duplicates are not allowed and if you delete one of the values from the registry then frhed will not be able to delete the corresponding link from the file system.</li>
+<li>Duplicates are not allowed and if you delete one of the values from the registry then Frhed will not be able to delete the corresponding link from the file system.</li>
 <li>You cannot create links on read-only devices as the browsing mechanism detects volumes where files cannot be created.  These include places that do not have a path in the file system, like places such as Control Panel etc., places on read-only media and places on volumes that are full.</li>
 <li>Renaming a link will allow you to delete it from the registry but not the file system.</li>
-<li>If there are links to removable media you may see DVD/CD/floppy activity when frhed is searching for links.</li>
-<li>Note that to have links to more than one version of frhed (that has the shortcut manager) you will have to create one link, rename it by appending a version no and then create the other link and rename it in the same way.  This will ensure that if you accidentally add a link to frhed to a folder then links to any old versions will not be overwritten. These links will not be safe from the find n' fix function - to make them safe rename the exe by appending a version number and create a link to the exe that is not named frhed.lnk (to prevent it being overwritten).</li>
-<li>Update &amp; find n' fix both search recursively from a user specified directory for links to frhed - update looks for links to the filename of the running version of frhed while find n' fix looks for links to any frhed.exe that is in the search tree.  Duplicate links in the same directory will be removed and all links found will be renamed to frhed.lnk.</li>
+<li>If there are links to removable media you may see DVD/CD/floppy activity when Frhed is searching for links.</li>
+<li>Note that to have links to more than one version of Frhed (that has the
+  shortcut manager) you will have to create one link, rename it by appending a
+  version no and then create the other link and rename it in the same way. This
+  will ensure that if you accidentally add a link to Frhed to a folder then
+  links to any old versions will not be overwritten. These links will not be
+  safe from the find n' fix function - to make them safe rename the exe by
+  appending a version number and create a link to the exe that is not named
+  Frhed.lnk (to prevent it being overwritten).</li>
+<li>Update &amp; find n' fix both search recursively from a user specified directory for links to Frhed - update looks for links to the filename of the running version of Frhed while find n' fix looks for links to any frhed.exe that is in the search tree.  Duplicate links in the same directory will be removed and all links found will be renamed to frhed.lnk.</li>
 </ul>
 
 <!------------------------------------------------------------------------------------------------->
@@ -1433,7 +1441,7 @@ and the h means hexadecimal notation (otherwise use "d" for decimal notation).
 This notation can be combined with text after it or before it, or several encoded values after
 another etc.</p>
 <hr>
-<p>Q: frhed opens all files from Explorer supenly. How do I remove this behavior?</p>
+<p>Q: Frhed opens all files from Explorer supenly. How do I remove this behavior?</p>
 <p>A: Uncheck the following: <dfn>Registry/In all context menu</dfn>, <dfn>Registry/Is default in unknown context</dfn>
 &amp; <dfn>Registry/In unknown context menu</dfn>. Or edit the registry - Delete HKCR\*\shell\Open in frhed\,
 HKCR\Unknown\shell\Open in frhed\ &amp; the "(Default)" values under their parent keys.</p>
@@ -1443,15 +1451,15 @@ HKCR\Unknown\shell\Open in frhed\ &amp; the "(Default)" values under their paren
 position, interpreted as either signed or unsigned, which is indicated in front of the "B:".</p>
 <hr>
 <p>Q: I know that two files I am comparing with the <dfn>Edit/Compare from current offset</dfn> command
-are equal, why does frhed show me lots of differences?</p>
+are equal, why does Frhed show me lots of differences?</p>
 <p>A: As the command's name indicates, the file you choose from the following dialogue is compared
 to the currently loaded file beginning from the CURRENT CURSOR POSITION. So if you want to know
 if the two files match completely beginning to end, you must put the blinking cursor in the
 very first position of the file, that is, at index zero. Just press Ctrl+Pos1 on the keyboard to
 go there directly.</p>
 <hr>
-<p>Q: My Wheel Mouse does not work correctly with frhed. Are wheel mice supported?</p>
-<p>A: I also use a Logitech wheel mouse, which works fine with frhed. It is possible that the standard
+<p>Q: My Wheel Mouse does not work correctly with Frhed. Are wheel mice supported?</p>
+<p>A: I also use a Logitech wheel mouse, which works fine with Frhed. It is possible that the standard
 drivers installed by Windows for wheel mice do things slightly differently than the "real" Logitech
 drivers. I suggest you install the original drivers supplied by your mouse manufacturer. If
 you have any success with this, please tell me about it, I don't know if this really works.</p>
@@ -1466,10 +1474,10 @@ work with IE4 and above.</p>
 
 <ul>
 <li><code>before.css</code> is located in the same directory as this help file (frhed.chm).<br>
-Use this stylesheet if you want to override browser defaults, but keep frhed's default styles.</li>
+Use this stylesheet if you want to override browser defaults, but keep Frhed's default styles.</li>
 <li><code>frhed.css</code> is located inside this help file and contains the default styles for this help file.</li>
 <li><code>after.css</code> is located in the same directory as this help file.<br>
-Use this stylesheet if you want to override both the browser defaults and frhed's defaults.</li>
+Use this stylesheet if you want to override both the browser defaults and Frhed's defaults.</li>
 </ul>
 <p>NOTE: <code>before.css</code> and <code>after.css</code> are accessed using JavaScript, so you must
 turn it on before you can use these style sheets. The alternative to using JavaScript would have been
