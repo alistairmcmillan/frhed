@@ -68,6 +68,7 @@ Section "ProgramFiles" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
   File "..\Build\Release\frhed.exe"
+  File "..\Build\Release\heksedit.dll"
   CreateDirectory "$SMPROGRAMS\Frhed"
   CreateShortCut "$SMPROGRAMS\Frhed\Frhed.lnk" "$INSTDIR\frhed.exe"
   CreateShortCut "$DESKTOP\Frhed.lnk" "$INSTDIR\frhed.exe"
@@ -119,6 +120,7 @@ Section Uninstall
   Delete "$INSTDIR\frhed.chm"
   Delete "$INSTDIR\RAWIO32.dll"
   Delete "$INSTDIR\frhed.exe"
+  Delete "$INSTDIR\heksedit.dll"
 
   Delete "$SMPROGRAMS\Frhed\Uninstall.lnk"
   Delete "$SMPROGRAMS\Frhed\Website.lnk"
