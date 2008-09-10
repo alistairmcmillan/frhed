@@ -11,7 +11,7 @@
 #define IDD_GOTODIALOG                  106
 #define IDD_DIALOG2                     107
 #define IDD_FINDDIALOG                  108
-#define IDI_ICON1                       109
+#define IDI_FRHED                       109
 #define IDD_DIALOG3                     110
 #define IDD_ABOUTDIALOG                 111
 #define IDD_DIALOG4                     112

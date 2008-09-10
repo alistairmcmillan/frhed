@@ -92,7 +92,7 @@ BOOL UpgradeDlg::OnInitDialog(HWND hw)
 	col.cx = 185;
 	col.pszText = "MRU Files";
 	ListView_InsertColumn(list,0,&col);
-	HICON hIcon = LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(IDI_ICON1));
+	HICON hIcon = LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(IDI_FRHED));
 	SendDlgItemMessage(hw, IDC_DISPLAY, WM_SETICON, 1, (LPARAM)hIcon);
 	return TRUE;
 }

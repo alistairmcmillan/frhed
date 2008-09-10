@@ -84,7 +84,7 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *szCmdLine, int)
 	//Register the main window class
 	wndclass.style = CS_HREDRAW | CS_VREDRAW;
 	wndclass.lpfnWndProc = MainWndProc;
-	wndclass.hIcon = LoadIcon(hIconInstance, MAKEINTRESOURCE(IDI_ICON1));
+	wndclass.hIcon = LoadIcon(hIconInstance, MAKEINTRESOURCE(IDI_FRHED));
 	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wndclass.hInstance = hMainInstance;
 	wndclass.lpszMenuName = MAKEINTRESOURCE(IDR_MAINMENU);
