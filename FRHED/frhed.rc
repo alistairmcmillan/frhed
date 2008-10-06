@@ -1,5 +1,7 @@
-//Microsoft Developer Studio generated resource script.
+// Frhed resource script (for English only).
 //
+// $Id$
+
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -20,6 +22,12 @@
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
 #endif //_WIN32
+
+// Include the manifest file for VC6 and VS2003.Net
+#if _MSC_VER < 1400
+  CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "res\\Frhed.exe.manifest"
+#endif // MSC_VER
+
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
