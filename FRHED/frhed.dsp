@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="frhed" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Frhed" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Application" 0x0101
 
-CFG=frhed - Win32 Debug
+CFG=Frhed - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=frhed - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "frhed.mak" CFG="frhed - Win32 Debug"
+!MESSAGE NMAKE /f "frhed.mak" CFG="Frhed - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "frhed - Win32 Release" (based on "Win32 (x86) Application")
-!MESSAGE "frhed - Win32 Debug" (based on "Win32 (x86) Application")
+!MESSAGE "Frhed - Win32 Release" (based on "Win32 (x86) Application")
+!MESSAGE "Frhed - Win32 Debug" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "frhed - Win32 Release"
+!IF  "$(CFG)" == "Frhed - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -39,7 +39,7 @@ RSC=rc.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "..\Build\Release"
-# PROP Intermediate_Dir "..\BuildTmp\frhed\Release"
+# PROP Intermediate_Dir "..\BuildTmp\Frhed\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
@@ -56,7 +56,7 @@ LINK32=link.exe
 # ADD LINK32 version.lib comctl32.lib wininet.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib shlwapi.lib /nologo /subsystem:windows /machine:I386
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "frhed - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Frhed - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -66,7 +66,7 @@ LINK32=link.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "..\Build\Debug"
-# PROP Intermediate_Dir "..\BuildTmp\frhed\Debug"
+# PROP Intermediate_Dir "..\BuildTmp\Frhed\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
@@ -87,8 +87,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "frhed - Win32 Release"
-# Name "frhed - Win32 Debug"
+# Name "Frhed - Win32 Release"
+# Name "Frhed - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"

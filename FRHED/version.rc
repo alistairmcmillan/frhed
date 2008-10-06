@@ -27,14 +27,14 @@ BEGIN
         BEGIN
             VALUE "Comments", "Homepage: http://www.kibria.de, http://zip.to/pabs3\0"
             VALUE "CompanyName", "(c) Raihan Kibria 2000\0"
-            VALUE "FileDescription", "frhed - free hex editor " CURRENT_VERSION "." SUB_RELEASE_NO "." BUILD_NO
+            VALUE "FileDescription", "Frhed - Free hex editor " CURRENT_VERSION "." SUB_RELEASE_NO "." BUILD_NO
             VALUE "FileVersion", CURRENT_VERSION "." SUB_RELEASE_NO "." BUILD_NO
             VALUE "InternalName", "frhed\0"
             VALUE "LegalCopyright", "GNU General Public License v2.0\0"
             VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "frhed.exe\0"
+            VALUE "OriginalFilename", "Frhed.exe\0"
             VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "frhed\0"
+            VALUE "ProductName", "Frhed\0"
             VALUE "ProductVersion", CURRENT_VERSION "." SUB_RELEASE_NO "." BUILD_NO
             VALUE "SpecialBuild", "\0"
         END
