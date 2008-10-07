@@ -2,15 +2,15 @@
 <META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
 <link rel="stylesheet" type="text/css" href="frhed.css">
 <title>The Free Hex Editor Help File</title>
-</head><body><h1><img src="frhed.png" style="border: 0px;">The Free Hex Editor Help File</h1>
+</head><body><h1><img src="frhed.png" alt="" style="border: 0px;">The Free Hex Editor Help File</h1>
 
-<img src="logo.bmp" align="right" usemap="#map" width="256" height="256">
+<img src="logo.bmp" align="right" usemap="#map" width="256" height="256" alt="Desktop">
 <map name="map" id="map">
-<area shape="rect" coords="110,177,161,198" href="mailto:raihan@kibria.de">
-<area shape="rect" coords="83,40,142,100"   href="http://frhed.sourceforge.net/">
+<area shape="rect" coords="110,177,161,198" href="mailto:raihan@kibria.de" alt="Signature">
+<area shape="rect" coords="83,40,142,100"   href="http://frhed.sourceforge.net/" alt="Magnifying Glass">
 </map>
 
-<p style="vertical-align: middle;"><img src="frhed-big.png" style="border: 0px;">
+<p style="vertical-align: middle;"><img src="frhed-big.png" alt="Frhed icon" style="border: 0px;">
 This help file contains information for the <u>Fr</u>ee <u>H</u>ex <u>Ed</u>itor v1.1.0</p>
 
 <hr>
@@ -71,7 +71,7 @@ Some questions other people have asked.</li>
 Additional features by <a href="mailto:pabs3@zip.to">Pabs</a>,
 <a href="mailto:not@p-nand-q.com">Gerson Kurz</a>, Mike Funduc and nas. All Rights Reserved.</font></p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#features">Features</a></h2>
 <ul>
 <li>Native 32 bit Windows application: long filenames supported, editable file size limited only by available system memory.</li>
@@ -96,7 +96,7 @@ Additional features by <a href="mailto:pabs3@zip.to">Pabs</a>,
 <li>OLE drag-drop</li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#disclaimer">Disclaimer</a></h2>
 
 <p>Frhed is supplied on an as-is basis. The author offers no warranty of its fitness
@@ -106,7 +106,7 @@ or liability to address any problems that may be encountered in using it; howeve
 is continually being developed and improved, so he is always interested to hear about
 any bugs or deficiencies.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#license">License</a></h2>
 <p>Frhed is licensed by the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License</a>. 
 </p>
@@ -116,7 +116,7 @@ you modify the sources and distribute modified version of Frhed you must publish
 the modified sources.
 </p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#contrib">Acknowledgements</a></h2>
 
 <p>Thanks to:</p>
@@ -133,7 +133,7 @@ the modified sources.
 <li>Harry reviewed frhed.</li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#contact">Frhed on the Web</a></h2>
 
 <p>If you have comments or suggestions please submit them to
@@ -151,7 +151,7 @@ on Frhed's homepage:
 <li><a href="http://www.funduc.com/srfrhed.htm">Funduc Software's Frhed mod</a>.</li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#installation">Installation</a></h1>
 <p>Frhed uses the <a href="http://www.nullsoft.com/free/nsis/">Nullsoft
 Scriptable Install System</a>. To install Frhed, just run the installer
@@ -159,14 +159,14 @@ executable.</p>
 
 <p>Frhed supports normal Windows uninstall behaviour as found in the Control Panel.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#binary-files">Binary Files</a></h1>
 <ul>
 <li><a href="#what-are-binary-files">What are binary files?</a></li>
 <li><a href="#what-are-bits-n-bytes">What are bits and bytes?</a></li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#what-are-binary-files">What are binary files?</a></h2>
 <p>All the files on your computer, programs as well as documents, are really large "lists" of
 numbers. Imagine a numbered list like this one:</p>
@@ -183,7 +183,7 @@ the lower left corner of it's window. Large files contain many numbers, small fi
 many. The numbers in the list can have a value between 0 and 255, for a special reason:
 Each number is a "byte".</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#what-are-bits-n-bytes">What are bits and bytes?</a></h2>
 <p>"Bit" is an abbreviation for "BInary digiT". It can have a value of either 0 or 1. One bit
 alone is not very useful, because already the number 2 can not be described with it. So you
@@ -238,7 +238,7 @@ several character sets in use (for example Windows uses either the ANSI or the O
 In one character set the number 97 might mean the letter "a", but in another it could be used for
 the apostrophe.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#file-operations">File operations</a></h1>
 <p>The following File Operations are supported:</p>
 
@@ -254,14 +254,14 @@ the apostrophe.</p>
 <li><a href="#import-hexdump">Importing a hexdump file</a></li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#file-new">Creating new files</a></h2>
 <p>If Frhed is started without parameters or with a nonexistant filename as parameter,
 then it starts with a new, empty file that is untitled. If a file is already loaded, then
 choose <dfn>File/New</dfn> from the menu. If a file is already loaded and it has been changed, then
 you will be prompted if you want to save the changes.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#file-open">Opening files</a></h2>
 <p>If Frhed is started with command line parameters, then the whole string following the
 program name is considered to be the name of the file to open.</p>
@@ -289,7 +289,7 @@ window to open it. If several files were dragged, then you must choose which one
 <p>If the file access permissions don't allow writing or open-read-only mode is on then
 read-only mode will be engaged.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#file-open-partially">Opening files partially</a></h2>
 <p>If you want to edit a very large file and it's not necessary to load all of it into memory,
 choose the <dfn>File/Open partially</dfn> command. First you will have to choose the file you want to open in a
@@ -313,7 +313,7 @@ will also be resized when you save the file.</p>
 <p>If the file access permissions don't allow writing or open-read-only mode is on then read-only
 mode will be engaged.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#saving-files">Saving files</a></h2>
 <p>To save the current file choose <dfn>File/Save</dfn> from the menu.
 If the file has never been saved before, then <dfn>File/Save as</dfn>
@@ -321,18 +321,18 @@ will be automatically invoked.</p>
 
 <p><dfn>File/Save as</dfn> saves the file with a different name.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#save-selection-as">Saving selections</a></h2>
 <p>To save the current selection choose <dfn>File/Save selection as</dfn> from the menu.
 If the is no selection then all of the file will be saved.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#revert-file">Reverting to the saved file</a></h2>
 <p>When you have made changes to a file, want to change it back and cannot remember the exact
 bytes in the file then the <dfn>File/Revert</dfn> command will do it for you. If the file has never been saved
 then this command will revert to an untitled empty file.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#export-as-hexdump">Exporting the file as a hexdump text</a></h2>
 
 <p>The <dfn>File/Export as hexdump</dfn> command is used if you need the hexdump of the file in
@@ -381,7 +381,7 @@ be true depending on whether or not the font mapper for your system uses one fon
 Unfortunately Word ignores the other font hints that can be determined; character set, variable/monospaced and font family.</li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#delete-file">Deleting the current file</a></h2>
 
 <p><u><font color="red" size="+3"><b>USE WITH CAUTION</b></font></u></p>
@@ -392,7 +392,7 @@ This requires a double confirmation because it could be disastrous.</p>
 <p>When ever you edit files using any hex editor you should <strong>always</strong>
 have a backup anyway.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#import-hexdump">Importing a hexdump file</a></h2>
 
 <p>The <dfn>File/Import from hexdump</dfn> command imports hexdump data from the clipboard or from a file.</p>
@@ -448,7 +448,7 @@ Yes to ignore any further mismatches, no to ignore that one or cancel to cancel 
 Import operation.  Ignoring the mismatches will have no effect.</li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#main-window">The main window</a></h1>
 <p>The window's title shows the name of the currently loaded file in square brackets,
 with an asterisk on it's right side if the file has been changed. If a file is loaded,
@@ -578,7 +578,7 @@ drop me (<a href="mailto:pabs3@zip.to">Pabs</a>) a line.</p>
 <p>The window also has a vertical and a horizontal scrollbar, which can be used to
 scroll the view. They don't change the caret position.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#moving-in-the-file">Moving in the file</a></h1>
 
 <p>You can move the caret with the arrow keys. Press TAB to toggle the editing mode between byte and
@@ -621,7 +621,7 @@ button you can also set the caret position.</p>
 <p>You can also move in the file by choosing one of the bookmarks in the "Bookmarks"
 menu section. The caret will be set to that offset immediately.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#editing-the-file">Editing the file</a></h1>
 
 <p>There are several ways to edit the data in the file. But you will only be able
@@ -648,7 +648,7 @@ and the menu item will be checked.</p>
 <li><a href="#edit-move-or-copy">The <dfn>Edit/Move/Copy bytes</dfn> command</a></li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#using-the-mouse">Using the mouse</a></h2>
 
 <p>Frhed implements OLE drag-drop to allow you to move data in a file,
@@ -684,7 +684,7 @@ operation and their effects.</p>
 <p>Note that the Overwrite mode of the file is ignored when dropping.
 To overwrite existing data with that being dropped use the shift key.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#using-the-keyboard">Using the keyboard</a></h2>
 
 <p>For overwriting data the overwriting entering mode must be enabled, that means,
@@ -701,7 +701,7 @@ insert a byte at the current position.</p>
 
 <p>If there is a selection then you can replace it with a single character.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-cut">The <dfn>Edit/Cut</dfn> command</a></h2>
 <p>This command is used to remove bytes from the file. These bytes can either be
 copied to the clipboard (as text with special syntax for non-character bytes)
@@ -715,12 +715,12 @@ bottom of the dialog box.</p>
 <p>If the command is chosen without a selection, then the values in the dialog
 will be set so that the byte at the current offset will be cut.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-copy">The <dfn>Edit/Copy</dfn> command</a></h2>
 <p>This command is used to copy bytes from the file to the clipboard. It is similar
 to the <a href="#edit-cut">Edit/Cut</a> command, only the data will only be copied, not removed.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-paste">The <dfn>Edit/Paste</dfn> command</a></h2>
 <p>This either inserts or overwrites data from the clipboard starting at the current
 offset. Choose a radio button for the writing mode wished for. You can also choose
@@ -750,7 +750,7 @@ of the data but only the allocated size.</p>
 
 <p>The list will be automatically updated when the contents of the clipboard change.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-paste-dialog">The <dfn>Edit/Paste with dialogue</dfn> command</a></h2>
 <p>This either inserts or overwrites data starting at the current offset. Choose a radio
 button for the writing mode wished for. The big edit-box is initialised with the current
@@ -765,22 +765,22 @@ considered to contain special syntax, so <code>&lt;ld:150&gt;</code> will not be
 as text. The binary mode (Little or Big-endian) and character set (ANSI or OEM)
 is used as set in the options.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-append">The <dfn>Edit/Append</dfn> command</a></h2>
 <p>This command appends a number of zero-bytes to the file.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-delete">The <dfn>Edit/Delete</dfn> command</a></h2>
 <p>This command calls the same dialog as the <a href="#edit-cut">Edit/Cut</a> command, only with the "cut to clipboard"
 checkbox already disabled.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-select-block">The <dfn>Edit/Select</dfn> block command</a></h2>
 
 <p>With this you can explicitely choose what block of data is to be selected, by specifying
 the start and end offsets of the block.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-enter-decimal">The <dfn>Edit/Enter decimal value</dfn> command</a></h2>
 <p>With this you can overwrite data with an integer value of either byte, word or longword size.
 The start offset is initialized with the current offset, in hexadecimal notation. Note that if
@@ -788,13 +788,13 @@ you change the start offset, use hexadecimal notation and prefix with "x". You c
 the number of times to overwrite or insert and the size of the value. The values are initialised
 with the current offset, the value of the current offset, byte size and 1 time.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-manipulate-bits">The <dfn>Edit/Manipulate bits</dfn> command</a></h2>
 <P>If you need to manipulate individual bits in a byte, then go to this byte with the caret and
 choose the command. Check the appropriate checkboxes for the bits and select OK. The boxes are
 initialised with the current value.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-fill-selection">The <dfn>Edit/Fill selection with</dfn> command</a></h2>
 <p>First select some of the bytes in a file then open the Fill selection with dialog from the
 edit menu or using Ctrl + Shift + F. If there is no selection it is assumed that the whole file
@@ -869,12 +869,12 @@ cannot be present in files).</p>
   </tr>
 </table>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#insert-file">The <dfn>File/Insert file</dfn> command</a></h2>
 <p>This inserts the requested file between the current byte and previous one,
 replacing the selection if there is any.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-reverse-bytes">The <dfn>Edit/Reverse bytes</dfn> command</a></h2>
 <p>This will reverse the order of some bytes around in the file.</p>
 
@@ -884,7 +884,7 @@ replacing the selection if there is any.</p>
 
 <p>The selection and caret will be moved intelligently.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-move-or-copy">The <dfn>Edit/Move/Copy bytes</dfn> command</a></h2>
 <p>This will move or copy some bytes around in the file.</p>
 
@@ -905,7 +905,7 @@ forward or backward* to move or copy the block.</p>
 
 <p>* Start with a minus (-) before the 'x' if any.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#other-edit-functions">Misc. Edit functions</a></h1>
 <p>The following other commands are supported in the Edit menu:</p>
 
@@ -917,7 +917,7 @@ forward or backward* to move or copy the block.</p>
 <li><a href="#edit-in-texteditor">The <dfn>Edit/Open in text editor</dfn> command</a></li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-compare">The <dfn>Edit/Compare from current offset</dfn> command</a></h2>
 <p>If you need to compare two files then load one into Frhed and choose this
 command. You will first be prompted to choose the file to compare with.
@@ -938,15 +938,15 @@ of difference then it will be selected and displayed in the main window.</p>
 
 <p>You can also copy the list of differences to the clipboard.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-get-float">The <dfn>Edit/Get floating point value</dfn> command</a></h2>
 <p>This will show you the floating point values starting at the current caret position.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-file-properties">The <dfn>Edit/File properties</dfn> command</a></h2>
 <p>Choose this to get the filename, path and size of the current file, and also the total number of lines of the hexdump.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-apply-template">The <dfn>Edit/Apply template</dfn> command</a></h2>
 <p>Use this command to apply a binary template on the file.
 A binary template consists of a text file with the extension
@@ -987,13 +987,13 @@ DWORD filelength = 8 (signed) = 8 (unsigned) = 0x8
 <li>a double value: "double"</li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#edit-in-texteditor">The <dfn>Edit/Open in text editor</dfn> command</a></h2>
 <p>This function attempts to call an external text editing program with the current file as argument.
 You have the option of saving the file first. The default editor is the Windows Notepad. You can
 choose the editor in the <a href="#options-settings">Options/View Settings</a> dialog.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#disk-menu">The Disk menu</a></h1>
 <ul>
 <li><a href="#disk-open-drive">The <dfn>Disk/Open Drive</dfn> command</a></li>
@@ -1005,7 +1005,7 @@ choose the editor in the <a href="#options-settings">Options/View Settings</a> d
 <li><a href="#disk-goto-sector">The <dfn>Disk/Goto Sector #</dfn> command</a></li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#disk-open-drive">The <dfn>Disk/Open Drive</dfn> command</a></h2>
 <p>Use this command to open a physical harddrive or logical partition.</p>
 
@@ -1019,31 +1019,31 @@ choose the editor in the <a href="#options-settings">Options/View Settings</a> d
 <a href="http://uranus.it.swin.edu.au/~jn/linux/ex2fs95.htm">Read more about this here (external link)</a>.</li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#disk-close-drive">The <dfn>Disk/Close Drive</dfn> command</a></h2>
 <p>Use this command to close the previously opened drive again.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#disk-goto-first">The <dfn>Disk/Goto First Sector</dfn> command</a></h2>
 <p>Use this command to navigate to the first sector of the harddisk.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#disk-goto-next">The <dfn>Disk/Goto Next Sector</dfn> command</a></h2>
 <p>Use this command to navigate to the next sector of the harddisk.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#disk-goto-prev">The <dfn>Disk/Goto Previous Sector</dfn> command</a></h2>
 <p>Use this command to navigate to the previous sector of the harddisk.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#disk-goto-last">The <dfn>Disk/Goto Last Sector</dfn> command</a></h2>
 <p>Use this command to navigate to the last sector of the harddisk.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#disk-goto-sector">The <dfn>Disk/Goto Sector #</dfn> command</a></h2>
 <p>This command will show a dialog where you can specify a sector number to navigate to.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#options-menu">The Options menu</a></h1>
 <ul>
 <li><a href="#options-settings">The <dfn>Options/View settings</dfn> command</a></li>
@@ -1058,7 +1058,7 @@ choose the editor in the <a href="#options-settings">Options/View Settings</a> d
 <li><a href="#options-make-backups">The <dfn>Options/Make backups</dfn> command</a></li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#options-settings">The <dfn>Options/View settings</dfn> command</a></h2>
 <p>Here you can choose:</p>
 
@@ -1077,26 +1077,26 @@ maximum offset (enabled) or right-padded with spaces (disabled)</li>
 <li>the name of the Internet browser that will be called in the About dialog.</li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#options-color-text">The <dfn>Options/Color settings/Text color</dfn> command</a></h2>
 <p>Choose what color the text in the main window should have.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#options-color-background">The <dfn>Options/Color settings/Background color</dfn> command</a></h2>
 <p>Choose what color the background in the main window should have.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#options-color-separator">The <dfn>Options/Color settings/Separator color</dfn> command</a></h2>
 <p>Choose what color the separators in the main window should have.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#options-character-set">The <dfn>Options/Character set</dfn> command</a></h2>
 <p>Here you can choose the character set for displaying and writing characters, either ANSI (the Windows
 character set) or OEM (the DOS character set). The font size in points can also be chosen.</p>
 
 <p>See <a href="#character-sets">Character tables</a> for examples at the default 10 pt font sise.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#options-color-reset">The <dfn>Options/Color settings/Reset colors to standard</dfn> command</a></h2>
 <p>Reset colors to their default values:</p>
 <table style="text-align: center;">
@@ -1105,7 +1105,7 @@ character set) or OEM (the DOS character set). The font size in points can also 
 <tr><td style="background-color: red;">Bookmark - Red</td><td style="background-color: #c0c0c0;">Separator - Grey (192)</td></tr>
 </table>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#options-binary-mode">The <dfn>Options/Binary mode</dfn> command</a></h2>
 
 <p>What kind of byte order to use: Either Little-endian, as used in Intel-computers or Big-endian,
@@ -1125,13 +1125,13 @@ then by Intel convention the longword is written in this way, with the growing o
 <p>This means that a file written by a Big-endian machine will contain wrong longword and word values
 if read by a Little-endian machine without conversion.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#options-color-adopt">The <dfn>Options/Color settings/Adopt OS colour scheme</dfn> command</a></h2>
 <p>Adopt the colour scheme of the operating system if it offers one.
 The separator colour and the bookmark colour are not changed since Win32
 doesn't offer these.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#options-ole-dragndrop">The <dfn>Options/OLE Drag-drop</dfn> command</a></h2>
 
 <table>
@@ -1156,12 +1156,12 @@ Choose Special syntax to output the bytes as Frhed's <a href="#special-syntax">s
 <tr><td>Drag "Rich Text Format" (as hexdump)</td><td>This allows you to drag a full colour hexdump, with bookmarks, separators and selection to wordprocessors such as <a href="http://www.openoffice.org">OpenOffice</a>, <a href="http://www.abisource.com">AbiWord</a> and <a href="http://www.microsoft.com">MS Word</a>.</td></tr>
 </table>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#options-make-backups">The <dfn>Options/Make backups</dfn> option</a></h2>
 <p>When saving first the old file is renamed by appending ".bak" to the name, deleting any previous backup,
 and then the file is saved as per usual.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#bookmark-menu">The Bookmarks menu</a></h1>
 <ul>
 <li><a href="#bookmark-add">The <dfn>Bookmarks/Add bookmark</dfn> command</a></li>
@@ -1169,21 +1169,21 @@ and then the file is saved as per usual.</p>
 <li><a href="#bookmark-clear-all">The <dfn>Bookmarks/Clear all bookmarks</dfn> command</a></li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#bookmark-add">The <dfn>Bookmarks/Add bookmark</dfn> command</a></h2>
 <p>Choose this to add a bookmark to the bookmark list. The offset of the bookmark will be set to the
 current position initially. You can also add a description for the bookmark that will also appear in the menu.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#bookmark-remove">The <dfn>Bookmarks/Remove bookmark</dfn> command</a></h2>
 <p>Choose this to remove a bookmark from the bookmark list. You will be presented with a list of the
 bookmarks and have to choose the one to remove.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#bookmark-clear-all">The <dfn>Bookmarks/Clear all bookmarks</dfn> command</a></h2>
 <p>Deletes all bookmarks.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#misc-menu">The Misc menu</a></h1>
 <ul>
 <li><a href="#misc-exports">The <dfn>Misc/Goto DLL Exports</dfn> command</a></li>
@@ -1191,27 +1191,27 @@ bookmarks and have to choose the one to remove.</p>
 <li><a href="#misc-crypt">The <dfn>Misc/Encode Decode</dfn> command</a></li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#misc-exports">The <dfn>Misc/Goto DLL Exports</dfn> command</a></h2>
 <p>When you have opened a DLL, you can use this function to navigate to the list of DLL exports. 
 The list will be highlighted, if possible.</p>
 
 <p><b>Note:</b> It is likely that only part of the DLL exports will be highlighted, due to the way the PE file format is specified.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#misc-imports">The <dfn>Misc/Goto DLL Imports</dfn> command</a></h2>
 <p>When you have opened a DLL, you can use this function to navigate to the list of DLL imports. 
 The list will be highlighted, if possible.</p>
 
 <p><b>Note:</b> It is likely that only part of the DLL imports will be highlighted, due to the way the PE file format is specified.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#misc-crypt">The <dfn>Misc/Encode Decode</dfn> command</a></h2>
 <p>This command will open a dialog, where you can encode/decode data using a cryptographic algorithm.
 The cryptographic algorithms are implemented in the FRHEDX.DLL. You can write your own extension DLL 
 to implement alternate algorithms; please check the Frhed sourcecode for more details.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#special-syntax">Using the special syntax</a></h1>
 <p>Byte, word, longword and floating point data can be encoded as follows:</p>
 
@@ -1269,14 +1269,14 @@ unsigned from 0 to 4,294,967,295</p>
 <p><b>Double (8 bytes)</b>:</p>
 <p>range 1.7E +/- 308 (15 digits)</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#character-sets">Character Tables</a></h1>
 <p><b>The ANSI character set</b>:</p>
-<img src="ansimap.bmp">
+<img src="ansimap.bmp" alt="ANSI character set">
 <p><b>The OEM character set</b>:</p>
-<img src="oemmap.bmp">
+<img src="oemmap.bmp" alt="OEM character set">
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#registry-menu">The Registry Menu</a></h1>
 <p>The registry menu contains items related to methods of launching Frhed,
 the registry data, relations with previous versions of Frhed and different
@@ -1297,13 +1297,13 @@ instances of Frhed.</p>
 <li><a href="#shortcuts">Shortcuts to Frhed</a></li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#in-all-context">In all context menu</a></h2>
 <p>When checked this item indicates that in the context menu of all files
 there appears an item named &quot;Open in Frhed&quot; which will launch
 Frhed with the file opened.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#in-unknown-context">In unknown context menu</a></h2>
 <p>The same is true of this item except that the item appears only in the
 context menu of files that have an extension that has not yet been registered
@@ -1311,7 +1311,7 @@ with Windows.  NOTE that if both are checked both will appear on the menu
 of unregistered files and that these files generally have an
 &quot;Open with&hellip;&quot; command.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#default-in-unknown">Is default in unknown context</a></h2>
 <p>When this item is checked the &quot;Open in Frhed&quot; command for
 unregistered files becomes the default action when double clicking or
@@ -1323,14 +1323,14 @@ this yourself - just set the default value in the key &quot;HKEY_CLASSES_ROOT\*\
 to &quot;Open in Frhed&quot;.  This is disabled if the above option is
 not checked.  Unchecking the above option unchecks and disables this one.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#save-ini">Save ini when required</a></h2>
 <p>When this item is unchecked Frhed will not save data to the registry
 when it normally does.  It does this on exit and at other times -
 see the source where the function save_ini_data is called.  This option
 was added so that the <dfn>Registry/Remove Frhed</dfn> item could work properly.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#change-inst">Change instance</a></h2>
 <p>Allows the user to switch from one set of instance options to another
 and to specify the instance number to save to on exit and at other times.
@@ -1340,7 +1340,7 @@ number that instance will be written to the registry with current values
 and current values will stay the same.  This option is always enabled so
 that you may reload instance options at any time.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#remove-frhed">Remove Frhed</a></h2>
 <p>Removes, in this order, registered links to Frhed, both context menu
 entries, registry entries for the current version and registry entries
@@ -1352,7 +1352,7 @@ how to totally remove Frhed from their computer and asked to email the
 author. This option is disabled if none of the above are present. Previous
 versions of Frhed are ignored.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#upgrade">Upgrade</a></h2>
 <p>This brings up a dialog box that can be used to upgrade Frhed.</p>
 
@@ -1383,7 +1383,7 @@ you have manually edited the registry.</p>
 you cannot upgrade from them without manually entering their data into the
 registry or converting the ini files to reg files.</p>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h2><a name="#shortcuts">Shortcuts to Frhed</a></h2>
 <p>This is a link manager specific to Frhed.  All links to Frhed created
 by this have the filename &quot;frhed.lnk&quot;. You can add new links
@@ -1421,7 +1421,7 @@ All values in this key that contain strings are loaded into the list of links af
 <li>Update &amp; find n' fix both search recursively from a user specified directory for links to Frhed - update looks for links to the filename of the running version of Frhed while find n' fix looks for links to any frhed.exe that is in the search tree.  Duplicate links in the same directory will be removed and all links found will be renamed to frhed.lnk.</li>
 </ul>
 
-<!------------------------------------------------------------------------------------------------->
+<!-- --------------------------------------------------------------------------------------------- -->
 <h1><a name="#faq">Frequently Asked Questions</a></h1>
 <hr>
 <p>Q: How do I search for hex values?</p>
@@ -1431,7 +1431,7 @@ has to be written as (you must write the angled brackets too!)
 
 <pre>&lt;bh:f7&gt;</pre>
 
-where the b means byte-sized value (otherwise use a "w" for word-size or "l" for longword-size)
+<p>where the b means byte-sized value (otherwise use a "w" for word-size or "l" for longword-size)
 and the h means hexadecimal notation (otherwise use "d" for decimal notation).
 This notation can be combined with text after it or before it, or several encoded values after
 another etc.</p>
