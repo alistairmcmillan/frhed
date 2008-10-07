@@ -1,15 +1,15 @@
+@echo off
+
 rem A batch file for building Frhed help file
 rem This patch file requires that Help Compiler (hhc) and python are in PATH
 rem $Id$
-
-@echo off
 
 set build_tmp=..\BuildTmp\Help
 set build_dir=..\Build\Help
 set help_file=frhed.chm
 
-mkdir %build_tmp%
-mkdir %build_dir%
+if not exist "%build_tmp%" mkdir "%build_tmp%"
+if not exist "%build_dir%" mkdir "%build_dir%"
 
 del /s /q %build_dir%\%help_file%
 
