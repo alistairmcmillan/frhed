@@ -18,7 +18,6 @@ python pydocgen.py frhed.cfg
 copy *.bmp %build_tmp%
 copy *.png %build_tmp%
 copy *.css %build_tmp%
-copy *.js %build_tmp%
 
 cd %build_tmp%
 

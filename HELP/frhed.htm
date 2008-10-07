@@ -1,9 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Final//EN"><html><head>
 <META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
-<script language="JavaScript" src="externlink.js"></script>
-<script language="JavaScript">document.createStyleSheet(externlink("before.css"));</script>
 <link rel="stylesheet" type="text/css" href="frhed.css">
-<script language="JavaScript">document.createStyleSheet(externlink("after.css"));</script>
 <title>The Free Hex Editor Help File</title>
 </head><body><h1><img src="frhed.png" style="border: 0px;">The Free Hex Editor Help File</h1>
 
@@ -67,9 +64,6 @@ Tables of the ANSI and OEM character sets.</li>
 
 <li><a href="#faq">Frequently asked questions</a>:
 Some questions other people have asked.</li>
-
-<li><a href="#custom-styles">Custom stylesheets</a>:
-If you dislike the colour scheme or fonts in this help file, it is possible to modify them.</li>
 </ul>
 
 <hr>
@@ -1464,81 +1458,5 @@ go there directly.</p>
 drivers installed by Windows for wheel mice do things slightly differently than the "real" Logitech
 drivers. I suggest you install the original drivers supplied by your mouse manufacturer. If
 you have any success with this, please tell me about it, I don't know if this really works.</p>
-
-<!------------------------------------------------------------------------------------------------->
-<h1><a name="#custom-styles">Custom stylesheets</a></h1>
-<p>This help file uses CSS or "Cascading Style Sheets" to change the display characteristics
-of text, lists, images, tables and pretty much everything else. NOTE: Stylesheets may only
-work with IE4 and above.</p>
-
-<p>All topics in this help file (even this one) reference three CSS files in the following order:</p>
-
-<ul>
-<li><code>before.css</code> is located in the same directory as this help file (frhed.chm).<br>
-Use this stylesheet if you want to override browser defaults, but keep Frhed's default styles.</li>
-<li><code>frhed.css</code> is located inside this help file and contains the default styles for this help file.</li>
-<li><code>after.css</code> is located in the same directory as this help file.<br>
-Use this stylesheet if you want to override both the browser defaults and Frhed's defaults.</li>
-</ul>
-<p>NOTE: <code>before.css</code> and <code>after.css</code> are accessed using JavaScript, so you must
-turn it on before you can use these style sheets. The alternative to using JavaScript would have been
-to put them in the root directory of the disk where this help file is located and accessed them using
-static links to <code>file:///before.css</code> and <code>file:///after.css</code>. The JavaScript
-method, however, is much more flexible and prevents the need for write access to the root directory,
-which would probably not be granted on locked down machines, such as in university computer labs and
-work machines. If you prefer to use static links you can do so by installing the help file source, replacing all the
-JavaScript stuff with static links, regenerating the individual topics from the big-flat-file using pydocgen.py
-and recompiling using HTML Help Workshop from <a href="http://www.microsoft.com">Microsoft</a>.<br>
-e.g. This:</p>
-
-<pre>&lt;script language="JavaScript"&gt;document.createStyleSheet(externlink("after.css"));&lt;/script&gt;</pre>
-<p>is converted to:</p>
-<pre>&lt;link rel="stylesheet" type="text/css" href="file:///<var>&lt;your static path&gt;</var>/after.css"&gt;</pre>
-<p>Alternatively someone may already have done this - check on <a href="#contact">these websites</a>.</p>
-
-<p>It is beyond the scope of this help file to discuss the intricacies of stylesheet syntax and usage,
-but see below for a few tips. There are a number of references on the Web and here are two to get you
-started:</p>
-
-<ul>
-<li><a href="http://www.w3.org/TR/REC-CSS2/">WWW Consortium's CSS2 Specification</a>
-- The official specification.</li>
-<li><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnie40/html/css-ie4.asp">Microsoft's
-"Cascading Style Sheets in Internet Explorer 4.0"</a> - what is supported by HTMLHelp</li>
-</ul>
-
-<p><code><a href="frhed.css">frhed.css</a></code> is available to study and use in <code>before.css</code>
-and <code>after.css</code>.<br>
-Click one of the following buttons to open your CSS files in in their associated program.</p>
-
-<form><input type="button" name="Button" value="before.css" OnClick="externlink('before.css',true);">
-<input type="button" name="Button" value="after.css" OnClick="externlink('after.css',true);"></form>
-
-<p><b>Tips</b>:</p>
-
-<ul>
-<li>You can import other stylesheets using <code>@import "mystylesheet.css";</code>. The semicolon(;) is important and the import must be before the definition of any styles.</li>
-<li>You set styles using the following syntax:<br>
-Note the semicolon after each value.<br>
-There is more to the syntax than what is listed here - please visit the above two references.
-
-<pre>[<var>&lt;some-tag&gt;</var>][.<var>&lt;some-class&gt;</var>][:<var>&lt;some-pseudo-class&gt;</var>] {
-	(<var>&lt;some-attribute&gt;</var>: <var>&lt;some-value&gt;</var>;)...
-}...</pre>
-
-<table>
-<tr><td>Variable</td><td>Explanation</td></tr>
-<tr><td><var>&lt;some-tag&gt;</var></td><td>The name of a HTML tag e.g. body, a, ul.</td></tr>
-<tr><td><var>&lt;some-class&gt;</var></td><td>The value of the "class" attribute in a tag in the document eg. <code>.SomeClass { color: red; }</code> (or <code>p.SomeClass</code>) in CSS then <code>&lt;p class="SomeClass"&gt;Some text&lt;/p&gt;</code> in HTML.</td></tr>
-<tr><td><var>&lt;some-pseudo-class&gt;</var></td><td>The name of a supported pseudo-class like <code>hover</code>, <code>active</code>, <code>link</code> or <code>visited</code>. Two useful pseudo classes that are in the official CSS spec, but are not supported by IE, include <code>before</code> and <code>after</code>, which can insert strings before and after what ever their style is applied to.</td></tr>
-<tr><td><var>&lt;some-attribute&gt;</var></td><td>A style attribute like <code>color</code> or <code>text-decoration</code>.</td></tr>
-<tr><td><var>&lt;some-value&gt;</var></td><td>The value of an attribute like <code>#00ff00</code>(a bright green colour) or <code>150%</code>(a relative size).</td></tr>
-</table>
-</li>
-<li>Comments are C-style (<code>/*Some comments*/</code>), not C++-style (<code>//Some comments</code>) and they cannot be nested.</li>
-<li>To temporarily disable one of the two external style sheets just rename it or comment out its contents.</li>
-<li>For changes to a stylesheet to come into effect you need to change pages or refresh the current page (press F5).</li>
-<li>It can be hard to revert styles to what they were before a sheet was applied - you need to find out a reasonable default &amp; apply that.</li>
-</ul>
 
 </body></html>
