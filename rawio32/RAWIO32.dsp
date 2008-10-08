@@ -53,8 +53,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 comctl32.lib thunk32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /machine:I386 /ALIGN:16384
-# SUBTRACT LINK32 /incremental:yes
+# ADD LINK32 comctl32.lib thunk32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /machine:I386 /def:".\RAWIO32.def"
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "RAWIO32 - Win32 Debug"
 
@@ -80,7 +80,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 thunk32.lib shell32.lib comctl32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /incremental:no /debug /machine:I386 /pdbtype:sept /ALIGN:16384
+# ADD LINK32 thunk32.lib shell32.lib comctl32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /incremental:no /debug /machine:I386 /def:".\RAWIO32.def" /pdbtype:sept
+# SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 
@@ -116,6 +117,7 @@ SOURCE=.\RAWIO32.h
 # Begin Source File
 
 SOURCE=.\RAWIO32.def
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
