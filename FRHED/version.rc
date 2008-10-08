@@ -25,7 +25,7 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "Comments", "Homepage: http://www.kibria.de, http://zip.to/pabs3\0"
+            VALUE "Comments", "Homepage: http://frhed.sourceforge.net\0"
             VALUE "CompanyName", "(c) Raihan Kibria 2000\0"
             VALUE "FileDescription", "Frhed - Free hex editor " CURRENT_VERSION "." SUB_RELEASE_NO "." BUILD_NO
             VALUE "FileVersion", CURRENT_VERSION "." SUB_RELEASE_NO "." BUILD_NO
