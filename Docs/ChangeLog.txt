@@ -4,6 +4,9 @@ to Subversion revision numbers (rXXXXX).
 
 For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 
+Frhed 1.3.2
+  Bugfix: File/Exit didnt' work (#2175624)
+
 Frhed 1.3.1 - 2008-10-16 (r73)
   Revise the installer (#2068059)
   Change resource file to English (U.S.) (was German)

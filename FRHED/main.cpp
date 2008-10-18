@@ -230,7 +230,12 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		pHexWnd->set_wnd_title();
 		return 0;
 	case WM_COMMAND:
-		pHexWnd->command(LOWORD(wParam));
+		// Exit command must be handled in Frhed executable,
+		// not in heksedit dll.
+		if (LOWORD(wParam) == IDM_EXIT)
+			SendMessage (hwnd, WM_CLOSE, 0, 0);
+		else
+			pHexWnd->command(LOWORD(wParam));
 		break;
 	case WM_DROPFILES:
 		pHexWnd->dropfiles(reinterpret_cast<HDROP>(wParam));
