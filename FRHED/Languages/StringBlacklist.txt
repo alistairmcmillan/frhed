@@ -1,11 +1,9 @@
-(filter name)
-[VERSION COPYRIGHT GOES HERE]
-_HDR_POPUP_
-_ITEM_POPUP_
-_POPUP_
-<PlaceHolder>
 0
-0.00
+1
+bmk
 IDM_MRU
+List1
 MS Shell Dlg
-Version 1.0
+Spin1
+Static
+statictext
