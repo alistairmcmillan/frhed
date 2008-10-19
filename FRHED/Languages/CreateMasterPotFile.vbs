@@ -234,7 +234,7 @@ Sub CreateMasterPotFile(ByVal sPotPath, ByVal oStrings, ByVal sCodePage)
   
   Set oPotFile = oFSO.CreateTextFile(sPotPath, True)
   
-  oPotFile.WriteLine "# This file is part of FRHED <http://winmerge.org/>"
+  oPotFile.WriteLine "# This file is part of Frhed <http://frhed.sourceforge.net/>"
   oPotFile.WriteLine "# Released under the ""GNU General Public License"""
   oPotFile.WriteLine "#"
   oPotFile.WriteLine "# ID line follows -- this is updated by SVN"
@@ -242,18 +242,19 @@ Sub CreateMasterPotFile(ByVal sPotPath, ByVal oStrings, ByVal sCodePage)
   oPotFile.WriteLine "#"
   oPotFile.WriteLine "msgid """""
   oPotFile.WriteLine "msgstr """""
-  oPotFile.WriteLine """Project-Id-Version: FRHED\n"""
+  oPotFile.WriteLine """Project-Id-Version: Frhed\n"""
   oPotFile.WriteLine """Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?group_id=13216&atid=113216\n"""
   oPotFile.WriteLine """POT-Creation-Date: " & GetPotCreationDate() & "\n"""
   oPotFile.WriteLine """PO-Revision-Date: \n"""
   oPotFile.WriteLine """Last-Translator: \n"""
-  oPotFile.WriteLine """Language-Team: English <winmerge-translate@lists.sourceforge.net>\n"""
+  oPotFile.WriteLine """Language-Team: English <frhed-devel@lists.sourceforge.net>\n"""
   oPotFile.WriteLine """MIME-Version: 1.0\n"""
   oPotFile.WriteLine """Content-Type: text/plain; charset=CP" & sCodePage & "\n"""
   oPotFile.WriteLine """Content-Transfer-Encoding: 8bit\n"""
   oPotFile.WriteLine """X-Poedit-Language: English\n"""
   oPotFile.WriteLine """X-Poedit-SourceCharset: CP" & sCodePage & "\n"""
-  oPotFile.WriteLine """X-Generator: CreateMasterPotFile.vbs\n"""
+  oPotFile.WriteLine """X-Poedit-Basepath: ../\n"""
+  'oPotFile.WriteLine """X-Generator: CreateMasterPotFile.vbs\n"""
   oPotFile.WriteLine
   For Each sKey In oStrings.Keys 'For all strings...
     Set oString = oStrings(sKey)
