@@ -73,6 +73,8 @@ Section "ProgramFiles" SEC01
   CreateShortCut "$SMPROGRAMS\Frhed\Frhed.lnk" "$INSTDIR\frhed.exe"
   CreateShortCut "$DESKTOP\Frhed.lnk" "$INSTDIR\frhed.exe"
   File "..\..\Build\Release\RAWIO32.dll"
+  File "..\Runtimes\msvcr71.dll"
+  File "..\Runtimes\msvcp71.dll"
 SectionEnd
 
 Section "Documentation" SEC02
@@ -121,6 +123,8 @@ Section Uninstall
   Delete "$INSTDIR\RAWIO32.dll"
   Delete "$INSTDIR\frhed.exe"
   Delete "$INSTDIR\heksedit.dll"
+  Delete "$INSTDIR\msvcr71.dll"
+  Delete "$INSTDIR\msvcp71.dll"
 
   Delete "$SMPROGRAMS\Frhed\Uninstall.lnk"
   Delete "$SMPROGRAMS\Frhed\Website.lnk"
