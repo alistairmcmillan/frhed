@@ -4,7 +4,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Frhed"
-!define PRODUCT_VERSION "1.3.1.1"
+!define PRODUCT_VERSION "1.3.1"
 !define PRODUCT_PUBLISHER "Raihan Kibria"
 !define PRODUCT_WEB_SITE "http://frhed.sourceforge.net"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\frhed.exe"
