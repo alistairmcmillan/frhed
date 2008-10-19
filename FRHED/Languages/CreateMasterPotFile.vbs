@@ -17,6 +17,7 @@ Const STRINGTABLE_BLOCK = 3
 Const VERSIONINFO_BLOCK = 4
 Const ACCELERATORS_BLOCK = 5
 Const TEXTINCLUDE_BLOCK = 6
+Const BITMAP_BLOCK = 7
 
 Dim oFSO, bRunFromCmd
 
@@ -96,6 +97,9 @@ Function GetStringsFromRcFile(ByVal sRcFilePath, ByRef sCodePage)
       
       If fContinuation Then
         ' Nothing to do
+      ElseIf (Left(sLine, 2) = "//") Then 'If comment line...
+        sLine = ""
+        'IGNORE FOR SPEEDUP!
       ElseIf InStr(sLine, " TEXTINCLUDE") > 0 Then 'TEXTINCLUDE...
         iBlockType = TEXTINCLUDE_BLOCK
       ElseIf InStr(sLine, " MENU") > 0 And InStr(sLine, "IDR_") > 0 Then 'MENU...
@@ -108,18 +112,15 @@ Function GetStringsFromRcFile(ByVal sRcFilePath, ByRef sCodePage)
         iBlockType = VERSIONINFO_BLOCK
       ElseIf InStr(sLine, " ACCELERATORS") > 0 Then 'ACCELERATORS...
         iBlockType = ACCELERATORS_BLOCK
-      ElseIf InStr(sLine, " BITMAP ") > 0 Then 'BEGIN...
+      ElseIf InStr(sLine, " BITMAP ") > 0 Then 'BITMAP...
+        iBlockType = BITMAP_BLOCK
         sLcLine = "//" & sLcLine
-        'IGNORE FOR SPEEDUP!
       ElseIf (sLine = "BEGIN") Then 'BEGIN...
         'IGNORE FOR SPEEDUP!
       ElseIf (sLine = "END") Then 'END...
-        If (iBlockType = STRINGTABLE_BLOCK) Then 'If inside stringtable...
+        If (iBlockType = STRINGTABLE_BLOCK) Or (iBlockType = TEXTINCLUDE_BLOCK) Then 'If inside STRINGTABLE or TEXTINCLUDE...
           iBlockType = NO_BLOCK
         End If
-      ElseIf (Left(sLine, 2) = "//") Then 'If comment line...
-        sLine = ""
-        'IGNORE FOR SPEEDUP!
       ElseIf sLine <> "" Then 'If NOT empty line...
         Select Case iBlockType
           Case NO_BLOCK:
