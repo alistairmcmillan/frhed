@@ -1,5 +1,47 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  hexwdlg.h
+ *
+ * @brief Dialog class declarations.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
+#ifndef _HEXW_DLG_H_
+#define _HEXW_DLG_H_
+
 void GetWindowText(HWND, SimpleString &);
 void GetDlgItemText(HWND, int, SimpleString &);
+
+/**
+ * @brief About-dialog for Frhed application.
+ * This dialog shows program name, version and contributor info.
+ */
+class AboutDlg : public HexEditorWindow
+{
+public:
+	enum { IDD = IDD_ABOUTDIALOG };
+	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
+protected:
+	BOOL OnInitDialog(HWND);
+	BOOL OnCommand(HWND, WPARAM, LPARAM);
+};
 
 class DragDropOptionsDlg : public HexEditorWindow
 {
@@ -287,3 +329,5 @@ private:
 	BOOL OnInitDialog(HWND);
 	BOOL Apply(HWND);
 };
+
+#endif // _HEXW_DLG_H_

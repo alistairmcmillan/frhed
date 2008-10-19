@@ -1055,6 +1055,7 @@ void HexEditorWindow::command(int cmd)
 	{
 //Pabs changed - line insert
 //File Menu
+	// What is this??
 	case 0xE140:
 		assert(FALSE);
 		break;
@@ -1512,7 +1513,7 @@ void HexEditorWindow::command(int cmd)
 		break;
 
 	case IDM_ABOUT:
-		ShowModalDialog(IDD_ABOUTDIALOG, hwnd, AboutDlgProc, this);
+		static_cast<dialog<AboutDlg>*>(this)->DoModal(hwnd);
 		break;
 
 	case IDM_FIND:
@@ -2389,52 +2390,6 @@ int HexEditorWindow::close(const char *caption)
 			return 0;//Don't exit
 	}
 	return 1;
-}
-
-//--------------------------------------------------------------------------------------------
-INT_PTR CALLBACK AboutDlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
-{
-	switch (iMsg)
-	{
-	case WM_INITDIALOG:
-		TranslateDialog(hDlg);
-		// Set the version information.
-		SetDlgItemText(hDlg, IDC_STATIC1,
-			"frhed - free hex editor for 32-bit Windows\nVersion "CURRENT_VERSION"."
-			SUB_RELEASE_NO"."BUILD_NO"\n(c) Raihan Kibria 2000"
-			"\nFill with by Pabs Dec 1999"
-			"\nDisk-Access, Code/Decode Extension and some other bits by Gerson Kurz."
-			"\nDLL interface by Jochen Neubeck.");
-		// Set the email-addresses.
-		SetDlgItemText(hDlg, IDC_EDIT1,
-			"rkibria@hrz1.hrz.tu-darmstadt.de"
-			"\r\nPabs: pabs3@zip.to");
-		// Set the homepage URL.
-		SetDlgItemText(hDlg, IDC_EDIT2, "http://www.kibria.de");
-		// Set the icon.
-		if (HWND hwndParent = GetParent(hDlg))
-			if (DWORD dwIcon = GetClassLong(hwndParent, GCLP_HICON))
-				SendDlgItemMessage(hDlg, IDC_APPICON, STM_SETICON, dwIcon, 0);
-		return TRUE;
-
-	case WM_COMMAND:
-		switch (wParam)
-		{
-		case IDOK:
-		case IDCANCEL:
-			EndDialog(hDlg, wParam);
-			return TRUE;
-
-		case IDC_BUTTON1:
-			{
-				HINSTANCE hi = ShellExecute(hDlg, "open", "http://www.kibria.de", 0, NULL, SW_SHOWNORMAL);
-				if ((UINT)hi <= HINSTANCE_ERROR)
-					MessageBox(hDlg, "Could not call browser.", "Go to homepage", MB_ICONERROR);
-			}
-		}
-		break;
-	}
-	return FALSE;
 }
 
 //--------------------------------------------------------------------------------------------

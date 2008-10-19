@@ -106,6 +106,10 @@ PreLink_Cmds=PreLink.bat $(IntDir) $(TargetPath)
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\AboutDlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\AddBmkDlg.cpp
 # End Source File
 # Begin Source File
