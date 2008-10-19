@@ -48,7 +48,7 @@ SetCompressor lzma
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "..\Build\${PRODUCT_NAME}-${PRODUCT_VERSION}-Setup.exe"
+OutFile "..\..\Build\${PRODUCT_NAME}-${PRODUCT_VERSION}-Setup.exe"
 InstallDir "$PROGRAMFILES\Frhed"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
@@ -67,16 +67,16 @@ FunctionEnd
 Section "ProgramFiles" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File "..\Build\Release\frhed.exe"
-  File "..\Build\Release\heksedit.dll"
+  File "..\..\Build\Release\frhed.exe"
+  File "..\..\Build\Release\heksedit.dll"
   CreateDirectory "$SMPROGRAMS\Frhed"
   CreateShortCut "$SMPROGRAMS\Frhed\Frhed.lnk" "$INSTDIR\frhed.exe"
   CreateShortCut "$DESKTOP\Frhed.lnk" "$INSTDIR\frhed.exe"
-  File "..\Build\Release\RAWIO32.dll"
+  File "..\..\Build\Release\RAWIO32.dll"
 SectionEnd
 
 Section "Documentation" SEC02
-  File "..\Build\HELP\frhed.chm"
+  File "..\..\Build\HELP\frhed.chm"
   CreateShortCut "$SMPROGRAMS\Frhed\Help.lnk" "$INSTDIR\frhed.chm"
 SectionEnd
 
