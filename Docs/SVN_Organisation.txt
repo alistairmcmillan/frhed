@@ -1,0 +1,49 @@
+
+Frhed Folder Structure
+=========================
+
+ - Docs
+ - FRHED
+   - Languages
+   - res
+ - HELP
+ - Installer
+   - NSIS
+   - Runtimes
+ - rawio32
+ - Tools
+ - Web
+
+
+Frhed/Docs/
+ - Folder containing Frhed documentation, but not user manual
+
+Frhed/FRHED/
+ - Frhed executable and heksedit.dll codes, main source folder.
+
+Frhed/FRHED/Languages
+ - Frhed translations and related files (scripts) 
+
+Frhed/FRHED/res
+ - Frhed/heksedit resource files (images, icons etc)
+
+Frhed/HELP/
+ - Frhed user manual files
+
+Frhed/Installer/
+ - Frhed installer(s) files
+
+Frhed/Installer/NSIS/
+ - Frhed NSIS installer - currently the only installer
+
+Frhed/Installer/Runtimes/
+ - Microsoft runtimes included into the installer
+
+Frhed/rawio32/
+ - 32-bit code library to access disk data directly
+
+Frhed/Tools/
+ - Scripts and other needed tools
+
+Frhed/Web/
+ - Frhed web site files
