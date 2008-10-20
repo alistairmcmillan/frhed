@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Installer.html</title>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+</head>
+<body>
+<h2>Building Frhed Installer</h2>
+
+<h3>Table of Contents</h3>
+<ol>
+  <li><a href="#Tools">Tools</a></li>
+  <li><a href="#InstallerFiles">Installer Files</a></li>
+  <li><a href="#FrhedFiles">Frhed Files</a></li>
+  <li><a href="#Building">Building</a></li>
+ </ol>
+
+<h3><a name="Tools">Tools</a></h3>
+<p>
+To build the installer, you'll need:
+<ul>
+  <li>NSIS - <a href="http://nsis.sourceforge.net/">http://nsis.sourceforge.net/</a></li>
+</ul>
+</p>
+
+<h3><a name="InstallerFiles">Installer Files</a></h3>
+<p>
+Installer files are in <code>Installer/NSIS</code> -subfolder. Important files are:
+<ul>
+  <li><code>frhed.nsi</code> - NSIS installer script file</li>
+  <li><code>GPL.txt</code> - license text included in the installer</li>
+</ul>
+There is <code>Installer/Runtimes</code> -folder which contains Microsoft
+runtime files needed. These files are included in the installer.
+</p>
+
+<h3><a name="FrhedFiles">Frhed Files</a></h3>
+<p>
+<i>Before you can build the installer you must build Frhed successfully.</i>
+</p>
+
+<p>
+After the Frhed has been successfully build, you'll have files the installer
+needs in <code>Build</code> -folder:
+<ul>
+  <li><code>Release/Frhed.exe</code></li>
+  <li><code>Release/heksedit.dll</code></li>
+  <li><code>Release/RAWIO32.dll</code></li>
+  <li><code>Help/frhed.chm</code></li>
+</ul>
+</p>
+
+<h3><a name="Building">Building</a></h3>
+<p>
+Once all files are present, building the installer should be a simple task:
+<ul>
+  <li>Select the <code>frhed.nsi</code> -file in the Explorer and select
+    <i>Compile NSIS Script</i> from the context menu or</li>
+  <li>Start the NSIS, load <code>frhed.nsi</code> and compile it.
+</ul>
+</p>
+
+<p>Once the installer building finishes, installer file is created into
+<code>Build</code> -folder. The installer file is named as
+<code>Frhed-<i>[version]</i>-Setup.exe</code>.
+</p>
+
+</body>
+</html>
