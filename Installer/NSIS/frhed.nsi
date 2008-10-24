@@ -24,7 +24,6 @@ SetCompressor lzma
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
 ; License page
-!define MUI_LICENSEPAGE_CHECKBOX
 !insertmacro MUI_PAGE_LICENSE "GPL.txt"
 ; Components page
 !insertmacro MUI_PAGE_COMPONENTS
