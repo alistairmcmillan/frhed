@@ -1,3 +1,6 @@
+This file lists changes in versions before 1.3.1 Alpha. To see changes in 1.3.1 Alpha
+and later releases, see the ChangeLog.txt file.
+
 To find source-level changes use diff or a visual diff prog such as CSdiff (good for RTF files) or Araxis Merge
 
 version Experimental/Alpha
