@@ -72,11 +72,23 @@ Section "ProgramFiles" SEC01
   CreateShortCut "$SMPROGRAMS\Frhed\Frhed.lnk" "$INSTDIR\frhed.exe"
   CreateShortCut "$DESKTOP\Frhed.lnk" "$INSTDIR\frhed.exe"
   File "..\..\Build\Release\RAWIO32.dll"
+
+  ; MS C/C++ runtime files
   File "..\Runtimes\msvcr71.dll"
   File "..\Runtimes\msvcp71.dll"
+
+  ; Basic documents (always included)
+  CreateDirectory "$INSTDIR\Docs"
+  SetOutPath "$INSTDIR\Docs"
+  File "GPL.txt"
+  File "..\..\Docs\ChangeLog.txt"
+  File "..\..\Docs\Contributors.txt"
+  ; ChangeLog.txt refers to this file
+  File "..\..\Docs\History.txt"
 SectionEnd
 
 Section "Documentation" SEC02
+  SetOutPath "$INSTDIR"
   File "..\..\Build\HELP\frhed.chm"
   CreateShortCut "$SMPROGRAMS\Frhed\Help.lnk" "$INSTDIR\frhed.chm"
 SectionEnd
@@ -122,8 +134,17 @@ Section Uninstall
   Delete "$INSTDIR\RAWIO32.dll"
   Delete "$INSTDIR\frhed.exe"
   Delete "$INSTDIR\heksedit.dll"
+  
+  ; MS runtimes
   Delete "$INSTDIR\msvcr71.dll"
   Delete "$INSTDIR\msvcp71.dll"
+
+  ; Basic documents
+  Delete "$INSTDIR\Docs\GPL.txt"
+  Delete "$INSTDIR\Docs\ChangeLog.txt"
+  Delete "$INSTDIR\Docs\Contributors.txt"
+  Delete "$INSTDIR\Docs\History.txt"
+  RMDir "$INSTDIR\Docs"
 
   Delete "$SMPROGRAMS\Frhed\Uninstall.lnk"
   Delete "$SMPROGRAMS\Frhed\Website.lnk"
