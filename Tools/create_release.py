@@ -47,7 +47,7 @@
 # Subversion binary - set this to absolute path to svn.exe
 svn_binary = 'C:\\Program Files\\Subversion\\bin\\svn.exe'
 # Visual Studio path
-vs_path = 'C:\\Program Files\\Microsoft Visual Studio  .NET 2003'
+vs_path = 'C:\\Program Files\\Microsoft Visual Studio .NET 2003'
 # NSIS installation folder
 nsis_path = 'C:\\Program Files\\NSIS'
 # Relative path where to create a release folder
