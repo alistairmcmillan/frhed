@@ -47,7 +47,9 @@
 # Subversion binary - set this to absolute path to svn.exe
 svn_binary = 'C:\\Program Files\\Subversion\\bin\\svn.exe'
 # Visual Studio path
-vs_path = 'C:\\Program Files\\Microsoft Visual Studio .NET 2003'
+vs_path = 'C:\\Program Files\\Microsoft Visual Studio  .NET 2003'
+# NSIS installation folder
+nsis_path = 'C:\\Program Files\\NSIS'
 # Relative path where to create a release folder
 dist_root_folder = 'distrib'
 
@@ -201,6 +203,15 @@ def build_manual():
     print 'Manual build finished.'
     os.chdir(curdir)
 
+def build_nsis_installer():
+    """Builds the NSIS installer for the Frhed."""
+
+    nsis_exe = os.path.join(nsis_path, 'makensis')
+    cur_path = os.getcwd()
+    frhed_nsi = os.path.join(cur_path, '../Installer/NSIS/frhed.nsi')
+
+    call([nsis_exe, frhed_nsi], shell=True)
+
 def get_and_create_bin_folder(dist_folder, folder):
     """Formats and creates binary distribution folder."""
 
@@ -353,7 +364,8 @@ def main(argv):
     
     build_targets()
     build_manual()
-    
+    build_nsis_installer()
+
     dist_bin_folder = get_and_create_bin_folder(dist_folder, version_folder)
     create_bin_folders(dist_bin_folder, dist_src_folder)
 
