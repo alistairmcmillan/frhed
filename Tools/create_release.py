@@ -208,7 +208,7 @@ def build_nsis_installer():
 
     nsis_exe = os.path.join(nsis_path, 'makensis')
     cur_path = os.getcwd()
-    frhed_nsi = os.path.join(cur_path, '../Installer/NSIS/frhed.nsi')
+    frhed_nsi = os.path.join(cur_path, 'Installer/NSIS/frhed.nsi')
 
     call([nsis_exe, frhed_nsi], shell=True)
 
