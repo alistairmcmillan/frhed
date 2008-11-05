@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article id="misc_menu">
+  <title>The Misc Menu</title>
+
+  <section>
+    <title>The <menuchoice><guimenu>Misc</guimenu><guimenuitem>Goto DLL Exports</guimenuitem></menuchoice> command</title>
+    <para>When you have opened a DLL, you can use this function to navigate to the list of DLL exports.
+    The list will be highlighted, if possible.</para>
+    <note>
+      <para>It is likely that only part of the DLL exports will be highlighted, due to the way the PE file format is specified.</para>
+    </note>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Misc</guimenu><guimenuitem>Goto DLL Imports</guimenuitem></menuchoice> command</title>
+    <para>When you have opened a DLL, you can use this function to navigate to the list of DLL imports.
+    The list will be highlighted, if possible.</para>
+    <note>
+      <para>It is likely that only part of the DLL imports will be highlighted, due to the way the PE file format is specified.</para>
+    </note>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Misc</guimenu><guimenuitem>Encode Decode</guimenuitem></menuchoice> command</title>
+    <para>This command will open a dialog, where you can encode/decode data using a cryptographic algorithm.
+    The cryptographic algorithms are implemented in the FRHEDX.DLL. You can write your own extension DLL 
+    to implement alternate algorithms; please check the Frhed sourcecode for more details.</para>
+  </section>
+</article>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article id="binary_files">
+  <title>Binary Files</title>
+
+  <section>
+    <title>What are binary files?</title>
+    <para>All the files on your computer, programs as well as documents, are really large &quot;lists&quot; of numbers. Imagine a numbered list like this one:</para>
+    <screen>0) 24
+1) 33
+2) 9
+3) 0
+4) 115</screen>
+    <para>The numbering starts at zero. At each list index there is a number, for example the number 9 is at index &quot;2&quot;. The index is usually called &quot;offset&quot;. frhed displays the current offset in the lower left corner of it&apos;s window. Large files contain many numbers, small files not so many. The numbers in the list can have a value between 0 and 255, for a special reason: Each number is a &quot;byte&quot;.</para>
+  </section>
+
+  <section>
+    <title>What are bits and bytes?</title>
+    <para>&quot;Bit&quot; is an abbreviation for &quot;BInary digiT&quot;. It can have a value of either 0 or 1. One bit alone is not very useful, because already the number 2 can not be described with it. So you take many bits to describe large numbers. This is how it works:</para>
+    <para> The normal decimal system you know, with digits from 0 to 9, describes numbers larger than 9 by arranging several digits in such a way that each position in the number means something different.</para>
+    <para>For example the number &quot;245&quot; means really &quot;2 times 100 + 4 times 10 + 5 times 1&quot;. The further left a digit&apos;s position in the number, the higher a value it contributes to the number. Every time you go one step left in the number, you multiply the digit there with 1, 10, 100, 1000 and so on and add that value to what you already have. The values you have to multiply the digit <emphasis role="bold">with</emphasis> can be obtained if you start out with 1 on the far right, then multiply with 10 every time you go left. So you get to multiply with 1, then with 1×10=10, then with 10×10=100, then 10×100=1000 and so on. This is our &quot;base 10&quot; number system.</para>
+    <para>Now the <emphasis role="bold">binary system</emphasis> is a &quot;base 2&quot;-system. A binary number might looks like this: 1011</para>
+    <para>This is not &quot;one thousand and eleven&quot;, as it would be in the decimal system. In the decimal system we multiplied the digits at the various positions with a 1, 10, 10×10=100, 10×100=1000 and so on, but this time, in the binary system (also known as &quot;dual system&quot;), we multiply with 1, 2, 2×2=4, 2×4=8, 2×8=16 and so on, starting at the right and doing with a &quot;2&quot; what we did with a &quot;10&quot; before. So the value of the binary number above is &quot;1 times 1 + 1 times 2 + 0 times 4 + 1 times 8&quot;, giving us the number &quot;11&quot; in our decimal system.</para>
+    <para>Computers use bits to calculate everything, because they can be modeled as &quot;current on&quot; or &quot;current off&quot; easily. With a packet of 4 bits (called a &quot;nibble&quot;) you can describe the numbers from 0 to 15. A packet of 8 bits is called a &quot;byte&quot;, and <emphasis role="bold">these</emphasis> are what the file contains. Each byte can describe a number from 0 to 255. So, a file is a list (or &quot;array&quot;) of &quot;bytes&quot;, with each byte at a certain index or &quot;offset&quot;. These bytes are what Frhed displays in the middle of the screen, but in yet another different number system: the &quot;hexadecimal&quot; system, which is a system with the base 16. So there are 16 digits, the normal ones from 0 to 9, and additionally the letters &quot;a&quot; through &quot;f&quot; with following values:</para>
+    <screen>a = 10
+b = 11
+c = 12
+d = 13
+e = 14
+f = 15</screen>
+    <para>So the &quot;hex&quot; (short for &quot;hexadecimal&quot;) number &quot;f14a&quot; means: &quot;10 times 1 + 4 times 16 + 1 time 16×16(=256) + 15 times 16×256(=4096)&quot;, giving a value of 61770 in decimal. The point of using hex numbers is that values of up to 255 (maximum value of a byte) can be described by employing up to 2 hexadecimal digits, which gives a neat and ordered output on hex editors such as Frhed. On the right side of the Frhed window there are &quot;normal&quot; letters, punctuation symbols and so on. This is because each byte can be seen as an index to a symbol in a &quot;character set&quot;. This means that the computer stores for example the letter &quot;a&quot; as a number with the value 97 (&quot;61&quot; in hex notation), the comma &quot;,&quot; as a number 44 and so on. So if you write a text on the computer and save it to disk, then the file will contain a number of bytes, each byte signifying a letter, other symbol, or a special code number for &quot;End of line&quot; or &quot;Tabulator&quot; and such. But there are several character sets in use (for example Windows uses either the ANSI or the OEM character set): In one character set the number 97 might mean the letter &quot;a&quot;, but in another it could be used for the apostrophe.</para>
+  </section>
+</article>

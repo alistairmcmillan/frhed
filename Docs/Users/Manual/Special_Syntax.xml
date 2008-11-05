@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix id="special_syntax">
+  <title>Using the Special Syntax</title>
+
+  <para>Byte, word, longword and floating point data can be encoded as follows:</para>
+  <screen>&lt;<literal>{Size}</literal><literal>{Numeral system}</literal>:<literal>{Value}</literal>&gt;</screen>
+  <variablelist>
+    <varlistentry>
+      <term>Size</term>
+      <listitem>
+        <para><literal>b</literal> for byte-size (8 bit) value.</para>
+        <para><literal>w</literal> for word-size (16 bit) value.</para>
+        <para><literal>l</literal> for longword-size (32 bit) value.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Numeral System</term>
+      <listitem>
+        <para><literal>d</literal> for decimal system.</para>
+        <para><literal>h</literal> for hexadecimal system.</para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Value</term>
+      <listitem>
+        <para>Enter the value of the datum after the colon.</para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <note>
+    <para>For floating point values set Size and Numeral system to:</para>
+    <itemizedlist>
+      <listitem>
+        <para><literal>fl</literal> is for float values.</para>
+      </listitem>
+      <listitem>
+        <para><literal>do</literal> is for double values.</para>
+      </listitem>
+    </itemizedlist>
+  </note>
+  <section>
+    <title>Examples</title>
+    <para><literal>&lt;bd:-15&gt;</literal> means byte-size datum with decimal value -15.</para>
+    <para><literal>&lt;wh:23f0&gt;</literal> means word-size datum with hexadecimal value 23f0.</para>
+    <para><literal>&lt;ld:1234567890&gt;</literal> means longword-size datum with decimal value 1234567890.</para>
+    <para><literal>&lt;fl:2.5&gt;</literal> means float-size datum with value 2.5.</para>
+    <para><literal>&lt;do:1.8e7&gt;</literal> means double-size datum with value 1.8×10^7.</para>
+    <note>
+      <para>If you want to find or paste a valid special syntax string like <literal>&lt;bd:0&gt;</literal> as text, then prefix a \ to &lt;. This will turn &lt; into a normal character. Copying a &lt; in the file will insert the \ automatically.</para>
+      <para>Backslashes (&quot;\&quot;) in the file are copied and encoded as double backslashes (&quot;\\&quot;).</para>
+    </note>
+  </section>
+  <section>
+    <title>Data ranges and sizes</title>
+    <section>
+      <title>Integers</title>
+      <variablelist>
+        <varlistentry>
+          <term>Byte</term>
+          <listitem>
+            <para>signed from -128 to 127</para>
+            <para>unsigned from 0 to 255</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Word (2 bytes)</term>
+          <listitem>
+            <para>signed from -32,768 to 32,767</para>
+            <para>unsigned from 0 to 65,535</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Longword (4 bytes)</term>
+          <listitem>
+            <para>signed from -2,147,483,648 to 2,147,483,647</para>
+            <para>unsigned from 0 to 4,294,967,295</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section>
+      <title>Floating point types</title>
+      <variablelist>
+        <varlistentry>
+          <term>Float (4 bytes)</term>
+          <listitem>
+            <para>range 3.4E +/- 38 (7 digits)</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Double (8 bytes</term>
+          <listitem>
+            <para>range 1.7E +/- 308 (15 digits)</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+  </section>
+</appendix>

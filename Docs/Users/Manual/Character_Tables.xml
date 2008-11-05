@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix id="character_tables">
+  <title>Character Tables</title>
+
+  <section>
+    <title>The ANSI character set</title>
+    
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="screenshots/ansimap.bmp" format="BMP" />
+      </imageobject>
+
+      <textobject>
+        <phrase>ANSI character set</phrase>
+      </textobject>
+    </mediaobject>
+  </section>
+
+  <section>
+    <title>The OEM character set</title>
+    
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="screenshots/oemmap.bmp" format="BMP" />
+      </imageobject>
+
+      <textobject>
+        <phrase>OEM character set</phrase>
+      </textobject>
+    </mediaobject>
+  </section>
+</appendix>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article id="faq">
+  <title>Frequently Asked Questions</title>
+
+  <qandaset>
+    <qandaentry>
+      <question>
+        <para>How do I search for hex values?</para>
+      </question>
+      <answer>
+        <para>You have to describe the values using a special syntax (as described in
+        "Using the special syntax" in the help file). For example the byte value 0xf7
+        has to be written as (you must write the angled brackets too!)</para>
+
+        <screen>&lt;bh:f7&gt;</screen>
+
+        <para>where the b means byte-sized value (otherwise use a "w" for word-size or "l" for longword-size)
+        and the h means hexadecimal notation (otherwise use "d" for decimal notation).
+        This notation can be combined with text after it or before it, or several encoded values after
+        another etc.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>Frhed opens all files from Explorer supenly. How do I remove this behavior?</para>
+      </question>
+      <answer>
+        <para>Uncheck the following: <menuchoice><guimenu>Registry</guimenu><guimenuitem>In all context menu</guimenuitem>
+        </menuchoice>, <menuchoice><guimenu>Registry</guimenu><guimenuitem>Is default in unknown context</guimenuitem></menuchoice>
+        &amp; <menuchoice><guimenu>Registry</guimenu><guimenuitem>In unknown context menu</guimenuitem></menuchoice>.
+        Or edit the registry - Delete HKCR\*\shell\Open in frhed\,
+        HKCR\Unknown\shell\Open in frhed\ &amp; the "(Default)" values under their parent keys.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>What do the B:??, W:??, L:?? in the status bar mean?</para>
+      </question>
+      <answer>
+        <para>These show you the byte (B), word (W) and longword (L) value beginning at the current cursor
+        position, interpreted as either signed or unsigned, which is indicated in front of the "B:".</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>I know that two files I am comparing with the <menuchoice><guimenu>Edit</guimenu>
+        <guimenuitem>Compare from current offset</guimenuitem></menuchoice> command are equal,
+        why does Frhed show me lots of differences?</para>
+      </question>
+      <answer>
+        <para>As the command's name indicates, the file you choose from the following dialogue is compared
+        to the currently loaded file beginning from the CURRENT CURSOR POSITION. So if you want to know
+        if the two files match completely beginning to end, you must put the blinking cursor in the
+        very first position of the file, that is, at index zero. Just press Ctrl+Pos1 on the keyboard to
+        go there directly.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>My Wheel Mouse does not work correctly with Frhed. Are wheel mice supported?</para>
+      </question>
+      <answer>
+        <para>I also use a Logitech wheel mouse, which works fine with Frhed. It is possible that the standard
+        drivers installed by Windows for wheel mice do things slightly differently than the "real" Logitech
+        drivers. I suggest you install the original drivers supplied by your mouse manufacturer. If
+        you have any success with this, please tell me about it, I don't know if this really works.</para>
+      </answer>
+    </qandaentry>
+  </qandaset>
+</article>

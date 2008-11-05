@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"./build/dtd/docbookx.dtd" [
+<!ENTITY Introduction SYSTEM "Introduction.xml">
+<!ENTITY Installation SYSTEM "Installation.xml">
+<!ENTITY BinaryFiles SYSTEM "Binary_Files.xml">
+<!ENTITY FileOperations SYSTEM "File_Operations.xml">
+<!ENTITY MainWindow SYSTEM "Main_Window.xml">
+<!ENTITY MovingInTheFile SYSTEM "Moving_in_the_file.xml">
+<!ENTITY EditingTheFile SYSTEM "Editing_the_file.xml">
+<!ENTITY DiskMenu SYSTEM "Disk_Menu.xml">
+<!ENTITY OptionsMenu SYSTEM "Options_Menu.xml">
+<!ENTITY BookmarksMenu SYSTEM "Bookmarks_Menu.xml">
+<!ENTITY MiscMenu SYSTEM "Misc_Menu.xml">
+<!ENTITY RegistryMenu SYSTEM "Registry_Menu.xml">
+<!ENTITY Faq SYSTEM "FAQ.xml">
+<!ENTITY CharacterTables SYSTEM "Character_Tables.xml">
+<!ENTITY SpecialSyntax SYSTEM "Special_Syntax.xml">
+]>
+<book id="index">
+  <bookinfo>
+    <title>Frhed Help</title>
+
+    <productname>Frhed</productname>
+
+    <releaseinfo><emphasis>Revision 0.0.1</emphasis></releaseinfo>
+
+    <legalnotice>
+      <para>Information in this document is subject to change without notice.
+      Other products and companies referred to herein are trademarks or
+      registered trademarks of their respective companies or mark
+      holders.</para>
+    </legalnotice>
+  </bookinfo>
+
+  &Introduction;
+  &Installation;
+  &BinaryFiles;
+  &FileOperations;
+  &MainWindow;
+  &MovingInTheFile;
+  &EditingTheFile;
+  &DiskMenu;
+  &OptionsMenu;
+  &BookmarksMenu;
+  &MiscMenu;
+  &RegistryMenu;
+  &Faq;
+  &CharacterTables;
+  &SpecialSyntax;
+</book>

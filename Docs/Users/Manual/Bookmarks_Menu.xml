@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article id="bookmarks_menu">
+  <title>The Bookmarks Menu</title>
+
+  <section>
+    <title>The <menuchoice><guimenu>Bookmarks</guimenu><guimenuitem>Add bookmark</guimenuitem></menuchoice> command</title>
+    <para>Choose this to add a bookmark to the bookmark list.
+    The offset of the bookmark will be set to the current position initially.
+    You can also add a description for the bookmark that will also appear in the menu.</para>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Bookmarks</guimenu><guimenuitem>Remove bookmark</guimenuitem></menuchoice> command</title>
+    <para>Choose this to remove a bookmark from the bookmark list.
+    You will be presented with a list of the bookmarks and have to choose the one to remove.</para>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Bookmarks</guimenu><guimenuitem>Clear all bookmarks</guimenuitem></menuchoice> command</title>
+    <para>Deletes all bookmarks.</para>
+  </section>
+</article>
