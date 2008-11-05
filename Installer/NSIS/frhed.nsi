@@ -81,10 +81,10 @@ Section "ProgramFiles" SEC01
   CreateDirectory "$INSTDIR\Docs"
   SetOutPath "$INSTDIR\Docs"
   File "GPL.txt"
-  File "..\..\Docs\ChangeLog.txt"
-  File "..\..\Docs\Contributors.txt"
+  File "..\..\Docs\Users\ChangeLog.txt"
+  File "..\..\Docs\Users\Contributors.txt"
   ; ChangeLog.txt refers to this file
-  File "..\..\Docs\History.txt"
+  File "..\..\Docs\Users\History.txt"
 SectionEnd
 
 Section "Documentation" SEC02
