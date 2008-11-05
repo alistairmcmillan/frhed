@@ -24,7 +24,7 @@ template<class T> SimpleArray<T>::SimpleArray(int nNewSize, int nGrowBy)
 }
 
 //-------------------------------------------------------------------
-template<class T> SimpleArray<T>::SimpleArray(T* ptArray, int upbound, int size)
+template<class T> SimpleArray<T>::SimpleArray(const T* ptArray, int upbound, int size)
 	: m_nGrowBy(1), m_pT(ptArray), m_nUpperBound(upbound), m_nSize(size)
 {
 #ifdef _DEBUG
@@ -37,7 +37,7 @@ template<class T> SimpleArray<T>::SimpleArray(T* ptArray, int upbound, int size)
 }
 
 //-------------------------------------------------------------------
-template<class T> SimpleArray<T>::SimpleArray(SimpleArray& spaArg)
+template<class T> SimpleArray<T>::SimpleArray(const SimpleArray& spaArg)
 	: m_nSize(spaArg.m_nSize), m_nUpperBound(spaArg.m_nUpperBound),
 	m_nGrowBy(spaArg.m_nGrowBy)
 {
@@ -273,7 +273,7 @@ template<class T> void SimpleArray<T>::SetAtRef(int nIndex, const T& argT)
 }
 
 //-------------------------------------------------------------------
-template<class T> T SimpleArray<T>::GetAt(int nIndex)
+template<class T> T SimpleArray<T>::GetAt(int nIndex) const
 {
 	return m_pT[nIndex];
 }
@@ -299,25 +299,25 @@ template<class T> int SimpleArray<T>::AddSpace(int nExtend)
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::GetGrowBy()
+template<class T> int SimpleArray<T>::GetGrowBy() const
 {
 	return m_nGrowBy;
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::GetSize()
+template<class T> int SimpleArray<T>::GetSize() const
 {
 	return m_nSize;
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::GetUpperBound()
+template<class T> int SimpleArray<T>::GetUpperBound() const
 {
 	return m_nUpperBound;
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::GetLength()
+template<class T> int SimpleArray<T>::GetLength() const
 {
 	return m_nUpperBound+1;
 }
@@ -448,13 +448,13 @@ template<class T> void SimpleArray<T>::Append(T argT)
 }
 
 //-------------------------------------------------------------------
-template<class T> T& SimpleArray<T>::GetRefAt(int nIndex)
+template<class T> T& SimpleArray<T>::GetRefAt(int nIndex) const
 {
 	return m_pT[nIndex];
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::blCompare(SimpleArray<T>& spa)
+template<class T> int SimpleArray<T>::blCompare(SimpleArray<T>& spa) const
 {
 	if(m_nUpperBound != spa.GetUpperBound() ) return FALSE;
 	int k;
@@ -478,7 +478,7 @@ template<class T> int SimpleArray<T>::operator!=(SimpleArray<T>& spa)
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::blIsEmpty()
+template<class T> int SimpleArray<T>::blIsEmpty() const
 {
 	return (GetUpperBound() < 0) ? TRUE : FALSE;
 }

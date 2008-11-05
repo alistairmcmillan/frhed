@@ -16,9 +16,9 @@ template<class T> class SimpleArray
 {
 public:
 	SimpleArray();
-	SimpleArray(T* ptArray, int upbound, int size);
+	SimpleArray(const T* ptArray, int upbound, int size);
 	SimpleArray(int nNewSize, int nGrowBy = 1);
-	SimpleArray(SimpleArray& spaArg);
+	SimpleArray(const SimpleArray& spaArg);
 	virtual ~SimpleArray();
 
 	operator T*()
@@ -40,12 +40,12 @@ public:
 	int SetAtGrowRef(int nIndex, const T& argT);
 	void SetAt(int nIndex, T argT);
 	void SetAtRef(int nIndex, const T& argT);
-	T GetAt(int nIndex);
-	T& GetRefAt(int nIndex);
-	int GetSize();
-	int GetUpperBound();
-	int GetLength();
-	int GetGrowBy();
+	T GetAt(int nIndex) const;
+	T& GetRefAt(int nIndex) const;
+	int GetSize() const;
+	int GetUpperBound() const;
+	int GetLength() const;
+	int GetGrowBy() const;
 	int SetSize(int nNewSize, int nGrowBy = 0);
 	void SetGrowBy(int nGrowBy);
 	T& operator[](int nIndex) {return m_pT[nIndex];}
@@ -54,11 +54,11 @@ public:
 	int blContainsRef(const T& argT);
 	int blContains(T argT);
 	int nContainsAt(T argT);
-	int blIsEmpty();
+	int blIsEmpty() const;
 	void AppendRef(const T& argT);
 	void Append(T argT);
 	void Exchange(int nIndex1, int nIndex2);
-	int blCompare(SimpleArray<T>& spa);
+	int blCompare(SimpleArray<T>& spa) const;
 	int operator==(SimpleArray<T>& spa);
 	int operator!=(SimpleArray<T>& spa);
 	int Adopt(T* ptArray, int upbound, int size);
