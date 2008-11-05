@@ -23,6 +23,9 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
+#ifndef _LOADHEXFILE_H_
+#define _LOADHEXFILE_H_
+
 #include "Simparr.h"
 
 class hexfile_stream
@@ -142,3 +145,5 @@ private:
 public:
 	static bool StreamIn(HexEditorWindow &, hexfile_stream &);
 };
+
+#endif // _LOADHEXFILE_H_
