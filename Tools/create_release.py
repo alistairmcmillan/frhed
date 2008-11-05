@@ -241,9 +241,9 @@ def create_bin_folders(bin_folder, dist_src_folder):
 
     #copy_po_files(lang_folder)
 
-    shutil.copy('Docs/ChangeLog.txt', doc_folder)
-    shutil.copy('Docs/Contributors.txt', doc_folder)
-    shutil.copy('Docs/History.txt', doc_folder)
+    shutil.copy('Docs/Users/ChangeLog.txt', doc_folder)
+    shutil.copy('Docs/Users/Contributors.txt', doc_folder)
+    shutil.copy('Docs/Users/History.txt', doc_folder)
     shutil.copy('Installer/NSIS/GPL.txt', doc_folder)
 
 def copy_po_files(dest_folder):
