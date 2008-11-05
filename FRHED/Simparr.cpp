@@ -8,10 +8,11 @@
 // $Id$
 
 #include "precomp.h"
-#include "simparr.h"
+#include <string.h>
+#include "Simparr.h"
 
 //-------------------------------------------------------------------
-int SimpleString::AppendString( const char* ps )
+int SimpleString::AppendString(const char* ps)
 {
 	if( m_nUpperBound == -1 )
 		return SetToString( ps );
@@ -23,28 +24,28 @@ int SimpleString::AppendString( const char* ps )
 }
 
 //-------------------------------------------------------------------
-int SimpleString::SetToString( const char* ps )
+int SimpleString::SetToString(const char* ps)
 {
 	Clear();
 	return AppendString( ps );
 }
 
 //-------------------------------------------------------------------
-SimpleString& SimpleString::operator=( const char* ps )
+SimpleString& SimpleString::operator=(const char* ps)
 {
 	SetToString( ps );
 	return *this;
 }
 
 //-------------------------------------------------------------------
-SimpleString& SimpleString::operator=( const SimpleString &str )
+SimpleString& SimpleString::operator=(const SimpleString &str)
 {
 	SetToString( &str[0] );
 	return *this;
 }
 
 //-------------------------------------------------------------------
-SimpleString& SimpleString::operator+=( const char* ps )
+SimpleString& SimpleString::operator+=(const char* ps)
 {
 	if( m_nUpperBound == -1 )
 		SetToString( ps );

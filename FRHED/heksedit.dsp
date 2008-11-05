@@ -395,6 +395,10 @@ SOURCE=.\Simparr.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Simparr_imp.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringTable.h
 # End Source File
 # Begin Source File

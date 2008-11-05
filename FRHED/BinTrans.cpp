@@ -24,6 +24,7 @@
 // $Id$
 
 #include "precomp.h"
+#include "Simparr.h"
 #include "hexwnd.h"
 #include "BinTrans.h"
 

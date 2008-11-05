@@ -27,6 +27,7 @@
 // Frhed main definition file.
 #include "precomp.h"
 #include "resource.h"
+#include "Simparr.h"
 #include "StringTable.h"
 #include "VersionData.h"
 #include "hexwnd.h"
