@@ -1,14 +1,13 @@
 /** 
  * @file  Simparr.cpp
  *
- * @brief Implementation file for SimpleArray and SimpleString classes.
+ * @brief Implementation file for SimpleString class.
  *
  */
 // ID line follows -- this is updated by SVN
 // $Id$
 
 #include "precomp.h"
-#include <string.h>
 #include "Simparr.h"
 
 //-------------------------------------------------------------------
@@ -57,7 +56,7 @@ SimpleString& SimpleString::operator+=(const char* ps)
 }
 
 //-------------------------------------------------------------------
-int SimpleString::StrLen()
+int SimpleString::StrLen() const
 {
 	if( m_pT != NULL )
 		return strlen( m_pT );
@@ -99,7 +98,7 @@ SimpleString SimpleString::operator+( const SimpleString& str1 )
 }
 
 //-------------------------------------------------------------------
-int SimpleString::IsEmpty()
+int SimpleString::IsEmpty() const
 {
 	return !StrLen();
 }

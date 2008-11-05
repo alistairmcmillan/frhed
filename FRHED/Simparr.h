@@ -84,17 +84,19 @@ protected:
 class SimpleString : public SimpleArray<char>
 {
 public:
-	int IsEmpty();
 	SimpleString operator+( const SimpleString& str1 );
 	SimpleString();
 	SimpleString( const char* ps );
+
+	int IsEmpty() const;
+	int StrLen() const;
 	int AppendString( const char* ps );
 	int SetToString( const char* ps );
+	void Clear();
+
 	SimpleString& operator=( const char* ps );
 	SimpleString& operator=( const SimpleString &str );
 	SimpleString& operator+=( const char* ps );
-	int StrLen();
-	void Clear();
 };
 
 SimpleString operator+( const SimpleString &ps1, const char* ps2 );
