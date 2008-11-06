@@ -203,7 +203,7 @@ template<class T> void SimpleArray<T>::InsertAtRef(int nIndex, const T& argT, in
 }
 
 //-------------------------------------------------------------------
-template<class T> SimpleArray<T>::RemoveAt(int nIndex, int nCount)
+template<class T> int SimpleArray<T>::RemoveAt(int nIndex, int nCount)
 {
 	if(nIndex < 0 || nIndex > m_nUpperBound || nCount < 1) return FALSE;
 	if(nCount > m_nUpperBound - nIndex)
