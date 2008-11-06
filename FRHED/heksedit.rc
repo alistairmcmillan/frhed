@@ -41,9 +41,11 @@ BEGIN
         MENUITEM "&New\tCtrl+N",                IDM_NEW
         MENUITEM "&Open...\tCtrl+O",            IDM_OPEN
         MENUITEM "Open pa&rtially...\tAlt+P",   IDM_PARTIAL_OPEN
+        MENUITEM SEPARATOR
         MENUITEM "&Save\tCtrl+S",               IDM_SAVE
         MENUITEM "Save &As...\tCtrl+J",         IDM_SAVE_AS
         MENUITEM "Save selec&tion as...\tCtrl+Shift+O", IDM_SAVESELAS
+        MENUITEM SEPARATOR
         MENUITEM "Re&vert\tCtrl+Shift+R",       IDM_REVERT
         MENUITEM "&Insert file...\tCtrl+Shift+I", IDM_INSERTFILE
         MENUITEM "&Delete file...\tCtrl+Shift+D", IDM_DELETEFILE
