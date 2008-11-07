@@ -292,14 +292,15 @@ def check_tools():
     return True
 
 def usage():
-    print 'WinMerge release script.'
-    print 'Usage: create_release [-h] [-v: n] [-c] [-l]'
+    print 'Frhed release script.'
+    print 'Usage: create_release [-h] [-v: n] [-c] [-l] [-f]'
     print '  where:'
     print '    -h, --help print this help'
     print '    -v: n, --version= n set release version'
     print '    -c, --cleanup clean up build files (temp files, libraries, executables)'
-    print '    -l, --libraries build libraries (expat, scew, pcre) only'
-    print '  For example: create_release -v: 2.7.7.1'
+    print '    -l, --libraries build libraries (heksedit, rawio32) only'
+    print '    -f:, --file= filename set the version number ini file'
+    print '  For example: create_release -f: versions.ini'
 
 def main(argv):
     version = '0.0.0.0'
@@ -314,7 +315,7 @@ def main(argv):
                 sys.exit()
             if opt in ("-v", "--version"):
                 version = arg
-                print "Start building WinMerge release version " + version
+                print "Start building Frhed release version " + version
             if opt in ("-c", "--cleanup"):
                 if cleanup_build() == True:
                     print 'Cleanup done.'
