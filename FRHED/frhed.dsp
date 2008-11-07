@@ -139,7 +139,7 @@ SOURCE=.\frhed.rc
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\icon1.ico
+SOURCE=.\res\Frhed.ico
 # End Source File
 # Begin Source File
 

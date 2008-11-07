@@ -427,7 +427,7 @@ SOURCE=.\heksedit.rc
 # End Source File
 # Begin Source File
 
-SOURCE=.\icon1.ico
+SOURCE=.\res\Frhed.ico
 # End Source File
 # Begin Source File
 
