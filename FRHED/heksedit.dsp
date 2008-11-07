@@ -438,24 +438,24 @@ SOURCE=.\resource.h
 SOURCE=.\Toolbar.bmp
 # End Source File
 # End Group
-# Begin Group "Text Files"
+# Begin Group "Documents"
 
 # PROP Default_Filter "txt"
 # Begin Source File
 
-SOURCE=.\Bugs.txt
+SOURCE=..\Docs\Users\ChangeLog.txt
 # End Source File
 # Begin Source File
 
-SOURCE=.\History.txt
+SOURCE=..\Docs\Users\Contributors.txt
 # End Source File
 # Begin Source File
 
-SOURCE=.\Readme.txt
+SOURCE=..\Docs\Users\History.txt
 # End Source File
 # Begin Source File
 
-SOURCE=.\Todo.txt
+SOURCE=..\Docs\Developers\SVN_Organisation.txt
 # End Source File
 # End Group
 # End Target
