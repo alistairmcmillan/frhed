@@ -2,5 +2,55 @@
 <article id="disk_menu">
   <title>The Disk Menu</title>
 
-  <para>...</para>
+  <section>
+    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Open Drive</guimenuitem></menuchoice> command</title>
+    <para>Use this command to open a physical harddrive or logical partition.</para>
+    <section>
+      <title>Restrictions</title>
+      <itemizedlist>
+        <listitem>
+          <simpara>Only Harddisks are supported. CD-ROMs and Floppys are not supported (yet).</simpara>
+        </listitem>
+        <listitem>
+          <simpara>Access is read-only. Write-access is planned for a future version of Frhed.</simpara>
+        </listitem>
+        <listitem>
+          <simpara><emphasis role="bold">Windows NT</emphasis>: You must have administrative privileges to access the physical harddisk data.</simpara>
+        </listitem>
+        <listitem>
+          <simpara><emphasis role="bold">Windows 95</emphasis>: You must have extended interrupt 13 enabled. <ulink url="http://uranus.it.swin.edu.au/~jn/linux/ex2fs95.htm">Read more about this here (external link)</ulink>.</simpara>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Close Drive</guimenuitem></menuchoice> command</title>
+    <para>Use this command to close the previously opened drive again.</para>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Goto First Sector</guimenuitem></menuchoice> command</title>
+    <para>Use this command to navigate to the first sector of the harddisk.</para>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Goto Next Sector</guimenuitem></menuchoice> command</title>
+    <para>Use this command to navigate to the next sector of the harddisk.</para>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Goto Previous Sector</guimenuitem></menuchoice> command</title>
+    <para>Use this command to navigate to the previous sector of the harddisk.</para>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Goto Last Sector</guimenuitem></menuchoice> command</title>
+    <para>Use this command to navigate to the last sector of the harddisk.</para>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Goto Sector #</guimenuitem></menuchoice> command</title>
+    <para>This command will show a dialog where you can specify a sector number to navigate to.</para>
+  </section>
 </article>

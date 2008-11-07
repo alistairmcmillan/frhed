@@ -2,5 +2,43 @@
 <article id="moving_in_the_file">
   <title>Moving in the file</title>
 
-  <para>...</para>
+  <para>You can move the caret with the arrow keys. Press TAB to toggle the editing mode between byte and
+  character editing. When there is a selection TAB brings the selection into the middle of the display.</para>
+
+  <para>You can also jump to any position by choosing the <menuchoice><guimenu>Edit</guimenu><guimenuitem>Go To</guimenuitem></menuchoice> command and entering
+  an offset, like "125", which will set the caret position to offset 125 decimal. For relative jumps
+  in the file, for example if you want to go to an offset 150 bytes after the current one, you have
+  to start with "+" as the first character and follow this with either a decimal number or a hex
+  number starting with "x". So to jump 150 bytes forward you have to enter "+150" or "+x96" in hex
+  notation. For backward relative jumps start with "-" (minus) as the first character.</para>
+
+  <para>To jump to the start of the line press Home or End for the end of the line.
+  To jump directly to the end of the file press Ctrl+End, for the beginning Ctrl+Home.</para>
+
+  <para>Frhed can find text and binary values in a file. Choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Find</guimenuitem></menuchoice> to do this.
+  In the dialog you can choose if the case of the text parts of the find string are to be
+  ignored and the find direction. To encode binary values, Frhed uses a special syntax. Example:</para>
+
+  <screen>Here is the findstring&lt;bd:0&gt;FloatValue&lt;fl:-14.56&gt;</screen>
+
+  <para>This will cause Frhed to search for a string "Here is the findstring." followed by a
+  zero-byte, then the text "FloatValue" and a 4-byte float with the value -14.56.</para>
+
+  <para>Note that coded binary values will also be transformed by the "match case" option of the Find
+  command, so if you search for a byte with the hex value of 0x41 (this is the upper-case letter "A")
+  with the match-case option disabled, then Frhed will also find bytes with the hex value 0x61
+  (the lower-case letter "a"). Therefore you should always search for discrete binary values with
+  case-matching enabled or you might not get correct results.
+  Please see <xref linkend="special_syntax" /> for further information.</para>
+
+  <para>The <menuchoice><guimenu>Edit</guimenu><guimenuitem>Find next</guimenuitem></menuchoice> and <menuchoice><guimenu>Edit</guimenu><guimenuitem>Find previous</guimenuitem></menuchoice> commands find the next or previous
+  occurance of the findstring last entered in the Find-dialog, with the match-case option enabled
+  or disabled as chosen in it. If there was no previous findstring the both Find next &amp; Find previous
+  commands will bring up the <menuchoice><guimenu>Edit</guimenu><guimenuitem>Find</guimenuitem></menuchoice> dialog.</para>
+
+  <para>By positioning the mouse cursor on a byte or a character and pressing the left mouse
+  button you can also set the caret position.</para>
+
+  <para>You can also move in the file by choosing one of the bookmarks in the <guimenu>Bookmarks</guimenu>
+  menu section. The caret will be set to that offset immediately.</para>
 </article>
