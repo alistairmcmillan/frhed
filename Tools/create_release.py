@@ -111,6 +111,12 @@ def cleanup_build():
         return False
     return True
 
+def get_product_version(file):
+    """Get the product version number from config file."""
+
+    version = SetVersions.get_product_version(file)
+    return version
+
 def set_resource_version(file):
     """Sets the version number to the resource."""
 
@@ -352,6 +358,9 @@ def main(argv):
         sys.exit()
 
     if len(ver_file) > 0:
+        version_read = get_product_version(ver_file)
+        if len(version_read) > 0:
+          version = version_read
         set_resource_version(ver_file)
 
     version_folder = 'Frhed-' + version
