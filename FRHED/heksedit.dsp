@@ -311,10 +311,6 @@ SOURCE=.\gktools.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GlobalStream.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\gtools.h
 # End Source File
 # Begin Source File
@@ -328,6 +324,10 @@ SOURCE=.\hexwdlg.h
 # Begin Source File
 
 SOURCE=.\hexwnd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\hgstream.h
 # End Source File
 # Begin Source File
 
@@ -423,11 +423,11 @@ SOURCE=.\VersionData.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\heksedit.rc
+SOURCE=.\res\Frhed.ico
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\Frhed.ico
+SOURCE=.\heksedit.rc
 # End Source File
 # Begin Source File
 
