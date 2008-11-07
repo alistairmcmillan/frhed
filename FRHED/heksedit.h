@@ -1,6 +1,34 @@
-// This is frhed vCURRENT_VERSION.SUB_RELEASE_NO
-#include "version.h"
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  heksedit.h
+ *
+ * @brief Interface definition for the hekseditor window.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
 
+#ifndef _HEKSEDIT_H_
+#define _HEKSEDIT_H_
+
+/**
+ * @brief Interface for the Hexeditor window.
+ */
 class IHexEditorWindow
 {
 public:
@@ -11,6 +39,7 @@ public:
 		COLORREF iBmkColor;
 		COLORREF iDiffBkColorValue, iDiffTextColorValue, iSelDiffBkColorValue, iSelDiffTextColorValue;
 	};
+
 	struct Settings
 	{
 		int iBytesPerLine;
@@ -25,6 +54,7 @@ public:
 		int bAutoOffsetLen;
 		int bCenterCaret;
 	};
+
 	struct Status
 	{
 		int iFileChanged;
@@ -39,6 +69,7 @@ public:
 		int iStartOfSelection;
 		int iEndOfSelection;
 	};
+
 	virtual unsigned char *STDMETHODCALLTYPE get_buffer(int) = 0;
 	virtual int STDMETHODCALLTYPE get_length() = 0;
 	virtual void STDMETHODCALLTYPE set_sibling(IHexEditorWindow *) = 0;
@@ -65,3 +96,5 @@ public:
 	virtual BSTR STDMETHODCALLTYPE load_string(UINT) = 0;
 	virtual void STDMETHODCALLTYPE free_string(BSTR) = 0;
 };
+
+#endif // _HEKSEDIT_H_
