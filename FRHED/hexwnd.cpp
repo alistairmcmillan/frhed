@@ -4019,12 +4019,18 @@ void HexEditorWindow::update_MRU()
 	save_ini_data();
 }
 
-//-------------------------------------------------------------------
-// Creates the MRU list and inserts it into the File menu.
+/**
+ * @brief Create MRU file list into File-menu.
+ * This method replaces the MRU placeholder items in File menu with actual
+ * previously opened files.
+ * @param [in] menu Handle to the File-menu.
+ */
 void HexEditorWindow::make_MRU_list(HMENU menu)
 {
-//Pabs changed - 15 used to be 9
-	do; while (RemoveMenu(menu, 15, MF_BYPOSITION));
+	// Remove MRU placeholder items
+	for (UINT id = IDM_MRU1; id <= IDM_MRU9; ++id)
+		DeleteMenu(menu, id, MF_BYCOMMAND);
+	
 	if (iMRU_count > 0)
 	{
 		AppendMenu(menu, MF_SEPARATOR, 0, 0);
