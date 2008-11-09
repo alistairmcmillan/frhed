@@ -28,6 +28,8 @@
 #include "LangArray.h"
 #include "VersionData.h"
 
+static const UINT ModifyableMenuFlags = MF_POPUP | MF_BITMAP | MF_DISABLED | MF_GRAYED | MF_MENUBARBREAK | MF_MENUBREAK;
+
 const LANGID LangArray::DefLangId = MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US);
 
 /**
@@ -475,6 +477,92 @@ void LangArray::TranslateDialogW(HWND h)
 		h = ::GetWindow(h, gw);
 		gw = GW_HWNDNEXT;
 	} while (h);
+}
+
+void LangArray::TranslateMenuA(HMENU h)
+{
+	if (h)
+	{
+		int i = GetMenuItemCount(h);
+		while (i > 0)
+		{
+			--i;
+			UINT state = GetMenuState(h, i, MF_BYPOSITION);
+			UINT id;
+			if (state & MF_POPUP)
+			{
+				id = reinterpret_cast<UINT>(GetSubMenu(h, i));
+				TranslateMenuA(reinterpret_cast<HMENU>(id));
+			}
+			else
+			{
+				id = GetMenuItemID(h, i);
+			}
+			TCHAR text[80];
+			if (GetMenuStringA(h, i, text, RTL_NUMBER_OF(text), MF_BYPOSITION))
+			{
+				int line = 0;
+				if (LPTSTR p = _tcschr(text, _T(':')))
+					line = _ttoi(p + 1);
+				if (BSTR t = TranslateStringA(line))
+				{
+					::ModifyMenuA(h, i, state & ModifyableMenuFlags | MF_BYPOSITION, id, (PSTR)t);
+					::SysFreeString(t);
+				}
+			}
+		}
+	}
+}
+
+void LangArray::TranslateMenuW(HMENU h)
+{
+	if (h)
+	{
+		int i = GetMenuItemCount(h);
+		while (i > 0)
+		{
+			--i;
+			UINT state = GetMenuState(h, i, MF_BYPOSITION);
+			UINT id;
+			if (state & MF_POPUP)
+			{
+				id = reinterpret_cast<UINT>(GetSubMenu(h, i));
+				TranslateMenuW(reinterpret_cast<HMENU>(id));
+			}
+			else
+			{
+				id = GetMenuItemID(h, i);
+			}
+			WCHAR text[80];
+			if (GetMenuStringW(h, i, text, RTL_NUMBER_OF(text), MF_BYPOSITION))
+			{
+				int line = 0;
+				if (LPWSTR p = wcschr(text, _T(':')))
+					line = _wtoi(p + 1);
+				if (BSTR t = TranslateStringW(line))
+				{
+					::ModifyMenuW(h, i, state & ModifyableMenuFlags | MF_BYPOSITION, id, t);
+					::SysFreeString(t);
+				}
+			}
+		}
+	}
+}
+
+HMENU LangArray::LoadMenuW(HINSTANCE hMainInstance, LPWSTR idr)
+{
+	HMENU h = ::LoadMenuW(m_hLangDll ? m_hLangDll : hMainInstance, idr);
+	if (m_hLangDll)
+		TranslateMenuW(h);
+	return h;
+}
+
+HMENU LangArray::LoadMenuA(HINSTANCE hMainInstance, LPSTR idr)
+{
+	HMENU h = ::LoadMenuA(m_hLangDll ? m_hLangDll : hMainInstance, idr);
+	if (m_hLangDll)
+		TranslateMenuA(h);
+	return h;
 }
 
 int LangArray::LangCodeMajor(LANGID langid, LPTSTR name)

@@ -49,6 +49,10 @@ public:
 	BSTR TranslateStringW(int line);
 	void TranslateDialogA(HWND);
 	void TranslateDialogW(HWND);
+	void TranslateMenuA(HMENU);
+	void TranslateMenuW(HMENU);
+	HMENU LoadMenuW(HINSTANCE, LPWSTR);
+	HMENU LoadMenuA(HINSTANCE, LPSTR);
 	static int LangCodeMajor(LANGID, LPTSTR);
 	static int LangCodeMinor(LANGID, LPTSTR);
 };
