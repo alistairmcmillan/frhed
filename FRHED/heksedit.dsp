@@ -1,24 +1,24 @@
 # Microsoft Developer Studio Project File - Name="heksedit" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
-# ** DO NOT EDIT **
+# ** NICHT BEARBEITEN **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
 CFG=heksedit - Win32 Debug
-!MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE use the Export Makefile command and run
+!MESSAGE Dies ist kein gültiges Makefile. Zum Erstellen dieses Projekts mit NMAKE
+!MESSAGE verwenden Sie den Befehl "Makefile exportieren" und führen Sie den Befehl
 !MESSAGE 
 !MESSAGE NMAKE /f "heksedit.mak".
 !MESSAGE 
-!MESSAGE You can specify a configuration when running NMAKE
-!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE Sie können beim Ausführen von NMAKE eine Konfiguration angeben
+!MESSAGE durch Definieren des Makros CFG in der Befehlszeile. Zum Beispiel:
 !MESSAGE 
 !MESSAGE NMAKE /f "heksedit.mak" CFG="heksedit - Win32 Debug"
 !MESSAGE 
-!MESSAGE Possible choices for configuration are:
+!MESSAGE Für die Konfiguration stehen zur Auswahl:
 !MESSAGE 
-!MESSAGE "heksedit - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "heksedit - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "heksedit - Win32 Release" (basierend auf  "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "heksedit - Win32 Debug" (basierend auf  "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 1
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /Od /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_CRT_SECURE_NO_DEPRECATE" /FR /Yu"precomp.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /Od /I "$(ProgramFiles)\Microsoft SDK\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_CRT_SECURE_NO_DEPRECATE" /FR /Yu"precomp.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -53,11 +53,11 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 version.lib comctl32.lib wininet.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib shlwapi.lib htmlhelp.lib /nologo /subsystem:windows /dll /machine:I386
+# ADD LINK32 version.lib comctl32.lib wininet.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib shlwapi.lib htmlhelp.lib /nologo /subsystem:windows /dll /machine:I386 /libpath:"$(ProgramFiles)\Microsoft SDK\lib"
 # SUBTRACT LINK32 /pdb:none
 # Begin Special Build Tool
 IntDir=.\..\BuildTmp\heksedit\Release
-TargetPath=\Frhed\Frhed_SVN\Build\Release\heksedit.dll
+TargetPath=\frhed\trunk\Build\Release\heksedit.dll
 SOURCE="$(InputPath)"
 PreLink_Cmds=PreLink.bat $(IntDir) $(TargetPath)
 # End Special Build Tool
@@ -76,7 +76,7 @@ PreLink_Cmds=PreLink.bat $(IntDir) $(TargetPath)
 # PROP Ignore_Export_Lib 1
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_CRT_SECURE_NO_DEPRECATE" /FR /Yu"precomp.h" /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "$(ProgramFiles)\Microsoft SDK\include" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_CRT_SECURE_NO_DEPRECATE" /FR /Yu"precomp.h" /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -86,11 +86,11 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 version.lib comctl32.lib wininet.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib shlwapi.lib htmlhelp.lib /nologo /subsystem:windows /dll /incremental:no /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 version.lib comctl32.lib wininet.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib shlwapi.lib htmlhelp.lib /nologo /subsystem:windows /dll /incremental:no /debug /machine:I386 /pdbtype:sept /libpath:"$(ProgramFiles)\Microsoft SDK\lib"
 # SUBTRACT LINK32 /nodefaultlib
 # Begin Special Build Tool
 IntDir=.\..\BuildTmp\heksedit\Debug
-TargetPath=\Frhed\Frhed_SVN\Build\Debug\heksedit.dll
+TargetPath=\frhed\trunk\Build\Debug\heksedit.dll
 SOURCE="$(InputPath)"
 PreLink_Cmds=PreLink.bat $(IntDir) $(TargetPath)
 # End Special Build Tool
@@ -111,6 +111,10 @@ SOURCE=.\AboutDlg.cpp
 # Begin Source File
 
 SOURCE=.\AddBmkDlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AnsiConvert.cpp
 # End Source File
 # Begin Source File
 
@@ -210,6 +214,10 @@ SOURCE=.\LangArray.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LangTools.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadHexFile.cpp
 # End Source File
 # Begin Source File
@@ -295,6 +303,10 @@ SOURCE=.\ViewSettingsDlg.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\AnsiConvert.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\BinTrans.h
 # End Source File
 # Begin Source File
@@ -348,6 +360,10 @@ SOURCE=.\InvokeHtmlHelp.h
 # Begin Source File
 
 SOURCE=.\LangArray.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LangTools.h
 # End Source File
 # Begin Source File
 

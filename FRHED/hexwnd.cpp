@@ -230,8 +230,6 @@ int HexEditorWindow::translate_accelerator(MSG *pMsg)
 	return TranslateAccelerator(hwnd, hAccel, pMsg);
 }
 
-LangArray langArray;
-
 static LPWSTR NTAPI LoadStringResource(HMODULE hModule, UINT uStringID)
 {
 	LPWSTR pwchMem = 0;
@@ -293,6 +291,18 @@ BOOL HexEditorWindow::load_lang(LANGID langid)
 	FreeStringTable();
 	BOOL bDone = langArray.Load(hMainInstance, langid);
 	LoadStringTable();
+	if (hwndMain)
+	{
+		HMENU hMenu = IsWindowUnicode(hwndMain) ?
+			langArray.LoadMenuW(hMainInstance, MAKEINTRESOURCEW(IDR_MAINMENU)) :
+			langArray.LoadMenuA(hMainInstance, MAKEINTRESOURCEA(IDR_MAINMENU));
+		if (hMenu)
+		{
+			HMENU hMenuDestroy = ::GetMenu(hwndMain);
+			if (::SetMenu(hwndMain, hMenu))
+				::DestroyMenu(hMenuDestroy);
+		}
+	}
 	return bDone;
 }
 
@@ -4037,10 +4047,16 @@ void HexEditorWindow::update_MRU()
  */
 void HexEditorWindow::make_MRU_list(HMENU menu)
 {
-	// Remove MRU placeholder items
-	for (UINT id = IDM_MRU1; id <= IDM_MRU9; ++id)
-		DeleteMenu(menu, id, MF_BYCOMMAND);
-	
+	// Remove MRU placeholder items and preceding separator
+	int i = GetMenuItemCount(menu);
+	while (i)
+	{
+		UINT id = GetMenuItemID(menu, --i);
+		if (id >= IDM_MRU1 && id <= IDM_MRU9 || id == 0)
+			RemoveMenu(menu, i, MF_BYPOSITION);
+		else
+			i = 0;
+	}
 	if (iMRU_count > 0)
 	{
 		AppendMenu(menu, MF_SEPARATOR, 0, 0);
@@ -4721,22 +4737,6 @@ void HexEditorWindow::CMD_goto()
 HRESULT HexEditorWindow::ResolveIt(LPCSTR lpszLinkFile, LPSTR lpszPath)
 {
 	return ::ResolveIt(hwndMain, lpszLinkFile, lpszPath);
-}
-
-void NTAPI TranslateDialog(HWND hwnd)
-{
-	if (IsWindowUnicode(hwnd))
-		langArray.TranslateDialogW(hwnd);
-	else
-		langArray.TranslateDialogA(hwnd);
-}
-
-INT_PTR NTAPI ShowModalDialog(UINT idd, HWND hwnd, DLGPROC dlgproc, LPVOID param)
-{
-	HINSTANCE hinst = langArray.m_hLangDll ? langArray.m_hLangDll : hMainInstance;
-	return IsWindowUnicode(hwnd)
-	? DialogBoxParamW(hinst, MAKEINTRESOURCEW(idd), hwnd, dlgproc, (LPARAM)param)
-	: DialogBoxParamA(hinst, MAKEINTRESOURCEA(idd), hwnd, dlgproc, (LPARAM)param);
 }
 
 //-------------------------------------------------------------------

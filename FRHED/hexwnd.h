@@ -30,6 +30,7 @@
 #include "IDT.h"
 
 #include "heksedit.h"
+#include "LangTools.h"
 
 #define SHARPEN_A(X) #X
 #define SHARPEN_W(X) L#X
@@ -77,9 +78,6 @@ enum EnteringMode { BYTES, CHARS };
 class hexfile_stream;
 class load_hexfile_0;
 class load_hexfile_1;
-
-class LangArray;
-extern LangArray langArray;
 
 interface CDropTarget;
 
@@ -331,9 +329,6 @@ protected:
 };
 
 void reverse_bytes(BYTE *, BYTE *);
-
-void NTAPI TranslateDialog(HWND);
-INT_PTR NTAPI ShowModalDialog(UINT, HWND, DLGPROC, LPVOID);
 
 class WaitCursor
 {

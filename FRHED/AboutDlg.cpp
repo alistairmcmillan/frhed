@@ -25,6 +25,7 @@
 
 #include "precomp.h"
 #include "resource.h"
+#include "StringTable.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
 
@@ -34,14 +35,12 @@
  */
 BOOL AboutDlg::OnInitDialog(HWND hDlg)
 {
-	TranslateDialog(hDlg);
 	// Set the version information.
-	SetDlgItemText(hDlg, IDC_STATIC1,
-		"frhed - free hex editor for 32-bit Windows\nVersion "CURRENT_VERSION"."
-		SUB_RELEASE_NO"."BUILD_NO"\n(c) Raihan Kibria 2000"
-		"\nFill with by Pabs Dec 1999"
-		"\nDisk-Access, Code/Decode Extension and some other bits by Gerson Kurz."
-		"\nDLL interface by Jochen Neubeck.");
+	wchar_t buf[4096];
+	buf[RTL_NUMBER_OF(buf) - 1] = L'\0';
+	_snwprintf(buf, RTL_NUMBER_OF(buf) - 1, S.AboutFrhed,
+		FRHED_MAJOR_VERSION, FRHED_MINOR_VERSION, FRHED_SUB_RELEASE_NO, FRHED_BUILD_NO);
+	SetDlgItemText(hDlg, IDC_STATIC1, buf);
 	// Set the email-addresses.
 	SetDlgItemText(hDlg, IDC_EDIT1,
 		"rkibria@hrz1.hrz.tu-darmstadt.de"
