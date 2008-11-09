@@ -26,6 +26,9 @@
 #ifndef _HEKSEDIT_H_
 #define _HEKSEDIT_H_
 
+// This is frhed vCURRENT_VERSION.SUB_RELEASE_NO
+#include "version.h"
+
 /**
  * @brief Interface for the Hexeditor window.
  */
