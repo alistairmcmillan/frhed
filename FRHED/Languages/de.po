@@ -1743,6 +1743,11 @@ msgstr "Letzter Sektor"
 
 #: heksedit.rc:1324
 #, c-format
+msgid "frhed - free hex editor for 32-bit Windows\nVersion %u.%u.%u.%u\n(c) Raihan Kibria 2000\nFill with by Pabs Dec 1999\nDisk-Access, Code/Decode Extension and some other bits by Gerson Kurz.\nDLL interface by Jochen Neubeck."
+msgstr "frhed - freier Hex-Editor für 32-bit Windows\nVersion %u.%u.%u.%u\n(c) Raihan Kibria 2000\nFill with by Pabs Dec 1999\nDisk-Access, Code/Decode Extension and some other bits by Gerson Kurz.\nDLL interface by Jochen Neubeck."
+
+#: heksedit.rc:1325
+#, c-format
 msgid "%d) 0x%x=%n%d to 0x%x=%n%d (%d bytes)"
 msgstr "%d) 0x%x=%n%d bis 0x%x=%n%d (%d Bytes)"
 
