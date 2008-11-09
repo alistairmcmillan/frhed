@@ -6,5 +6,6 @@ StringTable<LPWSTR> S;
 
 StringTable<WORD> IDS =
 {
-	IDS_DiffListItemFormat
+	IDS_DiffListItemFormat,
+	IDS_AboutFrhed
 };

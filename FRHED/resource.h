@@ -246,6 +246,7 @@
 #define IDC_APPICON                     1082
 #define IDC_COMBO1                      1083
 #define IDS_DiffListItemFormat          10001
+#define IDS_AboutFrhed                  10002
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects
