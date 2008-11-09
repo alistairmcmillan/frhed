@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Releasing.html</title>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+</head>
+<body>
+<h2>Doing Frhed Release</h2>
+
+<h3>Table of Contents</h3>
+<ol>
+  <li><a href="#Checklist">Checklist</a></li>
+  <li><a href="#VersionNumber">Version Number</a></li>
+  <li><a href="#UsingTheScript">Using the Script</a></li>
+  <li><a href="#Packaging">Packaging</a></li>
+  <li><a href="#Vircheck">Virus checking and checksum creation</a></li>
+ </ol>
+
+<h3><a name="Checklist">Checklist</a></h3>
+<p>When doing a release there are many things to check first:
+<ul>
+  <li>All projects compile: Frhed, heksedit, rawio32</li>
+  <li>User manual builds</li>
+  <li>Installer builds</li>
+  <li>No local changes in files (usually you want to do the release from code
+    in SVN without local changes)
+</ul>
+
+<h3><a name="VersionNumber">Version Number</a></h3>
+<p>Setting the correct version number for the release is very important. There
+are two approaches:
+<ol>
+  <li>Setting version number by hand for each component (if not using the
+    script)</li>
+  <li>Setting the version number to <code>versions.ini</code> file (when using
+    the script)</li>
+</ol>
+
+If not using the <code>versions.ini</code> then you must set the version number
+to these components:
+<ul>
+  <li>Frhed executable (<code>FRHED/version.h</code>)</li>
+  <li>Installer</li>
+  <li>Manual</li>
+</ul>
+
+When using the script, just update the <code>versions.ini</code> file with
+correct version numbers and the script updates all needed versioning
+information for you.
+</p>
+
+<h3><a name="UsingTheScript">Using the Script</a></h3>
+<p>The recommended way to do a Frhed release is to use the Python script 
+(<code>Tools/create_release.py</code>) for it. After the script finishes you'll
+have ready installer and executable and source folder ready to be added to zips.
+</p>
+
+<p>The script uses another scripts to set version numbers, build manual etc.
+</p>
+
+<h4>Running the Script</h4>
+<p>The script must be run in command prompt. As it is Python script you'll need
+to run it with Python. The script needs name of the version ini file as
+parameter. For example:</p>
+
+<p><code>python create_release.py versions.ini</code></p>
+
+<h3><a name="#Packaging">Packaging</a></h3>
+<p>In addition to the installer executable, it is very much recommeded to
+release executable files as a zip. This allows advanced users to do their
+custom installations. And it also allows installing the software without
+privileges or running executables.</p>
+
+<p><b>You must publish the sources!</b> The GPL license requires you to publish
+any changes to the sources you have done. The best practice is to always release
+source package with executables.</p>
+
+<p>The release script creates source folder which you can just zip and release.
+</p>
+
+<p>Please name the released zips so that it is easy to see what they contain.
+For example you can add <code>src</code> or <code>bin</code> as a part of the
+file names.</p>
+
+<h3><a name="#Vircheck">Virus checking and checksum creation</a></h3>
+<p>Yes, you are sure you don't have viruses in your computer. But users who are
+downloading the software cannot know it! You must convince them that the
+executables are safe to download and run.</p>
+
+<p>Running the virus checking and adding a mention that released files have been
+checked is a must. And if possible also mention the virus checker name/version/
+update date. So users can consider if the checking is good enough for them to
+trust.</p>
+
+<p>Another important thing is to make sure users download exactly the same files
+you have released. That nobody has been able to modify the files (like add
+viruses or other harmful content). The best way is to create checksums for the
+files you released and add those checksums to release info.</p>
+
+<p>One handy tool to create checksums is the <a href="http://checksumtool.sourceforge.net/">
+CheckSumTool</a>.</p>
+
+</body>
+</html>
