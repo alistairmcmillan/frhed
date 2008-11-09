@@ -3485,16 +3485,22 @@ void HexEditorWindow::CMD_color_settings(COLORREF *pColor)
 	}
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Read options.
+ * @param [in] key Sub-key in registry for options (version string).
+ */
 void HexEditorWindow::read_ini_data(char *key)
 {
 	// Is there any data for frhed in the registry?
 	HKEY key1;
-	char keyname[64];
+	const int keyname_size = 64;
+	char keyname[keyname_size] = {0};
 	LONG res;
 	if (key == 0)
-		key = "v"CURRENT_VERSION"." SUB_RELEASE_NO;
-	sprintf(keyname, "Software\\frhed\\%s\\%d", key, iInstCount);
+		_snprintf(keyname, keyname_size - 1, "Software\\frhed\\v" CURRENT_VERSION "." SUB_RELEASE_NO "\\%d",
+				iInstCount);
+	else
+		_snprintf(keyname, keyname_size - 1, "Software\\frhed\\%s\\%d", key, iInstCount);
 
 	res = RegOpenKeyEx(HKEY_CURRENT_USER, keyname, 0, KEY_ALL_ACCESS, &key1);
 	if (res == ERROR_SUCCESS)
@@ -3538,7 +3544,7 @@ void HexEditorWindow::read_ini_data(char *key)
 		res = RegQueryValueEx( key1, "locale", NULL, NULL, (BYTE*) &lcid, &datasize );
 		load_lang((LANGID)lcid);
 
-		char szPath[ _MAX_PATH + 1 ];
+		char szPath[ _MAX_PATH + 1 ] = {0};
 		datasize = _MAX_PATH + 1;
 		res = RegQueryValueEx( key1, "TexteditorName", NULL, NULL, (BYTE*) &szPath, &datasize );
 		TexteditorName = szPath;
@@ -3558,8 +3564,9 @@ void HexEditorWindow::read_ini_data(char *key)
 		int i;
 		for (i = 0 ; i < MRUMAX ; i++)
 		{
-			char fname[64];
-			sprintf(fname, "MRU_File%d", i + 1);
+			const int fname_size = 64;
+			char fname[fname_size] = {0};
+			_snprintf(fname, fname_size - 1, "MRU_File%d", i + 1);
 			datasize = _MAX_PATH;
 			res = RegQueryValueEx(key1, fname, NULL, NULL, (BYTE*) strMRU[i], &datasize);
 		}
@@ -3575,7 +3582,9 @@ void HexEditorWindow::read_ini_data(char *key)
 	}
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Save program options.
+ */
 void HexEditorWindow::save_ini_data()
 {
 	if (!bSaveIni)
@@ -3583,11 +3592,12 @@ void HexEditorWindow::save_ini_data()
 
 	HKEY key1;
 
-	char keyname[64];
-	sprintf(keyname, "Software\\frhed\\v" CURRENT_VERSION "." SUB_RELEASE_NO "\\%d", iInstCount);
+	const int keyname_size = 64;
+	char keyname[keyname_size] = {0};
+	_snprintf(keyname, keyname_size - 1, "Software\\frhed\\v" CURRENT_VERSION "." SUB_RELEASE_NO "\\%d",
+			iInstCount);
 
 	LONG res = RegCreateKey(HKEY_CURRENT_USER, keyname, &key1);
-
 	if (res == ERROR_SUCCESS)
 	{
 		RegSetValueEx( key1, "iTextColorValue", 0, REG_DWORD, (CONST BYTE*) &iTextColorValue, sizeof( int ) );
@@ -3634,10 +3644,10 @@ void HexEditorWindow::save_ini_data()
 
 		RegSetValueEx( key1, "iMRU_count", 0, REG_DWORD, (CONST BYTE*) &iMRU_count, sizeof( int ) );
 		int i;
-		char fname[ 64 ];
+		char fname[keyname_size] = {0};
 		for( i = 1; i <= MRUMAX; i++ )
 		{
-			sprintf( fname, "MRU_File%d", i );
+			_snprintf( fname, keyname_size - 1, "MRU_File%d", i );
 			RegSetValueEx( key1, fname, 0, REG_SZ, (CONST BYTE*) &(strMRU[i-1][0]), strlen( &(strMRU[i-1][0]) ) + 1 );
 		}
 
