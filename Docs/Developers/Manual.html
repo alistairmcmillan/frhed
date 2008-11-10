@@ -13,6 +13,7 @@
   <li><a href="#Tools">Tools</a></li>
   <li><a href="#Files">Files</a></li>
   <li><a href="#Building">Building</a></li>
+  <li><a href="#DocbookManual">New Docbook Manual</a></li>
  </ol>
 
 <h3><a name="Tools">Tools</a></h3>
@@ -74,6 +75,42 @@ Visual Studio Command Prompt runs this batch automatically.</p>
 
 <p>After the batch file finishes, the <code>frhed.chm</code> help file is in
 <code>/Build/help</code> folder.</p>
+
+<h3><a name="DocbookManual">New Docbook Manual</a></h3>
+<p>The new Docbook based manual is in works. Basically we are converting current
+manual which is one big HTML file to several smaller Docbook files. From
+DocBook we can later generate both HTML manual (for the Web) and the CHM
+manual for the local installation.</p>
+
+<p>New manual's files are in folder <code>Docs/Users/Manual/</code>. 
+</p>
+
+<h3><a name="ownbuildsystem">Our manual build system is based on Java and Saxon</a></h3>
+<p>Our manual build system uses the following tools:</p>
+<ul>
+  <li><a href="http://www.java.com/getjava/">Java Runtime Environment</a></li>
+  <li><a href="http://saxon.sourceforge.net/">Saxon</a></li>
+  <li><a href="http://www.docbook.org/xml/">DocBook DTD</a></li>
+  <li><a href="http://sourceforge.net/project/showfiles.php?group_id=21935&amp;package_id=16608">XSL StyleSheets</a></li>
+  <li><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp">HTML Help Compiler</a></li>
+</ul>
+<p>There is a useful tool package created for WinMerge for building the manual.
+The same tool package can be used for Frhed too. Download the tool package
+from  <a href="http://sourceforge.net/project/showfiles.php?group_id=13216&amp;package_id=284332&amp;release_id=614099">
+our manual build tools package v1</a> (it includes all required tools except
+of <a href="http://www.java.com/getjava/">Java</a>) and unzip it to the
+<code>build</code> subdirectory at the <code>Manual</code> directory.</p>
+
+<p>The batch files are also located at the <code>build</code> subdirectory at the <code>Manual</code> directory.
+The main file ist <code>build.bat</code>. Paths to the installed tools are written in the <code>configuration.bat</code> file.</p>
+<dl>
+  <dt><code>build.bat html</code> or <code>build_html.bat</code></dt>
+  <dd>Creates the HTML files under the <code>html</code> subdirectory at the <code>build</code> directory.</dd>
+  <dt><code>build.bat htmlhelp</code> or <br> <code>build_htmlhelp.bat</code></dt>
+  <dd>Creates the CHM file under the <code>htmlhelp</code> subdirectory at the <code>build</code> directory.</dd>
+  <dt><code>build.bat</code></dt>
+  <dd>Is the same like <code>build.bat html</code>.</dd>
+</dl>
 
 </body>
 </html>
