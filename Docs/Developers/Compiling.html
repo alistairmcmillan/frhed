@@ -74,14 +74,18 @@ Visual Studio versions convert those files to new format.</p>
   <li>rawio32 - I/O utility project</li>
 </ul>
 
-The <code>Frhed</code> project is dependent on <code>rawio32</code> project.
+The dependencies are such that:
+<ul>
+  <li><code>Frhed</code> project uses <code>heksedit</code> editor component.</li>
+  <li><code>heksedit</code> project uses <code>rawio32</code> project.</li>
+</ul>
 </p>
 
 <h3><a name="Compiling">Compile</a></h3>
 <p>To compile Frhed:
 <ul>
   <li>Open <code>FRHED.dsw</code> solution file to Visual Studio</li>
-  <li>Select the <code>frhed</code> project</li>
+  <li>Select the <code>frhed</code> project as a startup project</li>
   <li>Select <code>Rebuild all</code> to compile
 </ul>
 </p>
