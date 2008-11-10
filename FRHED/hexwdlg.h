@@ -267,6 +267,13 @@ private:
 	BOOL Apply(HWND);
 };
 
+/**
+ * @brief A Goto-dialog.
+ * This dialog allows user to jump to certain position in the file. The jump
+ * can be absolute or relative. An absolute jump goes to the position counted
+ * from the begin of the file. The relative jump goes given amount backwards
+ * or forward in the file.
+ */
 class GoToDlg : public HexEditorWindow
 {
 public:
