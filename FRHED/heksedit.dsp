@@ -315,6 +315,10 @@ SOURCE=.\clipboard.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Constants.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DllProxies.h
 # End Source File
 # Begin Source File

@@ -25,6 +25,7 @@
 
 #include "precomp.h"
 #include "resource.h"
+#include "Constants.h"
 #include "StringTable.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
@@ -46,7 +47,7 @@ BOOL AboutDlg::OnInitDialog(HWND hDlg)
 		"rkibria@hrz1.hrz.tu-darmstadt.de"
 		"\r\nPabs: pabs3@zip.to");
 	// Set the homepage URL.
-	SetDlgItemText(hDlg, IDC_EDIT2, "http://www.kibria.de");
+	SetDlgItemText(hDlg, IDC_EDIT2, FrhedHomepageURL);
 	// Set the icon.
 	if (HWND hwndParent = GetParent(hDlg))
 		if (DWORD dwIcon = GetClassLong(hwndParent, GCLP_HICON))
@@ -72,7 +73,7 @@ BOOL AboutDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 
 	case IDC_BUTTON1:
 		{
-			HINSTANCE hi = ShellExecute(hDlg, "open", "http://www.kibria.de", 0, NULL, SW_SHOWNORMAL);
+			HINSTANCE hi = ShellExecute(hDlg, "open", FrhedHomepageURL, 0, NULL, SW_SHOWNORMAL);
 			if ((UINT)hi <= HINSTANCE_ERROR)
 				MessageBox(hDlg, "Could not call browser.", "Go to homepage", MB_ICONERROR);
 		}
