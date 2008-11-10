@@ -14,6 +14,7 @@
   <li><a href="#Environment">Environment</a></li>
   <li><a href="#ProjectFiles">Project Files</a></li>
   <li><a href="#Compiling">Compiling</a></li>
+  <li><a href="#VS2005">Visual Studio 2005 & 2008 Manifest Files</a>
  </ol>
 
 <h3><a name="GettingSources">Getting Sources</a></h3>
@@ -88,6 +89,27 @@ The dependencies are such that:
   <li>Select the <code>frhed</code> project as a startup project</li>
   <li>Select <code>Rebuild all</code> to compile
 </ul>
+</p>
+
+<h3><a name="VS2005">Visual Studio 2005 & 2008 Manifest Files</a></h3>
+<p>When the VC6 project file (.dsp) or VS2003 project file (.vcproj) is
+converted to a Visual Studio 2005 or 2008 project, the visual styles do not get
+enabled. The problem is Visual Studio 2005 and 2008 automatically generate and
+embed a manifest file for the executable, but that generated manifest file does
+not include all needed properties to enable visual styles. The solution is to
+add WinMerge's manifest file as an additional manifest.</p>
+
+<p>From project properties, set<br>
+  <code>Manifest Tool / Input and Output / Additional Manifest Files</code>
+   -property value to:<br>
+  <code>$(InputDir)\res\Frhed.exe.manifest</code><br>
+  More general form of:<br>
+  <code>$(InputDir)\res\$(TargetFileName).manifest</code><br>
+  should work too but currently it does not for some reason.
+</p>
+
+<p>See also <a href="http://forums.microsoft.com/MSDN/ShowPost.aspx?PostID=143306&SiteID=1">
+Manifests in VS2005-- What are they?</a> -thread in Microsoft forum.
 </p>
 
 </body>
