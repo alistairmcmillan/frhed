@@ -1,16 +1,19 @@
 # This file is part of Frhed <http://frhed.sourceforge.net/>
 # Released under the "GNU General Public License"
 #
+# Translators:
+# * Tim Gerundt <tim at gerundt.de>
+#
 # ID line follows -- this is updated by SVN
-# $Id: $
+# $Id$
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?group_id=13216&atid=113216\n"
-"POT-Creation-Date: 2008-08-20 09:49+0000\n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-11-11 00:20+0000\n"
+"Last-Translator: Tim Gerundt <tim at gerundt.de>\n"
 "Language-Team: German <frhed-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CP1252\n"
@@ -49,7 +52,7 @@ msgstr "Ö&ffnen...\tStrg+O"
 #: heksedit.rc:43
 #, c-format
 msgid "Open pa&rtially...\tAlt+P"
-msgstr ""
+msgstr "&Partiell öffnen..\tAlt+P"
 
 #: heksedit.rc:45
 #, c-format
@@ -64,7 +67,7 @@ msgstr "Speichern &unter...\tStrg+J"
 #: heksedit.rc:47
 #, c-format
 msgid "Save selec&tion as...\tCtrl+Shift+O"
-msgstr ""
+msgstr "&Markierung speichern unter...\tStrg+Umschalt+O"
 
 #: heksedit.rc:49
 #, c-format
@@ -104,17 +107,17 @@ msgstr "&Beenden\tAlt+F4"
 #: heksedit.rc:68
 #, c-format
 msgid "&Disk"
-msgstr ""
+msgstr "&Laufwerk"
 
 #: heksedit.rc:70
 #, c-format
 msgid "&Open drive..."
-msgstr ""
+msgstr "Laufwerk ö&ffnen..."
 
 #: heksedit.rc:71
 #, c-format
 msgid "&Close drive"
-msgstr ""
+msgstr "Laufwerk &schließen"
 
 #: heksedit.rc:73
 #: heksedit.rc:208
@@ -289,7 +292,7 @@ msgstr ""
 #: heksedit.rc:116
 #, c-format
 msgid "&View"
-msgstr ""
+msgstr "&Ansicht"
 
 #: heksedit.rc:118
 #, c-format
@@ -324,7 +327,7 @@ msgstr ""
 #: heksedit.rc:125
 #, c-format
 msgid "&Options"
-msgstr ""
+msgstr "&Einstellungen"
 
 #: heksedit.rc:127
 #, c-format
@@ -399,7 +402,7 @@ msgstr ""
 #: heksedit.rc:149
 #, c-format
 msgid "&Registry"
-msgstr ""
+msgstr "&Registrierung"
 
 #: heksedit.rc:151
 #, c-format
@@ -444,7 +447,7 @@ msgstr ""
 #: heksedit.rc:160
 #, c-format
 msgid "&Bookmarks"
-msgstr ""
+msgstr "Le&sezeichen"
 
 #: heksedit.rc:162
 #, c-format
@@ -464,7 +467,7 @@ msgstr ""
 #: heksedit.rc:176
 #, c-format
 msgid "&Misc"
-msgstr ""
+msgstr "&Verschiedens"
 
 #: heksedit.rc:178
 #, c-format
@@ -484,7 +487,7 @@ msgstr ""
 #: heksedit.rc:183
 #, c-format
 msgid "&Help"
-msgstr ""
+msgstr "&Hilfe"
 
 #: heksedit.rc:185
 #, c-format
