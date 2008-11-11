@@ -3,4 +3,91 @@
   <title>Editing the file</title>
 
   <para>...</para>
+
+  <section>
+    <title>The <menuchoice><guimenu>Edit</guimenu><guimenuitem>Compare from current offset</guimenuitem></menuchoice> command</title>
+
+    <para>If you need to compare two files then load one into Frhed and choose this
+    command. You will first be prompted to choose the file to compare with.
+    Choose a file and then the OK button. Comparison will occur from the current caret offset.</para>
+
+    <para>If the chosen file matches the data in the loaded file from the current offset, you will
+    be prompted so. Otherwise you will get a list of areas of difference to choose from. Areas
+    of difference are ranges of bytes which are different in the files. For example:</para>
+
+<screen>File 1: 00 01 02 03 04 (loaded file)
+File 2: 00 ff ff 03 04</screen>
+
+    <para>In this case you will  get one area of difference 2 bytes in size from offset 1 to 2.
+    These offsets are measured relative to the current caret position. When you choose an area
+    of difference then it will be selected and displayed in the main window.</para>
+
+    <para>You can also copy the list of differences to the clipboard.</para>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Edit</guimenu><guimenuitem>Get floating point value</guimenuitem></menuchoice> command</title>
+    <para>This will show you the floating point values starting at the current caret position.</para>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Edit</guimenu><guimenuitem>File properties</guimenuitem></menuchoice> command</title>
+    <para>Choose this to get the filename, path and size of the current file, and also the total number of lines of the hexdump.</para>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Edit</guimenu><guimenuitem>Apply template</guimenuitem></menuchoice> command</title>
+
+    <para>Use this command to apply a binary template on the file.
+    A binary template consists of a text file with the extension
+    "tpl" that contains a number of variable type+name combinations,
+    such as this:</para>
+
+<screen>BYTE filetype
+WORD version
+DWORD filelength</screen>
+
+    <para>This sample template file named "sample.tpl" is included in the Frhed directory. When the command
+    is chosen from the menu you will be prompted to choose the template file you want to apply. Frhed will
+    then load that file and use the code in it to give you a structured "interpretation" of the data in the
+    currently loaded file, starting at the current byte. The result will be displayed in the edit-box of a
+    dialog, from where you can copy the result to the clipboard if necessary. The result looks like this:</para>
+
+    <screen>File: C:\Data\test.dat
+Template file: C:\frhed\sample.tpl
+Applied at offset: 15
+
+BYTE filetype = 66 (signed) = 66 (unsigned) = 0x42 = 'B'
+WORD version = 30285 (signed) = 30285 (unsigned) = 0x764d
+DWORD filelength = 8 (signed) = 8 (unsigned) = 0x8
+
+-&gt; Length of template = 7 bytes.</screen>
+
+    <para>Following variable types are recognized: (recognition is case-sensitive, so "byte" is not recognized as type "BYTE")</para>
+
+    <itemizedlist>
+      <listitem>
+        <simpara>a byte-size value: &quot;BYTE&quot;, &quot;char&quot;</simpara>
+      </listitem>
+      <listitem>
+        <simpara>a word-size value: &quot;WORD&quot;, &quot;short&quot;</simpara>
+      </listitem>
+      <listitem>
+        <simpara>a longword-size value: &quot;DWORD&quot;, &quot;int&quot;, &quot;long&quot;, &quot;LONG&quot;</simpara>
+      </listitem>
+      <listitem>
+        <simpara>a float value: &quot;float&quot;</simpara>
+      </listitem>
+      <listitem>
+        <simpara>a double value: &quot;double&quot;</simpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>The <menuchoice><guimenu>Edit</guimenu><guimenuitem>Open in text editor</guimenuitem></menuchoice> command</title>
+    <para>This function attempts to call an external text editing program with the current file as argument.
+    You have the option of saving the file first. The default editor is the Windows Notepad. You can
+    choose the editor in the <menuchoice><guimenu>Options</guimenu><guimenuitem>View Settings</guimenuitem></menuchoice> dialog.</para>
+  </section>
 </article>
