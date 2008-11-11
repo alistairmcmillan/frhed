@@ -1,3 +1,28 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  FillWithDlg.cpp
+ *
+ * @brief Implementation of the Fill dialog.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "resource.h"
 #include "hexwnd.h"
@@ -34,13 +59,13 @@ void FillWithDialog::inittxt(HWND hDlg)
 		iEndOfSelSetting = DataArray.GetUpperBound();
 	}
 	//init all the readonly boxes down below
-	char bufff[250];
+	char bufff[250] = {0};
 	int tteemmpp = 1 + abs(iStartOfSelSetting - iEndOfSelSetting);
-	sprintf(bufff,"%d=0x%x", iStartOfSelSetting, iStartOfSelSetting);
+	_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x", iStartOfSelSetting, iStartOfSelSetting);
 	SetDlgItemText(hDlg, IDC_STS,bufff);
-	sprintf(bufff,"%d=0x%x", iEndOfSelSetting, iEndOfSelSetting);
+	_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x", iEndOfSelSetting, iEndOfSelSetting);
 	SetDlgItemText(hDlg, IDC_ES,bufff);
-	sprintf(bufff,"%d=0x%x",tteemmpp,tteemmpp);
+	_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x",tteemmpp,tteemmpp);
 	SetDlgItemText(hDlg, IDC_SS,bufff);
 	if (curtyp)
 	{//1-file
@@ -50,17 +75,17 @@ void FillWithDialog::inittxt(HWND hDlg)
 	}
 	else
 	{//0-input
-		sprintf(bufff, "%d=0x%x", buflen, buflen);
+		_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x", buflen, buflen);
 		SetDlgItemText(hDlg,IDC_SI, bufff);
 		if (buflen)
 		{
 			int d = tteemmpp / buflen;
 			int m = tteemmpp % buflen;
-			sprintf(bufff,"%d=0x%x", d, d);
+			_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x", d, d);
 			SetDlgItemText(hDlg,IDC_IFS, bufff);
 			HFONT hfdef = (HFONT)SendMessage(hDlg, WM_GETFONT, 0, 0);
 			SendDlgItemMessage(hDlg,IDC_IFS,WM_SETFONT,(WPARAM) hfdef, MAKELPARAM(TRUE, 0));
-			sprintf(bufff,"%d=0x%x", m, m);
+			_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x", m, m);
 			SetDlgItemText(hDlg,IDC_R, bufff);
 		}
 		else
