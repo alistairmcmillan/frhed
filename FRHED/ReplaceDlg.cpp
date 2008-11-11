@@ -266,8 +266,8 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				resize_window();
 				synch_sibling();
 
-				char tbuf[80];
-				sprintf(tbuf, "%d occurences replaced.", occ_num);
+				char tbuf[80] = {0};
+				_snprintf(tbuf, RTL_NUMBER_OF(tbuf) - 1, "%d occurences replaced.", occ_num);
 				MessageBox(hDlg, tbuf, "Replace/Replace all following", MB_ICONINFORMATION);
 			}
 			break;
@@ -301,8 +301,8 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				resize_window();
 				synch_sibling();
 
-				char tbuf[32];
-				sprintf(tbuf, "%d occurances replaced.", occ_num);
+				char tbuf[80] = {0};
+				_snprintf(tbuf, RTL_NUMBER_OF(tbuf) - 1, "%d occurances replaced.", occ_num);
 				MessageBox(hDlg, tbuf, "Replace/Replace all following", MB_ICONINFORMATION);
 			}
 			break;

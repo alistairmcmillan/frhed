@@ -1,3 +1,28 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  ShortcutsDlg.cpp
+ *
+ * @brief Implementation of the Shortcuts dialog.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "shtools.h"
 #include "resource.h"
@@ -13,13 +38,19 @@ public:
 	LVITEM li;
 	LVFINDINFO fi;
 	BOOL cr;
+
 	TraverseFolders(HWND);
 	void Recurse();
 };
 
-TraverseFolders::TraverseFolders(HWND h)
+TraverseFolders::TraverseFolders(HWND h) 
+: cr(FALSE)
 {
-	ZeroMemory(this, sizeof *this);
+	ZeroMemory(rn, sizeof(rn));
+	ZeroMemory(vn, sizeof(vn));
+	ZeroMemory(&li, sizeof(li));
+	ZeroMemory(&fi, sizeof(fi));
+
 	hwlist = h;
 	li.mask = LVIF_TEXT;//Using the text only
 	li.iItem = ListView_GetItemCount(hwlist);//Initial insert pos
@@ -102,15 +133,16 @@ BOOL ShortcutsDlg::OnInitDialog(HWND hw)
 
 int CALLBACK ShortcutsDlg::BrowseCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 {
+	static const char FrhedLink[] = "frhed.lnk";
 	//If the folder exists & doesn't contain a link then enabled
 	// Set the status window to the currently selected path.
 	if (m == BFFM_SELCHANGED)
 	{
-		char szDir[MAX_PATH];
+		char szDir[MAX_PATH] = {0};
 		if (SHGetPathFromIDList((LPITEMIDLIST) l ,szDir) && PathIsDirectory(szDir))
 		{
 			PathAddBackslash(szDir);
-			strcat(szDir, "frhed.lnk");
+			strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
 			if (PathFileExists(szDir))
 			{
 				SendMessage(hw,BFFM_ENABLEOK,0,0);//Disable
@@ -147,7 +179,7 @@ int CALLBACK ShortcutsDlg::SearchCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 {
 	if (m == BFFM_SELCHANGED)
 	{
-		char szDir[MAX_PATH];
+		char szDir[MAX_PATH] = {0};
 		BOOL ret = SHGetPathFromIDList((LPITEMIDLIST) l ,szDir) && PathIsDirectory(szDir);
 		SendMessage(hw, BFFM_ENABLEOK, 0, ret);//Enable/Disable
 		SendMessage(hw, BFFM_SETSTATUSTEXT, 0,
@@ -158,6 +190,7 @@ int CALLBACK ShortcutsDlg::SearchCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 
 BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 {
+	static const char FrhedLink[] = "frhed.lnk";
 	switch (LOWORD(w))
 	{
 	case IDCANCEL:
@@ -168,24 +201,26 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			//Save links (from the list box) to the registry & file system
 			HKEY hk;
 			if(ERROR_SUCCESS==RegCreateKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links",&hk)){
-				char valnam[50] = "";//value name
-				char buf[_MAX_PATH+1]="";//location of the link (all links named frhed.lnk)
+				char valnam[50] = {0};//value name
+				char buf[_MAX_PATH + 1] = {0};//location of the link (all links named frhed.lnk)
 				HWND list = GetDlgItem (hw, IDC_LIST);//get the list
 				int num = ListView_GetItemCount(list);//get the # items in the list
 				int len;
-				for(int i=0;i<num;i++){//loop num times
-					sprintf(valnam,"%d",i);//write the valname
-					ListView_GetItemText(list, i, 0, buf, _MAX_PATH+1);//get the string
-					len = strlen(buf)+1;//string len +1
+				for (int i = 0; i < num; i++)
+				{
+					_snprintf(valnam, RTL_NUMBER_OF(valnam), "%d", i);
+					ListView_GetItemText(list, i, 0, buf, _MAX_PATH + 1);
+					len = strlen(buf) + 1;
 					RegSetValueEx(hk,valnam,0,REG_SZ,(BYTE*)buf,len);
 					//Just in case
 					PathAddBackslash(buf);
-					strcat(buf,"frhed.lnk");
+					strncat(buf, FrhedLink, RTL_NUMBER_OF(buf) - strlen(buf));
 					CreateLink(_pgmptr,buf);
-				}//end of the loop
+				}
 				RegCloseKey(hk);
 			}
-			else MessageBox(hw,"Could not Save shortcut entries", "Shortcuts",MB_OK);
+			else
+				MessageBox(hw,"Could not Save shortcut entries", "Shortcuts",MB_OK);
 
 			//If the key is empty after this kill it (to prevent re-enabling of "Remove frhed")
 			SHDeleteEmptyKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links");
@@ -202,7 +237,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			//& add it
 
 			BROWSEINFO bi;
-			CHAR szDir[MAX_PATH];
+			CHAR szDir[MAX_PATH] = {0};
 			LPITEMIDLIST pidl;
 			LPMALLOC pMalloc;
 			HWND list = GetDlgItem(hw,IDC_LIST);
@@ -244,29 +279,33 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 						//Check if the item is already in the list
 						int num = ListView_GetItemCount(list);//get the # items in the list
 						int done = 0;
-						char path[MAX_PATH]="";
-						char buf[_MAX_PATH+1]="";
+						char path[MAX_PATH] = {0};
+						char buf[_MAX_PATH + 1] = {0};
 
-						strcpy(path,szDir);
+						strncpy(path, szDir, RTL_NUMBER_OF(path));
 						_strupr(path);
-						for(int i=0;i<num;i++){//loop num times
+						for (int i = 0; i < num; i++)
+						{
 							ListView_GetItemText(list, i, 0, buf,_MAX_PATH+1);//get the string
 							_strupr(buf);
-							if(!strcmp(buf,path)){
+							if(!strncmp(buf, path, RTL_NUMBER_OF(buf)))
+							{
 								done = 1;
 								break;
 							}
 						}//end of the loop
 						char valnam[_MAX_PATH+1];
-						if(done){
+						if(done)
+						{
 							MessageBox(hw,"There is already a link in that folder","Add/Move",MB_OK);
 							//Just in case
 							PathAddBackslash(szDir);
-							strcat(szDir,"frhed.lnk");
+							strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - RTL_NUMBER_OF(FrhedLink));
 							CreateLink(_pgmptr,szDir);
 						}
 						else{
-							if(LOWORD(w)==IDC_ADD){
+							if(LOWORD(w)==IDC_ADD)
+							{
 								//Add to the list
 								LVITEM item;
 								ZeroMemory(&item,sizeof(item));
@@ -276,51 +315,56 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 								ListView_InsertItem(list, &item);
 								//Add to the registry (find a string name that doesn't exist first)
 								if(ERROR_SUCCESS==RegCreateKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links",&hk)){
-									for(DWORD i = 0;;i++){
-										sprintf(valnam,"%d",i);
-										if(ERROR_FILE_NOT_FOUND==RegQueryValueEx(hk,valnam,0,NULL,NULL,NULL)){
-											RegSetValueEx(hk,valnam,0,REG_SZ,(BYTE*)szDir,strlen(szDir)+1);
+									for (DWORD i = 0 ; ; i++)
+									{
+										_snprintf(valnam, RTL_NUMBER_OF(valnam) - 1, "%d", i);
+										if (ERROR_FILE_NOT_FOUND == RegQueryValueEx(hk, valnam, 0, NULL, NULL, NULL))
+										{
+											RegSetValueEx(hk, valnam, 0, REG_SZ, (BYTE*)szDir, strlen(szDir) + 1);
 											break;
 										}
 									}
 									RegCloseKey(hk);
 									//Add to the filesystem
 									PathAddBackslash(szDir);
-									strcat(szDir,"frhed.lnk");
+									strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
 									CreateLink(_pgmptr,szDir);
 								}
 							}
-							else if(LOWORD(w)==IDC_MOVE){
+							else if(LOWORD(w)==IDC_MOVE)
+							{
 								//Move the old one to the new loc
-								DWORD valnamsize,typ;
-								char valbuf[_MAX_PATH+1];
+								DWORD valnamsize, typ;
+								char valbuf[_MAX_PATH + 1] = {0};
 								DWORD valbufsize,ret;
-								char cursel[_MAX_PATH+1]="";
+								char cursel[_MAX_PATH + 1] = {0};
 								//Get the old path
-								ListView_GetItemText(list,di,0,cursel,_MAX_PATH+1);
+								ListView_GetItemText(list, di, 0, cursel, _MAX_PATH + 1);
 								_strupr(cursel);
 								//Set the new path in the registry
 								if(ERROR_SUCCESS==RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links",0,KEY_ALL_ACCESS,&hk)){
-									for(DWORD i = 0;;i++){
+									for (DWORD i = 0; ; i++)
+									{
 										typ=0;
-										valnamsize = valbufsize = _MAX_PATH+1;
-										valbuf[0]=valnam[0]=0;
+										valnamsize = valbufsize = _MAX_PATH + 1;
+										valbuf[0] = valnam[0] = 0;
 										ret = RegEnumValue(hk,i,valnam,&valnamsize,0,&typ,(BYTE*) valbuf,&valbufsize);
 										_strupr(valbuf);
 										if(typ==REG_SZ && valbuf[0]!=0 && !strcmp(valbuf,cursel)){
 											RegSetValueEx(hk,valnam,0,REG_SZ,(BYTE*)szDir,strlen(szDir)+1);
 											break;
 										}
-										if(ERROR_NO_MORE_ITEMS==ret)break;
+										if (ERROR_NO_MORE_ITEMS == ret)
+											break;
 									}
 									RegCloseKey(hk);
 									//Set the new path
 									ListView_SetItemText(list,di,0,szDir);
 									//Move the actual file
 									PathAddBackslash(szDir);
-									strcat(szDir,"frhed.lnk");
+									strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
 									PathAddBackslash(cursel);
-									strcat(cursel,"frhed.lnk");
+									strncat(cursel, FrhedLink, RTL_NUMBER_OF(cursel) - strlen(cursel));
 									CreateLink(_pgmptr,cursel);//Just in case
 									rename(cursel,szDir);
 								}
@@ -356,7 +400,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				pidl = SHBrowseForFolder(&bi);
 				if (pidl)
 				{
-					CHAR szDir[MAX_PATH];
+					CHAR szDir[MAX_PATH] = {0};
 					if (SHGetPathFromIDList(pidl,szDir))
 					{
 						WaitCursor wc;//Wait until finished
@@ -380,20 +424,23 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				MessageBox(hw,"No links selected to delete","Delete links",MB_OK);
 				return TRUE;
 			}
-			for(;;){
+			for( ; ; )
+			{
 				di = ListView_GetNextItem(list, (UINT)-1, LVNI_SELECTED);
-				if(di==-1)break;
-				char valnam[_MAX_PATH+1];
-				DWORD valnamsize,typ;
-				char valbuf[_MAX_PATH+1];
-				DWORD valbufsize,ret;
-				char delbuf[_MAX_PATH+1] = "";
+				if (di == -1)
+					break;
+				char valnam[_MAX_PATH + 1] = {0};
+				DWORD valnamsize, typ;
+				char valbuf[_MAX_PATH + 1] = {0};
+				DWORD valbufsize, ret;
+				char delbuf[_MAX_PATH + 1] = {0};
 				ListView_GetItemText(list,di,0,delbuf,_MAX_PATH+1);
 				_strupr(delbuf);
 				ListView_DeleteItem(list,di);
 				HKEY hk;
 				if(ERROR_SUCCESS==RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links",0,KEY_ALL_ACCESS,&hk)){
-					for(DWORD i = 0;;i++){
+					for(DWORD i = 0; ; i++)
+					{
 						typ=0;
 						valnamsize = valbufsize = _MAX_PATH+1;
 						valbuf[0]=valnam[0]=0;
@@ -407,7 +454,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 					}
 					RegCloseKey(hk);
 					PathAddBackslash(delbuf);
-					strcat(delbuf,"frhed.lnk");
+					strncat(delbuf, FrhedLink, RTL_NUMBER_OF(delbuf) - strlen(delbuf));
 					remove(delbuf);
 				}
 				SHDeleteEmptyKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links");
@@ -418,20 +465,21 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 		{
 			//Reload links from the registry frhed\subreleaseno\links\ all values loaded & tested
 			HKEY hk;
-			char valnam[_MAX_PATH+1]="";
-			DWORD valnamsize = _MAX_PATH+1,typ;
-			char valbuf[_MAX_PATH+1]="";
-			DWORD valbufsize = _MAX_PATH+1,ret;
+			char valnam[_MAX_PATH + 1] = {0};
+			DWORD valnamsize = _MAX_PATH + 1, typ;
+			char valbuf[_MAX_PATH + 1] = {0};
+			DWORD valbufsize = _MAX_PATH + 1, ret;
 			HWND list = GetDlgItem(hw,IDC_LIST);
 			//Delete list
 			ListView_DeleteAllItems(list);
 			LVITEM item;
-			ZeroMemory(&item,sizeof(item));
-			item.mask=LVIF_TEXT;
+			ZeroMemory(&item, sizeof(item));
+			item.mask= LVIF_TEXT;
 			item.pszText = valbuf;
 			if(ERROR_SUCCESS==RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links",0,KEY_ALL_ACCESS,&hk)){
 				//Load all the string values
-				for(DWORD i = 0;;i++){
+				for(DWORD i = 0;;i++)
+				{
 					typ=0;
 					valnamsize = valbufsize = _MAX_PATH+1;
 					valbuf[0]=valnam[0]=0;
@@ -441,7 +489,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 						item.iItem = i;
 						ListView_InsertItem(list, &item);
 						PathAddBackslash(valbuf);
-						strcat(valbuf,"frhed.lnk");
+						strncat(valbuf, FrhedLink, RTL_NUMBER_OF(valbuf) - strlen(valbuf));
 						CreateLink(_pgmptr,valbuf);
 					}
 					if(ERROR_NO_MORE_ITEMS==ret)break;
@@ -462,8 +510,8 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			//HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders\Desktop = C:\WINDOWS\Desktop on my computer
 			HKEY hk;
 			if(ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER,"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders",&hk)){
-				char szDir[_MAX_PATH+1]="";
-				DWORD len = _MAX_PATH+1;
+				char szDir[_MAX_PATH + 1] = {0};
+				DWORD len = _MAX_PATH + 1;
 				//Get the path from the registry
 				switch(LOWORD(w)){
 					case IDC_START:
@@ -484,9 +532,9 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				HWND list = GetDlgItem(hw,IDC_LIST);
 				int num = ListView_GetItemCount(list);//get the # items in the list
 				int done = 0;
-				char path[_MAX_PATH+1]="";
-				char buf[_MAX_PATH+1]="";
-				strcpy(path,szDir);
+				char path[_MAX_PATH + 1]= {0};
+				char buf[_MAX_PATH + 1] = {0};
+				strncpy(path, szDir, RTL_NUMBER_OF(path));
 				_strupr(path);
 				for(int i=0;i<num;i++){//loop num times
 					ListView_GetItemText(list,i,0,buf,_MAX_PATH+1);//get the string
@@ -496,11 +544,12 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 						break;
 					}
 				}//end of the loop
-				if(done){
+				if(done)
+				{
 					MessageBox(hw,"There is already a link in that folder","Add",MB_OK);
 					//Just in case
 					PathAddBackslash(szDir);
-					strcat(szDir,"frhed.lnk");
+					strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
 					CreateLink(_pgmptr,szDir);
 				}
 				else{
@@ -510,11 +559,12 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 					item.pszText = szDir;
 					item.iItem = num;
 					ListView_InsertItem(list, &item);
-					char valnam[_MAX_PATH+1];
+					char valnam[_MAX_PATH + 1] = {0};
 					if(ERROR_SUCCESS==RegCreateKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links",&hk)){
 						//Find a value name that does not exist
-						for(DWORD i = 0;;i++){
-							sprintf(valnam,"%d",i);
+						for(DWORD i = 0; ; i++)
+						{
+							_snprintf(valnam, RTL_NUMBER_OF(valnam) - 1, "%d", i);
 							if(ERROR_FILE_NOT_FOUND==RegQueryValueEx(hk,valnam,0,NULL,NULL,NULL)){
 								RegSetValueEx(hk,valnam,0,REG_SZ,(BYTE*)szDir,strlen(szDir)+1);//Add the value to the registry
 								break;
@@ -522,7 +572,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 						}
 						RegCloseKey(hk);
 						PathAddBackslash(szDir);
-						strcat(szDir,"frhed.lnk");
+						strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
 						CreateLink(_pgmptr,szDir);
 					}
 				}

@@ -1,3 +1,28 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  ReverseDlg.cpp
+ *
+ * @brief Implementation of the Data reversing dialog.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "resource.h"
 #include "hexwnd.h"
@@ -5,7 +30,7 @@
 
 INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 {
-	char buf[128];
+	char buf[128] = {0};
 	int iStartOfSelSetting;
 	int iEndOfSelSetting;
 	int maxb;
@@ -21,9 +46,9 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 		{
 			iEndOfSelSetting = iStartOfSelSetting = iCurByte;
 		}
-		sprintf(buf, "x%x", iStartOfSelSetting);
+		_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iStartOfSelSetting);
 		SetDlgItemText (h, IDC_EDIT1, buf);
-		sprintf(buf, "x%x", iEndOfSelSetting);
+		_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iEndOfSelSetting);
 		SetDlgItemText (h, IDC_EDIT2, buf);
 		//Because we are using the Select block dialog template some things need to be changed
 		SetWindowText(h, "Reverse bytes");

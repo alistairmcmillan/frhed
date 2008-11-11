@@ -1,3 +1,28 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  SelectBlockDlg.cpp
+ *
+ * @brief Implementation of the Block selecting dialog.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "resource.h"
 #include "hexwnd.h"
@@ -5,17 +30,17 @@
 
 BOOL SelectBlockDlg::OnInitDialog(HWND hDlg)
 {
-	char buf[128];
-	sprintf(buf, "x%x", bSelected ? iStartOfSelection : iCurByte);
+	char buf[128] = {0};
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", bSelected ? iStartOfSelection : iCurByte);
 	SetDlgItemText(hDlg, IDC_EDIT1, buf);
-	sprintf(buf, "x%x", bSelected ? iEndOfSelection : iCurByte);
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", bSelected ? iEndOfSelection : iCurByte);
 	SetDlgItemText(hDlg, IDC_EDIT2, buf);
 	return TRUE;
 }
 
 BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 {
-	char buf[128];
+	char buf[128] = {0};
 	int iStartOfSelSetting;
 	int iEndOfSelSetting;
 	int maxb;

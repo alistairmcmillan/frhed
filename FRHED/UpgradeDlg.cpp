@@ -1,3 +1,28 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  UpgradeDlg.cpp
+ *
+ * @brief Implementation of the Settings upgrading (from previous version) dialog.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "resource.h"
 #include "regtools.h"
@@ -19,7 +44,7 @@ BOOL UpgradeDlg::OnInitDialog(HWND hw)
 {
 	int i;
 	HKEY hk;
-	char subkeynam[_MAX_PATH+1];
+	char subkeynam[_MAX_PATH + 1] = {0};
 	LVITEM item;
 	ZeroMemory(&item,sizeof(LVITEM));
 	item.mask = LVIF_TEXT ;
@@ -100,7 +125,7 @@ BOOL UpgradeDlg::OnInitDialog(HWND hw)
 BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 {
 	HWND insts = GetDlgItem(hw,IDC_INSTS);
-	char keynam[_MAX_PATH+1]="Software\\frhed\\";
+	char keynam[_MAX_PATH + 1] = "Software\\frhed\\";
 	LVCOLUMN col;
 	switch (w)
 	{
@@ -125,12 +150,13 @@ BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			if(ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER,keynam,&lk)){
 				char cver[_MAX_PATH+1]="Software\\frhed\\v"CURRENT_VERSION"."SUB_RELEASE_NO"\\";
 				int i,numi=ListView_GetItemCount(insts),len,lenc=strlen(cver);
-				strcat(keynam,"\\");
-				for(i=0;i<numi;i++){
+				strncat(keynam, "\\", RTL_NUMBER_OF(keynam) - strlen(keynam));
+				for(i=0;i<numi;i++)
+				{
 					if(ListView_GetCheckState(insts,i)){
 						len = strlen(keynam);
 						ListView_GetItemText(insts,i,0,&keynam[len],_MAX_PATH+1-len);//get the inst
-						strcpy(&cver[lenc],&keynam[len]);
+						strcpy(&cver[lenc], &keynam[len]);
 						RegCopyValues(HKEY_CURRENT_USER,keynam,HKEY_CURRENT_USER,cver);//copy the key
 						keynam[len]=cver[lenc]=0;
 					}//if cur inst checked
@@ -145,7 +171,7 @@ BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 		{
 			//Get the instance
 			int i = ListView_GetNextItem(insts, (UINT)-1, LVNI_SELECTED);
-			char text[_MAX_PATH+1];
+			char text[_MAX_PATH + 1] = {0};
 			ListView_GetItemText(insts,i,0,text,_MAX_PATH+1);
 			//Get the version
 			ZeroMemory(&col,sizeof(col));
@@ -171,9 +197,10 @@ BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			for(v=0;v<numv;v++){
 				if(ListView_GetCheckState(vers,v)){
 					for(i=0;i<numi;i++){
-						if(ListView_GetCheckState(insts,i)){
+						if(ListView_GetCheckState(insts,i))
+						{
 							ListView_GetItemText(vers,v,0,&keynam[15],_MAX_PATH+1-15);//get the ver
-							strcat(keynam,"\\");
+							strncat(keynam, "\\", RTL_NUMBER_OF(keynam) - strlen(keynam));
 							len = strlen(keynam);
 							ListView_GetItemText(insts,i,0,&keynam[len],_MAX_PATH+1-len);//get the inst
 							RegDeleteKey(HKEY_CURRENT_USER,keynam);//delete the key
@@ -328,7 +355,7 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 			return 0;
 		//Offset & 2 spaces
 		int tol = DispData.bAutoOffsetLen ? mol : DispData.iOffsetLen;
-		sprintf(linebuf, "%*.*x", tol, tol, 0);
+		_snprintf(linebuf, RTL_NUMBER_OF(linebuf) - 1,  "%*.*x", tol, tol, 0);
 		p = strlen(linebuf);
 		mol += 2;
 		memset(linebuf + p, ' ', mol - p);
@@ -366,7 +393,7 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 		SetTextColor(dc,DispData.iSelTextColorValue);
 
 		//Create the text
-		sprintf(linebuf, "%*.*x", tol, tol, tmp);
+		_snprintf(linebuf, RTL_NUMBER_OF(linebuf) - 1, "%*.*x", tol, tol, tmp);
 		p = strlen(linebuf);
 		memset(linebuf+p,' ',mol-p);
 		linebuf[mol]=0;
@@ -519,9 +546,9 @@ void UpgradeDlg::ChangeSelVer(HWND hw, char* text)
 	}
 
 	//Add all the links
-	strcat(keyname,"\\links");
+	strncat(keyname, "\\links", RTL_NUMBER_OF(keyname) - strlen(keyname));
 	char* valnam = subkeynam;
-	char valbuf[_MAX_PATH+1];
+	char valbuf[_MAX_PATH + 1] = {0};
 	DWORD valnamsize,valbufsize,typ;
 	item.pszText = valbuf;
 	if(ERROR_SUCCESS==RegOpenKeyEx(HKEY_CURRENT_USER, keyname,0,KEY_ALL_ACCESS,&hk)){
@@ -567,8 +594,8 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 	if (0 == RegOpenKeyEx(HKEY_CURRENT_USER,keynam,0,KEY_ALL_ACCESS,&hk))
 	{
 		//Add all the data
-		BYTE databuf[_MAX_PATH + 1];
-		char szText[_MAX_PATH + 1];
+		BYTE databuf[_MAX_PATH + 1] = {0};
+		char szText[_MAX_PATH + 1] = {0};
 
 		int mrucount = 0;
 
@@ -627,12 +654,12 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 				mrucount = *(int*)databuf;
 			if(i<6)
 			{
-				sprintf(szText, "RGB - %u,%u,%u",
+				_snprintf(szText, RTL_NUMBER_OF(szText) - 1, "RGB - %u,%u,%u",
 					(unsigned)databuf[0], (unsigned)databuf[1], (unsigned)databuf[2]);
 			}
 			else if(i<6+8)
 			{
-				sprintf(szText,"%u", *(int*)databuf);
+				_snprintf(szText, RTL_NUMBER_OF(szText) - 1, "%u", *(int*)databuf);
 			}
 			else if(i<6+8+4)
 			{
@@ -673,7 +700,7 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 		//Add all the MRUs
 		for (i = 0 ; i < mrucount ; i++ )
 		{
-			sprintf(szText, "MRU_File%d", i + 1);
+			_snprintf(szText, RTL_NUMBER_OF(szText) - 1, "MRU_File%d", i + 1);
 			DWORD datasize = sizeof databuf;
 			ZeroMemory(databuf, sizeof databuf);
 			RegQueryValueEx(hk, szText, NULL, NULL, databuf, &datasize);

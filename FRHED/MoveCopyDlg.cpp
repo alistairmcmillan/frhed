@@ -1,3 +1,28 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  MoveCopyDlg.cpp
+ *
+ * @brief Implementation of the data moving/copying dialog.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "resource.h"
 #include "hexwnd.h"
@@ -5,15 +30,15 @@
 
 BOOL MoveCopyDlg::OnInitDialog(HWND hw)
 {
-	char buf[30];
+	char buf[30] = {0};
 	int iMove1stEnd = iGetStartOfSelection();
 	int iMove2ndEndorLen = iGetEndOfSelection();
-	sprintf(buf, "x%x", iMove1stEnd);
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iMove1stEnd);
 	SetDlgItemText (hw, IDC_1STOFFSET, buf);
-	sprintf(buf, "x%x", iMove2ndEndorLen);
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iMove2ndEndorLen);
 	SetDlgItemText (hw, IDC_2NDDELIM, buf);
 	CheckDlgButton (hw, IDC_OTHEREND, BST_CHECKED);
-	sprintf(buf, "x%x", iMovePos);
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iMovePos);
 	SetDlgItemText(hw, IDC_MOVEMENT, buf);
 	CheckDlgButton(hw, IDC_FPOS, BST_CHECKED);
 	if (iMoveOpTyp == OPTYP_MOVE)
@@ -25,14 +50,14 @@ BOOL MoveCopyDlg::OnInitDialog(HWND hw)
 
 BOOL MoveCopyDlg::Apply(HWND hw)
 {
-	char buf[30];
+	char buf[30] = {0};
 	const int dlgitems[3] = { IDC_1STOFFSET, IDC_2NDDELIM, IDC_MOVEMENT };
 	const int check[3] = { 0, IDC_LEN, IDC_FORWARD };
 	int vals[3];
 	for (int n = 0 ; n < 3; n++)
 	{
 		HWND cntrl = GetDlgItem(hw, dlgitems[n]);
-		GetWindowText(cntrl, buf, sizeof buf);
+		GetWindowText(cntrl, buf, RTL_NUMBER_OF(buf));
 		int i = 0;
 		if (n && buf[i] == '-')
 		{
@@ -48,8 +73,8 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 			sscanf(&buf[i], "%d", &vals[n]) == 0)
 		{
 			// No fields assigned: badly formed number.
-			char msg[80];
-			sprintf(msg, "The value in box number %d cannot be recognized.", n + 1);
+			char msg[80] = {0};
+			_snprintf(msg, RTL_NUMBER_OF(msg) - 1, "The value in box number %d cannot be recognized.", n + 1);
 			MessageBox(hw, msg, "Move/Copy", MB_ICONERROR);
 			return FALSE;
 		}

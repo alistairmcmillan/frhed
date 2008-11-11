@@ -1,3 +1,28 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  CopyHexdumpDlg.cpp
+ *
+ * @brief Implementation of the Hexdump copying dialog.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "resource.h"
 #include "hexwnd.h"
@@ -22,10 +47,10 @@ BOOL CopyHexdumpDlg::OnInitDialog(HWND hDlg)
 		iCopyHexdumpDlgStart = iGetStartOfSelection();
 		iCopyHexdumpDlgEnd = iGetEndOfSelection();
 	}
-	char buf[16];
-	sprintf(buf, "%x", iCopyHexdumpDlgStart);
+	char buf[16] = {0};
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%x", iCopyHexdumpDlgStart);
 	SetDlgItemText(hDlg, IDC_EDIT1, buf);
-	sprintf(buf, "%x", iCopyHexdumpDlgEnd);
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%x", iCopyHexdumpDlgEnd);
 	SetDlgItemText(hDlg, IDC_EDIT2, buf);
 	CheckDlgButton(hDlg, iCopyHexdumpMode ? IDC_RADIO2 : IDC_RADIO1, BST_CHECKED);
 //Pabs changed - line insert
@@ -37,7 +62,7 @@ BOOL CopyHexdumpDlg::OnInitDialog(HWND hDlg)
 BOOL CopyHexdumpDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 {
 	int iCopyHexdumpDlgStart, iCopyHexdumpDlgEnd;
-	char buf[16];
+	char buf[16] = {0};
 	switch (wParam)
 	{
 	case IDOK:
