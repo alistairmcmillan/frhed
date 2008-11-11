@@ -4047,24 +4047,19 @@ void HexEditorWindow::update_MRU()
  */
 void HexEditorWindow::make_MRU_list(HMENU menu)
 {
-	// Remove MRU placeholder items and preceding separator
-	int i = GetMenuItemCount(menu);
-	while (i)
-	{
-		UINT id = GetMenuItemID(menu, --i);
-		if (id >= IDM_MRU1 && id <= IDM_MRU9 || id == 0)
-			RemoveMenu(menu, i, MF_BYPOSITION);
-		else
-			i = 0;
-	}
+	const int insertPos = GetMenuPosFromID(menu, IDM_MRU1);
+
+	// Remove MRU placeholder items
+	for (UINT id = IDM_MRU1; id <= IDM_MRU9; ++id)
+		DeleteMenu(menu, id, MF_BYCOMMAND);
+
 	if (iMRU_count > 0)
 	{
-		AppendMenu(menu, MF_SEPARATOR, 0, 0);
-		char buf[_MAX_PATH + 1 + 30];
+		char buf[_MAX_PATH + 1 + 30] = {0};
 		for (int i = 0 ; i < iMRU_count ; i++)
 		{
-			sprintf(buf, "&%d %s", i+1, strMRU[i]);
-			AppendMenu(menu, MF_ENABLED | MF_STRING, IDM_MRU1 + i, buf);
+			_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "&%d %s", i + 1, strMRU[i]);
+			InsertMenu(menu, insertPos + i, MF_BYPOSITION, IDM_MRU1 + i, buf);
 		}
 	}
 }
