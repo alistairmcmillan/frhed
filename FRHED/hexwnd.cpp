@@ -48,6 +48,8 @@
 
 static const char appname[] = "frhed";
 
+static int MenuGetPosFromID(HMENU hMenu, DWORD id);
+
 //CF_RTF defined in Richedit.h, but we don't include it cause that would be overkill
 #ifndef CF_RTF
 	#define CF_RTF TEXT("Rich Text Format")
@@ -82,6 +84,29 @@ BOOL unknownpresent();
 BOOL oldpresent();
 BOOL linkspresent();
 BOOL frhedpresent();
+
+/**
+ * @brief Get menuitem's position from ID.
+ * This is a helper function to get a menuitem position in the menu when
+ * the menu ID is known.
+ * @param [in] hMenu Handle to the menu.
+ * @param [in] id Menu ID to find.
+ * @return Menuitem position or -1 if the menu ID is not found.
+ */
+static int MenuGetPosFromID(HMENU hMenu, DWORD id)
+{
+	const int count = GetMenuItemCount(hMenu);
+	for (int i = 0; i < count; i++)
+	{
+		MENUITEMINFO mi;
+		mi.cbSize = sizeof(MENUITEMINFO);
+		mi.fMask = MIIM_ID;
+		GetMenuItemInfo(hMenu, i, TRUE, &mi);
+		if (mi.wID == id)
+			return i;
+	}
+	return -1;
+}
 
 //--------------------------------------------------------------------------------------------
 HexEditorWindow::HexEditorWindow()
@@ -4047,7 +4072,7 @@ void HexEditorWindow::update_MRU()
  */
 void HexEditorWindow::make_MRU_list(HMENU menu)
 {
-	const int insertPos = GetMenuPosFromID(menu, IDM_MRU1);
+	const int insertPos = MenuGetPosFromID(menu, IDM_MRU1);
 
 	// Remove MRU placeholder items
 	for (UINT id = IDM_MRU1; id <= IDM_MRU9; ++id)
