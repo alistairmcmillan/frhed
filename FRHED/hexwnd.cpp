@@ -46,7 +46,7 @@
 #include "ids.h"
 #include "ido.h"
 
-static const char appname[] = "frhed";
+static const char appname[] = "Frhed";
 
 static int MenuGetPosFromID(HMENU hMenu, DWORD id);
 
@@ -4078,7 +4078,13 @@ void HexEditorWindow::make_MRU_list(HMENU menu)
 	for (UINT id = IDM_MRU1; id <= IDM_MRU9; ++id)
 		DeleteMenu(menu, id, MF_BYCOMMAND);
 
-	if (iMRU_count > 0)
+	if (iMRU_count == 0)
+	{
+		// If there are no MRU items, remove one separator so that there
+		// won't be two separators and no items between them.
+		DeleteMenu(menu, insertPos - 1, MF_BYPOSITION);
+	}
+	else if (iMRU_count > 0)
 	{
 		char buf[_MAX_PATH + 1 + 30] = {0};
 		for (int i = 0 ; i < iMRU_count ; i++)
