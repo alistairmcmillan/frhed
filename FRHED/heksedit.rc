@@ -54,7 +54,6 @@ BEGIN
         MENUITEM "&Export as hexdump...",       IDM_COPY_HEXDUMP
         MENUITEM "I&mport from hexdump...\tCtrl+Shift+H", IDM_OPEN_HEXDUMP
         MENUITEM SEPARATOR
-        MENUITEM "E&xit\tAlt+F4",               IDM_EXIT
         MENUITEM "IDM_MRU",                     IDM_MRU1
         MENUITEM "IDM_MRU",                     IDM_MRU2
         MENUITEM "IDM_MRU",                     IDM_MRU3
@@ -64,6 +63,8 @@ BEGIN
         MENUITEM "IDM_MRU",                     IDM_MRU7
         MENUITEM "IDM_MRU",                     IDM_MRU8
         MENUITEM "IDM_MRU",                     IDM_MRU9
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               IDM_EXIT
     END
     POPUP "&Disk"
     BEGIN
