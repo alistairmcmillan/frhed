@@ -205,12 +205,12 @@ BEGIN
     END
     POPUP "1"
     BEGIN
-        MENUITEM "Goto First Sector",           ID_DISK_GOTOFIRSTTRACK
+        MENUITEM "Goto &First Sector",          ID_DISK_GOTOFIRSTTRACK
         MENUITEM "Goto &Next Sector",           ID_DISK_GOTONEXTTRACK
         MENUITEM "Goto &Previous Sector",       ID_DISK_GOTOPREVIOUSTRACK
-        MENUITEM "Goto Last Sector",            ID_DISK_GOTOLASTTRACK
+        MENUITEM "Goto &Last Sector",           ID_DISK_GOTOLASTTRACK
         MENUITEM SEPARATOR
-        MENUITEM "Goto Sector #...",            ID_DISK_GOTOTRACK
+        MENUITEM "Goto &Sector #...",           ID_DISK_GOTOTRACK
     END
 END
 
