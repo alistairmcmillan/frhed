@@ -122,30 +122,30 @@ msgstr "Laufwerk &schlieﬂen"
 #: heksedit.rc:73
 #: heksedit.rc:208
 #, c-format
-msgid "Goto First Sector"
-msgstr ""
+msgid "Goto &First Sector"
+msgstr "Gehe zu &erstem Sektor"
 
 #: heksedit.rc:74
 #, c-format
 msgid "Goto &Next Sector\tCtrl+Shift+PgDn"
-msgstr ""
+msgstr "Gehe zu &n‰chstem Sektor\Strg+Umschalt+Bild runter"
 
 #: heksedit.rc:75
 #, c-format
 msgid "Goto &Previous Sector\tCtrl+Shift+PgUp"
-msgstr ""
+msgstr "Gehe zu &vorherigem Sektor\Strg+Umschalt+Bild hoch"
 
 #: heksedit.rc:77
 #: heksedit.rc:211
 #, c-format
-msgid "Goto Last Sector"
-msgstr ""
+msgid "Goto &Last Sector"
+msgstr "Gehe zu &letztem Sektor"
 
 #: heksedit.rc:79
 #: heksedit.rc:213
 #, c-format
-msgid "Goto Sector #..."
-msgstr ""
+msgid "Goto &Sector #..."
+msgstr "Gehe zu &Sektor #..."
 
 #: heksedit.rc:81
 #, c-format
@@ -512,12 +512,12 @@ msgstr ""
 #: heksedit.rc:209
 #, c-format
 msgid "Goto &Next Sector"
-msgstr ""
+msgstr "Gehe zu &n‰chstem Sektor"
 
 #: heksedit.rc:210
 #, c-format
 msgid "Goto &Previous Sector"
-msgstr ""
+msgstr "Gehe zu &vorherigem Sektor"
 
 #: heksedit.rc:342
 #, c-format
@@ -1727,22 +1727,22 @@ msgstr "Hilfe"
 #: heksedit.rc:1316
 #, c-format
 msgid "Goto next sector"
-msgstr "N‰chster Sektor"
+msgstr "Gehe zu n‰chstem Sektor"
 
 #: heksedit.rc:1317
 #, c-format
 msgid "Goto previous sector"
-msgstr "Vorheriger Sektor"
+msgstr "Gehe zu vorherigem Sektor"
 
 #: heksedit.rc:1318
 #, c-format
 msgid "Goto first sector"
-msgstr "Erster Sektor"
+msgstr "Gehe zu erstem Sektor"
 
 #: heksedit.rc:1319
 #, c-format
 msgid "Goto last sector"
-msgstr "Letzter Sektor"
+msgstr "Gehe zu letztem Sektor"
 
 #: heksedit.rc:1324
 #, c-format
