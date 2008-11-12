@@ -70,13 +70,13 @@ BEGIN
         MENUITEM "&Open drive...",              ID_DISK_OPEN_DRIVE
         MENUITEM "&Close drive",                ID_DISK_CLOSEDRIVE
         MENUITEM SEPARATOR
-        MENUITEM "Goto First Sector",           ID_DISK_GOTOFIRSTTRACK
+        MENUITEM "Goto &First Sector",          ID_DISK_GOTOFIRSTTRACK
         MENUITEM "Goto &Next Sector\tCtrl+Shift+PgDn", ID_DISK_GOTONEXTTRACK
         MENUITEM "Goto &Previous Sector\tCtrl+Shift+PgUp", 
                                                 ID_DISK_GOTOPREVIOUSTRACK
-        MENUITEM "Goto Last Sector",            ID_DISK_GOTOLASTTRACK
+        MENUITEM "Goto &Last Sector",           ID_DISK_GOTOLASTTRACK
         MENUITEM SEPARATOR
-        MENUITEM "Goto Sector #...",            ID_DISK_GOTOTRACK
+        MENUITEM "Goto &Sector #...",           ID_DISK_GOTOTRACK
     END
     POPUP "&Edit"
     BEGIN
