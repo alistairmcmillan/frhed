@@ -15,7 +15,7 @@
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 /////////////////////////////////////////////////////////////////////////////
 /** 
- * @file  hexwnd.cpp
+ * @file  AboutDlg.cpp
  *
  * @brief Implementation of the About dialog.
  *
