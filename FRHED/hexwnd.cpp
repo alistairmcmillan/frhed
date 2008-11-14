@@ -1137,74 +1137,93 @@ void HexEditorWindow::command(int cmd)
 		static_cast<dialog<UpgradeDlg>*>(this)->DoModal(hwnd);
 		break;
 	case IDM_REMOVE:
-		int res,r,r0;r=r0=0;//r&r0 used to determine if the user has removed all frhed data
-		res = MessageBox(hwnd, "Are you sure you want to remove frhed ?", "Remove frhed", MB_YESNO);
+		int res, r, r0;
+		r = r0 = 0; //r&r0 used to determine if the user has removed all frhed data
+
+		res = MessageBox(hwnd, "Are you sure you want to remove frhed ?",
+				"Remove frhed", MB_YESNO);
 		if (res != IDYES)
 			return;
+
 		//Can assume registry data exists
 		res = linkspresent();
 		if (res)
 		{
 			r0++;
-			res = MessageBox(hwnd, "Remove known links ?", "Remove frhed", MB_YESNO);
+			res = MessageBox(hwnd, "Remove known links ?", "Remove frhed",
+					MB_YESNO);
 			if (res == IDYES)
 			{
 				r++;
 				//Remove known links & registry entries of those links
 				HKEY hk;
-				char valnam[_MAX_PATH+1]="";
-				DWORD valnamsize = _MAX_PATH+1,typ;
-				char valbuf[_MAX_PATH+1]="";
-				DWORD valbufsize = _MAX_PATH+1,ret;
-				if(ERROR_SUCCESS==RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links",0,KEY_ALL_ACCESS,&hk)){
-					for(DWORD i = 0;;i++){
-						typ=0;
-						valnamsize = valbufsize = _MAX_PATH+1;
-						valbuf[0]=valnam[0]=0;
-						ret = RegEnumValue(hk,i,valnam,&valnamsize,0,&typ,(BYTE*) valbuf,&valbufsize);
-						if(typ==REG_SZ && valbuf[0]!=0 && PathIsDirectory(valbuf)){
+				char valnam[_MAX_PATH + 1] = {0};
+				DWORD valnamsize = _MAX_PATH + 1, typ;
+				char valbuf[_MAX_PATH + 1] = {0};
+				DWORD valbufsize = _MAX_PATH + 1, ret;
+				if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER,
+						"Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links",
+						0, KEY_ALL_ACCESS, &hk))
+				{
+					for (DWORD i = 0; ; i++)
+					{
+						typ = 0;
+						valnamsize = valbufsize = _MAX_PATH + 1;
+						valbuf[0] = valnam[0] = 0;
+						ret = RegEnumValue(hk, i, valnam, &valnamsize, 0,
+								&typ, (BYTE*) valbuf, &valbufsize);
+						if (typ == REG_SZ && valbuf[0] != 0 &&
+								PathIsDirectory(valbuf))
+						{
 							PathAddBackslash(valbuf);
-							strcat(valbuf,"frhed.lnk");
+							strcat(valbuf, "frhed.lnk");
 							remove(valbuf);
 						}
-						if(ERROR_NO_MORE_ITEMS==ret)break;
+						if (ERROR_NO_MORE_ITEMS == ret)
+							break;
 					}
 					RegCloseKey(hk);
 				}
-				RegDeleteKey(HKEY_CURRENT_USER,"Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links");
+				RegDeleteKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links");
 			}
 		}
-		res = contextpresent()||unknownpresent();
+		res = contextpresent() || unknownpresent();
 		if (res)
 		{
 			r0++;
-			res = MessageBox(hwnd,"Remove 'Open in frhed' command(s) ?","Remove frhed",MB_YESNO);
-			if(res==IDYES) {
+			res = MessageBox(hwnd, "Remove 'Open in frhed' command(s) ?",
+					"Remove frhed", MB_YESNO);
+			if(res==IDYES)
+			{
 				r++;
 				//Remove 'Open in frhed' command registry entries
-				RegDeleteKey( HKEY_CLASSES_ROOT, "*\\shell\\Open in frhed\\command" ); //WinNT requires the key to have no subkeys
-				RegDeleteKey( HKEY_CLASSES_ROOT, "*\\shell\\Open in frhed" );
-				RegDeleteKey( HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in frhed\\command" ); //WinNT requires the key to have no subkeys
-				RegDeleteKey( HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in frhed" );
-				char stringval[ _MAX_PATH ]="";
+				RegDeleteKey(HKEY_CLASSES_ROOT, "*\\shell\\Open in frhed\\command"); //WinNT requires the key to have no subkeys
+				RegDeleteKey(HKEY_CLASSES_ROOT, "*\\shell\\Open in frhed");
+				RegDeleteKey(HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in frhed\\command"); //WinNT requires the key to have no subkeys
+				RegDeleteKey(HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in frhed");
+				char stringval[_MAX_PATH]= {0};
 				long len = _MAX_PATH;
-				RegQueryValue(HKEY_CLASSES_ROOT,"Unknown\\shell",stringval,&len);
-				if(!strcmp(stringval, "Open in frhed")){
+				RegQueryValue(HKEY_CLASSES_ROOT, "Unknown\\shell", stringval,&len);
+				if (!strcmp(stringval, "Open in frhed"))
+				{
 					HKEY hk;
-					if(ERROR_SUCCESS==RegOpenKey(HKEY_CLASSES_ROOT, "Unknown\\shell",&hk)){
-						RegDeleteValue(hk,NULL);
+					if (ERROR_SUCCESS == RegOpenKey(HKEY_CLASSES_ROOT,
+							"Unknown\\shell", &hk))
+					{
+						RegDeleteValue(hk, NULL);
 						RegCloseKey(hk);
 					}
 				}
 			}
 		}
 		HKEY tmp;
-		res = RegOpenKey(HKEY_CURRENT_USER,"Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO ,&tmp);
+		res = RegOpenKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO, &tmp);
 		if (res == ERROR_SUCCESS)
 		{
 			RegCloseKey(tmp);
 			r0++;
-			res = MessageBox(hwnd, "Remove registry entries?", "Remove frhed", MB_YESNO);
+			res = MessageBox(hwnd, "Remove registry entries?", "Remove frhed",
+					MB_YESNO);
 			if (res == IDYES)
 			{
 				r++;
@@ -1212,19 +1231,22 @@ void HexEditorWindow::command(int cmd)
 				OSVERSIONINFO ver;
 				ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 				GetVersionEx(&ver);
-				if(ver.dwPlatformId==VER_PLATFORM_WIN32_NT)
-					RegDeleteWinNTKey(HKEY_CURRENT_USER,"Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO );
+				if (ver.dwPlatformId == VER_PLATFORM_WIN32_NT)
+					RegDeleteWinNTKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO);
 				else
-					RegDeleteKey(HKEY_CURRENT_USER,"Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO );
+					RegDeleteKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO);
 				res = oldpresent();
-				if(res){
-					res = MessageBox(hwnd,"Registry entries from previous versions of frhed were found\n"
-						"Should they all be removed ?","Remove frhed",MB_YESNO);
-					if(res==IDYES){
-						if(ver.dwPlatformId==VER_PLATFORM_WIN32_NT)
-							RegDeleteWinNTKey(HKEY_CURRENT_USER,"Software\\frhed");
+				if (res)
+				{
+					res = MessageBox(hwnd, 
+							"Registry entries from previous versions of frhed were found\n"
+							"Should they all be removed ?", "Remove frhed", MB_YESNO);
+					if (res == IDYES)
+					{
+						if (ver.dwPlatformId == VER_PLATFORM_WIN32_NT)
+							RegDeleteWinNTKey(HKEY_CURRENT_USER, "Software\\frhed");
 						else
-							RegDeleteKey(HKEY_CURRENT_USER,"Software\\frhed");
+							RegDeleteKey(HKEY_CURRENT_USER, "Software\\frhed");
 					}
 				}
 			}
