@@ -3,7 +3,8 @@
 
 /* Add any HTML Help specific rules below */
 
-.article {
+.article,
+.appendix {
   border:1px solid white; /* Fix problems with old IE browsers! */
 }
 
