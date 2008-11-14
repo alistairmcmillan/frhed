@@ -2,5 +2,216 @@
 <article id="file_operations">
   <title>File Operations</title>
 
-  <para>...</para>
+  <section>
+    <title>Creating new files</title>
+    <para>If Frhed is started without parameters or with a nonexistant filename as parameter,
+    then it starts with a new, empty file that is untitled. If a file is already loaded, then
+    choose <menuchoice><guimenu>File</guimenu><guimenuitem>New</guimenuitem></menuchoice> from
+    the menu. If a file is already loaded and it has been changed, then
+    you will be prompted if you want to save the changes.</para>
+  </section>
+
+  <section>
+    <title>Opening files</title>
+    <para>If Frhed is started with command line parameters, then the whole string following the
+    program name is considered to be the name of the file to open.</para>
+
+    <example>
+      <itemizedlist>
+        <listitem>
+          <simpara><code>frhed filename.dat</code> opens the file called "filename.dat"</simpara>
+        </listitem>
+        <listitem>
+          <simpara><code>frhed a file-name.dat</code> opens the file called "a file-name.dat"</simpara>
+        </listitem>
+      </itemizedlist>
+    </example>
+
+    <note>
+      <para>If you put a link to frhed.exe into the "SendTo"-Folder in your Windows main
+      directory then you can open any file from the Explorer with Frhed by choosing Frhed
+      from the "Send To"-item in the file's context menu.</para>
+    </note>
+
+    <para>You can also choose <menuchoice><guimenu>File</guimenu><guimenuitem>Open</guimenuitem></menuchoice>
+    from the menu. If a file is already loaded and it has
+    been changed, then you will be prompted if you want to lose the changes, save the changes
+    or cancel the request.</para>
+
+    <para>A file can also be dragged (for instance from the Windows Explorer window) into Frhed's
+    window to open it. If several files were dragged, then you must choose which one to open.</para>
+
+    <para>You may also select a file from the MRU list to open.</para>
+
+    <para>If the file access permissions don't allow writing or open-read-only mode is on then
+    read-only mode will be engaged.</para>
+  </section>
+
+  <section>
+    <title>Opening files partially</title>
+    <para>If you want to edit a very large file and it's not necessary to load all of it into
+    memory, choose the <menuchoice><guimenu>File</guimenu><guimenuitem>Open partially</guimenuitem></menuchoice>
+    command. First you will have to choose the file you want to open in a
+    File-Open-dialog. Then you must enter the offset from which the file will be loaded
+    and how many bytes to load, or you can check the "Open partially from end of file"-radiobutton
+    if you want to load data from the end of the file. Also you may have Frhed display the offsets
+    relative to the start of the file instead of relative to the start of the loaded block. Note,
+    however, that so far the rest of the program uses offsets relative to start of the loaded block.</para>
+
+    <para>Frhed will now be in partially-opened-mode, which means that whenever you choose the 
+    <menuchoice><guimenu>File</guimenu><guimenuitem>Save</guimenuitem></menuchoice> command,
+    the data will be written back to the position they were loaded from. This mode is indicated by
+    a letter "P" in the window title after the file name.</para>
+
+    <para>If the file has been changed, then you will be prompted if you want to lose the changes,
+    save the changes or cancel the request.</para>
+
+    <para>You can also resize the block of data you loaded and the corresponding section of the file
+    will also be resized when you save the file.</para>
+
+    <para>If the file access permissions don't allow writing or open-read-only mode is on then read-only
+    mode will be engaged.</para>
+  </section>
+
+  <section>
+    <title>Saving files</title>
+    <para>To save the current file choose <menuchoice><guimenu>File</guimenu><guimenuitem>Save</guimenuitem></menuchoice> from the menu.
+    If the file has never been saved before, then <menuchoice><guimenu>File</guimenu><guimenuitem>Save as</guimenuitem></menuchoice>
+    will be automatically invoked.</para>
+
+    <para><menuchoice><guimenu>File</guimenu><guimenuitem>Save as</guimenuitem></menuchoice> saves the file with a different name.</para>
+  </section>
+
+  <section>
+    <title>Saving selections</title>
+    <para>To save the current selection choose <menuchoice><guimenu>File</guimenu><guimenuitem>Save selection as</guimenuitem></menuchoice> from the menu.
+    If the is no selection then all of the file will be saved.</para>
+  </section>
+
+  <section>
+    <title>Reverting to the saved file</title>
+    <para>When you have made changes to a file, want to change it back and cannot remember the exact
+    bytes in the file then the <menuchoice><guimenu>File</guimenu><guimenuitem>Revert</guimenuitem></menuchoice>
+    command will do it for you. If the file has never been saved
+    then this command will revert to an untitled empty file.</para>
+  </section>
+
+  <section>
+    <title>Exporting the file as a hexdump text</title>
+    <para>The <menuchoice><guimenu>File</guimenu><guimenuitem>Export as hexdump</guimenuitem></menuchoice>
+    command is used if you need the hexdump of the file in plain text form, for example if
+    you need to insert it in a word processor document. You can either put the hexdump into the
+    clipboard or into a file, which you will have to choose. The start line of the hexdump has to
+    be specified (in hexadecimal notation without prefix), which you can find on the left side of
+    the window, for example 23c or 134. You must also specify the end line. The values in the
+    dialog will be initialized so that the whole file will be dumped, if there is nothing
+    selected, or they will be such that the current selection will be dumped.</para>
+
+    <para>Also you have the option of just outputting the hex bytes on a single line
+    - just uncheck the "Export like Frhed display" check box.</para>
+
+    <para>Also you have the option of outputting an RTF hexdump of the lines. The RTF is output
+    by Frhed as follows:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>The file that was hexdumped in the document properties as the Title.</para>
+      </listitem>
+      <listitem>
+        <para>A Times New Roman 20pt paragraph containing the file name of the file that was hexdumped.</para>
+      </listitem>
+      <listitem>
+        <para>Each line of hexdump, with the selection or current byte highlighted as per the display colours.</para>
+      </listitem>
+      <listitem>
+        <para>Bookmarks are both highlighted and put into the document. The bookmark name is that same as what you gave Frhed, unless you didn&apos;t give a name, in which case the name will be the offset of the bookmark in decimal. The document bookmarks will be in the same place as the caret.</para>
+      </listitem>
+      <listitem>
+        <para>The separators are put in a single group together and are simple lines as per the display settings.</para>
+      </listitem>
+      <listitem>
+        <para>Limitations: the RTF output is not perfect in these ways:</para>
+        <para>For the chars Microsoft Word will convert some into underscores (generally the control characters up to 0x20). This is only apparent in OEM mode since in ANSI mode Frhed translates these chars into periods (.).</para>
+        <para>Microsoft Word will alter the bookmark names by replacing non-alphanumerics with underscores, place &quot;BM&quot; in front of bookmarks that begin with a number and hide bookmarks beginning with underscores (can still view them with &quot;Hidden bookmarks&quot; checked).</para>
+        <para>If your display is running at anything less than 24 bit colour you may not get the colours you expect for the caret. This is because at lower bit levels the InvertRect function (which Frhed uses to invert the caret in the window) works differently than just inverting the bits of colours as it does at 24-bit &amp; as Frhed does in generating the inverted colour for RTF export. If someone finds out how InvertRect works at lower bit levels please let me (Pabs) know.</para>
+        <para>The bookmarks border takes up space (at least on Word2000) which means that subsequent characters on the same line will be displaced to the right 2 pixels. This is noticable when there is a selection covering two adjacent lines, one with &amp; one without a bookmark. There is little that can be done about this except try a different word processor.</para>
+        <para>The separators will not always be sized or positioned exactly. There is not much that can be done about this since it is hard to know the exact size in twips the word processor will display the text at. An alternative to this might be to use tables, which might not work and might also solve the bookmark problem.</para>
+        <para>At some fonts &amp; sizes (esp. OEM &amp; ANSI 9, ANSI 10) Frhed cannot determine the correct font name the system chose &amp; this will cause Word to use the wrong font, often this will be Times New Roman. This may or may not be true depending on whether or not the font mapper for your system uses one font for all sizes and the fonts you have installed. Unfortunately Word ignores the other font hints that can be determined; character set, variable/monospaced and font family.</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>Deleting the current file</title>
+    <warning>
+      <para>USE WITH CAUTION</para>
+    </warning>
+
+    <para>The <menuchoice><guimenu>File</guimenu><guimenuitem>Delete File</guimenuitem></menuchoice>
+    command deletes the file currently opened in the editor and closes it.
+    This requires a double confirmation because it could be disastrous.</para>
+
+    <para>When ever you edit files using any hex editor you should <emphasis role="bold">always</emphasis>
+    have a backup anyway.</para>
+  </section>
+
+  <section>
+    <title>Importing a hexdump file</title>
+    <para>The <menuchoice><guimenu>File</guimenu><guimenuitem>Import from hexdump</guimenuitem></menuchoice>
+    command imports hexdump data from the clipboard or from a file.</para>
+
+    <para>The data you choose to import can be in one of two formats. One is a text 
+    version of the display &amp; the other is all the hex digits on one line.</para>
+
+    <para>The Frhed will try to determine the type by looking for characters that are
+    not whitespace or hexdigits and you will be asked to verify the Frhed's findings.</para>
+
+    <para>If you decide it is in the Frhed display format then you will be asked if you
+    want the display settings found in the file to replace current ones.  If so,
+    Frhed can determine the offset length, the number of bytes per line, if the
+    offset length should be automatically adjusted and possibly if the data is
+    ANSI/OEM from its contents.  If any of these cannot be determined their
+    settings will remain the same.</para>
+
+    <para>Frhed will also notify you if the character and hex data do not agree with each
+    other or the offsets are invalid and you may choose to ignore any more of these notices.</para>
+
+    <para>If illegal characters are found in the hexdata section or the data ends unexpectedly
+    the operation will not be able to continue and you will have the option of keeping
+    the data that has already been found or cancelling the operation.</para>
+
+    <para>Also if the first offset found is not zero you can insert that amount of null bytes
+    at the start of the file and if you choose not to and you chose to alter relevant
+    display settings then Frhed will display offsets relative to the first offset found.</para>
+
+    <para>If you decide it is not in the Frhed display format then Frhed will go through the
+    file filtering out whitespace and adding each hex digit found as a nibble (If odd
+    no's of hex digits are present then '0' will be the last nibble).
+    If other characters are found Frhed will complain and give you the option of ignoring
+    the any other illegal characters that are found.</para>
+
+    <para>If the file access permissions don't allow writing or open-read-only mode is on then
+    read-only mode will be engaged.</para>
+
+    <para>If the current file has been changed, then you will be prompted if you want to lose
+    the changes, save the changes or cancel the request.</para>
+    
+    <section>
+      <title>Bugs</title>
+      <itemizedlist>
+        <listitem>
+          <para>If the file was output using an offset length that is smaller than is required
+          the parser will determine that the character data does not match the hex data.
+          If the output data is edited to the same as with an offset length of 2 the same
+          thing happens.  This occurs because of a bug in <menuchoice><guimenu>File</guimenu>
+          <guimenuitem>Export as Hexdump</guimenuitem></menuchoice>, causing it to
+          remove characters from the end of each line that has larger offset lengths than that
+          of the first line.  This bug was fixed in v1.0.156.Pabs.  If you know the file was
+          output using a small offset length and are sure that you have not edited it press
+          Yes to ignore any further mismatches, no to ignore that one or cancel to cancel the
+          Import operation. Ignoring the mismatches will have no effect.</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
 </article>
