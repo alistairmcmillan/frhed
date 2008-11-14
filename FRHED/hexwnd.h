@@ -32,14 +32,6 @@
 #include "heksedit.h"
 #include "LangTools.h"
 
-#define SHARPEN_A(X) #X
-#define SHARPEN_W(X) L#X
-#define SHARPEN(T,X) SHARPEN_##T(X)
-
-#define CURRENT_VERSION SHARPEN(A,FRHED_MAJOR_VERSION) "." SHARPEN(A,FRHED_MINOR_VERSION)
-#define SUB_RELEASE_NO SHARPEN(A,FRHED_SUB_RELEASE_NO)
-#define BUILD_NO SHARPEN(A,FRHED_BUILD_NO)
-
 #include "PhysicalDrive.h"
 #include "PMemoryBlock.h"
 
