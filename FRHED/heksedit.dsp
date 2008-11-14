@@ -379,10 +379,6 @@ SOURCE=.\LoadHexFile.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ntdiskspec.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\PDrive95.h
 # End Source File
 # Begin Source File
