@@ -118,21 +118,46 @@ div.section h4 {
   background-color: #FFDDAA;
   border: 1px solid olive;
 }
+.caution h3,
+.caution p {
+  margin: 0;
+  padding: 5px;
+}
 .important {
   background-color: #FFFFDD;
   border: 1px solid olive;
+}
+.important h3,
+.important p {
+  margin: 0;
+  padding: 5px;
 }
 .note {
   background-color: #DDDDFF;
   border: 1px solid blue;
 }
+.note h3,
+.note p {
+  margin: 0;
+  padding: 5px;
+}
 .tip {
   background-color: #DDFFDD;
   border: 1px solid green;
 }
+.tip h3,
+.tip p {
+  margin: 0;
+  padding: 5px;
+}
 .warning {
   background-color: #FFDDDD;
   border: 1px solid red;
+}
+.warning h3,
+.warning p {
+  margin: 0;
+  padding: 5px;
 }
 
 /* Examples */
