@@ -8,6 +8,10 @@ set docbook_outputdir=%docbook_build_path%\html
 
 if not exist "%docbook_outputdir%" mkdir "%docbook_outputdir%"
 
+echo Copy images...
+if not exist "%docbook_outputdir%\images" mkdir "%docbook_outputdir%\images"
+copy "..\images\*.gif" "%docbook_outputdir%\images\."
+
 echo Copy screenshots...
 if not exist "%docbook_outputdir%\screenshots" mkdir "%docbook_outputdir%\screenshots"
 copy "..\screenshots\*.*" "%docbook_outputdir%\screenshots\."
