@@ -28,6 +28,7 @@
 
 #include "precomp.h"
 #include "resource.h"
+#include "Constants.h"
 #include "hexwnd.h"
 #include "toolbar.h"
 
@@ -166,7 +167,7 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *szCmdLine, int)
 				"Click on Yes if you want to open the file linked to,\n"
 				"or click on No if you want to open the link file itself.\n"
 				"Choose Cancel if you want to abort opening.",
-				"frhed", MB_YESNOCANCEL | MB_ICONQUESTION );
+				ApplicationName, MB_YESNOCANCEL | MB_ICONQUESTION );
 			switch( ret )
 			{
 			case IDYES:

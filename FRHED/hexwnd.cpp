@@ -27,6 +27,7 @@
 // Frhed main definition file.
 #include "precomp.h"
 #include "resource.h"
+#include "Constants.h"
 #include "Simparr.h"
 #include "StringTable.h"
 #include "VersionData.h"
@@ -45,8 +46,6 @@
 #include "idt.h"
 #include "ids.h"
 #include "ido.h"
-
-static const char appname[] = "Frhed";
 
 static int MenuGetPosFromID(HMENU hMenu, DWORD id);
 
@@ -1674,7 +1673,7 @@ void HexEditorWindow::set_wnd_title()
 			if (bPartialOpen==TRUE)
 				strcat (buf, " - P");
 			strcat (buf, " - ");
-			strcat (buf, appname);
+			strcat (buf, ApplicationName);
 			SetWindowText (hwndMain, buf);
 			bFilestatusChanged = FALSE;
 		}
@@ -1885,7 +1884,7 @@ void HexEditorWindow::set_wnd_title()
 	else
 	{
 		if (hwndMain)
-			SetWindowText(hwndMain, appname);
+			SetWindowText(hwndMain, ApplicationName);
 		SendMessage(hwndStatusBar, WM_SETTEXT, 0, (LPARAM) "No file loaded");
 	}
 }
@@ -3691,7 +3690,8 @@ void HexEditorWindow::save_ini_data()
 	}
 	else
 	{
-		MessageBox(hwnd, "Could not save preferences to registry.", appname, MB_ICONERROR);
+		MessageBox(hwnd, "Could not save preferences to registry.",
+				ApplicationName, MB_ICONERROR);
 	}
 }
 
@@ -4319,7 +4319,7 @@ void HexEditorWindow::dropfiles(HDROP hDrop)
 			"Click on Yes if you want to open the file linked to,\n"
 			"or click on No if you want to open the link file itself.\n"
 			"Choose Cancel if you want to abort opening.",
-			appname, MB_YESNOCANCEL | MB_ICONQUESTION );
+			ApplicationName, MB_YESNOCANCEL | MB_ICONQUESTION );
 		switch( ret )
 		{
 		case IDYES:
@@ -4769,7 +4769,7 @@ HRESULT HexEditorWindow::ResolveIt(LPCSTR lpszLinkFile, LPSTR lpszPath)
 void HexEditorWindow::CMD_colors_to_default()
 {
 	if (MessageBox(hwnd, "Really reset colors to default values?",
-			appname, MB_YESNO | MB_ICONQUESTION) == IDYES)
+			ApplicationName, MB_YESNO | MB_ICONQUESTION) == IDYES)
 	{
 		iBmkColor = RGB( 255, 0, 0 );
 		iSelBkColorValue = RGB( 255, 255, 0 );
@@ -5308,9 +5308,11 @@ void HexEditorWindow::CMD_fw()
 
 void HexEditorWindow::CMD_deletefile()
 {
-	if (IDYES != MessageBox(hwnd, "Are you sure you want to delete this file?", appname, MB_ICONERROR|MB_YESNO))
+	if (IDYES != MessageBox(hwnd, "Are you sure you want to delete this file?",
+			ApplicationName, MB_ICONERROR | MB_YESNO))
 		return;
-	if (IDYES != MessageBox(hwnd,"Are you really really sure you want to delete this file?", appname, MB_ICONERROR|MB_YESNO))
+	if (IDYES != MessageBox(hwnd,"Are you really really sure you want to delete this file?",
+			ApplicationName, MB_ICONERROR | MB_YESNO))
 		return;
 	if (remove(filename) != 0)
 	{
@@ -6115,7 +6117,8 @@ void HexEditorWindow::status_bar_click(bool left)
 
 void HexEditorWindow::CMD_adopt_colours()
 {
-	if( MessageBox( hwnd, "Really adopt the operating system colour scheme?", appname, MB_YESNO | MB_ICONQUESTION ) == IDYES )
+	if (MessageBox(hwnd, "Really adopt the operating system colour scheme?",
+			ApplicationName, MB_YESNO | MB_ICONQUESTION) == IDYES)
 	{
 		iTextColorValue = GetSysColor(COLOR_WINDOWTEXT);
 		iBkColorValue = GetSysColor(COLOR_WINDOW);
