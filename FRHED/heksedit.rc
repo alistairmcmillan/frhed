@@ -1322,8 +1322,8 @@ END
 
 STRINGTABLE 
 BEGIN
-	IDS_AboutFrhed          "frhed - free hex editor for 32-bit Windows\nVersion %u.%u.%u.%u\n(c) Raihan Kibria 2000\nFill with by Pabs Dec 1999\nDisk-Access, Code/Decode Extension and some other bits by Gerson Kurz.\nDLL interface by Jochen Neubeck."
-    IDS_DiffListItemFormat  "%d) 0x%x=%n%d to 0x%x=%n%d (%d bytes)"
+    IDS_ABOUTFRHED          "frhed - free hex editor for 32-bit Windows\nVersion %u.%u.%u.%u\n(c) Raihan Kibria 2000\nFill with by Pabs Dec 1999\nDisk-Access, Code/Decode Extension and some other bits by Gerson Kurz.\nDLL interface by Jochen Neubeck."
+    IDS_DIFFLISTITEMFORMAT  "%d) 0x%x=%n%d to 0x%x=%n%d (%d bytes)"
 END
 
 #endif    // Englisch (USA) resources
