@@ -23,7 +23,14 @@
 
     <productname>Frhed</productname>
 
-    <releaseinfo><emphasis>Revision 0.0.1</emphasis></releaseinfo>
+    <releaseinfo><emphasis>Revision 0.1.0</emphasis></releaseinfo>
+
+    <legalnotice>
+      <para>Frhed is Copyright © <ulink url="mailto:raihan@kibria.de">Raihan Kibria</ulink> 2002.
+      Additional features by <ulink url="mailto:pabs3@zip.to">Pabs</ulink>,
+      <ulink url="mailto:not@p-nand-q.com">Gerson Kurz</ulink>, Mike Funduc and nas.
+      All Rights Reserved.</para>
+    </legalnotice>
 
     <legalnotice>
       <para>Information in this document is subject to change without notice.
