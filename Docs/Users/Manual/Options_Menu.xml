@@ -116,147 +116,169 @@
 
   <section>
     <title>The <menuchoice><guimenu>Options</guimenu><guimenuitem>OLE Drag-drop</guimenuitem></menuchoice> command</title>
-    <informaltable frame="none">
-      <tgroup cols="2">
-        <colspec colname="c1" colwidth="50*"/>
-        <colspec colname="c2" colwidth="50*"/>
-        <tbody>
-          <row>
-            <entry nameend="c2" namest="c1">
-              <para>
-                <emphasis role="bold">General</emphasis>
-              </para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Option</para>
-            </entry>
-            <entry>
-              <para>Effect</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Enable drop input</para>
-            </entry>
-            <entry>
-              <para>This allows you to drop data onto Frhed from other programs or other Frhed instances.</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Enable drag output</para>
-            </entry>
-            <entry>
-              <para>This allows you to drag data from Frhed to other programs or other Frhed instances.</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Enable scroll-delaying for drag-drop</para>
-            </entry>
-            <entry>
-              <para>During a drag-drop operation if you move the mouse near the outside of the window Frhed can either begin scrolling immediately or delay for an interval and then start scrolling. The delay is determined by Windows and if it doesn&apos;t seem to delay scrolling at all you should turn this off.</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Enable scroll-delaying for selecting</para>
-            </entry>
-            <entry>
-              <para>As for drag-drop, but applies to when Frhed is selecting.</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Always give the opportunity to change between move and copy after a drop.</para>
-            </entry>
-            <entry>
-              <para>Normally you Move data with the left mouse button and Copy by combining with Ctrl. If you use the right or middle mouse button a menu will popup on a drop to give you the opportunity to pick move or copy. This option allows you to always have this menu popup even when you use the left mouse button.</para>
-            </entry>
-          </row>
-          <row>
-            <entry nameend="c2" namest="c1">
-              <para>
-                <emphasis role="bold">Input</emphasis>
-              </para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>CF_HDROP opens the files dropped.</para>
-            </entry>
-            <entry>
-              <para>When you drop files from explorer normally Frhed will bring up a list of formats to drop. With this enabled Frhed will instead open the file dropped or ask you which file you want to open for multiple files. Overrides the next two.</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Drop &quot;BinaryData&quot; if present</para>
-            </entry>
-            <entry>
-              <para>&quot;BinaryData&quot; is used to transfer data between Frhed instances. Check this if you want to automatically drop this when it is present. Overrides CF_TEXT.</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Drop CF_TEXT if present</para>
-            </entry>
-            <entry>
-              <para>CF_TEXT is the standard format used for transferring text. Check this if you want to automatically drop this when it is present.</para>
-            </entry>
-          </row>
-          <row>
-            <entry nameend="c2" namest="c1">
-              <para>
-                <emphasis role="bold">Output</emphasis>
-              </para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Drag &quot;BinaryData&quot;</para>
-            </entry>
-            <entry>
-              <para>&quot;BinaryData&quot; is used to transfer data between Frhed instances. Check this if you want to be able to do this.</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Drag CF_TEXT as:</para>
-            </entry>
-            <entry>
-              <para>CF_TEXT is the standard format used for transferring text. Check this if you want to</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Hexdump/Special syntax (&lt;bh:ff&gt;...)</para>
-            </entry>
-            <entry>
-              <para>Choose Hexdump to output either of the formats output by <menuchoice><guimenu>File</guimenu><guimenuitem>Export as Hexdump</guimenuitem></menuchoice>. Choose Special syntax to output the bytes as Frhed&apos;s <link linkend="special_syntax">special syntax format</link>.</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>display (else digits)</para>
-            </entry>
-            <entry>
-              <para>Check for a hexdump like the display, uncheck for the bytes as hex on a single line.</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Drag &quot;Rich Text Format&quot; (as hexdump)</para>
-            </entry>
-            <entry>
-              <para>This allows you to drag a full colour hexdump, with bookmarks, separators and selection to wordprocessors such as <ulink url="http://www.openoffice.org">OpenOffice</ulink>, <ulink url="http://www.abisource.com">AbiWord</ulink> and <ulink url="http://www.microsoft.com">MS Word</ulink>.</para>
-            </entry>
-          </row>
-        </tbody>
-      </tgroup>
-    </informaltable>
+    <section>
+      <title>General</title>
+      <informaltable>
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>
+                <para>Option</para>
+              </entry>
+              <entry>
+                <para>Effect</para>
+              </entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                <para>Enable drop input</para>
+              </entry>
+              <entry>
+                <para>This allows you to drop data onto Frhed from other programs or other Frhed instances.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>Enable drag output</para>
+              </entry>
+              <entry>
+                <para>This allows you to drag data from Frhed to other programs or other Frhed instances.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>Enable scroll-delaying for drag-drop</para>
+              </entry>
+              <entry>
+                <para>During a drag-drop operation if you move the mouse near the outside of the window Frhed can either begin scrolling immediately or delay for an interval and then start scrolling. The delay is determined by Windows and if it doesn&apos;t seem to delay scrolling at all you should turn this off.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>Enable scroll-delaying for selecting</para>
+              </entry>
+              <entry>
+                <para>As for drag-drop, but applies to when Frhed is selecting.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>Always give the opportunity to change between move and copy after a drop.</para>
+              </entry>
+              <entry>
+                <para>Normally you Move data with the left mouse button and Copy by combining with Ctrl. If you use the right or middle mouse button a menu will popup on a drop to give you the opportunity to pick move or copy. This option allows you to always have this menu popup even when you use the left mouse button.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    
+    <section>
+      <title>Input</title>
+      <informaltable>
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>
+                <para>Option</para>
+              </entry>
+              <entry>
+                <para>Effect</para>
+              </entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                <para>CF_HDROP opens the files dropped.</para>
+              </entry>
+              <entry>
+                <para>When you drop files from explorer normally Frhed will bring up a list of formats to drop. With this enabled Frhed will instead open the file dropped or ask you which file you want to open for multiple files. Overrides the next two.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>Drop &quot;BinaryData&quot; if present</para>
+              </entry>
+              <entry>
+                <para>&quot;BinaryData&quot; is used to transfer data between Frhed instances. Check this if you want to automatically drop this when it is present. Overrides CF_TEXT.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>Drop CF_TEXT if present</para>
+              </entry>
+              <entry>
+                <para>CF_TEXT is the standard format used for transferring text. Check this if you want to automatically drop this when it is present.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    
+    <section>
+      <title>Output</title>
+      <informaltable>
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>
+                <para>Option</para>
+              </entry>
+              <entry>
+                <para>Effect</para>
+              </entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                <para>Drag &quot;BinaryData&quot;</para>
+              </entry>
+              <entry>
+                <para>&quot;BinaryData&quot; is used to transfer data between Frhed instances. Check this if you want to be able to do this.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>Drag CF_TEXT as:</para>
+              </entry>
+              <entry>
+                <para>CF_TEXT is the standard format used for transferring text. Check this if you want to</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>Hexdump/Special syntax (&lt;bh:ff&gt;...)</para>
+              </entry>
+              <entry>
+                <para>Choose Hexdump to output either of the formats output by <menuchoice><guimenu>File</guimenu><guimenuitem>Export as Hexdump</guimenuitem></menuchoice>. Choose Special syntax to output the bytes as Frhed&apos;s <link linkend="special_syntax">special syntax format</link>.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>display (else digits)</para>
+              </entry>
+              <entry>
+                <para>Check for a hexdump like the display, uncheck for the bytes as hex on a single line.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>Drag &quot;Rich Text Format&quot; (as hexdump)</para>
+              </entry>
+              <entry>
+                <para>This allows you to drag a full colour hexdump, with bookmarks, separators and selection to wordprocessors such as <ulink url="http://www.openoffice.org">OpenOffice</ulink>, <ulink url="http://www.abisource.com">AbiWord</ulink> and <ulink url="http://www.microsoft.com">MS Word</ulink>.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
   </section>
 
   <section>
