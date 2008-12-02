@@ -37,7 +37,7 @@ import shutil
 import sys
 
 # The version of the script
-script_version = 0.6
+script_version = 0.7
 
 def get_product_version(filename):
   '''Get product version used in archive paths etc.
@@ -388,6 +388,61 @@ def set_CDefine_ver(file, version, major, minor, subrelease, buildnumber):
   shutil.move(outfile, file)
   return True
 
+def process_DocBook(filename, config, sect):
+  '''Process DocBook section in the ini file.'''
+
+  ver = config.get(sect, 'versionstring')
+  file = config.get(sect, 'path')
+  desc = config.get(sect, 'description')
+  tag = config.get(sect, 'tag')
+  
+  print '%s : %s' % (sect, desc)
+  print '  File: ' + file
+  print '  Version: ' + ver
+  print '  Tag: ' + tag
+  
+  inidir = os.path.dirname(filename)
+  manualfile = os.path.join(inidir, file)
+  
+  ret = set_DocBook_ver(manualfile, ver, tag)
+  return ret
+
+def set_DocBook_ver(file, version, tag):
+  '''Set revision of DocBook manual.'''
+
+  outfile = file + '.bak'
+  try:
+    fread = open(file, 'r')
+  except IOError, (errno, strerror):
+    print 'Cannot open file ' + file + ' for reading'
+    print 'Error: ' + strerror
+    return False
+
+  try:
+    fwrite = open(outfile, 'w')
+  except IOError, (errno, strerror):
+    print 'Cannot open file ' + infile + ' for writing'
+    print 'Error: ' + strerror
+    fread.close()
+    return False
+
+  # Replace text inside releaseinfo tag with new text
+  begintag = '<' + tag + '>'
+  endtag = '</' + tag + '>'
+  for line in fread:
+    begin_ind = line.find(begintag)
+    end_ind = line.find(endtag)
+    if begin_ind != -1 and end_ind != -1:
+      line = line[:begin_ind + len(begintag)] + version + line[end_ind:]
+    fwrite.write(line)
+
+  fread.close()
+  fwrite.close()
+  
+  shutil.move(outfile, file)
+  
+  return True
+
 def replace_rc_ver_at_end(line, version):
   '''Replace plain version number at the end of the line in RC file.
      Also make sure we have four numbers.
@@ -442,6 +497,8 @@ def process_versions(filename):
       ret = process_InnoSetup(filename, config, sect)
     if vertype == 'C-Define':
       ret = process_CDefine(filename, config, sect)
+    if vertype == 'Docbook':
+      ret = process_DocBook(filename, config, sect)
   return ret
 
 def usage():
