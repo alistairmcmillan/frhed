@@ -150,16 +150,14 @@
 
   <section>
     <title>Deleting the current file</title>
-    <warning>
-      <para>USE WITH CAUTION</para>
-    </warning>
-
     <para>The <menuchoice><guimenu>File</guimenu><guimenuitem>Delete File</guimenuitem></menuchoice>
     command deletes the file currently opened in the editor and closes it.
     This requires a double confirmation because it could be disastrous.</para>
 
-    <para>When ever you edit files using any hex editor you should <emphasis role="bold">always</emphasis>
-    have a backup anyway.</para>
+    <warning>
+      <para>USE WITH CAUTION! When ever you edit files using any hex editor you
+      should <emphasis role="bold">always</emphasis> have a backup anyway.</para>
+    </warning>
   </section>
 
   <section>
@@ -203,22 +201,17 @@
     <para>If the current file has been changed, then you will be prompted if you want to lose
     the changes, save the changes or cancel the request.</para>
     
-    <section>
-      <title>Bugs</title>
-      <itemizedlist>
-        <listitem>
-          <para>If the file was output using an offset length that is smaller than is required
-          the parser will determine that the character data does not match the hex data.
-          If the output data is edited to the same as with an offset length of 2 the same
-          thing happens.  This occurs because of a bug in <menuchoice><guimenu>File</guimenu>
-          <guimenuitem>Export as Hexdump</guimenuitem></menuchoice>, causing it to
-          remove characters from the end of each line that has larger offset lengths than that
-          of the first line.  This bug was fixed in v1.0.156.Pabs.  If you know the file was
-          output using a small offset length and are sure that you have not edited it press
-          Yes to ignore any further mismatches, no to ignore that one or cancel to cancel the
-          Import operation. Ignoring the mismatches will have no effect.</para>
-        </listitem>
-      </itemizedlist>
-    </section>
+    <warning>
+      <para>If the file was output using an offset length that is smaller than is required
+      the parser will determine that the character data does not match the hex data.
+      If the output data is edited to the same as with an offset length of 2 the same
+      thing happens.  This occurs because of a bug in <menuchoice><guimenu>File</guimenu>
+      <guimenuitem>Export as Hexdump</guimenuitem></menuchoice>, causing it to
+      remove characters from the end of each line that has larger offset lengths than that
+      of the first line.  This bug was fixed in v1.0.156.Pabs.  If you know the file was
+      output using a small offset length and are sure that you have not edited it press
+      Yes to ignore any further mismatches, no to ignore that one or cancel to cancel the
+      Import operation. Ignoring the mismatches will have no effect.</para>
+    </warning>
   </section>
 </article>
