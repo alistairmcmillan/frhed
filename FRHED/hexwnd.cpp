@@ -3197,8 +3197,8 @@ int HexEditorWindow::CMD_save()
 		int nbl = DataArray.GetLength(); // Length of the DataArray
 		if (nbl != iPartialOpenLen)
 		{
-			int i = iPartialOffset + iPartialOpenLen; // loop var & start of loop
-			int e = iPartialFileLen - 1; // end of loop
+			__int64 i = iPartialOffset + iPartialOpenLen; // loop var & start of loop
+			__int64 e = iPartialFileLen - 1; // end of loop
 			int n = 1; // loop increment
 			if (nbl > iPartialOpenLen)
 			{//Bigger .'. we need to start at the end
@@ -3211,9 +3211,9 @@ int HexEditorWindow::CMD_save()
 			do
 			{
 				BYTE tmp;//Temporary byte for moving data
-				_lseek(filehandle, i, SEEK_SET);
+				_lseeki64(filehandle, i, SEEK_SET);
 				_read(filehandle, &tmp, 1);
-				_lseek(filehandle, i + r, SEEK_SET);
+				_lseeki64(filehandle, i + r, SEEK_SET);
 				if (-1 == _write(filehandle, &tmp, 1))
 				{
 					MessageBox(hwnd, "Could not move data in the file.", "Save", MB_ICONERROR);
