@@ -88,7 +88,7 @@ Section "ProgramFiles" SEC01
 SectionEnd
 
 Section "Documentation" SEC02
-  SetOutPath "$INSTDIR"
+  SetOutPath "$INSTDIR\Docs"
   File "..\..\Build\HELP\frhed.chm"
   CreateShortCut "$SMPROGRAMS\Frhed\Help.lnk" "$INSTDIR\frhed.chm"
 SectionEnd
