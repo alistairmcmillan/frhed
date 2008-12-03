@@ -14,6 +14,7 @@ Frhed 1.3.3
   Load Help file from Docs subfolder
   Show error message if help file is not found
   Installer: Install help file to Docs-subfolder
+  Add some initial support for 64-bit file sizes (for partial loading)
   Bugfix: Crash when exiting in Vista (r123)
 
 Frhed 1.3.2 - 2008-11-07 (r116)

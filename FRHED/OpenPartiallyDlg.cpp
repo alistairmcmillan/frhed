@@ -33,12 +33,13 @@ int OpenPartiallyDlg::bShowFileStatsPL = 0;
 
 BOOL OpenPartiallyDlg::OnInitDialog(HWND hDlg)
 {
-	int iPLFileLen = _filelength(filehandle);
+	__int64 iPLFileLen = _filelengthi64(filehandle);
 	char buf[128] = {0};
 	SetDlgItemText(hDlg, IDC_EDIT1, "x0");
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "Size of file: %l. Load how many bytes:", iPLFileLen);
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "Size of file: %lld. Load how many bytes:", iPLFileLen);
 	SetDlgItemText(hDlg, IDC_STATIC2, buf);
-	SetDlgItemInt(hDlg, IDC_EDIT2, iPLFileLen, FALSE);
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%lld", iPLFileLen);
+	SetDlgItemText(hDlg, IDC_EDIT2, buf);
 	CheckDlgButton(hDlg, IDC_RADIO1, BST_CHECKED);
 	CheckDlgButton(hDlg, IDC_CHECK1, bShowFileStatsPL);
 	return TRUE;
@@ -46,18 +47,27 @@ BOOL OpenPartiallyDlg::OnInitDialog(HWND hDlg)
 
 BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 {
-	int iPLFileLen = _filelength(filehandle);
+	__int64 iPLFileLen = _filelengthi64(filehandle);
 	bShowFileStatsPL = IsDlgButtonChecked(hDlg, IDC_CHECK1);
 	char buf[128] = {0};
-	int iNumBytesPl;
+	__int64 iNumBytesPl;
+	
 	// Only complain about wrong offset in start offset editbox if loading from start.
 	if (GetDlgItemText(hDlg, IDC_EDIT2, buf, 128) &&
-		sscanf(buf, "%u", &iNumBytesPl) == 0)
+		sscanf(buf, "%lld", &iNumBytesPl) == 0)
 	{
 		MessageBox(hDlg, "Number of bytes not recognized.", "Open partially", MB_ICONERROR);
 		return FALSE;
 	}
-	int iStartPL;
+
+	if (iNumBytesPl >= INT_MAX)
+	{
+		MessageBox(hDlg, "Cannot open more than 2 GB of data.",
+				"Open partially", MB_ICONERROR);
+		return FALSE;
+	}
+
+	__int64 iStartPL;
 	if (IsDlgButtonChecked(hDlg, IDC_RADIO2))
 	{
 		// Load from end of file: arguments must be adapted.
@@ -70,7 +80,7 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 	}
 	else if (GetDlgItemText(hDlg, IDC_EDIT1, buf, 128) &&
 		sscanf(buf, "x%x", &iStartPL) == 0 &&
-		sscanf(buf, "%u", &iStartPL) == 0)
+		sscanf(buf, "%lld", &iStartPL) == 0)
 	{
 		MessageBox(hDlg, "Start offset not recognized.", "Open partially", MB_ICONERROR);
 		return FALSE;
@@ -80,23 +90,14 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		MessageBox(hDlg, "Too many bytes to load.", "Open partially", MB_ICONERROR);
 		return FALSE;
 	}
-	//int filehandle = _open(szFileName, _O_RDONLY|_O_BINARY);
-	/*if (filehandle == -1)
-	{
-		char buf[500];
-		sprintf(buf, "Error code 0x%x occured while opening file %s.", errno, szFileName);
-		MessageBox(hDlg, buf, "Open partially", MB_ICONERROR);
-		return FALSE;
-	}*/
+
 	BOOL done = FALSE;
-	//DataArray.ClearAll();
-	//CMD_new
-	if (DataArray.SetSize(iNumBytesPl))
+	if (DataArray.SetSize((int)iNumBytesPl))
 	{
 		DataArray.ExpandToSize();
-		_lseek(filehandle, iStartPL, 0);
+		_lseeki64(filehandle, iStartPL, 0);
 		iPartialOffset = iStartPL;
-		iPartialOpenLen = iNumBytesPl;
+		iPartialOpenLen = (int)iNumBytesPl;
 		iPartialFileLen = iPLFileLen;
 		bPartialStats = bShowFileStatsPL;
 		if (_read(filehandle, DataArray, iNumBytesPl) != -1)

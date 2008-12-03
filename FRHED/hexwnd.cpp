@@ -3232,7 +3232,7 @@ int HexEditorWindow::CMD_save()
 				}
 			}
 		}
-		if (_lseek(filehandle, iPartialOffset, 0) == -1)
+		if (_lseeki64(filehandle, iPartialOffset, 0) == -1)
 		{
 			MessageBox(hwnd, "Could not seek in file.", "Save", MB_ICONERROR);
 		}
@@ -5152,7 +5152,7 @@ void HexEditorWindow::CMD_revert()
 		int filehandle = _open(filename, _O_RDONLY|_O_BINARY);
 		if (filehandle != -1)
 		{
-			_lseek(filehandle, iPartialOffset, 0);
+			_lseeki64(filehandle, iPartialOffset, 0);
 			if (DataArray.SetSize(iPartialOpenLen))
 			{
 				if (_read(filehandle, &DataArray[0], iPartialOpenLen) != -1)

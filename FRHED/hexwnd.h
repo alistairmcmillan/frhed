@@ -288,7 +288,8 @@ protected:
 	static int iPasteSkip;
 
 	int bOpenReadOnly;//Pabs inserted ", iPartialOpenLen, iPartialFileLen, bPartialStats"
-	int iPartialOffset, bPartialOpen, iPartialOpenLen, iPartialFileLen, bPartialStats;
+	__int64 iPartialOffset, iPartialFileLen;
+	int bPartialOpen, iPartialOpenLen, bPartialStats;
 	int iBmkCount;
 	bookmark pbmkList[BMKMAX];
 	int iMRU_count;
