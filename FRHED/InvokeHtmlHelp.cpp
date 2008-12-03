@@ -25,9 +25,9 @@
 
 #include "precomp.h"
 #include <htmlhelp.h>
-
-/** @brief HtmlHelp file to open from Frhed program folder. */
-static const char HtmlHelpFile[] = "frhed.chm";
+#include <tchar.h>
+#include "Constants.h"
+#include "paths.h"
 
 /**
  * @brief Show HTML help.
@@ -36,27 +36,39 @@ static const char HtmlHelpFile[] = "frhed.chm";
  * @param [in] path Additional relative path inside help file to open.
  * @param [in] hParentWindow Window opening this help.
  */
-void ShowHtmlHelp( UINT uCommand, LPCTSTR path, HWND hParentWindow )
+void ShowHtmlHelp(UINT uCommand, LPCTSTR path, HWND hParentWindow)
 {
-	if( uCommand == HELP_CONTEXT )
+	TCHAR fullHelpPath[MAX_PATH] = {0};
+	
+	paths_GetFullPath(HtmlHelpFile, fullHelpPath, RTL_NUMBER_OF(fullHelpPath));
+	if (!paths_DoesFileExist(fullHelpPath))
+	{
+		TCHAR msg[500] = {0};
+		_sntprintf(msg, RTL_NUMBER_OF(msg) - 1, "Help file\n%s\nnot found!",
+				fullHelpPath);
+		MessageBox(hParentWindow, msg, "Frhed", MB_ICONERROR);
+		return;
+	}
+
+	if (uCommand == HELP_CONTEXT)
 	{
 		if (path != NULL)
 		{
 			char fullpath[MAX_PATH] = {0};
-			_snprintf(fullpath, MAX_PATH, "%s::/%s", HtmlHelpFile, path);
+			_snprintf(fullpath, MAX_PATH, "%s::/%s", fullHelpPath, path);
 			HtmlHelp(hParentWindow, fullpath, HH_DISPLAY_TOPIC, NULL);
 		}
 		else
 		{
-			HtmlHelp(hParentWindow, HtmlHelpFile, HH_DISPLAY_TOPIC, NULL);
+			HtmlHelp(hParentWindow, fullHelpPath, HH_DISPLAY_TOPIC, NULL);
 		}
 	}
-	else if( uCommand == HELP_FINDER )
+	else if (uCommand == HELP_FINDER)
 	{
-		HtmlHelp(hParentWindow, HtmlHelpFile, HH_DISPLAY_SEARCH, NULL);
+		HtmlHelp(hParentWindow, fullHelpPath, HH_DISPLAY_SEARCH, NULL);
 	}
-	else if( uCommand == HELP_CONTENTS )
+	else if (uCommand == HELP_CONTENTS)
 	{
-		HtmlHelp(hParentWindow, HtmlHelpFile, HH_DISPLAY_TOC, NULL);
+		HtmlHelp(hParentWindow, fullHelpPath, HH_DISPLAY_TOC, NULL);
 	}
 }

@@ -15,3 +15,6 @@ const char FrhedHomepageURL[] = "http://frhed.sourceforge.net/";
 
 /** @brief Filename of the contributors list. */
 const char ContributorsList[] = "Docs\\Contributors.txt";
+
+/** @brief HtmlHelp file to open from Frhed program folder. */
+static const char HtmlHelpFile[] = "docs\\frhed.chm";
