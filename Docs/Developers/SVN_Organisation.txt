@@ -9,7 +9,6 @@ Frhed Folder Structure
  - FRHED
    - Languages
    - res
- - HELP
  - Installer
    - NSIS
    - Runtimes
@@ -28,7 +27,7 @@ Frhed/Docs/Users
  - Documentation for users, changelog etc
 
 Frhed/Docs/Users/Manual
- - New Docbook-based user manual
+ - Docbook-based user manual
 
 Frhed/FRHED/
  - Frhed executable and heksedit.dll codes, main source folder.
@@ -38,9 +37,6 @@ Frhed/FRHED/Languages
 
 Frhed/FRHED/res
  - Frhed/heksedit resource files (images, icons etc)
-
-Frhed/HELP/
- - HTML-based user manual files
 
 Frhed/Installer/
  - Frhed installer(s) files
