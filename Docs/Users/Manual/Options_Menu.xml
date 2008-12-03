@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <article id="options_menu">
-  <title>The Options Menu</title>
+  <title>The <guimenu>Options</guimenu> Menu</title>
 
   <section>
-    <title>The <menuchoice><guimenu>Options</guimenu><guimenuitem>View settings</guimenuitem></menuchoice> command</title>
+    <title>The <guimenuitem>View settings</guimenuitem> command</title>
     <para>Here you can choose:</para>
     <itemizedlist>
       <listitem>
@@ -34,60 +34,63 @@
   </section>
 
   <section>
-    <title>The <menuchoice><guimenu>Options</guimenu><guisubmenu>Color settings</guisubmenu><guimenuitem>Text color</guimenuitem></menuchoice> command</title>
-    <para>Choose what color the text in the main window should have.</para>
+    <title>The <guisubmenu>Color settings</guisubmenu> submenu</title>
+    <section>
+      <title>The <guimenuitem>Text color</guimenuitem> command</title>
+      <para>Choose what color the text in the main window should have.</para>
+    </section>
+
+    <section>
+      <title>The <guimenuitem>Background color</guimenuitem> command</title>
+      <para>Choose what color the background in the main window should have.</para>
+    </section>
+
+    <section>
+      <title>The <guimenuitem>Separator color</guimenuitem> command</title>
+      <para>Choose what color the separators in the main window should have.</para>
+    </section>
+
+    <section>
+      <title>The <guimenuitem>Reset colors to standard</guimenuitem> command</title>
+      <para>Reset colors to their default values:</para>
+      <informaltable frame="none">
+        <tgroup cols="2">
+          <colspec colname="c1" colwidth="50*"/>
+          <colspec colname="c2" colwidth="50*"/>
+          <tbody>
+            <row>
+              <entry align="center" nameend="c2" namest="c1" valign="middle">
+                <para> Selection - Black Text, Yellow Background</para>
+              </entry>
+            </row>
+            <row>
+              <entry align="center" nameend="c2" namest="c1" valign="middle">
+                <para> Window - Black Text, White Background</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>Bookmark - Red</para>
+              </entry>
+              <entry>
+                <para>Separator - Grey (192)</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+
+    <section>
+      <title>The <guimenuitem>Adopt OS colour scheme</guimenuitem> command</title>
+      <para>Adopt the colour scheme of the operating system if it offers one.
+      The separator colour and the bookmark colour are not changed since Win32
+      doesn't offer these.</para>
+    </section>
   </section>
 
   <section>
-    <title>The <menuchoice><guimenu>Options</guimenu><guisubmenu>Color settings</guisubmenu><guimenuitem>Background color</guimenuitem></menuchoice> command</title>
-    <para>Choose what color the background in the main window should have.</para>
-  </section>
-
-  <section>
-    <title>The <menuchoice><guimenu>Options</guimenu><guisubmenu>Color settings</guisubmenu><guimenuitem>Separator color</guimenuitem></menuchoice> command</title>
-    <para>Choose what color the separators in the main window should have.</para>
-  </section>
-
-  <section>
-    <title>The <menuchoice><guimenu>Options</guimenu><guisubmenu>Color settings</guisubmenu><guimenuitem>Reset colors to standard</guimenuitem></menuchoice> command</title>
-    <para>Reset colors to their default values:</para>
-    <informaltable frame="none">
-      <tgroup cols="2">
-        <colspec colname="c1" colwidth="50*"/>
-        <colspec colname="c2" colwidth="50*"/>
-        <tbody>
-          <row>
-            <entry align="center" nameend="c2" namest="c1" valign="middle">
-              <para> Selection - Black Text, Yellow Background</para>
-            </entry>
-          </row>
-          <row>
-            <entry align="center" nameend="c2" namest="c1" valign="middle">
-              <para> Window - Black Text, White Background</para>
-            </entry>
-          </row>
-          <row>
-            <entry>
-              <para>Bookmark - Red</para>
-            </entry>
-            <entry>
-              <para>Separator - Grey (192)</para>
-            </entry>
-          </row>
-        </tbody>
-      </tgroup>
-    </informaltable>
-  </section>
-
-  <section>
-    <title>The <menuchoice><guimenu>Options</guimenu><guisubmenu>Color settings</guisubmenu><guimenuitem>Adopt OS colour scheme</guimenuitem></menuchoice> command</title>
-    <para>Adopt the colour scheme of the operating system if it offers one.
-    The separator colour and the bookmark colour are not changed since Win32
-    doesn't offer these.</para>
-  </section>
-
-  <section>
-    <title>The <menuchoice><guimenu>Options</guimenu><guimenuitem>Character set</guimenuitem></menuchoice> command</title>
+    <title>The <guimenuitem>Character set</guimenuitem> command</title>
     <para>Here you can choose the character set for displaying and writing characters, either ANSI (the Windows
     character set) or OEM (the DOS character set). The font size in points can also be chosen.</para>
 
@@ -95,7 +98,7 @@
   </section>
 
   <section>
-    <title>The <menuchoice><guimenu>Options</guimenu><guimenuitem>Binary mode</guimenuitem></menuchoice> command</title>
+    <title>The <guimenuitem>Binary mode</guimenuitem> command</title>
     <para>What kind of byte order to use: Either Little-endian, as used in Intel-computers or Big-endian,
     used for example in computers with a Motorola processor. The difference between these modes is thus:
     Consider a longword, which is 4 bytes (named A to D) long.</para>
@@ -115,7 +118,7 @@
   </section>
 
   <section>
-    <title>The <menuchoice><guimenu>Options</guimenu><guimenuitem>OLE Drag-drop</guimenuitem></menuchoice> command</title>
+    <title>The <guimenuitem>OLE Drag-drop</guimenuitem> command</title>
     <section>
       <title>General</title>
       <informaltable>
@@ -282,7 +285,7 @@
   </section>
 
   <section>
-    <title>The <menuchoice><guimenu>Options</guimenu><guimenuitem>Make backups</guimenuitem></menuchoice> option</title>
+    <title>The <guimenuitem>Make backups</guimenuitem> option</title>
     <para>When saving first the old file is renamed by appending ".bak" to the name, deleting any previous backup,
     and then the file is saved as per usual.</para>
   </section>

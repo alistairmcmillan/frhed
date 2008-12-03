@@ -97,6 +97,13 @@
   </section>
 
   <section>
+    <title>Insert file</title>
+    <para>The <menuchoice><guimenu>File</guimenu><guimenuitem>Insert file</guimenuitem></menuchoice>
+    command inserts the requested file between the current byte and previous one,
+    replacing the selection if there is any.</para>
+  </section>
+
+  <section>
     <title>Exporting the file as a hexdump text</title>
     <para>The <menuchoice><guimenu>File</guimenu><guimenuitem>Export as hexdump</guimenuitem></menuchoice>
     command is used if you need the hexdump of the file in plain text form, for example if

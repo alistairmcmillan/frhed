@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <article id="disk_menu">
-  <title>The Disk Menu</title>
+  <title>The <guimenu>Disk</guimenu> Menu</title>
 
   <section>
-    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Open Drive</guimenuitem></menuchoice> command</title>
+    <title>The <guimenuitem>Open Drive</guimenuitem> command</title>
     <para>Use this command to open a physical harddrive or logical partition.</para>
     <section>
       <title>Restrictions</title>
@@ -25,32 +25,32 @@
   </section>
 
   <section>
-    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Close Drive</guimenuitem></menuchoice> command</title>
+    <title>The <guimenuitem>Close Drive</guimenuitem> command</title>
     <para>Use this command to close the previously opened drive again.</para>
   </section>
 
   <section>
-    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Goto First Sector</guimenuitem></menuchoice> command</title>
+    <title>The <guimenuitem>Goto First Sector</guimenuitem> command</title>
     <para>Use this command to navigate to the first sector of the harddisk.</para>
   </section>
 
   <section>
-    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Goto Next Sector</guimenuitem></menuchoice> command</title>
+    <title>The <guimenuitem>Goto Next Sector</guimenuitem> command</title>
     <para>Use this command to navigate to the next sector of the harddisk.</para>
   </section>
 
   <section>
-    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Goto Previous Sector</guimenuitem></menuchoice> command</title>
+    <title>The <guimenuitem>Goto Previous Sector</guimenuitem> command</title>
     <para>Use this command to navigate to the previous sector of the harddisk.</para>
   </section>
 
   <section>
-    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Goto Last Sector</guimenuitem></menuchoice> command</title>
+    <title>The <guimenuitem>Goto Last Sector</guimenuitem> command</title>
     <para>Use this command to navigate to the last sector of the harddisk.</para>
   </section>
 
   <section>
-    <title>The <menuchoice><guimenu>Disk</guimenu><guimenuitem>Goto Sector #</guimenuitem></menuchoice> command</title>
+    <title>The <guimenuitem>Goto Sector #</guimenuitem> command</title>
     <para>This command will show a dialog where you can specify a sector number to navigate to.</para>
   </section>
 </article>

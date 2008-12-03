@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <article id="registry_menu">
-  <title>The Registry Menu</title>
+  <title>The <guimenu>Registry</guimenu> Menu</title>
 
   <para>The <guimenu>Registry</guimenu> menu contains items related to methods of launching Frhed,
   the registry data, relations with previous versions of Frhed and different
