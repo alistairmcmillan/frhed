@@ -6,6 +6,9 @@ For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 
 Frhed 1.3.3
   Update homepage URL in About-dialog to Sf.net (r137)
+  Update About-dialog layout
+  Open contributors list from About-dialog
+  Update copyright info in About-dialog
   Allow translating menus
   "Exit" is now the last item in the "File menu (#2231019)
   Bugfix: Crash when exiting in Vista (r123)

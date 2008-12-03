@@ -79,7 +79,7 @@
 #define IDC_LEN                         164
 #define IDC_XOR                         165
 #define IDC_FORWARD                     166
-#define IDC_STATIC1                     167
+#define IDC_ABOUT_VER                   167
 #define IDC_LIST1                       168
 #define IDC_STATIC2                     169
 #define IDC_STATIC4                     169
@@ -235,6 +235,9 @@
 #define IDM_UPGRADE                     319
 #define IDM_SHORTCUTS                   320
 #define ID_DISK_CLOSEDRIVE              321
+#define IDC_MANIPBITS                   322
+#define IDC_NUMDIFFS                    323
+#define IDC_ABOUTCONTRIBS               324
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
@@ -246,7 +249,7 @@
 #define IDC_APPICON                     1082
 #define IDC_COMBO1                      1083
 #define IDS_DIFFLISTITEMFORMAT          10001
-#define IDS_ABOUTFRHED                  10002
+#define IDS_ABOUTFRHEDVER               10002
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

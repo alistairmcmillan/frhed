@@ -26,6 +26,7 @@
 #include "precomp.h"
 #include "resource.h"
 #include "Constants.h"
+#include "paths.h"
 #include "StringTable.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
@@ -41,11 +42,7 @@ BOOL AboutDlg::OnInitDialog(HWND hDlg)
 	buf[RTL_NUMBER_OF(buf) - 1] = L'\0';
 	_snwprintf(buf, RTL_NUMBER_OF(buf) - 1, S.AboutFrhed,
 		FRHED_MAJOR_VERSION, FRHED_MINOR_VERSION, FRHED_SUB_RELEASE_NO, FRHED_BUILD_NO);
-	SetDlgItemText(hDlg, IDC_STATIC1, buf);
-	// Set the email-addresses.
-	SetDlgItemText(hDlg, IDC_EDIT1,
-		"rkibria@hrz1.hrz.tu-darmstadt.de"
-		"\r\nPabs: pabs3@zip.to");
+	SetDlgItemText(hDlg, IDC_ABOUT_VER, buf);
 	// Set the homepage URL.
 	SetDlgItemText(hDlg, IDC_EDIT2, FrhedHomepageURL);
 	// Set the icon.
@@ -76,6 +73,23 @@ BOOL AboutDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			HINSTANCE hi = ShellExecute(hDlg, "open", FrhedHomepageURL, 0, NULL, SW_SHOWNORMAL);
 			if ((UINT)hi <= HINSTANCE_ERROR)
 				MessageBox(hDlg, "Could not call browser.", "Go to homepage", MB_ICONERROR);
+		}
+		return TRUE;
+
+	case IDC_ABOUTCONTRIBS:
+		{
+			TCHAR contrList[MAX_PATH] = {0};
+			paths_GetFullPath(ContributorsList, contrList,
+					RTL_NUMBER_OF(contrList));
+			if (!paths_DoesFileExist(contrList))
+			{
+				TCHAR buf[4096] = {0};
+				_sntprintf(buf, RTL_NUMBER_OF(buf), "File\n%s\nnot found!",
+						ContributorsList);
+				MessageBox(hDlg, buf, "Frhed", MB_ICONERROR);
+			}
+			else
+				paths_OpenFile(hDlg, ContributorsList);
 		}
 		return TRUE;
 	}

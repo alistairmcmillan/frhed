@@ -12,3 +12,6 @@ const char ApplicationName[] = "Frhed";
 
 /** @brief Frhed homepage URL. */
 const char FrhedHomepageURL[] = "http://frhed.sourceforge.net/";
+
+/** @brief Filename of the contributors list. */
+const char ContributorsList[] = "Docs\\Contributors.txt";

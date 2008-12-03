@@ -15,31 +15,20 @@
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 /////////////////////////////////////////////////////////////////////////////
 /** 
- * @file  StringTable.h
+ * @file paths.h
  *
- * @brief String table for translated texts.
+ * @brief Path handling functions.
  *
  */
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _STRING_TABLE_H_
-#define _STRING_TABLE_H_
+#ifndef _PATHS_H_
+#define _PATHS_H_
 
-/**
- * @brief A struct holding resource strings (translated).
- * This struct contains strings loaded from the resource file (English) or
- * from selected translation's PO file.
- */
-template <class T>
-struct StringTable
-{
-	operator T *() { return reinterpret_cast<T *>(this); }
-	T DiffListItemFormat;
-	T AboutFrhed;
-};
+bool paths_DoesFileExist(LPCTSTR file);
+void paths_GetFullPath(LPCTSTR path, LPTSTR fullpath, int size);
+void paths_GetModulePath(HMODULE hModule, LPTSTR path, int size);
+void paths_OpenFile(HWND hwnd, LPCTSTR file);
 
-extern StringTable<LPWSTR> S;
-extern StringTable<WORD> IDS;
-
-#endif // _STRING_TABLE_H_
+#endif // _PATHS_H_
