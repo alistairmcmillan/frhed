@@ -199,10 +199,10 @@ def build_manual():
     HTML version for the Web. HTML version is created with ads."""
 
     curdir = os.getcwd()
-    os.chdir('HELP')
+    os.chdir('Docs/Users/Manual/build')
     print 'Build HTML Help (CHM) manual...' 
-    call(['build.bat'])
-    
+    call(['build_htmlhelp.bat'])
+
     # HTML manual not build in trunk.
     #print 'Build HTML manual for Web with ads...'
     #call(['build_html.bat', 'withads'])
@@ -243,10 +243,10 @@ def create_bin_folders(bin_folder, dist_src_folder):
 
     shutil.copy('build/release/heksedit.dll', bin_folder)
     shutil.copy('build/release/RAWIO32.dll', bin_folder)
-    shutil.copy('build/help/frhed.chm', bin_folder)
 
     #copy_po_files(lang_folder)
 
+    shutil.copy('build/Manual/htmlhelp/Frhed.chm', doc_folder)
     shutil.copy('Docs/Users/ChangeLog.txt', doc_folder)
     shutil.copy('Docs/Users/Contributors.txt', doc_folder)
     shutil.copy('Docs/Users/History.txt', doc_folder)
