@@ -1,24 +1,24 @@
 # Microsoft Developer Studio Project File - Name="heksedit" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
-# ** NICHT BEARBEITEN **
+# ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
 CFG=heksedit - Win32 Debug
-!MESSAGE Dies ist kein gültiges Makefile. Zum Erstellen dieses Projekts mit NMAKE
-!MESSAGE verwenden Sie den Befehl "Makefile exportieren" und führen Sie den Befehl
+!MESSAGE This is not a valid makefile. To build this project using NMAKE,
+!MESSAGE use the Export Makefile command and run
 !MESSAGE 
 !MESSAGE NMAKE /f "heksedit.mak".
 !MESSAGE 
-!MESSAGE Sie können beim Ausführen von NMAKE eine Konfiguration angeben
-!MESSAGE durch Definieren des Makros CFG in der Befehlszeile. Zum Beispiel:
+!MESSAGE You can specify a configuration when running NMAKE
+!MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
 !MESSAGE NMAKE /f "heksedit.mak" CFG="heksedit - Win32 Debug"
 !MESSAGE 
-!MESSAGE Für die Konfiguration stehen zur Auswahl:
+!MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "heksedit - Win32 Release" (basierend auf  "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "heksedit - Win32 Debug" (basierend auf  "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "heksedit - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "heksedit - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -57,7 +57,7 @@ LINK32=link.exe
 # SUBTRACT LINK32 /pdb:none
 # Begin Special Build Tool
 IntDir=.\..\BuildTmp\heksedit\Release
-TargetPath=\frhed\trunk\Build\Release\heksedit.dll
+TargetPath=\Frhed\Frhed_SVN\Build\Release\heksedit.dll
 SOURCE="$(InputPath)"
 PreLink_Cmds=PreLink.bat $(IntDir) $(TargetPath)
 # End Special Build Tool
@@ -90,7 +90,7 @@ LINK32=link.exe
 # SUBTRACT LINK32 /nodefaultlib
 # Begin Special Build Tool
 IntDir=.\..\BuildTmp\heksedit\Debug
-TargetPath=\frhed\trunk\Build\Debug\heksedit.dll
+TargetPath=\Frhed\Frhed_SVN\Build\Debug\heksedit.dll
 SOURCE="$(InputPath)"
 PreLink_Cmds=PreLink.bat $(IntDir) $(TargetPath)
 # End Special Build Tool
@@ -231,6 +231,10 @@ SOURCE=.\OpenPartiallyDlg.cpp
 # Begin Source File
 
 SOURCE=.\PasteDlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\paths.cpp
 # End Source File
 # Begin Source File
 
@@ -376,6 +380,10 @@ SOURCE=.\LangTools.h
 # Begin Source File
 
 SOURCE=.\LoadHexFile.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\paths.h
 # End Source File
 # Begin Source File
 
