@@ -391,8 +391,8 @@ BEGIN
                     37,55,167,8
     PUSHBUTTON      "Open contributors list",IDC_ABOUTCONTRIBS,37,65,150,14
     GROUPBOX        "Homepage",IDC_STATIC,6,90,198,52
-    EDITTEXT        IDC_EDIT2,22,100,167,12,ES_AUTOHSCROLL | ES_READONLY
-    PUSHBUTTON      "Open Frhed's homepage in browser",IDC_BUTTON1,
+    EDITTEXT        IDC_ABOUT_URL,22,100,167,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Open Frhed's homepage in browser",IDC_ABOUT_OPENURL,
                     30,120,150,14
     DEFPUSHBUTTON   "OK",IDOK,80,148,50,14
 END

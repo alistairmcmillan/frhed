@@ -238,6 +238,8 @@
 #define IDC_MANIPBITS                   322
 #define IDC_NUMDIFFS                    323
 #define IDC_ABOUTCONTRIBS               324
+#define IDC_ABOUT_URL                   325
+#define IDC_ABOUT_OPENURL               326
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076

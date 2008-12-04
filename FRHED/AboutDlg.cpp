@@ -44,7 +44,7 @@ BOOL AboutDlg::OnInitDialog(HWND hDlg)
 		FRHED_MAJOR_VERSION, FRHED_MINOR_VERSION, FRHED_SUB_RELEASE_NO, FRHED_BUILD_NO);
 	SetDlgItemText(hDlg, IDC_ABOUT_VER, buf);
 	// Set the homepage URL.
-	SetDlgItemText(hDlg, IDC_EDIT2, FrhedHomepageURL);
+	SetDlgItemText(hDlg, IDC_ABOUT_URL, FrhedHomepageURL);
 	// Set the icon.
 	if (HWND hwndParent = GetParent(hDlg))
 		if (DWORD dwIcon = GetClassLong(hwndParent, GCLP_HICON))
@@ -68,7 +68,7 @@ BOOL AboutDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 		EndDialog(hDlg, wParam);
 		return TRUE;
 
-	case IDC_BUTTON1:
+	case IDC_ABOUT_OPENURL:
 		{
 			HINSTANCE hi = ShellExecute(hDlg, "open", FrhedHomepageURL, 0, NULL, SW_SHOWNORMAL);
 			if ((UINT)hi <= HINSTANCE_ERROR)
