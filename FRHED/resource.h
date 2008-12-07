@@ -250,6 +250,12 @@
 #define IDC_HEXDUMP_OFFSET2             334
 #define IDC_HEXDUMP_EXPORTFILE          335
 #define IDC_HEXDUMP_EXPORTCLIPB         336
+#define IDC_DECIMAL_VALUE               337
+#define IDC_DECIMAL_OFFSET              338
+#define IDC_DECIMAL_TIMES               339
+#define IDC_DECIMAL_BYTE                340
+#define IDC_DECIMAL_WORD                341
+#define IDC_DECIMAL_DWORD               342
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076

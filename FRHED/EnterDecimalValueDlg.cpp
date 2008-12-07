@@ -48,14 +48,14 @@ BOOL EnterDecimalValueDlg::OnInitDialog(HWND hDlg)
 			iDecValDlgValue = (int)DataArray[iCurByte];
 	}
 	char buf[16] = {0};
-	SetDlgItemInt(hDlg, IDC_EDIT1, iDecValDlgValue, TRUE);
+	SetDlgItemInt(hDlg, IDC_DECIMAL_VALUE, iDecValDlgValue, TRUE);
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iCurByte);
-	SetDlgItemText(hDlg, IDC_EDIT2, buf);
-	SetDlgItemInt(hDlg, IDC_EDIT3, 1, TRUE);
+	SetDlgItemText(hDlg, IDC_DECIMAL_OFFSET, buf);
+	SetDlgItemInt(hDlg, IDC_DECIMAL_TIMES, 1, TRUE);
 	CheckDlgButton(hDlg,
-		iDecValDlgSize == 4 ? IDC_RADIO3 :
-		iDecValDlgSize == 2 ? IDC_RADIO2 :
-		IDC_RADIO1,
+		iDecValDlgSize == 4 ? IDC_DECIMAL_DWORD :
+		iDecValDlgSize == 2 ? IDC_DECIMAL_WORD :
+		IDC_DECIMAL_BYTE,
 		BST_CHECKED);
 	return TRUE;
 }
@@ -63,26 +63,28 @@ BOOL EnterDecimalValueDlg::OnInitDialog(HWND hDlg)
 BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 {
 	iDecValDlgSize =
-		IsDlgButtonChecked(hDlg, IDC_RADIO3) ? 4 :
-		IsDlgButtonChecked(hDlg, IDC_RADIO2) ? 2 :
+		IsDlgButtonChecked(hDlg, IDC_DECIMAL_DWORD) ? 4 :
+		IsDlgButtonChecked(hDlg, IDC_DECIMAL_WORD) ? 2 :
 		1;
 	char buf[16] = {0};
 	BOOL translated;
-	int iDecValDlgValue = GetDlgItemInt(hDlg, IDC_EDIT1, &translated, TRUE);
+	int iDecValDlgValue = GetDlgItemInt(hDlg, IDC_DECIMAL_VALUE, &translated,
+			TRUE);
 	if (!translated)
 	{
 		MessageBox(hDlg, "Decimal value not recognized.", "Enter decimal value", MB_ICONERROR);
 		return FALSE;
 	}
 	int iDecValDlgOffset;
-	if (GetDlgItemText(hDlg, IDC_EDIT2, buf, 16) &&
+	if (GetDlgItemText(hDlg, IDC_DECIMAL_OFFSET, buf, 16) &&
 		sscanf(buf, "%d", &iDecValDlgOffset) == 0 && 
 		sscanf(buf, "x%x", &iDecValDlgOffset) == 0)
 	{
 		MessageBox(hDlg, "Offset not recognized.", "Enter decimal value", MB_ICONERROR);
 		return FALSE;
 	}
-	int iDecValDlgTimes = GetDlgItemInt(hDlg, IDC_EDIT3, &translated, TRUE);
+	int iDecValDlgTimes = GetDlgItemInt(hDlg, IDC_DECIMAL_TIMES, &translated,
+			TRUE);
 	if (!translated)
 	{
 		MessageBox(hDlg, "Number of times not recognized.", "Enter decimal value", MB_ICONERROR);
