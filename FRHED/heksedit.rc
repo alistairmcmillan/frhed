@@ -405,14 +405,14 @@ BEGIN
     LTEXT           "Use hexadecimal notation without prefix.",IDC_STATIC,7,
                     7,128,8
     LTEXT           "Start at line with offset:",IDC_STATIC,7,17,72,8
-    EDITTEXT        IDC_EDIT1,6,25,149,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_HEXDUMP_OFFSET,6,25,149,12,ES_AUTOHSCROLL
     LTEXT           "Up to and including line with offset:",IDC_STATIC,7,40,
                     111,8
-    EDITTEXT        IDC_EDIT2,7,49,149,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_HEXDUMP_OFFSET2,7,49,149,13,ES_AUTOHSCROLL
     GROUPBOX        "Export hexdump to:",IDC_STATIC,7,69,88,40,WS_GROUP
-    CONTROL         "Export to file",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | 
+    CONTROL         "Export to file",IDC_HEXDUMP_EXPORTFILE,"Button",BS_AUTORADIOBUTTON | 
                     WS_GROUP | WS_TABSTOP,14,80,55,10
-    CONTROL         "Export to clipboard",IDC_RADIO2,"Button",
+    CONTROL         "Export to clipboard",IDC_HEXDUMP_EXPORTCLIPB,"Button",
                     BS_AUTORADIOBUTTON | WS_TABSTOP,14,92,75,10
     GROUPBOX        "Type:",IDC_STATIC,7,110,103,45,WS_GROUP
     CONTROL         "frhed display as text",IDC_EXPORTDISPLAY,"Button",

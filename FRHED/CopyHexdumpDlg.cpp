@@ -49,10 +49,11 @@ BOOL CopyHexdumpDlg::OnInitDialog(HWND hDlg)
 	}
 	char buf[16] = {0};
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%x", iCopyHexdumpDlgStart);
-	SetDlgItemText(hDlg, IDC_EDIT1, buf);
+	SetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET, buf);
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%x", iCopyHexdumpDlgEnd);
-	SetDlgItemText(hDlg, IDC_EDIT2, buf);
-	CheckDlgButton(hDlg, iCopyHexdumpMode ? IDC_RADIO2 : IDC_RADIO1, BST_CHECKED);
+	SetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET2, buf);
+	CheckDlgButton(hDlg, iCopyHexdumpMode ? IDC_HEXDUMP_EXPORTCLIPB :
+			IDC_HEXDUMP_EXPORTFILE, BST_CHECKED);
 //Pabs changed - line insert
 	CheckDlgButton(hDlg, iCopyHexdumpType, BST_CHECKED);
 //end
@@ -66,9 +67,9 @@ BOOL CopyHexdumpDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	switch (wParam)
 	{
 	case IDOK:
-		if (GetDlgItemText(hDlg, IDC_EDIT1, buf, 16) &&
+		if (GetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET, buf, 16) &&
 			sscanf(buf, "%x", &iCopyHexdumpDlgStart) &&
-			GetDlgItemText(hDlg, IDC_EDIT2, buf, 16) &&
+			GetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET2, buf, 16) &&
 			sscanf(buf, "%x", &iCopyHexdumpDlgEnd))
 		{
 			iCopyHexdumpMode = IsDlgButtonChecked(hDlg, IDC_RADIO2);

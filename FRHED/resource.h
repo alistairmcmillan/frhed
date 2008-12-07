@@ -246,6 +246,10 @@
 #define IDC_FIND_UNICODE                330
 #define IDC_FIND_UP                     331
 #define IDC_FIND_DOWN                   332
+#define IDC_HEXDUMP_OFFSET              333
+#define IDC_HEXDUMP_OFFSET2             334
+#define IDC_HEXDUMP_EXPORTFILE          335
+#define IDC_HEXDUMP_EXPORTCLIPB         336
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
