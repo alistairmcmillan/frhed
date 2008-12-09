@@ -130,6 +130,10 @@ SOURCE=.\BitManipDlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CharacterSetDlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ChooseDiffDlg.cpp
 # End Source File
 # Begin Source File
