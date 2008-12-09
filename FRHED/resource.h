@@ -262,6 +262,12 @@
 #define IDC_PASTE_TIMES                 346
 #define IDC_PASTE_BINARY                347
 #define IDC_PASTE_SKIPBYTES             348
+#define IDC_CUT_STARTOFFSET             349
+#define IDC_CUT_INCLUDEOFFSET           350
+#define IDC_CUT_NUMBYTES                351
+#define IDC_CUT_NUMBEROFBYTES           352
+#define IDC_CUT_NUMBYTES2               353
+#define IDC_CUT_CLIPBOARD               354
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
