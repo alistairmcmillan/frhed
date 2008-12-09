@@ -1,3 +1,28 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  ViewSettingsDlg.cpp
+ *
+ * @brief Implementation of the View settings -dialog.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "resource.h"
 #include "hexwnd.h"
@@ -167,14 +192,15 @@ INT_PTR ViewSettingsDlg::OnCompareitemLangId(COMPAREITEMSTRUCT *pcis)
 
 BOOL ViewSettingsDlg::OnInitDialog(HWND hDlg)
 {
-	SetDlgItemInt(hDlg, IDC_EDIT1, iBytesPerLine, TRUE);
-	SetDlgItemInt(hDlg, IDC_EDIT2, iMinOffsetLen, TRUE);
-	CheckDlgButton(hDlg, IDC_CHECK1, iAutomaticBPL);
-	CheckDlgButton(hDlg, bUnsignedView ? IDC_RADIO1 : IDC_RADIO2, BST_CHECKED);
-	CheckDlgButton(hDlg, IDC_CHECK5, bOpenReadOnly);
-	CheckDlgButton(hDlg, IDC_CHECK2, bAutoOffsetLen);
-	SetDlgItemText(hDlg, IDC_EDIT3, TexteditorName);
-	hCbLang = GetDlgItem(hDlg, IDC_COMBO1);
+	SetDlgItemInt(hDlg, IDC_SETTINGS_BYTESPERLINE, iBytesPerLine, TRUE);
+	SetDlgItemInt(hDlg, IDC_SETTINGS_OFFSETLEN, iMinOffsetLen, TRUE);
+	CheckDlgButton(hDlg, IDC_SETTINGS_ADJUST_BYTELINE, iAutomaticBPL);
+	CheckDlgButton(hDlg, bUnsignedView ? IDC_SETTINGS_CARETUNSIGN :
+			IDC_SETTINGS_CARETSIGN, BST_CHECKED);
+	CheckDlgButton(hDlg, IDC_SETTINGS_OPENRO, bOpenReadOnly);
+	CheckDlgButton(hDlg, IDC_SETTINGS_ADJOFFSET, bAutoOffsetLen);
+	SetDlgItemText(hDlg, IDC_SETTINGS_EDITOR, TexteditorName);
+	hCbLang = GetDlgItem(hDlg, IDC_SETTINGS_LANGUAGE);
 	SendMessage(hCbLang, CB_SETDROPPEDWIDTH, 698, 0);
 	EnumSystemLocales(EnumLocalesProc, LCID_SUPPORTED);
 	return TRUE;
@@ -182,18 +208,18 @@ BOOL ViewSettingsDlg::OnInitDialog(HWND hDlg)
 
 BOOL ViewSettingsDlg::Apply(HWND hDlg)
 {
-	iBytesPerLine = GetDlgItemInt(hDlg, IDC_EDIT1, 0, TRUE);
+	iBytesPerLine = GetDlgItemInt(hDlg, IDC_SETTINGS_BYTESPERLINE, 0, TRUE);
 	if (iBytesPerLine < 1)
 		iBytesPerLine = 1;
-	iMinOffsetLen = GetDlgItemInt(hDlg, IDC_EDIT2, 0, TRUE);
+	iMinOffsetLen = GetDlgItemInt(hDlg, IDC_SETTINGS_OFFSETLEN, 0, TRUE);
 	if (iMinOffsetLen < 1)
 		iMinOffsetLen = 1;
 	// Get the text editor path and name.
-	GetDlgItemText(hDlg, IDC_EDIT3, TexteditorName);
-	iAutomaticBPL = IsDlgButtonChecked(hDlg, IDC_CHECK1);
-	bAutoOffsetLen = IsDlgButtonChecked(hDlg, IDC_CHECK2);
-	bUnsignedView = IsDlgButtonChecked(hDlg, IDC_RADIO1);
-	bOpenReadOnly = IsDlgButtonChecked(hDlg, IDC_CHECK5);
+	GetDlgItemText(hDlg, IDC_SETTINGS_EDITOR, TexteditorName);
+	iAutomaticBPL = IsDlgButtonChecked(hDlg, IDC_SETTINGS_ADJUST_BYTELINE);
+	bAutoOffsetLen = IsDlgButtonChecked(hDlg, IDC_SETTINGS_ADJOFFSET);
+	bUnsignedView = IsDlgButtonChecked(hDlg, IDC_SETTINGS_CARETUNSIGN);
+	bOpenReadOnly = IsDlgButtonChecked(hDlg, IDC_SETTINGS_OPENRO);
 	int i = SendMessage(hCbLang, CB_GETCURSEL, 0, 0);
 	if (i != -1)
 	{
@@ -221,13 +247,13 @@ INT_PTR ViewSettingsDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 				EndDialog(hDlg, wParam);
 			}
 			return TRUE;
-		case MAKEWPARAM(IDC_COMBO1, CBN_DROPDOWN):
+		case MAKEWPARAM(IDC_SETTINGS_LANGUAGE, CBN_DROPDOWN):
 			if (DefWndProcDroppedComboBox == 0)
 			{
 				DefWndProcDroppedComboBox = SubclassAW((HWND)lParam, WndProcDroppedComboBox);
 			}
 			return TRUE;
-		case MAKEWPARAM(IDC_COMBO1, CBN_CLOSEUP):
+		case MAKEWPARAM(IDC_SETTINGS_LANGUAGE, CBN_CLOSEUP):
 			if (DefWndProcDroppedComboBox)
 			{
 				SubclassAW((HWND)lParam, DefWndProcDroppedComboBox);
@@ -239,7 +265,7 @@ INT_PTR ViewSettingsDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 	case WM_DRAWITEM:
 		switch (wParam)
 		{
-		case IDC_COMBO1:
+		case IDC_SETTINGS_LANGUAGE:
 			OnDrawitemLangId(reinterpret_cast<DRAWITEMSTRUCT *>(lParam));
 			return TRUE;
 		}
@@ -247,7 +273,7 @@ INT_PTR ViewSettingsDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 	case WM_COMPAREITEM:
 		switch (wParam)
 		{
-		case IDC_COMBO1:
+		case IDC_SETTINGS_LANGUAGE:
 			return OnCompareitemLangId(reinterpret_cast<COMPAREITEMSTRUCT *>(lParam));
 		}
 		break;

@@ -273,6 +273,15 @@
 #define IDC_COPY_BYTES                  357
 #define IDC_COPY_OFFSETEDIT             358
 #define IDC_COPY_BYTECOUNT              359
+#define IDC_SETTINGS_BYTESPERLINE       360
+#define IDC_SETTINGS_ADJUST_BYTELINE    361
+#define IDC_SETTINGS_OFFSETLEN          362
+#define IDC_SETTINGS_ADJOFFSET          363
+#define IDC_SETTINGS_CARETUNSIGN        364
+#define IDC_SETTINGS_CARETSIGN          365
+#define IDC_SETTINGS_OPENRO             366
+#define IDC_SETTINGS_EDITOR             367
+#define IDC_SETTINGS_LANGUAGE           368
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
