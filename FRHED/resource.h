@@ -256,6 +256,12 @@
 #define IDC_DECIMAL_BYTE                340
 #define IDC_DECIMAL_WORD                341
 #define IDC_DECIMAL_DWORD               342
+#define IDC_PASTE_CLIPBOARD             343
+#define IDC_PASTE_OVERWRITE             344
+#define IDC_PASTE_INSERT                345
+#define IDC_PASTE_TIMES                 346
+#define IDC_PASTE_BINARY                347
+#define IDC_PASTE_SKIPBYTES             348
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076

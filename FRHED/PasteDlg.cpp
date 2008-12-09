@@ -1,3 +1,28 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  PasteDlg.cpp
+ *
+ * @brief Implementation of the Paste dialog.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "resource.h"
 #include "hexwnd.h"
@@ -7,35 +32,35 @@ BOOL PasteDlg::OnInitDialog(HWND hDlg)
 {
 	if (bSelected) // iPasteMode = 0
 	{
-		EnableWindow(GetDlgItem(hDlg, IDC_RADIO1), FALSE);
-		EnableWindow(GetDlgItem(hDlg, IDC_RADIO2), FALSE);
+		EnableWindow(GetDlgItem(hDlg, IDC_PASTE_OVERWRITE), FALSE);
+		EnableWindow(GetDlgItem(hDlg, IDC_PASTE_INSERT), FALSE);
 	}
 	else if (iInsertMode) // iPasteMode = 2
 	{
-		CheckDlgButton(hDlg, IDC_RADIO2, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_PASTE_INSERT, BST_CHECKED);
 	}
 	else // iPasteMode = 1
 	{
-		CheckDlgButton(hDlg, IDC_RADIO1, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_PASTE_OVERWRITE, BST_CHECKED);
 	}
-	SendDlgItemMessage(hDlg, IDC_EDIT1, WM_PASTE, 0, 0);
-	SetDlgItemInt(hDlg, IDC_EDIT2, iPasteTimes, TRUE);
-	SetDlgItemInt(hDlg, IDC_EDIT3, iPasteSkip, TRUE);
-	CheckDlgButton(hDlg, IDC_CHECK1, iPasteAsText);
+	SendDlgItemMessage(hDlg, IDC_PASTE_CLIPBOARD, WM_PASTE, 0, 0);
+	SetDlgItemInt(hDlg, IDC_PASTE_TIMES, iPasteTimes, TRUE);
+	SetDlgItemInt(hDlg, IDC_PASTE_SKIPBYTES, iPasteSkip, TRUE);
+	CheckDlgButton(hDlg, IDC_PASTE_BINARY, iPasteAsText);
 	return TRUE;
 }
 
 BOOL PasteDlg::Apply(HWND hDlg)
 {
-	iPasteAsText = IsDlgButtonChecked(hDlg, IDC_CHECK1);
-	iPasteTimes = GetDlgItemInt(hDlg, IDC_EDIT2, 0, TRUE);
+	iPasteAsText = IsDlgButtonChecked(hDlg, IDC_PASTE_BINARY);
+	iPasteTimes = GetDlgItemInt(hDlg, IDC_PASTE_TIMES, 0, TRUE);
 	if (iPasteTimes <= 0)
 	{
 		MessageBox(hDlg, "Number of times to paste must be at least 1.", "Paste", MB_ICONERROR);
 		return FALSE;
 	}
-	iPasteSkip = GetDlgItemInt(hDlg, IDC_EDIT3, 0, TRUE);
-	HWND hwndEdit1 = GetDlgItem(hDlg, IDC_EDIT1);
+	iPasteSkip = GetDlgItemInt(hDlg, IDC_PASTE_SKIPBYTES, 0, TRUE);
+	HWND hwndEdit1 = GetDlgItem(hDlg, IDC_PASTE_CLIPBOARD);
 	int destlen = GetWindowTextLength(hwndEdit1) + 1;
 	char *pcPastestring = new char[destlen];
 	destlen = GetWindowText(hwndEdit1, pcPastestring, destlen);
@@ -53,7 +78,7 @@ BOOL PasteDlg::Apply(HWND hDlg)
 		return FALSE;
 	}
 	WaitCursor wc1;
-	if (bSelected || IsDlgButtonChecked(hDlg, IDC_RADIO2))
+	if (bSelected || IsDlgButtonChecked(hDlg, IDC_PASTE_INSERT))
 	{
 		// Insert at iCurByte. Bytes there will be pushed up.
 		if (bSelected)
@@ -137,36 +162,36 @@ BOOL FastPasteDlg::OnInitDialog(HWND hDlg)
 {
 	SendMessage(hDlg, WM_COMMAND, IDC_REFRESH, 0);
 	hwndNextViewer = SetClipboardViewer(hDlg);
-	SetDlgItemInt(hDlg, IDC_EDIT2, iPasteTimes, TRUE);
-	SetDlgItemInt(hDlg, IDC_EDIT3, iPasteSkip, TRUE);
+	SetDlgItemInt(hDlg, IDC_PASTE_TIMES, iPasteTimes, TRUE);
+	SetDlgItemInt(hDlg, IDC_PASTE_SKIPBYTES, iPasteSkip, TRUE);
 	// Depending on INS or OVR mode, set the radio button.
 	if (bSelected) // iPasteMode = 0
 	{
-		EnableWindow(GetDlgItem(hDlg, IDC_RADIO1), FALSE);
-		EnableWindow(GetDlgItem(hDlg, IDC_RADIO2), FALSE);
+		EnableWindow(GetDlgItem(hDlg, IDC_PASTE_OVERWRITE), FALSE);
+		EnableWindow(GetDlgItem(hDlg, IDC_PASTE_INSERT), FALSE);
 	}
 	else if (iInsertMode) // iPasteMode = 2
 	{
-		CheckDlgButton(hDlg, IDC_RADIO2, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_PASTE_INSERT, BST_CHECKED);
 	}
 	else // iPasteMode = 1
 	{
-		CheckDlgButton(hDlg, IDC_RADIO1, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_PASTE_OVERWRITE, BST_CHECKED);
 	}
-	CheckDlgButton(hDlg, IDC_CHECK1, iPasteAsText);
+	CheckDlgButton(hDlg, IDC_PASTE_BINARY, iPasteAsText);
 	return TRUE;
 }
 
 BOOL FastPasteDlg::Apply(HWND hDlg)
 {
-	iPasteAsText = IsDlgButtonChecked(hDlg, IDC_CHECK1);
-	iPasteTimes = GetDlgItemInt(hDlg, IDC_EDIT2, 0, TRUE);
+	iPasteAsText = IsDlgButtonChecked(hDlg, IDC_PASTE_BINARY);
+	iPasteTimes = GetDlgItemInt(hDlg, IDC_PASTE_TIMES, 0, TRUE);
 	if (iPasteTimes <= 0)
 	{
 		MessageBox(hDlg, "Number of times to paste must be at least 1.", "Paste", MB_ICONERROR);
 		return FALSE;
 	}
-	iPasteSkip = GetDlgItemInt(hDlg, IDC_EDIT3, 0, TRUE);
+	iPasteSkip = GetDlgItemInt(hDlg, IDC_PASTE_SKIPBYTES, 0, TRUE);
 	HWND list = GetDlgItem(hDlg, IDC_LIST);
 	int i = SendMessage(list, LB_GETCURSEL, 0, 0);
 	if (i == LB_ERR)
@@ -228,7 +253,7 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 		return FALSE;
 	}
 	WaitCursor wc1;
-	if (bSelected || IsDlgButtonChecked(hDlg, IDC_RADIO2))
+	if (bSelected || IsDlgButtonChecked(hDlg, IDC_PASTE_INSERT))
 	{
 		// Insert at iCurByte. Bytes there will be pushed up.
 		if (bSelected)
@@ -367,7 +392,7 @@ BOOL FastPasteDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 			int i = SendMessage(list, LB_GETCURSEL, 0, 0);
 			UINT f = SendMessage(list, LB_GETITEMDATA, i, 0);
 			if (f == CF_UNICODETEXT)
-				CheckDlgButton(hDlg, IDC_CHECK1, BST_CHECKED);
+				CheckDlgButton(hDlg, IDC_PASTE_BINARY, BST_CHECKED);
 		}
 		return TRUE;
 	}

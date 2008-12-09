@@ -454,20 +454,20 @@ CAPTION "Paste with dialogue"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "Clipboard content (text):",IDC_STATIC,7,7,76,8
-    EDITTEXT        IDC_EDIT1,7,18,277,65,ES_MULTILINE | WS_VSCROLL,
+    EDITTEXT        IDC_PASTE_CLIPBOARD,7,18,277,65,ES_MULTILINE | WS_VSCROLL,
                     WS_EX_TRANSPARENT
     GROUPBOX        "Paste mode",IDC_STATIC,7,86,64,40
-    CONTROL         "Overwrite",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | 
+    CONTROL         "Overwrite",IDC_PASTE_OVERWRITE,"Button",BS_AUTORADIOBUTTON | 
                     WS_GROUP | WS_TABSTOP,14,98,46,10
-    CONTROL         "Insert",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON | 
+    CONTROL         "Insert",IDC_PASTE_INSERT,"Button",BS_AUTORADIOBUTTON | 
                     WS_TABSTOP,14,109,33,10
     LTEXT           "Paste data how many times:",IDC_STATIC,80,86,89,8
-    EDITTEXT        IDC_EDIT2,79,96,67,12,ES_AUTOHSCROLL
-    CONTROL         "Paste coded binary values as text",IDC_CHECK1,"Button",
+    EDITTEXT        IDC_PASTE_TIMES,79,96,67,12,ES_AUTOHSCROLL
+    CONTROL         "Paste coded binary values as text",IDC_PASTE_BINARY,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,80,115,122,10
     LTEXT           " Skip how many bytes between inserts/overwrites",
                     IDC_STATIC,7,129,160,8
-    EDITTEXT        IDC_EDIT3,168,126,60,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PASTE_SKIPBYTES,168,126,60,12,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,234,96,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,234,112,50,14
 END
