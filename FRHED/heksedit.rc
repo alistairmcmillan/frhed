@@ -502,15 +502,15 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "Prefix offsets with x for hex.",IDC_STATIC,7,7,86,8
     LTEXT           "Start copying at offset:",IDC_STATIC,7,20,72,8
-    EDITTEXT        IDC_EDIT1,7,29,130,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_COPY_STARTOFFSET,7,29,130,13,ES_AUTOHSCROLL
     GROUPBOX        "Copy how many bytes",IDC_STATIC,7,51,144,73
-    CONTROL         "Copy up to and including offset:",IDC_RADIO1,"Button",
+    CONTROL         "Copy up to and including offset:",IDC_COPY_OFFSET,"Button",
                     BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,14,63,115,10
-    CONTROL         "Number of bytes to copy:",IDC_RADIO2,"Button",
+    CONTROL         "Number of bytes to copy:",IDC_COPY_BYTES,"Button",
                     BS_AUTORADIOBUTTON | WS_TABSTOP,13,93,95,10
-    EDITTEXT        IDC_EDIT2,14,73,130,13,ES_AUTOHSCROLL | WS_GROUP
-    EDITTEXT        IDC_EDIT3,14,103,130,13,ES_AUTOHSCROLL | WS_DISABLED | 
-                    WS_GROUP
+    EDITTEXT        IDC_COPY_OFFSETEDIT,14,73,130,13,ES_AUTOHSCROLL | WS_GROUP
+    EDITTEXT        IDC_COPY_BYTECOUNT,14,103,130,13,ES_AUTOHSCROLL |
+                    WS_DISABLED | WS_GROUP
     DEFPUSHBUTTON   "OK",IDOK,25,131,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,82,131,50,14
 END

@@ -268,6 +268,11 @@
 #define IDC_CUT_NUMBEROFBYTES           352
 #define IDC_CUT_NUMBYTES2               353
 #define IDC_CUT_CLIPBOARD               354
+#define IDC_COPY_STARTOFFSET            355
+#define IDC_COPY_OFFSET                 356
+#define IDC_COPY_BYTES                  357
+#define IDC_COPY_OFFSETEDIT             358
+#define IDC_COPY_BYTECOUNT              359
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076

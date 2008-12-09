@@ -35,11 +35,11 @@ BOOL CopyDlg::OnInitDialog(HWND hDlg)
 	int iEnd = iGetEndOfSelection();
 	char buf[32] = {0};
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iStart);
-	SetDlgItemText(hDlg, IDC_EDIT1, buf);
+	SetDlgItemText(hDlg, IDC_COPY_STARTOFFSET, buf);
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iEnd);
-	SetDlgItemText(hDlg, IDC_EDIT2, buf);
-	SetDlgItemInt(hDlg, IDC_EDIT3, iEnd - iStart + 1, TRUE);
-	CheckDlgButton(hDlg, IDC_RADIO1, BST_CHECKED);
+	SetDlgItemText(hDlg, IDC_COPY_OFFSETEDIT, buf);
+	SetDlgItemInt(hDlg, IDC_COPY_BYTECOUNT, iEnd - iStart + 1, TRUE);
+	CheckDlgButton(hDlg, IDC_COPY_OFFSET, BST_CHECKED);
 	return TRUE;
 }
 
@@ -48,16 +48,16 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	char buf[64] = {0};
 	int iOffset;
 	int iNumberOfBytes;
-	if (GetDlgItemText(hDlg, IDC_EDIT1, buf, 64) &&
+	if (GetDlgItemText(hDlg, IDC_COPY_STARTOFFSET, buf, 64) &&
 		sscanf(buf, "x%x", &iOffset) == 0 &&
 		sscanf(buf, "%d", &iOffset) == 0)
 	{
 		MessageBox(hDlg, "Start offset not recognized.", "Copy", MB_ICONERROR);
 		return FALSE;
 	}
-	if (IsDlgButtonChecked(hDlg, IDC_RADIO1))
+	if (IsDlgButtonChecked(hDlg, IDC_COPY_OFFSET))
 	{
-		if (GetDlgItemText(hDlg, IDC_EDIT2, buf, 64) &&
+		if (GetDlgItemText(hDlg, IDC_COPY_OFFSETEDIT, buf, 64) &&
 			sscanf(buf, "x%x", &iNumberOfBytes) == 0 &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
@@ -68,7 +68,7 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	}
 	else
 	{// Get number of bytes.
-		if (GetDlgItemText(hDlg, IDC_EDIT3, buf, 64) &&
+		if (GetDlgItemText(hDlg, IDC_COPY_BYTECOUNT, buf, 64) &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
 			MessageBox(hDlg, "Number of bytes not recognized.", "Copy", MB_ICONERROR);
@@ -118,10 +118,12 @@ INT_PTR CopyDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				EndDialog(hDlg, wParam);
 			}
 			return TRUE;
-		case IDC_RADIO1:
-		case IDC_RADIO2:
-			EnableWindow(GetDlgItem(hDlg, IDC_EDIT2), IsDlgButtonChecked(hDlg, IDC_RADIO1));
-			EnableWindow(GetDlgItem(hDlg, IDC_EDIT3), IsDlgButtonChecked(hDlg, IDC_RADIO2));
+		case IDC_COPY_OFFSET:
+		case IDC_COPY_BYTES:
+			EnableWindow(GetDlgItem(hDlg, IDC_COPY_OFFSETEDIT),
+					IsDlgButtonChecked(hDlg, IDC_COPY_OFFSET));
+			EnableWindow(GetDlgItem(hDlg, IDC_COPY_BYTECOUNT),
+					IsDlgButtonChecked(hDlg, IDC_COPY_BYTES));
 			return TRUE;
 		}
 		break;
