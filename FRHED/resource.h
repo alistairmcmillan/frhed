@@ -282,6 +282,7 @@
 #define IDC_SETTINGS_OPENRO             366
 #define IDC_SETTINGS_EDITOR             367
 #define IDC_SETTINGS_LANGUAGE           368
+#define IDC_APPEND_BYTES                369
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
