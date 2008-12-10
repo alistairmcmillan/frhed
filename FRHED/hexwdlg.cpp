@@ -74,28 +74,6 @@ INT_PTR DragDropOptionsDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 	return FALSE;
 }
 
-INT_PTR BinaryModeDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
-{
-	switch (iMsg)
-	{
-	case WM_INITDIALOG:
-		CheckDlgButton(hDlg, iBinaryMode == LITTLEENDIAN_MODE ? IDC_RADIO1 : IDC_RADIO2, BST_CHECKED);
-		return TRUE;
-	case WM_COMMAND:
-		switch (wParam)
-		{
-		case IDOK:
-			iBinaryMode = IsDlgButtonChecked(hDlg, IDC_RADIO1) ? LITTLEENDIAN_MODE : BIGENDIAN_MODE;
-			// fall through
-		case IDCANCEL:
-			EndDialog(hDlg, wParam);
-			return TRUE;
-		}
-		break;
-	}
-	return FALSE;
-}
-
 INT_PTR ChangeInstDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 {
 	//God damn spinners make life easy

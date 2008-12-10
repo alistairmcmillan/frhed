@@ -122,6 +122,10 @@ SOURCE=.\AppendDlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BinaryModeDlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BinTrans.cpp
 # End Source File
 # Begin Source File
