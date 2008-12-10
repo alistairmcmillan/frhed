@@ -32,9 +32,9 @@ BOOL SelectBlockDlg::OnInitDialog(HWND hDlg)
 {
 	char buf[128] = {0};
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", bSelected ? iStartOfSelection : iCurByte);
-	SetDlgItemText(hDlg, IDC_EDIT1, buf);
+	SetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSET, buf);
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", bSelected ? iEndOfSelection : iCurByte);
-	SetDlgItemText(hDlg, IDC_EDIT2, buf);
+	SetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSETEND, buf);
 	return TRUE;
 }
 
@@ -47,14 +47,14 @@ BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	switch (wParam)
 	{
 	case IDOK:
-		if (GetDlgItemText(hDlg, IDC_EDIT1, buf, 128) &&
+		if (GetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSET, buf, 128) &&
 			sscanf(buf, "x%x", &iStartOfSelSetting) == 0 &&
 			sscanf(buf, "%d", &iStartOfSelSetting) == 0)
 		{
 			MessageBox(hDlg, "Start offset not recognized.", "Select block", MB_ICONERROR);
 			return TRUE;
 		}
-		if (GetDlgItemText(hDlg, IDC_EDIT2, buf, 128) &&
+		if (GetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSETEND, buf, 128) &&
 			sscanf(buf, "x%x", &iEndOfSelSetting) == 0 &&
 			sscanf(buf, "%d", &iEndOfSelSetting) == 0)
 		{

@@ -290,6 +290,8 @@
 #define IDC_CHOOSEDIFF_DIFFLIST         374
 #define IDC_BINMODE_LITTLEEND           375
 #define IDC_BINMODE_BIGEND              376
+#define IDC_BLOCKSEL_OFFSET             377
+#define IDC_BLOCKSEL_OFFSETEND          378
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
