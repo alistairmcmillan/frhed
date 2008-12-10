@@ -103,7 +103,7 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 	WaitCursor wc;
 	while (iDecValDlgTimes)
 	{
-		if (iBinaryMode == LITTLEENDIAN_MODE)
+		if (iBinaryMode == ENDIAN_LITTLE)
 		{
 			switch (iDecValDlgSize)
 			{

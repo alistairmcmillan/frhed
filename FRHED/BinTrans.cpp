@@ -220,7 +220,7 @@ int Text2BinTranslator::iTranslateOneBytecode( char* dest, char* src, int srclen
 		break;
 	}
 
-	if (binmode == LITTLEENDIAN_MODE)
+	if (binmode == ENDIAN_LITTLE)
 	{
 		switch (src[1])
 		{

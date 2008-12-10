@@ -147,7 +147,7 @@ HexEditorWindow::HexEditorWindow()
 		sprintf(strMRU[--iMRU_count], "dummy%d", iMRU_count);
 
 	bFilestatusChanged = TRUE;
-	iBinaryMode = LITTLEENDIAN_MODE;
+	iBinaryMode = ENDIAN_LITTLE;
 	bUnsignedView = TRUE;
 	iFontSize = 10;
 	iInsertMode = FALSE;
@@ -1290,7 +1290,7 @@ void HexEditorWindow::command(int cmd)
 			{
 				// Space enough for float.
 				memcpy(&u, &DataArray[iCurByte], sizeof u.fval);
-				if (iBinaryMode != LITTLEENDIAN_MODE) // BIGENDIAN_MODE
+				if (iBinaryMode == ENDIAN_BIG)
 					reverse_bytes(u.bytes, u.bytes + sizeof u.fval - 1);
 				buf2 += sprintf(buf2, "float size value:\n%g\n", u.fval);
 			}
@@ -1302,7 +1302,7 @@ void HexEditorWindow::command(int cmd)
 			{
 				// Space enough for double.
 				memcpy(&u, &DataArray[iCurByte], sizeof u.dval);
-				if (iBinaryMode != LITTLEENDIAN_MODE) // BIGENDIAN_MODE
+				if (iBinaryMode == ENDIAN_BIG)
 					reverse_bytes(u.bytes, u.bytes + sizeof u.dval - 1);
 				buf2 += sprintf(buf2, "\ndouble size value:\n%g\n", u.dval);
 			}
@@ -1594,7 +1594,7 @@ void HexEditorWindow::set_wnd_title()
 			if (bUnsignedView) // Values signed/unsigned?
 			{
 				// UNSIGNED
-				if (iBinaryMode == LITTLEENDIAN_MODE)
+				if (iBinaryMode == ENDIAN_LITTLE)
 				{
 					// UNSIGNED LITTLEENDIAN_MODE
 					// Decimal value of byte.
@@ -1657,7 +1657,7 @@ void HexEditorWindow::set_wnd_title()
 			}
 			else // SIGNED
 			{
-				if (iBinaryMode == LITTLEENDIAN_MODE)
+				if (iBinaryMode == ENDIAN_LITTLE)
 				{
 					// SIGNED LITTLEENDIAN_MODE
 					// Decimal value of byte.
@@ -1744,11 +1744,11 @@ void HexEditorWindow::set_wnd_title()
 		{
 			strcat(buf, " / OVR");
 		}
-		if (iBinaryMode == LITTLEENDIAN_MODE)
+		if (iBinaryMode == ENDIAN_LITTLE)
 		{
 			strcat(buf, " / L"); // Intel
 		}
-		else if (iBinaryMode == BIGENDIAN_MODE)
+		else if (iBinaryMode == ENDIAN_BIG)
 		{
 			strcat(buf, " / B"); // Motorola
 		}
@@ -4365,7 +4365,7 @@ void HexEditorWindow::apply_template_on_memory( char* pcTpl, int tpl_len, Simple
 							ResultArray.AppendArray( name, strlen(name) );
 							WORD wd;
 							// Get value depending on binary mode.
-							if( iBinaryMode == LITTLEENDIAN_MODE )
+							if (iBinaryMode == ENDIAN_LITTLE)
 							{
 								wd = *( (WORD*)( &DataArray[ fpos ] ) );
 							}
@@ -4411,7 +4411,7 @@ void HexEditorWindow::apply_template_on_memory( char* pcTpl, int tpl_len, Simple
 							ResultArray.AppendArray( name, strlen(name) );
 							DWORD dw;
 							// Get value depending on binary mode.
-							if( iBinaryMode == LITTLEENDIAN_MODE )
+							if (iBinaryMode == ENDIAN_LITTLE)
 							{
 								dw = *( (DWORD*)( &DataArray[ fpos ] ) );
 							}
@@ -4456,7 +4456,7 @@ void HexEditorWindow::apply_template_on_memory( char* pcTpl, int tpl_len, Simple
 							ResultArray.AppendArray( name, strlen(name) );
 							float f;
 							// Get value depending on binary mode.
-							if( iBinaryMode == LITTLEENDIAN_MODE )
+							if (iBinaryMode == ENDIAN_LITTLE)
 							{
 								f = *( (float*)( &DataArray[ fpos ] ) );
 							}
@@ -4501,7 +4501,7 @@ void HexEditorWindow::apply_template_on_memory( char* pcTpl, int tpl_len, Simple
 							ResultArray.AppendArray( name, strlen(name) );
 							double d;
 							// Get value depending on binary mode.
-							if( iBinaryMode == LITTLEENDIAN_MODE )
+							if (iBinaryMode == ENDIAN_LITTLE)
 							{
 								d = *( (double*)( &DataArray[ fpos ] ) );
 							}
@@ -5854,16 +5854,10 @@ void HexEditorWindow::status_bar_click(bool left)
 				}
 				break;
 			case 2: // L <--> B
-				//This is not a typo - these preprocessor directives are required to make optimum code
-				#if ((!LITTLEENDIAN_MODE) == BIGENDIAN_MODE) && (LITTLEENDIAN_MODE == (!BIGENDIAN_MODE))
-				//If this does not work replace with the below
-				iBinaryMode = !iBinaryMode;
-				#else
-				if (iBinaryMode == LITTLEENDIAN_MODE)
-					iBinaryMode = BIGENDIAN_MODE;
-				else if (iBinaryMode == BIGENDIAN_MODE)
-					iBinaryMode = LITTLEENDIAN_MODE;
-				#endif
+				if (iBinaryMode == ENDIAN_LITTLE)
+					iBinaryMode = ENDIAN_BIG;
+				else if (iBinaryMode == ENDIAN_BIG)
+					iBinaryMode = ENDIAN_LITTLE;
 				break;
 			}//switch ANSI/READ/L
 

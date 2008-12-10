@@ -23,11 +23,21 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
+
 #ifndef _HEKSEDIT_H_
 #define _HEKSEDIT_H_
 
 // This is frhed vCURRENT_VERSION.SUB_RELEASE_NO
 #include "version.h"
+
+/**
+ * @brief Byte endians.
+ */
+enum BYTE_ENDIAN
+{
+	ENDIAN_LITTLE, /**< Little endian used e.g. in Intel processors. */
+	ENDIAN_BIG /**< Big endian used e.g. in Motorola processors. */
+};
 
 /**
  * @brief Interface for the Hexeditor window.
@@ -47,7 +57,7 @@ public:
 	{
 		int iBytesPerLine;
 		int iAutomaticBPL;
-		int iBinaryMode;
+		BYTE_ENDIAN iBinaryMode;
 		int bReadOnly;
 		int bSaveIni;
 		int iFontSize;

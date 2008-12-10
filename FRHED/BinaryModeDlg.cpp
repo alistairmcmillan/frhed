@@ -33,7 +33,7 @@ INT_PTR BinaryModeDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPara
 	switch (iMsg)
 	{
 	case WM_INITDIALOG:
-		CheckDlgButton(hDlg, iBinaryMode == LITTLEENDIAN_MODE ?
+		CheckDlgButton(hDlg, iBinaryMode == ENDIAN_LITTLE ?
 				IDC_BINMODE_LITTLEEND : IDC_BINMODE_BIGEND, BST_CHECKED);
 		return TRUE;
 	case WM_COMMAND:
@@ -41,7 +41,7 @@ INT_PTR BinaryModeDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPara
 		{
 		case IDOK:
 			iBinaryMode = IsDlgButtonChecked(hDlg, IDC_BINMODE_LITTLEEND) ?
-					LITTLEENDIAN_MODE : BIGENDIAN_MODE;
+					ENDIAN_LITTLE : ENDIAN_BIG;
 			// fall through
 		case IDCANCEL:
 			EndDialog(hDlg, wParam);
