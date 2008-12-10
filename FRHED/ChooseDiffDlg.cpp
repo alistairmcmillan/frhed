@@ -127,14 +127,14 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 			// Read data.
 			if (_read(filehandle, cmpdata, filelen) != -1)
 			{
-				HWND hwndList = GetDlgItem(hDlg, IDC_LIST1);
+				HWND hwndList = GetDlgItem(hDlg, IDC_CHOOSEDIFF_DIFFLIST);
 				if (int diff = get_diffs(hwndList, (char *)&DataArray[iCurByte], DataArray.GetLength() - iCurByte, cmpdata, filelen))
 				{
 					char buf[100];
 					sprintf(buf, "%d areas of difference found.", diff);
 					SetDlgItemText(hDlg, IDC_NUMDIFFS, buf);
 					sprintf(buf, "Remaining loaded data size: %d, size of file on disk: %d.", iSrcFileLen, iDestFileLen);
-					SetDlgItemText(hDlg, IDC_STATIC2, buf);
+					SetDlgItemText(hDlg, IDC_CHOOSEDIFF_FSIZES, buf);
 					SendMessage(hwndList, LB_SETCURSEL, 0, 0);
 					bDone = TRUE;
 				}
@@ -175,7 +175,7 @@ BOOL ChooseDiffDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 			IStream *piStream = 0;
 			if (SUCCEEDED(CreateStreamOnHGlobal(0, FALSE, &piStream)))
 			{
-				HWND hwndList = GetDlgItem(hDlg, IDC_LIST1);//get the list
+				HWND hwndList = GetDlgItem(hDlg, IDC_CHOOSEDIFF_DIFFLIST);//get the list
 				CLIPFORMAT cf = IsWindowUnicode(hwndList) ? CF_UNICODETEXT : CF_TEXT;
 				int num = SendMessage(hwndList, LB_GETCOUNT, 0, 0);//get the # items in the list
 				for (int i = 0 ; i < num ; i++)
@@ -211,7 +211,7 @@ BOOL ChooseDiffDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 
 	case IDOK:
 		{
-			HWND hwndList = GetDlgItem(hDlg, IDC_LIST1);
+			HWND hwndList = GetDlgItem(hDlg, IDC_CHOOSEDIFF_DIFFLIST);
 			int i = SendMessage(hwndList, LB_GETCURSEL, 0, 0);
 			if (i != -1)
 			{

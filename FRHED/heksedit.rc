@@ -620,10 +620,10 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Choose area of difference to display"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "file_sizes",IDC_STATIC2,7,7,244,8
+    LTEXT           "file_sizes",IDC_CHOOSEDIFF_FSIZES,7,7,244,8
     LTEXT           "number_of_diffs",IDC_NUMDIFFS,7,18,244,8
-    LISTBOX         IDC_LIST1,7,29,244,178,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
-                    WS_TABSTOP
+    LISTBOX         IDC_CHOOSEDIFF_DIFFLIST,7,29,244,178,LBS_NOINTEGRALHEIGHT |
+                    WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "OK",IDOK,7,210,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,74,210,50,14
     PUSHBUTTON      "Copy above list",IDCOPY,187,210,64,14
