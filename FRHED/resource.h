@@ -309,6 +309,7 @@
 #define IDC_OPENPARTIAL_OFFSET          393
 #define IDC_OPENPARTIAL_BYTES           394
 #define IDC_OPENPARTIAL_RELOFFSET       395
+#define IDC_OPENPARTIAL_BYTECOUNT       396
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076

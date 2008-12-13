@@ -696,7 +696,7 @@ BEGIN
     CONTROL         "From end of file",IDC_OPENPARTIAL_ENDBYTES,"Button",
                     BS_AUTORADIOBUTTON,17,50,64,10
     EDITTEXT        IDC_OPENPARTIAL_OFFSET,28,31,134,12,ES_AUTOHSCROLL | WS_GROUP
-    LTEXT           "how_many_bytes",IDC_STATIC,7,73,207,8
+    LTEXT           "how_many_bytes",IDC_OPENPARTIAL_BYTECOUNT,7,73,207,8
     EDITTEXT        IDC_OPENPARTIAL_BYTES,7,82,135,13,ES_AUTOHSCROLL
     CONTROL         "Display offsets relative to start of file (or start of loaded block)",
                     IDC_OPENPARTIAL_RELOFFSET,"Button",BS_AUTOCHECKBOX |
