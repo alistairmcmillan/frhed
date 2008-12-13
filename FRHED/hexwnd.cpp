@@ -4604,14 +4604,22 @@ int HexEditorWindow::read_tpl_token( char* pcTpl, int tpl_len, int& index, char*
 	return FALSE;
 }
 
-//-------------------------------------------------------------------
-// TmplDisplayDlgProc
+/**
+ * @brief A handler function for Result dialog (templated).
+ * This function handles messages for the result dialog. The result dialog
+ * is a "template" for which the result text is given as a parameter.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg Message to handle.
+ * @param [in] wParam First message parameter (e.g. control ID).
+ * @param [in] lParam Second message parameter (e.g. result text).
+ * @return TRUE if the message was handled, FALSE if not.
+ */
 INT_PTR CALLBACK TmplDisplayDlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
 	{
 	case WM_INITDIALOG:
-		SetDlgItemText(hDlg, IDC_EDIT1, (LPCTSTR)lParam);
+		SetDlgItemText(hDlg, IDC_TMPLRESULT_RESULT, (LPCTSTR)lParam);
 		return TRUE;
 
 	case WM_COMMAND:

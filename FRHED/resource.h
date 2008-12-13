@@ -316,6 +316,7 @@
 #define IDC_FPASTE_SKIPS                400
 #define IDC_FPASTE_CFORMAT              401
 #define IDC_FPASTE_REFRESH              402
+#define IDC_TMPLRESULT_RESULT           403
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
