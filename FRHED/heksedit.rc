@@ -691,16 +691,16 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Start opening partially...",IDC_STATIC,7,7,207,60
     CONTROL         "At offset relative to beginning of file: (prefix x for hex)",
-                    IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,17,21,
-                    179,10
-    CONTROL         "From end of file",IDC_RADIO2,"Button",
+                    IDC_OPENPARTIAL_BEGINOFF,"Button",BS_AUTORADIOBUTTON |
+                    WS_GROUP,17,21,179,10
+    CONTROL         "From end of file",IDC_OPENPARTIAL_ENDBYTES,"Button",
                     BS_AUTORADIOBUTTON,17,50,64,10
-    EDITTEXT        IDC_EDIT1,28,31,134,12,ES_AUTOHSCROLL | WS_GROUP
-    LTEXT           "how_many_bytes",IDC_STATIC2,7,73,207,8
-    EDITTEXT        IDC_EDIT2,7,82,135,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_OPENPARTIAL_OFFSET,28,31,134,12,ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "how_many_bytes",IDC_STATIC,7,73,207,8
+    EDITTEXT        IDC_OPENPARTIAL_BYTES,7,82,135,13,ES_AUTOHSCROLL
     CONTROL         "Display offsets relative to start of file (or start of loaded block)",
-                    IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,100,
-                    206,10
+                    IDC_OPENPARTIAL_RELOFFSET,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,7,100,206,10
     DEFPUSHBUTTON   "OK",IDOK,55,115,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,110,115,50,14
 END

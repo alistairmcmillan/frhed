@@ -35,25 +35,25 @@ BOOL OpenPartiallyDlg::OnInitDialog(HWND hDlg)
 {
 	__int64 iPLFileLen = _filelengthi64(filehandle);
 	char buf[128] = {0};
-	SetDlgItemText(hDlg, IDC_EDIT1, "x0");
+	SetDlgItemText(hDlg, IDC_OPENPARTIAL_OFFSET, "x0");
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "Size of file: %lld. Load how many bytes:", iPLFileLen);
 	SetDlgItemText(hDlg, IDC_STATIC2, buf);
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%lld", iPLFileLen);
-	SetDlgItemText(hDlg, IDC_EDIT2, buf);
-	CheckDlgButton(hDlg, IDC_RADIO1, BST_CHECKED);
-	CheckDlgButton(hDlg, IDC_CHECK1, bShowFileStatsPL);
+	SetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTES, buf);
+	CheckDlgButton(hDlg, IDC_OPENPARTIAL_BEGINOFF, BST_CHECKED);
+	CheckDlgButton(hDlg, IDC_OPENPARTIAL_RELOFFSET, bShowFileStatsPL);
 	return TRUE;
 }
 
 BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 {
 	__int64 iPLFileLen = _filelengthi64(filehandle);
-	bShowFileStatsPL = IsDlgButtonChecked(hDlg, IDC_CHECK1);
+	bShowFileStatsPL = IsDlgButtonChecked(hDlg, IDC_OPENPARTIAL_RELOFFSET);
 	char buf[128] = {0};
 	__int64 iNumBytesPl;
 	
 	// Only complain about wrong offset in start offset editbox if loading from start.
-	if (GetDlgItemText(hDlg, IDC_EDIT2, buf, 128) &&
+	if (GetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTES, buf, 128) &&
 		sscanf(buf, "%lld", &iNumBytesPl) == 0)
 	{
 		MessageBox(hDlg, "Number of bytes not recognized.", "Open partially", MB_ICONERROR);
@@ -68,7 +68,7 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 	}
 
 	__int64 iStartPL;
-	if (IsDlgButtonChecked(hDlg, IDC_RADIO2))
+	if (IsDlgButtonChecked(hDlg, IDC_OPENPARTIAL_ENDBYTES))
 	{
 		// Load from end of file: arguments must be adapted.
 		iStartPL = iPLFileLen - iNumBytesPl;
@@ -78,7 +78,7 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 			return FALSE;
 		}
 	}
-	else if (GetDlgItemText(hDlg, IDC_EDIT1, buf, 128) &&
+	else if (GetDlgItemText(hDlg, IDC_OPENPARTIAL_OFFSET, buf, 128) &&
 		sscanf(buf, "x%x", &iStartPL) == 0 &&
 		sscanf(buf, "%lld", &iStartPL) == 0)
 	{
@@ -133,9 +133,10 @@ INT_PTR OpenPartiallyDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lP
 				EndDialog(hDlg, wParam);
 			}
 			return TRUE;
-		case IDC_RADIO1:
-		case IDC_RADIO2:
-			EnableWindow(GetDlgItem(hDlg, IDC_EDIT1), IsDlgButtonChecked(hDlg, IDC_RADIO1));
+		case IDC_OPENPARTIAL_BEGINOFF:
+		case IDC_OPENPARTIAL_ENDBYTES:
+			EnableWindow(GetDlgItem(hDlg, IDC_OPENPARTIAL_OFFSET),
+					IsDlgButtonChecked(hDlg, IDC_OPENPARTIAL_BEGINOFF));
 			return TRUE;
 		}
 		break;
