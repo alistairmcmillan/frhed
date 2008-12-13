@@ -35,21 +35,21 @@ BOOL BitManipDlg::OnInitDialog(HWND hDlg)
 	SetDlgItemText(hDlg, IDC_MANIPBITS, buf);
 	BYTE cBitValue = DataArray[iCurByte];
 	if (cBitValue & 1)
-		CheckDlgButton(hDlg, IDC_CHECK1, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_MANIPBITS_BIT1, BST_CHECKED);
 	if (cBitValue & 2)
-		CheckDlgButton(hDlg, IDC_CHECK2, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_MANIPBITS_BIT2, BST_CHECKED);
 	if (cBitValue & 4)
-		CheckDlgButton(hDlg, IDC_CHECK3, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_MANIPBITS_BIT3, BST_CHECKED);
 	if (cBitValue & 8)
-		CheckDlgButton(hDlg, IDC_CHECK4, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_MANIPBITS_BIT4, BST_CHECKED);
 	if (cBitValue & 16)
-		CheckDlgButton(hDlg, IDC_CHECK5, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_MANIPBITS_BIT5, BST_CHECKED);
 	if (cBitValue & 32)
-		CheckDlgButton(hDlg, IDC_CHECK6, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_MANIPBITS_BIT6, BST_CHECKED);
 	if (cBitValue & 64)
-		CheckDlgButton(hDlg, IDC_CHECK7, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_MANIPBITS_BIT7, BST_CHECKED);
 	if (cBitValue & 128)
-		CheckDlgButton(hDlg, IDC_CHECK8, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_MANIPBITS_BIT8, BST_CHECKED);
 	Apply(hDlg, 0);
 	return TRUE;
 }
@@ -57,21 +57,21 @@ BOOL BitManipDlg::OnInitDialog(HWND hDlg)
 BOOL BitManipDlg::Apply(HWND hDlg, WPARAM wParam)
 {
 	BYTE cBitValue = 0;
-	if (IsDlgButtonChecked(hDlg, IDC_CHECK8))
+	if (IsDlgButtonChecked(hDlg, IDC_MANIPBITS_BIT8))
 		cBitValue |= 128;
-	if (IsDlgButtonChecked(hDlg, IDC_CHECK7))
+	if (IsDlgButtonChecked(hDlg, IDC_MANIPBITS_BIT7))
 		cBitValue |= 64;
-	if (IsDlgButtonChecked(hDlg, IDC_CHECK6))
+	if (IsDlgButtonChecked(hDlg, IDC_MANIPBITS_BIT6))
 		cBitValue |= 32;
-	if (IsDlgButtonChecked(hDlg, IDC_CHECK5))
+	if (IsDlgButtonChecked(hDlg, IDC_MANIPBITS_BIT5))
 		cBitValue |= 16;
-	if (IsDlgButtonChecked(hDlg, IDC_CHECK4))
+	if (IsDlgButtonChecked(hDlg, IDC_MANIPBITS_BIT4))
 		cBitValue |= 8;
-	if (IsDlgButtonChecked(hDlg, IDC_CHECK3))
+	if (IsDlgButtonChecked(hDlg, IDC_MANIPBITS_BIT3))
 		cBitValue |= 4;
-	if (IsDlgButtonChecked(hDlg, IDC_CHECK2))
+	if (IsDlgButtonChecked(hDlg, IDC_MANIPBITS_BIT2))
 		cBitValue |= 2;
-	if (IsDlgButtonChecked(hDlg, IDC_CHECK1))
+	if (IsDlgButtonChecked(hDlg, IDC_MANIPBITS_BIT1))
 		cBitValue |= 1;
 	if (wParam == IDOK)
 	{
@@ -84,7 +84,7 @@ BOOL BitManipDlg::Apply(HWND hDlg, WPARAM wParam)
 	char buf[64];
 	sprintf(buf, "Value: 0x%x , %d signed, %u unsigned.",
 		(unsigned char)cBitValue, (signed char)cBitValue, (unsigned char)cBitValue);
-	SetDlgItemText(hDlg, IDC_STATIC2, buf);
+	SetDlgItemText(hDlg, IDC_MANIPBITS_VALUE, buf);
 	return FALSE;
 }
 
@@ -98,8 +98,9 @@ INT_PTR BitManipDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case IDOK:
-		case IDC_CHECK1: case IDC_CHECK2: case IDC_CHECK3: case IDC_CHECK4:
-		case IDC_CHECK5: case IDC_CHECK6: case IDC_CHECK7: case IDC_CHECK8:
+		case IDC_MANIPBITS_BIT1: case IDC_MANIPBITS_BIT2: case IDC_MANIPBITS_BIT3:
+		case IDC_MANIPBITS_BIT4: case IDC_MANIPBITS_BIT5: case IDC_MANIPBITS_BIT6:
+		case IDC_MANIPBITS_BIT7: case IDC_CHECK8:
 			if (Apply(hDlg, wParam))
 			{
 			case IDCANCEL:

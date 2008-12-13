@@ -570,22 +570,22 @@ CAPTION "Manipulate bits"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "statictext",IDC_MANIPBITS,7,7,243,8
-    CONTROL         "Bit 7",IDC_CHECK8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    7,18,30,10,WS_EX_STATICEDGE
-    CONTROL         "Bit 6",IDC_CHECK7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    38,18,30,10,WS_EX_STATICEDGE
-    CONTROL         "Bit 5",IDC_CHECK6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    69,18,30,10,WS_EX_STATICEDGE
-    CONTROL         "Bit 4",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    100,18,30,10,WS_EX_STATICEDGE
-    CONTROL         "Bit 3",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    130,18,30,10,WS_EX_STATICEDGE
-    CONTROL         "Bit 2",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    160,18,30,10,WS_EX_STATICEDGE
-    CONTROL         "Bit 1",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    190,18,30,10,WS_EX_STATICEDGE
-    CONTROL         "Bit 0",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    220,18,30,10,WS_EX_STATICEDGE
+    CONTROL         "Bit 7",IDC_MANIPBITS_BIT8,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,7,18,30,10,WS_EX_STATICEDGE
+    CONTROL         "Bit 6",IDC_MANIPBITS_BIT7,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,38,18,30,10,WS_EX_STATICEDGE
+    CONTROL         "Bit 5",IDC_MANIPBITS_BIT6,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,69,18,30,10,WS_EX_STATICEDGE
+    CONTROL         "Bit 4",IDC_MANIPBITS_BIT5,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,100,18,30,10,WS_EX_STATICEDGE
+    CONTROL         "Bit 3",IDC_MANIPBITS_BIT4,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,130,18,30,10,WS_EX_STATICEDGE
+    CONTROL         "Bit 2",IDC_MANIPBITS_BIT3,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,160,18,30,10,WS_EX_STATICEDGE
+    CONTROL         "Bit 1",IDC_MANIPBITS_BIT2,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,190,18,30,10,WS_EX_STATICEDGE
+    CONTROL         "Bit 0",IDC_MANIPBITS_BIT1,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,220,18,30,10,WS_EX_STATICEDGE
     LTEXT           "(128)",IDC_STATIC,15,29,17,8
     LTEXT           "(64)",IDC_STATIC,48,29,13,8
     LTEXT           "(32)",IDC_STATIC,77,29,13,8
@@ -594,7 +594,7 @@ BEGIN
     LTEXT           "(4)",IDC_STATIC,171,29,9,8
     LTEXT           "(2)",IDC_STATIC,202,29,9,8
     LTEXT           "(1)",IDC_STATIC,231,29,9,8
-    LTEXT           "Static",IDC_STATIC2,7,43,243,8
+    LTEXT           "Static",IDC_MANIPBITS_VALUE,7,43,243,8
     DEFPUSHBUTTON   "OK",IDOK,75,63,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,132,63,50,14
 END

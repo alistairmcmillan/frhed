@@ -292,6 +292,15 @@
 #define IDC_BINMODE_BIGEND              376
 #define IDC_BLOCKSEL_OFFSET             377
 #define IDC_BLOCKSEL_OFFSETEND          378
+#define IDC_MANIPBITS_BIT1              379
+#define IDC_MANIPBITS_BIT2              380
+#define IDC_MANIPBITS_BIT3              381
+#define IDC_MANIPBITS_BIT4              382
+#define IDC_MANIPBITS_BIT5              383
+#define IDC_MANIPBITS_BIT6              384
+#define IDC_MANIPBITS_BIT7              385
+#define IDC_MANIPBITS_BIT8              386
+#define IDC_MANIPBITS_VALUE             387
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
