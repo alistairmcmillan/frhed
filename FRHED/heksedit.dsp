@@ -170,6 +170,10 @@ SOURCE=.\EnterDecimalValueDlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FastPasteDlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\FillWithDlg.cpp
 # End Source File
 # Begin Source File
