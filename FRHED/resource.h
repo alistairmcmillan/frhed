@@ -303,6 +303,7 @@
 #define IDC_MANIPBITS_VALUE             387
 #define IDC_BMKADD_OFFSET               388
 #define IDC_BMKADD_NAME                 389
+#define IDC_REMOVEBMK_LIST              390
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076

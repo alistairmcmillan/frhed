@@ -31,7 +31,7 @@
 BOOL RemoveBmkDlg::OnInitDialog(HWND hDlg)
 {
 	char buf[128] = {0};
-	HWND hwndList = GetDlgItem(hDlg, IDC_LIST1);
+	HWND hwndList = GetDlgItem(hDlg, IDC_REMOVEBMK_LIST);
 	for (int i = 0 ; i < iBmkCount ; i++)
 	{
 		_snprintf(buf, RTL_NUMBER_OF(buf) - 1, pbmkList[i].name ? "%d) 0x%x:%s" : "%d) 0x%x",
@@ -48,7 +48,7 @@ BOOL RemoveBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	switch (wParam)
 	{
 	case IDOK:
-		i = SendDlgItemMessage(hDlg, IDC_LIST1, LB_GETCURSEL, 0, 0);
+		i = SendDlgItemMessage(hDlg, IDC_REMOVEBMK_LIST, LB_GETCURSEL, 0, 0);
 		if (char *name = pbmkList[i].name)
 			free(name);
 		--iBmkCount;
