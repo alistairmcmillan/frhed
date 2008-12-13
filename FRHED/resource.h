@@ -310,6 +310,12 @@
 #define IDC_OPENPARTIAL_BYTES           394
 #define IDC_OPENPARTIAL_RELOFFSET       395
 #define IDC_OPENPARTIAL_BYTECOUNT       396
+#define IDC_FPASTE_OWERWRITE            397
+#define IDC_FPASTE_INSERT               398
+#define IDC_FPASTE_PASTETIMES           399
+#define IDC_FPASTE_SKIPS                400
+#define IDC_FPASTE_CFORMAT              401
+#define IDC_FPASTE_REFRESH              402
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076

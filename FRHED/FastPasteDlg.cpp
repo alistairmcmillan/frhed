@@ -32,23 +32,23 @@ static HWND hwndNextViewer = NULL;
 
 BOOL FastPasteDlg::OnInitDialog(HWND hDlg)
 {
-	SendMessage(hDlg, WM_COMMAND, IDC_REFRESH, 0);
+	SendMessage(hDlg, WM_COMMAND, IDC_FPASTE_REFRESH, 0);
 	hwndNextViewer = SetClipboardViewer(hDlg);
-	SetDlgItemInt(hDlg, IDC_EDIT2, iPasteTimes, TRUE);
-	SetDlgItemInt(hDlg, IDC_EDIT3, iPasteSkip, TRUE);
+	SetDlgItemInt(hDlg, IDC_FPASTE_PASTETIMES, iPasteTimes, TRUE);
+	SetDlgItemInt(hDlg, IDC_FPASTE_SKIPS, iPasteSkip, TRUE);
 	// Depending on INS or OVR mode, set the radio button.
 	if (bSelected) // iPasteMode = 0
 	{
-		EnableWindow(GetDlgItem(hDlg, IDC_RADIO1), FALSE);
-		EnableWindow(GetDlgItem(hDlg, IDC_RADIO2), FALSE);
+		EnableWindow(GetDlgItem(hDlg, IDC_FPASTE_OWERWRITE), FALSE);
+		EnableWindow(GetDlgItem(hDlg, IDC_FPASTE_INSERT), FALSE);
 	}
 	else if (iInsertMode) // iPasteMode = 2
 	{
-		CheckDlgButton(hDlg, IDC_RADIO2, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_FPASTE_INSERT, BST_CHECKED);
 	}
 	else // iPasteMode = 1
 	{
-		CheckDlgButton(hDlg, IDC_RADIO1, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_FPASTE_OWERWRITE, BST_CHECKED);
 	}
 	CheckDlgButton(hDlg, IDC_CHECK1, iPasteAsText);
 	return TRUE;
@@ -57,14 +57,14 @@ BOOL FastPasteDlg::OnInitDialog(HWND hDlg)
 BOOL FastPasteDlg::Apply(HWND hDlg)
 {
 	iPasteAsText = IsDlgButtonChecked(hDlg, IDC_CHECK1);
-	iPasteTimes = GetDlgItemInt(hDlg, IDC_EDIT2, 0, TRUE);
+	iPasteTimes = GetDlgItemInt(hDlg, IDC_FPASTE_PASTETIMES, 0, TRUE);
 	if (iPasteTimes <= 0)
 	{
 		MessageBox(hDlg, "Number of times to paste must be at least 1.", "Paste", MB_ICONERROR);
 		return FALSE;
 	}
-	iPasteSkip = GetDlgItemInt(hDlg, IDC_EDIT3, 0, TRUE);
-	HWND list = GetDlgItem(hDlg, IDC_LIST);
+	iPasteSkip = GetDlgItemInt(hDlg, IDC_FPASTE_SKIPS, 0, TRUE);
+	HWND list = GetDlgItem(hDlg, IDC_FPASTE_CFORMAT);
 	int i = SendMessage(list, LB_GETCURSEL, 0, 0);
 	if (i == LB_ERR)
 	{
@@ -125,7 +125,7 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 		return FALSE;
 	}
 	WaitCursor wc1;
-	if (bSelected || IsDlgButtonChecked(hDlg, IDC_RADIO2))
+	if (bSelected || IsDlgButtonChecked(hDlg, IDC_FPASTE_INSERT))
 	{
 		// Insert at iCurByte. Bytes there will be pushed up.
 		if (bSelected)
@@ -186,10 +186,10 @@ BOOL FastPasteDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 			EndDialog(hDlg, wParam);
 		}
 		return TRUE;
-	case IDC_REFRESH:
+	case IDC_FPASTE_REFRESH:
 		{
 			//Get all the Clipboard formats
-			HWND list = GetDlgItem(hDlg, IDC_LIST);
+			HWND list = GetDlgItem(hDlg, IDC_FPASTE_CFORMAT);
 			SendMessage( list, LB_RESETCONTENT, 0, 0 );
 			if (CountClipboardFormats() && OpenClipboard(NULL))
 			{
@@ -258,9 +258,9 @@ BOOL FastPasteDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 			}
 		}
 		return TRUE;
-	case MAKEWPARAM(IDC_LIST, LBN_SELCHANGE):
+	case MAKEWPARAM(IDC_FPASTE_CFORMAT, LBN_SELCHANGE):
 		{
-			HWND list = GetDlgItem(hDlg, IDC_LIST);
+			HWND list = GetDlgItem(hDlg, IDC_FPASTE_CFORMAT);
 			int i = SendMessage(list, LB_GETCURSEL, 0, 0);
 			UINT f = SendMessage(list, LB_GETITEMDATA, i, 0);
 			if (f == CF_UNICODETEXT)
@@ -289,7 +289,7 @@ INT_PTR FastPasteDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam
 		break;
 	case WM_DRAWCLIPBOARD:  // clipboard contents changed.
 		// Update the window by using Auto clipboard format.
-		SendMessage(hDlg, WM_COMMAND, IDC_REFRESH, 0);
+		SendMessage(hDlg, WM_COMMAND, IDC_FPASTE_REFRESH, 0);
 		// Pass the message to the next window in clipboard viewer chain.
 		SendMessage(hwndNextViewer, iMsg, wParam, lParam);
 		break;
