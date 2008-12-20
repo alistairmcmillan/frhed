@@ -37,20 +37,22 @@ import shutil
 import sys
 
 # The version of the script
-script_version = 0.7
+script_version = 0.9
 
 def get_product_version(filename):
   '''Get product version used in archive paths etc.
      TODO: add new section. At the moment this gets executable version.
   '''
+
   config = ConfigParser.ConfigParser()
   config.readfp(open(filename))
 
   # First try RC file, then define-macro
   version = ''
-  try:
+  if config.has_section('Executable') and \
+      config.has_option('Executable', 'version'):
     version = config.get('Executable', 'version')
-  except ConfigParser.NoSectionError:
+  else:
     print 'Executable version not found, using default.'
 
   # Remove quotation marks
@@ -64,9 +66,16 @@ def get_product_version(filename):
 def process_NSIS(filename, config, sect):
   '''Process NSIS section in the ini file.'''
 
-  ver = config.get(sect, 'version')
-  file = config.get(sect, 'path')
-  desc = config.get(sect, 'description')
+  if config.has_option(sect, 'version') and \
+      config.has_option(sect, 'path') and \
+      config.has_option(sect, 'description'):
+
+    ver = config.get(sect, 'version')
+    file = config.get(sect, 'path')
+    desc = config.get(sect, 'description')
+  else:
+    print 'ERROR: NSIS section does not have all required options!'
+    return False
   
   print '%s : %s' % (sect, desc)
   print '  File: ' + file
@@ -116,9 +125,16 @@ def set_NSIS_ver(file, version):
 def process_AssemblyCs(filename, config, sect):
   '''Process C# AssemblyInfo section in the ini file.'''
 
-  ver = config.get(sect, 'version')
-  file = config.get(sect, 'path')
-  desc = config.get(sect, 'description')
+  if config.has_option(sect, 'version') and \
+      config.has_option(sect, 'path') and \
+      config.has_option(sect, 'description'):
+
+    ver = config.get(sect, 'version')
+    file = config.get(sect, 'path')
+    desc = config.get(sect, 'description')
+  else:
+    print 'ERROR: Assembly info section does not have all required options!'
+    return False
   
   print '%s : %s' % (sect, desc)
   print '  File: ' + file
@@ -164,9 +180,16 @@ def set_CSAssembly_ver(file, version):
 def process_WinRC(filename, config, sect):
   '''Process Windows RC file section in the ini file.'''
 
-  ver = config.get(sect, 'version')
-  file = config.get(sect, 'path')
-  desc = config.get(sect, 'description')
+  if config.has_option(sect, 'version') and \
+       config.has_option(sect, 'path') and \
+       config.has_option(sect, 'description'):
+
+    ver = config.get(sect, 'version')
+    file = config.get(sect, 'path')
+    desc = config.get(sect, 'description')
+  else:
+    print 'ERROR: RC file section does not have all required options!'
+    return False
   
   print '%s : %s' % (sect, desc)
   print '  File: ' + file
@@ -225,10 +248,20 @@ def set_WinRC_ver(file, version):
   return ret
 
 def process_InnoSetup(filename, config, sect):
-  ver = config.get(sect, 'version')
-  file = config.get(sect, 'path')
-  desc = config.get(sect, 'description')
-  macro = config.get(sect, 'macro')
+  '''Process Innosetup script file section in the ini file.'''
+
+  if config.has_option(sect, 'version') and \
+      config.has_option(sect, 'path') and \
+      config.has_option(sect, 'description') and \
+      config.has_option(sect, 'macro'):
+
+    ver = config.get(sect, 'version')
+    file = config.get(sect, 'path')
+    desc = config.get(sect, 'description')
+    macro = config.get(sect, 'macro')
+  else:
+    print 'ERROR: InnoSetup section does not have all required options!'
+    return False
   
   print '%s : %s' % (sect, desc)
   print '  File: ' + file
@@ -285,15 +318,26 @@ def set_InnoSetup_ver(file, version, macro):
 def process_CDefine(filename, config, sect):
   '''Read version number information for setting it into C/C++ #defines.'''
 
-  ver = config.get(sect, 'version')
-  file = config.get(sect, 'path')
-  desc = config.get(sect, 'description')
+  if config.has_option(sect, 'version') and \
+      config.has_option(sect, 'path') and \
+      config.has_option(sect, 'description'):
+
+    ver = config.get(sect, 'version')
+    file = config.get(sect, 'path')
+    desc = config.get(sect, 'description')
+  else:
+    print 'ERROR: C Define section does not have all required options!'
+    return False
   
   # Macro names to use
-  major = config.get(sect, 'define-major')
-  minor = config.get(sect, 'define-minor')
-  subrel = config.get(sect, 'define-subrelease')
-  buildnum = config.get(sect, 'define-buildnumber')
+  if config.has_option(sect, 'define-major'):
+    major = config.get(sect, 'define-major')
+  if config.has_option(sect, 'define-minor'):
+    minor = config.get(sect, 'define-minor')
+  if config.has_option(sect, 'define-subrelease'):
+    subrel = config.get(sect, 'define-subrelease')
+  if config.has_option(sect, 'define-buildnumber'):
+    buildnum = config.get(sect, 'define-buildnumber')
 
   if len(major) == 0 and len(minor) == 0 and len(subrel) == 0:
    print '  ERROR: You must set at least one of major/minor/subrelease version numbers.'
@@ -391,10 +435,18 @@ def set_CDefine_ver(file, version, major, minor, subrelease, buildnumber):
 def process_DocBook(filename, config, sect):
   '''Process DocBook section in the ini file.'''
 
-  ver = config.get(sect, 'versionstring')
-  file = config.get(sect, 'path')
-  desc = config.get(sect, 'description')
-  tag = config.get(sect, 'tag')
+  if config.has_option(sect, 'versionstring') and \
+      config.has_option(sect, 'path') and \
+      config.has_option(sect, 'description') and \
+      config.has_option(sect, 'tag'):
+
+    ver = config.get(sect, 'versionstring')
+    file = config.get(sect, 'path')
+    desc = config.get(sect, 'description')
+    tag = config.get(sect, 'tag')
+  else:
+    print 'ERROR: DocBook section does not have all required options!'
+    return False
   
   print '%s : %s' % (sect, desc)
   print '  File: ' + file
@@ -503,7 +555,7 @@ def process_versions(filename):
 
 def usage():
   '''Print script usage information.'''
-  print 'SetVersions.py - version ' + script_version
+  print 'SetVersions.py - version ' + str(script_version)
   print 'Script to set program component version numbers.'
   print 'Usage: SetVersions.py [-h] filename'
   print 'Where:'
