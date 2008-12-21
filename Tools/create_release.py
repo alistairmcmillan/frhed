@@ -38,20 +38,26 @@
 # - creating SHA-1 hashes for distributed files
 
 # Tools needed:
-# - Python 2.5 :)
-# - Subversion command line binaries
+# - Python 2.5 or 2.6 :)
+# - Subversion command line binaries from http://subversion.tigris.org/
+
 
 # CONFIGURATION:
 # Set these variables to match your environment and folders you want to use
 
 # Subversion binary - set this to absolute path to svn.exe
-svn_binary = 'C:\\Program Files\\Subversion\\bin\\svn.exe'
+svn_binary = r'C:\Program Files\Subversion\bin\svn.exe'
 # Visual Studio path
-vs_path = 'C:\\Program Files\\Microsoft Visual Studio .NET 2003'
+vs_path = r'C:\Program Files\Microsoft Visual Studio .NET 2003'
 # NSIS installation folder
 nsis_path = 'C:\\Program Files\\NSIS'
 # Relative path where to create a release folder
 dist_root_folder = 'distrib'
+# Source location
+# Give URL to SVN repository to export source from SVN or 'workspace' to export
+# from workspace
+source_location = 'https://frhed.svn.sourceforge.net/svnroot/frhed/trunk'
+#source_location ='workspace'
 
 # END CONFIGURATION - you don't need to edit anything below...
 
@@ -158,7 +164,11 @@ def svn_export(dist_src_folder):
     """Exports sources to distribution folder."""
 
     print 'Exporting sources to ' + dist_src_folder
-    call([svn_binary, 'export', '--non-interactive', '.', dist_src_folder])
+    print 'Exporting from: ' + source_location
+    if source_location == 'workspace':
+        call([svn_binary, 'export', '--non-interactive', '.', dist_src_folder])
+    else:
+        call([svn_binary, 'export', '--non-interactive', source_location, dist_src_folder]) 
 
 def build_libraries():
     """Builds library targets: rawio32 and heksedit."""
@@ -267,8 +277,13 @@ def copy_po_files(dest_folder):
                 shutil.copy(fullpath, dest_folder)
 
 def find_frhed_root():
-    """Find Frhed tree root folder from where to run rest of the script."""
-    
+    """Find Frhed tree root folder from where to run rest of the script.
+
+    This function checks if we are in Frhed root folder. If we are in some
+    other folder then we must try to find the Frhed root folder. Because all
+    other code assumes we are in Frhed root folder. If the root folder is
+    found current folder is changed into it."""
+
     # If we find FRHED and Installer -subfolders we are in root 
     if os.path.exists('FRHED') and os.path.exists('Installer'):
         return True
@@ -298,18 +313,22 @@ def check_tools():
     return True
 
 def usage():
+    """Print script usage information."""
+
     print 'Frhed release script.'
-    print 'Usage: create_release [-h] [-v: n] [-c] [-l] [-f]'
+    print 'Usage: create_release [-h] [-f file] [-v n] [-c] [-l]'
     print '  where:'
     print '    -h, --help print this help'
-    print '    -v: n, --version= n set release version'
+    print '    -v n, --version=n set release version'
     print '    -c, --cleanup clean up build files (temp files, libraries, executables)'
     print '    -l, --libraries build libraries (heksedit, rawio32) only'
-    print '    -f:, --file= filename set the version number ini file'
-    print '  For example: create_release -f: versions.ini'
+    print '    -f file, --file=filename set the version number ini file'
+    print '  For example: create_release -f versions.ini'
+    print '  If no version number (-v) or INI file (-f) given, 0.0.0.0 will be'
+    print '    used as version number.'
 
 def main(argv):
-    version = '0.0.0.0'
+    version = ''
     ver_file = ''
     if len(argv) > 0:
         opts, args = getopt.getopt(argv, "hclv:f:", [ "help", "cleanup", "libraries",
@@ -331,6 +350,11 @@ def main(argv):
                 sys.exit()
             if opt in ("-f", "--file"):
                 ver_file = arg
+
+    if ver_file == '' and version == '':
+        print 'WARNING: No version number or INI file given, using default'
+        print '    version number of 0.0.0.0 where applicable in this script.'
+        version = '0.0.0.0'
 
     # Check all required tools are found (script configuration)
     if check_tools() == False:
