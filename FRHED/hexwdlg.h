@@ -105,10 +105,13 @@ private:
 	static LRESULT CALLBACK HexProc(HWND, UINT, WPARAM, LPARAM);
 };
 
+/**
+ * A dialog for reversing bytes in the selected area.
+ */
 class ReverseDlg : public HexEditorWindow
 {
 public:
-	enum { IDD = IDD_SELECT_BLOCK_DIALOG };
+	enum { IDD = IDD_REVERSE_BYTES_DIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 };
 
@@ -217,6 +220,9 @@ private:
 	BOOL OnCommand(HWND, WPARAM, LPARAM);
 };
 
+/**
+ * A dialog for selecting a block of bytes.
+ */
 class SelectBlockDlg : public HexEditorWindow
 {
 public:

@@ -30,45 +30,31 @@
 
 INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 {
-	char buf[128] = {0};
+	TCHAR buf[32];
 	int iStartOfSelSetting;
 	int iEndOfSelSetting;
 	int maxb;
 	switch (m)
 	{
 	case WM_INITDIALOG:
-		if (bSelected)
-		{
-			iStartOfSelSetting = iStartOfSelection;
-			iEndOfSelSetting = iEndOfSelection;
-		}
-		else
-		{
-			iEndOfSelSetting = iStartOfSelSetting = iCurByte;
-		}
-		_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iStartOfSelSetting);
-		SetDlgItemText (h, IDC_EDIT1, buf);
-		_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iEndOfSelSetting);
-		SetDlgItemText (h, IDC_EDIT2, buf);
-		//Because we are using the Select block dialog template some things need to be changed
-		SetWindowText(h, "Reverse bytes");
-		#define IDC_STATIC      0xFFFF //Stupid bloody windows
-		SetDlgItemText(h, IDC_STATIC, "Reverse bytes between and including");
-		SetDlgItemText(h, IDC_STATIC2, "these two offsets (prefix x for hex)");
+		_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iGetStartOfSelection());
+		SetDlgItemText (h, IDC_REVERSE_OFFSET, buf);
+		_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iGetEndOfSelection());
+		SetDlgItemText(h, IDC_REVERSE_OFFSETEND, buf);
 		return TRUE;
 
 	case WM_COMMAND:
 		switch (w)
 		{
 		case IDOK:
-			if (GetDlgItemText(h, IDC_EDIT1, buf, 128) &&
+			if (GetDlgItemText(h, IDC_REVERSE_OFFSET, buf, RTL_NUMBER_OF(buf)) &&
 				sscanf(buf, "x%x", &iStartOfSelSetting) == 0 &&
 				sscanf(buf, "%d", &iStartOfSelSetting) == 0)
 			{
 				MessageBox(h, "Start offset not recognized.", "Reverse bytes", MB_ICONERROR);
 				return TRUE;
 			}
-			if (GetDlgItemText(h, IDC_EDIT2, buf, 128) &&
+			if (GetDlgItemText(h, IDC_REVERSE_OFFSETEND, buf, RTL_NUMBER_OF(buf)) &&
 				sscanf(buf, "x%x", &iEndOfSelSetting) == 0 &&
 				sscanf(buf, "%d", &iEndOfSelSetting) == 0)
 			{
@@ -80,28 +66,22 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 				MessageBox(h, "Cannot reverse the order of one byte.", "Reverse bytes", MB_ICONERROR);
 				return TRUE;
 			}
+
+			SetCursor (LoadCursor (NULL, IDC_WAIT));
+			if (iEndOfSelSetting < iStartOfSelSetting)
+				swap(iEndOfSelSetting, iStartOfSelSetting);
+
 			maxb = DataArray.GetUpperBound();
-			if (iStartOfSelSetting < 0 ||
-				iStartOfSelSetting > maxb ||
-				iEndOfSelSetting < 0 ||
-				iEndOfSelSetting > maxb)
+			if (iStartOfSelSetting < 0 || iEndOfSelSetting > maxb)
 			{
 				MessageBox(h, "The chosen block extends into non-existant data.\nThe offsets will be shifted to correct positions.", "Reverse bytes", MB_ICONERROR);
 			}
 
-			SetCursor (LoadCursor (NULL, IDC_WAIT));
 			if (iStartOfSelSetting < 0)
 				iStartOfSelSetting = 0;
-			if (iStartOfSelSetting > maxb)
-				iStartOfSelSetting = maxb;
-			if (iEndOfSelSetting < 0)
-				iEndOfSelSetting = 0;
 			if (iEndOfSelSetting > maxb)
 				iEndOfSelSetting = maxb;
-			if (iEndOfSelSetting < iStartOfSelSetting)
-				swap(iEndOfSelSetting, iStartOfSelSetting);
-			if (iStartOfSelSetting != iEndOfSelSetting)
-				reverse_bytes(&DataArray[iStartOfSelSetting], &DataArray[iEndOfSelSetting]);
+			reverse_bytes(&DataArray[iStartOfSelSetting], &DataArray[iEndOfSelSetting]);
 			if (bSelected)
 			{
 				//If the selection was inside the bit that was reversed, then reverse it too

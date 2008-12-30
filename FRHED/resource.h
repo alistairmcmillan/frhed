@@ -7,7 +7,7 @@
 #define IDR_MAINMENU                    102
 #define IDR_ACCELERATOR1                103
 #define IDR_CONTEXTMENU                 104
-#define IDD_DIALOG1                     105
+#define IDD_REVERSE_BYTES_DIALOG        105
 #define IDD_GOTODIALOG                  106
 #define IDD_DIALOG2                     107
 #define IDD_FINDDIALOG                  108
@@ -317,6 +317,8 @@
 #define IDC_FPASTE_CFORMAT              401
 #define IDC_FPASTE_REFRESH              402
 #define IDC_TMPLRESULT_RESULT           403
+#define IDC_REVERSE_OFFSET              404
+#define IDC_REVERSE_OFFSETEND           405
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
