@@ -279,8 +279,8 @@ protected:
 	static int ScrollInterval;
 	static int MouseOpDist;
 	static int MouseOpDelay;
-	static SimpleString TexteditorName;
-	static SimpleString EncodeDlls;
+	static TCHAR TexteditorName[MAX_PATH];
+	static TCHAR EncodeDlls[MAX_PATH];
 	static int iPasteAsText;
 	static int iPasteTimes;
 	static int iPasteSkip;

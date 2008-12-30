@@ -215,7 +215,7 @@ BOOL ViewSettingsDlg::Apply(HWND hDlg)
 	if (iMinOffsetLen < 1)
 		iMinOffsetLen = 1;
 	// Get the text editor path and name.
-	GetDlgItemText(hDlg, IDC_SETTINGS_EDITOR, TexteditorName);
+	GetDlgItemText(hDlg, IDC_SETTINGS_EDITOR, TexteditorName, RTL_NUMBER_OF(TexteditorName));
 	iAutomaticBPL = IsDlgButtonChecked(hDlg, IDC_SETTINGS_ADJUST_BYTELINE);
 	bAutoOffsetLen = IsDlgButtonChecked(hDlg, IDC_SETTINGS_ADJOFFSET);
 	bUnsignedView = IsDlgButtonChecked(hDlg, IDC_SETTINGS_CARETUNSIGN);

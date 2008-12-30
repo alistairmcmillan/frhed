@@ -70,8 +70,8 @@ int HexEditorWindow::iPasteAsText = 0;
 int HexEditorWindow::iPasteTimes = 1;
 int HexEditorWindow::iPasteSkip = 0;
 
-SimpleString HexEditorWindow::TexteditorName = "notepad.exe";
-SimpleString HexEditorWindow::EncodeDlls;
+TCHAR HexEditorWindow::TexteditorName[MAX_PATH] = _T("NOTEPAD.EXE");
+TCHAR HexEditorWindow::EncodeDlls[MAX_PATH] = _T("FRHEXDES.DLL;FRHEDX.DLL");
 
 //Temporary stuff for CMD_move_copy
 int iMovePos;
@@ -3455,15 +3455,11 @@ void HexEditorWindow::read_ini_data(char *key)
 		res = RegQueryValueEx( key1, "locale", NULL, NULL, (BYTE*) &lcid, &datasize );
 		load_lang((LANGID)lcid);
 
-		char szPath[ _MAX_PATH + 1 ] = {0};
-		datasize = _MAX_PATH + 1;
-		res = RegQueryValueEx( key1, "TexteditorName", NULL, NULL, (BYTE*) &szPath, &datasize );
-		TexteditorName = szPath;
+		datasize = sizeof TexteditorName;
+		res = SHGetValue(key1, 0, _T("TexteditorName"), 0, TexteditorName, &datasize);
 
-		datasize = _MAX_PATH + 1;
-		strcpy(szPath, "FRHEXDES.DLL;FRHEDX.DLL"); // default
-		res = RegQueryValueEx( key1, "EncodeDlls", NULL, NULL, (BYTE*) &szPath, &datasize );
-		EncodeDlls = szPath;
+		datasize = sizeof EncodeDlls;
+		res = SHGetValue(key1, 0, _T("EncodeDlls"), 0, EncodeDlls, &datasize);
 
 		res = RegQueryValueEx( key1, "iWindowShowCmd", NULL, NULL, (BYTE*) &iWindowShowCmd, &datasize );
 		res = RegQueryValueEx( key1, "iWindowX", NULL, NULL, (BYTE*) &iWindowX, &datasize );
@@ -3545,7 +3541,8 @@ void HexEditorWindow::save_ini_data()
 		LCID lcid = MAKELCID(langArray.m_langid, 0);
 		RegSetValueEx( key1, "locale", 0, REG_DWORD, (CONST BYTE*) &lcid, sizeof lcid);
 
-		RegSetValueEx( key1, "TexteditorName", 0, REG_SZ, (CONST BYTE*) (char*) TexteditorName, TexteditorName.StrLen() + 1 );
+		SHSetValue(key1, 0, _T("TexteditorName"), REG_SZ, TexteditorName, _tcslen(TexteditorName) * sizeof(TCHAR));
+		SHSetValue(key1, 0, _T("EncodeDlls"), REG_SZ, EncodeDlls, _tcslen(EncodeDlls) * sizeof(TCHAR));
 
 		RegSetValueEx( key1, "iWindowShowCmd", 0, REG_DWORD, (CONST BYTE*) &iWindowShowCmd, sizeof( int ) );
 		RegSetValueEx( key1, "iWindowX", 0, REG_DWORD, (CONST BYTE*) &iWindowX, sizeof( int ) );
