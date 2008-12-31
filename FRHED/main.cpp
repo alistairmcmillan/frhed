@@ -215,7 +215,9 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		hwndToolBar = CreateTBar(hwnd, hMainInstance);
 		SendMessage(hwndToolBar, CCM_SETUNICODEFORMAT, TRUE, 0);
 		hwndHex = CreateWindowEx(WS_EX_CLIENTEDGE,
-			IsNT() ? szHexClassW : szHexClassA, 0,
+// Using widechar class name causes a startup crash now, work around it by using ANSI name
+//			IsNT() ? szHexClassW : szHexClassA, 0,
+			szHexClassA, 0,
 			WS_TABSTOP | WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL,
 			10, 10, 100, 100, hwnd, 0, hMainInstance, 0);
 		pHexWnd = (HexEditorWindow *)GetWindowLong(hwndHex, GWL_USERDATA);
