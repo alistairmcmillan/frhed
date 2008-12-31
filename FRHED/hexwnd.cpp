@@ -3408,7 +3408,7 @@ void HexEditorWindow::read_ini_data(char *key)
 	char keyname[keyname_size] = {0};
 	LONG res;
 	if (key == 0)
-		_snprintf(keyname, keyname_size - 1, "Software\\frhed\\v" CURRENT_VERSION "." SUB_RELEASE_NO "\\%d",
+		_snprintf(keyname, keyname_size - 1, "Software\\frhed\\v" SHARPEN(FRHED_VERSION_3) "\\%d",
 				iInstCount);
 	else
 		_snprintf(keyname, keyname_size - 1, "Software\\frhed\\%s\\%d", key, iInstCount);
@@ -3501,7 +3501,7 @@ void HexEditorWindow::save_ini_data()
 
 	const int keyname_size = 64;
 	char keyname[keyname_size] = {0};
-	_snprintf(keyname, keyname_size - 1, "Software\\frhed\\v" CURRENT_VERSION "." SUB_RELEASE_NO "\\%d",
+	_snprintf(keyname, keyname_size - 1, "Software\\frhed\\v" SHARPEN(FRHED_VERSION_3) "\\%d",
 			iInstCount);
 
 	LONG res = RegCreateKey(HKEY_CURRENT_USER, keyname, &key1);
@@ -6192,7 +6192,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 		"}\n" // \colortbl
 
 		//This is new for RTF 1.7, but it should be ignored by older readers so who cares (older than M$ Word XP = Word 2002??)
-		"{\\*\\generator frhed v"CURRENT_VERSION"."SUB_RELEASE_NO";}\n"
+		"{\\*\\generator frhed v"SHARPEN(FRHED_VERSION_3)";}\n"
 
 		//Metadata here too?
 		"{\\info\n"

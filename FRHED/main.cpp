@@ -33,8 +33,8 @@
 #include "toolbar.h"
 
 static const char szMainClass[] = "frhed wndclass";
-static const char szHexClassA[] = "hekseditA_" CURRENT_VERSION "." SUB_RELEASE_NO "." BUILD_NO;
-static const char szHexClassW[] = "hekseditW_" CURRENT_VERSION "." SUB_RELEASE_NO "." BUILD_NO;
+static const char szHexClassA[] = "hekseditA_" SHARPEN(FRHED_VERSION_4);
+static const char szHexClassW[] = "hekseditW_" SHARPEN(FRHED_VERSION_4);
 
 HINSTANCE hMainInstance;
 

@@ -50,7 +50,7 @@ BOOL UpgradeDlg::OnInitDialog(HWND hw)
 	item.mask = LVIF_TEXT ;
 	item.pszText = subkeynam;
 
-	DWORD exstyle = LVS_EX_CHECKBOXES|LVS_EX_FULLROWSELECT|LVS_EX_INFOTIP;
+	static const DWORD exstyle = LVS_EX_CHECKBOXES|LVS_EX_FULLROWSELECT|LVS_EX_INFOTIP;
 	HWND list = GetDlgItem(hw,IDC_VERS);
 	ListView_DeleteColumn(list,0);
 	ListView_DeleteAllItems(list);
@@ -58,12 +58,12 @@ BOOL UpgradeDlg::OnInitDialog(HWND hw)
 
 	//Add a column
 	LVCOLUMN col;
-	ZeroMemory(&col,sizeof(col));
+	ZeroMemory(&col, sizeof(col));
 	col.mask = LVCF_TEXT|LVCF_WIDTH ;
 	col.fmt = LVCFMT_LEFT;
 	col.pszText = "HKCU\\Software\\frhed";
 	col.cx = 165;
-	ListView_InsertColumn(list,0,&col);
+	ListView_InsertColumn(list, 0, &col);
 
 	//Fill the vers list with the various versions
 	if (RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\frhed", 0, KEY_ALL_ACCESS, &hk) == 0)
@@ -138,7 +138,7 @@ BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			HWND vers = GetDlgItem(hw,IDC_VERS);
 			int i = ListView_GetNextItem(vers, (UINT)-1, LVNI_SELECTED);
 			ListView_GetItemText(vers,i,0,&keynam[15],_MAX_PATH+1-15);
-			if(!strcmp(&keynam[15],"v"CURRENT_VERSION"."SUB_RELEASE_NO)){
+			if(!strcmp(&keynam[15],"v"SHARPEN(FRHED_VERSION_3))){
 				//If that key was this version don't copy
 				MessageBox(hw,
 					"You can't copy the registry data of the selected version\n"
@@ -148,7 +148,7 @@ BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 
 			//Open the reg key to load from
 			if(ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER,keynam,&lk)){
-				char cver[_MAX_PATH+1]="Software\\frhed\\v"CURRENT_VERSION"."SUB_RELEASE_NO"\\";
+				char cver[_MAX_PATH+1]="Software\\frhed\\v"SHARPEN(FRHED_VERSION_3)"\\";
 				int i,numi=ListView_GetItemCount(insts),len,lenc=strlen(cver);
 				strncat(keynam, "\\", RTL_NUMBER_OF(keynam) - strlen(keynam));
 				for(i=0;i<numi;i++)
@@ -206,7 +206,7 @@ BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 							RegDeleteKey(HKEY_CURRENT_USER,keynam);//delete the key
 							keynam[len-1]=0;//cut off the "\\<inst>"
 							SHDeleteEmptyKey(HKEY_CURRENT_USER,keynam);//Delete an empty key
-							if (strcmp(&keynam[15],"v"CURRENT_VERSION"."SUB_RELEASE_NO) == 0)
+							if (strcmp(&keynam[15],"v"SHARPEN(FRHED_VERSION_3)) == 0)
 								bSaveIni = 0;//If that key was this version don't save
 						}//if cur inst checked
 					}//loop insts
@@ -282,11 +282,13 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 
 	//-------------Draw the status bar-----------------------------------------
 		GetClientRect(hw,&rt);
-		rt.top = rt.bottom-18;
+		rt.top = rt.bottom - 18;
 		DrawEdge (dc, &rt, BDR_SUNKENOUTER, BF_RECT);
 		HFONT fon = (HFONT) SendMessage(GetParent(hw),WM_GETFONT,0,0);
 		HFONT ofon = (HFONT) SelectObject(dc,fon);
-		char statusbuf[]="ANSI / READ";int i=0,len=11;
+		char statusbuf[]="ANSI / READ";
+		int i = 0;
+		int len = 11;
 		if(DispData.iCharacterSet!=ANSI_FIXED_FONT){
 			statusbuf[1]='O';
 			statusbuf[2]='E';
@@ -497,13 +499,13 @@ INT_PTR UpgradeDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 //init the insts list
 void UpgradeDlg::ChangeSelVer(HWND hw, char* text)
 {
-	HWND insts = GetDlgItem(hw,IDC_INSTS);
-	HWND instdata = GetDlgItem(hw,IDC_INSTDATA);
-	HWND links = GetDlgItem(hw,IDC_LINKS);
-	HWND mru = GetDlgItem(hw,IDC_MRU);
+	HWND insts = GetDlgItem(hw, IDC_INSTS);
+	HWND instdata = GetDlgItem(hw, IDC_INSTDATA);
+	HWND links = GetDlgItem(hw, IDC_LINKS);
+	HWND mru = GetDlgItem(hw, IDC_MRU);
 
 	ListView_DeleteAllItems(insts);
-	ListView_DeleteColumn(insts,0);
+	ListView_DeleteColumn(insts, 0);
 	ListView_DeleteAllItems(instdata);
 	ListView_DeleteAllItems(links);
 	ListView_DeleteAllItems(mru);
@@ -515,7 +517,7 @@ void UpgradeDlg::ChangeSelVer(HWND hw, char* text)
 	col.fmt = LVCFMT_LEFT;
 	col.pszText = text;
 	col.cx = 120;
-	ListView_InsertColumn(insts,0,&col);
+	ListView_InsertColumn(insts, 0, &col);
 
 	char keyname[100];
 	char subkeynam[_MAX_PATH+1];
@@ -532,11 +534,14 @@ void UpgradeDlg::ChangeSelVer(HWND hw, char* text)
 	//Fill the instance list with the various instances of the current selected version
 	if(0==RegOpenKeyEx(HKEY_CURRENT_USER,keyname,0,KEY_ALL_ACCESS,&hk)){
 		for(int i=0;;i++){
-			res = RegEnumKey(hk,i,subkeynam,_MAX_PATH+1);
-			if(res==ERROR_NO_MORE_ITEMS)break;
-			else{
+			res = RegEnumKey(hk, i, subkeynam, _MAX_PATH + 1);
+			if(res == ERROR_NO_MORE_ITEMS)
+				break;
+			else
+			{
 				int instno=0;
-				if(StrToIntEx(subkeynam,STIF_DEFAULT,&instno)){
+				if(StrToIntEx(subkeynam,STIF_DEFAULT,&instno))
+				{
 					item.iItem = i;
 					ListView_InsertItem(insts, &item);
 				}
@@ -553,12 +558,13 @@ void UpgradeDlg::ChangeSelVer(HWND hw, char* text)
 	item.pszText = valbuf;
 	if(ERROR_SUCCESS==RegOpenKeyEx(HKEY_CURRENT_USER, keyname,0,KEY_ALL_ACCESS,&hk)){
 		//Load all the string values
-		for(DWORD i = 0;;i++){
-			typ=0;
+		for(DWORD i = 0; ; i++){
+			typ = 0;
 			valnamsize = valbufsize = _MAX_PATH+1;
-			valbuf[0]=valnam[0]=0;
+			valbuf[0] = valnam[0] = 0;
 			res = RegEnumValue(hk,i,valnam,&valnamsize,0,&typ,(BYTE*) valbuf,&valbufsize);
-			if(typ==REG_SZ && valbuf[0]!=0 ){
+			if (typ==REG_SZ && valbuf[0]!=0 )
+			{
 				//Add the string
 				item.iItem = i;
 				ListView_InsertItem(links, &item);

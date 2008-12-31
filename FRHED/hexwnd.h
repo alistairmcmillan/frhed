@@ -30,6 +30,11 @@
 #include "IDT.h"
 
 #include "heksedit.h"
+
+// This is frhed vCURRENT_VERSION.SUB_RELEASE_NO
+// Its needed here even though nothing in this file uses macros!
+#include "version.h"
+
 #include "LangTools.h"
 
 #include "PhysicalDrive.h"

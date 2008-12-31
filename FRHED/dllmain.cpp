@@ -8,17 +8,8 @@
 HINSTANCE hMainInstance;
 LRESULT CALLBACK HexWndProc(HWND, UINT, WPARAM, LPARAM);
 
-static const char szHexClassA[] = "hekseditA_"
-	SHARPEN(A,FRHED_MAJOR_VERSION) "."
-	SHARPEN(A,FRHED_MINOR_VERSION) "."
-	SHARPEN(A,FRHED_SUB_RELEASE_NO) "."
-	SHARPEN(A,FRHED_BUILD_NO);
-
-static const WCHAR szHexClassW[] = L"hekseditW_"
-	SHARPEN(W,FRHED_MAJOR_VERSION) L"."
-	SHARPEN(W,FRHED_MINOR_VERSION) L"."
-	SHARPEN(W,FRHED_SUB_RELEASE_NO) L"."
-	SHARPEN(W,FRHED_BUILD_NO);
+static const char szHexClassA[] = "hekseditA_" SHARPEN(FRHED_VERSION_4);
+static const WCHAR szHexClassW[] = L"hekseditW_" SHARPEN_W(FRHED_VERSION_4);
 
 //--------------------------------------------------------------------------------------------
 // WinMain: the starting point.

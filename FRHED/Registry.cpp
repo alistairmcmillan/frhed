@@ -51,7 +51,7 @@ BOOL linkspresent()
 {
 	//Check if frhed\subreleaseno\links exists
 	HKEY hk;
-	if(ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links",&hk)){
+	if(ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links",&hk)){
 		RegCloseKey(hk);
 		return TRUE;
 	}
@@ -95,8 +95,9 @@ BOOL oldpresent()
 	if( res == ERROR_SUCCESS ){
 		for(DWORD i = 0;; i++ ){
 			res = RegEnumKey(hk,i,subkeynam,MAX_PATH + 1);
-			if(res==ERROR_NO_MORE_ITEMS)break;
-			else if(0!=strcmp(subkeynam,"v"CURRENT_VERSION"."SUB_RELEASE_NO)){
+			if(res==ERROR_NO_MORE_ITEMS)
+				break;
+			else if(0!=strcmp(subkeynam,"v"SHARPEN(FRHED_VERSION_3))){
 				RegCloseKey(hk);
 				return TRUE;
 			}
@@ -110,7 +111,7 @@ BOOL frhedpresent()
 {
 	//Check if frhed\subreleaseno exists
 	HKEY hk;
-	if(ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO ,&hk)){
+	if(ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) ,&hk)){
 		RegCloseKey(hk);
 		return TRUE;
 	}
@@ -145,7 +146,7 @@ void registry_RemoveFrhed(HWND hwnd, bool saveIni)
 			char valbuf[_MAX_PATH + 1] = {0};
 			DWORD valbufsize = _MAX_PATH + 1, ret;
 			if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER,
-					"Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links",
+					"Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links",
 					0, KEY_ALL_ACCESS, &hk))
 			{
 				for (DWORD i = 0; ; i++)
@@ -167,7 +168,7 @@ void registry_RemoveFrhed(HWND hwnd, bool saveIni)
 				}
 				RegCloseKey(hk);
 			}
-			RegDeleteKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO "\\links");
+			RegDeleteKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links");
 		}
 	}
 	res = contextpresent() || unknownpresent();
@@ -200,7 +201,7 @@ void registry_RemoveFrhed(HWND hwnd, bool saveIni)
 		}
 	}
 	HKEY tmp;
-	res = RegOpenKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO, &tmp);
+	res = RegOpenKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3), &tmp);
 	if (res == ERROR_SUCCESS)
 	{
 		RegCloseKey(tmp);
@@ -215,9 +216,9 @@ void registry_RemoveFrhed(HWND hwnd, bool saveIni)
 			ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 			GetVersionEx(&ver);
 			if (ver.dwPlatformId == VER_PLATFORM_WIN32_NT)
-				RegDeleteWinNTKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO);
+				RegDeleteWinNTKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3));
 			else
-				RegDeleteKey(HKEY_CURRENT_USER, "Software\\frhed\\v"CURRENT_VERSION"." SUB_RELEASE_NO);
+				RegDeleteKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3));
 			res = oldpresent();
 			if (res)
 			{

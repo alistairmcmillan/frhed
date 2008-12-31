@@ -23,22 +23,26 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _FRHED_VERSION_H_
-#define _FRHED_VERSION_H_
-
 // These set Frhed release version number
+// Note that for releases, these values are read from
+// versions.ini file and set here by the SetVersions.py script
 #define FRHED_MAJOR_VERSION 1
 #define FRHED_MINOR_VERSION 2
 #define FRHED_SUB_RELEASE_NO 1
-#define FRHED_BUILD_NO 1
+#define FRHED_BUILD_NO 3
 
 // Utility macros for formatting version number to string.
 #define SHARPEN_A(X) #X
 #define SHARPEN_W(X) L#X
-#define SHARPEN(T,X) SHARPEN_##T(X)
 
-#define CURRENT_VERSION SHARPEN(A,FRHED_MAJOR_VERSION) "." SHARPEN(A,FRHED_MINOR_VERSION)
-#define SUB_RELEASE_NO SHARPEN(A,FRHED_SUB_RELEASE_NO)
-#define BUILD_NO SHARPEN(A,FRHED_BUILD_NO)
+#ifdef UNICODE
+#define SHARPEN(X) SHARPEN_W(X)
+#else
+#define SHARPEN(X) SHARPEN_A(X)
+#endif
 
-#endif // _FRHED_VERSION_H_
+#define FRHED_VERSION_1 FRHED_MAJOR_VERSION
+#define FRHED_VERSION_2 FRHED_MAJOR_VERSION.FRHED_MINOR_VERSION
+#define FRHED_VERSION_3 FRHED_MAJOR_VERSION.FRHED_MINOR_VERSION.FRHED_SUB_RELEASE_NO
+#define FRHED_VERSION_4 FRHED_MAJOR_VERSION.FRHED_MINOR_VERSION.FRHED_SUB_RELEASE_NO.FRHED_BUILD_NO
+

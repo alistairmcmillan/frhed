@@ -23,28 +23,25 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-
 #ifndef _HEKSEDIT_H_
 #define _HEKSEDIT_H_
 
-// This is frhed vCURRENT_VERSION.SUB_RELEASE_NO
-#include "version.h"
-
-/**
- * @brief Byte endians.
- */
-enum BYTE_ENDIAN
-{
-	ENDIAN_LITTLE, /**< Little endian used e.g. in Intel processors. */
-	ENDIAN_BIG /**< Big endian used e.g. in Motorola processors. */
-};
-
 /**
  * @brief Interface for the Hexeditor window.
+ * @note This file is published to hosting applications. Do not add global declarations.
  */
 class IHexEditorWindow
 {
 public:
+	/**
+	 * @brief Byte endians.
+	 */
+	enum BYTE_ENDIAN
+	{
+		ENDIAN_LITTLE, /**< Little endian used e.g. in Intel processors. */
+		ENDIAN_BIG /**< Big endian used e.g. in Motorola processors. */
+	};
+
 	struct Colors
 	{
 		COLORREF iTextColorValue, iBkColorValue, iSepColorValue;
