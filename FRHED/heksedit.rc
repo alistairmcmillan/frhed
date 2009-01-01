@@ -522,7 +522,7 @@ CAPTION "View Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "Number of bytes to display per line:",IDC_STATIC,7,7,
-                    110,8
+                    160,8
     EDITTEXT        IDC_SETTINGS_BYTESPERLINE,7,16,68,12,ES_AUTOHSCROLL
     CONTROL         "Automatically adjust number of bytes per line (uncheck this if you want Frhed to use your own choice for bytes per line)",
                     IDC_SETTINGS_ADJUST_BYTELINE,"Button",BS_AUTOCHECKBOX |

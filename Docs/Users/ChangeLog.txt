@@ -11,6 +11,8 @@ Frhed 1.3.4
   Bugfix: Crash in Encode/Decode dialog (r220)
   Bugfix: View settings dialog didn't read current
     settings values (r226)
+  Bugfix: First text in View settings dialog was not
+    fully visible (r228)
 
 Frhed 1.3.3 - 2008-12-04 (r188)
   Update homepage URL in About-dialog to Sf.net (r137)
