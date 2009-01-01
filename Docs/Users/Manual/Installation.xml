@@ -2,6 +2,9 @@
 <article id="installation">
   <title>Installation</title>
 
-  <para>Frhed uses the <ulink url="http://www.nullsoft.com/free/nsis/">Nullsoft Scriptable Install System</ulink>. To install Frhed, just run the installer executable.</para>
-  <para>Frhed supports normal Windows uninstall behaviour as found in the Control Panel.</para>
+  <para>Frhed uses the <ulink url="http://www.nullsoft.com/free/nsis/">Nullsoft
+  Scriptable Install System</ulink>. To install Frhed, just run the installer
+  executable.</para>
+  <para>Frhed supports normal Windows uninstall behaviour as found in the
+  Control Panel.</para>
 </article>
