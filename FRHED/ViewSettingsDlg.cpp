@@ -190,8 +190,15 @@ INT_PTR ViewSettingsDlg::OnCompareitemLangId(COMPAREITEMSTRUCT *pcis)
 	return w1 < w2 ? -1 : w1 > w2 ? 1 : 0;*/
 }
 
+/**
+ * @brief Initialize the dialog controls.
+ * This function reads settings values from registry and sets them for the
+ * dialog controls.
+ */
 BOOL ViewSettingsDlg::OnInitDialog(HWND hDlg)
 {
+	read_ini_data();
+
 	SetDlgItemInt(hDlg, IDC_SETTINGS_BYTESPERLINE, iBytesPerLine, TRUE);
 	SetDlgItemInt(hDlg, IDC_SETTINGS_OFFSETLEN, iMinOffsetLen, TRUE);
 	CheckDlgButton(hDlg, IDC_SETTINGS_ADJUST_BYTELINE, iAutomaticBPL);
@@ -206,6 +213,9 @@ BOOL ViewSettingsDlg::OnInitDialog(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Save the settings in dialog controls to registry.
+ */
 BOOL ViewSettingsDlg::Apply(HWND hDlg)
 {
 	iBytesPerLine = GetDlgItemInt(hDlg, IDC_SETTINGS_BYTESPERLINE, 0, TRUE);
