@@ -190,7 +190,8 @@
 
     <section>
       <title>The <guimenuitem>Delete</guimenuitem> command</title>
-      <para>This command calls the same dialog as the <menuchoice><guimenu>Edit</guimenu><guimenuitem>Cut</guimenuitem></menuchoice>
+      <para>This command calls the same dialog as the <menuchoice><guimenu>Edit
+      </guimenu><guimenuitem>Cut</guimenuitem></menuchoice>
       command, only with the "cut to clipboard" checkbox already disabled.</para>
     </section>
 
@@ -447,7 +448,8 @@ File 2: 00 ff ff 03 04</screen>
 
     <section>
       <title>The <guimenuitem>File properties</guimenuitem> command</title>
-      <para>Choose this to get the filename, path and size of the current file, and also the total number of lines of the hexdump.</para>
+      <para>Choose this to get the filename, path and size of the current file,
+      and also the total number of lines of the hexdump.</para>
     </section>
 
     <section>
@@ -478,7 +480,8 @@ DWORD filelength = 8 (signed) = 8 (unsigned) = 0x8
 
 -&gt; Length of template = 7 bytes.</screen>
 
-      <para>Following variable types are recognized: (recognition is case-sensitive, so "byte" is not recognized as type "BYTE")</para>
+      <para>Following variable types are recognized: (recognition is
+      case-sensitive, so "byte" is not recognized as type "BYTE")</para>
 
       <itemizedlist>
         <listitem>
@@ -488,7 +491,8 @@ DWORD filelength = 8 (signed) = 8 (unsigned) = 0x8
           <simpara>a word-size value: &quot;WORD&quot;, &quot;short&quot;</simpara>
         </listitem>
         <listitem>
-          <simpara>a longword-size value: &quot;DWORD&quot;, &quot;int&quot;, &quot;long&quot;, &quot;LONG&quot;</simpara>
+          <simpara>a longword-size value: &quot;DWORD&quot;, &quot;int&quot;,
+          &quot;long&quot;, &quot;LONG&quot;</simpara>
         </listitem>
         <listitem>
           <simpara>a float value: &quot;float&quot;</simpara>
