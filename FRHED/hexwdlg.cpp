@@ -1,5 +1,6 @@
 #include "precomp.h"
 #include "resource.h"
+#include "Constants.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "LangArray.h"
@@ -102,7 +103,7 @@ INT_PTR ChangeInstDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 				int i = iLoadInst + 1;
 				const int num_size = 64;
 				char num[num_size] = {0};
-				_snprintf(num, num_size - 1, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\%d", i);
+				_snprintf(num, num_size - 1, "%s\\%d", OptionsRegistrySettingsPath, i);
 				if (ERROR_SUCCESS != RegOpenKeyEx(HKEY_CURRENT_USER, num, 0, KEY_EXECUTE, &hk))
 					break;
 				RegCloseKey(hk);//Close the key - just testing if it exists

@@ -25,38 +25,27 @@
 
 #include "precomp.h"
 #include "version.h"
+#include "Constants.h"
 #include "Registry.h"
 #include "regtools.h"
 
 BOOL contextpresent()
 {
 	HKEY key1;
-	LONG res = RegOpenKeyEx( HKEY_CLASSES_ROOT, "*\\shell\\Open in frhed\\command", 0, KEY_ALL_ACCESS, &key1 );
+	LONG res = RegOpenKeyEx(HKEY_CLASSES_ROOT, "*\\shell\\Open in frhed\\command", 0, KEY_ALL_ACCESS, &key1);
 	if (res == ERROR_SUCCESS) //succeeded check if has the required keys & data
 	{
 		char stringval[ _MAX_PATH ];
 		char exepath[ _MAX_PATH ];
 		long len = 0;//dummy
-		strcpy( exepath, _pgmptr );
+		strcpy(exepath, _pgmptr);
 		strcat(exepath," %1");
-		RegQueryValue(key1,NULL,stringval,&len);
+		RegQueryValue(key1, NULL, stringval, &len);
 		RegCloseKey(key1);
-		if(strcmp(stringval, exepath))
+		if (strcmp(stringval, exepath))
 			return 1;
 	}
 	return 0;
-}
-
-BOOL linkspresent()
-{
-	//Check if frhed\subreleaseno\links exists
-	HKEY hk;
-	if(ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links",&hk)){
-		RegCloseKey(hk);
-		return TRUE;
-	}
-
-	return FALSE;
 }
 
 BOOL defaultpresent()
@@ -89,15 +78,18 @@ BOOL unknownpresent()
 BOOL oldpresent()
 {
 	HKEY hk;
-	char keyname[] = "Software\\frhed";
-	char subkeynam[MAX_PATH + 1] = "";
-	LONG res = RegOpenKeyEx( HKEY_CURRENT_USER,keyname,0,KEY_ALL_ACCESS,&hk );
-	if( res == ERROR_SUCCESS ){
-		for(DWORD i = 0;; i++ ){
-			res = RegEnumKey(hk,i,subkeynam,MAX_PATH + 1);
-			if(res==ERROR_NO_MORE_ITEMS)
+	LONG res = RegOpenKeyEx(HKEY_CURRENT_USER, OptionsRegistryPath, 0,
+			KEY_ALL_ACCESS, &hk);
+	if (res == ERROR_SUCCESS)
+	{
+		TCHAR subkeynam[MAX_PATH] = {0};
+		for (DWORD i = 0; ; i++)
+		{
+			res = RegEnumKey(hk ,i, subkeynam, MAX_PATH);
+			if (res == ERROR_NO_MORE_ITEMS)
 				break;
-			else if(0!=strcmp(subkeynam,"v"SHARPEN(FRHED_VERSION_3))){
+			else if (0 != strcmp(subkeynam, OptionsRegistrySettingsPath))
+			{
 				RegCloseKey(hk);
 				return TRUE;
 			}
@@ -107,92 +99,105 @@ BOOL oldpresent()
 	return FALSE;
 }
 
+/**
+ * @brief Check if Frhed settings key already exist.
+ */
 BOOL frhedpresent()
 {
 	//Check if frhed\subreleaseno exists
 	HKEY hk;
-	if(ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) ,&hk)){
-		RegCloseKey(hk);
-		return TRUE;
-	}
-
-	return FALSE;
+	if (ERROR_SUCCESS != RegOpenKey(HKEY_CURRENT_USER, OptionsRegistrySettingsPath, &hk))
+		return FALSE;
+	RegCloseKey(hk);
+	return TRUE;
 }
 
-void registry_RemoveFrhed(HWND hwnd, bool saveIni)
+/**
+ * @brief Check if links key in Frhed settings already exist.
+ */
+BOOL linkspresent()
 {
+	HKEY hk;
+	TCHAR keyname[64] = {0};
+	_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
+			OptionsRegistrySettingsPath);
+	if (ERROR_SUCCESS != RegOpenKey(HKEY_CURRENT_USER, keyname, &hk))
+		return FALSE;
+	RegCloseKey(hk);
+	return TRUE;
+}
+
+BOOL registry_RemoveFrhed(HWND hwnd)
+{
+	BOOL bRemoveRegistryEntries = FALSE;
 	int res, r, r0;
-	r = r0 = 0; //r&r0 used to determine if the user has removed all frhed data
-
-	res = MessageBox(hwnd, "Are you sure you want to remove frhed ?",
-			"Remove frhed", MB_YESNO);
+	r = r0 = 0; // r&r0 used to determine if the user has removed all frhed data
+	res = MessageBox(hwnd, _T("Are you sure you want to remove Frhed?"), _T("Remove Frhed"), MB_YESNO);
 	if (res != IDYES)
-		return;
-
+		return FALSE;
 	//Can assume registry data exists
 	res = linkspresent();
 	if (res)
 	{
 		r0++;
-		res = MessageBox(hwnd, "Remove known links ?", "Remove frhed",
-				MB_YESNO);
+		res = MessageBox(hwnd, _T("Remove known links?"), _T("Remove Frhed"), MB_YESNO);
 		if (res == IDYES)
 		{
 			r++;
 			//Remove known links & registry entries of those links
 			HKEY hk;
-			char valnam[_MAX_PATH + 1] = {0};
-			DWORD valnamsize = _MAX_PATH + 1, typ;
-			char valbuf[_MAX_PATH + 1] = {0};
-			DWORD valbufsize = _MAX_PATH + 1, ret;
-			if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER,
-					"Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links",
-					0, KEY_ALL_ACCESS, &hk))
+			TCHAR valnam[MAX_PATH];
+			DWORD valnamsize, typ;
+			TCHAR valbuf[MAX_PATH];
+			DWORD valbufsize, ret;
+			
+			TCHAR keyname[64] = {0};
+			_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
+					OptionsRegistrySettingsPath);
+			if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, keyname, 0,
+					KEY_ALL_ACCESS, &hk))
 			{
 				for (DWORD i = 0; ; i++)
 				{
 					typ = 0;
-					valnamsize = valbufsize = _MAX_PATH + 1;
+					valnamsize = sizeof valnam;
+					valbufsize = sizeof valbuf;
 					valbuf[0] = valnam[0] = 0;
-					ret = RegEnumValue(hk, i, valnam, &valnamsize, 0,
-							&typ, (BYTE*) valbuf, &valbufsize);
-					if (typ == REG_SZ && valbuf[0] != 0 &&
-							PathIsDirectory(valbuf))
+					ret = RegEnumValue(hk, i, valnam, &valnamsize, 0, &typ, (BYTE*) valbuf,
+								&valbufsize);
+					if (typ == REG_SZ && valbuf[0] != 0 && PathIsDirectory(valbuf))
 					{
-						PathAddBackslash(valbuf);
-						strcat(valbuf, "frhed.lnk");
-						remove(valbuf);
+						PathAppend(valbuf, _T("frhed.lnk"));
+						_tremove(valbuf);
 					}
 					if (ERROR_NO_MORE_ITEMS == ret)
 						break;
 				}
 				RegCloseKey(hk);
 			}
-			RegDeleteKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links");
+			RegDeleteKey(HKEY_CURRENT_USER, keyname);
 		}
 	}
 	res = contextpresent() || unknownpresent();
 	if (res)
 	{
 		r0++;
-		res = MessageBox(hwnd, "Remove 'Open in frhed' command(s) ?",
-				"Remove frhed", MB_YESNO);
-		if(res==IDYES)
+		res = MessageBox(hwnd, _T("Remove 'Open in frhed' command(s) ?"), _T("Remove Frhed"), MB_YESNO);
+		if (res == IDYES)
 		{
 			r++;
 			//Remove 'Open in frhed' command registry entries
-			RegDeleteKey(HKEY_CLASSES_ROOT, "*\\shell\\Open in frhed\\command"); //WinNT requires the key to have no subkeys
-			RegDeleteKey(HKEY_CLASSES_ROOT, "*\\shell\\Open in frhed");
-			RegDeleteKey(HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in frhed\\command"); //WinNT requires the key to have no subkeys
-			RegDeleteKey(HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in frhed");
-			char stringval[_MAX_PATH]= {0};
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in frhed\\command")); //WinNT requires the key to have no subkeys
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in frhed"));
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in frhed\\command")); //WinNT requires the key to have no subkeys
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in frhed"));
+			TCHAR stringval[MAX_PATH];
 			long len = _MAX_PATH;
-			RegQueryValue(HKEY_CLASSES_ROOT, "Unknown\\shell", stringval,&len);
-			if (!strcmp(stringval, "Open in frhed"))
+			RegQueryValue(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), stringval, &len);
+			if (!_tcscmp(stringval, _T("Open in Frhed")))
 			{
 				HKEY hk;
-				if (ERROR_SUCCESS == RegOpenKey(HKEY_CLASSES_ROOT,
-						"Unknown\\shell", &hk))
+				if (ERROR_SUCCESS == RegOpenKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), &hk))
 				{
 					RegDeleteValue(hk, NULL);
 					RegCloseKey(hk);
@@ -201,36 +206,34 @@ void registry_RemoveFrhed(HWND hwnd, bool saveIni)
 		}
 	}
 	HKEY tmp;
-	res = RegOpenKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3), &tmp);
+	res = RegOpenKey(HKEY_CURRENT_USER, OptionsRegistrySettingsPath, &tmp);
 	if (res == ERROR_SUCCESS)
 	{
 		RegCloseKey(tmp);
 		r0++;
-		res = MessageBox(hwnd, "Remove registry entries?", "Remove frhed",
-				MB_YESNO);
+		res = MessageBox(hwnd, _T("Remove registry entries?"), _T("Remove Frhed"), MB_YESNO);
 		if (res == IDYES)
 		{
 			r++;
-			saveIni = FALSE;//Don't save ini data when the user quits (and hope other instances are not running now (they will write new data)
+			bRemoveRegistryEntries = TRUE;//Don't save ini data when the user quits (and hope other instances are not running now (they will write new data)
 			OSVERSIONINFO ver;
 			ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 			GetVersionEx(&ver);
 			if (ver.dwPlatformId == VER_PLATFORM_WIN32_NT)
-				RegDeleteWinNTKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3));
+				RegDeleteWinNTKey(HKEY_CURRENT_USER, OptionsRegistrySettingsPath);
 			else
-				RegDeleteKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3));
+				RegDeleteKey(HKEY_CURRENT_USER, OptionsRegistrySettingsPath);
 			res = oldpresent();
 			if (res)
 			{
-				res = MessageBox(hwnd, 
-						"Registry entries from previous versions of frhed were found\n"
-						"Should they all be removed ?", "Remove frhed", MB_YESNO);
+				res = MessageBox(hwnd, _T("Registry entries from previous versions of Frhed were found\n")
+					_T("Should they all be removed?"), _T("Remove frhed"), MB_YESNO);
 				if (res == IDYES)
 				{
 					if (ver.dwPlatformId == VER_PLATFORM_WIN32_NT)
-						RegDeleteWinNTKey(HKEY_CURRENT_USER, "Software\\frhed");
+						RegDeleteWinNTKey(HKEY_CURRENT_USER, OptionsRegistryPath);
 					else
-						RegDeleteKey(HKEY_CURRENT_USER, "Software\\frhed");
+						RegDeleteKey(HKEY_CURRENT_USER, OptionsRegistryPath);
 				}
 			}
 		}
@@ -250,14 +253,15 @@ void registry_RemoveFrhed(HWND hwnd, bool saveIni)
 	if (r == r0)
 	{
 		MessageBox(hwnd,
-			"Now all that remains to remove frhed from this computer is to:\n"
-			"1. Quit all other instances of frhed(after turning off \"Save ini...\" in each one)\n"
-			"2. Quit this instance of frhed\n"
-			"3. Check that the registry data was removed (just in case)\n"
-			"4. Delete the directory where frhed currently resides\n"
-			"5. If you have an email account please take the time to\n"
-			"    email the author/s and give the reason/s why you have\n"
-			"    removed frhed from your computer",
-			"Remove frhed", MB_OK);
+			_T("Now all that remains to remove Frhed from this computer is to:\n")
+			_T("1. Quit all other instances of frhed(after turning off \"Save ini...\" in each one)\n")
+			_T("2. Quit this instance of frhed\n")
+			_T("3. Check that the registry data was removed (just in case)\n")
+			_T("4. Delete the directory where Frhed currently resides\n")
+			_T("5. If you have an email account please take the time to\n")
+			_T("    email the author/s and give the reason/s why you have\n")
+			_T("    removed Frhed from your computer"),
+			_T("Remove Frhed"), MB_OK);
 	}
+	return bRemoveRegistryEntries;
 }

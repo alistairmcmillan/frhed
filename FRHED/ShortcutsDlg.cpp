@@ -24,6 +24,7 @@
 // $Id$
 
 #include "precomp.h"
+#include "Constants.h"
 #include "shtools.h"
 #include "resource.h"
 #include "hexwnd.h"
@@ -90,9 +91,11 @@ void TraverseFolders::Recurse()
 					ListView_InsertItem(hwlist,&li);
 					//Add to the Registry
 					sprintf(vn,"%d",li.iItem);
-					SHSetValue(HKEY_CURRENT_USER,
-						"Software\\frhed\\v"SHARPEN(FRHED_VERSION_3)"\\links",
-						vn, REG_SZ, rn, fnam - rn);
+					TCHAR keyname[64] = {0};
+					_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
+							OptionsRegistrySettingsPath);
+					SHSetValue(HKEY_CURRENT_USER, keyname, vn, REG_SZ, rn,
+							fnam - rn);
 					li.iItem++;
 				}
 				strcat(rn,"\\frhed.lnk");//put the name backon
@@ -196,11 +199,14 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 	case IDCANCEL:
 	case IDOK:
 		{
+			TCHAR keyname[64] = {0};
+			_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
+					OptionsRegistrySettingsPath);
 			//Delete all values
-			RegDeleteKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links");
+			RegDeleteKey(HKEY_CURRENT_USER, keyname);
 			//Save links (from the list box) to the registry & file system
 			HKEY hk;
-			if (ERROR_SUCCESS == RegCreateKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links", &hk))
+			if (ERROR_SUCCESS == RegCreateKey(HKEY_CURRENT_USER, keyname, &hk))
 			{
 				char valnam[50] = {0};//value name
 				char buf[_MAX_PATH + 1] = {0};//location of the link (all links named frhed.lnk)
@@ -224,8 +230,8 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				MessageBox(hw,"Could not Save shortcut entries", "Shortcuts",MB_OK);
 
 			//If the key is empty after this kill it (to prevent re-enabling of "Remove frhed")
-			SHDeleteEmptyKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links");
-			SHDeleteEmptyKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3));
+			SHDeleteEmptyKey(HKEY_CURRENT_USER, keyname);
+			SHDeleteEmptyKey(HKEY_CURRENT_USER, OptionsRegistrySettingsPath);
 
 			EndDialog(hw, 0);
 			return TRUE;
@@ -310,6 +316,10 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 						}
 						else
 						{
+							TCHAR keyname[64] = {0};
+							_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
+									OptionsRegistrySettingsPath);
+
 							if (LOWORD(w) == IDC_ADD)
 							{
 								//Add to the list
@@ -320,7 +330,8 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 								item.iItem = num;
 								ListView_InsertItem(list, &item);
 								//Add to the registry (find a string name that doesn't exist first)
-								if (ERROR_SUCCESS == RegCreateKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links",&hk)){
+								if (ERROR_SUCCESS == RegCreateKey(HKEY_CURRENT_USER, keyname, &hk))
+								{
 									for (DWORD i = 0 ; ; i++)
 									{
 										_snprintf(valnam, RTL_NUMBER_OF(valnam) - 1, "%d", i);
@@ -348,7 +359,8 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 								ListView_GetItemText(list, di, 0, cursel, _MAX_PATH + 1);
 								_strupr(cursel);
 								//Set the new path in the registry
-								if(ERROR_SUCCESS==RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links",0,KEY_ALL_ACCESS,&hk)){
+								if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, keyname, 0, KEY_ALL_ACCESS, &hk))
+								{
 									for (DWORD i = 0; ; i++)
 									{
 										typ = 0;
@@ -425,6 +437,9 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 		}
 	case IDC_DELETE:
 		{
+			TCHAR keyname[64] = {0};
+			_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
+					OptionsRegistrySettingsPath);
 			HWND list = GetDlgItem (hw, IDC_LIST);//get the list
 			//Delete the selected links from the registry & the filesystem
 			int di = ListView_GetSelectedCount(list);
@@ -447,7 +462,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				_strupr(delbuf);
 				ListView_DeleteItem(list,di);
 				HKEY hk;
-				if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links", 0, KEY_ALL_ACCESS, &hk))
+				if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, keyname, 0, KEY_ALL_ACCESS, &hk))
 				{
 					for (DWORD i = 0; ; i++)
 					{
@@ -469,13 +484,16 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 					strncat(delbuf, FrhedLink, RTL_NUMBER_OF(delbuf) - strlen(delbuf));
 					remove(delbuf);
 				}
-				SHDeleteEmptyKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links");
+				SHDeleteEmptyKey(HKEY_CURRENT_USER, keyname);
 			}
 			return TRUE;
 		}
 	case IDC_RELOAD:
 		{
 			//Reload links from the registry frhed\subreleaseno\links\ all values loaded & tested
+			TCHAR keyname[64] = {0};
+			_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
+					OptionsRegistrySettingsPath);
 			HKEY hk;
 			char valnam[_MAX_PATH + 1] = {0};
 			DWORD valnamsize = _MAX_PATH + 1, typ;
@@ -488,14 +506,15 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			ZeroMemory(&item, sizeof(item));
 			item.mask= LVIF_TEXT;
 			item.pszText = valbuf;
-			if(ERROR_SUCCESS==RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links",0,KEY_ALL_ACCESS,&hk)){
+			if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, keyname, 0, KEY_ALL_ACCESS, &hk))
+			{
 				//Load all the string values
 				for (DWORD i = 0 ; ; i++)
 				{
 					typ = 0;
 					valnamsize = valbufsize = _MAX_PATH+1;
 					valbuf[0] = valnam[0] = 0;
-					ret = RegEnumValue(hk,i,valnam,&valnamsize,0,&typ,(BYTE*) valbuf,&valbufsize);
+					ret = RegEnumValue(hk, i, valnam, &valnamsize, 0, &typ, (BYTE*) valbuf, &valbufsize);
 					if (typ == REG_SZ && valbuf[0] != 0 && PathIsDirectory(valbuf))
 					{//Valid dir
 						//Add the string
@@ -522,6 +541,9 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			//HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders\Programs = C:\WINDOWS\Start Menu\Programs on my computer
 			//HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders\SendTo = C:\WINDOWS\SendTo on my computer
 			//HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders\Desktop = C:\WINDOWS\Desktop on my computer
+			TCHAR keyname[64] = {0};
+			_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
+					OptionsRegistrySettingsPath);
 			HKEY hk;
 			if (ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER,"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders",&hk))
 			{
@@ -576,15 +598,16 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 					item.iItem = num;
 					ListView_InsertItem(list, &item);
 					char valnam[_MAX_PATH + 1] = {0};
-					if(ERROR_SUCCESS==RegCreateKey(HKEY_CURRENT_USER, "Software\\frhed\\v"SHARPEN(FRHED_VERSION_3) "\\links",&hk))
+					if (ERROR_SUCCESS == RegCreateKey(HKEY_CURRENT_USER, keyname, &hk))
 					{
 						//Find a value name that does not exist
 						for (DWORD i = 0; ; i++)
 						{
 							_snprintf(valnam, RTL_NUMBER_OF(valnam) - 1, "%d", i);
-							if(ERROR_FILE_NOT_FOUND==RegQueryValueEx(hk,valnam,0,NULL,NULL,NULL))
+							if (ERROR_FILE_NOT_FOUND == RegQueryValueEx(hk, valnam, 0, NULL, NULL, NULL))
 							{
-								RegSetValueEx(hk,valnam,0,REG_SZ,(BYTE*)szDir,strlen(szDir)+1);//Add the value to the registry
+								//Add the value to the registry
+								RegSetValueEx(hk, valnam, 0,REG_SZ, (BYTE*)szDir, strlen(szDir) + 1);
 								break;
 							}
 						}

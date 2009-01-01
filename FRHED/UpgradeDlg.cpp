@@ -25,6 +25,7 @@
 
 #include "precomp.h"
 #include "resource.h"
+#include "Constants.h"
 #include "regtools.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
@@ -66,7 +67,7 @@ BOOL UpgradeDlg::OnInitDialog(HWND hw)
 	ListView_InsertColumn(list, 0, &col);
 
 	//Fill the vers list with the various versions
-	if (RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\frhed", 0, KEY_ALL_ACCESS, &hk) == 0)
+	if (RegOpenKeyEx(HKEY_CURRENT_USER, OptionsRegistryPath, 0, KEY_ALL_ACCESS, &hk) == 0)
 	{
 		i = 0;
 		while (RegEnumKey(hk, i, subkeynam, _MAX_PATH+1) != ERROR_NO_MORE_ITEMS)
@@ -124,8 +125,9 @@ BOOL UpgradeDlg::OnInitDialog(HWND hw)
 
 BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 {
-	HWND insts = GetDlgItem(hw,IDC_INSTS);
-	char keynam[_MAX_PATH + 1] = "Software\\frhed\\";
+	HWND insts = GetDlgItem(hw, IDC_INSTS);
+	char keynam[MAX_PATH];
+	strncpy(keynam, OptionsRegistryPath, RTL_NUMBER_OF(keynam));
 	LVCOLUMN col;
 	switch (w)
 	{
@@ -137,8 +139,9 @@ BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			HKEY lk;
 			HWND vers = GetDlgItem(hw,IDC_VERS);
 			int i = ListView_GetNextItem(vers, (UINT)-1, LVNI_SELECTED);
-			ListView_GetItemText(vers,i,0,&keynam[15],_MAX_PATH+1-15);
-			if(!strcmp(&keynam[15],"v"SHARPEN(FRHED_VERSION_3))){
+			ListView_GetItemText(vers, i, 0, &keynam[15], MAX_PATH - 15);
+			if (!strcmp(&keynam[15], OptionsRegistrySettingsPath))
+			{
 				//If that key was this version don't copy
 				MessageBox(hw,
 					"You can't copy the registry data of the selected version\n"
@@ -147,13 +150,19 @@ BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			}
 
 			//Open the reg key to load from
-			if(ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER,keynam,&lk)){
-				char cver[_MAX_PATH+1]="Software\\frhed\\v"SHARPEN(FRHED_VERSION_3)"\\";
-				int i,numi=ListView_GetItemCount(insts),len,lenc=strlen(cver);
+			if (ERROR_SUCCESS == RegOpenKey(HKEY_CURRENT_USER, keynam, &lk))
+			{
+				char cver[_MAX_PATH+1];
+				strncpy(cver, OptionsRegistryPath, RTL_NUMBER_OF(cver));
+				int i;
+				int numi = ListView_GetItemCount(insts);
+				int len;
+				int lenc = strlen(cver);
 				strncat(keynam, "\\", RTL_NUMBER_OF(keynam) - strlen(keynam));
-				for(i=0;i<numi;i++)
+				for (i = 0;i < numi; i++)
 				{
-					if(ListView_GetCheckState(insts,i)){
+					if (ListView_GetCheckState(insts, i))
+					{
 						len = strlen(keynam);
 						ListView_GetItemText(insts,i,0,&keynam[len],_MAX_PATH+1-len);//get the inst
 						strcpy(&cver[lenc], &keynam[len]);
@@ -171,13 +180,13 @@ BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 		{
 			//Get the instance
 			int i = ListView_GetNextItem(insts, (UINT)-1, LVNI_SELECTED);
-			char text[_MAX_PATH + 1] = {0};
-			ListView_GetItemText(insts,i,0,text,_MAX_PATH+1);
+			char text[MAX_PATH] = {0};
+			ListView_GetItemText(insts, i, 0, text, MAX_PATH);
 			//Get the version
-			ZeroMemory(&col,sizeof(col));
+			ZeroMemory(&col, sizeof(col));
 			col.mask = LVCF_TEXT;
 			col.pszText = keynam;
-			col.cchTextMax = _MAX_PATH+1;
+			col.cchTextMax = _MAX_PATH;
 			ListView_GetColumn(insts,0,&col);
 			//Save the current instance
 			int tmp = iInstCount;
@@ -206,7 +215,7 @@ BOOL UpgradeDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 							RegDeleteKey(HKEY_CURRENT_USER,keynam);//delete the key
 							keynam[len-1]=0;//cut off the "\\<inst>"
 							SHDeleteEmptyKey(HKEY_CURRENT_USER,keynam);//Delete an empty key
-							if (strcmp(&keynam[15],"v"SHARPEN(FRHED_VERSION_3)) == 0)
+							if (strcmp(&keynam[15], OptionsRegistrySettingsPath) == 0)
 								bSaveIni = 0;//If that key was this version don't save
 						}//if cur inst checked
 					}//loop insts
@@ -521,8 +530,8 @@ void UpgradeDlg::ChangeSelVer(HWND hw, char* text)
 
 	char keyname[100];
 	char subkeynam[_MAX_PATH+1];
-	strcpy(keyname,"Software\\frhed\\");
-	strcat(keyname,text);
+	strcpy(keyname, OptionsRegistryPath);
+	strcat(keyname, text);
 
 	LVITEM item;
 	ZeroMemory(&item,sizeof(LVITEM));
@@ -586,7 +595,8 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 	ListView_DeleteAllItems(mru);
 
 	//Assemble the keyname
-	char keynam[_MAX_PATH+1]="Software\\frhed\\";
+	char keynam[_MAX_PATH+1];
+	strncpy(keynam, OptionsRegistryPath, RTL_NUMBER_OF(keynam));
 	LVCOLUMN col;
 	ZeroMemory(&col,sizeof(col));
 	col.mask = LVCF_TEXT;

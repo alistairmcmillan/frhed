@@ -33,6 +33,6 @@ BOOL unknownpresent();
 BOOL oldpresent();
 BOOL frhedpresent();
 
-void registry_RemoveFrhed(HWND hwnd, bool saveIni);
+BOOL registry_RemoveFrhed(HWND);
 
 #endif // _REGISTRY_H_

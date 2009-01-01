@@ -1130,7 +1130,8 @@ void HexEditorWindow::command(int cmd)
 		static_cast<dialog<UpgradeDlg>*>(this)->DoModal(hwnd);
 		break;
 	case IDM_REMOVE:
-		registry_RemoveFrhed(hwnd, !!bSaveIni);
+		if (registry_RemoveFrhed(hwnd))
+			bSaveIni = FALSE;
 		break;
 	case IDM_SAVEINI:
 		bSaveIni = !bSaveIni;//!(MF_CHECKED==GetMenuState(hMenu,IDM_SAVEINI,0));
@@ -3408,10 +3409,11 @@ void HexEditorWindow::read_ini_data(char *key)
 	char keyname[keyname_size] = {0};
 	LONG res;
 	if (key == 0)
-		_snprintf(keyname, keyname_size - 1, "Software\\frhed\\v" SHARPEN(FRHED_VERSION_3) "\\%d",
+		_snprintf(keyname, keyname_size - 1, "%s\\%d", OptionsRegistrySettingsPath,
 				iInstCount);
 	else
-		_snprintf(keyname, keyname_size - 1, "Software\\frhed\\%s\\%d", key, iInstCount);
+		_snprintf(keyname, keyname_size - 1, "%s\\%s\\%d", OptionsRegistrySettingsPath, key,
+				iInstCount);
 
 	res = RegOpenKeyEx(HKEY_CURRENT_USER, keyname, 0, KEY_ALL_ACCESS, &key1);
 	if (res == ERROR_SUCCESS)
@@ -3501,7 +3503,7 @@ void HexEditorWindow::save_ini_data()
 
 	const int keyname_size = 64;
 	char keyname[keyname_size] = {0};
-	_snprintf(keyname, keyname_size - 1, "Software\\frhed\\v" SHARPEN(FRHED_VERSION_3) "\\%d",
+	_snprintf(keyname, keyname_size - 1, "%s\\%d", OptionsRegistrySettingsPath,
 			iInstCount);
 
 	LONG res = RegCreateKey(HKEY_CURRENT_USER, keyname, &key1);
@@ -3553,7 +3555,7 @@ void HexEditorWindow::save_ini_data()
 		RegSetValueEx( key1, "iMRU_count", 0, REG_DWORD, (CONST BYTE*) &iMRU_count, sizeof( int ) );
 		int i;
 		char fname[keyname_size] = {0};
-		for( i = 1; i <= MRUMAX; i++ )
+		for (i = 1; i <= MRUMAX; i++)
 		{
 			_snprintf( fname, keyname_size - 1, "MRU_File%d", i );
 			RegSetValueEx( key1, fname, 0, REG_SZ, (CONST BYTE*) &(strMRU[i-1][0]), strlen( &(strMRU[i-1][0]) ) + 1 );
