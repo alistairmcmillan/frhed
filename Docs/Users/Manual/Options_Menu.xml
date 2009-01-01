@@ -7,28 +7,41 @@
     <para>Here you can choose:</para>
     <itemizedlist>
       <listitem>
-        <para>The number of bytes to display per line of hexdump (only applies if &quot;Automatically adjust number of bytes per line&quot; is disabled)</para>
+        <para>The number of bytes to display per line of hexdump (only applies
+        if &quot;Automatically adjust number of bytes per line&quot; is
+        disabled)</para>
       </listitem>
       <listitem>
-        <para>If the &quot;Automatically adjust number of bytes per line&quot;-checkbox is checked, then the number of bytes displayed per hexdump line is adjusted in such a way that the whole window width is used at all times.</para>
+        <para>If the &quot;Automatically adjust number of bytes per line&quot;-
+        checkbox is checked, then the number of bytes displayed per hexdump
+        line is adjusted in such a way that the whole window width is used at
+        all times.</para>
       </listitem>
       <listitem>
-        <para>The number of digits for the offset length (only applies if &quot;Adjust offset length&quot; is disabled)</para>
+        <para>The number of digits for the offset length (only applies if
+        &quot;Adjust offset length&quot; is disabled)</para>
       </listitem>
       <listitem>
-        <para>If the offset length should be automatically adjusted to that of the maximum offset (enabled) or right-padded with spaces (disabled)</para>
+        <para>If the offset length should be automatically adjusted to that of
+        the maximum offset (enabled) or right-padded with spaces (disabled)
+        </para>
       </listitem>
       <listitem>
-        <para>How to display the values at the caret position, either as signed or as unsigned integer values</para>
+        <para>How to display the values at the caret position, either as signed
+        or as unsigned integer values</para>
       </listitem>
       <listitem>
-        <para>If read-only mode should be automatically set after opening files.</para>
+        <para>If read-only mode should be automatically set after opening
+        files.</para>
       </listitem>
       <listitem>
-        <para>The name of the text editor that will be called by the <menuchoice><guimenu>Edit</guimenu><guimenuitem>Open in text editor</guimenuitem></menuchoice> command.</para>
+        <para>The name of the text editor that will be called by the
+        <menuchoice><guimenu>Edit</guimenu><guimenuitem>Open in text editor
+        </guimenuitem></menuchoice> command.</para>
       </listitem>
       <listitem>
-        <para>The name of the Internet browser that will be called in the About dialog.</para>
+        <para>The name of the Internet browser that will be called in the About
+        dialog.</para>
       </listitem>
     </itemizedlist>
   </section>
@@ -42,16 +55,19 @@
 
     <section>
       <title>The <guimenuitem>Background color</guimenuitem> command</title>
-      <para>Choose what color the background in the main window should have.</para>
+      <para>Choose what color the background in the main window should have.
+      </para>
     </section>
 
     <section>
       <title>The <guimenuitem>Separator color</guimenuitem> command</title>
-      <para>Choose what color the separators in the main window should have.</para>
+      <para>Choose what color the separators in the main window should have.
+      </para>
     </section>
 
     <section>
-      <title>The <guimenuitem>Reset colors to standard</guimenuitem> command</title>
+      <title>The <guimenuitem>Reset colors to standard</guimenuitem> command
+      </title>
       <para>Reset colors to their default values:</para>
       <informaltable>
         <tgroup cols="2">
@@ -113,30 +129,37 @@
 
   <section>
     <title>The <guimenuitem>Character set</guimenuitem> command</title>
-    <para>Here you can choose the character set for displaying and writing characters, either ANSI (the Windows
-    character set) or OEM (the DOS character set). The font size in points can also be chosen.</para>
+    <para>Here you can choose the character set for displaying and writing
+    characters, either ANSI (the Windows character set) or OEM (the DOS
+    character set). The font size in points can also be chosen.</para>
 
-    <para>See <xref linkend="character_tables" /> for examples at the default 10 pt font size.</para>
+    <para>See <xref linkend="character_tables" /> for examples at the default
+    10 pt font size.</para>
   </section>
 
   <section>
     <title>The <guimenuitem>Binary mode</guimenuitem> command</title>
-    <para>What kind of byte order to use: Either Little-endian, as used in Intel-computers or Big-endian,
-    used for example in computers with a Motorola processor. The difference between these modes is thus:
-    Consider a longword, which is 4 bytes (named A to D) long.</para>
+    <para>What kind of byte order to use: Either Little-endian, as used in
+    Intel-computers or Big-endian, used for example in computers with a
+    Motorola processor. The difference between these modes is thus: Consider a
+    longword, which is 4 bytes (named A to D) long.</para>
 
     <screen>Longword in processor register = ABCD.</screen>
 
-    <para>The least significant bit, which has the value 1, is found in byte "D". In a processor
-    register the longword is ordered in this way. If this value is written to a position in memory,
-    then by Intel convention the longword is written in this way, with the growing offsets to the right:</para>
+    <para>The least significant bit, which has the value 1, is found in byte
+    "D". In a processor register the longword is ordered in this way. If this
+    value is written to a position in memory, then by Intel convention the
+    longword is written in this way, with the growing offsets to the right:
+    </para>
 
     <screen>Longword in memory = DCBA.</screen>
 
-    <para>That is, the bytes making up the longword are written in reverse order as they are found in a processor register.</para>
+    <para>That is, the bytes making up the longword are written in reverse
+    order as they are found in a processor register.</para>
 
-    <para>This means that a file written by a Big-endian machine will contain wrong longword and word values
-    if read by a Little-endian machine without conversion.</para>
+    <para>This means that a file written by a Big-endian machine will contain
+    wrong longword and word values if read by a Little-endian machine without
+    conversion.</para>
   </section>
 
   <section>
@@ -161,7 +184,8 @@
                 <para>Enable drop input</para>
               </entry>
               <entry>
-                <para>This allows you to drop data onto Frhed from other programs or other Frhed instances.</para>
+                <para>This allows you to drop data onto Frhed from other
+                programs or other Frhed instances.</para>
               </entry>
             </row>
             <row>
@@ -169,7 +193,8 @@
                 <para>Enable drag output</para>
               </entry>
               <entry>
-                <para>This allows you to drag data from Frhed to other programs or other Frhed instances.</para>
+                <para>This allows you to drag data from Frhed to other programs
+                or other Frhed instances.</para>
               </entry>
             </row>
             <row>
@@ -177,7 +202,11 @@
                 <para>Enable scroll-delaying for drag-drop</para>
               </entry>
               <entry>
-                <para>During a drag-drop operation if you move the mouse near the outside of the window Frhed can either begin scrolling immediately or delay for an interval and then start scrolling. The delay is determined by Windows and if it doesn&apos;t seem to delay scrolling at all you should turn this off.</para>
+                <para>During a drag-drop operation if you move the mouse near
+                the outside of the window Frhed can either begin scrolling
+                immediately or delay for an interval and then start scrolling.
+                The delay is determined by Windows and if it doesn&apos;t seem
+                to delay scrolling at all you should turn this off.</para>
               </entry>
             </row>
             <row>
@@ -185,15 +214,22 @@
                 <para>Enable scroll-delaying for selecting</para>
               </entry>
               <entry>
-                <para>As for drag-drop, but applies to when Frhed is selecting.</para>
+                <para>As for drag-drop, but applies to when Frhed is selecting.
+                </para>
               </entry>
             </row>
             <row>
               <entry>
-                <para>Always give the opportunity to change between move and copy after a drop.</para>
+                <para>Always give the opportunity to change between move and
+                copy after a drop.</para>
               </entry>
               <entry>
-                <para>Normally you Move data with the left mouse button and Copy by combining with Ctrl. If you use the right or middle mouse button a menu will popup on a drop to give you the opportunity to pick move or copy. This option allows you to always have this menu popup even when you use the left mouse button.</para>
+                <para>Normally you Move data with the left mouse button and
+                Copy by combining with Ctrl. If you use the right or middle
+                mouse button a menu will popup on a drop to give you the
+                opportunity to pick move or copy. This option allows you to
+                always have this menu popup even when you use the left mouse
+                button.</para>
               </entry>
             </row>
           </tbody>
@@ -221,7 +257,10 @@
                 <para>CF_HDROP opens the files dropped.</para>
               </entry>
               <entry>
-                <para>When you drop files from explorer normally Frhed will bring up a list of formats to drop. With this enabled Frhed will instead open the file dropped or ask you which file you want to open for multiple files. Overrides the next two.</para>
+                <para>When you drop files from explorer normally Frhed will
+                bring up a list of formats to drop. With this enabled Frhed
+                will instead open the file dropped or ask you which file you
+                want to open for multiple files. Overrides the next two.</para>
               </entry>
             </row>
             <row>
@@ -229,7 +268,9 @@
                 <para>Drop &quot;BinaryData&quot; if present</para>
               </entry>
               <entry>
-                <para>&quot;BinaryData&quot; is used to transfer data between Frhed instances. Check this if you want to automatically drop this when it is present. Overrides CF_TEXT.</para>
+                <para>&quot;BinaryData&quot; is used to transfer data between
+                Frhed instances. Check this if you want to automatically drop
+                this when it is present. Overrides CF_TEXT.</para>
               </entry>
             </row>
             <row>
@@ -237,7 +278,9 @@
                 <para>Drop CF_TEXT if present</para>
               </entry>
               <entry>
-                <para>CF_TEXT is the standard format used for transferring text. Check this if you want to automatically drop this when it is present.</para>
+                <para>CF_TEXT is the standard format used for transferring
+                text. Check this if you want to automatically drop this when it
+                is present.</para>
               </entry>
             </row>
           </tbody>
@@ -265,7 +308,9 @@
                 <para>Drag &quot;BinaryData&quot;</para>
               </entry>
               <entry>
-                <para>&quot;BinaryData&quot; is used to transfer data between Frhed instances. Check this if you want to be able to do this.</para>
+                <para>&quot;BinaryData&quot; is used to transfer data between
+                Frhed instances. Check this if you want to be able to do this.
+                </para>
               </entry>
             </row>
             <row>
@@ -273,7 +318,8 @@
                 <para>Drag CF_TEXT as:</para>
               </entry>
               <entry>
-                <para>CF_TEXT is the standard format used for transferring text. Check this if you want to</para>
+                <para>CF_TEXT is the standard format used for transferring
+                text. Check this if you want to</para>
               </entry>
             </row>
             <row>
@@ -281,7 +327,11 @@
                 <para>Hexdump/Special syntax (&lt;bh:ff&gt;...)</para>
               </entry>
               <entry>
-                <para>Choose Hexdump to output either of the formats output by <menuchoice><guimenu>File</guimenu><guimenuitem>Export as Hexdump</guimenuitem></menuchoice>. Choose Special syntax to output the bytes as Frhed&apos;s <link linkend="special_syntax">special syntax format</link>.</para>
+                <para>Choose Hexdump to output either of the formats output by
+                <menuchoice><guimenu>File</guimenu><guimenuitem>Export as
+                Hexdump</guimenuitem></menuchoice>. Choose Special syntax to
+                output the bytes as Frhed&apos;s <link linkend=
+                "special_syntax">special syntax format</link>.</para>
               </entry>
             </row>
             <row>
@@ -289,7 +339,8 @@
                 <para>display (else digits)</para>
               </entry>
               <entry>
-                <para>Check for a hexdump like the display, uncheck for the bytes as hex on a single line.</para>
+                <para>Check for a hexdump like the display, uncheck for the
+                bytes as hex on a single line.</para>
               </entry>
             </row>
             <row>
@@ -297,7 +348,11 @@
                 <para>Drag &quot;Rich Text Format&quot; (as hexdump)</para>
               </entry>
               <entry>
-                <para>This allows you to drag a full colour hexdump, with bookmarks, separators and selection to wordprocessors such as <ulink url="http://www.openoffice.org">OpenOffice</ulink>, <ulink url="http://www.abisource.com">AbiWord</ulink> and <ulink url="http://www.microsoft.com">MS Word</ulink>.</para>
+                <para>This allows you to drag a full colour hexdump, with
+                bookmarks, separators and selection to wordprocessors such as
+                <ulink url="http://www.openoffice.org">OpenOffice</ulink>,
+                <ulink url="http://www.abisource.com">AbiWord</ulink> and
+                <ulink url="http://www.microsoft.com">MS Word</ulink>.</para>
               </entry>
             </row>
           </tbody>
@@ -308,7 +363,8 @@
 
   <section>
     <title>The <guimenuitem>Make backups</guimenuitem> option</title>
-    <para>When saving first the old file is renamed by appending ".bak" to the name, deleting any previous backup,
-    and then the file is saved as per usual.</para>
+    <para>When saving first the old file is renamed by appending ".bak" to the
+    name, deleting any previous backup, and then the file is saved as per
+    usual.</para>
   </section>
 </article>
