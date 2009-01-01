@@ -32,7 +32,7 @@
 BOOL contextpresent()
 {
 	HKEY key1;
-	LONG res = RegOpenKeyEx(HKEY_CLASSES_ROOT, "*\\shell\\Open in frhed\\command", 0, KEY_ALL_ACCESS, &key1);
+	LONG res = RegOpenKeyEx(HKEY_CLASSES_ROOT, "*\\shell\\Open in Frhed\\command", 0, KEY_ALL_ACCESS, &key1);
 	if (res == ERROR_SUCCESS) //succeeded check if has the required keys & data
 	{
 		char stringval[ _MAX_PATH ];
@@ -53,14 +53,14 @@ BOOL defaultpresent()
 	char stringval[_MAX_PATH];
 	long len = _MAX_PATH;
 	LONG res = RegQueryValue(HKEY_CLASSES_ROOT, "Unknown\\shell", stringval, &len);
-	return res == ERROR_SUCCESS && strcmp(stringval, "Open in frhed") == 0;
+	return res == ERROR_SUCCESS && strcmp(stringval, "Open in Frhed") == 0;
 }
 
 BOOL unknownpresent()
 {
 	HKEY key1;
 	LONG res;
-	res = RegOpenKeyEx( HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in frhed\\command", 0, KEY_ALL_ACCESS, &key1 );
+	res = RegOpenKeyEx( HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in Frhed\\command", 0, KEY_ALL_ACCESS, &key1 );
 	if( res == ERROR_SUCCESS ){//succeeded check if has the required keys & data
 		char stringval[ _MAX_PATH ];
 		char exepath[ _MAX_PATH ];
@@ -167,7 +167,7 @@ BOOL registry_RemoveFrhed(HWND hwnd)
 								&valbufsize);
 					if (typ == REG_SZ && valbuf[0] != 0 && PathIsDirectory(valbuf))
 					{
-						PathAppend(valbuf, _T("frhed.lnk"));
+						PathAppend(valbuf, _T("Frhed.lnk"));
 						_tremove(valbuf);
 					}
 					if (ERROR_NO_MORE_ITEMS == ret)
@@ -182,15 +182,15 @@ BOOL registry_RemoveFrhed(HWND hwnd)
 	if (res)
 	{
 		r0++;
-		res = MessageBox(hwnd, _T("Remove 'Open in frhed' command(s) ?"), _T("Remove Frhed"), MB_YESNO);
+		res = MessageBox(hwnd, _T("Remove 'Open in Frhed' command(s) ?"), _T("Remove Frhed"), MB_YESNO);
 		if (res == IDYES)
 		{
 			r++;
 			//Remove 'Open in frhed' command registry entries
-			RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in frhed\\command")); //WinNT requires the key to have no subkeys
-			RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in frhed"));
-			RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in frhed\\command")); //WinNT requires the key to have no subkeys
-			RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in frhed"));
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed\\command")); //WinNT requires the key to have no subkeys
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed"));
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed\\command")); //WinNT requires the key to have no subkeys
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed"));
 			TCHAR stringval[MAX_PATH];
 			long len = _MAX_PATH;
 			RegQueryValue(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), stringval, &len);
@@ -227,7 +227,7 @@ BOOL registry_RemoveFrhed(HWND hwnd)
 			if (res)
 			{
 				res = MessageBox(hwnd, _T("Registry entries from previous versions of Frhed were found\n")
-					_T("Should they all be removed?"), _T("Remove frhed"), MB_YESNO);
+					_T("Should they all be removed?"), _T("Remove Frhed"), MB_YESNO);
 				if (res == IDYES)
 				{
 					if (ver.dwPlatformId == VER_PLATFORM_WIN32_NT)
@@ -254,8 +254,8 @@ BOOL registry_RemoveFrhed(HWND hwnd)
 	{
 		MessageBox(hwnd,
 			_T("Now all that remains to remove Frhed from this computer is to:\n")
-			_T("1. Quit all other instances of frhed(after turning off \"Save ini...\" in each one)\n")
-			_T("2. Quit this instance of frhed\n")
+			_T("1. Quit all other instances of Frhed(after turning off \"Save ini...\" in each one)\n")
+			_T("2. Quit this instance of Frhed\n")
 			_T("3. Check that the registry data was removed (just in case)\n")
 			_T("4. Delete the directory where Frhed currently resides\n")
 			_T("5. If you have an email account please take the time to\n")

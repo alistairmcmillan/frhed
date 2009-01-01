@@ -154,9 +154,9 @@ BEGIN
         MENUITEM "Is &default in unknown context", IDM_DEFAULT, CHECKED
         MENUITEM "&Save ini when required",     IDM_SAVEINI, CHECKED
         MENUITEM "Change &instance...",         IDM_CHANGEINST
-        MENUITEM "&Remove frhed...",            IDM_REMOVE
+        MENUITEM "&Remove Frhed...",            IDM_REMOVE
         MENUITEM "Up&grade...",                 IDM_UPGRADE
-        MENUITEM "S&hortcuts to frhed...",      IDM_SHORTCUTS
+        MENUITEM "S&hortcuts to Frhed...",      IDM_SHORTCUTS
     END
     POPUP "&Bookmarks"
     BEGIN
@@ -415,11 +415,11 @@ BEGIN
     CONTROL         "Export to clipboard",IDC_HEXDUMP_EXPORTCLIPB,"Button",
                     BS_AUTORADIOBUTTON | WS_TABSTOP,14,92,75,10
     GROUPBOX        "Type:",IDC_STATIC,7,110,103,45,WS_GROUP
-    CONTROL         "frhed display as text",IDC_EXPORTDISPLAY,"Button",
+    CONTROL         "Frhed display as text",IDC_EXPORTDISPLAY,"Button",
                     BS_AUTORADIOBUTTON | WS_GROUP,15,120,78,10
     CONTROL         "Just hex digits on a line",IDC_EXPORTDIGITS,"Button",
                     BS_AUTORADIOBUTTON,15,130,89,10
-    CONTROL         "frhed display as RTF",IDC_EXPORTRTF,"Button",
+    CONTROL         "Frhed display as RTF",IDC_EXPORTRTF,"Button",
                     BS_AUTORADIOBUTTON,15,140,81,10
     DEFPUSHBUTTON   "OK",IDOK,105,70,50,14,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,105,90,50,14
@@ -524,7 +524,7 @@ BEGIN
     LTEXT           "Number of bytes to display per line:",IDC_STATIC,7,7,
                     110,8
     EDITTEXT        IDC_SETTINGS_BYTESPERLINE,7,16,68,12,ES_AUTOHSCROLL
-    CONTROL         "Automatically adjust number of bytes per line (uncheck this if you want frhed to use your own choice for bytes per line)",
+    CONTROL         "Automatically adjust number of bytes per line (uncheck this if you want Frhed to use your own choice for bytes per line)",
                     IDC_SETTINGS_ADJUST_BYTELINE,"Button",BS_AUTOCHECKBOX |
                     BS_MULTILINE | WS_TABSTOP,7,31,234,19
     LTEXT           "Display length of offset in how many characters:",
@@ -740,7 +740,7 @@ BEGIN
     LTEXT           "Clipboard format to use:",IDC_STATIC,5,65,75,8
     LISTBOX         IDC_FPASTE_CFORMAT,5,75,255,35,LBS_NOINTEGRALHEIGHT |
                     WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
-    LTEXT           " - CF_TEXT was used by previous versions of frhed\n - Those starting w CF_ are standard formats && others are registered/private ones\n - Some formats may have been synthesized from the original.",
+    LTEXT           " - CF_TEXT was used by previous versions of Frhed\n - Those starting w CF_ are standard formats && others are registered/private ones\n - Some formats may have been synthesized from the original.",
                     IDC_STATIC,5,115,255,25
     DEFPUSHBUTTON   "OK",IDOK,210,11,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,210,28,50,14
@@ -845,7 +845,7 @@ BEGIN
                     11,15
     DEFPUSHBUTTON   "OK",IDOK,190,5,50,15
     PUSHBUTTON      "Cancel",IDCANCEL,190,25,50,15
-    LTEXT           "Remember that if any instance of frhed is running on the same instance data as this one it will overwrite the data of this one if it exits last.  Unless, that is, that the option to save ini data to the registry on exit is disabled)",
+    LTEXT           "Remember that if any instance of Frhed is running on the same instance data as this one it will overwrite the data of this one if it exits last.  Unless, that is, that the option to save ini data to the registry on exit is disabled)",
                     IDC_STATIC,5,45,235,25
 END
 
@@ -898,11 +898,11 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shortcuts"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "Paths of shortcuts to frhed:",IDC_STATIC,5,5,86,8
-    CONTROL         "Links to frhed",IDC_LIST,"SysListView32",LVS_REPORT | 
+    LTEXT           "Paths of shortcuts to Frhed:",IDC_STATIC,5,5,86,8
+    CONTROL         "Links to Frhed",IDC_LIST,"SysListView32",LVS_REPORT | 
                     LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | WS_TABSTOP,5,15,
                     105,120,WS_EX_CLIENTEDGE
-    PUSHBUTTON      "&Find links to any frhed.exe, fix them and list them here.",
+    PUSHBUTTON      "&Find links to any Frhed.exe, fix them and list them here.",
                     IDC_FIND_AND_FIX,5,140,205,20,BS_CENTER | BS_VCENTER | 
                     BS_MULTILINE
     LTEXT           "Create link in/on:",IDC_STATIC,115,5,55,8

@@ -30,7 +30,7 @@ void TRACE(const char* pszFormat,...)
 {
 #ifdef _DEBUG
 	static BOOL bFirstTime = TRUE;
-	FILE* fp = fopen("frhed.log",bFirstTime?"w":"a");
+	FILE* fp = fopen("Frhed.log",bFirstTime?"w":"a");
 	if(fp)
 	{
 		bFirstTime = FALSE;

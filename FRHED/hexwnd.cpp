@@ -1142,14 +1142,14 @@ void HexEditorWindow::command(int cmd)
 	case IDM_CONTEXT:
 		if (MF_CHECKED == GetMenuState(hMenu, IDM_CONTEXT, 0))
 		{
-			RegDeleteKey(HKEY_CLASSES_ROOT, "*\\shell\\Open in frhed\\command"); //WinNT requires the key to have no subkeys
-			RegDeleteKey(HKEY_CLASSES_ROOT, "*\\shell\\Open in frhed");
+			RegDeleteKey(HKEY_CLASSES_ROOT, "*\\shell\\Open in Frhed\\command"); //WinNT requires the key to have no subkeys
+			RegDeleteKey(HKEY_CLASSES_ROOT, "*\\shell\\Open in Frhed");
 		}
 		else
 		{
 			HKEY key1;
 			LONG res = RegCreateKey(HKEY_CLASSES_ROOT,
-				"*\\shell\\Open in frhed\\command",
+				"*\\shell\\Open in Frhed\\command",
 				&key1);
 			if (res == ERROR_SUCCESS)
 			{
@@ -1163,8 +1163,8 @@ void HexEditorWindow::command(int cmd)
 		if (MF_CHECKED == GetMenuState(hMenu, IDM_UNKNOWN, 0))
 		{
 			HKEY hk;
-			RegDeleteKey(HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in frhed\\command"); //WinNT requires the key to have no subkeys
-			RegDeleteKey(HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in frhed");
+			RegDeleteKey(HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in Frhed\\command"); //WinNT requires the key to have no subkeys
+			RegDeleteKey(HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in Frhed");
 			if (ERROR_SUCCESS == RegOpenKey(HKEY_CLASSES_ROOT, "Unknown\\shell", &hk))
 			{
 				RegDeleteValue(hk, NULL);
@@ -1175,7 +1175,7 @@ void HexEditorWindow::command(int cmd)
 		{
 			HKEY key1;
 			LONG res = RegCreateKey(HKEY_CLASSES_ROOT,
-				"Unknown\\shell\\Open in frhed\\command",
+				"Unknown\\shell\\Open in Frhed\\command",
 				&key1);
 			if (res == ERROR_SUCCESS)
 			{
@@ -1197,7 +1197,7 @@ void HexEditorWindow::command(int cmd)
 		}
 		else
 		{
-			RegSetValue(HKEY_CLASSES_ROOT, "Unknown\\shell", REG_SZ, "Open in frhed", 13);
+			RegSetValue(HKEY_CLASSES_ROOT, "Unknown\\shell", REG_SZ, "Open in Frhed", 13);
 		}
 		break;
 //end
@@ -1517,7 +1517,7 @@ void HexEditorWindow::command(int cmd)
 		{
 			char buf[500];
 			sprintf(buf, "Unknown COMMAND-ID %d.", cmd);
-			MessageBox(hwnd, buf, "frhed ERROR", MB_OK);
+			MessageBox(hwnd, buf, "Frhed ERROR", MB_OK);
 		}
 		break;
 	}
@@ -5395,11 +5395,11 @@ bool HexEditorWindow::load_hexfile(hexfile_stream &hexin)
 	hexin.lhseek(0);
 
 	char msg[150] =
-		"Does this data have the same format as the frhed display?"
+		"Does this data have the same format as the Frhed display?"
 		"\nThis data contains ";
 	strcat(msg, typ ?
-		"characters other than whitespace and hexdigits. (like frhed display)" :
-		"only whitespace and hexdigits. (unlike frhed display)");
+		"characters other than whitespace and hexdigits. (like Frhed display)" :
+		"only whitespace and hexdigits. (unlike Frhed display)");
 
 	switch (MessageBox(hwnd, msg, "Import Hexdump", MB_YESNOCANCEL))
 	{
@@ -6194,7 +6194,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 		"}\n" // \colortbl
 
 		//This is new for RTF 1.7, but it should be ignored by older readers so who cares (older than M$ Word XP = Word 2002??)
-		"{\\*\\generator frhed v"SHARPEN(FRHED_VERSION_3)";}\n"
+		"{\\*\\generator Frhed v"SHARPEN(FRHED_VERSION_4)";}\n"
 
 		//Metadata here too?
 		"{\\info\n"

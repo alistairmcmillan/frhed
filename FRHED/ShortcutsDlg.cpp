@@ -98,7 +98,7 @@ void TraverseFolders::Recurse()
 							fnam - rn);
 					li.iItem++;
 				}
-				strcat(rn,"\\frhed.lnk");//put the name backon
+				strcat(rn,"\\Frhed.lnk");//put the name backon
 				CreateLink(_pgmptr,rn);//create the new link
 			}
 		} while (_findnext(S, &F) == 0);
@@ -125,7 +125,7 @@ BOOL ShortcutsDlg::OnInitDialog(HWND hw)
 	ZeroMemory(&col, sizeof col);
 	col.mask = LVCF_TEXT | LVCF_WIDTH;
 	col.fmt = LVCFMT_LEFT;
-	col.pszText = "link names are \"frhed.lnk\"";
+	col.pszText = "link names are \"Frhed.lnk\"";
 	col.cx = 153;
 	ListView_InsertColumn(GetDlgItem(hw, IDC_LIST), 0, &col);
 	//Load links from the registry
@@ -136,7 +136,7 @@ BOOL ShortcutsDlg::OnInitDialog(HWND hw)
 
 int CALLBACK ShortcutsDlg::BrowseCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 {
-	static const char FrhedLink[] = "frhed.lnk";
+	static const char FrhedLink[] = "Frhed.lnk";
 	//If the folder exists & doesn't contain a link then enabled
 	// Set the status window to the currently selected path.
 	if (m == BFFM_SELCHANGED)
@@ -149,7 +149,7 @@ int CALLBACK ShortcutsDlg::BrowseCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 			if (PathFileExists(szDir))
 			{
 				SendMessage(hw,BFFM_ENABLEOK,0,0);//Disable
-				SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"This folder already contains a file called \"frhed.lnk\"");
+				SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"This folder already contains a file called \"Frhed.lnk\"");
 			}
 			else
 			{
@@ -160,19 +160,19 @@ int CALLBACK ShortcutsDlg::BrowseCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 					_close(fh);
 					remove(szDir);
 					SendMessage(hw,BFFM_ENABLEOK,0,1);//Enable
-					SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"\"frhed.lnk\" can be added to this folder");
+					SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"\"Frhed.lnk\" can be added to this folder");
 				}
 				else
 				{
 					SendMessage(hw,BFFM_ENABLEOK,0,0);//Disable
-					SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"\"frhed.lnk\" cannot be added to this folder");
+					SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"\"Frhed.lnk\" cannot be added to this folder");
 				}
 			}
 		}
 		else
 		{
 			SendMessage(hw,BFFM_ENABLEOK,0,0);//Disable
-			SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"\"frhed.lnk\" cannot be added to this folder");
+			SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"\"Frhed.lnk\" cannot be added to this folder");
 		}
 	}
 	return 0;
@@ -186,14 +186,14 @@ int CALLBACK ShortcutsDlg::SearchCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 		BOOL ret = SHGetPathFromIDList((LPITEMIDLIST) l ,szDir) && PathIsDirectory(szDir);
 		SendMessage(hw, BFFM_ENABLEOK, 0, ret);//Enable/Disable
 		SendMessage(hw, BFFM_SETSTATUSTEXT, 0,
-			(LPARAM)(ret ? "frhed can start searching here" : "frhed cannot start the search from here"));
+			(LPARAM)(ret ? "Frhed can start searching here" : "Frhed cannot start the search from here"));
 	}
 	return 0;
 }
 
 BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 {
-	static const char FrhedLink[] = "frhed.lnk";
+	static const char FrhedLink[] = "Frhed.lnk";
 	switch (LOWORD(w))
 	{
 	case IDCANCEL:
@@ -278,9 +278,9 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				bi.hwndOwner = hw;
 				bi.lpfn = BrowseCallbackProc;
 				if (LOWORD(w) == IDC_ADD)
-					bi.lpszTitle = "Place a link to frhed in...";
+					bi.lpszTitle = "Place a link to Frhed in...";
 				else if (LOWORD(w) == IDC_MOVE)
-					bi.lpszTitle = "Move the link to frhed to...";
+					bi.lpszTitle = "Move the link to Frhed to...";
 
 				pidl = SHBrowseForFolder(&bi);
 				if (pidl)
@@ -402,7 +402,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 		{
 			//Go through the file system searching for links to this exe
 			//-Thanks to Raihan for the traversing code this was based on.
-			if (LOWORD(w) == IDC_FIND_AND_FIX && IDNO == MessageBox(hw,"Existing links to old versions of frhed will be updated to this version\nAre you sure you want to continue","Find & fix",MB_YESNO))
+			if (LOWORD(w) == IDC_FIND_AND_FIX && IDNO == MessageBox(hw,"Existing links to old versions of Frhed will be updated to this version\nAre you sure you want to continue","Find & fix",MB_YESNO))
 				return TRUE;
 			//Find a spot to start from
 			LPMALLOC pMalloc;

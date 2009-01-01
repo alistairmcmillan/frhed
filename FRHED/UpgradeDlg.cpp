@@ -62,7 +62,7 @@ BOOL UpgradeDlg::OnInitDialog(HWND hw)
 	ZeroMemory(&col, sizeof(col));
 	col.mask = LVCF_TEXT|LVCF_WIDTH ;
 	col.fmt = LVCFMT_LEFT;
-	col.pszText = "HKCU\\Software\\frhed";
+	col.pszText = "HKCU\\Software\\Frhed";
 	col.cx = 165;
 	ListView_InsertColumn(list, 0, &col);
 
@@ -725,6 +725,6 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 		}
 		RegCloseKey(hk);
 		//Paint the display box
-		SetDlgItemText(hw, IDC_DISPLAY, "frhed Display");
+		SetDlgItemText(hw, IDC_DISPLAY, "Frhed Display");
 	}
 }
