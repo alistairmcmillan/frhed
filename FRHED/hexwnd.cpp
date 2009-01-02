@@ -614,14 +614,12 @@ int HexEditorWindow::snap_caret()
 // Handler for non-character keys (arrow keys, page up/down etc.)
 void HexEditorWindow::keydown(int key)
 {
-	if (filename[0] == '\0' || iCurByte<0)
-		return;
-
 	//Pabs rewrote the rest of this function
 	//Only handle these
 	switch (key)
 	{
-	case VK_ESCAPE: case VK_LEFT: case VK_RIGHT: case VK_UP: case VK_DOWN:
+	case VK_ESCAPE:
+	case VK_LEFT: case VK_RIGHT: case VK_UP: case VK_DOWN:
 	case VK_PRIOR: case VK_NEXT: case VK_HOME: case VK_END:
 		break;
 	default:
@@ -636,7 +634,7 @@ void HexEditorWindow::keydown(int key)
 	int c;//The original value
 	int sel = bSelected;
 
-	if (shift && !ctrl && key != VK_ESCAPE)
+	if (shift)
 	{
 		a = &iEndOfSelection;
 		if (!bSelected)
@@ -644,62 +642,70 @@ void HexEditorWindow::keydown(int key)
 			iStartOfSelection = iEndOfSelection = c = iCurByte;
 			bSelected = TRUE;
 		}
-		else c = iEndOfSelection;
-	}
-	else if (!bSelecting)
-	{
-		c = iCurByte;
-		if (bSelected)
-		{
-			int iStartOfSelSetting = iStartOfSelection;
-			int iEndOfSelSetting = iEndOfSelection;
-			if (iStartOfSelSetting > iEndOfSelSetting)
-				swap(iStartOfSelSetting, iEndOfSelSetting);
-
-			switch (key)
-			{
-			case VK_ESCAPE:
-				if (dragging)
-					return;
-				ShowCaret(hwnd);
-				// fall through
-			case VK_LEFT:
-			case VK_UP:
-			case VK_PRIOR:
-			case VK_HOME:
-				iCurByte = iStartOfSelSetting;
-				c = iEndOfSelSetting;
-				iCurNibble = 0;
-				break;
-			case VK_RIGHT:
-			case VK_DOWN:
-			case VK_NEXT:
-			case VK_END:
-				iCurByte = iEndOfSelSetting;
-				c = iStartOfSelSetting;
-				iCurNibble = 1;
-				break;
-			}
-		}
-		if (ctrl && shift)
-		{
-			a = &iEndOfSelection;
-			c = iEndOfSelection;
-			bSelected = TRUE;
-		}
 		else
 		{
-			bSelected = FALSE;
-			a = &iCurByte;
+			c = iEndOfSelection;
 		}
 	}
-	else /*if( bSelected && bSelecting )*/
+	if (!shift || ctrl || key == VK_ESCAPE)
 	{
-		a = &iStartOfSelection;
-		c = iStartOfSelection;
-		if (key == VK_ESCAPE)
+		if (!bSelecting)
 		{
-			iStartOfSelection = iEndOfSelection = new_pos;
+			c = iCurByte;
+			if (bSelected)
+			{
+				int iStartOfSelSetting = iGetStartOfSelection();
+				int iEndOfSelSetting = iGetEndOfSelection();
+
+				switch (key)
+				{
+				case VK_ESCAPE:
+					if (dragging)
+						return;
+					ShowCaret(hwnd);
+					// fall through
+				case VK_LEFT:
+				case VK_UP:
+				case VK_PRIOR:
+				case VK_HOME:
+					iCurByte = iStartOfSelSetting;
+					c = iEndOfSelSetting;
+					iCurNibble = 0;
+					break;
+				case VK_RIGHT:
+				case VK_DOWN:
+				case VK_NEXT:
+				case VK_END:
+					iCurByte = iEndOfSelSetting;
+					c = iStartOfSelSetting;
+					iCurNibble = 1;
+					break;
+				}
+			}
+			else
+			{
+				iStartOfSelection = iCurByte;
+			}
+			if (ctrl && shift)
+			{
+				a = &iEndOfSelection;
+				c = iEndOfSelection;
+				bSelected = TRUE;
+			}
+			else
+			{
+				bSelected = FALSE;
+				a = &iCurByte;
+			}
+		}
+		else /*if( bSelected && bSelecting )*/
+		{
+			a = &iStartOfSelection;
+			c = iStartOfSelection;
+			if (key == VK_ESCAPE)
+			{
+				iStartOfSelection = iEndOfSelection = new_pos;
+			}
 		}
 	}
 
@@ -729,35 +735,73 @@ void HexEditorWindow::keydown(int key)
 
 	switch(key)
 	{
-		case VK_LEFT: case VK_UP:  case VK_PRIOR: *a-=b; break;
-		case VK_RIGHT:case VK_DOWN:case VK_NEXT:  *a+=b; break;
-		case VK_HOME:
-			if(ctrl) *a = 0;
-			else *a=*a/iBytesPerLine*iBytesPerLine;
-			iCurNibble = 0;
+	case VK_LEFT: case VK_UP:  case VK_PRIOR:
+		*a -= b;
 		break;
-		case VK_END:
-			if(ctrl) *a = lastbyte;
-			else *a=(*a/iBytesPerLine+1)*iBytesPerLine-1;
-			iCurNibble = 1;
-			break;
+	case VK_RIGHT: case VK_DOWN: case VK_NEXT:
+		*a += b;
+		break;
+	case VK_HOME:
+		if (ctrl)
+			*a = 0;
+		else
+			*a = *a / iBytesPerLine * iBytesPerLine;
+		iCurNibble = 0;
+		break;
+	case VK_END:
+		if (ctrl)
+			*a = lastbyte;
+		else
+			*a = (*a / iBytesPerLine + 1) * iBytesPerLine - 1;
+		iCurNibble = 1;
+		break;
 	}
-
-	if(bSelected){
-		if(lastbyte<0){bSelected=iCurNibble=iCurByte=0;}
-		else{
-			if(iStartOfSelection>lastbyte){iStartOfSelection=lastbyte;iCurNibble=1;}
-			if(iStartOfSelection<0){iStartOfSelection=0;iCurNibble=0;}
-			if(iEndOfSelection>lastbyte){iEndOfSelection=lastbyte;iCurNibble=1;}
-			if(iEndOfSelection<0){iEndOfSelection=0;iCurNibble=0;}
+	if (bSelected)
+	{
+		if (lastbyte < 0)
+		{
+			bSelected = iCurNibble = iCurByte = 0;
 		}
-	} else {
-		if(iCurByte>lastbyte){iCurByte=lastbyte;iCurNibble=1;}
-		if(iCurByte<0){iCurByte=0;iCurNibble=0;}
+		else
+		{
+			if (iStartOfSelection > lastbyte)
+			{
+				iStartOfSelection = lastbyte;
+				iCurNibble = 1;
+			}
+			if (iStartOfSelection < 0)
+			{
+				iStartOfSelection = 0;
+				iCurNibble = 0;
+			}
+			if (iEndOfSelection > lastbyte)
+			{
+				iEndOfSelection = lastbyte;
+				iCurNibble = 1;
+			}
+			if (iEndOfSelection < 0)
+			{
+				iEndOfSelection = 0;
+				iCurNibble = 0;
+			}
+		}
+	}
+	else
+	{
+		if (iCurByte > lastbyte)
+		{
+			iCurByte = lastbyte;
+			iCurNibble = 1;
+		}
+		if (iCurByte < 0)
+		{
+			iCurByte = 0;
+			iCurNibble = 0;
+		}
 	}
 	//repaint from line c to line a
-	if(c!=*a||icn!=iCurNibble||sel!=bSelected){
-
+	if (c != *a || icn != iCurNibble || sel != bSelected)
+	{
 		if (bSelected)
 		{
 			iCurByte = *a;
@@ -4097,6 +4141,7 @@ INT_PTR CALLBACK MultiDropDlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 	{
 	case WM_INITDIALOG:
 		{
+			TranslateDialog(h);
 			SetWindowText(h, "Open");
 			SetDlgItemText(h, 0xFFFF, "Choose a file to open:");
 			SetDlgItemText(h, IDOK, "Open");
@@ -4592,6 +4637,7 @@ INT_PTR CALLBACK TmplDisplayDlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM 
 	switch (iMsg)
 	{
 	case WM_INITDIALOG:
+		TranslateDialog(hDlg);
 		SetDlgItemText(hDlg, IDC_TMPLRESULT_RESULT, (LPCTSTR)lParam);
 		return TRUE;
 
