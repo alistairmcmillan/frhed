@@ -1788,46 +1788,30 @@ void HexEditorWindow::set_wnd_title()
 
 //--------------------------------------------------------------------------------------------
 // Set Caret position.
-void HexEditorWindow::set_caret_pos ()
+void HexEditorWindow::set_caret_pos()
 {
-	set_wnd_title ();
-	if (bSelected)
+	set_wnd_title();
+	int iCaretByte = bSelected ? iEndOfSelection : iCurByte;
+	int iCaretLine = iCaretByte / iBytesPerLine;
+	int x = iMaxOffsetLen + iByteSpace - iHscrollPos;
+	int y = iCaretLine - iVscrollPos;
+	if (y >= 0 && y < cyBuffer && !bSelecting)
 	{
-		SetCaretPos (-cxChar, -cyChar );
-		return;
+		switch (iEnteringMode)
+		{
+		case CHARS:
+			x += iBytesPerLine * 3 + iCharSpace + (iCaretByte % iBytesPerLine);
+			break;
+		case BYTES:
+			x += (iCaretByte % iBytesPerLine) * 3 + iCurNibble;
+			break;
+		}
 	}
-
-	int iCaretLine = iCurByte / iBytesPerLine,
-		iBottomLine = iVscrollPos + cyBuffer - 1;
-
-	switch (iEnteringMode)
+	else
 	{
-	case CHARS:
-		if (iCaretLine >= iVscrollPos && iCaretLine <= iBottomLine && filename[0] != '\0')
-		{
-			int y = iCaretLine - iVscrollPos;
-//Pabs replaced "iOffsetLen" with "iMaxOffsetLen"
-			int x = iMaxOffsetLen+iByteSpace+iBytesPerLine*3+iCharSpace
-//end
-				- iHscrollPos + (iCurByte%iBytesPerLine);
-			SetCaretPos ( x*cxChar, y*cyChar );
-		}
-		else
-			SetCaretPos ( -cxChar, -cyChar );
-		break;
-	case BYTES:
-		// If caret in vertical visible area...
-		if (iCaretLine >= iVscrollPos && iCaretLine <= iBottomLine && filename[0] != '\0')
-		{
-			int y = iCaretLine - iVscrollPos;
-//Pabs replaced "iOffsetLen" with "iMaxOffsetLen"
-			int x = iMaxOffsetLen+iByteSpace + (iCurByte%iBytesPerLine)*3 - iHscrollPos + iCurNibble;
-//end
-			SetCaretPos ( x*cxChar, y*cyChar );
-		}
-		else
-			SetCaretPos ( -cxChar, -cyChar );
+		x = y = -1;
 	}
+	SetCaretPos(x * cxChar, y * cyChar);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2451,6 +2435,7 @@ int HexEditorWindow::lbuttonup (int xPos, int yPos)
 	//dragging = false;
 
 	bSelecting = FALSE;
+	set_caret_pos();
 
 	return 0;
 }
