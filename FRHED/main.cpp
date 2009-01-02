@@ -34,7 +34,6 @@
 
 static const char szMainClass[] = "frhed wndclass";
 static const char szHexClassA[] = "hekseditA_" SHARPEN(FRHED_VERSION_4);
-static const char szHexClassW[] = "hekseditW_" SHARPEN(FRHED_VERSION_4);
 
 HINSTANCE hMainInstance;
 
@@ -52,15 +51,12 @@ static BOOL NTAPI IsNT()
 
 static BOOL CALLBACK WndEnumProcCountInstances(HWND hwnd, LPARAM lParam)
 {
-	char buf[64];
-	if (GetClassName(hwnd, buf, 64) != 0)
-		if (strcmp(buf, szMainClass) == 0)
+	TCHAR buf[64];
+	if (GetClassName(hwnd, buf, RTL_NUMBER_OF(buf)))
+		if (StrCmp(buf, szMainClass) == 0)
 			++*(int *)lParam;
 	return TRUE;
 }
-
-//--------------------------------------------------------------------------------------------
-// WinMain: the starting point.
 
 static HWND hwndMain = 0;
 static HWND hwndHex = 0;
@@ -68,13 +64,23 @@ static HWND hwndToolBar = 0;
 static HWND hwndStatusBar = 0;
 static HexEditorWindow *pHexWnd = 0;
 
+//--------------------------------------------------------------------------------------------
+// WinMain: the starting point.
 int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *szCmdLine, int)
 {
 	OleInitialize(NULL);
 	InitCommonControls();
 
-	hMainInstance = LoadLibrary("heksedit.dll");
-
+	// Load the heksedit component.
+	static const TCHAR pe_heksedit[] = _T("heksedit.dll");
+	hMainInstance = LoadLibrary(pe_heksedit);
+	if (hMainInstance == NULL)
+	{
+		TCHAR complain[100];
+		wsprintf(complain, _T("Unable to load the %s"), pe_heksedit);
+		MessageBox(NULL, complain, NULL, MB_ICONSTOP);
+		return 3;
+	}
 	// Register window class and open window.
 
 	MSG msg;
@@ -99,6 +105,12 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *szCmdLine, int)
 	CreateWindow(szMainClass, 0, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
 		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 		NULL, NULL, hMainInstance, NULL);
+
+	if (!pHexWnd)
+	{
+		MessageBox(NULL, _T("Unable to create the heksedit control"), NULL, MB_ICONSTOP);
+		return 3;
+	}
 
 	// Read in the last saved preferences.
 	pHexWnd->iInstCount = iInstCount;
@@ -215,12 +227,12 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		hwndToolBar = CreateTBar(hwnd, hMainInstance);
 		SendMessage(hwndToolBar, CCM_SETUNICODEFORMAT, TRUE, 0);
 		hwndHex = CreateWindowEx(WS_EX_CLIENTEDGE,
-// Using widechar class name causes a startup crash now, work around it by using ANSI name
-//			IsNT() ? szHexClassW : szHexClassA, 0,
 			szHexClassA, 0,
 			WS_TABSTOP | WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL,
 			10, 10, 100, 100, hwnd, 0, hMainInstance, 0);
 		pHexWnd = (HexEditorWindow *)GetWindowLong(hwndHex, GWL_USERDATA);
+		if (!pHexWnd)
+			return -1;
 		hwndStatusBar = CreateStatusWindow(
 			CCS_BOTTOM | WS_CHILD | WS_VISIBLE | SBARS_SIZEGRIP,
 			"Ready", hwnd, 2);
@@ -236,7 +248,7 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		// Exit command must be handled in Frhed executable,
 		// not in heksedit dll.
 		if (LOWORD(wParam) == IDM_EXIT)
-			SendMessage (hwnd, WM_CLOSE, 0, 0);
+			SendMessage(hwnd, WM_CLOSE, 0, 0);
 		else
 			pHexWnd->command(LOWORD(wParam));
 		break;
@@ -305,6 +317,7 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case WM_DESTROY:
+		if (pHexWnd)
 		{
 			// Store window position for next startup.
 			WINDOWPLACEMENT wndpl;
