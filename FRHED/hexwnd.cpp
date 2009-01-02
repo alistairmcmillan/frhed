@@ -48,8 +48,6 @@
 #include "ids.h"
 #include "ido.h"
 
-static int MenuGetPosFromID(HMENU hMenu, DWORD id);
-
 //CF_RTF defined in Richedit.h, but we don't include it cause that would be overkill
 #ifndef CF_RTF
 	#define CF_RTF TEXT("Rich Text Format")
@@ -76,29 +74,6 @@ TCHAR HexEditorWindow::EncodeDlls[MAX_PATH] = _T("FRHEXDES.DLL;FRHEDX.DLL");
 //Temporary stuff for CMD_move_copy
 int iMovePos;
 OPTYP iMoveOpTyp;
-
-/**
- * @brief Get menuitem's position from ID.
- * This is a helper function to get a menuitem position in the menu when
- * the menu ID is known.
- * @param [in] hMenu Handle to the menu.
- * @param [in] id Menu ID to find.
- * @return Menuitem position or -1 if the menu ID is not found.
- */
-static int MenuGetPosFromID(HMENU hMenu, DWORD id)
-{
-	const int count = GetMenuItemCount(hMenu);
-	for (int i = 0; i < count; i++)
-	{
-		MENUITEMINFO mi;
-		mi.cbSize = sizeof(MENUITEMINFO);
-		mi.fMask = MIIM_ID;
-		GetMenuItemInfo(hMenu, i, TRUE, &mi);
-		if (mi.wID == id)
-			return i;
-	}
-	return -1;
-}
 
 //--------------------------------------------------------------------------------------------
 HexEditorWindow::HexEditorWindow()
@@ -3948,25 +3923,24 @@ void HexEditorWindow::update_MRU()
  */
 void HexEditorWindow::make_MRU_list(HMENU menu)
 {
-	const int insertPos = MenuGetPosFromID(menu, IDM_MRU1);
-
-	// Remove MRU placeholder items
-	for (UINT id = IDM_MRU1; id <= IDM_MRU9; ++id)
-		DeleteMenu(menu, id, MF_BYCOMMAND);
-
-	if (iMRU_count == 0)
+	// Remove MRU placeholder items and preceding separator
+	int j = GetMenuItemCount(menu) - 2; // index of last MRU item if present
+	while (j > 0)
 	{
-		// If there are no MRU items, remove one separator so that there
-		// won't be two separators and no items between them.
-		DeleteMenu(menu, insertPos - 1, MF_BYPOSITION);
+		UINT id = GetMenuItemID(menu, --j);
+		if (id >= IDM_MRU1 && id <= IDM_MRU9 || id == 0)
+			RemoveMenu(menu, j, MF_BYPOSITION);
+		else
+			break;
 	}
-	else if (iMRU_count > 0)
+	if (iMRU_count > 0)
 	{
-		char buf[_MAX_PATH + 1 + 30] = {0};
+		InsertMenu(menu, ++j, MF_SEPARATOR | MF_BYPOSITION, 0, 0);
 		for (int i = 0 ; i < iMRU_count ; i++)
 		{
-			_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "&%d %s", i + 1, strMRU[i]);
-			InsertMenu(menu, insertPos + i, MF_BYPOSITION, IDM_MRU1 + i, buf);
+			TCHAR buf[MAX_PATH + 1 + 30];
+			_stprintf(buf, _T("&%d %s"), i + 1, strMRU[i]);
+			InsertMenu(menu, ++j, MF_STRING | MF_BYPOSITION, IDM_MRU1 + i, buf);
 		}
 	}
 }
