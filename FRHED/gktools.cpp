@@ -217,7 +217,7 @@ INT_PTR OpenDriveDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 					delete Drive;
 				}
 			}
-			HWND hListbox = GetDlgItem(hDlg, IDC_LIST1);
+			HWND hListbox = GetDlgItem(hDlg, IDC_DRIVE_LIST);
 			LIST_ENTRY *Flink = &PartitionInfoList;
 			while ((Flink = Flink->Flink) != &PartitionInfoList)
 			{
@@ -234,7 +234,7 @@ INT_PTR OpenDriveDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 		{
 		case IDOK:
 			{
-				HWND hListbox = GetDlgItem(hDlg, IDC_LIST1);
+				HWND hListbox = GetDlgItem(hDlg, IDC_DRIVE_LIST);
 				int nCurSel = SendMessage(hListbox, LB_GETCURSEL, 0, 0);
 				if (nCurSel < 0)
 					return TRUE;
@@ -276,7 +276,7 @@ INT_PTR GotoTrackDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 			CHAR szTempBuffer[10240];
 
 			sprintf(szTempBuffer, "%I64d", CurrentSectorNumber);
-			SetDlgItemText(hDlg, IDC_EDIT1, szTempBuffer);
+			SetDlgItemText(hDlg, IDC_DRIVE_TRACK, szTempBuffer);
 
 			DISK_GEOMETRY dg;
 			Drive->GetDriveGeometry(&dg);
@@ -300,7 +300,7 @@ INT_PTR GotoTrackDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 				dg.BytesPerSector,
 				TotalSizeInBytes);
 
-			SetDlgItemText(hDlg, IDC_EDIT3, szTempBuffer);
+			SetDlgItemText(hDlg, IDC_DRIVE_INFO, szTempBuffer);
 		}
 		return FALSE;
 
@@ -310,7 +310,7 @@ INT_PTR GotoTrackDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 		case IDOK:
 			{
 				CHAR szBuffer[256];
-				GetDlgItemText(hDlg,IDC_EDIT1, szBuffer, sizeof(szBuffer) );
+				GetDlgItemText(hDlg, IDC_DRIVE_TRACK, szBuffer, sizeof(szBuffer));
 
 				INT64 TempCurrentSectorNumber = 0;
 				sscanf(szBuffer, "%I64d", &TempCurrentSectorNumber);
