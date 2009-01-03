@@ -14,7 +14,7 @@
 4) 115</screen>
     <para>The numbering starts at zero. At each list index there is a number,
     for example the number 9 is at index &quot;2&quot;. The index is usually
-    called &quot;offset&quot;. frhed displays the current offset in the lower
+    called &quot;offset&quot;. Frhed displays the current offset in the lower
     left corner of it&apos;s window. Large files contain many numbers, small
     files not so many. The numbers in the list can have a value between 0 and
     255, for a special reason: Each number is a &quot;byte&quot;.</para>

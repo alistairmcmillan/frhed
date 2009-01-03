@@ -106,7 +106,7 @@
     </itemizedlist>
     
     <para>If you work only with the registry, however, you have much more
-    control over your options and by exporting the HKCU\Software\frhed key
+    control over your options and by exporting the HKCU\Software\Frhed key
     to a &quot;.reg&quot; file, deleting the key, editing the file and
     importing it back into the registry you can combine options from several
     previous versions.  It is recommended that you use the upgrade dialog or
@@ -144,7 +144,7 @@
     </orderedlist>
     
     <para>The paths of these are read from the registry and should always point to the correct path.
-    The paths of the links (without names) are stored in the registry under HKCU\Software\frhed\<replaceable>&lt;current version&gt;</replaceable>\links.
+    The paths of the links (without names) are stored in the registry under HKCU\Software\Frhed\<replaceable>&lt;current version&gt;</replaceable>\links.
     All values in this key that contain strings are loaded into the list of links after being verified and or updated.</para>
     
     <para>Note that:</para>

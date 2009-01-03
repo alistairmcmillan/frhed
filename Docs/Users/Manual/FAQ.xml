@@ -29,8 +29,8 @@
         <para>Uncheck the following: <menuchoice><guimenu>Registry</guimenu><guimenuitem>In all context menu</guimenuitem>
         </menuchoice>, <menuchoice><guimenu>Registry</guimenu><guimenuitem>Is default in unknown context</guimenuitem></menuchoice>
         &amp; <menuchoice><guimenu>Registry</guimenu><guimenuitem>In unknown context menu</guimenuitem></menuchoice>.
-        Or edit the registry - Delete HKCR\*\shell\Open in frhed\,
-        HKCR\Unknown\shell\Open in frhed\ &amp; the "(Default)" values under their parent keys.</para>
+        Or edit the registry - Delete HKCR\*\shell\Open in Frhed\,
+        HKCR\Unknown\shell\Open in Frhed\ &amp; the "(Default)" values under their parent keys.</para>
       </answer>
     </qandaentry>
 
