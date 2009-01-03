@@ -833,13 +833,13 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "Load the following instance data:",IDC_STATIC,5,5,105,
                     15,SS_CENTERIMAGE
-    EDITTEXT        IDC_EDIT1,150,5,25,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_CHINST_INSTANCE,150,5,25,15,ES_AUTOHSCROLL
     CONTROL         "Spin1",IDC_LINST,"msctls_updown32",UDS_SETBUDDYINT | 
                     UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,175,5,11,
                     15
     LTEXT           "and save (when quiting) to this instance data:",
                     IDC_STATIC,5,25,144,15,SS_CENTERIMAGE
-    EDITTEXT        IDC_EDIT0,150,25,25,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_CHINST_NEWINSTANCE,150,25,25,15,ES_AUTOHSCROLL
     CONTROL         "Spin1",IDC_SINST,"msctls_updown32",UDS_SETBUDDYINT | 
                     UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,175,25,
                     11,15

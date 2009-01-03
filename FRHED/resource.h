@@ -319,6 +319,8 @@
 #define IDC_TMPLRESULT_RESULT           403
 #define IDC_REVERSE_OFFSET              404
 #define IDC_REVERSE_OFFSETEND           405
+#define IDC_CHINST_INSTANCE             406
+#define IDC_CHINST_NEWINSTANCE          407
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
