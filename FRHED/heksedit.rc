@@ -1061,6 +1061,17 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,85,85,55,20
 END
 
+IDD_MULTIDND_DIALOG DIALOGEX 0, 0, 209, 167
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Multiple files dropped"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "Select the file to open:",IDC_STATIC,7,7,84,8
+    LISTBOX         IDC_DROPPED_FILES,7,17,195,123,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "Open",IDOK,51,146,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,109,146,50,14
+END
 
 /////////////////////////////////////////////////////////////////////////////
 //

@@ -4124,10 +4124,7 @@ INT_PTR CALLBACK MultiDropDlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 	case WM_INITDIALOG:
 		{
 			TranslateDialog(h);
-			SetWindowText(h, "Open");
-			SetDlgItemText(h, 0xFFFF, "Choose a file to open:");
-			SetDlgItemText(h, IDOK, "Open");
-			HWND hwndList = GetDlgItem(h, IDC_LIST1);
+			HWND hwndList = GetDlgItem(h, IDC_DROPPED_FILES);
 			SetWindowLong(hwndList, GWL_STYLE, GetWindowLong(hwndList,GWL_STYLE) & ~LBS_SORT | WS_HSCROLL);
 
 			char file[_MAX_PATH + 1];
@@ -4145,10 +4142,10 @@ INT_PTR CALLBACK MultiDropDlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 		switch (w)
 		{
 		case IDOK:
-			EndDialog(h, SendDlgItemMessage(h, IDC_LIST1, LB_GETCURSEL, 0, 0));
+			EndDialog(h, SendDlgItemMessage(h, IDC_DROPPED_FILES, LB_GETCURSEL, 0, 0));
 			return TRUE;
 		case IDCANCEL:
-			EndDialog(h, SendDlgItemMessage(h, IDC_LIST1, LB_GETCOUNT, 0, 0));
+			EndDialog(h, SendDlgItemMessage(h, IDC_DROPPED_FILES, LB_GETCOUNT, 0, 0));
 			return TRUE;
 		}
 		break;
@@ -4168,7 +4165,7 @@ void HexEditorWindow::dropfiles(HDROP hDrop)
 	UINT i = 0;
 	if (numfiles > 1)
 	{
-		i = ShowModalDialog(IDD_REMOVEBMK_DIALOG, hwnd, MultiDropDlgProc, hDrop);
+		i = ShowModalDialog(IDD_MULTIDND_DIALOG, hwnd, MultiDropDlgProc, hDrop);
 		if (i >= numfiles)
 		{
 			DragFinish(hDrop);

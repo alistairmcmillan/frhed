@@ -9,7 +9,7 @@
 #define IDR_CONTEXTMENU                 104
 #define IDD_REVERSE_BYTES_DIALOG        105
 #define IDD_GOTODIALOG                  106
-#define IDD_DIALOG2                     107
+#define IDD_MULTIDND_DIALOG             107
 #define IDD_FINDDIALOG                  108
 #define IDI_FRHED                       109
 #define IDD_DIALOG3                     110
@@ -330,6 +330,7 @@
 #define IDC_ENCODE_ARGS                 414
 #define IDC_ENCODE_ENC                  415
 #define IDC_ENCODE_DEC                  416
+#define IDC_DROPPED_FILES               417
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
