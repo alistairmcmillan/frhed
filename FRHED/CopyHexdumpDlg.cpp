@@ -72,7 +72,7 @@ BOOL CopyHexdumpDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			GetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET2, buf, 16) &&
 			sscanf(buf, "%x", &iCopyHexdumpDlgEnd))
 		{
-			iCopyHexdumpMode = IsDlgButtonChecked(hDlg, IDC_RADIO2);
+			iCopyHexdumpMode = IsDlgButtonChecked(hDlg, IDC_HEXDUMP_EXPORTCLIPB);
 //Pabs changed - line insert
 			if (IsDlgButtonChecked(hDlg, IDC_EXPORTDISPLAY))
 				iCopyHexdumpType = IDC_EXPORTDISPLAY;
