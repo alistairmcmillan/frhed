@@ -899,9 +899,9 @@ CAPTION "Shortcuts"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "Paths of shortcuts to Frhed:",IDC_STATIC,5,5,86,8
-    CONTROL         "Links to Frhed",IDC_LIST,"SysListView32",LVS_REPORT | 
-                    LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | WS_TABSTOP,5,15,
-                    105,120,WS_EX_CLIENTEDGE
+    CONTROL         "Links to Frhed",IDC_SHORTCUT_LINKS,"SysListView32",
+                    LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER |
+                    WS_TABSTOP,5,15,105,120,WS_EX_CLIENTEDGE
     PUSHBUTTON      "&Find links to any Frhed.exe, fix them and list them here.",
                     IDC_FIND_AND_FIX,5,140,205,20,BS_CENTER | BS_VCENTER | 
                     BS_MULTILINE

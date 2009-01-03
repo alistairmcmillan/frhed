@@ -127,7 +127,7 @@ BOOL ShortcutsDlg::OnInitDialog(HWND hw)
 	col.fmt = LVCFMT_LEFT;
 	col.pszText = "link names are \"Frhed.lnk\"";
 	col.cx = 153;
-	ListView_InsertColumn(GetDlgItem(hw, IDC_LIST), 0, &col);
+	ListView_InsertColumn(GetDlgItem(hw, IDC_SHORTCUT_LINKS), 0, &col);
 	//Load links from the registry
 	//Tricky-tricky
 	SendMessage(hw, WM_COMMAND, MAKEWPARAM(IDC_RELOAD, BN_CLICKED), (LPARAM)GetDlgItem(hw,IDC_RELOAD));
@@ -210,7 +210,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			{
 				char valnam[50] = {0};//value name
 				char buf[_MAX_PATH + 1] = {0};//location of the link (all links named frhed.lnk)
-				HWND list = GetDlgItem (hw, IDC_LIST);//get the list
+				HWND list = GetDlgItem (hw, IDC_SHORTCUT_LINKS);//get the list
 				int num = ListView_GetItemCount(list);//get the # items in the list
 				int len;
 				for (int i = 0; i < num; i++)
@@ -247,7 +247,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			CHAR szDir[MAX_PATH] = {0};
 			LPITEMIDLIST pidl;
 			LPMALLOC pMalloc;
-			HWND list = GetDlgItem(hw,IDC_LIST);
+			HWND list = GetDlgItem(hw, IDC_SHORTCUT_LINKS);
 			int di = -1;
 			HKEY hk;
 
@@ -425,7 +425,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 					{
 						WaitCursor wc;//Wait until finished
 						_chdir(szDir);//Set the dir to start searching in
-						TraverseFolders tf = GetDlgItem(hw, IDC_LIST);//Set the list hwnd;
+						TraverseFolders tf = GetDlgItem(hw, IDC_SHORTCUT_LINKS);//Set the list hwnd;
 						tf.cr = LOWORD(w) == IDC_FIND_AND_FIX;//any frhed.exe if 1 else _pgmptr
 						tf.Recurse();//Search
 					}
@@ -440,7 +440,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			TCHAR keyname[64] = {0};
 			_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
 					OptionsRegistrySettingsPath);
-			HWND list = GetDlgItem (hw, IDC_LIST);//get the list
+			HWND list = GetDlgItem (hw, IDC_SHORTCUT_LINKS);//get the list
 			//Delete the selected links from the registry & the filesystem
 			int di = ListView_GetSelectedCount(list);
 			if (di == 0)
@@ -499,7 +499,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			DWORD valnamsize = _MAX_PATH + 1, typ;
 			char valbuf[_MAX_PATH + 1] = {0};
 			DWORD valbufsize = _MAX_PATH + 1, ret;
-			HWND list = GetDlgItem(hw,IDC_LIST);
+			HWND list = GetDlgItem(hw, IDC_SHORTCUT_LINKS);
 			//Delete list
 			ListView_DeleteAllItems(list);
 			LVITEM item;
@@ -566,7 +566,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				}
 				RegCloseKey(hk);
 
-				HWND list = GetDlgItem(hw,IDC_LIST);
+				HWND list = GetDlgItem(hw, IDC_SHORTCUT_LINKS);
 				int num = ListView_GetItemCount(list);//get the # items in the list
 				int done = 0;
 				char path[_MAX_PATH + 1]= {0};
@@ -627,7 +627,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 BOOL ShortcutsDlg::OnNotify(HWND hw, WPARAM w, LPARAM l)
 {
 	NMLVKEYDOWN *nmh = ((NMLVKEYDOWN*)l);
-	if (nmh->hdr.idFrom == IDC_LIST &&
+	if (nmh->hdr.idFrom == IDC_SHORTCUT_LINKS &&
 		nmh->hdr.code == LVN_KEYDOWN &&
 		nmh->wVKey == VK_DELETE)
 	{
