@@ -48,6 +48,8 @@
 #include "ids.h"
 #include "ido.h"
 
+static void EnableToolbarButton(HWND toolbar, int ID, BOOL bEnable);
+
 //CF_RTF defined in Richedit.h, but we don't include it cause that would be overkill
 #ifndef CF_RTF
 	#define CF_RTF TEXT("Rich Text Format")
@@ -2134,6 +2136,11 @@ void HexEditorWindow::adjust_view_for_caret()
 //end
 }
 
+/**
+ * @brief Determine if menuitem will be enabled or disabled.
+ * @param [in] id Resource ID of the menuitem.
+ * @return TRUE if menuitem is enabled, FALSE otherwise.
+ */
 BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 {
 	switch (id)
@@ -2152,7 +2159,8 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 		// "Toggle entering mode" is allowed if read-only is disabled.
 	case IDM_PASTE_WITH_DLG:
 		// "Paste with dialogue" is allowed if read-only is disabled
-		return !bReadOnly;
+		// All kinds of editing disabled for drives
+		return !bReadOnly && Drive == 0;
 	case IDM_COPY_HEXDUMP:
 	case IDM_SAVESELAS:
 	case IDM_SELECT_ALL:
@@ -2179,6 +2187,9 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 		// "Cut" is allowed if there is a selection or the caret is on a byte.
 		// It is not allowed in read-only mode.
 	case IDA_DELETEKEY:
+		// No editing of drives
+		if (Drive != 0)
+			return FALSE;
 		// "Delete" is allowed if there is a selection or the caret is on a byte.
 		// It is not allowed in read-only mode.
 		return (bSelected || iCurByte < DataArray.GetLength()) && !bReadOnly;
@@ -2186,6 +2197,9 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 		// "Copy" is allowed if there is a selection or the caret is on a byte.
 		return bSelected || iCurByte < DataArray.GetLength();
 	case IDM_EDIT_PASTE:
+		// No editing of drives
+		if (Drive != 0)
+			return FALSE;
 		// "Paste" is allowed if the clipboard contains text,
 		// there is no selection going on and read-only is disabled.
 		id = 0;
@@ -2196,6 +2210,9 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 		}
 		return id != 0;
 	case IDM_EDIT_APPEND:
+		// No editing of drives
+		if (Drive != 0)
+			return FALSE;
 		// "Append" is allowed if read-only is disabled
 		// and there is no selection going on.
 		return !bReadOnly && !bSelected;
@@ -2203,6 +2220,9 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 		//"Fill with" is allowed if the file is not empty and read-only is disabled.
 		//If there is no selection the whole file is filled
 	case IDM_REPLACE:
+		// No editing of drives
+		if (Drive != 0)
+			return FALSE;
 		// "Replace" is allowed if the file is not empty and read-only is disabled.
 		return DataArray.GetLength() && !bReadOnly;
 	case IDM_FINDNEXT:
@@ -2215,6 +2235,9 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 		// "Enter decimal value" is allowed if read-only is disabled, the file is not empty,
 		// the caret is on a byte and there is no selection going on.
 	case IDM_EDIT_MANIPULATEBITS:
+		// No editing of drives
+		if (Drive != 0)
+			return FALSE;
 		// "Manipulate bits" is allowed if the caret is on a byte, read-only is disabled
 		// and there is no selection going on.
 		return !bReadOnly && iCurByte < DataArray.GetLength() && !bSelected;
@@ -2242,6 +2265,12 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 	case IDM_CLEARALL_BMK:
 		// "Remove bookmark" and "Clear all bookmarks" are allowed if there are bookmarks set.
 		return iBmkCount > 0;
+	case IDM_EDIT_READONLYMODE:
+		// No editing of drives
+		return (Drive == 0);
+	case IDM_SAVE:
+		// Definitely no saving for drives!
+		return (Drive == 0);
 	}
 	return TRUE;
 }
@@ -6493,19 +6522,37 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 	return s.Relinquish();
 }
 
+/**
+ * @brief Enable/disable toolbar button.
+ * @param [in] toolbar Resource handle to toolbar to modify.
+ * @param [in] ID Resource id of button to enable/disable.
+ * @param [in] bEnable If TRUE button will be enabled,
+ *   if FALSE button will be disabled.
+ */
+static void EnableToolbarButton(HWND toolbar, int ID, BOOL bEnable)
+{
+	int iCurrentFlags = (int)SendMessage(toolbar, TB_GETSTATE, ID, 0L);
+	if (bEnable)
+		iCurrentFlags |= TBSTATE_ENABLED;
+	else
+		iCurrentFlags &= ~TBSTATE_ENABLED;
+	SendMessage(toolbar, TB_SETSTATE, ID, MAKELPARAM(iCurrentFlags, 0));
+}
+
+/**
+ * @brief Switch toolbar buttons between file/disk editing modes.
+ * @param [in] bEnable If TRUE enable disk editing mode,
+ *   if FALSE enable file editing mode.
+ */
 void HexEditorWindow::EnableDriveButtons(BOOL bEnable)
 {
-	int IDS[] = { ID_DISK_GOTOFIRSTTRACK, ID_DISK_GOTONEXTTRACK, ID_DISK_GOTOPREVIOUSTRACK, ID_DISK_GOTOLASTTRACK, -1 };
+	const int IDS[] = { ID_DISK_GOTOFIRSTTRACK, ID_DISK_GOTONEXTTRACK,
+			ID_DISK_GOTOPREVIOUSTRACK, ID_DISK_GOTOLASTTRACK, -1 };
+	const int IDS_ToDisable[] = { IDM_EDIT_PASTE, IDM_EDIT_CUT, IDM_REPLACE,
+			IDM_SAVE, -1 };
 
-	for( int i = 0; IDS[i] != -1; i++ )
-	{
-		int iCurrentFlags = (int)SendMessage(hwndToolBar, TB_GETSTATE, IDS[i], 0L);
-
-		if( bEnable )
-			iCurrentFlags |= TBSTATE_ENABLED;
-		else
-			iCurrentFlags &= ~TBSTATE_ENABLED;
-
-		SendMessage(hwndToolBar, TB_SETSTATE, IDS[i], MAKELPARAM(iCurrentFlags, 0));
-	}
+	for (int i = 0; IDS[i] != -1; i++)
+		EnableToolbarButton(hwndToolBar, IDS[i], TRUE);
+	for (int i = 0; IDS_ToDisable[i] != -1; i++)
+		EnableToolbarButton(hwndToolBar, IDS_ToDisable[i], FALSE);
 }
