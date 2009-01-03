@@ -326,6 +326,10 @@
 #define IDC_DRIVE_TRACK                 410
 #define IDC_SHORTCUT_LINKS              411
 #define IDC_DAND_LIST                   412
+#define IDC_ENCODE_LIST                 413
+#define IDC_ENCODE_ARGS                 414
+#define IDC_ENCODE_ENC                  415
+#define IDC_ENCODE_DEC                  416
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076

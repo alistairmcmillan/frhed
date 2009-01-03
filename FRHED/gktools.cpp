@@ -141,7 +141,7 @@ INT_PTR EncodeDecodeDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 		{
 			SimpleString buffer((LPSTR)(LPCSTR)EncodeDlls);
 			LPCSTR lpszToken = strtok(buffer, ";");
-			HWND hListbox = GetDlgItem(hDlg,IDC_LIST1);
+			HWND hListbox = GetDlgItem(hDlg, IDC_ENCODE_LIST);
 			AddEncoders(hListbox, BuiltinEncoders);
 			while (lpszToken)
 			{
@@ -159,7 +159,7 @@ INT_PTR EncodeDecodeDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 				lpszToken = strtok(0, ";");
 			}
 			SendMessage(hListbox, LB_SETCURSEL, 0, 0);
-			CheckDlgButton(hDlg, IDC_RADIO1, BST_CHECKED);
+			CheckDlgButton(hDlg, IDC_ENCODE_ENC, BST_CHECKED);
 		}
 		return TRUE;
 
@@ -170,10 +170,10 @@ INT_PTR EncodeDecodeDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			{
 				MEMORY_CODING mc;
 				CHAR szBuffer[1024];
-				GetDlgItemText(hDlg, IDC_EDIT1, szBuffer, sizeof(szBuffer));
-				mc.bEncode = IsDlgButtonChecked(hDlg, IDC_RADIO1);
+				GetDlgItemText(hDlg, IDC_ENCODE_ARGS, szBuffer, sizeof(szBuffer));
+				mc.bEncode = IsDlgButtonChecked(hDlg, IDC_ENCODE_ENC);
 				mc.lpszArguments = szBuffer;
-				HWND hListbox = GetDlgItem(hDlg,IDC_LIST1);
+				HWND hListbox = GetDlgItem(hDlg, IDC_ENCODE_LIST);
 				int nCurSel = SendMessage(hListbox, LB_GETCURSEL, 0, 0);
 				if (nCurSel < 0)
 					return TRUE;
