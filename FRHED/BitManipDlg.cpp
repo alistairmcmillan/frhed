@@ -100,7 +100,7 @@ INT_PTR BitManipDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case IDOK:
 		case IDC_MANIPBITS_BIT1: case IDC_MANIPBITS_BIT2: case IDC_MANIPBITS_BIT3:
 		case IDC_MANIPBITS_BIT4: case IDC_MANIPBITS_BIT5: case IDC_MANIPBITS_BIT6:
-		case IDC_MANIPBITS_BIT7: case IDC_CHECK8:
+		case IDC_MANIPBITS_BIT7: case IDC_MANIPBITS_BIT8:
 			if (Apply(hDlg, wParam))
 			{
 			case IDCANCEL:
