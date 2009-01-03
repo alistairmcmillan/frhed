@@ -6552,7 +6552,7 @@ void HexEditorWindow::EnableDriveButtons(BOOL bEnable)
 			IDM_SAVE, -1 };
 
 	for (int i = 0; IDS[i] != -1; i++)
-		EnableToolbarButton(hwndToolBar, IDS[i], TRUE);
+		EnableToolbarButton(hwndToolBar, IDS[i], bEnable);
 	for (int i = 0; IDS_ToDisable[i] != -1; i++)
-		EnableToolbarButton(hwndToolBar, IDS_ToDisable[i], FALSE);
+		EnableToolbarButton(hwndToolBar, IDS_ToDisable[i], !bEnable);
 }
