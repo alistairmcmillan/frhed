@@ -5861,27 +5861,35 @@ void HexEditorWindow::status_bar_click(bool left)
 			case 1: //READ/INS/OVR
 				if (left) //READ -> INS -> OVR -> READ...
 				{
-					if (bReadOnly)
+					// Cannot switch drive to edit mode
+					if (Drive == 0)
 					{
-						bReadOnly = 0;
-						iInsertMode = 1;
+						if (bReadOnly)
+						{
+							bReadOnly = 0;
+							iInsertMode = 1;
+						}
+						else if (iInsertMode)
+							iInsertMode = 0;
+						else
+							bReadOnly = 1;
 					}
-					else if (iInsertMode)
-						iInsertMode = 0;
-					else
-						bReadOnly = 1;
 				}
 				else //READ <- INS <- OVR <- READ...
 				{
-					if (bReadOnly)
+					// Cannot switch drive to edit mode
+					if (Drive == 0)
 					{
-						bReadOnly = 0;
-						iInsertMode= 0;
+						if (bReadOnly)
+						{
+							bReadOnly = 0;
+							iInsertMode= 0;
+						}
+						else if (iInsertMode)
+							bReadOnly = 1;
+						else
+							iInsertMode = 1;
 					}
-					else if (iInsertMode)
-						bReadOnly = 1;
-					else
-						iInsertMode = 1;
 				}
 				break;
 			case 2: // L <--> B
