@@ -252,9 +252,10 @@ public:
 	void set_focus();
 	void kill_focus();
 	int lbuttondown( int nFlags, int xPos, int yPos);
-	int snap_caret();
+	void snap_caret();
 	void keydown(int key);
 	void character(char ch);
+	void scroll_window(int dx, int dy);
 	void vscroll(int cmd);
 	void hscroll(int cmd);
 	int paint();

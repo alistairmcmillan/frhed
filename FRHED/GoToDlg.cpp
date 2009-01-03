@@ -57,8 +57,7 @@ BOOL GoToDlg::Apply(HWND hDlg)
 		return FALSE;
 	}
 	iCurByte = offset;
-	if (snap_caret())
-		repaint();
+	snap_caret();
 	return TRUE;
 }
 

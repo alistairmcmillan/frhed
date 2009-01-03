@@ -561,55 +561,38 @@ void HexEditorWindow::kill_focus()
 	}
 }
 
-int HexEditorWindow::snap_caret()
+void HexEditorWindow::snap_caret()
 {
-	int repall = 0;
-	int adjusth = 0;
-	int adjustv = 0;
-
 	int col = iMaxOffsetLen + iByteSpace;
 	if (bSelecting ? area == AREA_BYTES : iEnteringMode == BYTES)
-		col += (iCurByte % iBytesPerLine) * 3 + iCurNibble; //BYTES_LOGICAL_COLUMN;
+		col += (iCurByte % iBytesPerLine) * 3 + iCurNibble;
 	else
-		col += iBytesPerLine * 3 + iCharSpace + iCurByte % iBytesPerLine; //CHARS_LOGICAL_COLUMN;
+		col += iBytesPerLine * 3 + iCharSpace + iCurByte % iBytesPerLine;
 
 	if (col >= iHscrollPos + cxBuffer)
 	{
 		iHscrollPos = col - (cxBuffer - 1);
-		adjusth = 1;
+		adjust_hscrollbar();
 	}
 	else if (col < iHscrollPos)
 	{
-		iHscrollPos = column;
-		adjusth = 1;
-	}
-
-	if (adjusth)
-	{
+		iHscrollPos = col;
 		adjust_hscrollbar();
-		repall = 1;
 	}
 
 	int row = iCurByte / iBytesPerLine;
 	if (row < iVscrollPos)
 	{
 		iVscrollPos = row;
-		adjustv = 1;
+		adjust_vscrollbar();
 	}
 	else if (row >= iVscrollPos + cyBuffer)
 	{
 		iVscrollPos = row - (cyBuffer - 1);
 		if (iVscrollPos < 0)
 			iVscrollPos = 0;
-		adjustv = 1;
-	}
-
-	if (adjustv)
-	{
 		adjust_vscrollbar();
-		repall = 1;
 	}
-	return repall;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -809,10 +792,8 @@ void HexEditorWindow::keydown(int key)
 			iCurByte = *a;
 			iCurNibble = 0;
 		}
-		if (snap_caret())
-			repaint();
-		else
-			repaint(*a / iBytesPerLine, c / iBytesPerLine);
+		snap_caret();
+		repaint(*a / iBytesPerLine, c / iBytesPerLine);
 	}
 }
 
@@ -915,10 +896,15 @@ void HexEditorWindow::character(char ch)
 	}
 	iFileChanged = TRUE;
 	bFilestatusChanged = TRUE;
-	if (snap_caret())
-		repaint();
-	else
-		repaint(iByteLine, iCurByte / iBytesPerLine);
+	snap_caret();
+	repaint(iByteLine, iCurByte / iBytesPerLine);
+}
+
+void HexEditorWindow::scroll_window(int dx, int dy)
+{
+	ScrollWindow(hwnd, dx * cxChar, dy * cyChar, 0, 0);
+	if (hwnd == GetFocus())
+		set_caret_pos();
 }
 
 //--------------------------------------------------------------------------------------------
@@ -927,11 +913,9 @@ void HexEditorWindow::vscroll(int cmd)
 {
 	SCROLLINFO SI;
 	SI.cbSize = sizeof SI;
-	SI.fMask = SIF_TRACKPOS;
+	SI.fMask = SIF_POS | SIF_TRACKPOS;
 	GetScrollInfo(hwnd, SB_VERT, &SI);
-	int pos = SI.nTrackPos;
-	if (filename[0] == '\0' || DataArray.GetLength() == 0)
-		return;
+	SI.nPos = iVscrollPos;
 	switch (cmd)
 	{
 	case SB_TOP:
@@ -961,7 +945,7 @@ void HexEditorWindow::vscroll(int cmd)
 			iVscrollPos = iNumlines;
 		break;
 	case SB_THUMBTRACK:
-		iVscrollPos = pos;
+		iVscrollPos = SI.nTrackPos;
 		break;
 	default:
 		return;//break;//Pabs put return here - don't repaint if don't need to
@@ -972,14 +956,10 @@ void HexEditorWindow::vscroll(int cmd)
 	if (iVscrollPos < 0)
 		iVscrollPos = 0;
 //end
-
-	SI.fMask  = SIF_POS | SIF_DISABLENOSCROLL;
-	SI.nPos   = iVscrollPos;
+	scroll_window(0, SI.nPos - iVscrollPos);
+	SI.fMask = SIF_POS | SIF_DISABLENOSCROLL;
+	SI.nPos = iVscrollPos;
 	SetScrollInfo(hwnd, SB_VERT, &SI, TRUE);
-
-	if (iVscrollPos > iNumlines - 0)
-		iVscrollPos = iNumlines - 0;
-	repaint();
 }
 
 //--------------------------------------------------------------------------------------------
@@ -988,12 +968,9 @@ void HexEditorWindow::hscroll(int cmd)
 {
 	SCROLLINFO SI;
 	SI.cbSize = sizeof SI;
-	SI.fMask = SIF_TRACKPOS;
+	SI.fMask = SIF_POS | SIF_TRACKPOS;
 	GetScrollInfo(hwnd, SB_HORZ, &SI);
-	int pos = SI.nTrackPos;
-	if (filename[0] == '\0' || DataArray.GetLength()==0)
-		return;
-
+	SI.nPos = iHscrollPos;
 	int iHscrollInc = 0;
 	switch (cmd)
 	{
@@ -1024,7 +1001,7 @@ void HexEditorWindow::hscroll(int cmd)
 			iHscrollInc = iHscrollMax - iHscrollPos;
 		break;
 	case SB_THUMBTRACK:
-		iHscrollInc = pos - iHscrollPos;
+		iHscrollInc = SI.nTrackPos - iHscrollPos;
 		break;
 	default:
 		return;//break;//Pabs put return here - don't repaint if don't need to
@@ -1036,10 +1013,10 @@ void HexEditorWindow::hscroll(int cmd)
 	if (iHscrollPos < 0)
 		iHscrollPos = 0;
 //end
+	scroll_window(SI.nPos - iHscrollPos, 0);
 	SI.fMask = SIF_POS | SIF_DISABLENOSCROLL;
 	SI.nPos = iHscrollPos;
 	SetScrollInfo(hwnd, SB_HORZ, &SI, TRUE);
-	repaint();
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1818,7 +1795,7 @@ void HexEditorWindow::set_caret_pos()
 
 //--------------------------------------------------------------------------------------------
 // Repaints the whole window.
-void HexEditorWindow::repaint( int from, int to )
+void HexEditorWindow::repaint(int from, int to)
 {
 	if (hwnd == GetFocus())
 	{
@@ -1860,7 +1837,7 @@ void HexEditorWindow::repaint(int line)
 
 //--------------------------------------------------------------------------------------------
 // Clear everything up.
-void HexEditorWindow::clear_all ()
+void HexEditorWindow::clear_all()
 {
 //Pabs changed "iOffsetLen" replaced with "iMinOffsetLen = iMaxOffsetLen" and '8' with '6'
 	iMaxOffsetLen = iMinOffsetLen = 6;
@@ -1888,6 +1865,8 @@ void HexEditorWindow::adjust_vscrollbar()
 	SCROLLINFO SI;
 	SI.cbSize = sizeof SI;
 	SI.fMask = SIF_RANGE | SIF_POS | SIF_DISABLENOSCROLL;
+	GetScrollInfo(hwnd, SB_VERT, &SI);
+	scroll_window(0, SI.nPos - iVscrollPos);
 	SI.nMin = 0;
 	SI.nMax = iVscrollMax;
 	SI.nPos = iVscrollPos;
@@ -1901,6 +1880,8 @@ void HexEditorWindow::adjust_hscrollbar()
 	SCROLLINFO SI;
 	SI.cbSize = sizeof SI;
 	SI.fMask = SIF_RANGE | SIF_POS | SIF_DISABLENOSCROLL;
+	GetScrollInfo(hwnd, SB_HORZ, &SI);
+	scroll_window(SI.nPos - iHscrollPos, 0);
 	SI.nMin = 0;
 	SI.nMax = iHscrollMax;
 	SI.nPos = iHscrollPos;
@@ -2438,7 +2419,7 @@ int HexEditorWindow::lbuttonup (int xPos, int yPos)
 			break;
 		default:
 			iEnteringMode = CHARS;
-		break;
+			break;
 		}
 
 		SetCursor( LoadCursor( NULL, IDC_IBEAM ) );
@@ -3258,7 +3239,8 @@ int HexEditorWindow::CMD_save()
 			} while (i != e);
 			if (nbl < iPartialOpenLen)
 			{//If the new file is bigger than the first _write will resize the file properly otherwise we need to specifically resize the file
-				if (-1 == _chsize(filehandle, iPartialFileLen + r))
+				if (_lseeki64(filehandle, iPartialFileLen + r, SEEK_SET) == -1 ||
+					!SetEndOfFile((HANDLE)_get_osfhandle(filehandle)))
 				{
 					MessageBox(hwnd, "Could not resize the file.", "Save", MB_ICONERROR);
 					_close(filehandle);
@@ -3330,7 +3312,7 @@ void HexEditorWindow::CMD_open()
 //-------------------------------------------------------------------
 void HexEditorWindow::adjust_view_for_selection()
 {
-	if( bSelected )
+	if (bSelected)
 	{
 		int iCharStart = iMaxOffsetLen + iByteSpace + iBytesPerLine * 3 + iCharSpace;
 //Pabs changed to put selection in center of screen
@@ -3613,16 +3595,6 @@ void HexEditorWindow::CMD_edit_append()
 //-------------------------------------------------------------------
 void HexEditorWindow::CMD_manipulate_bits()
 {
-	if (DataArray.GetLength() == 0)
-	{
-		MessageBox(hwnd, "File is empty.", "Manipulate Bits", MB_ICONERROR);
-		return;
-	}
-	if (iCurByte < 0 || iCurByte >= DataArray.GetLength())
-	{
-		MessageBox(hwnd, "Must choose byte in the file.", "Manipulate Bits", MB_ICONERROR);
-		return;
-	}
 	static_cast<dialog<BitManipDlg>*>(this)->DoModal(hwnd);
 }
 
@@ -3657,10 +3629,8 @@ void HexEditorWindow::CMD_on_backspace()
 	{
 		// Only step back.
 		int iByteLine = iCurByte-- / iBytesPerLine;
-		if (snap_caret())
-			repaint();
-		else
-			repaint(iByteLine, iCurByte / iBytesPerLine);
+		snap_caret();
+		repaint(iByteLine, iCurByte / iBytesPerLine);
 	}
 }
 
@@ -3786,8 +3756,6 @@ void HexEditorWindow::timer(WPARAM w, LPARAM)
 				adjust_hscrollbar();
 			if (adjustv)
 				adjust_vscrollbar();
-			if (adjusth || adjustv)
-				repaint();
 		}
 		break;
 	}
@@ -5158,10 +5126,25 @@ void HexEditorWindow::synch_sibling(BOOL bSynchSelection)
 	if (sibling != this)
 	{
 		Status *sibling_status = sibling->get_status();
+		Settings *sibling_settings = sibling->get_settings();
+
 		int sibling_length = sibling->get_length();
+
+		int iMin = sibling_status->bSelected ?
+			min(sibling_status->iStartOfSelection, sibling_status->iEndOfSelection) :
+			sibling_status->iCurByte;
+		int iMax = sibling_status->bSelected ?
+			max(sibling_status->iStartOfSelection, sibling_status->iEndOfSelection) :
+			sibling_status->iCurByte;
+
 		sibling_status->iEnteringMode = iEnteringMode;
 		sibling_status->iCurByte = iCurByte < sibling_length ? iCurByte : sibling_length;
 		sibling_status->iCurNibble = iCurNibble;
+
+		sibling_status->iVscrollMax = iVscrollMax;
+		sibling_status->iVscrollPos = iVscrollPos;
+		sibling->adjust_vscrollbar();
+
 		if (bSynchSelection)
 		{
 			sibling_status->iStartOfSelection = iStartOfSelection;
@@ -5172,11 +5155,18 @@ void HexEditorWindow::synch_sibling(BOOL bSynchSelection)
 				sibling_status->iStartOfSelection = sibling_length - 1;
 			if (sibling_status->iEndOfSelection >= sibling_length)
 				sibling_status->iEndOfSelection = sibling_length - 1;
+			int iMinNew = sibling_status->bSelected ?
+				min(sibling_status->iStartOfSelection, sibling_status->iEndOfSelection) :
+				sibling_status->iCurByte;
+			int iMaxNew = sibling_status->bSelected ?
+				max(sibling_status->iStartOfSelection, sibling_status->iEndOfSelection) :
+				sibling_status->iCurByte;
+			if (iMin > iMinNew)
+				iMin = iMinNew;
+			if (iMax < iMaxNew)
+				iMax = iMaxNew;
 		}
-		sibling_status->iVscrollMax = iVscrollMax;
-		sibling_status->iVscrollPos = iVscrollPos;
-		sibling->adjust_vscrollbar();
-		sibling->repaint(-1, -1);
+		sibling->repaint(iMin / sibling_settings->iBytesPerLine, iMax / sibling_settings->iBytesPerLine);
 	}
 }
 
@@ -6551,8 +6541,9 @@ void HexEditorWindow::EnableDriveButtons(BOOL bEnable)
 	const int IDS_ToDisable[] = { IDM_EDIT_PASTE, IDM_EDIT_CUT, IDM_REPLACE,
 			IDM_SAVE, -1 };
 
-	for (int i = 0; IDS[i] != -1; i++)
+	int i;
+	for (i = 0; IDS[i] != -1; i++)
 		EnableToolbarButton(hwndToolBar, IDS[i], bEnable);
-	for (int i = 0; IDS_ToDisable[i] != -1; i++)
+	for (i = 0; IDS_ToDisable[i] != -1; i++)
 		EnableToolbarButton(hwndToolBar, IDS_ToDisable[i], !bEnable);
 }
