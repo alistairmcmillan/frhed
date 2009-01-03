@@ -1001,7 +1001,7 @@ CAPTION "Drag-drop"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "Clipboard format[s] to use:",-1,5,5,82,8
-    CONTROL         "List1",IDC_LIST,"SysListView32",LVS_REPORT | 
+    CONTROL         "List1",IDC_DAND_LIST,"SysListView32",LVS_REPORT | 
                     LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | WS_TABSTOP,5,15,
                     135,100,WS_EX_CLIENTEDGE
     DEFPUSHBUTTON   "OK",IDOK,145,15,50,15

@@ -31,7 +31,7 @@ INT_PTR DragDropDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 				EnableWindow( GetDlgItem( h, IDC_MOVE ), FALSE );
 			if( !(allowable_effects & DROPEFFECT_COPY) )
 				EnableWindow( GetDlgItem( h, IDC_COPY ), FALSE );
-			HWND list = GetDlgItem(h, IDC_LIST);
+			HWND list = GetDlgItem(h, IDC_DAND_LIST);
 			if (numformatetcs && formatetcs)
 			{
 				LVCOLUMN col;
@@ -106,7 +106,7 @@ INT_PTR DragDropDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 		case IDOK:
 			{
 				effect = !IsDlgButtonChecked(h, IDC_MOVE);
-				HWND list = GetDlgItem(h, IDC_LIST);
+				HWND list = GetDlgItem(h, IDC_DAND_LIST);
 				numformats = ListView_GetSelectedCount(list);
 				if (numformats)
 				{
@@ -136,7 +136,7 @@ INT_PTR DragDropDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 		case IDC_UP:
 		case IDC_DOWN:
 			{
-				HWND list = GetDlgItem(h, IDC_LIST);
+				HWND list = GetDlgItem(h, IDC_DAND_LIST);
 				LVITEM item[2];
 				ZeroMemory(item, sizeof item);
 				//If anyone knows a better way to swap two items please send a patch
