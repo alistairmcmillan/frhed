@@ -366,7 +366,7 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 			return 0;
 		//Offset & 2 spaces
 		int tol = DispData.bAutoOffsetLen ? mol : DispData.iOffsetLen;
-		_snprintf(linebuf, RTL_NUMBER_OF(linebuf) - 1,  "%*.*x", tol, tol, 0);
+		sprintf(linebuf, "%*.*x", tol, tol, 0); // The fix caused a crash
 		p = strlen(linebuf);
 		mol += 2;
 		memset(linebuf + p, ' ', mol - p);
@@ -404,7 +404,7 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 		SetTextColor(dc,DispData.iSelTextColorValue);
 
 		//Create the text
-		_snprintf(linebuf, RTL_NUMBER_OF(linebuf) - 1, "%*.*x", tol, tol, tmp);
+		sprintf(linebuf, "%*.*x", tol, tol, tmp); // The fix caused a crash
 		p = strlen(linebuf);
 		memset(linebuf+p,' ',mol-p);
 		linebuf[mol]=0;
@@ -521,21 +521,20 @@ void UpgradeDlg::ChangeSelVer(HWND hw, char* text)
 
 	//Init the version number on the insts list header
 	LVCOLUMN col;
-	ZeroMemory(&col,sizeof(col));
+	ZeroMemory(&col, sizeof col);
 	col.mask = LVCF_TEXT|LVCF_WIDTH;
 	col.fmt = LVCFMT_LEFT;
 	col.pszText = text;
 	col.cx = 120;
 	ListView_InsertColumn(insts, 0, &col);
 
-	char keyname[100];
-	char subkeynam[_MAX_PATH+1];
-	strcpy(keyname, OptionsRegistryPath);
-	strcat(keyname, text);
+	TCHAR keyname[MAX_PATH];
+	TCHAR subkeynam[MAX_PATH];
+	PathCombine(keyname, OptionsRegistryPath, text);
 
 	LVITEM item;
-	ZeroMemory(&item,sizeof(LVITEM));
-	item.mask = LVIF_TEXT ;
+	ZeroMemory(&item, sizeof item);
+	item.mask = LVIF_TEXT;
 	item.pszText = subkeynam;
 	HKEY hk;
 	LONG res;
@@ -543,7 +542,7 @@ void UpgradeDlg::ChangeSelVer(HWND hw, char* text)
 	//Fill the instance list with the various instances of the current selected version
 	if(0==RegOpenKeyEx(HKEY_CURRENT_USER,keyname,0,KEY_ALL_ACCESS,&hk)){
 		for(int i=0;;i++){
-			res = RegEnumKey(hk, i, subkeynam, _MAX_PATH + 1);
+			res = RegEnumKey(hk, i, subkeynam, MAX_PATH);
 			if(res == ERROR_NO_MORE_ITEMS)
 				break;
 			else
@@ -595,16 +594,15 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 	ListView_DeleteAllItems(mru);
 
 	//Assemble the keyname
-	char keynam[_MAX_PATH+1];
+	TCHAR keynam[MAX_PATH];
 	strncpy(keynam, OptionsRegistryPath, RTL_NUMBER_OF(keynam));
 	LVCOLUMN col;
-	ZeroMemory(&col,sizeof(col));
+	ZeroMemory(&col, sizeof col);
 	col.mask = LVCF_TEXT;
-	col.pszText = &keynam[15];
-	col.cchTextMax = _MAX_PATH+1-15;
+	col.pszText = PathAddBackslash(keynam);
+	col.cchTextMax = keynam + MAX_PATH - col.pszText;
 	ListView_GetColumn(insts,0,&col);
-	strcat(keynam,"\\");
-	strcat(keynam,text);
+	PathAppend(keynam, text);
 
 	HKEY hk;
 	if (0 == RegOpenKeyEx(HKEY_CURRENT_USER,keynam,0,KEY_ALL_ACCESS,&hk))
