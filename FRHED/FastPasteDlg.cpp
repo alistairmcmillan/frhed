@@ -50,13 +50,13 @@ BOOL FastPasteDlg::OnInitDialog(HWND hDlg)
 	{
 		CheckDlgButton(hDlg, IDC_FPASTE_OWERWRITE, BST_CHECKED);
 	}
-	CheckDlgButton(hDlg, IDC_CHECK1, iPasteAsText);
+	CheckDlgButton(hDlg, IDC_FPASTE_TXT, iPasteAsText);
 	return TRUE;
 }
 
 BOOL FastPasteDlg::Apply(HWND hDlg)
 {
-	iPasteAsText = IsDlgButtonChecked(hDlg, IDC_CHECK1);
+	iPasteAsText = IsDlgButtonChecked(hDlg, IDC_FPASTE_TXT);
 	iPasteTimes = GetDlgItemInt(hDlg, IDC_FPASTE_PASTETIMES, 0, TRUE);
 	if (iPasteTimes <= 0)
 	{
@@ -264,7 +264,7 @@ BOOL FastPasteDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 			int i = SendMessage(list, LB_GETCURSEL, 0, 0);
 			UINT f = SendMessage(list, LB_GETITEMDATA, i, 0);
 			if (f == CF_UNICODETEXT)
-				CheckDlgButton(hDlg, IDC_CHECK1, BST_CHECKED);
+				CheckDlgButton(hDlg, IDC_FPASTE_TXT, BST_CHECKED);
 		}
 		return TRUE;
 	}

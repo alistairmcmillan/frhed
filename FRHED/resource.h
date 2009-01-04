@@ -331,6 +331,7 @@
 #define IDC_ENCODE_ENC                  415
 #define IDC_ENCODE_DEC                  416
 #define IDC_DROPPED_FILES               417
+#define IDC_FPASTE_TXT                  418
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076
