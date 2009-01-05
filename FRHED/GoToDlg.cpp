@@ -30,6 +30,11 @@
 
 char GoToDlg::buffer[16];
 
+/**
+ * @brief Go to offset user gave to the dialog.
+ * @param [in] hDlg Handle of Goto-dialog.
+ * @return TRUE if new offset was applied, FALSE for invalid offset.
+ */
 BOOL GoToDlg::Apply(HWND hDlg)
 {
 	int offset, i = 0, r = 0;
@@ -50,12 +55,14 @@ BOOL GoToDlg::Apply(HWND hDlg)
 			offset = -offset;
 		offset += iCurByte;
 	}
+	
 	// Absolute jump.
-	if (offset < 0 || offset >= DataArray.GetLength())
-	{
-		MessageBox(hDlg, "Invalid offset.", "Go to", MB_ICONERROR);
-		return FALSE;
-	}
+	// Check limits and jump to begin/end if out of limits
+	if (offset < 0)
+		offset = 0;
+	if (offset >= DataArray.GetLength())
+		offset = DataArray.GetLength() - 1;
+
 	iCurByte = offset;
 	snap_caret();
 	return TRUE;

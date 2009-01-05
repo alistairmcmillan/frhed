@@ -11,6 +11,7 @@ Frhed 1.3.4
   Disable editing when disk is opened (#2481367)
   Add note text to Open Drive dialog telling modifying or
     saving drive data is not possible (#2481367)
+  Goto begin/end of file if out of bounds offset is given (r264)
   Bugfix: Replacing data with longer data jammed Frhed (#2431267)
   Bugfix: Crash in Encode/Decode dialog (r220)
   Bugfix: View settings dialog didn't read current
