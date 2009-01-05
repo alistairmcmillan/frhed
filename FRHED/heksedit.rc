@@ -528,7 +528,7 @@ BEGIN
                     IDC_SETTINGS_ADJUST_BYTELINE,"Button",BS_AUTOCHECKBOX |
                     BS_MULTILINE | WS_TABSTOP,7,31,234,19
     LTEXT           "Display length of offset in how many characters:",
-                    IDC_STATIC,7,51,151,8
+                    IDC_STATIC,7,51,200,8
     EDITTEXT        IDC_SETTINGS_OFFSETLEN,7,61,68,12,ES_AUTOHSCROLL
     CONTROL         "Adjust offset len to that of the max offset",
                     IDC_SETTINGS_ADJOFFSET,"Button",BS_AUTOCHECKBOX |

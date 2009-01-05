@@ -17,6 +17,7 @@ Frhed 1.3.4
     fully visible (r228)
   Bugfix: Selecting to begin (Ctrl+Shift+Home) or to end of
     file (Ctrl+Shift+End) did not work (r235)
+  Bugfix: Another text visibility problem in View Settings (r255)
 
 Frhed 1.3.3 - 2008-12-04 (r188)
   Update homepage URL in About-dialog to Sf.net (r137)
