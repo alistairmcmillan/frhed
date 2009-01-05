@@ -34,8 +34,7 @@
  */
 BOOL ostools_HaveAdminAccess()
 {
-	// make sure this is NT first
-	OSVERSIONINFO ver = { 0 };
+	OSVERSIONINFO ver = {0};
 	ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 
 	// if this fails, we want to default to being enabled
@@ -44,45 +43,23 @@ BOOL ostools_HaveAdminAccess()
 		return TRUE;
 	}
 
-	// now check with the security manager
-	HANDLE hHandleToken;
-
-	if (!::OpenProcessToken(::GetCurrentProcess(), TOKEN_READ, &hHandleToken))
-		return FALSE;
-
-	UCHAR TokenInformation[1024];
-	DWORD dwTokenInformationSize;
-
-	BOOL bSuccess = ::GetTokenInformation(hHandleToken, TokenGroups,
-			TokenInformation, sizeof(TokenInformation), &dwTokenInformationSize);
-
-	::CloseHandle(hHandleToken);
-
-	if (!bSuccess)
-		return FALSE;
-
-	SID_IDENTIFIER_AUTHORITY siaNtAuthority = SECURITY_NT_AUTHORITY;
-	PSID psidAdministrators;
-
-	if (!::AllocateAndInitializeSid(&siaNtAuthority, 2,
-			SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0,
-			&psidAdministrators))
-		return FALSE;
-
-	// assume that we don't find the admin SID.
-	bSuccess = FALSE;
-
-	PTOKEN_GROUPS ptgGroups = (PTOKEN_GROUPS)TokenInformation;
-
-	for (UINT x = 0; x < ptgGroups->GroupCount; x++)
+	SID_IDENTIFIER_AUTHORITY NtAuthority = SECURITY_NT_AUTHORITY;
+	PSID AdministratorsGroup;
+	// Initialize SID.
+	if (!AllocateAndInitializeSid(&NtAuthority,	2,SECURITY_BUILTIN_DOMAIN_RID,
+			DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &AdministratorsGroup))
 	{
-		if (::EqualSid(psidAdministrators, ptgGroups->Groups[x].Sid))
-		{
-			bSuccess = TRUE;
-			break;
-		}
+		// Initializing SID Failed.
+		return false;
 	}
-
-	::FreeSid(psidAdministrators);
-	return bSuccess;
+	// Check whether the token is present in admin group.
+	BOOL IsInAdminGroup = FALSE;
+	if (!CheckTokenMembership(NULL,	AdministratorsGroup, &IsInAdminGroup))
+	{
+		// Error occurred.
+		IsInAdminGroup = FALSE;
+	}
+	// Free SID and return.
+	FreeSid(AdministratorsGroup);
+	return IsInAdminGroup;
 }
