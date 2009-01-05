@@ -242,6 +242,10 @@ SOURCE=.\OpenPartiallyDlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OSTools.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PasteDlg.cpp
 # End Source File
 # Begin Source File
@@ -392,6 +396,10 @@ SOURCE=.\LangTools.h
 # Begin Source File
 
 SOURCE=.\LoadHexFile.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OSTools.h
 # End Source File
 # Begin Source File
 

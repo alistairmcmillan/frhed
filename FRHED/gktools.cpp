@@ -6,6 +6,7 @@
 #include "hexwnd.h"
 #include "gktools.h"
 #include "simparr.h"
+#include "OSTools.h"
 
 static PList PartitionInfoList;
 
@@ -208,6 +209,13 @@ INT_PTR OpenDriveDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 	{
 	case WM_INITDIALOG:
 		{
+			BOOL admin = ostools_HaveAdminAccess();
+			if (!admin)
+			{
+				MessageBox(hDlg, _T("You need to have Administrator privileges for getting list of drives."),
+						_T("Access Denied"), MB_OK | MB_ICONSTOP);
+				return TRUE;
+			}
 			ShowWindow(hDlg, SW_SHOW);
 			if (PartitionInfoList.IsEmpty())
 			{

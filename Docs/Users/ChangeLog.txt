@@ -21,6 +21,7 @@ Frhed 1.3.4
     file (Ctrl+Shift+End) did not work (r235)
   Bugfix: Another text visibility problem in View Settings (r255)
   Bugfix: Remove "BOO" message from statusbar click (#2487952)
+  Bugfix: Opening drives needs Administrator privileges (#2480516)
 
 Frhed 1.3.3 - 2008-12-04 (r188)
   Update homepage URL in About-dialog to Sf.net (r137)
