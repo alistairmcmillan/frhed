@@ -5583,17 +5583,6 @@ void HexEditorWindow::status_bar_click(bool left)
 	//Do the requested function
 	switch(n)
 	{
-
-	case -1:
-		{
-			//The user clicked the status bar outside the rects
-			//May want to add something useful here later
-			//An easter egg will do for now
-			int tmp = (IDYES==MessageBox(hwnd, "BOO","Scared ya, di'n' I, huh, huh?",MB_ICONQUESTION|MB_YESNO));
-			MessageBox(hwnd, tmp?"Wwwwooooohhhhoooo!!! :-)":"Aww damn. ;-("," ",MB_ICONEXCLAMATION|MB_OK);
-			break;
-		}
-
 	case 0:
 		{
 			//The user clicked in the 1st part - offset/bits/byte/word/dword
