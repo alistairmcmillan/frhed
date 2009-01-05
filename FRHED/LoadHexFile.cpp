@@ -29,6 +29,29 @@
 #include "hexwnd.h"
 #include "LoadHexFile.h"
 
+/**
+ * @brief Convert hex byte to numeric value.
+ * Convert hex byte (0-9,a-f) to numeric value. E.g '8' gets converted to 8
+ * and 'B' gets converted to 11.
+ * @param [in] by Byte to convert.
+ * @return Numeric value, or ' ' if by is invalid hex char.
+ * @note The function assumes the @p by is valid hex byte.
+ */
+static BYTE Hex2Nibble(BYTE by)
+{
+	assert(isxdigit(by));
+
+	if (_istdigit(by))
+		return by - '0';
+	else
+	{
+		if (_istlower(by))
+			return by - 'a' + 10;
+		else
+			return by - 'A' + 10;
+	}
+}
+
 int hexfile_stream::lheatwhite()
 {
 	int c;
@@ -54,8 +77,6 @@ bool load_hexfile_0::StreamIn(HexEditorWindow &hexwnd, hexfile_stream &hexin)
 bool load_hexfile_0::StreamIn(hexfile_stream &hexin)
 {
 	int temp[4] = {0,0,0,0};
-//Use only if U know c is a hex digit & not something else like' ', 'z' etc
-#	define hex2nibble(c) (isdigit((c)) ? (c) - '0' : (c) - (islower((c)) ? 'a' : 'A') + 10)
 	BYTE flnd = 0;//Start with the first nibble
 	int ii = 0;
 	int diio = 1;
@@ -70,7 +91,7 @@ bool load_hexfile_0::StreamIn(hexfile_stream &hexin)
 				ExpandToSize();
 				m_pT[ii] = 0;
 			}
-			m_pT[ii] |= hex2nibble((BYTE)temp[0]) ;
+			m_pT[ii] |= Hex2Nibble((BYTE)temp[0]) ;
 			if (flnd)
 				ii++;
 			else
