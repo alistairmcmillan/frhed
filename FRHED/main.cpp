@@ -223,7 +223,6 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 		hwndMain = hwnd;
-		DragAcceptFiles(hwnd, TRUE); // Accept files dragged into main window.
 		hwndToolBar = CreateTBar(hwnd, hMainInstance);
 		SendMessage(hwndToolBar, CCM_SETUNICODEFORMAT, TRUE, 0);
 		hwndHex = CreateWindowEx(WS_EX_CLIENTEDGE,
@@ -251,9 +250,6 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			SendMessage(hwnd, WM_CLOSE, 0, 0);
 		else
 			pHexWnd->command(LOWORD(wParam));
-		break;
-	case WM_DROPFILES:
-		pHexWnd->dropfiles(reinterpret_cast<HDROP>(wParam));
 		break;
 	case WM_SETFOCUS:
 		SetFocus(hwndHex);
@@ -329,7 +325,6 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			pHexWnd->iWindowWidth = wndpl.rcNormalPosition.right - pHexWnd->iWindowX;
 			pHexWnd->iWindowHeight = wndpl.rcNormalPosition.bottom - pHexWnd->iWindowY;
 			pHexWnd->save_ini_data();
-			DragAcceptFiles(hwndMain, FALSE);
 			pHexWnd = 0;
 			PostQuitMessage(0);
 		}
