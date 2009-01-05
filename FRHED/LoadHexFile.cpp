@@ -77,7 +77,7 @@ bool load_hexfile_0::StreamIn(HexEditorWindow &hexwnd, hexfile_stream &hexin)
 bool load_hexfile_0::StreamIn(hexfile_stream &hexin)
 {
 	int temp[4] = {0,0,0,0};
-	BYTE flnd = 0;//Start with the first nibble
+	bool flnd = false; // High nibble?
 	int ii = 0;
 	int diio = 1;
 	for (int i = 0 ; (temp[0] = hexin.lhgetc()) != EOF ; i++)
@@ -87,7 +87,12 @@ bool load_hexfile_0::StreamIn(hexfile_stream &hexin)
 			if (!flnd)
 			{
 				if (!SetSize(ii + 1))
-					return IDYES == MessageBox(hwnd, "Not enough memory to import data.\nCannot continue!\nDo you want to keep what has been found so far?", "Import Hexdump", MB_YESNO | MB_ICONERROR);
+				{
+					UINT ret = MessageBox(hwnd, "Not enough memory to import data.\n"
+							"Cannot continue!\nDo you want to keep what has been found so far?",
+							"Import Hexdump", MB_YESNO | MB_ICONERROR);
+					return IDYES == ret;
+				}
 				ExpandToSize();
 				m_pT[ii] = 0;
 			}
@@ -100,7 +105,10 @@ bool load_hexfile_0::StreamIn(hexfile_stream &hexin)
 		}
 		else if (!isspace(temp[0]) && diio)
 		{
-			switch (MessageBox(hwnd, "Illegal character found.\nIgnore further illegal characters?", "Import Hexdump", MB_YESNOCANCEL | MB_ICONERROR))
+			UINT ret = MessageBox(hwnd, "Illegal character found.\n"
+					"Ignore further illegal characters?",
+					"Import Hexdump", MB_YESNOCANCEL | MB_ICONERROR);
+			switch (ret)
 			{
 			case IDYES:
 				diio = 0;
@@ -118,8 +126,10 @@ bool load_hexfile_1::StreamIn(hexfile_stream &hexin)
 	int temp[4] = {0,0,0,0};
 	unsigned char c[4] = {0,0,0,0};
 	int i, ii = 0, ls, bpl, fo = 0, fol;
-	int flnd = 1, dim = 1, diio = 1;
+	int dim = 1, diio = 1;
+	bool flnd = true;
 	bAutoOffsetLen = 1;
+
 	do
 	{
 		//get the offset
@@ -136,7 +146,10 @@ bool load_hexfile_1::StreamIn(hexfile_stream &hexin)
 				break;
 			if (!isxdigit(c[0]) && diio)
 			{
-				switch (MessageBox(hwnd, "Illegal character in offset.\nIgnore further invalid offsets?","Import Hexdump",MB_YESNOCANCEL | MB_ICONERROR))
+				UINT ret = MessageBox(hwnd, "Illegal character in offset.\n"
+						"Ignore further invalid offsets?", "Import Hexdump",
+						MB_YESNOCANCEL | MB_ICONERROR);
+				switch (ret)
 				{
 				case IDYES:
 					diio = 0;
@@ -166,7 +179,8 @@ bool load_hexfile_1::StreamIn(hexfile_stream &hexin)
 				sprintf(msg,
 					"The first offset found was 0x%x, which is greater than zero.\n"
 					"Do you want to insert %d null bytes at the start of the data?", tmp, tmp);
-				if (IDYES == MessageBox(hwnd, msg, "Import Hexdump", MB_YESNO | MB_ICONWARNING))
+				UINT ret = MessageBox(hwnd, msg, "Import Hexdump", MB_YESNO | MB_ICONWARNING);
+				if (ret == IDYES)
 				{
 					ii = tmp;
 					if (!SetSize(ii))
@@ -183,7 +197,10 @@ bool load_hexfile_1::StreamIn(hexfile_stream &hexin)
 			}
 			else if (ii + fo != tmp)
 			{
-				switch (MessageBox(hwnd, "Invalid offset found.\nIgnore further invalid offsets?","Import Hexdump",MB_YESNOCANCEL | MB_ICONWARNING))
+				UINT ret = MessageBox(hwnd, "Invalid offset found.\n"
+						"Ignore further invalid offsets?", "Import Hexdump",
+						MB_YESNOCANCEL | MB_ICONWARNING);
+				switch (ret)
 				{
 				case IDYES:
 					diio = 0;
@@ -205,7 +222,7 @@ bool load_hexfile_1::StreamIn(hexfile_stream &hexin)
 		for (bpl = 0 ;; bpl++)
 		{
 			//get the three chars
-			for(i = 0 ; i < 3 ; i++)
+			for (i = 0 ; i < 3 ; i++)
 			{
 				temp[i] = hexin.lhgetc();
 				if (temp[i] == EOF)
@@ -311,7 +328,10 @@ bool load_hexfile_1::StreamIn(hexfile_stream &hexin)
 BadData:
 					if (dim)
 					{
-						switch (MessageBox(hwnd, "Character data does not agree with hex data.\nIgnore further mismatched data?\nNB: Hex data will be used when ignoring.", "Import Hexdump", MB_YESNOCANCEL | MB_ICONWARNING))
+						UINT ret = MessageBox(hwnd, "Character data does not agree with hex data.\n"
+								"Ignore further mismatched data?\nNB: Hex data will be used when ignoring.",
+								"Import Hexdump", MB_YESNOCANCEL | MB_ICONWARNING);
+						switch (ret)
 						{
 						case IDYES:
 							dim = 0;
@@ -337,7 +357,7 @@ BadData:
 			}
 		}//get rest of line
 NextLine:
-		flnd = 0;
+		flnd = false;
 	} while (hexin.lheatwhite() != EOF);
 	//parsing loop
 	return TRUE;
@@ -357,9 +377,10 @@ bool load_hexfile_1::StreamIn(HexEditorWindow &hexwnd, hexfile_stream &hexin)
 	load_hexfile_1 instance(hexwnd);
 	if (!instance.StreamIn(hexin))
 		return false;
-	if (IDYES == MessageBox(hexwnd.hwnd,
-		"Would you like display settings found in the data to replace current ones?",
-		"Import Hexdump", MB_YESNO))
+	UINT ret = MessageBox(hexwnd.hwnd,
+			"Would you like display settings found in the data to replace current ones?",
+			"Import Hexdump", MB_YESNO);
+	if (ret == IDYES)
 	{
 		hexwnd.iMinOffsetLen = instance.iMinOffsetLen;
 		hexwnd.bAutoOffsetLen = instance.bAutoOffsetLen;
