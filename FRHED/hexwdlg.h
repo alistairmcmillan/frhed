@@ -289,8 +289,9 @@ class GoToDlg : public HexEditorWindow
 public:
 	enum { IDD = IDD_GOTODIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-	static char buffer[];
+	static char buffer[];  /**< Buffer for offset value. */
 private:
+	BOOL OnInitDialog(HWND);
 	BOOL Apply(HWND);
 };
 

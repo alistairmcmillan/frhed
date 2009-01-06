@@ -28,7 +28,25 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 
-char GoToDlg::buffer[16];
+/** Size of offset edit and buffer. */
+static const UINT EditLen = 16;
+
+char GoToDlg::buffer[EditLen + 1];
+
+/**
+ * Initialize the dialog.
+ * This function initializes the dialog by setting the initial value for the
+ * offset edit box and setting text lenhgt limit for it.
+ * @param [in] hDlg Handle to dialog to initialize.
+ * @return TRUE.
+ */
+BOOL GoToDlg::OnInitDialog(HWND hDlg)
+{
+	HWND edit = GetDlgItem(hDlg, IDC_GOTO_OFFSET);
+	SetDlgItemText(hDlg, IDC_GOTO_OFFSET, buffer);
+	SendMessage(edit, EM_SETLIMITTEXT, EditLen, 0);
+	return TRUE;
+}
 
 /**
  * @brief Go to offset user gave to the dialog.
@@ -73,8 +91,7 @@ INT_PTR GoToDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	switch (iMsg)
 	{
 	case WM_INITDIALOG:
-		SetDlgItemText(hDlg, IDC_GOTO_OFFSET, buffer);
-		return TRUE;
+		return OnInitDialog(hDlg);
 	case WM_COMMAND:
 		switch (wParam)
 		{
