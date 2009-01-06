@@ -214,6 +214,7 @@ public:
 	void STDMETHODCALLTYPE CMD_fast_paste();
 	void STDMETHODCALLTYPE CMD_zoom(int);
 	int mousemove(int xPos, int yPos);
+	void mousewheel(int delta);
 	int lbuttonup(int xPos, int yPos);
 
 	void EnableDriveButtons(BOOL bEnable);

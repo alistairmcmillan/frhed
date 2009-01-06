@@ -2529,8 +2529,6 @@ int HexEditorWindow::lbuttondown ( int nFlags, int xPos, int yPos )
 	iLBDownX = xPos;
 	iLBDownY = yPos;
 
-	if (filename[0] == '\0')
-		return 0;
 	SetCapture( hwnd );
 
 //Pabs inserted - after reading the fuzz report
@@ -2594,6 +2592,15 @@ int HexEditorWindow::lbuttondown ( int nFlags, int xPos, int yPos )
 	return 0;
 }
 //end
+
+//--------------------------------------------------------------------------------------------
+// WM_MOUSEWHEEL handler.
+void HexEditorWindow::mousewheel(int delta)
+{
+	int pos = GetScrollPos(hwnd, SB_VERT) - delta / (WHEEL_DELTA / 3);
+	SetScrollPos(hwnd, SB_VERT, pos, TRUE);
+	vscroll(SB_THUMBTRACK);
+}
 
 //Pabs inserted
 void HexEditorWindow::get_pos(long x, long y)
@@ -5043,6 +5050,10 @@ int HexEditorWindow::OnWndMsg( HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lPara
 
 	case WM_MOUSEMOVE:
 		mousemove(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		break;
+
+	case WM_MOUSEWHEEL:
+		mousewheel(GET_WHEEL_DELTA_WPARAM(wParam));
 		break;
 
 	case WM_KEYDOWN:
