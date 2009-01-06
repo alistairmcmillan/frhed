@@ -56,8 +56,8 @@ dist_root_folder = 'distrib'
 # Source location
 # Give URL to SVN repository to export source from SVN or 'workspace' to export
 # from workspace
-source_location = 'https://frhed.svn.sourceforge.net/svnroot/frhed/trunk'
-#source_location ='workspace'
+source_location ='workspace'
+#source_location = 'https://frhed.svn.sourceforge.net/svnroot/frhed/trunk'
 
 # END CONFIGURATION - you don't need to edit anything below...
 
