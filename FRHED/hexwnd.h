@@ -184,7 +184,6 @@ public:
 	void CMD_compare();
 	void CMD_properties();
 	void make_font();
-	void CMD_select_all();
 	void CMD_on_backspace ();
 	void CMD_toggle_insertmode();
 	void CMD_character_set();
@@ -212,6 +211,7 @@ public:
 	void STDMETHODCALLTYPE CMD_edit_paste();
 	void STDMETHODCALLTYPE CMD_edit_clear();
 	void STDMETHODCALLTYPE CMD_fast_paste();
+	void STDMETHODCALLTYPE CMD_select_all();
 	void STDMETHODCALLTYPE CMD_zoom(int);
 	int mousemove(int xPos, int yPos);
 	void mousewheel(int delta);

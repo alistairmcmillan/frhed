@@ -107,6 +107,7 @@ public:
 	virtual BSTR STDMETHODCALLTYPE load_string(UINT) = 0;
 	virtual void STDMETHODCALLTYPE free_string(BSTR) = 0;
 	virtual void STDMETHODCALLTYPE CMD_zoom(int) = 0;
+	virtual void STDMETHODCALLTYPE CMD_select_all() = 0;
 };
 
 #endif // _HEKSEDIT_H_
