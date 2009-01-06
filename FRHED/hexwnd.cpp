@@ -127,6 +127,7 @@ HexEditorWindow::HexEditorWindow()
 	iBinaryMode = ENDIAN_LITTLE;
 	bUnsignedView = TRUE;
 	iFontSize = 10;
+	iFontZoom = 0;
 	iInsertMode = FALSE;
 	iTextColorValue = RGB(0,0,0);
 	iBkColorValue = RGB(255,255,255);
@@ -1335,6 +1336,18 @@ void HexEditorWindow::command(int cmd)
 
 	case IDM_CHARACTER_SET:
 		CMD_character_set();
+		break;
+
+	case IDM_ZOOMIN:
+		CMD_zoom(+1);
+		break;
+
+	case IDM_ZOOMOUT:
+		CMD_zoom(-1);
+		break;
+
+	case IDM_ZOOMNORMAL:
+		CMD_zoom(0);
 		break;
 
 	case IDM_EDIT_MANIPULATEBITS:
@@ -3605,6 +3618,23 @@ void HexEditorWindow::CMD_character_set()
 }
 
 //-------------------------------------------------------------------
+void HexEditorWindow::CMD_zoom(int iAmount)
+{
+	if (iAmount)
+		iFontZoom += iAmount;
+	else
+		iFontZoom = 0;
+	if (iFontZoom < 2 - iFontSize)
+		iFontZoom = 2 - iFontSize;
+	HWND hwndFocus = GetFocus();
+	if (hwnd == hwndFocus)
+		kill_focus();
+	resize_window();
+	if (hwnd == hwndFocus)
+		set_focus();
+}
+
+//-------------------------------------------------------------------
 void HexEditorWindow::CMD_toggle_insertmode()
 {
 	iInsertMode = !iInsertMode;
@@ -3652,15 +3682,12 @@ void HexEditorWindow::make_font()
 	if (hFont)
 		DeleteObject(hFont);
 	HDC hdc = GetDC(hwnd);
-	int nHeight = -MulDiv(iFontSize, GetDeviceCaps(hdc, LOGPIXELSY), 72);
+	int nHeight = -MulDiv(iFontSize + iFontZoom, GetDeviceCaps(hdc, LOGPIXELSY), 72);
 	ReleaseDC(hwnd, hdc);
-	int cset;
-	if (iCharacterSet == ANSI_FIXED_FONT)
-		cset = ANSI_CHARSET;
-	else
-		cset = OEM_CHARSET;
-	hFont = CreateFont(nHeight,0,0,0,0,0,0,0,cset,OUT_DEFAULT_PRECIS,
-		CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,FIXED_PITCH | FF_DONTCARE,0);
+	int cset = iCharacterSet == ANSI_FIXED_FONT ? ANSI_CHARSET : OEM_CHARSET;
+	static const TCHAR facename[] = _T("Lucida Console");
+	hFont = CreateFont(nHeight, 0, 0, 0, 0, 0, 0, 0, cset, OUT_DEFAULT_PRECIS,
+		CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH | FF_DONTCARE, facename);
 }
 
 //-------------------------------------------------------------------

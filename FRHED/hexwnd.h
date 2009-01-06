@@ -212,6 +212,7 @@ public:
 	void STDMETHODCALLTYPE CMD_edit_paste();
 	void STDMETHODCALLTYPE CMD_edit_clear();
 	void STDMETHODCALLTYPE CMD_fast_paste();
+	void STDMETHODCALLTYPE CMD_zoom(int);
 	int mousemove(int xPos, int yPos);
 	int lbuttonup(int xPos, int yPos);
 

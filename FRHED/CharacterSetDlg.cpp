@@ -49,6 +49,7 @@ INT_PTR CharacterSetDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 		{
 		case IDOK:
 			iFontSize = GetDlgItemInt(hDlg, IDC_CHSET_FONTSIZE, 0, TRUE);
+			iFontZoom = 0;
 			iCharacterSet = IsDlgButtonChecked(hDlg, IDC_CHSET_ANSI) ?
 				ANSI_FIXED_FONT : OEM_FIXED_FONT;
 			save_ini_data();
