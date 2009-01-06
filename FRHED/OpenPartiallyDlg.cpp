@@ -79,7 +79,7 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		}
 	}
 	else if (GetDlgItemText(hDlg, IDC_OPENPARTIAL_OFFSET, buf, 128) &&
-		sscanf(buf, "x%x", &iStartPL) == 0 &&
+		sscanf(buf, "x%llx", &iStartPL) == 0 &&
 		sscanf(buf, "%lld", &iStartPL) == 0)
 	{
 		MessageBox(hDlg, "Start offset not recognized.", "Open partially", MB_ICONERROR);
