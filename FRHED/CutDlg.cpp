@@ -24,7 +24,7 @@ BOOL CutDlg::OnInitDialog(HWND hDlg)
 	SetDlgItemText(hDlg, IDC_CUT_STARTOFFSET, buf);
 	sprintf(buf, "x%x", iEnd);
 	SetDlgItemText(hDlg, IDC_CUT_NUMBYTES, buf);
-	SetDlgItemInt(hDlg, IDC_CUT_NUMBYTES2, iEnd - iStart + 1, TRUE);
+	SetDlgItemInt(hDlg, IDC_CUT_ENDOFFSET, iEnd - iStart + 1, TRUE);
 	CheckDlgButton(hDlg, IDC_CUT_CLIPBOARD, iCutMode);
 	CheckDlgButton(hDlg, IDC_CUT_INCLUDEOFFSET, BST_CHECKED);
 	return TRUE;
@@ -62,7 +62,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 	}
 	else
 	{// Get number of bytes.
-		if (GetDlgItemText(hDlg, IDC_CUT_NUMBYTES2, buf, OffsetLen) &&
+		if (GetDlgItemText(hDlg, IDC_CUT_ENDOFFSET, buf, OffsetLen) &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
 			MessageBox(hDlg, "Number of bytes not recognized.", "Cut", MB_ICONERROR);
@@ -137,7 +137,7 @@ INT_PTR CutDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case IDC_CUT_INCLUDEOFFSET:
 		case IDC_CUT_NUMBYTES:
 			EnableWindow(GetDlgItem(hDlg, IDC_CUT_NUMBYTES), IsDlgButtonChecked(hDlg, IDC_CUT_INCLUDEOFFSET));
-			EnableWindow(GetDlgItem(hDlg, IDC_CUT_NUMBYTES2), IsDlgButtonChecked(hDlg, IDC_CUT_NUMBYTES));
+			EnableWindow(GetDlgItem(hDlg, IDC_CUT_ENDOFFSET), IsDlgButtonChecked(hDlg, IDC_CUT_NUMBYTES));
 			return TRUE;
 		}
 		break;

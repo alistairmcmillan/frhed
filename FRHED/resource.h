@@ -246,7 +246,7 @@
 #define IDC_CUT_INCLUDEOFFSET           350
 #define IDC_CUT_NUMBYTES                351
 #define IDC_CUT_NUMBEROFBYTES           352
-#define IDC_CUT_NUMBYTES2               353
+#define IDC_CUT_ENDOFFSET               353
 #define IDC_CUT_CLIPBOARD               354
 #define IDC_COPY_STARTOFFSET            355
 #define IDC_COPY_OFFSET                 356
