@@ -28,32 +28,49 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 
+/** @brief Max length of the offset number. */
+static const int OffsetLen = 16;
+
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to dialog.
+ * @return TRUE
+ */
 BOOL AddBmkDlg::OnInitDialog(HWND hDlg)
 {
-	char buf[32];
-	sprintf(buf, "x%x", iCurByte);
+	char buf[OffsetLen + 1] = {0};
+	_sntprintf(buf, RTL_NUMBER_OF(buf), _T("x%x"), iCurByte);
 	SetDlgItemText(hDlg, IDC_BMKADD_OFFSET, buf);
 	return TRUE;
 }
 
+/**
+ * @brief Handle dialog commands.
+ * @param [in] hDlg Handle to dialog.
+ * @param [in] wParam First param (depends on command).
+ * @param [in] lParam Second param (depends on command).
+ * @return TRUE if command (message) was handled, FALSE if not.
+ */
 BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 {
-	char buf[16];
+	char buf[OffsetLen + 1] = {0};
 	int i, offset;
-	char name[BMKTEXTMAX];
+	char name[BMKTEXTMAX] = {0};
 	switch (wParam)
 	{
 	case IDOK:
-		if (GetDlgItemText(hDlg, IDC_BMKADD_OFFSET, buf, 16) &&
+		if (GetDlgItemText(hDlg, IDC_BMKADD_OFFSET, buf, OffsetLen) &&
 			sscanf(buf, "x%x", &offset) == 0 &&
 			sscanf(buf, "%d", &offset) == 0)
 		{
-			MessageBox(hDlg, "Start offset not recognized.", "Add bookmark", MB_ICONERROR);
+			MessageBox(hDlg, "Start offset not recognized.", "Add bookmark",
+					MB_ICONERROR);
 			return TRUE;
 		}
 		if (offset < 0 || offset > DataArray.GetLength())
 		{
-			MessageBox(hDlg, "Can not set bookmark at that position.", "Add bookmark", MB_ICONERROR);
+			MessageBox(hDlg, "Can not set bookmark at that position.",
+					"Add bookmark", MB_ICONERROR);
 			return TRUE;
 		}
 		// Is there already a bookmark on this offset?
@@ -61,13 +78,15 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 		{
 			if (pbmkList[i].offset == offset)
 			{
-				MessageBox(hDlg, "There already is a bookmark on that position.", "Add bookmark", MB_ICONERROR);
+				MessageBox(hDlg, "There already is a bookmark on that position.",
+						"Add bookmark", MB_ICONERROR);
 				return TRUE;
 			}
 		}
 		// No bookmark on that position yet.
 		pbmkList[iBmkCount].offset = offset;
-		pbmkList[iBmkCount].name = GetDlgItemText(hDlg, IDC_BMKADD_NAME, name, BMKTEXTMAX) ? strdup(name) : 0;
+		pbmkList[iBmkCount].name = GetDlgItemText(hDlg, IDC_BMKADD_NAME, name,
+					BMKTEXTMAX) ? strdup(name) : 0;
 		iBmkCount++;
 		repaint();
 		// fall through
