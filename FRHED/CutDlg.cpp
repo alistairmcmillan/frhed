@@ -4,13 +4,22 @@
 #include "hexwdlg.h"
 #include "BinTrans.h"
 
+/** Length of the offset buffer. */
+static const int OffsetLen = 16;
+
 int CutDlg::iCutMode = 1;
 
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE
+ */
 BOOL CutDlg::OnInitDialog(HWND hDlg)
 {
 	int iStart = iGetStartOfSelection();
 	int iEnd = iGetEndOfSelection();
-	char buf[32];
+	char buf[OffsetLen + 1] = {0};
+
 	sprintf(buf, "x%x", iStart);
 	SetDlgItemText(hDlg, IDC_CUT_STARTOFFSET, buf);
 	sprintf(buf, "x%x", iEnd);
@@ -21,12 +30,19 @@ BOOL CutDlg::OnInitDialog(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Cut the data.
+ * This function cuts the data based on values user entered to the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE if the cutting succeeded, FALSE otherwise.
+ */
 BOOL CutDlg::Apply(HWND hDlg)
 {
-	char buf[64];
+	char buf[OffsetLen + 1] = {0};
 	int iOffset;
 	int iNumberOfBytes;
-	if (GetDlgItemText(hDlg, IDC_CUT_STARTOFFSET, buf, 64) &&
+
+	if (GetDlgItemText(hDlg, IDC_CUT_STARTOFFSET, buf, OffsetLen) &&
 		sscanf(buf, "x%x", &iOffset) == 0 &&
 		sscanf(buf, "%d", &iOffset) == 0)
 	{
@@ -35,7 +51,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 	}
 	if (IsDlgButtonChecked(hDlg, IDC_CUT_INCLUDEOFFSET))
 	{
-		if (GetDlgItemText(hDlg, IDC_CUT_NUMBYTES, buf, 64) &&
+		if (GetDlgItemText(hDlg, IDC_CUT_NUMBYTES, buf, OffsetLen) &&
 			sscanf(buf, "x%x", &iNumberOfBytes) == 0 &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
@@ -46,7 +62,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 	}
 	else
 	{// Get number of bytes.
-		if (GetDlgItemText(hDlg, IDC_CUT_NUMBYTES2, buf, 64) &&
+		if (GetDlgItemText(hDlg, IDC_CUT_NUMBYTES2, buf, OffsetLen) &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
 			MessageBox(hDlg, "Number of bytes not recognized.", "Cut", MB_ICONERROR);
