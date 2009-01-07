@@ -3102,18 +3102,33 @@ int HexEditorWindow::create_bc_translation(char **ppd, char *src, int srclen)
 	}
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Cut- and Delete-commands handler.
+ * @param [in] iMode 0 if DELETE, 1 if CUT.
+ */
 void HexEditorWindow::CMD_edit_cut(int iMode)
 {
-	CutDlg::iCutMode = iMode;
+	if (iMode == 0)
+		CutDlg::iCutMode = CutDlg::CUT_DELETE;
+	else if (iMode == 1)
+		CutDlg::iCutMode = CutDlg::CUT_CUT;
+	else
+		assert(false); // Invalid cut mode
+
 	static_cast<dialog<CutDlg>*>(this)->DoModal(hwnd);
 }
 
+/**
+ * @brief Cut-command handler.
+ */
 void HexEditorWindow::CMD_edit_cut()
 {
 	CMD_edit_cut(1);
 }
 
+/**
+ * @brief Delete-command handler.
+ */
 void HexEditorWindow::CMD_edit_clear()
 {
 	CMD_edit_cut(0);

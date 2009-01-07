@@ -7,7 +7,7 @@
 /** Length of the offset buffer. */
 static const int OffsetLen = 16;
 
-int CutDlg::iCutMode = 1;
+CutDlg::CUT_MODE CutDlg::iCutMode = CutDlg::CUT_CUT;
 
 /**
  * @brief Initialize the dialog.
@@ -28,7 +28,7 @@ BOOL CutDlg::OnInitDialog(HWND hDlg)
 	SetDlgItemText(hDlg, IDC_CUT_ENDOFFSET, buf);
 	SetDlgItemInt(hDlg, IDC_CUT_NUMBYTES, iEnd - iStart + 1, TRUE);
 
-	CheckDlgButton(hDlg, IDC_CUT_CLIPBOARD, iCutMode);
+	CheckDlgButton(hDlg, IDC_CUT_CLIPBOARD, iCutMode == CutDlg::CUT_CUT);
 	return TRUE;
 }
 
@@ -51,6 +51,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 		MessageBox(hDlg, "Start offset not recognized.", "Cut", MB_ICONERROR);
 		return FALSE;
 	}
+
 	if (IsDlgButtonChecked(hDlg, IDC_CUT_INCLUDEOFFSET))
 	{
 		if (GetDlgItemText(hDlg, IDC_CUT_ENDOFFSET, buf, OffsetLen) &&
@@ -71,7 +72,13 @@ BOOL CutDlg::Apply(HWND hDlg)
 			return FALSE;
 		}
 	}
-	iCutMode = IsDlgButtonChecked(hDlg, IDC_CUT_CLIPBOARD);
+
+	UINT res = IsDlgButtonChecked(hDlg, IDC_CUT_CLIPBOARD);
+	if (res == BST_CHECKED)
+		iCutMode = CutDlg::CUT_CUT;
+	else if (res == BST_UNCHECKED)
+		iCutMode = CutDlg::CUT_DELETE;
+
 	// Can requested number be cut?
 	// DataArray.GetLength ()-iCutOffset = number of bytes from current pos. to end.
 	if (DataArray.GetLength() - iOffset < iNumberOfBytes)
@@ -79,10 +86,9 @@ BOOL CutDlg::Apply(HWND hDlg)
 		MessageBox(hDlg, "Can't cut more bytes than are present.", "Cut", MB_ICONERROR);
 		return FALSE;
 	}
-	// OK
-	//int newlen = DataArray.GetLength () - iCutNumberOfBytes;
+
 	// Cut to clipboard?
-	if (iCutMode)
+	if (iCutMode == CutDlg::CUT_CUT)
 	{
 		// Transfer to cipboard.
 		int destlen = Text2BinTranslator::iBytes2BytecodeDestLen((char*) &DataArray[iOffset], iNumberOfBytes);
@@ -102,7 +108,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 		SetClipboardData(CF_TEXT, hGlobal);
 		CloseClipboard();
 	}
-	// Cut data.
+
+	// Delete data.
 	if (!DataArray.RemoveAt(iOffset, iNumberOfBytes))
 	{
 		MessageBox(hDlg, "Could not cut data.", "Cut", MB_ICONERROR);
