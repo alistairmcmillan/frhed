@@ -23,10 +23,12 @@ BOOL CutDlg::OnInitDialog(HWND hDlg)
 	sprintf(buf, "x%x", iStart);
 	SetDlgItemText(hDlg, IDC_CUT_STARTOFFSET, buf);
 	sprintf(buf, "x%x", iEnd);
-	SetDlgItemText(hDlg, IDC_CUT_NUMBYTES, buf);
-	SetDlgItemInt(hDlg, IDC_CUT_ENDOFFSET, iEnd - iStart + 1, TRUE);
-	CheckDlgButton(hDlg, IDC_CUT_CLIPBOARD, iCutMode);
+
 	CheckDlgButton(hDlg, IDC_CUT_INCLUDEOFFSET, BST_CHECKED);
+	SetDlgItemText(hDlg, IDC_CUT_ENDOFFSET, buf);
+	SetDlgItemInt(hDlg, IDC_CUT_NUMBYTES, iEnd - iStart + 1, TRUE);
+
+	CheckDlgButton(hDlg, IDC_CUT_CLIPBOARD, iCutMode);
 	return TRUE;
 }
 
@@ -51,7 +53,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 	}
 	if (IsDlgButtonChecked(hDlg, IDC_CUT_INCLUDEOFFSET))
 	{
-		if (GetDlgItemText(hDlg, IDC_CUT_NUMBYTES, buf, OffsetLen) &&
+		if (GetDlgItemText(hDlg, IDC_CUT_ENDOFFSET, buf, OffsetLen) &&
 			sscanf(buf, "x%x", &iNumberOfBytes) == 0 &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
@@ -62,7 +64,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 	}
 	else
 	{// Get number of bytes.
-		if (GetDlgItemText(hDlg, IDC_CUT_ENDOFFSET, buf, OffsetLen) &&
+		if (GetDlgItemText(hDlg, IDC_CUT_NUMBYTES, buf, OffsetLen) &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
 			MessageBox(hDlg, "Number of bytes not recognized.", "Cut", MB_ICONERROR);
@@ -118,6 +120,14 @@ BOOL CutDlg::Apply(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Process messages.
+ * @param [in] hDlg Handle to dialog.
+ * @param [in] iMsg Message ID.
+ * @param [in] wParam First message parameter (depends on message).
+ * @param [in] lParam Second message parameter (depends on message).
+ * @return TRUE if message was handled, FALSE if ignored.
+ */
 INT_PTR CutDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
@@ -130,14 +140,23 @@ INT_PTR CutDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case IDOK:
 			if (Apply(hDlg))
 			{
-			case IDCANCEL:
 				EndDialog(hDlg, wParam);
 			}
 			return TRUE;
-		case IDC_CUT_INCLUDEOFFSET:
-		case IDC_CUT_NUMBYTES:
-			EnableWindow(GetDlgItem(hDlg, IDC_CUT_NUMBYTES), IsDlgButtonChecked(hDlg, IDC_CUT_INCLUDEOFFSET));
-			EnableWindow(GetDlgItem(hDlg, IDC_CUT_ENDOFFSET), IsDlgButtonChecked(hDlg, IDC_CUT_NUMBYTES));
+		case IDCANCEL:
+			EndDialog(hDlg, wParam);
+			return TRUE;
+		}
+		
+		// Check for controls
+		switch (LOWORD(wParam))
+		{
+		case IDC_CUT_INCLUDEOFFSET:  
+		case IDC_CUT_NUMBEROFBYTES:
+			EnableWindow(GetDlgItem(hDlg, IDC_CUT_NUMBYTES),
+						IsDlgButtonChecked(hDlg, IDC_CUT_NUMBEROFBYTES));
+			EnableWindow(GetDlgItem(hDlg, IDC_CUT_ENDOFFSET),
+						IsDlgButtonChecked(hDlg, IDC_CUT_INCLUDEOFFSET));
 			return TRUE;
 		}
 		break;
