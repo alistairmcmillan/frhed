@@ -190,7 +190,7 @@ INT_PTR EncodeDecodeDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 				mc.dwSize = upper - lower + 1;
 				mc.fpEncodeFunc(&mc);
 				iFileChanged = TRUE;
-				bFilestatusChanged = TRUE;
+				bFilestatusChanged = true;
 				repaint();
 			}
 			// fall through

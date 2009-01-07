@@ -35,7 +35,7 @@ BOOL PasteDlg::OnInitDialog(HWND hDlg)
 		EnableWindow(GetDlgItem(hDlg, IDC_PASTE_OVERWRITE), FALSE);
 		EnableWindow(GetDlgItem(hDlg, IDC_PASTE_INSERT), FALSE);
 	}
-	else if (iInsertMode) // iPasteMode = 2
+	else if (bInsertMode) // iPasteMode = 2
 	{
 		CheckDlgButton(hDlg, IDC_PASTE_INSERT, BST_CHECKED);
 	}
@@ -99,7 +99,7 @@ BOOL PasteDlg::Apply(HWND hDlg)
 			i += destlen + iPasteSkip;
 		}
 		iFileChanged = TRUE;
-		bFilestatusChanged = TRUE;
+		bFilestatusChanged = true;
 		resize_window();
 	}
 	else
@@ -122,7 +122,7 @@ BOOL PasteDlg::Apply(HWND hDlg)
 			}
 		}
 		iFileChanged = TRUE;
-		bFilestatusChanged = TRUE;
+		bFilestatusChanged = true;
 		repaint();
 	}
 	delete [] pcPastestring;

@@ -154,7 +154,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 		}
 		iEndOfSelection = iStartOfSelection + out.GetLength() - 1;
 	}
-	bFilestatusChanged = TRUE;
+	bFilestatusChanged = true;
 	iFileChanged = TRUE;
 	return TRUE;
 }

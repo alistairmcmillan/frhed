@@ -49,7 +49,7 @@ BOOL AppendDlg::Apply(HWND hDlg)
 	for (int i = 0 ; i < iAppendbytes ; i++)
 		DataArray[oldupbound + i] = 0;
 	iFileChanged = TRUE;
-	bFilestatusChanged = TRUE;
+	bFilestatusChanged = true;
 	resize_window();
 	return TRUE;
 }

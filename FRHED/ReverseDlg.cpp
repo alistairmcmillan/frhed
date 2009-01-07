@@ -107,7 +107,7 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 			}
 			SetCursor (LoadCursor (NULL, IDC_ARROW));
 			iFileChanged = TRUE;
-			bFilestatusChanged = TRUE;
+			bFilestatusChanged = true;
 			repaint();
 			// fall through
 		case IDCANCEL:

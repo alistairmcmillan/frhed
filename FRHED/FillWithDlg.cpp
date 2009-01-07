@@ -330,7 +330,7 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 				if (curtyp) _close(FWFile);//close file
 				SetCursor (LoadCursor (NULL, IDC_ARROW));
 				iFileChanged = TRUE;//mark as changed
-				bFilestatusChanged = TRUE;
+				bFilestatusChanged = true;
 				repaint();//you tell me
 			}
 			// fall through

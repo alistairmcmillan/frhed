@@ -308,14 +308,14 @@ protected:
 	bookmark pbmkList[BMKMAX]; /**< List of bookmarks. */
 	int iMRU_count; /**< Count of MRU list items active. */
 	char strMRU[MRUMAX][_MAX_PATH]; /**< List of MRU items. */
-	int bFilestatusChanged;
+	bool bFilestatusChanged;
 	int bScrollTimerSet;
 	int iMouseX; /**< Current mouse X position. */
 	int iMouseY; /**< Current mouse Y position. */
-	int bUnsignedView; /**< View shows byte values as unsigned? */
+	bool bUnsignedView; /**< View shows byte values as unsigned? */
 	HFONT hFont;
-	int iInsertMode; /**< Editing mode is in insert-mode? */
-	int bFileNeverSaved;
+	bool bInsertMode; /**< Editing mode is in insert-mode? */
+	bool bFileNeverSaved;
 	SimpleArray<unsigned char> DataArray;
 	int bLButtonDown, bSelecting, iLBDownX, iLBDownY;
 	int cxChar, cxCaps, cyChar, cxClient, cyClient, cxBuffer, cyBuffer, iNumlines;

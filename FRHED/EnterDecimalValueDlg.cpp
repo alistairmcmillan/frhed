@@ -148,7 +148,7 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 		--iDecValDlgTimes;
 	}
 	iFileChanged = TRUE;
-	bFilestatusChanged = TRUE;
+	bFilestatusChanged = true;
 	repaint();
 	return TRUE;
 }

@@ -77,7 +77,7 @@ BOOL BitManipDlg::Apply(HWND hDlg, WPARAM wParam)
 	{
 		DataArray[iCurByte] = cBitValue;
 		iFileChanged = TRUE;
-		bFilestatusChanged = TRUE;
+		bFilestatusChanged = true;
 		repaint();
 		return TRUE;
 	}

@@ -96,7 +96,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 	if (iCurByte < 0)
 		iCurByte = 0;
 	iFileChanged = TRUE;
-	bFilestatusChanged = TRUE;
+	bFilestatusChanged = true;
 	bSelected = FALSE;
 	resize_window();
 	return TRUE;

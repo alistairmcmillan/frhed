@@ -123,12 +123,12 @@ HexEditorWindow::HexEditorWindow()
 	while (iMRU_count)
 		sprintf(strMRU[--iMRU_count], "dummy%d", iMRU_count);
 
-	bFilestatusChanged = TRUE;
+	bFilestatusChanged = true;
 	iBinaryMode = ENDIAN_LITTLE;
-	bUnsignedView = TRUE;
+	bUnsignedView = true;
 	iFontSize = 10;
 	iFontZoom = 0;
-	iInsertMode = FALSE;
+	bInsertMode = false;
 	iTextColorValue = RGB(0,0,0);
 	iBkColorValue = RGB(255,255,255);
 	iSepColorValue = RGB(192,192,192);
@@ -155,7 +155,7 @@ HexEditorWindow::HexEditorWindow()
 	iCharSpace = 1;
 	iEnteringMode = BYTES;
 	iFileChanged = FALSE;
-	bFileNeverSaved = TRUE;
+	bFileNeverSaved = true;
 
 	iCharacterSet = ANSI_FIXED_FONT;
 
@@ -359,12 +359,12 @@ int HexEditorWindow::load_file(const char *fname)
 	}
 	if (bLoaded)
 	{
-		bFileNeverSaved = FALSE;
+		bFileNeverSaved = false;
 		bPartialStats = 0;
 		bPartialOpen = FALSE;
 		// Update MRU list.
 		update_MRU();
-		bFilestatusChanged = TRUE;
+		bFilestatusChanged = true;
 		iVscrollMax = 0;
 		iVscrollPos = 0;
 		iHscrollMax = 0;
@@ -856,7 +856,7 @@ void HexEditorWindow::character(char ch)
 		bSelected = FALSE;//Deselect
 		resize_window();//Redraw stuff
 	}
-	else if (iInsertMode && iCurNibble == 0 || iCurByte == DataArray.GetLength())
+	else if (bInsertMode && iCurNibble == 0 || iCurByte == DataArray.GetLength())
 	{
 		// caret at EOF
 		if (!DataArray.InsertAtGrow(iCurByte, 0, 1))
@@ -896,7 +896,7 @@ void HexEditorWindow::character(char ch)
 		++iCurByte;
 	}
 	iFileChanged = TRUE;
-	bFilestatusChanged = TRUE;
+	bFilestatusChanged = true;
 	snap_caret();
 	repaint(iByteLine, iCurByte / iBytesPerLine);
 }
@@ -1564,7 +1564,7 @@ void HexEditorWindow::set_wnd_title()
 			strcat (buf, " - ");
 			strcat (buf, ApplicationName);
 			SetWindowText (hwndMain, buf);
-			bFilestatusChanged = FALSE;
+			bFilestatusChanged = false;
 		}
 		// Selection going on.
 		if (bSelected)
@@ -1748,7 +1748,7 @@ void HexEditorWindow::set_wnd_title()
 		{
 			strcat (buf, " / READ");
 		}
-		else if (iInsertMode)
+		else if (bInsertMode)
 		{
 			strcat(buf, " / INS");
 		}
@@ -3123,7 +3123,7 @@ int HexEditorWindow::CMD_new(const char *title)
 	delete Drive;
 	Drive = 0;
 
-	bFileNeverSaved = TRUE;
+	bFileNeverSaved = true;
 	bSelected = FALSE;
 //Pabs replaced bLButtonIsDown with bSelecting & inserted
 	//bMoving = FALSE;
@@ -3131,7 +3131,7 @@ int HexEditorWindow::CMD_new(const char *title)
 	//bDroppedHere = FALSE;
 //end
 	iFileChanged = FALSE;
-	bFilestatusChanged = TRUE;
+	bFilestatusChanged = true;
 	iVscrollMax = 0;
 	iVscrollPos = 0;
 	iHscrollMax = 0;
@@ -3177,8 +3177,8 @@ int HexEditorWindow::CMD_save_as()
 		// File was saved.
 		GetLongPathNameWin32(szFileName, filename);
 		iFileChanged = FALSE;
-		bFilestatusChanged = TRUE;
-		bFileNeverSaved = FALSE;
+		bFilestatusChanged = true;
+		bFileNeverSaved = false;
 		bPartialStats = 0;
 		bPartialOpen = FALSE;
 		update_MRU();
@@ -3280,7 +3280,7 @@ int HexEditorWindow::CMD_save()
 		{
 			done = 1;
 			iFileChanged = FALSE;
-			bFilestatusChanged = TRUE;
+			bFilestatusChanged = true;
 			set_wnd_title();
 		}
 		_close(filehandle);
@@ -3301,7 +3301,7 @@ int HexEditorWindow::CMD_save()
 	{
 		done = 1;
 		iFileChanged = FALSE;
-		bFilestatusChanged = TRUE;
+		bFilestatusChanged = true;
 		bPartialStats = 0;
 		bPartialOpen = FALSE;
 		set_wnd_title();
@@ -3644,7 +3644,7 @@ void HexEditorWindow::CMD_zoom(int iAmount)
 //-------------------------------------------------------------------
 void HexEditorWindow::CMD_toggle_insertmode()
 {
-	iInsertMode = !iInsertMode;
+	bInsertMode = !bInsertMode;
 	set_wnd_title();
 }
 
@@ -3653,12 +3653,12 @@ void HexEditorWindow::CMD_on_backspace()
 {
 	if (iCurByte <= 0)
 		return;
-	if (iInsertMode)
+	if (bInsertMode)
 	{
 		// INSERT-mode: If one exists delete previous byte.
 		DataArray.RemoveAt(--iCurByte, 1);
 		iFileChanged = TRUE;
-		bFilestatusChanged = TRUE;
+		bFilestatusChanged = true;
 		set_wnd_title();
 		resize_window();
 	}
@@ -3921,7 +3921,8 @@ void HexEditorWindow::start_mouse_operation()
 		{
 			DataArray.RemoveAt(iStartOfSelSetting, iEndOfSelSetting - iStartOfSelSetting + 1);
 			bSelected = FALSE;
-			iFileChanged = bFilestatusChanged = TRUE;
+			iFileChanged = TRUE;
+			bFilestatusChanged = true;
 			iCurByte = iStartOfSelSetting;
 			resize_window();
 		}
@@ -4136,9 +4137,9 @@ void HexEditorWindow::CMD_open_partially()
 	// If read-only mode on opening is enabled or the file is read only:
 	bReadOnly = bOpenReadOnly || -1 == _access(szFileName, 02); //Pabs added call to _access
 	strcpy(filename, szFileName);
-	bFileNeverSaved = FALSE;
-	bFilestatusChanged = TRUE;
-	bFileNeverSaved = FALSE;
+	bFileNeverSaved = false;
+	bFilestatusChanged = true;
+	bFileNeverSaved = false;
 	bPartialOpen = TRUE;
 	resize_window();
 }
@@ -4816,7 +4817,7 @@ void HexEditorWindow::RefreshCurrentTrack()
 			CopyMemory(DataArray, Track.GetObjectMemory(), BytesPerSector);
 			bReadOnly = TRUE;
 			sprintf(filename, "%s:Sector %I64d", (LPCSTR) SelectedPartitionInfo->GetNameAsString(), CurrentSectorNumber);
-			bFileNeverSaved = FALSE;
+			bFileNeverSaved = false;
 			iVscrollMax = 0;
 			iVscrollPos = 0;
 			iHscrollMax = 0;
@@ -4824,8 +4825,8 @@ void HexEditorWindow::RefreshCurrentTrack()
 			iCurByte = 0;
 			iCurNibble = 0;
 			iFileChanged = FALSE;
-			bFilestatusChanged = TRUE;
-			bFileNeverSaved = FALSE;
+			bFilestatusChanged = true;
+			bFileNeverSaved = false;
 			bPartialOpen = TRUE;
 			resize_window();
 		}
@@ -5227,8 +5228,8 @@ void HexEditorWindow::CMD_revert()
 					iVscrollMax = iVscrollPos = iHscrollMax = iHscrollPos =
 					iVscrollPos = iCurByte = iCurNibble = 0;
 					iFileChanged = FALSE;
-					bFilestatusChanged = TRUE;
-					bFileNeverSaved = FALSE;
+					bFilestatusChanged = true;
+					bFileNeverSaved = false;
 					bSelected = FALSE;
 					resize_window();
 				}
@@ -5357,7 +5358,7 @@ void HexEditorWindow::CMD_insertfile()
 				if (inslen || bSelected)
 				{
 					iFileChanged = TRUE;
-					bFilestatusChanged = TRUE;
+					bFilestatusChanged = true;
 					bSelected = inslen != 0;
 					resize_window();
 				}
@@ -5557,7 +5558,8 @@ void HexEditorWindow::CMD_open_hexdump()
 			bSelected =
 			iVscrollMax = iVscrollPos = iHscrollMax = iHscrollPos =
 			iCurByte = iCurNibble = FALSE;
-		bFileNeverSaved = bFilestatusChanged = TRUE;
+		bFileNeverSaved = true;
+		bFilestatusChanged = true;
 		// If read-only mode on opening is enabled:
 		if (bOpenReadOnly)
 			bReadOnly = TRUE;
@@ -5836,7 +5838,8 @@ void HexEditorWindow::status_bar_click(bool left)
 							}
 							DataArray[iCurByte] = c;
 							//Redraw the data & status bar etc
-							bFilestatusChanged = iFileChanged = TRUE;
+							bFilestatusChanged = true;
+							iFileChanged = TRUE;
 							repaint(iCurByte / iBytesPerLine);
 
 						}//In actual bits
@@ -5891,10 +5894,10 @@ void HexEditorWindow::status_bar_click(bool left)
 						if (bReadOnly)
 						{
 							bReadOnly = 0;
-							iInsertMode = 1;
+							bInsertMode = true;
 						}
-						else if (iInsertMode)
-							iInsertMode = 0;
+						else if (bInsertMode)
+							bInsertMode = false;
 						else
 							bReadOnly = 1;
 					}
@@ -5907,12 +5910,12 @@ void HexEditorWindow::status_bar_click(bool left)
 						if (bReadOnly)
 						{
 							bReadOnly = 0;
-							iInsertMode= 0;
+							bInsertMode= false;
 						}
-						else if (iInsertMode)
+						else if (bInsertMode)
 							bReadOnly = 1;
 						else
-							iInsertMode = 1;
+							bInsertMode = true;
 					}
 				}
 				break;
@@ -6095,7 +6098,7 @@ void HexEditorWindow::CMD_move_copy(int iMove1stEnd, int iMove2ndEndorLen, bool 
 	}
 
 	iFileChanged = TRUE;
-	bFilestatusChanged = TRUE;
+	bFilestatusChanged = true;
 	if (redraw)
 	{
 		if (iMoveOpTyp == OPTYP_COPY)

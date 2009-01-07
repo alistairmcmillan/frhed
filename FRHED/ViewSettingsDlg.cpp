@@ -228,7 +228,13 @@ BOOL ViewSettingsDlg::Apply(HWND hDlg)
 	GetDlgItemText(hDlg, IDC_SETTINGS_EDITOR, TexteditorName, RTL_NUMBER_OF(TexteditorName));
 	iAutomaticBPL = IsDlgButtonChecked(hDlg, IDC_SETTINGS_ADJUST_BYTELINE);
 	bAutoOffsetLen = IsDlgButtonChecked(hDlg, IDC_SETTINGS_ADJOFFSET);
-	bUnsignedView = IsDlgButtonChecked(hDlg, IDC_SETTINGS_CARETUNSIGN);
+
+	UINT res = IsDlgButtonChecked(hDlg, IDC_SETTINGS_CARETUNSIGN);
+	if (res == BST_CHECKED)
+		bUnsignedView = true;
+	else if (res == BST_UNCHECKED)
+		bUnsignedView = false;
+
 	bOpenReadOnly = IsDlgButtonChecked(hDlg, IDC_SETTINGS_OPENRO);
 	int i = SendMessage(hCbLang, CB_GETCURSEL, 0, 0);
 	if (i != -1)
