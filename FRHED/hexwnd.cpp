@@ -172,12 +172,18 @@ HexEditorWindow::HexEditorWindow()
 	area = AREA_NONE;
 }
 
-//--------------------------------------------------------------------------------------------
+/**
+ * Destructor.
+ * Release resources and free memory before the app closes.
+ */
 HexEditorWindow::~HexEditorWindow()
 {
 	if (hFont)
 		DeleteObject(hFont);
 	delete Drive;
+
+	for (int i = 0; i < iBmkCount; ++i)
+		free(pbmkList[i].name);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -4100,8 +4106,13 @@ void HexEditorWindow::CMD_clear_all_bmk()
 	if (response != IDYES)
 		return;
 	while (iBmkCount)
+	{
 		if (char *name = pbmkList[--iBmkCount].name)
+		{
 			free(name);
+			name = NULL;
+		}
+	}
 	repaint();
 }
 

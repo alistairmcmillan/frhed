@@ -50,7 +50,10 @@ BOOL RemoveBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	case IDOK:
 		i = SendDlgItemMessage(hDlg, IDC_REMOVEBMK_LIST, LB_GETCURSEL, 0, 0);
 		if (char *name = pbmkList[i].name)
+		{
 			free(name);
+			name = NULL;
+		}
 		--iBmkCount;
 		for ( ; i < iBmkCount ; i++)
 			pbmkList[i] = pbmkList[i + 1];
