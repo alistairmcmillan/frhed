@@ -59,10 +59,13 @@ INT_PTR CALLBACK TmplDisplayDlgProc(HWND, UINT, WPARAM, LPARAM);
 #define TPL_TYPE_MAXLEN 16
 #define TPL_NAME_MAXLEN 128
 
+/**
+ * @brief Bookmark.
+ */
 typedef struct
 {
-	int offset;
-	char* name;
+	int offset; /**< Offset of the bookmark in bookmarks list. */
+	char* name; /**< Name of the bookmark. */
 } bookmark;
 
 //--------------------------------------------------------------------------------------------
@@ -76,6 +79,11 @@ class load_hexfile_1;
 
 interface CDropTarget;
 
+/**
+ * @brief Hex editor window.
+ * This class is the class handling the hex editor window. Dialogs are also
+ * derived from this class.
+ */
 class HexEditorWindow
 : public IHexEditorWindow
 , public IHexEditorWindow::Colors
@@ -274,14 +282,14 @@ public:
 public:
 	int iWindowShowCmd, iWindowX, iWindowY, iWindowWidth, iWindowHeight;
 	int iInstCount;
-	HWND hwndMain;
-	HWND hwndToolBar;
-	HWND hwndStatusBar;
-	HACCEL hAccel;
+	HWND hwndMain; /**< Handle to main window. */
+	HWND hwndToolBar; /**< Handle to main window's toolbar. */
+	HWND hwndStatusBar; /**< Handle to main window's statusbar. */
+	HACCEL hAccel; /**< Handle to accelerator keys list. */
 
 protected:
 //Pabs inserted
-	int bMakeBackups;//Backup the file when saving
+	int bMakeBackups; /**< Backup the file when saving. */
 //end
 	static int ScrollDelay;
 	static int ScrollInterval;
@@ -296,16 +304,17 @@ protected:
 	int bOpenReadOnly;//Pabs inserted ", iPartialOpenLen, iPartialFileLen, bPartialStats"
 	__int64 iPartialOffset, iPartialFileLen;
 	int bPartialOpen, iPartialOpenLen, bPartialStats;
-	int iBmkCount;
-	bookmark pbmkList[BMKMAX];
-	int iMRU_count;
-	char strMRU[MRUMAX][_MAX_PATH];
+	int iBmkCount; /**< Count of bookmarks. */
+	bookmark pbmkList[BMKMAX]; /**< List of bookmarks. */
+	int iMRU_count; /**< Count of MRU list items active. */
+	char strMRU[MRUMAX][_MAX_PATH]; /**< List of MRU items. */
 	int bFilestatusChanged;
 	int bScrollTimerSet;
-	int iMouseX, iMouseY;
-	int bUnsignedView;
+	int iMouseX; /**< Current mouse X position. */
+	int iMouseY; /**< Current mouse Y position. */
+	int bUnsignedView; /**< View shows byte values as unsigned? */
 	HFONT hFont;
-	int iInsertMode;
+	int iInsertMode; /**< Editing mode is in insert-mode? */
 	int bFileNeverSaved;
 	SimpleArray<unsigned char> DataArray;
 	int bLButtonDown, bSelecting, iLBDownX, iLBDownY;
