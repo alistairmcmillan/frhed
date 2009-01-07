@@ -41,6 +41,12 @@ BOOL AddBmkDlg::OnInitDialog(HWND hDlg)
 	char buf[OffsetLen + 1] = {0};
 	_sntprintf(buf, RTL_NUMBER_OF(buf), _T("x%x"), iCurByte);
 	SetDlgItemText(hDlg, IDC_BMKADD_OFFSET, buf);
+	
+	// Limit edit text lengths
+	HWND edit = GetDlgItem(hDlg, IDC_BMKADD_OFFSET);
+	SendMessage(edit, EM_SETLIMITTEXT, OffsetLen, 0);
+	edit = GetDlgItem(hDlg, IDC_BMKADD_NAME);
+	SendMessage(edit, EM_SETLIMITTEXT, BMKTEXTMAX, 0);
 	return TRUE;
 }
 
