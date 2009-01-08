@@ -6,6 +6,7 @@ For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 
 Frhed 1.3.5
   Limit edit field lengths in Add Bookmark -dialog (r279)
+  Remove "Frhed is being started for the first time" -message (#2489863)
   Bugfix: Byte count edit field was not enabled in Cut/Delete dialog (r284)
 
 Frhed 1.3.4 - 2009-01-06 (r270)

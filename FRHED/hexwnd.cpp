@@ -3456,6 +3456,8 @@ void HexEditorWindow::CMD_color_settings(COLORREF *pColor)
 /**
  * @brief Read options.
  * @param [in] key Sub-key in registry for options (version string).
+ * @todo Some error checking for reading values would be nice...
+ * @todo Remove @p key after the Upgrade-feature and dialog have been removed.
  */
 void HexEditorWindow::read_ini_data(char *key)
 {
@@ -3541,8 +3543,6 @@ void HexEditorWindow::read_ini_data(char *key)
 	else
 	{
 		// There is no data. Write with default values.
-		MessageBox(hwnd, "Frhed is being started for the first time\n"
-			"and will be attempting to write to the registry.", "Initialize registry", MB_OK);
 		save_ini_data();//end
 	}
 }
