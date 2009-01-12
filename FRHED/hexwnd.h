@@ -303,7 +303,9 @@ protected:
 
 	int bOpenReadOnly;//Pabs inserted ", iPartialOpenLen, iPartialFileLen, bPartialStats"
 	__int64 iPartialOffset, iPartialFileLen;
-	int bPartialOpen, iPartialOpenLen, bPartialStats;
+	bool bPartialOpen; /**< Was file opened partially? */
+	int iPartialOpenLen; /**< Length of the partially opened block from file. */
+	bool bPartialStats;
 	int iBmkCount; /**< Count of bookmarks. */
 	bookmark pbmkList[BMKMAX]; /**< List of bookmarks. */
 	int iMRU_count; /**< Count of MRU list items active. */

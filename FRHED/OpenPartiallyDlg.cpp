@@ -29,8 +29,13 @@
 #include "hexwdlg.h"
 
 int OpenPartiallyDlg::filehandle = 0;
-int OpenPartiallyDlg::bShowFileStatsPL = 0;
+bool OpenPartiallyDlg::bShowFileStatsPL = false;
 
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE.
+ */
 BOOL OpenPartiallyDlg::OnInitDialog(HWND hDlg)
 {
 	__int64 iPLFileLen = _filelengthi64(filehandle);
@@ -41,14 +46,21 @@ BOOL OpenPartiallyDlg::OnInitDialog(HWND hDlg)
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%lld", iPLFileLen);
 	SetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTES, buf);
 	CheckDlgButton(hDlg, IDC_OPENPARTIAL_BEGINOFF, BST_CHECKED);
-	CheckDlgButton(hDlg, IDC_OPENPARTIAL_RELOFFSET, bShowFileStatsPL);
+	const UINT state = bShowFileStatsPL ? BST_CHECKED : BST_UNCHECKED;
+	CheckDlgButton(hDlg, IDC_OPENPARTIAL_RELOFFSET, state);
 	return TRUE;
 }
 
+/**
+ * @brief Apply user's selections and open the file.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE if file was successfully opened, FALSE otherwise.
+ */
 BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 {
 	__int64 iPLFileLen = _filelengthi64(filehandle);
-	bShowFileStatsPL = IsDlgButtonChecked(hDlg, IDC_OPENPARTIAL_RELOFFSET);
+	const UINT state = IsDlgButtonChecked(hDlg, IDC_OPENPARTIAL_RELOFFSET);
+	bShowFileStatsPL = state == BST_CHECKED;
 	char buf[128] = {0};
 	__int64 iNumBytesPl;
 	

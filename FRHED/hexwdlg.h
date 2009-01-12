@@ -351,13 +351,18 @@ private:
 	BOOL Apply(HWND, WPARAM);
 };
 
+/**
+ * @brief Dialog for opening file partially.
+ * This dialog allows user to select range of bytes in file to open.
+ * Only the selected range is opened into the hex editor.
+ */
 class OpenPartiallyDlg : public HexEditorWindow
 {
 public:
 	enum { IDD = IDD_OPEN_PARTIAL_DIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 	static int filehandle;
-	static int bShowFileStatsPL;
+	static bool bShowFileStatsPL;
 private:
 	BOOL OnInitDialog(HWND);
 	BOOL Apply(HWND);

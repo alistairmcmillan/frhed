@@ -199,7 +199,7 @@ private:
 	int iBytesPerLine;
 	int iAutomaticBPL;
 	int iCharacterSet;
-	int bPartialStats;
+	bool bPartialStats;
 	int iPartialOffset;
 
 	load_hexfile_1(HexEditorWindow &hexwnd)

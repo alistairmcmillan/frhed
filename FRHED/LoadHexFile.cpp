@@ -191,7 +191,7 @@ bool load_hexfile_1::StreamIn(hexfile_stream &hexin)
 				else
 				{
 					fo = tmp;
-					bPartialStats = TRUE;
+					bPartialStats = true;
 					iPartialOffset = tmp;
 				}
 			}

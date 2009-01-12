@@ -77,7 +77,9 @@ TCHAR HexEditorWindow::EncodeDlls[MAX_PATH] = _T("FRHEXDES.DLL;FRHEDX.DLL");
 int iMovePos;
 OPTYP iMoveOpTyp;
 
-//--------------------------------------------------------------------------------------------
+/**
+ * @brief Constructor.
+ */
 HexEditorWindow::HexEditorWindow()
 {
 	Drive = 0;
@@ -115,8 +117,8 @@ HexEditorWindow::HexEditorWindow()
 
 	bOpenReadOnly = bReadOnly = FALSE;
 	iPartialOffset = 0;
-	bPartialStats = 0;
-	bPartialOpen = FALSE;
+	bPartialStats = false;
+	bPartialOpen = false;
 	iBmkCount = 0;
 
 	iMRU_count = MRUMAX;
@@ -323,7 +325,11 @@ void HexEditorWindow::free_string(BSTR text)
 	SysFreeString(text);
 }
 
-//--------------------------------------------------------------------------------------------
+/**
+ * @brief Load a file.
+ * @param [in] fname Name of file to load.
+ * @return TRUE if the file was loaded succesfully, FALSE otherwise.
+ */
 int HexEditorWindow::load_file(const char *fname)
 {
 	WaitCursor wc;
@@ -366,8 +372,8 @@ int HexEditorWindow::load_file(const char *fname)
 	if (bLoaded)
 	{
 		bFileNeverSaved = false;
-		bPartialStats = 0;
-		bPartialOpen = FALSE;
+		bPartialStats = false;
+		bPartialOpen = false;
 		// Update MRU list.
 		update_MRU();
 		bFilestatusChanged = true;
@@ -1549,9 +1555,9 @@ int HexEditorWindow::destroy_window()
 	return 0;
 }
 
-//--------------------------------------------------------------------------------------------
-// Set the window title and the statusbar text.
-//Pabs hugely revamped for less code
+/**
+ * @brief Set the window title and the statusbar text.
+ */
 void HexEditorWindow::set_wnd_title()
 {
 	char buf[512];
@@ -1565,7 +1571,7 @@ void HexEditorWindow::set_wnd_title()
 			if (iFileChanged)
 				strcat (buf, " *");
 			strcat (buf, "]");
-			if (bPartialOpen==TRUE)
+			if (bPartialOpen)
 				strcat (buf, " - P");
 			strcat (buf, " - ");
 			strcat (buf, ApplicationName);
@@ -3134,7 +3140,11 @@ void HexEditorWindow::CMD_edit_clear()
 	CMD_edit_cut(0);
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Open a new window.
+ * @param [in] title Title of the new window.
+ * @return 1
+ */
 int HexEditorWindow::CMD_new(const char *title)
 {
 	if (!close(title))
@@ -3159,8 +3169,8 @@ int HexEditorWindow::CMD_new(const char *title)
 	iHscrollPos = 0;
 	iCurByte = 0;
 	iCurNibble = 0;
-	bPartialStats = 0;
-	bPartialOpen = FALSE;
+	bPartialStats = false;
+	bPartialOpen = false;
 	// Delete old data.
 	DataArray.ClearAll();
 	strcpy(filename, "Untitled");
@@ -3168,7 +3178,10 @@ int HexEditorWindow::CMD_new(const char *title)
 	return 1;
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Save file with another name.
+ * @return 1 if saving succeeded, 0 otherwise.
+ */
 int HexEditorWindow::CMD_save_as()
 {
 	char szFileName[_MAX_PATH];
@@ -3200,8 +3213,8 @@ int HexEditorWindow::CMD_save_as()
 		iFileChanged = FALSE;
 		bFilestatusChanged = true;
 		bFileNeverSaved = false;
-		bPartialStats = 0;
-		bPartialOpen = FALSE;
+		bPartialStats = false;
+		bPartialOpen = false;
 		update_MRU();
 		done = 1;
 	}
@@ -3213,8 +3226,10 @@ int HexEditorWindow::CMD_save_as()
 	set_wnd_title();
 	return done;
 }
-//-------------------------------------------------------------------
-//Pabs changed this function so it would return 0 when unsuccessful
+/**
+ * @brief Save the file.
+ * @return 1 if saving succeeded, 0 otherwise.
+ */
 int HexEditorWindow::CMD_save()
 {
 	WaitCursor w1;
@@ -3323,8 +3338,8 @@ int HexEditorWindow::CMD_save()
 		done = 1;
 		iFileChanged = FALSE;
 		bFilestatusChanged = true;
-		bPartialStats = 0;
-		bPartialOpen = FALSE;
+		bPartialStats = false;
+		bPartialOpen = false;
 		set_wnd_title();
 	}
 	_close(filehandle);
@@ -4131,7 +4146,9 @@ void HexEditorWindow::CMD_clear_all_bmk()
 	repaint();
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Show the dialog to open file partially.
+ */
 void HexEditorWindow::CMD_open_partially()
 {
 	if (!close("Open partially"))
@@ -4166,7 +4183,7 @@ void HexEditorWindow::CMD_open_partially()
 	bFileNeverSaved = false;
 	bFilestatusChanged = true;
 	bFileNeverSaved = false;
-	bPartialOpen = TRUE;
+	bPartialOpen = true;
 	resize_window();
 }
 
@@ -4853,7 +4870,7 @@ void HexEditorWindow::RefreshCurrentTrack()
 			iFileChanged = FALSE;
 			bFilestatusChanged = true;
 			bFileNeverSaved = false;
-			bPartialOpen = TRUE;
+			bPartialOpen = true;
 			resize_window();
 		}
 	}
@@ -5497,6 +5514,9 @@ bool HexEditorWindow::load_hexfile(hexfile_stream &hexin)
 	return FALSE;
 }
 
+/**
+ * @brief Open hex dump to the editor.
+ */
 void HexEditorWindow::CMD_open_hexdump()
 {
 	if (!close("Import Hexdump"))
@@ -5579,11 +5599,12 @@ void HexEditorWindow::CMD_open_hexdump()
 	{
 		//Successful
 		strcpy(filename, "Untitled");
-		iVscrollPos = iCurByte = iCurNibble =
-			bPartialOpen = bPartialStats = iFileChanged =
-			bSelected =
+		iVscrollPos = iCurByte = iCurNibble = 0;
+		bPartialOpen = bPartialStats = false;
+		iFileChanged =
 			iVscrollMax = iVscrollPos = iHscrollMax = iHscrollPos =
-			iCurByte = iCurNibble = FALSE;
+			iCurByte = iCurNibble = 0;
+		bSelected = FALSE;
 		bFileNeverSaved = true;
 		bFilestatusChanged = true;
 		// If read-only mode on opening is enabled:
