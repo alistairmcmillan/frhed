@@ -211,7 +211,6 @@
 #define IDM_UNKNOWN                     315
 #define IDM_DEFAULT                     316
 #define IDM_SAVEINI                     317
-#define IDM_REMOVE                      318
 #define IDM_UPGRADE                     319
 #define IDM_SHORTCUTS                   320
 #define ID_DISK_CLOSEDRIVE              321

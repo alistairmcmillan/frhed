@@ -33,6 +33,4 @@ BOOL unknownpresent();
 BOOL oldpresent();
 BOOL frhedpresent();
 
-BOOL registry_RemoveFrhed(HWND);
-
 #endif // _REGISTRY_H_

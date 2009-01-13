@@ -158,7 +158,6 @@ BEGIN
         MENUITEM "Is &default in unknown context", IDM_DEFAULT, CHECKED
         MENUITEM "&Save ini when required",     IDM_SAVEINI, CHECKED
         MENUITEM "Change &instance...",         IDM_CHANGEINST
-        MENUITEM "&Remove Frhed...",            IDM_REMOVE
         MENUITEM "Up&grade...",                 IDM_UPGRADE
         MENUITEM "S&hortcuts to Frhed...",      IDM_SHORTCUTS
     END
