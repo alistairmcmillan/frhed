@@ -44,9 +44,9 @@
 #define IDB_TOOLBAR                     141
 #define IDC_REPLACEWITH_EDIT            142
 #define IDD_DRAG_DROP_OPTIONS           143
-#define IDM_ZOOMIN						144
-#define IDM_ZOOMOUT						145
-#define IDM_ZOOMNORMAL					146
+#define IDM_ZOOMIN                      144
+#define IDM_ZOOMOUT                     145
+#define IDM_ZOOMNORMAL                  146
 #define IDC_DRAG_CF_TEXT                147
 #define IDC_TEXT_SPECIAL                148
 #define IDC_DRAG_RTF                    149
@@ -311,6 +311,7 @@
 #define IDC_ENCODE_DEC                  416
 #define IDC_DROPPED_FILES               417
 #define IDC_FPASTE_TXT                  418
+#define IDC_SETTINGS_EDITORSELECT       419
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076

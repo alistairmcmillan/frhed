@@ -215,6 +215,8 @@ BOOL ViewSettingsDlg::OnInitDialog(HWND hDlg)
 
 /**
  * @brief Save the settings in dialog controls to registry.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE.
  */
 BOOL ViewSettingsDlg::Apply(HWND hDlg)
 {
@@ -247,6 +249,29 @@ BOOL ViewSettingsDlg::Apply(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Show the file selection dialog to select text editor executable.
+ * @param [in] hDlg Handle to the view settings dialog.
+ */
+void ViewSettingsDlg::SelectEditor(HWND hDlg)
+{
+	char szFileName[MAX_PATH];
+	szFileName[0] = '\0';
+	OPENFILENAME ofn;
+	ZeroMemory(&ofn, sizeof ofn);
+	ofn.lStructSize = sizeof ofn;
+	ofn.hwndOwner = hwnd;
+	ofn.lpstrFilter = "All Files (*.*)\0*.*\0\0";
+	ofn.lpstrFile = szFileName;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
+	if (GetOpenFileName(&ofn))
+	{
+		strncpy(TexteditorName, szFileName, MAX_PATH);
+		SetDlgItemText(hDlg, IDC_SETTINGS_EDITOR, TexteditorName);
+	}
+}
+
 INT_PTR ViewSettingsDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
@@ -256,6 +281,9 @@ INT_PTR ViewSettingsDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 	case WM_COMMAND:
 		switch (wParam)
 		{
+		case IDC_SETTINGS_EDITORSELECT:
+			SelectEditor(hDlg);
+			return TRUE;
 		case IDOK:
 			if (Apply(hDlg))
 			{

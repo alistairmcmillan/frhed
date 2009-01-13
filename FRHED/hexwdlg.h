@@ -52,6 +52,9 @@ public:
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 };
 
+/**
+ * @brief View settings dialog class.
+ */
 class ViewSettingsDlg : public HexEditorWindow
 {
 public:
@@ -65,6 +68,7 @@ private:
 	INT_PTR OnCompareitemLangId(COMPAREITEMSTRUCT *);
 	BOOL OnInitDialog(HWND);
 	BOOL Apply(HWND);
+	void SelectEditor(HWND hDlg);
 };
 
 class CharacterSetDlg : public HexEditorWindow
