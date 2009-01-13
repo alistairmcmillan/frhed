@@ -4075,19 +4075,28 @@ void HexEditorWindow::CMD_add_bookmark()
 	static_cast<dialog<AddBmkDlg>*>(this)->DoModal(hwnd);
 }
 
-//-------------------------------------------------------------------
-// Insert the bookmark list into the menu.
+/**
+ * @brief Insert the bookmark list into the menu.
+ * @param [in] menu Handle to the menu.
+ */
 void HexEditorWindow::make_bookmark_list(HMENU menu)
 {
-	do; while (RemoveMenu(menu, 3, MF_BYPOSITION));
+	do
+		;
+	while (RemoveMenu(menu, 3, MF_BYPOSITION));
+
 	if (iBmkCount > 0)
 	{
 		AppendMenu(menu, MF_SEPARATOR, 0, 0);
 		char buf[128];
 		for (int i = 0 ; i < iBmkCount ; i++)
 		{
-			sprintf(buf, pbmkList[i].name ? "&%d 0x%x:%s" : "&%d 0x%x", i + 1,
-				pbmkList[i].offset, pbmkList[i].name);
+			if (pbmkList[i].name)
+				sprintf(buf, "&%d %s (0x%x)", i + 1, pbmkList[i].name,
+						pbmkList[i].offset);
+			else
+				sprintf(buf, "&%d 0x%x", i + 1, pbmkList[i].offset,
+						pbmkList[i].name);
 			AppendMenu(menu, pbmkList[i].offset <= DataArray.GetLength() ?
 				MF_ENABLED : MF_GRAYED, IDM_BOOKMARK1 + i, buf);
 		}
