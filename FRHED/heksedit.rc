@@ -391,7 +391,7 @@ BEGIN
     LTEXT           "Frhed - Free hex editor for 32-bit Windows",IDC_STATIC,
                     37,7,167,8
     LTEXT           "",IDC_ABOUT_VER,37,17,167,8
-    LTEXT           "(c) Raihan Kibria 2000-2008",IDC_STATIC,37,27,167,8
+    LTEXT           "(c) Raihan Kibria 2000-2009",IDC_STATIC,37,27,167,8
     LTEXT           "All rights reserved.",IDC_STATIC,37,37,167,8
     LTEXT           "Contributors are listed in Contributors.txt.",IDC_STATIC,
                     37,55,167,8
