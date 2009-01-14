@@ -64,8 +64,9 @@ static HWND hwndToolBar = 0;
 static HWND hwndStatusBar = 0;
 static HexEditorWindow *pHexWnd = 0;
 
-//--------------------------------------------------------------------------------------------
-// WinMain: the starting point.
+/**
+ * @brief The application starting point.
+ */
 int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *szCmdLine, int)
 {
 	OleInitialize(NULL);
@@ -179,7 +180,7 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *szCmdLine, int)
 				"Click on Yes if you want to open the file linked to,\n"
 				"or click on No if you want to open the link file itself.\n"
 				"Choose Cancel if you want to abort opening.",
-				ApplicationName, MB_YESNOCANCEL | MB_ICONQUESTION );
+				ApplicationName, MB_YESNOCANCEL | MB_ICONWARNING );
 			switch( ret )
 			{
 			case IDYES:

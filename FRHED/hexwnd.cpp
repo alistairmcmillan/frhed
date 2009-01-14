@@ -2322,14 +2322,17 @@ int HexEditorWindow::initmenupopup(WPARAM w, LPARAM l)
 	return 0;
 }
 
-//--------------------------------------------------------------------------------------------
-// Handler on window closing.
+/**
+ * @brief Handler on window closing.
+ * @param [in] caption Messagebox caption, "Exit" if NULL.
+ * @return 0 if Frhed cannot be closed, 1 if we can close Frhed.
+ */
 int HexEditorWindow::close(const char *caption)
 {
 	if (iFileChanged)
 	{
 		int res = MessageBox(hwnd, "Do you want to save your changes?",
-			caption ? caption : "Exit", MB_YESNOCANCEL | MB_ICONQUESTION);
+			caption ? caption : "Exit", MB_YESNOCANCEL | MB_ICONWARNING);
 		if (res == IDCANCEL || res == IDYES && !(bFileNeverSaved ? CMD_save_as() : CMD_save()))
 			//User doesn't want to quit or User wants to save and the save was unsuccessful
 			return 0;//Don't exit
@@ -4131,11 +4134,13 @@ void HexEditorWindow::CMD_remove_bkm()
 	static_cast<dialog<RemoveBmkDlg>*>(this)->DoModal(hwnd);
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Remove all bookmarks.
+ */
 void HexEditorWindow::CMD_clear_all_bmk()
 {
 	int response = MessageBox(hwnd, "Really clear all bookmarks?",
-		"Clear all bookmarks", MB_YESNO | MB_ICONQUESTION);
+		"Clear all bookmarks", MB_YESNO | MB_ICONWARNING);
 	if (response != IDYES)
 		return;
 	while (iBmkCount)
@@ -4235,14 +4240,13 @@ INT_PTR CALLBACK MultiDropDlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 }
 //end
 
-// Handler for WM_DROPFILES
+/**
+ * @brief Handle file(s) dropped to Frhed window.
+ */
 void HexEditorWindow::dropfiles(HDROP hDrop)
 {
 	char lpszFile[_MAX_PATH];
-//Pabs inserted
 	UINT numfiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0 );
-//end
-//Pabs inserted
 	UINT i = 0;
 	if (numfiles > 1)
 	{
@@ -4254,7 +4258,6 @@ void HexEditorWindow::dropfiles(HDROP hDrop)
 		}
 	}
 	DragQueryFile(hDrop, i, lpszFile, _MAX_PATH);
-//end
 	DragFinish(hDrop); // handle to memory to free
 	if (hwndMain)
 		SetForegroundWindow(hwndMain);
@@ -4274,7 +4277,7 @@ void HexEditorWindow::dropfiles(HDROP hDrop)
 			"Click on Yes if you want to open the file linked to,\n"
 			"or click on No if you want to open the link file itself.\n"
 			"Choose Cancel if you want to abort opening.",
-			ApplicationName, MB_YESNOCANCEL | MB_ICONQUESTION );
+			ApplicationName, MB_YESNOCANCEL | MB_ICONWARNING);
 		switch( ret )
 		{
 		case IDYES:
@@ -4729,11 +4732,13 @@ HRESULT HexEditorWindow::ResolveIt(LPCSTR lpszLinkFile, LPSTR lpszPath)
 	return ::ResolveIt(hwndMain, lpszLinkFile, lpszPath);
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Reset colors to default values.
+ */
 void HexEditorWindow::CMD_colors_to_default()
 {
 	if (MessageBox(hwnd, "Really reset colors to default values?",
-			ApplicationName, MB_YESNO | MB_ICONQUESTION) == IDYES)
+			ApplicationName, MB_YESNO | MB_ICONWARNING) == IDYES)
 	{
 		iBmkColor = RGB( 255, 0, 0 );
 		iSelBkColorValue = RGB( 255, 255, 0 );
@@ -5539,7 +5544,7 @@ void HexEditorWindow::CMD_open_hexdump()
 				"Do you want to import from\n"
 				"the clipboard instead of a file?",
 				"Import Hexdump",
-				MB_YESNOCANCEL | MB_ICONQUESTION))
+				MB_YESNOCANCEL))
 			{
 			case IDCANCEL:
 				CloseClipboard();
@@ -6012,10 +6017,13 @@ void HexEditorWindow::status_bar_click(bool left)
 	}
 }
 
+/**
+ * @brief Adopt the OS color scheme.
+ */
 void HexEditorWindow::CMD_adopt_colours()
 {
 	if (MessageBox(hwnd, "Really adopt the operating system colour scheme?",
-			ApplicationName, MB_YESNO | MB_ICONQUESTION) == IDYES)
+			ApplicationName, MB_YESNO | MB_ICONWARNING) == IDYES)
 	{
 		iTextColorValue = GetSysColor(COLOR_WINDOWTEXT);
 		iBkColorValue = GetSysColor(COLOR_WINDOW);
