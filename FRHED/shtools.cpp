@@ -1,22 +1,51 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  shtools.cpp
+ *
+ * @brief Implementation of Shell api tool functions.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "shtools.h"
-/*Pabs inserted func
-Create link files for registry menu
-Copied from compiler documentation. - had to fix up some stuff - totally wrong parameters used - all freaky compile time errors
-CreateLink - uses the shell's IShellLink and IPersistFile interfaces to create and store a shortcut to the specified object.
-Returns the result of calling the member functions of the interfaces.
-lpszPathObj - address of a buffer containing the path of the object.
-lpszPathLink - address of a buffer containing the path where the shell link is to be stored.*/
+
+/**
+ * @brief Create link files for registry menu.
+ * CreateLink - uses the shell's IShellLink and IPersistFile interfaces to
+ *  create and store a shortcut to the specified object.
+ * @param [in] lpszPathObj Address of a buffer containing the path of the
+ *   object.
+ * @param [in] lpszPathLink Address of a buffer containing the path where the
+ *   shell link is to be stored.
+ * @return The result of calling the member functions of the interfaces.
+ */
 HRESULT CreateLink(LPCSTR lpszPathObj, LPCSTR lpszPathLink)
 {
 	HRESULT hres;
 	IShellLink* psl;
 
 	// Get a pointer to the IShellLink interface.
-
 	hres = CoCreateInstance(CLSID_ShellLink, NULL,
-		CLSCTX_INPROC_SERVER, IID_IShellLink, (void **)&psl);
-	if (SUCCEEDED(hres)) {
+			CLSCTX_INPROC_SERVER, IID_IShellLink, (void **)&psl);
+	if (SUCCEEDED(hres))
+	{
 		IPersistFile* ppf;
 
 		// Set the path to the shortcut target
@@ -26,26 +55,27 @@ HRESULT CreateLink(LPCSTR lpszPathObj, LPCSTR lpszPathLink)
 		// shortcut in persistent storage.
 		hres = psl->QueryInterface(IID_IPersistFile,(void **)&ppf);
 
-		if (SUCCEEDED(hres)) {
+		if (SUCCEEDED(hres))
+		{
 			WCHAR wsz[MAX_PATH];
 
-			//Bugfix - create the dir before saving the file because IPersistFile::Save won't
+			//Bugfix - create the dir before saving the file because IPersistFile::Save
+			// won't
 			hres = 1;
 			char* tmp;
-			*(tmp = PathFindFileName(lpszPathLink)-1) = 0;//Remove filename
-			if(!PathIsDirectory(lpszPathLink))hres = CreateDirectory(lpszPathLink,NULL);
+			*(tmp = PathFindFileName(lpszPathLink) - 1) = 0;//Remove filename
+			if (!PathIsDirectory(lpszPathLink))
+				hres = CreateDirectory(lpszPathLink, NULL);
 			*tmp = '\\';
 
-			if (hres) {
-
+			if (hres)
+			{
 				// Ensure that the string is ANSI.
-				MultiByteToWideChar(CP_ACP, 0, lpszPathLink, -1,wsz, MAX_PATH);
+				MultiByteToWideChar(CP_ACP, 0, lpszPathLink, -1, wsz, MAX_PATH);
 
 				// Save the link by calling IPersistFile::Save.
 				hres = ppf->Save(wsz, TRUE);
-
 			}
-
 			ppf->Release();
 		}
 		psl->Release();
@@ -64,7 +94,8 @@ HRESULT ResolveIt(HWND hwnd, LPCSTR lpszLinkFile, LPSTR lpszPath)
 	*lpszPath = 0; // assume failure
 
 	// Get a pointer to the IShellLink interface.
-	hres = CoCreateInstance( CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (void**)&psl );
+	hres = CoCreateInstance( CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER,
+			IID_IShellLink, (void**)&psl );
 	if (SUCCEEDED(hres))
 	{
 		IPersistFile* ppf;
@@ -87,8 +118,9 @@ HRESULT ResolveIt(HWND hwnd, LPCSTR lpszLinkFile, LPSTR lpszPath)
 				if (SUCCEEDED(hres))
 				{
 					// Get the path to the link target.
-					hres = psl->GetPath(szGotPath, MAX_PATH, (WIN32_FIND_DATA *)&wfd, SLGP_SHORTPATH );
-					if (!SUCCEEDED(hres) )
+					hres = psl->GetPath(szGotPath, MAX_PATH,
+							(WIN32_FIND_DATA *)&wfd, SLGP_SHORTPATH );
+					if (!SUCCEEDED(hres))
 					{
 						// application-defined function
 					}
