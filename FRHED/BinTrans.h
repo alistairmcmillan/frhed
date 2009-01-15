@@ -28,7 +28,9 @@
 
 #include "Simparr.h"
 
-//-------------------------------------------------------------------
+/**
+ * @brief A class translating between text export and binary data.
+ */
 class Text2BinTranslator : public SimpleString
 {
 public:
@@ -39,10 +41,11 @@ public:
 	static int iLengthOfTransToBin( char* src, int srclen );
 	static int iCreateBcTranslation( char* dest, char* src, int srclen, int charmode, int binmode );
 	static int iTranslateOneBytecode( char* dest, char* src, int srclen, int binmode );
-	static int iFindBytePos( char* src, char c );
+	static int iFindBytePos(const char* src, char c);
 	static int iTranslateBytesToBC (char* pd, unsigned char* src, int srclen);
+
 private:
-	int GetTrans2Bin( SimpleArray<char>& sa, int charmode, int binmode );
+	int GetTrans2Bin(SimpleArray<char>& sa, int charmode, int binmode);
 };
 
 #endif // BinTrans_h

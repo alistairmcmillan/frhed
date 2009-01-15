@@ -28,28 +28,39 @@
 #include "hexwnd.h"
 #include "BinTrans.h"
 
-//-------------------------------------------------------------------
-// Find char c from pointer to array src on, return it's position.
-int Text2BinTranslator::iFindBytePos( char* src, char c )
+/**
+ * @brief Find character from string.
+ * @param [in] src String from which the character is searched.
+ * @param [in] c Character to search.
+ * @return Position of the found char in the string, or length
+ *  of the string if character not found.
+ */
+int Text2BinTranslator::iFindBytePos(const char* src, char c)
 {
-	int i=0;
-	while (src[i] != c)
-		i++;
-	return i;
+	char * ptr = strchr(src, c);
+	if (ptr != NULL)
+		return ptr - src;
+	else
+		return strlen(src);
 }
 
-//-------------------------------------------------------------------
-// Create translation of bytecode-string.
-int Text2BinTranslator::GetTrans2Bin( SimpleArray<char>& sa, int charmode, int binmode )
+/**
+ * @brief Create translation of bytecode-string.
+ * @param [in] sa Array where the string is added.
+ * @param [in] charmode ANSI/OEM character set.
+ * @param [in] binmode BIG/LITTLE endian.
+ * @return TRUE if translation succeeded, FALSE otherwise.
+ */
+int Text2BinTranslator::GetTrans2Bin(SimpleArray<char>& sa, int charmode, int binmode)
 {
 	sa.ClearAll();
 
-	int destlen = iLengthOfTransToBin( m_pT, m_nUpperBound );
+	int destlen = iLengthOfTransToBin(m_pT, m_nUpperBound);
 	if (destlen > 0)
 	{
-		sa.SetSize( destlen );
+		sa.SetSize(destlen);
 		sa.ExpandToSize();
-		iCreateBcTranslation( (char*) sa, m_pT, m_nUpperBound, charmode, binmode );
+		iCreateBcTranslation((char*) sa, m_pT, m_nUpperBound, charmode, binmode);
 		return TRUE;
 	}
 	else
