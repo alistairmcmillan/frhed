@@ -1584,6 +1584,48 @@ void HexEditorWindow::format_bit_string(char* buf, BYTE by)
 }
 
 /**
+ * @brief Set characterset and edit mode to statusbar.
+ */
+void HexEditorWindow::statusbar_chset_and_editmode()
+{
+	char buf[20] = {0};
+
+	// Character set, input mode or read-only, binary mode.
+	switch (iCharacterSet)
+	{
+	case ANSI_FIXED_FONT:
+		sprintf (buf, "\tANSI");
+		break;
+
+	case OEM_FIXED_FONT:
+		sprintf (buf, "\tOEM");
+		break;
+	}
+
+	if (bReadOnly)
+	{
+		strcat (buf, " / READ");
+	}
+	else if (bInsertMode)
+	{
+		strcat(buf, " / INS");
+	}
+	else
+	{
+		strcat(buf, " / OVR");
+	}
+	if (iBinaryMode == ENDIAN_LITTLE)
+	{
+		strcat(buf, " / L"); // Intel
+	}
+	else if (iBinaryMode == ENDIAN_BIG)
+	{
+		strcat(buf, " / B"); // Motorola
+	}
+	SendMessage(hwndStatusBar, SB_SETTEXT, 1, (LPARAM) buf);
+}
+
+/**
  * @brief Set the window title and the statusbar text.
  */
 void HexEditorWindow::set_wnd_title()
@@ -1635,28 +1677,25 @@ void HexEditorWindow::set_wnd_title()
 				{
 					// UNSIGNED LITTLEENDIAN_MODE
 					// Decimal value of byte.
-					if (DataArray.GetLength ()-iCurByte >= 1)
-					{
-						sprintf (buf2, "\tUnsigned: B:%u", (unsigned int) DataArray[iCurByte]);
-						strcat (buf, buf2);
-					}
+					if (DataArray.GetLength() - iCurByte >= 1)
+						sprintf(buf2, "\tUnsigned: B:%u", (unsigned int) DataArray[iCurByte]);
 					else
-					{
-						sprintf (buf2, "\tEND");
-						strcat (buf, buf2);
-					}
+						sprintf(buf2, "\tEND");
+					strcat(buf, buf2);
+
 					// Space enough for a word?
-					if (DataArray.GetLength ()-iCurByte >= 2)
+					if (DataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a word.
-						wordval = (DataArray[iCurByte+1] << 8) | DataArray[iCurByte];
+						wordval = (DataArray[iCurByte + 1] << 8) | DataArray[iCurByte];
 						sprintf (buf2, ",W:%u", (unsigned int) wordval);
 						strcat (buf, buf2);
 					}
-					if (DataArray.GetLength ()-iCurByte >= 4)
+					if (DataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
-						longval = wordval | (((DataArray[iCurByte + 3] << 8) | DataArray[iCurByte + 2]) << 16);
+						longval = wordval | (((DataArray[iCurByte + 3] << 8) |
+								DataArray[iCurByte + 2]) << 16);
 						sprintf (buf2, ",L:%u", (unsigned int) longval);
 						strcat (buf, buf2);
 					}
@@ -1665,28 +1704,25 @@ void HexEditorWindow::set_wnd_title()
 				{
 					// UNSIGNED BIGENDIAN_MODE
 					// Decimal value of byte.
-					if (DataArray.GetLength ()-iCurByte >= 1)
-					{
+					if (DataArray.GetLength() - iCurByte >= 1)
 						sprintf (buf2, "\tUnsigned: B:%u", (unsigned int) DataArray[iCurByte]);
-						strcat (buf, buf2);
-					}
 					else
-					{
 						sprintf (buf2, "\tEND");
-						strcat (buf, buf2);
-					}
+					strcat(buf, buf2);
+
 					// Space enough for a word?
-					if (DataArray.GetLength ()-iCurByte >= 2)
+					if (DataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a word.
-						wordval = (DataArray[iCurByte] << 8) | DataArray[iCurByte+1];
+						wordval = (DataArray[iCurByte] << 8) | DataArray[iCurByte + 1];
 						sprintf (buf2, ",W:%u", (unsigned int) wordval);
 						strcat (buf, buf2);
 					}
-					if (DataArray.GetLength ()-iCurByte >= 4)
+					if (DataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
-						longval = (wordval<<16) | (DataArray[iCurByte+2]<<8) | (DataArray[iCurByte+3]);
+						longval = (wordval << 16) | (DataArray[iCurByte + 2] <<	8) |
+								(DataArray[iCurByte + 3]);
 						sprintf (buf2, ",L:%u", (unsigned int) longval);
 						strcat (buf, buf2);
 					}
@@ -1698,28 +1734,25 @@ void HexEditorWindow::set_wnd_title()
 				{
 					// SIGNED LITTLEENDIAN_MODE
 					// Decimal value of byte.
-					if (DataArray.GetLength ()-iCurByte >= 1)
-					{
+					if (DataArray.GetLength() - iCurByte >= 1)
 						sprintf (buf2, "\tSigned: B:%d", (int) (signed char) DataArray[iCurByte]);
-						strcat (buf, buf2);
-					}
 					else
-					{
 						sprintf (buf2, "\tEND");
-						strcat (buf, buf2);
-					}
+					strcat (buf, buf2);
+
 					// Space enough for a word?
-					if (DataArray.GetLength ()-iCurByte >= 2)
+					if (DataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a word.
 						wordval = (DataArray[iCurByte + 1] << 8) | DataArray[iCurByte];
 						sprintf (buf2, ",W:%d", (int) (signed short) wordval);
 						strcat (buf, buf2);
 					}
-					if (DataArray.GetLength ()-iCurByte >= 4)
+					if (DataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
-						longval = wordval | (((DataArray[iCurByte + 3] << 8) | DataArray[iCurByte + 2]) << 16);
+						longval = wordval | (((DataArray[iCurByte + 3] << 8) |
+								DataArray[iCurByte + 2]) << 16);
 						sprintf (buf2, ",L:%d", (signed int) longval);
 						strcat (buf, buf2);
 					}
@@ -1728,28 +1761,25 @@ void HexEditorWindow::set_wnd_title()
 				{
 					// SIGNED BIGENDIAN_MODE
 					// Decimal value of byte.
-					if (DataArray.GetLength ()-iCurByte >= 1)
-					{
+					if (DataArray.GetLength() - iCurByte >= 1)
 						sprintf (buf2, "\tSigned: B:%d", (signed char) DataArray[iCurByte]);
-						strcat (buf, buf2);
-					}
 					else
-					{
 						sprintf (buf2, "\tEND");
-						strcat (buf, buf2);
-					}
+					strcat (buf, buf2);
+
 					// Space enough for a word.
-					if (DataArray.GetLength ()-iCurByte >= 2)
+					if (DataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a longword.
-						wordval = (DataArray[iCurByte] << 8) | DataArray[iCurByte+1];
+						wordval = (DataArray[iCurByte] << 8) | DataArray[iCurByte + 1];
 						sprintf (buf2, ",W:%d", (int) (signed short) wordval);
 						strcat (buf, buf2);
 					}
-					if (DataArray.GetLength ()-iCurByte >= 4)
+					if (DataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
-						longval = (wordval<<16) | (DataArray[iCurByte+2]<<8) | (DataArray[iCurByte+3]);
+						longval = (wordval<<16) | (DataArray[iCurByte + 2] << 8) |
+								(DataArray[iCurByte + 3]);
 						sprintf (buf2, ",L:%d", (signed int) longval);
 						strcat (buf, buf2);
 					}
@@ -1757,42 +1787,11 @@ void HexEditorWindow::set_wnd_title()
 			}
 			SendMessage (hwndStatusBar, SB_SETTEXT, 0, (LPARAM) buf);
 		}
-		// Character set, input mode or read-only, binary mode.
-		switch (iCharacterSet)
-		{
-		case ANSI_FIXED_FONT:
-			sprintf (buf, "\tANSI");
-			break;
 
-		case OEM_FIXED_FONT:
-			sprintf (buf, "\tOEM");
-			break;
-		}
-
-		if (bReadOnly)
-		{
-			strcat (buf, " / READ");
-		}
-		else if (bInsertMode)
-		{
-			strcat(buf, " / INS");
-		}
-		else
-		{
-			strcat(buf, " / OVR");
-		}
-		if (iBinaryMode == ENDIAN_LITTLE)
-		{
-			strcat(buf, " / L"); // Intel
-		}
-		else if (iBinaryMode == ENDIAN_BIG)
-		{
-			strcat(buf, " / B"); // Motorola
-		}
-		SendMessage(hwndStatusBar, SB_SETTEXT, 1, (LPARAM) buf);
+		statusbar_chset_and_editmode();
 
 		// File size.
-		sprintf(buf, "\tSize: %u", DataArray.GetLength ());
+		sprintf(buf, "\tSize: %u", DataArray.GetLength());
 		SendMessage(hwndStatusBar, SB_SETTEXT, 2, (LPARAM) buf);
 	}
 	else

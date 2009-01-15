@@ -339,6 +339,7 @@ protected:
 
 	void set_and_format_title();
 	void format_bit_string(char* buf, BYTE by);
+	void statusbar_chset_and_editmode();
 };
 
 void reverse_bytes(BYTE *, BYTE *);
