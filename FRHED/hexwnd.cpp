@@ -1552,6 +1552,38 @@ int HexEditorWindow::destroy_window()
 }
 
 /**
+ * @brief Format and set the window title.
+ */
+void HexEditorWindow::set_and_format_title()
+{
+	char buf[512];
+	sprintf(buf, "[%s", filename);
+	if (iFileChanged)
+		strcat(buf, " *");
+	strcat (buf, "]");
+	if (bPartialOpen)
+		strcat (buf, " - P");
+	strcat (buf, " - ");
+	strcat (buf, ApplicationName);
+	SetWindowText (hwndMain, buf);
+}
+
+/**
+ * @brief Format bits in byte to a string.
+ * @param [in] buf Buffer where to format the string.
+ * @param [in] by Byte whose bits are formatted.
+ */
+void HexEditorWindow::format_bit_string(char* buf, BYTE by)
+{
+	int i;
+	for (i = 0; i < 8; i++)
+		buf[i] = ((by >> i) & 0x1 ? '1' : '0');//Extract bits
+	for (i = 0;i < 4; i++)
+		swap(buf[i], buf[7 - i]);//flip order-for some reason it doesn't display correctly going i-- or i++ in for loop
+	buf[8]='\0';//terminate string
+}
+
+/**
  * @brief Set the window title and the statusbar text.
  */
 void HexEditorWindow::set_wnd_title()
@@ -1563,15 +1595,7 @@ void HexEditorWindow::set_wnd_title()
 		// Change window title.
 		if (bFilestatusChanged && hwndMain)
 		{
-			sprintf (buf, "[%s", filename);
-			if (iFileChanged)
-				strcat (buf, " *");
-			strcat (buf, "]");
-			if (bPartialOpen)
-				strcat (buf, " - P");
-			strcat (buf, " - ");
-			strcat (buf, ApplicationName);
-			SetWindowText (hwndMain, buf);
+			set_and_format_title();
 			bFilestatusChanged = false;
 		}
 		// Selection going on.
@@ -1579,38 +1603,31 @@ void HexEditorWindow::set_wnd_title()
 		{
 			if (iEndOfSelection >= iStartOfSelection)
 			{
-				sprintf (buf, "Selected: Offset %d=0x%x to %d=0x%x (%d byte(s))", iStartOfSelection, iStartOfSelection,
-					iEndOfSelection, iEndOfSelection, iEndOfSelection-iStartOfSelection+1);
+				sprintf (buf, "Selected: Offset %d=0x%x to %d=0x%x (%d byte(s))",
+					iStartOfSelection, iStartOfSelection,
+					iEndOfSelection, iEndOfSelection, iEndOfSelection - iStartOfSelection+1);
 			}
 			else
 			{
-				sprintf (buf, "Selected: Offset %d=0x%x to %d=0x%x (%d byte(s))", iEndOfSelection, iEndOfSelection,
+				sprintf (buf, "Selected: Offset %d=0x%x to %d=0x%x (%d byte(s))",
+					iEndOfSelection, iEndOfSelection,
 					iStartOfSelection, iStartOfSelection, iStartOfSelection-iEndOfSelection+1);
 			}
 			SendMessage (hwndStatusBar, SB_SETTEXT, 0, (LPARAM) buf);
 		}
 		else // Normal display.
 		{
-//Pabs changed - \t removed from end of string literal ("Offset %d=0x%x\t" -> "Offset %d=0x%x")
 			sprintf (buf, "Offset %d=0x%x", iCurByte, iCurByte);
-//end
 			int wordval, longval;
-//Pabs changed - buf2 declaration moved so that selection bugfix works properly
 			char buf2[80];
-//end
-//Pabs changed - line insert
-			if (DataArray.GetLength()-iCurByte > 0){//if we are not looking at the End byte
-				// R. Kibria: changed the output slightly (used to be "Bits = 0b").
-				strcat (buf, "   Bits=");//append stuff to status text
-				unsigned char zzz=DataArray[iCurByte];//quicker to have a tmp var than to call operator[] 8 times
-				int i;
-				for(i=0;i<8;i++)buf2[i]=((zzz>>i)&0x1?'1':'0');//Extract bits
-				for(i=0;i<4;i++)swap(buf2[i],buf2[7-i]);//flip order-for some reason it doesn't display correctly going i-- or i++ in for loop
-				buf2[8]='\0';//terminate string
-				strcat (buf, buf2);//append to status text
+			if (DataArray.GetLength() - iCurByte > 0)
+			{//if we are not looking at the End byte
+				strcat(buf, "   Bits=");//append stuff to status text
+				BYTE by = DataArray[iCurByte];
+				format_bit_string(buf2, by);
+				strcat(buf, buf2);//append to status text
 			}
 			strcat (buf, "\t");//add that \t back on to the status text
-//end
 			if (bUnsignedView) // Values signed/unsigned?
 			{
 				// UNSIGNED

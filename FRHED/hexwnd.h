@@ -336,6 +336,9 @@ protected:
 	static char equal(char);
 	static char lower_case(char);
 	static int find_bytes(char* ps, int ls, char* pb, int lb, int mode, char (*cmp)(char));
+
+	void set_and_format_title();
+	void format_bit_string(char* buf, BYTE by);
 };
 
 void reverse_bytes(BYTE *, BYTE *);
