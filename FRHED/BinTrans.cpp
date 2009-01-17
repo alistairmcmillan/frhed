@@ -37,7 +37,7 @@
  */
 int Text2BinTranslator::iFindBytePos(const char* src, char c)
 {
-	char * ptr = strchr(src, c);
+	char * ptr = strchr((char*) src, c);
 	if (ptr != NULL)
 		return ptr - src;
 	else
