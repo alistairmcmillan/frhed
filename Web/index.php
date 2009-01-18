@@ -4,8 +4,6 @@
   $page = new Page;
   $page->printHead('Frhed - Free hex editor');
 ?>
-			<div class="content">
-
 				<h1 class="title">Frhed</h1>
 				<p class="olive"><b>Fr</b>ee <b>h</b>ex <b>ed</b>itor</p>
 
@@ -53,38 +51,6 @@
 				At autumn 2008 the <a href="http://winmerge.org/">WinMerge Team</a> decided to use Frhed as binary file editor component
 				for WinMerge. For developing Frhed further new <a href="https://sourceforge.net/projects/frhed">SourceForge project</a>
 				was created. This new project will develop Frhed as stand alone product.</p>
-
-			</div>
-
-			<div class="sidenav">
-
-				<h2>Project</h2>
-				<ul>
-					<li><a href="https://sourceforge.net/projects/frhed">Home</a></li>
-				</ul>
-
-				<h2>Support</h2>
-				<ul>
-					<li><a href="https://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485">Bugs</a></li>
-					<li><a href="https://sourceforge.net/tracker/?atid=1100164&amp;group_id=236485">Feature Requests</a></li>
-					<li><a href="http://apps.sourceforge.net/phpbb/frhed/">Forums</a></li>
-					<li><a href="https://sourceforge.net/mail/?group_id=236485">Mailing Lists</a></li>
-				</ul>
-
-				<h2>Links</h2>
-				<ul>
-					<li><a href="http://www.kibria.de/frhed.html" title="Original version from Raihan Kibria">Original Version</a></li>
-					<li><a href="http://winmerge.org/">WinMerge</a></li>
-				</ul>
-
-				<h2>Donate</h2>
-				<p>Support this project by donating money.</p>
-				<a href="http://sourceforge.net/donate/index.php?group_id=236485"><img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" alt="Support This Project" /> </a>
-
-			</div>
-
-			<div class="clearer"></div>
-
 <?php
   $page->printFoot();
 ?>

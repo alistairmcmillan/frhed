@@ -91,6 +91,7 @@
       $temp .= "<div class=\"wrapper\">\n";
       $temp .= "  <div class=\"container\">\n";
       $temp .= "    <div class=\"main\">\n";
+      $temp .= "      <div class=\"content\">\n";
       print($temp);
     }
 
@@ -98,7 +99,10 @@
      * print the foot from the page
      */
     function printFoot() {
-      $temp = "    </div> <!-- .main -->\n";
+      $temp = "      </div> <!-- .content -->\n";
+      $temp .= $this->getSideNavigation();
+      $temp .= "      <div class=\"clearer\"></div>\n";
+      $temp .= "    </div> <!-- .main -->\n";
       $temp .= "    <div class=\"footer\">\n";
       $temp .= "      <div class=\"left\">Valid <a href=\"http://jigsaw.w3.org/css-validator/check/referer\">CSS</a> &amp; <a href=\"http://validator.w3.org/check?uri=referer\">XHTML</a></div>\n";
       $temp .= "      <div class=\"right\">Design by <a href=\"http://arcsin.se/\">Arcsin</a> <a href=\"http://templates.arcsin.se/\">Web Templates</a></div>\n";
@@ -109,6 +113,34 @@
       $temp .= "</body>\n";
       $temp .= "</html>\n";
       print($temp);
+    }
+    
+    /**
+     * get the side navigation from the page
+     */
+    function getSideNavigation() {
+      $temp = "<div class=\"sidenav\">\n";
+      $temp .= "  <h2>Project</h2>\n";
+      $temp .= "  <ul>\n";
+      $temp .= "    <li><a href=\"http://sourceforge.net/projects/frhed\">Home</a></li>\n";
+      $temp .= "  </ul>\n";
+      $temp .= "  <h2>Support</h2>\n";
+      $temp .= "  <ul>\n";
+      $temp .= "    <li><a href=\"http://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485\">Bugs</a></li>\n";
+      $temp .= "    <li><a href=\"http://sourceforge.net/tracker/?atid=1100164&amp;group_id=236485\">Feature Requests</a></li>\n";
+      $temp .= "    <li><a href=\"http://apps.sourceforge.net/phpbb/frhed/\">Forums</a></li>\n";
+      $temp .= "    <li><a href=\"http://sourceforge.net/mail/?group_id=236485\">Mailing Lists</a></li>\n";
+      $temp .= "  </ul>\n";
+      $temp .= "  <h2>Links</h2>\n";
+      $temp .= "  <ul>\n";
+      $temp .= "    <li><a href=\"http://www.kibria.de/frhed.html\" title=\"Original version from Raihan Kibria\">Original Version</a></li>\n";
+      $temp .= "    <li><a href=\"http://winmerge.org/\">WinMerge</a></li>\n";
+      $temp .= "  </ul>\n";
+      $temp .= "  <h2>Donate</h2>\n";
+      $temp .= "  <p>Support this project by donating money.</p>\n";
+      $temp .= "  <a href=\"http://sourceforge.net/donate/index.php?group_id=236485\"><img src=\"http://images.sourceforge.net/images/project-support.jpg\" width=\"88\" height=\"32\" border=\"0\" alt=\"Support this project\" /></a>\n";
+      $temp .= "</div> <!-- .sidenav -->\n";
+      return $temp;
     }
   }
 ?>
