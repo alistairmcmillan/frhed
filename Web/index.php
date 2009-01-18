@@ -2,6 +2,8 @@
   include('engine/page.inc');
   
   $page = new Page;
+  $page->setDescription('Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially.');
+  $page->setKeywords('Frhed, free, hex editor, binary file, load partially, hexdump, compare');
   $page->printHead('Frhed - Free hex editor');
 ?>
 				<h1 class="title">Frhed</h1>
