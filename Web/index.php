@@ -1,22 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-	<title>Frhed - Free hex editor</title>
-	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
-	<link rel="stylesheet" type="text/css" href="css/default.css" media="screen"/>
-	<link rel="stylesheet" type="text/css" href="css/print.css" media="print"/>
-	<link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-</head>
-
-<body>
-
-<div class="wrapper">
-
-	<div class="container">
-
-		<div class="main">
-			
+<?php
+  include('engine/page.inc');
+  
+  $page = new Page;
+  $page->printHead('Frhed - Free hex editor');
+?>
 			<div class="content">
 
 				<h1 class="title">Frhed</h1>
@@ -98,22 +85,6 @@
 
 			<div class="clearer"></div>
 
-		</div>
-
-		<div class="footer">
-
-			<div class="left">Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">XHTML</a></div>
-
-			<div class="right">Design by <a href="http://arcsin.se/">Arcsin</a> <a href="http://templates.arcsin.se/">Web Templates</a></div>
-
-			<div class="clearer"><span></span></div>
-
-		</div>
-
-	</div>
-
-</div>
-
-</body>
-
-</html>
+<?php
+  $page->printFoot();
+?>
