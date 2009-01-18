@@ -80,8 +80,8 @@
       if ($this->_keywords != '') {
         $temp .= "  <meta name=\"keywords\" content=\"" . $this->_keywords . "\"/>\n";
       }
-      $temp .= "  <link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"/css/default.css\"/>\n";
-      $temp .= "  <link rel=\"stylesheet\" type=\"text/css\" media=\"print\" href=\"/css/print.css\"/>\n";
+      $temp .= "  <link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"/engine/css/default.css\"/>\n";
+      $temp .= "  <link rel=\"stylesheet\" type=\"text/css\" media=\"print\" href=\"/engine/css/print.css\"/>\n";
       $temp .= "  <link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"/favicon.ico\"/>\n";
       foreach ($this->_rssfeeds as $rssurl => $rsstitle) { //for all RSS feeds...
         $temp .= "  <link rel=\"alternate\" type=\"application/rss+xml\" title=\"" . $rsstitle . "\" href=\"" . $rssurl . "\">\n";

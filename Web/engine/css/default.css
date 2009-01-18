@@ -22,7 +22,7 @@ a {color: #FF3;}
 a:hover {color: #AA3;}
 
 body {
-	background: #111 url(../img/bg.jpg) repeat-x;
+	background: #111 url(../images/bg.jpg) repeat-x;
 	color: #DDD;
 	font: normal 62.5% "Trebuchet MS",Verdana,sans-serif;
 }
@@ -65,7 +65,7 @@ h1,h2 {padding-top: 6px;}
 	margin: 0 auto;
 	width: 780px;
 }
-.container {background: url(../img/header.gif) no-repeat center top;}
+.container {background: url(../images/header.gif) no-repeat center top;}
 
 /* title */
 .title {
@@ -75,7 +75,7 @@ h1,h2 {padding-top: 6px;}
 
 /* sub navigation */
 .sidenav {
-	background: url(../img/sidenav.gif) no-repeat right top;
+	background: url(../images/sidenav.gif) no-repeat right top;
 	padding-top: 126px;
 	float: right;
 	width: 210px;
