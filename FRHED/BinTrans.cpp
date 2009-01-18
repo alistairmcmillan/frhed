@@ -97,101 +97,80 @@ int Text2BinTranslator::iBytes2BytecodeDestLen(char* src, int srclen)
 	return destlen;
 }
 
-//-------------------------------------------------------------------
-// Bytecode?
-// Return = 0 if no bytecode
-//		else = Length 1/2/4 if bytecode
-int Text2BinTranslator::iIsBytecode( char* src, int len )
+/**
+ * Is the string a bytecode?
+ * @param [in] src String to check.
+ * @param [in] len Lengt of the string.
+ * @return 0 if no  bytecode, lenght of the bytecode (1/2/4/8) else.
+ */
+int Text2BinTranslator::iIsBytecode(char* src, int len)
 {
-	int i=0;
+	if (len < 5)
+		return 0; // Too short to be a bytecode
 
-	if (src[i] == '<')
+	if (src[0] != '<')
+		return 0;
+
+	if (src[1] != 'b' && src[1] != 'w' && src[1] != 'l' && src[1] != 'f' &&
+			src[1] != 'd')
+		return 0; // Wrong first option.
+
+	if (src[2] != 'd' && src[2] != 'h' && src[2] != 'l' && src[2] != 'o')
+		return 0; // Wrong second option.
+
+	if (src[3] != ':')
+		return 0;
+
+	int j;
+	for (j = 4; j < len; j++)
 	{
-		if (i+1 < len)
-		{
-			switch (src[i+1])
-			{
-			case 'b': case 'w': case 'l': case 'f': case 'd':
-				if (i+2 < len)
-				{
-					switch (src[i+2])
-					{
-						case 'd': case 'h': case 'l': case 'o':
-							if (i+3 < len)
-							{
-								if (src[i+3] == ':')
-								{
-									int j,k;
-									for (j=4; j < len; j++)
-									{
-										if (src[i+j] == '>')
-											break;
-									}
-									if (j==4 || j==len)
-										// No concluding ">" found.
-										return FALSE;
-									for (k=4; k<j; k++)
-									{
-										switch (src[i+2])
-										{
-										case 'd':
-											if ((src[i+k]>='0' && src[i+k]<='9') || src[i+k]=='-')
-												continue;
-											else
-												return FALSE; // Non-digit found.
-											break;
-
-										case 'h':
-											if ((src[i+k]>='0' && src[i+k]<='9') ||
-												(src[i+k]>='a' && src[i+k]<='f'))
-												continue;
-											else
-												return FALSE; // Non-hex-digit.
-											break;
-
-										case 'o': case 'l': // float or double.
-											if ((src[i+k]>='0' && src[i+k]<='9') || src[i+k]=='-' || src[i+k]=='.' || src[i+k]=='e' || src[i+k]=='E')
-												continue;
-											else
-												return FALSE;
-											break;
-										}
-									}
-									switch (src[i+1])
-									{
-									default:
-									case 'b': return 1;
-									case 'w': return 2;
-									case 'l': return 4;
-									case 'f': return 4;
-									case 'd': return 8;
-									}
-								}
-								else
-									return FALSE; // No ':'.
-							}
-							else
-								return FALSE; // No space for ':'.
-							break;
-
-						default:
-							return FALSE; // Wrong second option.
-					}
-				}
-				else
-					return FALSE; // No space for option 2.
-				break;
-
-			default:
-				return FALSE; // Wrong first option.
-				break;
-			}
-		}
-		else
-			return FALSE; // No space for option 1;
+		if (src[j] == '>')
+			break;
 	}
-	else
-		return FALSE; // No '<'.
+
+	if (j == 4 || j == len)
+		// No concluding ">" found.
+		return 0;
+
+	for (int k = 4; k < j; k++)
+	{
+		switch (src[2])
+		{
+		case 'd':
+			if ((src[k] >= '0' && src[k] <= '9') || src[k] == '-')
+				continue;
+			else
+				return 0; // Non-digit found.
+			break;
+
+		case 'h':
+			if ((src[k] >= '0' && src[k] <= '9') ||
+					(src[k] >= 'a' && src[k] <= 'f'))
+				continue;
+			else
+				return 0; // Non-hex-digit.
+			break;
+
+		case 'o': case 'l': // float or double.
+			if ((src[k] >= '0' && src[k] <= '9') || src[k] == '-' ||
+					src[k] == '.' || src[k] == 'e' || src[k] == 'E')
+				continue;
+			else
+				return 0;
+			break;
+		}
+	}
+	
+	// Return length by type
+	switch (src[1])
+	{
+	default:
+	case 'b': return 1;
+	case 'w': return 2;
+	case 'l': return 4;
+	case 'f': return 4;
+	case 'd': return 8;
+	}
 }
 
 //-------------------------------------------------------------------
