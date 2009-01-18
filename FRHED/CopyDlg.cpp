@@ -29,6 +29,14 @@
 #include "hexwdlg.h"
 #include "BinTrans.h"
 
+/** @brief Maximum text length in dialog edit boxes. */
+static const int MaxTextLen = 16;
+
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE.
+ */
 BOOL CopyDlg::OnInitDialog(HWND hDlg)
 {
 	int iStart = iGetStartOfSelection();
@@ -40,9 +48,22 @@ BOOL CopyDlg::OnInitDialog(HWND hDlg)
 	SetDlgItemText(hDlg, IDC_COPY_OFFSETEDIT, buf);
 	SetDlgItemInt(hDlg, IDC_COPY_BYTECOUNT, iEnd - iStart + 1, TRUE);
 	CheckDlgButton(hDlg, IDC_COPY_OFFSET, BST_CHECKED);
+
+	// Limit edit text lengths
+	HWND edit = GetDlgItem(hDlg, IDC_COPY_STARTOFFSET);
+	SendMessage(edit, EM_SETLIMITTEXT, MaxTextLen, 0);
+	edit = GetDlgItem(hDlg, IDC_COPY_OFFSETEDIT);
+	SendMessage(edit, EM_SETLIMITTEXT, MaxTextLen, 0);
+	edit = GetDlgItem(hDlg, IDC_COPY_BYTECOUNT);
+	SendMessage(edit, EM_SETLIMITTEXT, MaxTextLen, 0);
 	return TRUE;
 }
 
+/**
+ * @brief Copy the bytes.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE if bytes were copied, FALSE otherwise.
+ */
 BOOL CopyDlg::Apply(HWND hDlg)
 {
 	char buf[64] = {0};

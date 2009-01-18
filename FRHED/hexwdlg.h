@@ -325,6 +325,9 @@ private:
 	BOOL Apply(HWND);
 };
 
+/**
+ * A dialog for copying the bytes.
+ */
 class CopyDlg : public HexEditorWindow
 {
 public:
