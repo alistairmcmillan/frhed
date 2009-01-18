@@ -72,24 +72,27 @@ int Text2BinTranslator::GetTrans2Bin(SimpleArray<char>& sa, int charmode, int bi
 	return TRUE;
 }
 
-//-------------------------------------------------------------------
-// How long is a bytecode-string that encodes char-array src of length srclen?
-// Return: Length of bytecode-string including zero-byte.
-int Text2BinTranslator::iBytes2BytecodeDestLen( char* src, int srclen )
+/**
+ * @brief  Calculate length of bytecode string for char array. 
+ * @param [in] src Char array to calculate.
+ * @param [in] srclen How many chars to calculate.
+ * @return Length of bytecode-string including zero-byte.
+ */
+int Text2BinTranslator::iBytes2BytecodeDestLen(char* src, int srclen)
 {
-	int i, destlen = 1;
-	for (i=0; i<srclen; i++)
+	int destlen = 1;
+	for (int i = 0; i < srclen; i++)
 	{
 		if (src[i] == '<')
-			destlen+=2; // Escapecode needed.
-		else if( src[i] == '\\' )
-			destlen+=2; // Escapecode needed.
+			destlen += 2; // Escapecode needed.
+		else if (src[i] == '\\')
+			destlen += 2; // Escapecode needed.
 		else if (src[i] >= 32 && src[i] < 127)
 			destlen++; // Normal char.
-		else if( src[i]==10 || src[i]==13 )
+		else if (src[i] == 10 || src[i] == 13)
 			destlen++; // LF/CR.
 		else
-			destlen+=7; // Escapecode needed: <bh:xx>
+			destlen += 7; // Escapecode needed: <bh:xx>
 	}
 	return destlen;
 }
