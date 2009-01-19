@@ -266,6 +266,7 @@ private:
 	BOOL OnInitDialog(HWND);
 	BOOL OnCommand(HWND, WPARAM, LPARAM);
 	BOOL Apply(HWND);
+	void RefreshClipboardFormats(HWND);
 };
 
 class MoveCopyDlg : public HexEditorWindow

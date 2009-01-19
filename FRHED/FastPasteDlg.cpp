@@ -37,7 +37,7 @@ static HWND hwndNextViewer = NULL;
  */
 BOOL FastPasteDlg::OnInitDialog(HWND hDlg)
 {
-	SendMessage(hDlg, WM_COMMAND, IDC_FPASTE_REFRESH, 0);
+	RefreshClipboardFormats(hDlg);
 	hwndNextViewer = SetClipboardViewer(hDlg);
 	SetDlgItemInt(hDlg, IDC_FPASTE_PASTETIMES, iPasteTimes, TRUE);
 	SetDlgItemInt(hDlg, IDC_FPASTE_SKIPS, iPasteSkip, TRUE);
@@ -192,6 +192,95 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Refresh the clipboard formats list.
+ * This function gets all supported clipboard formats and updates the list to
+ * the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ */
+void FastPasteDlg::RefreshClipboardFormats(HWND hDlg)
+{
+	HWND list = GetDlgItem(hDlg, IDC_FPASTE_CFORMAT);
+	SendMessage( list, LB_RESETCONTENT, 0, 0 );
+	if (CountClipboardFormats() && OpenClipboard(NULL))
+	{
+		UINT uFormat;
+		int i;
+		char szFormatName[100];
+		char SetSel = 0;
+		LPCSTR lpFormatName;
+
+		uFormat = EnumClipboardFormats(0);
+		while (uFormat)
+		{
+			lpFormatName = NULL;
+
+			// For registered formats, get the registered name.
+			if (GetClipboardFormatName(uFormat, szFormatName, sizeof(szFormatName)))
+				lpFormatName = szFormatName;
+			else
+			{
+				//Get the name of the standard clipboard format.
+				switch (uFormat)
+				{
+					#define CASE(a,b) case a: lpFormatName = #a; SetSel = b; break;
+						CASE(CF_TEXT,1)
+					#undef CASE
+					#define CASE(a) case a: lpFormatName = #a; break;
+						CASE(CF_BITMAP) CASE(CF_METAFILEPICT) CASE(CF_SYLK)
+						CASE(CF_DIF) CASE(CF_TIFF) CASE(CF_OEMTEXT)
+						CASE(CF_DIB) CASE(CF_PALETTE) CASE(CF_PENDATA)
+						CASE(CF_RIFF) CASE(CF_WAVE) CASE(CF_UNICODETEXT)
+						CASE(CF_ENHMETAFILE) CASE(CF_HDROP) CASE(CF_LOCALE)
+						CASE(CF_MAX) CASE(CF_OWNERDISPLAY) CASE(CF_DSPTEXT)
+						CASE(CF_DSPBITMAP) CASE(CF_DSPMETAFILEPICT)
+						CASE(CF_DSPENHMETAFILE) CASE(CF_PRIVATEFIRST)
+						CASE(CF_PRIVATELAST) CASE(CF_GDIOBJFIRST)
+						CASE(CF_GDIOBJLAST) CASE(CF_DIBV5)
+					#undef CASE
+					default:
+						if (i != i)
+							;
+						#define CASE(a) else if(uFormat>a##FIRST&&uFormat<a##LAST) sprintf(szFormatName,#a "%d",uFormat-a##FIRST);
+							CASE(CF_PRIVATE) CASE(CF_GDIOBJ)
+						#undef CASE
+						/*Format ideas for future: hex number, system/msdn constant, registered format, WM_ASKFORMATNAME, tickbox for delay rendered or not*/
+						/*else if(uFormat>0xC000&&uFormat<0xFFFF){
+							sprintf(szFormatName,"CF_REGISTERED%d",uFormat-0xC000);
+						}*/
+						else
+							break;
+						lpFormatName = szFormatName;
+					break;
+				}
+			}
+
+			if (lpFormatName == NULL)
+			{
+				sprintf(szFormatName, "0x%.8x", uFormat);
+				lpFormatName = szFormatName;
+			}
+
+			//Insert into the list
+			if (lpFormatName)
+			{
+				i = SendMessage(list, LB_ADDSTRING, 0, (LPARAM) lpFormatName);
+				if (SetSel == 1)
+				{
+					SetSel = 2;
+					SendMessage(list, LB_SETCURSEL, i, 0);
+				}
+				SendMessage(list, LB_SETITEMDATA, i, uFormat);
+			}
+
+			uFormat = EnumClipboardFormats(uFormat);
+		}
+		CloseClipboard();
+		if (!SetSel)
+			SendMessage(list, LB_SETCURSEL, 0, 0);
+	}
+}
+
 BOOL FastPasteDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 {
 	switch (wParam)
@@ -205,74 +294,7 @@ BOOL FastPasteDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 		return TRUE;
 	case IDC_FPASTE_REFRESH:
 		{
-			//Get all the Clipboard formats
-			HWND list = GetDlgItem(hDlg, IDC_FPASTE_CFORMAT);
-			SendMessage( list, LB_RESETCONTENT, 0, 0 );
-			if (CountClipboardFormats() && OpenClipboard(NULL))
-			{
-				UINT uFormat;
-				int i;
-				char szFormatName[100], SetSel = 0;
-				LPCSTR lpFormatName;
-
-				uFormat = EnumClipboardFormats(0);
-				while (uFormat){
-					lpFormatName = NULL;
-
-					// For registered formats, get the registered name.
-					if (GetClipboardFormatName(uFormat, szFormatName, sizeof(szFormatName)))
-						lpFormatName = szFormatName;
-					else{
-						//Get the name of the standard clipboard format.
-						switch(uFormat){
-							#define CASE(a,b) case a: lpFormatName = #a; SetSel = b; break;
-								CASE(CF_TEXT,1)
-							#undef CASE
-							#define CASE(a) case a: lpFormatName = #a; break;
-								CASE(CF_BITMAP) CASE(CF_METAFILEPICT) CASE(CF_SYLK)
-								CASE(CF_DIF) CASE(CF_TIFF) CASE(CF_OEMTEXT)
-								CASE(CF_DIB) CASE(CF_PALETTE) CASE(CF_PENDATA)
-								CASE(CF_RIFF) CASE(CF_WAVE) CASE(CF_UNICODETEXT)
-								CASE(CF_ENHMETAFILE) CASE(CF_HDROP) CASE(CF_LOCALE)
-								CASE(CF_MAX) CASE(CF_OWNERDISPLAY) CASE(CF_DSPTEXT)
-								CASE(CF_DSPBITMAP) CASE(CF_DSPMETAFILEPICT)
-								CASE(CF_DSPENHMETAFILE) CASE(CF_PRIVATEFIRST)
-								CASE(CF_PRIVATELAST) CASE(CF_GDIOBJFIRST)
-								CASE(CF_GDIOBJLAST) CASE(CF_DIBV5)
-							#undef CASE
-							default:
-								if(i!=i);
-								#define CASE(a) else if(uFormat>a##FIRST&&uFormat<a##LAST) sprintf(szFormatName,#a "%d",uFormat-a##FIRST);
-									CASE(CF_PRIVATE) CASE(CF_GDIOBJ)
-								#undef CASE
-								/*Format ideas for future: hex number, system/msdn constant, registered format, WM_ASKFORMATNAME, tickbox for delay rendered or not*/
-								/*else if(uFormat>0xC000&&uFormat<0xFFFF){
-									sprintf(szFormatName,"CF_REGISTERED%d",uFormat-0xC000);
-								}*/
-								else break;
-								lpFormatName = szFormatName;
-							break;
-						}
-					}
-
-					if (lpFormatName == NULL){
-						sprintf(szFormatName,"0x%.8x",uFormat);
-						lpFormatName = szFormatName;
-					}
-
-					//Insert into the list
-					if(lpFormatName){
-						i = SendMessage(list, LB_ADDSTRING, 0, (LPARAM) lpFormatName);
-						if(SetSel == 1){SetSel = 2; SendMessage(list, LB_SETCURSEL, i, 0);}
-						SendMessage(list, LB_SETITEMDATA, i, uFormat);
-					}
-
-					uFormat = EnumClipboardFormats(uFormat);
-				}
-				CloseClipboard();
-				if (!SetSel)
-					SendMessage(list, LB_SETCURSEL, 0, 0);
-			}
+			RefreshClipboardFormats(hDlg);
 		}
 		return TRUE;
 	case MAKEWPARAM(IDC_FPASTE_CFORMAT, LBN_SELCHANGE):
