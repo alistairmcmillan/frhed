@@ -12,6 +12,7 @@ Frhed 1.3.5
   Add Browse-button for selecting text editor in View-settings (#2480604)
   New icon for the "Replace" button in the toolbar (#2515944)
   Limit edit field lengths in Copy bytes -dialog (r307)
+  Limit edit field lengths in Paste With -dialog (r313)
   Bugfix: Byte count edit field was not enabled in Cut/Delete dialog (r284)
 
 Frhed 1.3.4 - 2009-01-06 (r270)

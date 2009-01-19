@@ -28,6 +28,11 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to dialog.
+ * @return TRUE.
+ */
 BOOL PasteDlg::OnInitDialog(HWND hDlg)
 {
 	if (bSelected) // iPasteMode = 0
@@ -47,9 +52,21 @@ BOOL PasteDlg::OnInitDialog(HWND hDlg)
 	SetDlgItemInt(hDlg, IDC_PASTE_TIMES, iPasteTimes, TRUE);
 	SetDlgItemInt(hDlg, IDC_PASTE_SKIPBYTES, iPasteSkip, TRUE);
 	CheckDlgButton(hDlg, IDC_PASTE_BINARY, iPasteAsText);
+
+	// Limit edit text lengths
+	HWND edit = GetDlgItem(hDlg, IDC_PASTE_TIMES);
+	SendMessage(edit, EM_SETLIMITTEXT, 16, 0);
+	edit = GetDlgItem(hDlg, IDC_PASTE_SKIPBYTES);
+	SendMessage(edit, EM_SETLIMITTEXT, 16, 0);
+
 	return TRUE;
 }
 
+/**
+ * @brief Paste the bytes.
+ * @param [in] hDlg Handle to dialog.
+ * @return TRUE if paste succeeded, FALSE if failed.
+ */
 BOOL PasteDlg::Apply(HWND hDlg)
 {
 	iPasteAsText = IsDlgButtonChecked(hDlg, IDC_PASTE_BINARY);

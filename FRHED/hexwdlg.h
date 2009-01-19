@@ -225,7 +225,7 @@ private:
 };
 
 /**
- * A dialog for selecting a block of bytes.
+ * @brief A dialog for selecting a block of bytes.
  */
 class SelectBlockDlg : public HexEditorWindow
 {
@@ -237,6 +237,11 @@ private:
 	BOOL OnCommand(HWND, WPARAM, LPARAM);
 };
 
+/**
+ * @brief A dialog for pasting bytes to editor.
+ * This version of Paste-dialog shows the data in the clipboard and allows
+ * the user to edit data before pasting it.
+ */
 class PasteDlg : public HexEditorWindow
 {
 public:
