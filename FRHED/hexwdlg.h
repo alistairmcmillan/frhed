@@ -253,6 +253,10 @@ private:
 	BOOL Apply(HWND);
 };
 
+/**
+ * @brief A dialog for normal pasting of bytes to editor.
+ * This is the default paste-dialog (opened e.g. from Ctrl+V).
+ */
 class FastPasteDlg : public HexEditorWindow
 {
 public:

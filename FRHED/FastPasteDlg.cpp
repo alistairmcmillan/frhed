@@ -30,6 +30,11 @@
 
 static HWND hwndNextViewer = NULL;
 
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE.
+ */
 BOOL FastPasteDlg::OnInitDialog(HWND hDlg)
 {
 	SendMessage(hDlg, WM_COMMAND, IDC_FPASTE_REFRESH, 0);
@@ -51,9 +56,21 @@ BOOL FastPasteDlg::OnInitDialog(HWND hDlg)
 		CheckDlgButton(hDlg, IDC_FPASTE_OWERWRITE, BST_CHECKED);
 	}
 	CheckDlgButton(hDlg, IDC_FPASTE_TXT, iPasteAsText);
+
+	// Limit edit text lengths
+	HWND edit = GetDlgItem(hDlg, IDC_FPASTE_PASTETIMES);
+	SendMessage(edit, EM_SETLIMITTEXT, 16, 0);
+	edit = GetDlgItem(hDlg, IDC_FPASTE_SKIPS);
+	SendMessage(edit, EM_SETLIMITTEXT, 16, 0);
+
 	return TRUE;
 }
 
+/**
+ * @brief Paste the bytes to the editor.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE if bytes were pasted, FALSE if failed.
+ */
 BOOL FastPasteDlg::Apply(HWND hDlg)
 {
 	iPasteAsText = IsDlgButtonChecked(hDlg, IDC_FPASTE_TXT);
