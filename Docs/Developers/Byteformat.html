@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Byte format syntax</title>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+</head>
+<body>
+<h2>Byte format syntax</h2>
+
+<p>Types <i>byte</i>, <i>word</i>, <i>longword</i> and <i>floating point</i>
+data can be encoded as follows:</p>
+
+<h4>Size</h4>
+
+<ul>
+  <li><b>b</b> for byte-size (8 bit) value.</li>
+  <li><b>w</b> for word-size (16 bit) value.</li> 
+  <li><b>l</b> for longword-size (32 bit) value.</li> 
+</ul>
+
+<h4>Numeral System</h4>
+
+<ul>
+  <li><b>d</b> for decimal system.</li>
+  <li><b>h</b> for hexadecimal system.</li>
+</ul>
+
+<h4>Value</h4>
+<p>Enter the value of the datum after the colon.</p>
+
+<p><b>Note:</b></br>
+For floating point values set Size and Numeral system to:
+
+<ul>
+  <li><b>fl</b> is for float values.</li>
+  <li><b>do</b> is for double values.</li>
+</ul>
+
+<h3>Examples</h3>
+<ul>
+  <li><code>&lt;bd:-15&gt;</code> means byte-size datum with decimal value
+    -15.</li>
+  <li><code>&lt;wh:23f0&gt;</code> means word-size datum with hexadecimal value
+    23f0.</li>  
+  <li><code>&lt;ld:1234567890&gt;</code> means longword-size datum with decimal value
+    1234567890.</li>
+  <li><code>&lt;fl:2.5&gt;</code> means float-size datum with value 2.5.</li>
+  <li><code>&lt;do:1.8e7&gt;</code> means double-size datum with value
+    1.8×10^7</li> 
+</ul>
+
+<p><b>Note</b><br>
+If you want to find or paste a valid special syntax string like &lt;bd:0&gt; as
+text, then prefix a \ to &lt;. This will turn &lt; into a normal character.
+Copying a &lt; in the file will insert the \ automatically.
+<br>
+Backslashes ("\") in the file are copied and encoded as double backslashes
+("\\").</p>
+
+<h3>Data ranges and sizes </h3>
+
+<h4>Integers</h4>
+<ul>
+  <li><code>Byte</code><br> signed from -128 to 127 <br> unsigned from 0 to 255
+     </li>
+  <li><code>Word</code> (2 bytes)<br> signed from -32,768 to 32,767 <br>
+    unsigned from 0 to 65,535</li>
+  <li><code>Longword</code> (4 bytes)<br> signed from -2,147,483,648 to
+    2,147,483,647 <br> unsigned from 0 to 4,294,967,295</li>
+</ul>
+
+
+<h4>Floating point types</h4>
+
+<ul>
+  <li><code>Float</code> (4 bytes) range 3.4E +/- 38 (7 digits)</li>
+  <li><code>Double</code> (8 bytes range 1.7E +/- 308 (15 digits)</li>
+</ul>
+
+</body>
+</html>
