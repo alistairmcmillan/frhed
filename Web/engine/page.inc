@@ -123,6 +123,7 @@
       $temp .= "  <h2>Project</h2>\n";
       $temp .= "  <ul>\n";
       $temp .= "    <li><a href=\"http://sourceforge.net/projects/frhed\">Home</a></li>\n";
+      $temp .= "    <li><a href=\"/frhed_pad.xml\">PAD File</a></li>\n";
       $temp .= "  </ul>\n";
       $temp .= "  <h2>Support</h2>\n";
       $temp .= "  <ul>\n";
