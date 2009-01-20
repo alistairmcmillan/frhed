@@ -28,6 +28,11 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 
+/**
+ * @brief Append the data to current file.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE if appending succeeded, FALSE if failed.
+ */
 BOOL AppendDlg::Apply(HWND hDlg)
 {
 	char buf[64];
