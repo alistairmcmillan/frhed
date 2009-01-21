@@ -21,6 +21,11 @@
 				</ul>
 
 				<h2>Download</h2>
+				<h3>Beta releases</h3>
+				<ul>
+					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=307097&amp;release_id=655390">
+						Frhed 1.3.10</a> (2009-01-22)</li>
+				</ul>
 				<h3>Alpha releases</h3>
 				<ul>
 					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=295443&amp;release_id=651776">
