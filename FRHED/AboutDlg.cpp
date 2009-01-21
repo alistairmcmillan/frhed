@@ -41,7 +41,7 @@ BOOL AboutDlg::OnInitDialog(HWND hDlg)
 	wchar_t buf[4096];
 	buf[RTL_NUMBER_OF(buf) - 1] = L'\0';
 	_snwprintf(buf, RTL_NUMBER_OF(buf) - 1, S.AboutFrhed,
-		FRHED_MAJOR_VERSION, FRHED_MINOR_VERSION, FRHED_SUB_RELEASE_NO, FRHED_BUILD_NO);
+		FRHED_MAJOR_VERSION, FRHED_MINOR_VERSION, FRHED_SUB_RELEASE_NO);
 	SetDlgItemText(hDlg, IDC_ABOUT_VER, buf);
 	// Set the homepage URL.
 	SetDlgItemText(hDlg, IDC_ABOUT_URL, FrhedHomepageURL);
