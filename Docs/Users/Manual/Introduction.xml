@@ -115,7 +115,26 @@
   <section>
     <title>Acknowledgements</title>
 
-    <para>Thanks to:</para>
+    <para>Frhed is originally developed by Raihan Kibria.</para>
+
+    <para>Starting from autumn 2008 Frhed is developed by new developer
+    group:</para>
+
+    <itemizedlist>
+      <listitem>
+        <simpara>Kimmo Varis as lead developer</simpara>
+      </listitem>
+
+      <listitem>
+        <simpara>Tim Gerundt</simpara>
+      </listitem>
+
+      <listitem>
+        <simpara>Jochen Tucht</simpara>
+      </listitem>
+    </itemizedlist>
+
+    <para>Thanks to people helping with original Frhed versions:</para>
 
     <itemizedlist>
       <listitem>
