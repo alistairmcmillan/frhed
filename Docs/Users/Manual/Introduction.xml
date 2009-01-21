@@ -4,73 +4,84 @@
 
   <section>
     <title>Features</title>
+
     <itemizedlist>
       <listitem>
         <simpara>Native 32 bit Windows application: long filenames supported,
         editable file size limited only by available system memory.</simpara>
       </listitem>
+
       <listitem>
         <simpara>Small program size, loads fast.</simpara>
       </listitem>
+
       <listitem>
         <simpara>Cut, copy &amp; paste binary values. Syntax for describing
-        byte, word, longword, float and double binary values in text form to use with find and paste functions.</simpara>
+        byte, word, longword, float and double binary values in text form to
+        use with find and paste functions.</simpara>
       </listitem>
+
       <listitem>
-        <simpara>Directly enter hex values or text in main window (overwrite or
-        insert).</simpara>
+        <simpara>Directly enter hex values or text in main window (overwrite
+        or insert).</simpara>
       </listitem>
+
       <listitem>
         <simpara>Compare files.</simpara>
       </listitem>
+
       <listitem>
-        <simpara>Search for any combination of text and binary values.</simpara>
+        <simpara>Search for any combination of text and binary
+        values.</simpara>
       </listitem>
+
       <listitem>
         <simpara>Bit manipulation.</simpara>
       </listitem>
+
       <listitem>
         <simpara>Import/Export as hexdump to/from file or clipboard.</simpara>
       </listitem>
+
       <listitem>
         <simpara>Automatically adjust bytes displayed per hexdump line to
         window width, or set bytes per line manually.</simpara>
       </listitem>
+
       <listitem>
         <simpara>Choose font size, character set (ANSI or OEM), colors of text
         and background.</simpara>
       </listitem>
+
       <listitem>
         <simpara>Intel or Motorola binary format.</simpara>
       </listitem>
+
       <listitem>
-        <simpara>Can be used as &quot;Send to&quot;-Target and in the context
-        menu for all files and for files with non-registered extensions.
-        </simpara>
+        <simpara>Can be used as "Send to"-Target and in the context menu for
+        all files and for files with non-registered extensions. </simpara>
       </listitem>
+
       <listitem>
         <simpara>Set bookmarks to easily access offsets in the file.</simpara>
       </listitem>
+
       <listitem>
         <simpara>Load files partially.</simpara>
       </listitem>
+
       <listitem>
         <simpara>Load files by dragging them into the window.</simpara>
       </listitem>
+
       <listitem>
         <simpara>Apply binary templates for structured information.</simpara>
       </listitem>
-      <listitem>
-        <simpara>Easily remove links to Frhed, remove Frhed&apos;s registry
-        entries and upgrade from Frhed versions 1.0.154 and upward (1.0.153 and
-        below used ini files instead) from within the program itself.</simpara>
-      </listitem>
-      <listitem>
-        <simpara>Switch between sets of instance options.</simpara>
-      </listitem>
+
       <listitem>
         <simpara>Automatically create backups when saving.</simpara>
       </listitem>
+
       <listitem>
         <simpara>OLE drag-drop</simpara>
       </listitem>
@@ -79,19 +90,23 @@
 
   <section>
     <title>Disclaimer</title>
-    <para>Frhed is supplied on an as-is basis. The author offers no warranty of
-    its fitness for any purpose whatsoever, and accepts no liability whatsoever
-    for any loss or damage incurred by its use. Frhed is not a supported
-    product. The author accepts no commitment or liability to address any
-    problems that may be encountered in using it; however, Frhed is continually
-    being developed and improved, so he is always interested to hear about any
-    bugs or deficiencies.</para>
+
+    <para>Frhed is supplied on an as-is basis. The author offers no warranty
+    of its fitness for any purpose whatsoever, and accepts no liability
+    whatsoever for any loss or damage incurred by its use. Frhed is not a
+    supported product. The author accepts no commitment or liability to
+    address any problems that may be encountered in using it; however, Frhed
+    is continually being developed and improved, so he is always interested to
+    hear about any bugs or deficiencies.</para>
   </section>
 
   <section>
     <title>License</title>
-    <para>Frhed is licensed by the <ulink url="http://www.gnu.org/licenses/gpl-2.0.html">GNU
-    General Public License</ulink>.</para>
+
+    <para>Frhed is licensed by the <ulink
+    url="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public
+    License</ulink>.</para>
+
     <para>In short this means you can freely copy, use and distribute this
     software. If you modify the sources and distribute modified version of
     Frhed you must publish the modified sources.</para>
@@ -99,37 +114,47 @@
 
   <section>
     <title>Acknowledgements</title>
+
     <para>Thanks to:</para>
+
     <itemizedlist>
       <listitem>
         <simpara>Dario Bagnoli - bug reports and beta testing</simpara>
       </listitem>
+
       <listitem>
         <simpara>Tom Foth - suggestions</simpara>
       </listitem>
+
       <listitem>
         <simpara>Bo Wannerberg - Win2000 opening bugfix</simpara>
       </listitem>
+
       <listitem>
         <simpara><ulink url="mailto:pabs3@zip.to">Pabs</ulink> - Edit/Fill
         selection with command and other features</simpara>
       </listitem>
+
       <listitem>
         <simpara><ulink url="mailto:not@p-nand-q.com">Gerson Kurz</ulink> -
         Harddisk access stuff and other features</simpara>
       </listitem>
+
       <listitem>
         <simpara>Mike Funduc - selection command line parameters and a toolbar
         </simpara>
       </listitem>
+
       <listitem>
         <simpara>nas - improved the window creation</simpara>
       </listitem>
+
       <listitem>
         <simpara>The Starman reviewed Frhed, provides tutorials on using Frhed
         in a practical context and reported bugs in the import hexdump command
         &amp; other features.</simpara>
       </listitem>
+
       <listitem>
         <simpara>Harry reviewed Frhed.</simpara>
       </listitem>
@@ -138,24 +163,31 @@
 
   <section>
     <title>Frhed on the Web</title>
+
     <para>If you have comments or suggestions please submit them to <ulink
     url="http://apps.sourceforge.net/phpbb/frhed/">Frhed forum</ulink></para>
+
     <para>Please check for the newest updates of Frhed (including the newest
-    beta version) on Frhed&apos;s homepage: <ulink url="http://frhed.sourceforge.net/">
+    beta version) on Frhed's homepage: <ulink
+    url="http://frhed.sourceforge.net/">
     http://frhed.sourceforge.net/</ulink></para>
+
     <para>Some links:</para>
+
     <itemizedlist>
       <listitem>
-        <simpara><ulink url="http://frhed.sourceforge.net/">Frhed&apos;s
+        <simpara><ulink url="http://frhed.sourceforge.net/">Frhed's
         SourceForge project page</ulink>.</simpara>
       </listitem>
+
       <listitem>
         <simpara><ulink url="http://bonedaddy.net/pabs3/prog.html#frhed">
-        Pabs&apos; Frhed patch</ulink>.</simpara>
+        Pabs' Frhed patch</ulink>.</simpara>
       </listitem>
+
       <listitem>
         <simpara><ulink url="http://www.funduc.com/srfrhed.htm">Funduc
-        Software&apos;s Frhed mod</ulink>.</simpara>
+        Software's Frhed mod</ulink>.</simpara>
       </listitem>
     </itemizedlist>
   </section>
