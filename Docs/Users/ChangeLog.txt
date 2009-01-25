@@ -4,6 +4,9 @@ to Subversion revision numbers (rXXXXX).
 
 For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 
+Frhed 1.5.1
+  Improve Cut-dialog layout (r331)
+
 
 Frhed 1.4.x (R1_4) branch created (r327)
 
