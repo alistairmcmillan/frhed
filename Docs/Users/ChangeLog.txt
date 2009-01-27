@@ -6,6 +6,7 @@ For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 
 Frhed 1.4.0
   Improve Cut-dialog layout (r332)
+  Improve Append-dialog layout (r336)
 
 Frhed 1.4.x (R1_4) branch created (r327)
 
