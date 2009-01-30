@@ -45,7 +45,7 @@
 				<h2>Support</h2>
 				<p>For support you can try the <a href="http://apps.sourceforge.net/phpbb/frhed/">forums</a> or the <a href="https://sourceforge.net/mail/?group_id=236485">mailing lists</a>.
 				If you found bugs, please submit them to our <a href="https://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485">bug tracker</a>
-				or leave wishes at the <a href="https://sourceforge.net/tracker/?atid=1100164&amp;group_id=236485">feature requests</a> list.</p>
+				or leave wishes at the <a href="https://sourceforge.net/tracker/?atid=1100166&amp;group_id=236485">feature requests</a> list.</p>
 
 				<h2>Open Source</h2>
 				<p>Frhed is <a href="http://www.opensource.org/">open source</a> software and is licenced under the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License</a>.
