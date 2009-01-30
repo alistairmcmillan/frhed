@@ -128,7 +128,7 @@
       $temp .= "  <h2>Support</h2>\n";
       $temp .= "  <ul>\n";
       $temp .= "    <li><a href=\"http://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485\">Bugs</a></li>\n";
-      $temp .= "    <li><a href=\"http://sourceforge.net/tracker/?atid=1100164&amp;group_id=236485\">Feature Requests</a></li>\n";
+      $temp .= "    <li><a href=\"http://sourceforge.net/tracker/?atid=1100166&amp;group_id=236485\">Feature Requests</a></li>\n";
       $temp .= "    <li><a href=\"http://apps.sourceforge.net/phpbb/frhed/\">Forums</a></li>\n";
       $temp .= "    <li><a href=\"http://sourceforge.net/mail/?group_id=236485\">Mailing Lists</a></li>\n";
       $temp .= "  </ul>\n";
