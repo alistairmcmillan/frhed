@@ -139,7 +139,7 @@
       $temp .= "  </ul>\n";
       $temp .= "  <h2>Donate</h2>\n";
       $temp .= "  <p>Support this project by donating money.</p>\n";
-      $temp .= "  <a href=\"http://sourceforge.net/donate/index.php?group_id=236485\"><img src=\"http://images.sourceforge.net/images/project-support.jpg\" width=\"88\" height=\"32\" border=\"0\" alt=\"Support this project\" /></a>\n";
+      $temp .= "  <a href=\"http://sourceforge.net/donate/index.php?group_id=236485\"><img src=\"http://images.sourceforge.net/images/project-support.jpg\" width=\"88\" height=\"32\" style=\"border:none;\" alt=\"Support this project\" /></a>\n";
       $temp .= "</div> <!-- .sidenav -->\n";
       return $temp;
     }
