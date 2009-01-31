@@ -230,7 +230,7 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			szHexClassA, 0,
 			WS_TABSTOP | WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL,
 			10, 10, 100, 100, hwnd, 0, hMainInstance, 0);
-		pHexWnd = (HexEditorWindow *)GetWindowLong(hwndHex, GWL_USERDATA);
+		pHexWnd = (HexEditorWindow *)GetWindowLongPtr(hwndHex, GWL_USERDATA);
 		if (!pHexWnd)
 			return -1;
 		hwndStatusBar = CreateStatusWindow(

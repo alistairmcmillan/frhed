@@ -4227,7 +4227,7 @@ INT_PTR CALLBACK MultiDropDlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 		{
 			TranslateDialog(h);
 			HWND hwndList = GetDlgItem(h, IDC_DROPPED_FILES);
-			SetWindowLong(hwndList, GWL_STYLE, GetWindowLong(hwndList,GWL_STYLE) & ~LBS_SORT | WS_HSCROLL);
+			SetWindowLongPtr(hwndList, GWL_STYLE, GetWindowLongPtr(hwndList,GWL_STYLE) & ~LBS_SORT | WS_HSCROLL);
 
 			char file[_MAX_PATH + 1];
 			UINT n = DragQueryFile((HDROP)l, 0xFFFFFFFF, NULL, 0 );

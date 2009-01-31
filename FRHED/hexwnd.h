@@ -366,10 +366,10 @@ class dialog : public T
 	{
 		if (uMsg == WM_INITDIALOG)
 		{
-			SetWindowLong(hWnd, DWLP_USER, lParam);
+			SetWindowLongPtr(hWnd, DWLP_USER, lParam);
 			TranslateDialog(hWnd);
 		}
-		return ((T *)GetWindowLong(hWnd, DWLP_USER))->DlgProc(hWnd, uMsg, wParam, lParam);
+		return ((T *)GetWindowLongPtr(hWnd, DWLP_USER))->DlgProc(hWnd, uMsg, wParam, lParam);
 	}
 public:
 	INT_PTR DoModal(HWND hWnd)
