@@ -531,8 +531,10 @@ void HexEditorWindow::resize_window()
 	SetScrollInfo(hwnd, SB_VERT, &SI, TRUE);
 
 	iHscrollMax = iCharsPerLine - 1;
-	if(iHscrollPos>iHscrollMax-cxBuffer+1)iHscrollPos = iHscrollMax-cxBuffer+1;
-	if(iHscrollPos<0)iHscrollPos=0;
+	if (iHscrollPos > iHscrollMax - cxBuffer + 1)
+		iHscrollPos = iHscrollMax - cxBuffer + 1;
+	if (iHscrollPos < 0)
+		iHscrollPos = 0;
 	SI.nPage = cxBuffer;
 	SI.nPos = iHscrollPos;
 	SI.nMax = iHscrollMax;
