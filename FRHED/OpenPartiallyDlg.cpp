@@ -58,21 +58,21 @@ BOOL OpenPartiallyDlg::OnInitDialog(HWND hDlg)
  */
 BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 {
-	__int64 iPLFileLen = _filelengthi64(filehandle);
+	const __int64 iPLFileLen = _filelengthi64(filehandle);
 	const UINT state = IsDlgButtonChecked(hDlg, IDC_OPENPARTIAL_RELOFFSET);
 	bShowFileStatsPL = state == BST_CHECKED;
 	char buf[128] = {0};
-	__int64 iNumBytesPl;
+	UINT numBytesPl; // Bytes to read
 	
 	// Only complain about wrong offset in start offset editbox if loading from start.
 	if (GetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTES, buf, 128) &&
-		sscanf(buf, "%lld", &iNumBytesPl) == 0)
+		sscanf(buf, "%u", &numBytesPl) == 0)
 	{
 		MessageBox(hDlg, "Number of bytes not recognized.", "Open partially", MB_ICONERROR);
 		return FALSE;
 	}
 
-	if (iNumBytesPl >= INT_MAX)
+	if (numBytesPl >= INT_MAX)
 	{
 		MessageBox(hDlg, "Cannot open more than 2 GB of data.",
 				"Open partially", MB_ICONERROR);
@@ -83,10 +83,11 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 	if (IsDlgButtonChecked(hDlg, IDC_OPENPARTIAL_ENDBYTES))
 	{
 		// Load from end of file: arguments must be adapted.
-		iStartPL = iPLFileLen - iNumBytesPl;
+		iStartPL = iPLFileLen - numBytesPl;
 		if (iStartPL < 0)
 		{
-			MessageBox(hDlg, "Specified number of bytes to load\ngreater than file size.", "Open partially", MB_ICONERROR);
+			MessageBox(hDlg, "Specified number of bytes to load\ngreater than file size.",
+					"Open partially", MB_ICONERROR);
 			return FALSE;
 		}
 	}
@@ -97,22 +98,24 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		MessageBox(hDlg, "Start offset not recognized.", "Open partially", MB_ICONERROR);
 		return FALSE;
 	}
-	if (iStartPL + iNumBytesPl > iPLFileLen)
+	if (iStartPL + numBytesPl > iPLFileLen)
 	{
 		MessageBox(hDlg, "Too many bytes to load.", "Open partially", MB_ICONERROR);
 		return FALSE;
 	}
 
 	BOOL done = FALSE;
-	if (DataArray.SetSize((int)iNumBytesPl))
+	if (DataArray.SetSize(numBytesPl))
 	{
 		DataArray.ExpandToSize();
 		_lseeki64(filehandle, iStartPL, 0);
 		iPartialOffset = iStartPL;
-		iPartialOpenLen = (int)iNumBytesPl;
+		iPartialOpenLen = (int) numBytesPl;
 		iPartialFileLen = iPLFileLen;
 		bPartialStats = bShowFileStatsPL;
-		if (_read(filehandle, DataArray, iNumBytesPl) != -1)
+
+		// DataArray restricts max size to 2 GB.
+		if (_read(filehandle, DataArray, numBytesPl) != -1)
 		{
 			done = TRUE;
 		}
