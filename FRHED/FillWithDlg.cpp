@@ -37,7 +37,7 @@ int FillWithDialog::buflen;//number of bytes to fill with
 char FillWithDialog::szFWFileName[_MAX_PATH];//fill with file name
 int FillWithDialog::FWFile;//fill with file
 int FillWithDialog::FWFilelen;//fill with file len
-LONG FillWithDialog::oldproc;//old hex box proc
+LONG_PTR FillWithDialog::oldproc;//old hex box proc
 //LONG cmdoldproc;//old command box proc
 HFONT FillWithDialog::hfon;//needed so possible to display infinity char in fill with dlg box
 char FillWithDialog::curtyp;//filling with input-0 or file-1
@@ -180,12 +180,12 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 	{
 	case WM_INITDIALOG:
 		{
-			HWND hEditt=GetDlgItem(hDlg, IDC_HEX);//get the handle to the hex edit box
+			HWND hEditt = GetDlgItem(hDlg, IDC_HEX);//get the handle to the hex edit box
 			SendMessage(hEditt, EM_SETLIMITTEXT, (WPARAM)FW_MAX, 0);//limit the amount of text the user can enter
 			SetWindowText(hEditt, pcFWText);//init hex text
 			SetFocus(hEditt);//give the hex box focus
 			EnableWindow(hEditt,!curtyp);
-			oldproc = SetWindowLong(hEditt, GWLP_WNDPROC, (LONG_PTR)HexProc);//override the old proc to be HexProc
+			oldproc = (LONG_PTR) SetWindowLongPtr(hEditt, GWLP_WNDPROC, (LONG_PTR)HexProc);//override the old proc to be HexProc
 			EnableWindow(GetDlgItem(hDlg, IDC_HEXSTAT),!curtyp);
 
 			HWND typ = GetDlgItem(hDlg, IDC_TYPE);
@@ -194,7 +194,7 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 			SendMessage(typ, CB_SETCURSEL, (WPARAM)curtyp,0);//set cursel to previous
 
 			//en/disable filename box and browse button
-			HWND fn=GetDlgItem(hDlg, IDC_FN);
+			HWND fn = GetDlgItem(hDlg, IDC_FN);
 			SetWindowText(fn, szFWFileName);
 			EnableWindow(fn, curtyp);
 			EnableWindow(GetDlgItem(hDlg, IDC_BROWSE), curtyp);

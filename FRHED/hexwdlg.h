@@ -97,7 +97,7 @@ private:
 	static int buflen;//number of bytes to fill with
 	static char szFWFileName[_MAX_PATH];//fill with file name
 	static int FWFile,FWFilelen;//fill with file and len
-	static LONG oldproc;//old hex box proc
+	static LONG_PTR oldproc;//old hex box proc
 	static HFONT hfon;//needed so possible to display infinity char in fill with dlg box
 	static char curtyp;//filling with input-0 or file-1
 	static char asstyp;
