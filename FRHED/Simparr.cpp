@@ -10,101 +10,139 @@
 #include "precomp.h"
 #include "Simparr.h"
 
-//-------------------------------------------------------------------
+/**
+ * @brief Append string.
+ * @param [in] ps String to append.
+ * @return TRUE
+ */
 int SimpleString::AppendString(const char* ps)
 {
-	if( m_nUpperBound == -1 )
-		return SetToString( ps );
+	if (m_nUpperBound == ARR_EMPTY)
+		return SetToString(ps);
 	else
-	{
-		InsertAtGrow( m_nUpperBound, ps, 0, strlen( ps ) );
-	}
+		InsertAtGrow(m_nUpperBound, ps, 0, strlen(ps));
 	return TRUE;
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Replace string content with given string.
+ * @param [in] ps String to replace current content.
+ * @return TRUE.
+ */
 int SimpleString::SetToString(const char* ps)
 {
 	Clear();
-	return AppendString( ps );
+	return AppendString(ps);
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Replace string content with given string.
+ * @param [in] ps String to replace current content.
+ * @return TRUE.
+ */
 SimpleString& SimpleString::operator=(const char* ps)
 {
-	SetToString( ps );
+	SetToString(ps);
 	return *this;
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Replace string content with given string.
+ * @param [in] str String to replace current content.
+ * @return TRUE.
+ */
 SimpleString& SimpleString::operator=(const SimpleString &str)
 {
-	SetToString( &str[0] );
+	SetToString(&str[0]);
 	return *this;
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Append string to current string.
+ * @param [in] ps String to append.
+ * @return New string (given string appended).
+ */
 SimpleString& SimpleString::operator+=(const char* ps)
 {
-	if( m_nUpperBound == -1 )
-		SetToString( ps );
+	if (m_nUpperBound == ARR_EMPTY)
+		SetToString(ps);
 	else
-	{
-		InsertAtGrow( m_nUpperBound, ps, 0, strlen( ps ) );
-	}
+		InsertAtGrow(m_nUpperBound, ps, 0, strlen(ps));
 	return *this;
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Get length of the string.
+ * @return String length.
+ */
 int SimpleString::StrLen() const
 {
-	if( m_pT != NULL )
-		return strlen( m_pT );
+	if (m_pT != NULL)
+		return strlen(m_pT);
 	else
 		return 0;
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Constructor.
+ * Create a string containing only a zero-byte.
+ */
 SimpleString::SimpleString()
 {
-	// Create a string containing only a zero-byte.
 	m_nGrowBy = 64;
 	Clear();
 }
 
-//-------------------------------------------------------------------
-SimpleString::SimpleString( const char* ps )
+/**
+ * @brief Constructor.
+ * Create a SimpleString from a normal char array-string.
+ * @param [in] ps String to use as initial value.
+ */
+SimpleString::SimpleString(const char* ps)
 {
-	// Create a SimpleString from a normal char array-string.
 	m_nGrowBy = 64;
 	Clear();
-	SetToString( ps );
+	SetToString(ps);
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Clear string contents.
+ */
 void SimpleString::Clear()
 {
 	ClearAll();
-	Append( '\0' );
+	Append('\0');
 }
 
-//-------------------------------------------------------------------
-SimpleString SimpleString::operator+( const SimpleString& str1 )
+/**
+ * @brief Append a string.
+ * @param [in] str1 String to append.
+ * @return String with given string appended.
+ */
+SimpleString SimpleString::operator+(const SimpleString& str1)
 {
 	SimpleString t1;
-	t1.SetToString( m_pT );
+	t1.SetToString(m_pT);
 	t1 += str1;
-	return SimpleString( &t1[0] );
+	return SimpleString(&t1[0]);
 }
 
-//-------------------------------------------------------------------
-int SimpleString::IsEmpty() const
+/**
+ * @brief Check if string is empty.
+ * @return true if the string is empty, false otherwise.
+ */
+bool SimpleString::IsEmpty() const
 {
 	return !StrLen();
 }
 
-//-------------------------------------------------------------------
-SimpleString operator+( const SimpleString &ps1, const char* ps2 )
+/**
+ * @brief Concat two strings.
+ * @param [in] ps1 First string to concat.
+ * @param [in] ps2 Second string to concat.
+ * @return String with given strings combined.
+ */
+SimpleString operator+(const SimpleString &ps1, const char* ps2)
 {
 	SimpleString s1;
 	s1 += ps1;
@@ -112,13 +150,16 @@ SimpleString operator+( const SimpleString &ps1, const char* ps2 )
 	return SimpleString(s1);
 }
 
-//-------------------------------------------------------------------
-SimpleString operator+( const char* ps1, const SimpleString &ps2 )
+/**
+ * @brief Concat two strings.
+ * @param [in] ps1 First string to concat.
+ * @param [in] ps2 Second string to concat.
+ * @return String with given strings combined.
+ */
+SimpleString operator+(const char* ps1, const SimpleString &ps2)
 {
 	SimpleString s1;
 	s1 += ps1;
 	s1 += ps2;
 	return SimpleString(s1);
 }
-
-//-------------------------------------------------------------------
