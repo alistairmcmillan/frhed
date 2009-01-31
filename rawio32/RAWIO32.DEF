@@ -1,5 +1,4 @@
 LIBRARY		RAWIO32.DLL
-DESCRIPTION	'Add your description here'
 
 SECTIONS
 	.bss	READ WRITE
