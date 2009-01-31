@@ -150,7 +150,7 @@ BOOL P9xPhysicalDrive::Open( int iDrive )
 
 BOOL P9xPhysicalDrive::IsOpen()
 {
-	return (BOOL) m_hDevice;
+	return m_hDevice != NULL;
 }
 
 void P9xPhysicalDrive::Close()
