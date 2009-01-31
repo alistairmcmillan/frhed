@@ -29,11 +29,9 @@
 #include "hexwdlg.h"
 #include "LangArray.h"
 
-#define AW(h, f) (IsWindowUnicode(h) ? f##W : f##A)
-
 static WNDPROC NTAPI SubclassAW(HWND hWnd, WNDPROC wndproc)
 {
-	return (WNDPROC)AW(hWnd, SetWindowLongPtr)(hWnd, GWLP_WNDPROC, (LONG_PTR)wndproc);
+	return (WNDPROC)SetWindowLongPtr(hWnd, GWLP_WNDPROC, (LONG_PTR)wndproc);
 }
 
 static WNDPROC DefWndProcDroppedComboBox = 0;
@@ -56,7 +54,7 @@ static LRESULT CALLBACK WndProcDroppedComboBox(HWND hWnd, UINT uMsg, WPARAM wPar
 		}
 		break;
 	}
-	return AW(hWnd, CallWindowProc)(DefWndProcDroppedComboBox, hWnd, uMsg, wParam, lParam);
+	return CallWindowProc(DefWndProcDroppedComboBox, hWnd, uMsg, wParam, lParam);
 }
 
 HWND ViewSettingsDlg::hCbLang;
