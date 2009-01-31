@@ -34,15 +34,15 @@
 	</Company_Info>
 	<Program_Info>
 		<Program_Name>Frhed</Program_Name>
-		<Program_Version>1.3.4</Program_Version>
+		<Program_Version>1.3.10</Program_Version>
 		<Program_Release_Month>01</Program_Release_Month>
-		<Program_Release_Day>06</Program_Release_Day>
+		<Program_Release_Day>22</Program_Release_Day>
 		<Program_Release_Year>2009</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
 		<Program_Cost_Other />
 		<Program_Type>Freeware</Program_Type>
-		<Program_Release_Status>Alpha</Program_Release_Status>
+		<Program_Release_Status>Beta</Program_Release_Status>
 		<Program_Install_Support>Install and Uninstall</Program_Install_Support>
 		<Program_OS_Support>Win95,Win98,WinME,WinNT 4.x,Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64</Program_OS_Support>
 		<Program_Language>English</Program_Language>
@@ -51,8 +51,8 @@
 		<Program_Category_Class>System Utilities::Text/Document Editors</Program_Category_Class>
 		<Program_System_Requirements />
 		<File_Info>
-			<File_Size_Bytes>530090</File_Size_Bytes>
-			<File_Size_K>517.67</File_Size_K>
+			<File_Size_Bytes>530017</File_Size_Bytes>
+			<File_Size_K>517.59</File_Size_K>
 			<File_Size_MB>0.51</File_Size_MB>
 		</File_Info>
 		<Expire_Info>
@@ -84,7 +84,7 @@
 			<Application_XML_File_URL>http://frhed.sourceforge.net/frhed_pad.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
-			<Primary_Download_URL>http://downloads.sourceforge.net/frhed/Frhed-1.3.4-Setup.exe</Primary_Download_URL>
+			<Primary_Download_URL>http://downloads.sourceforge.net/frhed/Frhed-1.3.10-Setup.exe</Primary_Download_URL>
 			<Secondary_Download_URL />
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
