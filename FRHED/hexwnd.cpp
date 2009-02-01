@@ -446,17 +446,20 @@ void HexEditorWindow::resize_window()
 	//--------------------------------------------
 	int length = get_length();
 
-//Pabs inserted
 	int x = length;//value of the last offset
 	if (bPartialStats)
 		x += iPartialOffset;
-	iMaxOffsetLen = 1;
+	iMaxOffsetLen = 0;
 	//length of last offset
-	while (x & ~0 << 4 * iMaxOffsetLen)
+	UINT val = length;
+	while (val > 0)
+	{
 		++iMaxOffsetLen;
+		val <<= 4;
+	}
+
 	if (iMaxOffsetLen < iMinOffsetLen)
 		iMaxOffsetLen = iMinOffsetLen;
-//end
 
 	cxClient = rcClient.right;
 	cyClient = rcClient.bottom;
@@ -466,27 +469,27 @@ void HexEditorWindow::resize_window()
 	// cxBuffer = maximal width of client-area in chars.
 	if (iAutomaticBPL)
 	{
-//Pabs replaced "iOffsetLen" with "iMaxOffsetLen"
 		int bytemax = cxBuffer - iMaxOffsetLen - iByteSpace - iCharSpace;
-//end
 		iBytesPerLine = bytemax / 4;
 		if (iBytesPerLine < 1)
 			iBytesPerLine = 1;
 	}
 
-//Pabs inserted
 	x = length / iBytesPerLine * iBytesPerLine;//value of the last offset
 	if (bPartialStats)
 		x += iPartialOffset;
-	iMaxOffsetLen = 1;
+	iMaxOffsetLen = 0;
 	//length of last offset
-	while (x & ~0 << 4 * iMaxOffsetLen)
+	val = x;
+	while (val > 0)
+	{
 		++iMaxOffsetLen;
+		val <<= 4;
+	}
 	if (bAutoOffsetLen)
 		iMinOffsetLen = iMaxOffsetLen;
 	else if (iMaxOffsetLen < iMinOffsetLen)
 		iMaxOffsetLen = iMinOffsetLen;
-//end
 
 	// Caret or end of selection will be vertically centered if line not visible.
 	if (bCenterCaret)
