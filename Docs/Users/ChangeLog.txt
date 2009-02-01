@@ -8,6 +8,7 @@ Frhed 1.4.0
   Improve Cut-dialog layout (r332)
   Improve Append-dialog layout (r336)
   Bugfix: Crash when trying to partially load large file (#2552896)
+  Bugfix: Hang when loading big file (#2555546)
 
 Frhed 1.4.x (R1_4) branch created (r327)
 
