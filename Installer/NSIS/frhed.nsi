@@ -90,7 +90,7 @@ SectionEnd
 Section "Documentation" SEC02
   SetOutPath "$INSTDIR\Docs"
   File "..\..\Build\Manual\htmlhelp\frhed.chm"
-  CreateShortCut "$SMPROGRAMS\Frhed\Help.lnk" "$INSTDIR\frhed.chm"
+  CreateShortCut "$SMPROGRAMS\Frhed\Help.lnk" "$INSTDIR\Docs\frhed.chm"
 SectionEnd
 
 Section -AdditionalIcons
