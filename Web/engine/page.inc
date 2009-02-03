@@ -92,6 +92,8 @@
       $temp .= "  <div id=\"container\">\n";
       $temp .= "    <div id=\"main\">\n";
       $temp .= "      <div id=\"content\">\n";
+      $temp .= "<h1 class=\"title\">Frhed</h1>\n";
+      $temp .= "<p class=\"olive\"><b>Fr</b>ee <b>h</b>ex <b>ed</b>itor</p>\n";
       print($temp);
     }
 
