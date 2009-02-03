@@ -60,12 +60,12 @@ h1,h2 {padding-top: 6px;}
 .right {float: right;}
 
 /* structure */
-.wrapper {
+#wrapper {
 	font-size: 1.3em;
 	margin: 0 auto;
 	width: 780px;
 }
-.container {background: url(../images/header.gif) no-repeat center top;}
+#container {background: url(../images/header.gif) no-repeat center top;}
 
 /* title */
 .title {
@@ -74,55 +74,55 @@ h1,h2 {padding-top: 6px;}
 .olive {color: #CCA;}
 
 /* sub navigation */
-.sidenav {
+#sidenav {
 	background: url(../images/sidenav.gif) no-repeat right top;
 	padding-top: 126px;
 	float: right;
 	width: 210px;
 }
-.sidenav h2 {
+#sidenav h2 {
 	color: #9A3;
 	font-size: 1.4em;
 	line-height: 30px;
 	margin: 0;
 }
-.sidenav ul {padding: 0.5em 0 0 0.5em;}
-.sidenav li {list-style: none;}
-.sidenav li a {
+#sidenav ul {padding: 0.5em 0 0 0.5em;}
+#sidenav li {list-style: none;}
+#sidenav li a {
 	font-size: 1.1em;
 	line-height: 1.5em;
 	color: #777;
 	text-decoration: none;
 }
-.sidenav li a:hover {color: #8DCA3F;}
+#sidenav li a:hover {color: #8DCA3F;}
 
 /* content */
-.content {
+#content {
 	float: left;
 	margin: 10px 0;
 	padding-top: 32px;
 	width: 531px;
 }
-.content .descr {
+#content .descr {
 	color: #8DC63F;
 	margin-bottom: 6px;
 }
-.content li {margin-left: 18px;}
+#content li {margin-left: 18px;}
 
 /* footer */
-.footer {
+#footer {
 	border-top: 1px dashed #333;
 	color: #777;
 	font: normal 0.9em sans-serif;
 }
-.footer a {
+#footer a {
 	color: #784;
 	text-decoration: none;
 }
-.footer a:hover {
+#footer a:hover {
 	color: #AA3;
 	text-decoration: underline;
 }
-.footer .left, .footer .right {padding: 10px 0;}
-.footer .right, .footer .right a {color: #555;}
-.footer .right a:hover {color: #999;}
+#footer .left, .footer .right {padding: 10px 0;}
+#footer .right, .footer .right a {color: #555;}
+#footer .right a:hover {color: #999;}

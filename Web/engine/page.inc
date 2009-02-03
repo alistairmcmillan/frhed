@@ -88,10 +88,10 @@
       }
       $temp .= "</head>\n";
       $temp .= "<body>\n";
-      $temp .= "<div class=\"wrapper\">\n";
-      $temp .= "  <div class=\"container\">\n";
-      $temp .= "    <div class=\"main\">\n";
-      $temp .= "      <div class=\"content\">\n";
+      $temp .= "<div id=\"wrapper\">\n";
+      $temp .= "  <div id=\"container\">\n";
+      $temp .= "    <div id=\"main\">\n";
+      $temp .= "      <div id=\"content\">\n";
       print($temp);
     }
 
@@ -99,17 +99,17 @@
      * print the foot from the page
      */
     function printFoot() {
-      $temp = "      </div> <!-- .content -->\n";
+      $temp = "      </div> <!-- #content -->\n";
       $temp .= $this->getSideNavigation();
       $temp .= "      <div class=\"clearer\"></div>\n";
-      $temp .= "    </div> <!-- .main -->\n";
-      $temp .= "    <div class=\"footer\">\n";
+      $temp .= "    </div> <!-- #main -->\n";
+      $temp .= "    <div id=\"footer\">\n";
       $temp .= "      <div class=\"left\">Valid <a href=\"http://jigsaw.w3.org/css-validator/check/referer\">CSS</a> &amp; <a href=\"http://validator.w3.org/check?uri=referer\">XHTML</a></div>\n";
       $temp .= "      <div class=\"right\">Design by <a href=\"http://arcsin.se/\">Arcsin</a> <a href=\"http://templates.arcsin.se/\">Web Templates</a></div>\n";
       $temp .= "      <div class=\"clearer\"><span></span></div>\n";
-      $temp .= "    </div> <!-- .footer -->\n";
-      $temp .= "  </div> <!-- .container -->\n";
-      $temp .= "</div> <!-- .wrapper -->\n";
+      $temp .= "    </div> <!-- #footer -->\n";
+      $temp .= "  </div> <!-- #container -->\n";
+      $temp .= "</div> <!-- #wrapper -->\n";
       $temp .= "</body>\n";
       $temp .= "</html>\n";
       print($temp);
@@ -119,7 +119,7 @@
      * get the side navigation from the page
      */
     function getSideNavigation() {
-      $temp = "<div class=\"sidenav\">\n";
+      $temp = "<div id=\"sidenav\">\n";
       $temp .= "  <h2>Frhed</h2>\n";
       $temp .= "  <ul>\n";
       $temp .= "    <li><a href=\"/\">Home</a></li>\n";
@@ -142,7 +142,7 @@
       $temp .= "  <h2>Donate</h2>\n";
       $temp .= "  <p>Support this project by donating money.</p>\n";
       $temp .= "  <a href=\"http://sourceforge.net/donate/index.php?group_id=236485\"><img src=\"http://images.sourceforge.net/images/project-support.jpg\" width=\"88\" height=\"32\" style=\"border:none;\" alt=\"Support this project\" /></a>\n";
-      $temp .= "</div> <!-- .sidenav -->\n";
+      $temp .= "</div> <!-- #sidenav -->\n";
       return $temp;
     }
   }

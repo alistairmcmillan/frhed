@@ -1,9 +1,9 @@
 /* sidenav */
-.sidenav {
+#sidenav {
 	display: none;
 }
 
 /* footer */
-.footer {
+#footer {
 	display: none;
 }
