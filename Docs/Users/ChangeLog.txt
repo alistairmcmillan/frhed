@@ -4,12 +4,11 @@ to Subversion revision numbers (rXXXXX).
 
 For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 
-Frhed 1.4.0
+Frhed 1.4.0 - 2009-02-04 (r368)
   Improve Cut-dialog layout (r332)
   Improve Append-dialog layout (r336)
   Bugfix: Crash when trying to partially load large file (#2552896)
   Bugfix: Hang when loading big file (#2555546)
-  Bugfix: Incorrect shortcut to help file (#2556084)
 
 Frhed 1.4.x (R1_4) branch created (r327)
 
