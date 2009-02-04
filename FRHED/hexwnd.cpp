@@ -1984,7 +1984,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	int sibling_length = sibling->get_length();
 	unsigned char *sibling_buffer = sibling->get_buffer(sibling_length);
 
-	char linbuf[16] = {0}
+	char linbuf[16] = {0};
 
 	int iBkColor = PALETTERGB (GetRValue(iBkColorValue),GetGValue(iBkColorValue),GetBValue(iBkColorValue));
 	int iTextColor = PALETTERGB (GetRValue(iTextColorValue),GetGValue(iTextColorValue),GetBValue(iTextColorValue));
