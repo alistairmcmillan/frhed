@@ -10,6 +10,7 @@ Frhed 1.5.1
   Bugfix: Crash when trying to partially load large file (#2552896)
   Bugfix: Hang when loading big file (#2555546)
   Bugfix: Incorrect shortcut to help file (#2556084)
+  Bugfix: Sometimes crashed when opening View Settings (#2504837)
 
 Frhed 1.4.x (R1_4) branch created (r327)
 

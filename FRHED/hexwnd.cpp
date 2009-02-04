@@ -1984,7 +1984,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	int sibling_length = sibling->get_length();
 	unsigned char *sibling_buffer = sibling->get_buffer(sibling_length);
 
-	char linbuf[16];
+	char linbuf[16] = {0}
 
 	int iBkColor = PALETTERGB (GetRValue(iBkColorValue),GetGValue(iBkColorValue),GetBValue(iBkColorValue));
 	int iTextColor = PALETTERGB (GetRValue(iTextColorValue),GetGValue(iTextColorValue),GetBValue(iTextColorValue));
@@ -2004,8 +2004,11 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	int m = iMaxOffsetLen + iByteSpace;
 
 	// Write offset.
-	int i = sprintf(linbuf, "%*.*x", iMinOffsetLen, iMinOffsetLen, bPartialStats ? startpos + iPartialOffset : startpos);
-	memset(linbuf + i, ' ', m - i);
+	int i = _sntprintf(linbuf, RTL_NUMBER_OF(linbuf) -1, "%*.*x",
+			iMinOffsetLen, iMinOffsetLen, bPartialStats ?
+			startpos + iPartialOffset : startpos);
+	if (i != -1)
+		memset(linbuf + i, ' ', m - i);
 
 	SetTextColor(hdc, iTextColor);
 	SetBkColor(hdc, iBkColor);
