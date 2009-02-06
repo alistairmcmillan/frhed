@@ -62,7 +62,7 @@ Depending on Visual Studio version the project/solution file may need to be
 updated for later version before usage. Visual Studio asks about the conversion
 when opening the solution file.</p>
 
-<p>Build both <i>Debug> and <i>Release</i> targets of <i>gtest</i> project. You
+<p>Build both <i>Debug</i> and <i>Release</i> targets of <i>gtest</i> project. You
 don't need to build other projects. Indeed, <i>rebuild all</i> for the solution
 does not work. Some of the projects in the solution are unit tests for the
 framework itself.</p>
@@ -163,7 +163,7 @@ unit tests for help on that.</p>
 <pre>
 	TEST_F(SimpleArrayTest, Construct1)
 	{
-		SimpleArray<int> arr;
+		SimpleArray&lt;int&gt; arr;
 		EXPECT_TRUE(arr.blIsEmpty());
 		EXPECT_EQ(0, arr.GetSize());
 		EXPECT_EQ(0, arr.GetLength());
