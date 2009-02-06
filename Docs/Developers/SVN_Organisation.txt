@@ -13,6 +13,8 @@ Frhed Folder Structure
    - NSIS
    - Runtimes
  - rawio32
+ - Testing
+   - GoogleTest
  - Tools
  - Web
 
@@ -49,6 +51,12 @@ Frhed/Installer/Runtimes/
 
 Frhed/rawio32/
  - 32-bit code library to access disk data directly
+
+Frhed/Testing/
+ - Testing related files and projects. Test data.
+
+Frhed/Testing/GoogleTest
+ - Google Test unit test projects
 
 Frhed/Tools/
  - Scripts and other needed tools
