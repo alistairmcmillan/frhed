@@ -388,7 +388,7 @@ CAPTION "About Frhed"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     ICON            IDI_FRHED,IDC_APPICON,7,9,20,20
-    LTEXT           "Frhed - Free hex editor for 32-bit Windows",IDC_STATIC,
+    LTEXT           "Frhed - Free hex editor",IDC_STATIC,
                     37,7,167,8
     LTEXT           "",IDC_ABOUT_VER,37,17,167,8
     LTEXT           "(c) Raihan Kibria 2000-2009",IDC_STATIC,37,27,167,8
