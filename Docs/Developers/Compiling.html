@@ -4,6 +4,32 @@
 <head>
   <title>Compiling.html</title>
   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <style type="text/css">
+  <!--
+    body {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: Verdana,sans-serif;
+      font-size: small;
+    }
+    code,pre {
+      font-family: 'Lucida Console',monospace;
+      font-size: 1em;
+    }
+    h1,h2,h3,h4,h5,h6 {
+      font-family: Tahoma,Verdana,sans-serif;
+      color: #9A3;
+    }
+    pre {
+      margin-left: 25px;
+      margin-right: 25px;
+      padding: 5px;
+      background-color: #EEE;
+      border-left: 10px solid #CCC;
+    }
+  -->
+  </style>
 </head>
 <body>
 <h2>Compiling Frhed</h2>
@@ -14,7 +40,7 @@
   <li><a href="#Environment">Environment</a></li>
   <li><a href="#ProjectFiles">Project Files</a></li>
   <li><a href="#Compiling">Compiling</a></li>
-  <li><a href="#VS2005">Visual Studio 2005 & 2008 Manifest Files</a>
+  <li><a href="#VS2005">Visual Studio 2005 &amp; 2008 Manifest Files</a>
  </ol>
 
 <h3><a name="GettingSources">Getting Sources</a></h3>
@@ -53,18 +79,17 @@ You don't need to buy commercial Visual Studio edition for compiling Frhed.</p>
   <li>For VS 6 the Platform SDK February 2003 is recommended, later ones might
    not work properly. <a href="http://www.microsoft.com/msdownload/platformsdk/sdkupdate/psdk-full.htm">
    Download and install</a>.</li>
-  <li>For VS2003.Net and later</strong>: Platform SDK Windows 2003 SP1 or later
+  <li>For VS2003.Net and later: Platform SDK Windows 2003 SP1 or later
     is recommended. <a href="http://www.microsoft.com/downloads/details.aspx?familyid=0BAF2B35-C656-4969-ACE8-E4C0C0716ADB">
     Download and install</a>.</li>
 </ol>
-</p>
 
-Frhed uses <code>htmlhelp</code> library to show HTML help files in help viewer.
+<p>Frhed uses <code>htmlhelp</code> library to show HTML help files in help viewer.
 The HtmlHelp library is available as a part of <i>HTML Help Workshop</i> and as
 part of <i>Platform SDK</i> (PSDK).</p>
 
 <p>For VS 6 it is recommended to install HTML Help Workshop. It can be downloaded
-from Microsoft: <a href="http://www.microsoft.com/downloads/details.aspx?familyid=00535334-c8a6-452f-9aa0-d597d16580cc&displaylang=en">
+from Microsoft: <a href="http://www.microsoft.com/downloads/details.aspx?familyid=00535334-c8a6-452f-9aa0-d597d16580cc&amp;displaylang=en">
 HTML Help Workshop</a>. After installing HTML Help Workshop you must add its
 <code>include</code> and <code>lib</code> -folders to Visual Studio settings as
 additional include- and library-file folders.</p>
@@ -85,7 +110,6 @@ The dependencies are such that:
   <li><code>Frhed</code> project uses <code>heksedit</code> editor component.</li>
   <li><code>heksedit</code> project uses <code>rawio32</code> project.</li>
 </ul>
-</p>
 
 <h3><a name="Compiling">Compile</a></h3>
 <p>To compile Frhed:
@@ -94,9 +118,8 @@ The dependencies are such that:
   <li>Select the <code>frhed</code> project as a startup project</li>
   <li>Select <code>Rebuild all</code> to compile
 </ul>
-</p>
 
-<h3><a name="VS2005">Visual Studio 2005 & 2008 Manifest Files</a></h3>
+<h3><a name="VS2005">Visual Studio 2005 &amp; 2008 Manifest Files</a></h3>
 <p>When the VC6 project file (.dsp) or VS2003 project file (.vcproj) is
 converted to a Visual Studio 2005 or 2008 project, the visual styles do not get
 enabled. The problem is Visual Studio 2005 and 2008 automatically generate and
@@ -118,7 +141,7 @@ does the conversion. Note that the script re-formats the project file XML
 structure when saving so do not generate patches without first opening and
 saving the project file with Visual Studio.</p>
 
-<p>See also <a href="http://forums.microsoft.com/MSDN/ShowPost.aspx?PostID=143306&SiteID=1">
+<p>See also <a href="http://forums.microsoft.com/MSDN/ShowPost.aspx?PostID=143306&amp;SiteID=1">
 Manifests in VS2005-- What are they?</a> -thread in Microsoft forum.
 </p>
 
