@@ -71,7 +71,7 @@
 			<Char_Desc_45>Frhed is an binary file editor for Windows.</Char_Desc_45>
 			<Char_Desc_80>Frhed is an binary file editor for Windows with many advanced features.</Char_Desc_80>
 			<Char_Desc_250>Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially or compare files. The editable file size limited only by available system memory. Export as hexdump to file or clipboard.</Char_Desc_250>
-			<Char_Desc_450 />
+			<Char_Desc_450>Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially or compare files. The editable file size limited only by available system memory. Export as hexdump to file or clipboard. Search for any combination of text and binary values. Set bookmarks to easily access offsets in the file. Can automatically create backups when saving. Intel or Motorola binary format.</Char_Desc_450>
 			<Char_Desc_2000 />
 		</English>
 	</Program_Descriptions>
