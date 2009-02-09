@@ -77,6 +77,9 @@ Section "ProgramFiles" SEC01
   File "..\Runtimes\msvcr71.dll"
   File "..\Runtimes\msvcp71.dll"
 
+  ; Example template file
+  File "..\..\Docs\Users\Sample.tpl"
+
   ; Basic documents (always included)
   CreateDirectory "$INSTDIR\Docs"
   SetOutPath "$INSTDIR\Docs"
