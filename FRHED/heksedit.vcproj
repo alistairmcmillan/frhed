@@ -1248,6 +1248,27 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="Template.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;$(NoInherit)"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;$(NoInherit)"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="UpgradeDlg.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -1388,6 +1409,9 @@
 			</File>
 			<File
 				RelativePath="StringTable.h">
+			</File>
+			<File
+				RelativePath="Template.h">
 			</File>
 			<File
 				RelativePath="toolbar.h">

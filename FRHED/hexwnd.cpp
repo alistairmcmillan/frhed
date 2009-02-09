@@ -43,6 +43,7 @@
 #include "LoadHexFile.h"
 #include "LangArray.h"
 #include "Registry.h"
+#include "Template.h"
 
 #include "idt.h"
 #include "ids.h"
@@ -4344,369 +4345,31 @@ void HexEditorWindow::CMD_apply_template()
 //-------------------------------------------------------------------
 void HexEditorWindow::apply_template(char *pcTemplate)
 {
-	// Load template file.
-	int filehandle = _open(pcTemplate, _O_RDONLY|_O_BINARY);
-	if (filehandle == -1)
+	Template tmpl;
+	bool success = tmpl.OpenTemplate(pcTemplate);
+	if (!success)
 	{
 		char buf[500];
-		sprintf(buf, "Error code 0x%x occured while\nopening template file %s.", errno, pcTemplate);
+		sprintf(buf, "Could not open template file %s.", pcTemplate);
 		MessageBox(hwnd, buf, "Template error", MB_ICONERROR);
 		return;
 	}
-	int tpl_filelen = _filelength(filehandle);
-	if (tpl_filelen > 0)
+
+	success = tmpl.LoadTemplateData();
+	if (!success)
 	{
-		char *pcTpl = new char[tpl_filelen];
-		if (pcTpl && _read(filehandle, pcTpl, tpl_filelen) != -1)
-		{
-			// Template file is loaded into pcTpl.
-			SimpleArray<char> TplResult;
-			TplResult.SetSize(1, 100);
-			// Print filename and current offset to output.
-			TplResult.AppendArray("File: ", 6);
-			TplResult.AppendArray(filename, strlen(filename));
-			TplResult.AppendArray("\xd\xa", 2);
-			TplResult.AppendArray("Template file: ", 15);
-			TplResult.AppendArray(pcTemplate, strlen(pcTemplate));
-			TplResult.AppendArray("\xd\xa", 2);
-			TplResult.AppendArray("Applied at offset: ", 19);
-			char buf[16];
-			sprintf(buf, "%d\xd\xa\xd\xa", iCurByte);
-			TplResult.AppendArray(buf, strlen(buf));
-			// Apply template on file in memory.
-			apply_template_on_memory(pcTpl, tpl_filelen, TplResult);
-			TplResult.Append('\0');
-			// Display template data.
-			char *pcTmplText = TplResult;
-			ShowModalDialog(IDD_TMPL_RESULT_DIALOG, hwnd, TmplDisplayDlgProc, pcTmplText);
-		}
-		else//Pabs replaced NULL w hwnd
-			MessageBox(hwnd, "Template file could not be loaded.", "Template error", MB_ICONERROR);
-		// Delete template data.
-		delete [] pcTpl;
+		char buf[500];
+		sprintf(buf, "Could not load template from file %s.", pcTemplate);
+		MessageBox(hwnd, buf, "Template error", MB_ICONERROR);
+		return;
 	}
-	else
-		MessageBox(hwnd, "Template file is empty.", "Template error", MB_ICONERROR);
-	_close(filehandle);
-}
 
-//-------------------------------------------------------------------
-// Applies the template code in pcTpl of length tpl_len on the current file
-// from the current offset and outputs the result to the ResultArray.
-void HexEditorWindow::apply_template_on_memory( char* pcTpl, int tpl_len, SimpleArray<char>& ResultArray )
-{
-	// Use source code in pcTpl to decipher data in file.
-	int index = 0, fpos = iCurByte;
-	// While there is still code left...
-	while( index < tpl_len )
-	{
-		// Read in the var type.
-		if( ignore_non_code( pcTpl, tpl_len, index ) == TRUE )
-		{
-			// index now points to first code character.
-			// Get var type.
-			char cmd[ TPL_TYPE_MAXLEN ]; // This holds the variable type, like byte or word.
-			if( read_tpl_token( pcTpl, tpl_len, index, cmd ) == TRUE )
-			{
-				// cmd holds 0-terminated var type, index set to position of first space-
-				// character after the type. Now test if valid type was given.
-				//---- type BYTE ---------------------------------
-				if( strcmp( cmd, "BYTE" ) == 0 || strcmp( cmd, "char" ) == 0 )
-				{
-					// This is a byte/char.
-					if( ignore_non_code( pcTpl, tpl_len, index ) == TRUE )
-					{
-						// Enough space for a byte?
-						if( DataArray.GetLength() - fpos >= 1 )
-						{
-							// Read var name.
-							char name[ TPL_NAME_MAXLEN ];
-							// index is set to a non-space character by last call to ignore_non_code.
-							// Therefore the variable name can be read into buffer name.
-							read_tpl_token( pcTpl, tpl_len, index, name );
-							// Write variable type and name to output.
-							ResultArray.AppendArray( cmd, strlen(cmd) );
-							ResultArray.Append( ' ' );
-							ResultArray.AppendArray( name, strlen(name) );
-							// Write value to output.
-							char buf[ TPL_NAME_MAXLEN + 200];
-							if( DataArray[fpos] != 0 )
-								sprintf( buf, " = %d (signed) = %u (unsigned) = 0x%x = \'%c\'\xd\xa", (int) (signed char) DataArray[fpos], DataArray[fpos], DataArray[fpos], DataArray[fpos] );
-							else
-								sprintf( buf, " = %d (signed) = %u (unsigned) = 0x%x\xd\xa", (int) (signed char) DataArray[fpos], DataArray[fpos], DataArray[fpos] );
-							ResultArray.AppendArray( buf, strlen(buf) );
-							// Increase pointer for next variable.
-							fpos += 1;
-						}
-						else
-						{
-							ResultArray.AppendArray( "ERROR: not enough space for byte-size datum.", 45 );
-							return;
-						}
-					}
-					else
-					{
-						// No non-spaces after variable type up to end of array, so
-						// no space for variable name.
-						ResultArray.AppendArray( "ERROR: missing variable name.", 29 );
-						return;
-					}
-				}
-				else if( strcmp( cmd, "WORD" ) == 0 || strcmp( cmd, "short" ) == 0 )
-				{
-					// This is a word.
-					if( ignore_non_code( pcTpl, tpl_len, index ) == TRUE )
-					{
-						// Enough space for a word?
-						if( DataArray.GetLength() - fpos >= 2 )
-						{
-							// Read var name.
-							char name[ TPL_NAME_MAXLEN ];
-							read_tpl_token( pcTpl, tpl_len, index, name );
-							// Write variable type to output.
-							ResultArray.AppendArray( cmd, strlen(cmd) );
-							ResultArray.Append( ' ' );
-							// Write variable name to output.
-							ResultArray.AppendArray( name, strlen(name) );
-							WORD wd;
-							// Get value depending on binary mode.
-							if (iBinaryMode == ENDIAN_LITTLE)
-							{
-								wd = *( (WORD*)( &DataArray[ fpos ] ) );
-							}
-							else // BIGENDIAN_MODE
-							{
-								int i;
-								for( i=0; i<2; i++ )
-									((char*)&wd)[ i ] = DataArray[ fpos + 1 - i ];
-							}
-							char buf[ TPL_NAME_MAXLEN + 200 ];
-							sprintf( buf, " = %d (signed) = %u (unsigned) = 0x%x\xd\xa", (int) (signed short) wd, wd, wd );
-							ResultArray.AppendArray( buf, strlen(buf) );
-							fpos += 2;
-						}
-						else
-						{
-							ResultArray.AppendArray( "ERROR: not enough space for WORD.", 34 );
-							return;
-						}
-					}
-					else
-					{
-						ResultArray.AppendArray( "ERROR: missing variable name.", 29 );
-						return; // No more code: missing name.
-					}
-				}
-				else if( strcmp( cmd, "DWORD" ) == 0 || strcmp( cmd, "int" ) == 0 ||
-					strcmp( cmd, "long" ) == 0 || strcmp( cmd, "LONG" ) == 0 )
-				{
-					// This is a longword.
-					if( ignore_non_code( pcTpl, tpl_len, index ) == TRUE )
-					{
-						// Enough space for a longword?
-						if( DataArray.GetLength() - fpos >= 4 )
-						{
-							// Read var name.
-							char name[ TPL_NAME_MAXLEN ];
-							read_tpl_token( pcTpl, tpl_len, index, name );
-							// Write variable type to output.
-							ResultArray.AppendArray( cmd, strlen(cmd) );
-							ResultArray.Append( ' ' );
-							// Write variable name to output.
-							ResultArray.AppendArray( name, strlen(name) );
-							DWORD dw;
-							// Get value depending on binary mode.
-							if (iBinaryMode == ENDIAN_LITTLE)
-							{
-								dw = *( (DWORD*)( &DataArray[ fpos ] ) );
-							}
-							else // BIGENDIAN_MODE
-							{
-								int i;
-								for( i=0; i<4; i++ )
-									((char*)&dw)[ i ] = DataArray[ fpos + 3 - i ];
-							}
-							char buf[ TPL_NAME_MAXLEN + 200 ];
-							sprintf( buf, " = %d (signed) = %u (unsigned) = 0x%x\xd\xa", (signed long) dw, (unsigned long) dw, dw );
-							ResultArray.AppendArray( buf, strlen(buf) );
-							fpos += 4;
-						}
-						else
-						{
-							ResultArray.AppendArray( "ERROR: not enough space for DWORD.", 34 );
-							return;
-						}
-					}
-					else
-					{
-						ResultArray.AppendArray( "ERROR: missing variable name.", 29 );
-						return; // No more code: missing name.
-					}
-				}
-				else if( strcmp( cmd, "float" ) == 0 )
-				{
-					// This is a float.
-					if( ignore_non_code( pcTpl, tpl_len, index ) == TRUE )
-					{
-						// Enough space for a float?
-						if( DataArray.GetLength() - fpos >= 4 )
-						{
-							// Read var name.
-							char name[ TPL_NAME_MAXLEN ];
-							read_tpl_token( pcTpl, tpl_len, index, name );
-							// Write variable type to output.
-							ResultArray.AppendArray( cmd, strlen(cmd) );
-							ResultArray.Append( ' ' );
-							// Write variable name to output.
-							ResultArray.AppendArray( name, strlen(name) );
-							float f;
-							// Get value depending on binary mode.
-							if (iBinaryMode == ENDIAN_LITTLE)
-							{
-								f = *( (float*)( &DataArray[ fpos ] ) );
-							}
-							else // BIGENDIAN_MODE
-							{
-								int i;
-								for( i=0; i<4; i++ )
-									((char*)&f)[ i ] = DataArray[ fpos + 3 - i ];
-							}
-							char buf[ TPL_NAME_MAXLEN + 200 ];
-							sprintf( buf, " = %f = 0x%x\xd\xa", f, (unsigned long) *((int*) &f) );
-							ResultArray.AppendArray( buf, strlen(buf) );
-							fpos += 4;
-						}
-						else
-						{
-							ResultArray.AppendArray( "ERROR: not enough space for float.", 34 );
-							return;
-						}
-					}
-					else
-					{
-						ResultArray.AppendArray( "ERROR: missing variable name.", 29 );
-						return; // No more code: missing name.
-					}
-				}
-				else if( strcmp( cmd, "double" ) == 0 )
-				{
-					// This is a double.
-					if( ignore_non_code( pcTpl, tpl_len, index ) == TRUE )
-					{
-						// Enough space for a double?
-						if( DataArray.GetLength() - fpos >= 8 )
-						{
-							// Read var name.
-							char name[ TPL_NAME_MAXLEN ];
-							read_tpl_token( pcTpl, tpl_len, index, name );
-							// Write variable type to output.
-							ResultArray.AppendArray( cmd, strlen(cmd) );
-							ResultArray.Append( ' ' );
-							// Write variable name to output.
-							ResultArray.AppendArray( name, strlen(name) );
-							double d;
-							// Get value depending on binary mode.
-							if (iBinaryMode == ENDIAN_LITTLE)
-							{
-								d = *( (double*)( &DataArray[ fpos ] ) );
-							}
-							else // BIGENDIAN_MODE
-							{
-								int i;
-								for( i=0; i<8; i++ )
-									((char*)&d)[ i ] = DataArray[ fpos + 7 - i ];
-							}
-							char buf[ TPL_NAME_MAXLEN + 200 ];
-							sprintf( buf, " = %g\xd\xa", d );
-							ResultArray.AppendArray( buf, strlen(buf) );
-							fpos += 8;
-						}
-						else
-						{
-							ResultArray.AppendArray( "ERROR: not enough space for double.", 35 );
-							return;
-						}
-					}
-					else
-					{
-						ResultArray.AppendArray( "ERROR: missing variable name.", 29 );
-						return; // No more code: missing name.
-					}
-				}
-				else
-				{
-					ResultArray.AppendArray( "ERROR: Unknown variable type \"", 30 );
-					ResultArray.AppendArray( cmd, strlen( cmd ) );
-					ResultArray.Append( '\"' );
-					return;
-				}
-			}
-			else
-			{
-				// After the type there is only the array end. Therefore
-				// no space for a variable name.
-				ResultArray.AppendArray( "ERROR: Missing variable name.", 29 );
-				return;
-			}
-		}
-		else
-		{
-			// No non-spaces up to the end of the array.
-			break;
-		}
-	}
-	// No more code left in pcTpl.
-	char buf[128];
-	sprintf(buf, "\xd\xa-> Length of template = %d bytes.\xd\xa", fpos - iCurByte);
-	ResultArray.AppendArray(buf, strlen(buf));
-}
+	tmpl.SetDataArray(&DataArray);
+	tmpl.CreateTemplateArray(iCurByte);
+	tmpl.ApplyTemplate(iBinaryMode, iCurByte);
 
-//-------------------------------------------------------------------
-// This will set index to the position of the next non-space-character.
-// Return is FALSE if there are no non-spaces left up to the end of the array.
-int HexEditorWindow::ignore_non_code( char* pcTpl, int tpl_len, int& index )
-{
-	while( index < tpl_len )
-	{
-		// If code found, return.
-		switch( pcTpl[ index ] )
-		{
-		case ' ': case '\t': case 0x0d: case 0x0a:
-			break;
-
-		default:
-			return TRUE;
-		}
-		index++;
-	}
-	return FALSE;
-}
-
-//-------------------------------------------------------------------
-// Writes all non-space characters from index to dest and closes dest
-// with a zero-byte. index is set to position of the first space-
-// character. Return is false if there is only the array end after the
-// keyword. In that case index is set to tpl_len.
-int HexEditorWindow::read_tpl_token( char* pcTpl, int tpl_len, int& index, char* dest )
-{
-	int i = 0;
-	while( index + i < tpl_len )
-	{
-		switch( pcTpl[ index + i ] )
-		{
-		case ' ': case '\t': case 0x0d: case 0x0a:
-			dest[i] = '\0';
-			index += i;
-			return TRUE;
-
-		default:
-			dest[i] = pcTpl[ index + i ];
-		}
-		i++;
-	}
-	dest[i] = '\0';
-	index += i;
-	return FALSE;
+	char *pcTmplText = tmpl.GetResult();
+	ShowModalDialog(IDD_TMPL_RESULT_DIALOG, hwnd, TmplDisplayDlgProc, pcTmplText);
 }
 
 /**

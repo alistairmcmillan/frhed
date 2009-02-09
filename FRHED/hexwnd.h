@@ -56,8 +56,6 @@ INT_PTR CALLBACK TmplDisplayDlgProc(HWND, UINT, WPARAM, LPARAM);
 #define MRUMAX 9
 #define BMKMAX 9
 #define BMKTEXTMAX 256
-#define TPL_TYPE_MAXLEN 16
-#define TPL_NAME_MAXLEN 128
 
 /**
  * @brief Bookmark.
@@ -171,9 +169,6 @@ public:
 	BOOL STDMETHODCALLTYPE select_prev_diff(BOOL bFromEnd);
 	void CMD_colors_to_default();
 	void CMD_goto();
-	int read_tpl_token( char* pcTpl, int tpl_len, int& index, char* name );
-	int ignore_non_code( char* pcTpl, int tpl_len, int& index );
-	void apply_template_on_memory( char* pcTpl, int tpl_len, SimpleArray<char>& ResultArray );
 	void apply_template(char *pcTemplate);
 	void CMD_apply_template();
 	virtual void STDMETHODCALLTYPE dropfiles(HDROP);
