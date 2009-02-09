@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Templates.html</title>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <style type="text/css">
+  <!--
+    body {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: Verdana,sans-serif;
+      font-size: small;
+    }
+    code,pre {
+      font-family: 'Lucida Console',monospace;
+      font-size: 1em;
+    }
+    h1,h2,h3,h4,h5,h6 {
+      font-family: Tahoma,Verdana,sans-serif;
+      color: #9A3;
+    }
+    pre {
+      margin-left: 25px;
+      margin-right: 25px;
+      padding: 5px;
+      background-color: #EEE;
+      border-left: 10px solid #CCC;
+    }
+  -->
+  </style>
+</head>
+<body>
+<h2>Templates</h2>
+
+<h3>Table of Contents</h3>
+<ol>
+  <li><a href="#WhatAre">What are templates?</a></li>
+  <li><a href="#Format">Template format</a></li>
+</ol>
+
+<h3><a name="WhatAre">What are templates?</a></h3>
+<p>
+Templates are text files containing formatting information for the byte data.
+This formatting information can be applied to the binary file to see the data
+better structured. One can for example apply the structure of bitmap file
+header to see the header file data in easier to read format.
+</p>
+
+<h3><a name="Format">Template format</a></h3>
+<p>
+Template file is a plain text file. Every line in the file defines a data type
+and name for that data. For example, line can be:
+
+<pre>
+BYTE filetype
+</pre>
+
+where <i>BYTE</i> is the data type and <i>filetype</i> is the name given to the
+data.</p>
+
+<p>
+The data types are parsed exactly as is so you must have <i>BYTE</i>, not <i>
+byte</i> or <i>bYtE</i>. The maximum length for the name is 128 characters.
+</p>
+
+<p>
+The data types known in templates are:
+</p>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Data type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>BYTE<br>char</td>
+      <td>One byte of data.</td>
+    </tr>
+    <tr>
+      <td>WORD<br>short</td>
+      <td>Two bytes of data.</td>
+    </tr>
+    <tr>
+      <td>DWORD<br>int<br>long<br>LONG</td>
+      <td>Four bytes of data.</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td>Floating point number.</td>
+    </tr>
+    <tr>
+      <td>double</td>
+      <td>Double-precision floating point number.</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
