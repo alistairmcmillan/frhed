@@ -1,26 +1,52 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  hgstream.cpp
+ *
+ * @brief Implementation of HGlobalStream class.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "hgstream.h"
 
 HGlobalStream::HGlobalStream(DWORD blcksz)
+: _hex(0), _nbsp(0), _escfilt(0)
+, precision(0),
+, m_hGlobal(NULL)
+, m_dwLen(0), m_dwSize(0)
+, m_dwBlockSize(blcksz)
 {
-	_hex = _nbsp = _escfilt = 0;
-	precision = 0;
-	m_hGlobal = NULL;
-	m_dwLen = m_dwSize = 0;
-	m_dwBlockSize = blcksz;
 }
 
 HGlobalStream::~HGlobalStream()
 {
-	if (m_hGlobal) GlobalFree( m_hGlobal );
+	if (m_hGlobal)
+		GlobalFree(m_hGlobal);
 }
 
 HGlobalStream& HGlobalStream::operator << (const char *pszSource)
 {
-	if( !_nbsp && !_escfilt )
-		Realloc( strlen(pszSource), (void*)pszSource );
+	if (!_nbsp && !_escfilt)
+		Realloc(strlen(pszSource), (void*)pszSource);
 	else
-		filter( pszSource );
+		filter(pszSource);
 	_hex = _nbsp = _escfilt = 0;
 	return *this;
 }
@@ -70,7 +96,8 @@ HGlobalStream& HGlobalStream::operator << (DWORD i)
 #endif
 	char integer[11];
 	if (precision)
-		precision = sprintf(integer, _hex ? "%*.*x" : "%*.*u", precision, precision, i);
+		precision = sprintf(integer, _hex ? "%*.*x" : "%*.*u", precision,
+				precision, i);
 	else
 		precision = sprintf(integer, _hex? "%x" : "%u", i);
 	Realloc(precision, integer);
@@ -133,55 +160,104 @@ void HGlobalStream::filter(const char *src)
 	DWORD i = 0;
 	DWORD len = 0;
 	//Find out the length
-	if( _nbsp && _escfilt ){
-		for(; src[i]!='\0'; i++){
-			switch(src[i]){ case '\\': case '{': case '}': case ' ': len++; break; }
+	if (_nbsp && _escfilt)
+	{
+		for (; src[i] != '\0'; i++)
+		{
+			switch (src[i])
+			{
+			case '\\':
+			case '{':
+			case '}':
+			case ' ':
+				len++;
+				break;
+			}
 			len++;
 		}
-	} else if( _escfilt ){
-		for(; src[i]!='\0'; i++){
-			switch(src[i]){ case '\\': case '{': case '}': len++; break; }
+	}
+	else if (_escfilt)
+	{
+		for (; src[i] != '\0'; i++)
+		{
+			switch (src[i])
+			{
+			case '\\':
+			case '{':
+			case '}':
+				len++;
+				break;
+			}
 			len++;
 		}
-	} else if( _nbsp ){
-		for(; src[i]!='\0'; i++){
-			switch(src[i]){ case ' ': len++; break; }
+	}
+	else if (_nbsp)
+	{
+		for (; src[i] != '\0'; i++)
+		{
+			switch (src[i])
+			{
+			case ' ':
+				len++;
+				break;
+			}
 			len++;
 		}
-	} else return;
+	}
+	else
+		return;
 
 	if (char *pTemp = Extend(len))
 	{
 		DWORD ii = i = 0;
 		//Filter the data
-		if( _nbsp && _escfilt ){
+		if (_nbsp && _escfilt)
+		{
 			char c;
-			for(; src[i]!='\0'; i++){
-				switch(src[i]){
-					case '\\': case '{': case '}': case ' ':
-					pTemp[ii++] = '\\';
+			for (; src[i] != '\0'; i++)
+			{
+				switch (src[i])
+				{
+					case '\\':
+					case '{':
+					case '}':
+					case ' ':
+						pTemp[ii++] = '\\';
 				}
 				c = src[i];
-				if( src[i] == ' ') c = '~';
+				if (src[i] == ' ')
+					c = '~';
 				pTemp[ii++] = c;
 			}
-		} else if( _escfilt ){
-			for(; src[i]!='\0'; i++){
-				switch(src[i]){
-					case '\\': case '{': case '}':
-					pTemp[ii++] = '\\';
+		}
+		else if (_escfilt)
+		{
+			for (; src[i] != '\0'; i++)
+			{
+				switch (src[i])
+				{
+					case '\\':
+					case '{':
+					case '}':
+					 pTemp[ii++] = '\\';
 				}
 				pTemp[ii++] = src[i];
 			}
-		} else if( _nbsp ){
-			for(; src[i]!='\0'; i++){
-				if( src[i] == ' '){
+		}
+		else if (_nbsp)
+		{
+			for (; src[i] != '\0'; i++)
+			{
+				if (src[i] == ' ')
+				{
 					pTemp[ii++] = '\\';
 					pTemp[ii++] = '~';
-				} else pTemp[ii++] = src[i];
+				}
+				else
+					pTemp[ii++] = src[i];
 			}
 		}
-		GlobalUnlock( m_hGlobal );
+		GlobalUnlock(m_hGlobal);
 	}
 	_hex = _nbsp = _escfilt = 0;
 }
