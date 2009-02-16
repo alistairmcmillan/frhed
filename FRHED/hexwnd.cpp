@@ -44,6 +44,7 @@
 #include "LangArray.h"
 #include "Registry.h"
 #include "Template.h"
+#include "HexDump.h"
 
 #include "idt.h"
 #include "ids.h"
@@ -2916,65 +2917,23 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		if (mem && buflen > memlen) return 0;
 //end
 		// Create hexdump.
-		char buf2[128];
-//Pabs changed - "char*" removed - see further up
 		if (!mem)
 		{
 			pMem = new char[buflen];
-			if(!pMem) return 0;
+			if (!pMem)
+				return 0;
 		}
-//end
-		memset(pMem, ' ', buflen);
-		// Write hexdump.
-		// a = first byte of first line of hexdump.
-		// b = first byte of last line of hexdump.
-		//b = iCopyHexdumpDlgEnd;
-		// a = Offset of current line.
-		// k = Offset in text array.
-		for (int k = 0, a = iCopyHexdumpDlgStart; a <= iCopyHexdumpDlgEnd; a += iBytesPerLine, k += iCharsPerLine + 2)
-		{
-			// Write offset.
-			int m = sprintf(buf2, "%*.*x", iMinOffsetLen, iMinOffsetLen, bPartialStats ? a + iPartialOffset : a);
 
-			memset(buf2 + m, ' ', iMaxOffsetLen + iByteSpace - m);
-			buf2[iMaxOffsetLen + iByteSpace] = '\0';
+		HexDump dump;
+		dump.SetArray(&DataArray);
+		dump.SetOffsets(iMinOffsetLen, iMaxOffsetLen);
+		dump.Settings(iBytesPerLine, iCharsPerLine, bPartialStats, iPartialOffset,
+			iByteSpace, iCharSpace, iCharacterSet);
+		dump.CreateBuffer(buflen);
+		dump.Write(iCopyHexdumpDlgStart, iCopyHexdumpDlgEnd);
+		memcpy(pMem, dump.GetBuffer(), buflen);
 
-			int l = 0; // l = Offset in line, relative to k.
-			int n = 0;
-			while (buf2[n] != '\0')
-				pMem[k + (l++)] = buf2[n++]; // Copy Offset. l = next empty place after spaces.
-			// Write bytes and chars.
-			for (int j = 0 ; j < iBytesPerLine ; j++)
-			{
-				if (a + j > DataArray.GetUpperBound())
-				{
-					// Nonexistant byte.
-					pMem[k + l + j*3    ] = ' ';
-					pMem[k + l + j*3 + 1] = ' ';
-					pMem[k + l + j*3 + 2] = ' ';
-					// Nonexistant char.
-					pMem[k + l + iBytesPerLine*3 + iCharSpace + j] = ' ';
-				}
-				else
-				{
-					// Write byte.
-					sprintf(buf2, "%2.2x ", DataArray[a + j]);
-					pMem[k + l + j*3    ] = buf2[0];
-					pMem[k + l + j*3 + 1] = buf2[1];
-					pMem[k + l + j*3 + 2] = buf2[2];
-					// Write char.
-					if( iCharacterSet == OEM_FIXED_FONT && DataArray[a + j] != 0 )
-						pMem[k + l + iBytesPerLine*3 + iCharSpace + j] = DataArray[a + j];
-					else if( (DataArray[a + j] >= 32 && DataArray[a + j] <= 126) || (DataArray[a + j]>=160 && DataArray[a + j] <= 255) || (DataArray[a + j] >= 145 && DataArray[a + j] <= 146) )
-						pMem[k + l + iBytesPerLine*3 + iCharSpace + j] = DataArray[a + j];
-					else
-						pMem[k + l + iBytesPerLine*3 + iCharSpace + j] = '.';
-				}
-			}
-			pMem[k + iCharsPerLine] = '\r';
-			pMem[k + iCharsPerLine + 1] = '\n';
-		}
-		pMem[buflen-1] = '\0';
+		pMem[buflen - 1] = '\0';
 //Pabs changed - line insert
 	}
 	else if (iCopyHexdumpType == IDC_EXPORTDIGITS)
