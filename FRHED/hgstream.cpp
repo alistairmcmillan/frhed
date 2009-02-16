@@ -28,7 +28,7 @@
 
 HGlobalStream::HGlobalStream(DWORD blcksz)
 : _hex(0), _nbsp(0), _escfilt(0)
-, precision(0),
+, precision(0)
 , m_hGlobal(NULL)
 , m_dwLen(0), m_dwSize(0)
 , m_dwBlockSize(blcksz)

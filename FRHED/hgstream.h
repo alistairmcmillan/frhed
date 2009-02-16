@@ -26,9 +26,6 @@
 #ifndef _HG_STREAM_H_
 #define _HG_STREAM_H_
 
-#include <strstrea.h>
-#include <iomanip.h>
-
 /**
  * @brief a streaming class using global memory.
  * Returns a handle to a global memory pointer Caller is responsible for
