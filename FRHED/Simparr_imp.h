@@ -462,11 +462,13 @@ template<class T> T& SimpleArray<T>::GetRefAt(int nIndex) const
 //-------------------------------------------------------------------
 template<class T> int SimpleArray<T>::blCompare(SimpleArray<T>& spa) const
 {
-	if(m_nUpperBound != spa.GetUpperBound() ) return FALSE;
+	if (m_nUpperBound != spa.GetUpperBound())
+		return FALSE;
 	int k;
-	for(k = 0; k <= m_nUpperBound; k++)
+	for (k = 0; k <= m_nUpperBound; k++)
 	{
-		if(m_pT[k] != spa[k]) return FALSE;
+		if (m_pT[k] != spa[k])
+			return FALSE;
 	}
 	return TRUE;
 }
@@ -515,27 +517,26 @@ template<class T> int SimpleArray<T>::Adopt(T* ptArray, int upbound, int size)
 //-------------------------------------------------------------------
 template<class T> void SimpleArray<T>::SetUpperBound(int upbnd)
 {
-	if(upbnd < m_nSize)
+	if (upbnd < m_nSize)
 		m_nUpperBound = upbnd;
 }
 
 //-------------------------------------------------------------------
 template<class T> int SimpleArray<T>::AppendArray(T* pSrc, int srclen)
 {
-	if( srclen <= 0 )
+	if (srclen <= 0)
 		return FALSE;
 
-	if( m_nUpperBound + 1 + srclen > m_nSize )
+	if (m_nUpperBound + 1 + srclen > m_nSize)
 	{
 		// Not enough space, so get some.
-		if( !AddSpace( srclen ) )
+		if (!AddSpace(srclen))
 			return FALSE;
 	}
 	// Enough space to append without growing. Copy the data.
-	int i;
-	for( i=0; i<srclen; i++ )
+	for (int i = 0; i < srclen; i++ )
 	{
-		m_pT[ m_nUpperBound + 1 + i ] = pSrc[i];
+		m_pT[m_nUpperBound + 1 + i] = pSrc[i];
 	}
 	m_nUpperBound += srclen;
 	return TRUE;
@@ -551,13 +552,12 @@ template<class T> int SimpleArray<T>::ExpandToSize()
 //-------------------------------------------------------------------
 template<class T> int SimpleArray<T>::CopyFrom(int index, const T* pSrc, int srclen)
 {
-	if( m_nSize - index >= srclen )
+	if (m_nSize - index >= srclen)
 	{
 		// Enough space to copy into.
-		int i;
-		for( i = 0; i < srclen; i++ )
-			m_pT[ index + i ] = pSrc[ i ];
-		if( index + srclen - 1 > m_nUpperBound )
+		for (int i = 0; i < srclen; i++)
+			m_pT[index + i] = pSrc[i];
+		if (index + srclen - 1 > m_nUpperBound)
 			m_nUpperBound = index + srclen - 1;
 		return TRUE;
 	}
@@ -568,12 +568,12 @@ template<class T> int SimpleArray<T>::CopyFrom(int index, const T* pSrc, int src
 //-------------------------------------------------------------------
 template<class T> int SimpleArray<T>::Replace(int ToReplaceIndex, int ToReplaceLength, const T* pReplaceWith, int ReplaceWithLength)
 {
-	if( m_pT != NULL && ToReplaceLength > 0 )
+	if (m_pT != NULL && ToReplaceLength > 0)
 	{
 		// Number of elements from start to end of array large enough for request?
-		if( m_nUpperBound - ToReplaceIndex + 1 >= ToReplaceLength )
+		if (m_nUpperBound - ToReplaceIndex + 1 >= ToReplaceLength)
 		{
-			if( ToReplaceLength < ReplaceWithLength )
+			if (ToReplaceLength < ReplaceWithLength)
 			{
 				int i;
 				T dummy;
@@ -582,32 +582,30 @@ template<class T> int SimpleArray<T>::Replace(int ToReplaceIndex, int ToReplaceL
 				// objects.
 				dummy = 0;
 
-				InsertAtGrow( ToReplaceIndex, dummy, ReplaceWithLength - ToReplaceLength );
-				for( i = 0; i < ReplaceWithLength; i++ )
+				InsertAtGrow(ToReplaceIndex, dummy, ReplaceWithLength - ToReplaceLength);
+				for (i = 0; i < ReplaceWithLength; i++)
 				{
-					m_pT[ ToReplaceIndex + i ] = pReplaceWith[ i ];
+					m_pT[ToReplaceIndex + i] = pReplaceWith[i];
 				}
 
 				return TRUE;
 			}
-			else if( ToReplaceLength == ReplaceWithLength )
+			else if (ToReplaceLength == ReplaceWithLength)
 			{
-				int i;
-				for( i = 0; i < ReplaceWithLength; i++ )
+				for(int i = 0; i < ReplaceWithLength; i++)
 				{
-					m_pT[ ToReplaceIndex + i ] = pReplaceWith[ i ];
+					m_pT[ToReplaceIndex + i] = pReplaceWith[i];
 				}
 				return TRUE;
 			}
 			else // if( ToReplaceLength > ReplaceWithLength )
 			{
-				int i;
-				for( i = 0; i < ReplaceWithLength; i++ )
+				for(int i = 0; i < ReplaceWithLength; i++ )
 				{
-					m_pT[ ToReplaceIndex + i ] = pReplaceWith[ i ];
+					m_pT[ToReplaceIndex + i] = pReplaceWith[i];
 				}
 
-				RemoveAt( ToReplaceIndex + ReplaceWithLength, ToReplaceLength - ReplaceWithLength );
+				RemoveAt(ToReplaceIndex + ReplaceWithLength, ToReplaceLength - ReplaceWithLength);
 				return TRUE;
 			}
 		}
