@@ -4,6 +4,9 @@ to Subversion revision numbers (rXXXXX).
 
 For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 
+Frhed 1.4.2
+  Add example template file (#2582381)
+
 Frhed 1.4.0 - 2009-02-04 (r368)
   Improve Cut-dialog layout (r332)
   Improve Append-dialog layout (r336)
