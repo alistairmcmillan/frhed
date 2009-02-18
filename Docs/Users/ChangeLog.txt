@@ -9,6 +9,7 @@ Frhed 1.5.1
   Improve Append-dialog layout (r335)
   Remove "for 32-bit Windows" from About-dialog (#2570092)
   Add example template file (#2582381)
+  Open help when F1 pressed in dialogs (#2480571)
   Bugfix: Crash when trying to partially load large file (#2552896)
   Bugfix: Hang when loading big file (#2555546)
   Bugfix: Incorrect shortcut to help file (#2556084)

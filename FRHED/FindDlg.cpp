@@ -147,6 +147,10 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			return TRUE;
 		}
 		break;
+
+	case WM_HELP:
+		OnHelp(hDlg);
+		break;
 	}
 	return FALSE;
 }

@@ -167,6 +167,10 @@ INT_PTR CutDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		break;
+
+	case WM_HELP:
+		OnHelp(hDlg);
+		break;
 	}
 	return FALSE;
 }

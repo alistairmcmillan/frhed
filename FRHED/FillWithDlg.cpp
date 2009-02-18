@@ -376,6 +376,10 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 			return TRUE;
 		}
 		break;
+
+	case WM_HELP:
+		OnHelp(hDlg);
+		break;
 	}
 	return FALSE;
 }

@@ -109,8 +109,13 @@ INT_PTR AddBmkDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_INITDIALOG:
 		return OnInitDialog(hDlg);
+
 	case WM_COMMAND:
 		return OnCommand(hDlg, wParam, lParam);
+
+	case WM_HELP:
+		OnHelp(hDlg);
+		break;
 	}
 	return FALSE;
 }

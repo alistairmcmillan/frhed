@@ -169,6 +169,10 @@ INT_PTR PasteDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		return OnInitDialog(hDlg);
 	case WM_COMMAND:
 		return OnCommand(hDlg, wParam, lParam);
+
+	case WM_HELP:
+		OnHelp(hDlg);
+		break;
 	}
 	return FALSE;
 }

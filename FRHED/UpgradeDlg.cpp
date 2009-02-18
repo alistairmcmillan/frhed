@@ -500,6 +500,10 @@ INT_PTR UpgradeDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 		return OnNotify(hw, w, l);
 	case WM_DRAWITEM:
 		return OnDrawitem(hw, w, l);
+
+	case WM_HELP:
+		OnHelp(hw);
+		break;
 	}
 	return FALSE;
 }

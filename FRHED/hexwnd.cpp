@@ -4785,8 +4785,17 @@ int HexEditorWindow::OnWndMsg( HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lPara
 	case WM_DESTROY:
 		destroy_window();
 		break;
+
+	case WM_HELP:
+		OnHelp(hwnd);
+		break;
 	}
 	return DefWindowProc(hwnd, iMsg, wParam, lParam);
+}
+
+void HexEditorWindow::OnHelp(HWND hwnd)
+{
+	ShowHtmlHelp(HELP_CONTENTS, 0, hwnd);
 }
 
 //Pabs changed - removed CMD_explorersettings

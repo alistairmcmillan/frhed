@@ -83,6 +83,10 @@ INT_PTR DragDropOptionsDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 			return TRUE;
 		}
 		break;
+
+	case WM_HELP:
+		OnHelp(h);
+		break;
 	}
 	return FALSE;
 }
@@ -142,6 +146,10 @@ INT_PTR ChangeInstDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 			EndDialog(hw, w);
 			return TRUE;
 		}
+
+	case WM_HELP:
+		OnHelp(hw);
+		break;
 	}
 	return FALSE;
 }

@@ -115,6 +115,10 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 			return TRUE;
 		}
 		break;
+
+	case WM_HELP:
+		OnHelp(h);
+		break;
 	}
 	return FALSE;
 }

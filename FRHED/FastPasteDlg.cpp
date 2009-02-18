@@ -336,6 +336,10 @@ INT_PTR FastPasteDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam
 		ChangeClipboardChain(hDlg, hwndNextViewer);
 		hwndNextViewer = NULL;
 		break;
+
+	case WM_HELP:
+		OnHelp(hDlg);
+		break;
 	}
 	return FALSE;
 }

@@ -319,6 +319,10 @@ INT_PTR ViewSettingsDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 			return OnCompareitemLangId(reinterpret_cast<COMPAREITEMSTRUCT *>(lParam));
 		}
 		break;
+
+	case WM_HELP:
+		OnHelp(hDlg);
+		break;
 	}
 	return FALSE;
 }

@@ -646,6 +646,10 @@ INT_PTR ShortcutsDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 		return OnCommand(hw, w, l);
 	case WM_NOTIFY:
 		return OnNotify(hw, w, l);
+
+	case WM_HELP:
+		OnHelp(hw);
+		break;
 	}
 	return FALSE;
 }

@@ -92,6 +92,10 @@ INT_PTR SelectBlockDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 		return OnInitDialog(hDlg);
 	case WM_COMMAND:
 		return OnCommand(hDlg, wParam, lParam);
+
+	case WM_HELP:
+		OnHelp(hDlg);
+		break;
 	}
 	return FALSE;
 }

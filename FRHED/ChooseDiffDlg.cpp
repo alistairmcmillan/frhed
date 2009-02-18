@@ -255,8 +255,13 @@ INT_PTR ChooseDiffDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPara
 		if (!OnInitDialog(hDlg))
 			EndDialog(hDlg, IDCANCEL);
 		return TRUE;
+
 	case WM_COMMAND:
 		return OnCommand(hDlg, wParam, lParam);
+
+	case WM_HELP:
+		OnHelp(hDlg);
+		break;
 	}
 	return FALSE;
 }
