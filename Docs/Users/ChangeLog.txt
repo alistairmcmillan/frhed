@@ -8,6 +8,8 @@ Frhed 1.4.2
   Add example template file (#2582381)
   Bugfix: Fix dialog text styling (#2534010)
   Bugfix: Fix dialog style for About-dialog (r391)
+  Layout fixes for Hexdump export-, Copy bytes-,
+    Add bookmark- and Open partially -dialogs (r393)
 
 Frhed 1.4.0 - 2009-02-04 (r368)
   Improve Cut-dialog layout (r332)
