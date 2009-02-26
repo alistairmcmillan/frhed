@@ -16,6 +16,7 @@ Frhed 1.5.1
   Bugfix: Sometimes crashed when opening View Settings (#2504837)
   Bugfix: Help window opened from Frhed was modal (#2590341)
   Bugfix: Fix dialog text styling (#2534010)
+  Bugfix: Fix dialog style for About-dialog (r390)
 
 Frhed 1.4.x (R1_4) branch created (r327)
 
