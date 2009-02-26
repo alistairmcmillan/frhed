@@ -17,6 +17,8 @@ Frhed 1.5.1
   Bugfix: Help window opened from Frhed was modal (#2590341)
   Bugfix: Fix dialog text styling (#2534010)
   Bugfix: Fix dialog style for About-dialog (r390)
+  Bugfix: Layout fixes for Hexdump export-, Copy bytes-,
+    Add bookmark- and Open partially -dialogs (r392)
 
 Frhed 1.4.x (R1_4) branch created (r327)
 

@@ -41,7 +41,7 @@ BOOL OpenPartiallyDlg::OnInitDialog(HWND hDlg)
 	__int64 iPLFileLen = _filelengthi64(filehandle);
 	char buf[128] = {0};
 	SetDlgItemText(hDlg, IDC_OPENPARTIAL_OFFSET, "x0");
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "Size of file: %lld. Load how many bytes:", iPLFileLen);
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "&Size of file: %lld. Load how many bytes:", iPLFileLen);
 	SetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTECOUNT, buf);
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%lld", iPLFileLen);
 	SetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTES, buf);

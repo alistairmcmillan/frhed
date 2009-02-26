@@ -410,7 +410,7 @@ CAPTION "Export hexdump"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "Use hexadecimal notation without prefix.",IDC_STATIC,7,
-                    7,128,8
+                    7,148,8
     LTEXT           "Start at line with offset:",IDC_STATIC,7,17,72,8
     EDITTEXT        IDC_HEXDUMP_OFFSET,6,25,149,12,ES_AUTOHSCROLL
     LTEXT           "Up to and including line with offset:",IDC_STATIC,7,40,
@@ -506,7 +506,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION |
 CAPTION "Copy"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "Prefix offsets with x for hex.",IDC_STATIC,7,7,86,8
+    LTEXT           "Prefix offsets with x for hex.",IDC_STATIC,7,7,126,8
     LTEXT           "Start copying at offset:",IDC_STATIC,7,20,72,8
     EDITTEXT        IDC_COPY_STARTOFFSET,7,29,130,13,ES_AUTOHSCROLL
     GROUPBOX        "Copy how many bytes",IDC_STATIC,7,51,144,73
@@ -692,7 +692,7 @@ CAPTION "Add bookmark"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "Offset of bookmark: (prefix x for hex)",IDC_STATIC,7,7,
-                    114,8
+                    174,8
     EDITTEXT        IDC_BMKADD_OFFSET,7,18,118,12,ES_AUTOHSCROLL
     LTEXT           "Name of bookmark:",IDC_STATIC,7,36,63,8
     EDITTEXT        IDC_BMKADD_NAME,7,46,118,12,ES_AUTOHSCROLL
@@ -713,26 +713,23 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,109,146,50,14
 END
 
-IDD_OPEN_PARTIAL_DIALOG DIALOGEX 0, 0, 221, 135
+IDD_OPEN_PARTIAL_DIALOG DIALOGEX 0, 0, 221, 134
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION |
     WS_SYSMENU
 CAPTION "Open partially"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "Start opening partially...",IDC_STATIC,7,7,207,60
-    CONTROL         "At offset relative to beginning of file: (prefix x for hex)",
-                    IDC_OPENPARTIAL_BEGINOFF,"Button",BS_AUTORADIOBUTTON |
-                    WS_GROUP,17,21,179,10
-    CONTROL         "From end of file",IDC_OPENPARTIAL_ENDBYTES,"Button",
-                    BS_AUTORADIOBUTTON,17,50,64,10
-    EDITTEXT        IDC_OPENPARTIAL_OFFSET,28,31,134,12,ES_AUTOHSCROLL | WS_GROUP
-    LTEXT           "how_many_bytes",IDC_OPENPARTIAL_BYTECOUNT,7,73,207,8
-    EDITTEXT        IDC_OPENPARTIAL_BYTES,7,82,135,13,ES_AUTOHSCROLL
-    CONTROL         "Display offsets relative to start of file (or start of loaded block)",
-                    IDC_OPENPARTIAL_RELOFFSET,"Button",BS_AUTOCHECKBOX |
-                    WS_TABSTOP,7,100,206,10
-    DEFPUSHBUTTON   "OK",IDOK,55,115,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,110,115,50,14
+    GROUPBOX        "Start opening partially",IDC_STATIC,7,7,207,56
+    CONTROL         "&At offset from the beginning of file: (prefix x for hex):",IDC_OPENPARTIAL_BEGINOFF,
+                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,17,21,189,10
+    CONTROL         "&From end of file",IDC_OPENPARTIAL_ENDBYTES,"Button",BS_AUTORADIOBUTTON,17,47,93,10
+    EDITTEXT        IDC_OPENPARTIAL_OFFSET,28,32,134,12,ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "&How many bytes:",IDC_OPENPARTIAL_BYTECOUNT,7,67,207,8
+    EDITTEXT        IDC_OPENPARTIAL_BYTES,7,78,135,13,ES_AUTOHSCROLL
+    CONTROL         "&Display offsets relative to start of file (or start of loaded block)",IDC_OPENPARTIAL_RELOFFSET,
+                    "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,7,95,175,18
+    DEFPUSHBUTTON   "OK",IDOK,109,113,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,164,113,50,14
 END
 
 IDD_FASTPASTE_DIALOG DIALOGEX 0, 0, 267, 161
@@ -1244,7 +1241,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 214
         TOPMARGIN, 7
-        BOTTOMMARGIN, 128
+        BOTTOMMARGIN, 127
     END
 
     IDD_FASTPASTE_DIALOG, DIALOG
