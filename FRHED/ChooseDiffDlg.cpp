@@ -34,11 +34,8 @@ void ChooseDiffDlg::add_diff(HWND hwndList, int diff, int lower, int upper)
 {
 	wchar_t buf[100];
 	swprintf(buf,
-		S.DiffListItemFormat, //"%d) 0x%x=%n%d to 0x%x=%n%d (%d bytes)",
-		diff,
-		lower, &lower, lower,
-		upper, &upper, upper,
-		upper - lower + 1);
+		S.DiffListItemFormat, //"%d) 0x%x=%u to 0x%x=%u (%d bytes)",
+		diff, lower, lower,	upper, upper, upper - lower + 1);
 	int i;
 	if (IsWindowUnicode(hwndList))
 	{
