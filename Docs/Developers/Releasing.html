@@ -90,10 +90,10 @@ have ready installer and executable and source folder ready to be added to zips.
 to run it with Python. The script needs name of the version ini file as
 parameter. For example:</p>
 
-<p><code>python create_release.py versions.ini</code></p>
+<p><code>python create_release.py -f versions.ini</code></p>
 
 <h3><a name="#Packaging">Packaging</a></h3>
-<p>In addition to the installer executable, it is very much recommeded to
+<p>In addition to the installer executable, it is very much recommended to
 release executable files as a zip. This allows advanced users to do their
 custom installations. And it also allows installing the software without
 privileges or running executables.</p>
@@ -120,7 +120,7 @@ update date. So users can consider if the checking is good enough for them to
 trust.</p>
 
 <p>Another important thing is to make sure users download exactly the same files
-you have released. That nobody has been able to modify the files (like add
+you have released. That nobody has been able to modify the files (e.g. add
 viruses or other harmful content). The best way is to create checksums for the
 files you released and add those checksums to release info.</p>
 
