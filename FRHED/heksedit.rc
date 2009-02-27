@@ -438,12 +438,12 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION |
 CAPTION "Enter decimal value"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "Enter decimal value:",IDC_STATIC,7,7,65,8
+    LTEXT           "Enter decimal value:",IDC_STATIC,7,7,100,8
     EDITTEXT        IDC_DECIMAL_VALUE,7,16,97,12,ES_AUTOHSCROLL
     LTEXT           "At offset: (prefix x for hexadecimal)",IDC_STATIC,7,30,
-                    108,8
+                    200,8
     EDITTEXT        IDC_DECIMAL_OFFSET,7,38,98,12,ES_AUTOHSCROLL
-    LTEXT           "Number of times:",IDC_STATIC,7,54,54,8
+    LTEXT           "Number of times:",IDC_STATIC,7,54,100,8
     EDITTEXT        IDC_DECIMAL_TIMES,7,62,97,12,ES_AUTOHSCROLL
     GROUPBOX        "Size of Value:",IDC_STATIC,7,79,210,25
     CONTROL         "Byte (8 bit)",IDC_DECIMAL_BYTE,"Button",BS_AUTORADIOBUTTON | 
