@@ -21,6 +21,8 @@ Frhed 1.5.1
     Add bookmark- and Open partially -dialogs (r392)
   Bugfix: Layout fix for Reverse bytes-dialog (r394)
   Bugfix: Layout fix for Enter decimal value-dialog (r395)
+  Bugfix: Offset length was reset after opening View Settings
+    -dialog (r402)
 
 Frhed 1.4.x (R1_4) branch created (r327)
 

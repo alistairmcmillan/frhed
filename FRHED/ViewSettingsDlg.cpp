@@ -190,13 +190,14 @@ INT_PTR ViewSettingsDlg::OnCompareitemLangId(COMPAREITEMSTRUCT *pcis)
 
 /**
  * @brief Initialize the dialog controls.
- * This function reads settings values from registry and sets them for the
- * dialog controls.
+ * This function initializes dialog controls from current option values. Not
+ * reading from registry since there are values calculated runtime (min.
+ * offset length).
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE.
  */
 BOOL ViewSettingsDlg::OnInitDialog(HWND hDlg)
 {
-	read_ini_data();
-
 	SetDlgItemInt(hDlg, IDC_SETTINGS_BYTESPERLINE, iBytesPerLine, TRUE);
 	SetDlgItemInt(hDlg, IDC_SETTINGS_OFFSETLEN, iMinOffsetLen, TRUE);
 	UINT checked = iAutomaticBPL == 0 ? BST_UNCHECKED : BST_CHECKED;
