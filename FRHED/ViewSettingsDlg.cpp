@@ -199,11 +199,13 @@ BOOL ViewSettingsDlg::OnInitDialog(HWND hDlg)
 
 	SetDlgItemInt(hDlg, IDC_SETTINGS_BYTESPERLINE, iBytesPerLine, TRUE);
 	SetDlgItemInt(hDlg, IDC_SETTINGS_OFFSETLEN, iMinOffsetLen, TRUE);
-	CheckDlgButton(hDlg, IDC_SETTINGS_ADJUST_BYTELINE, iAutomaticBPL);
+	UINT checked = iAutomaticBPL == 0 ? BST_UNCHECKED : BST_CHECKED;
+	CheckDlgButton(hDlg, IDC_SETTINGS_ADJUST_BYTELINE, checked);
 	CheckDlgButton(hDlg, bUnsignedView ? IDC_SETTINGS_CARETUNSIGN :
 			IDC_SETTINGS_CARETSIGN, BST_CHECKED);
 	CheckDlgButton(hDlg, IDC_SETTINGS_OPENRO, bOpenReadOnly);
-	CheckDlgButton(hDlg, IDC_SETTINGS_ADJOFFSET, bAutoOffsetLen);
+	checked = bAutoOffsetLen == 0 ? BST_UNCHECKED : BST_CHECKED;
+	CheckDlgButton(hDlg, IDC_SETTINGS_ADJOFFSET, checked);
 	SetDlgItemText(hDlg, IDC_SETTINGS_EDITOR, TexteditorName);
 	hCbLang = GetDlgItem(hDlg, IDC_SETTINGS_LANGUAGE);
 	SendMessage(hCbLang, CB_SETDROPPEDWIDTH, 698, 0);
@@ -226,10 +228,20 @@ BOOL ViewSettingsDlg::Apply(HWND hDlg)
 		iMinOffsetLen = 1;
 	// Get the text editor path and name.
 	GetDlgItemText(hDlg, IDC_SETTINGS_EDITOR, TexteditorName, RTL_NUMBER_OF(TexteditorName));
-	iAutomaticBPL = IsDlgButtonChecked(hDlg, IDC_SETTINGS_ADJUST_BYTELINE);
-	bAutoOffsetLen = IsDlgButtonChecked(hDlg, IDC_SETTINGS_ADJOFFSET);
+	
+	UINT res = IsDlgButtonChecked(hDlg, IDC_SETTINGS_ADJUST_BYTELINE);
+	if (res == BST_CHECKED)
+		iAutomaticBPL = 1;
+	else
+		iAutomaticBPL = 0;
 
-	UINT res = IsDlgButtonChecked(hDlg, IDC_SETTINGS_CARETUNSIGN);
+	res = IsDlgButtonChecked(hDlg, IDC_SETTINGS_ADJOFFSET);
+	if (res == BST_CHECKED)
+		bAutoOffsetLen = 1;
+	else
+		bAutoOffsetLen = 0;
+
+	res = IsDlgButtonChecked(hDlg, IDC_SETTINGS_CARETUNSIGN);
 	if (res == BST_CHECKED)
 		bUnsignedView = true;
 	else if (res == BST_UNCHECKED)
