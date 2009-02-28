@@ -404,7 +404,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 	}
 	// No more code left in m_tmplBuf.
 	char buf[128];
-	sprintf(buf, "\xd\xa-> Length of template = %d bytes.\xd\xa", fpos - curByte);
+	sprintf(buf, "\r\n-> Length of template = %d bytes.\r\n", fpos - curByte);
 	m_resultArray.AppendArray(buf, strlen(buf));
 	m_resultArray.Append('\0');
 }
@@ -422,7 +422,7 @@ int Template::ignore_non_code(char* pcTpl, int tpl_len, int& index)
 	while (index < tpl_len)
 	{
 		// If code found, return.
-		switch(pcTpl[ index ])
+		switch(pcTpl[index])
 		{
 		case ' ':
 		case '\t':
