@@ -39,10 +39,6 @@
 					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=295443&amp;release_id=633733">
 						Frhed 1.3.1</a> (2008-10-16)</li>
 				</ul>
-				<h3>Original project download</h3>
-				<ul>
-					<li><a href="http://www.rs.e-technik.tu-darmstadt.de/applets/frhed-v1.1.zip">Frhed 1.1 BETA 1</a></li>
-				</ul>
 
 				<h2>Support</h2>
 				<p>For support you can try the <a href="http://apps.sourceforge.net/phpbb/frhed/">forums</a> or the <a href="https://sourceforge.net/mail/?group_id=236485">mailing lists</a>.
