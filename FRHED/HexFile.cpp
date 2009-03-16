@@ -51,10 +51,12 @@ static BYTE Hex2Nibble(BYTE by)
 	}
 }
 
+/**
+ * @brief Constructor.
+ */
 HexFile::HexFile()
 : m_pFile(NULL)
 , m_type(-1)
-, m_origType(-1)
 , m_size(0)
 , m_bAutoOffsetLen(false)
 , m_minOffsetLen(-1)
@@ -66,23 +68,34 @@ HexFile::HexFile()
 {
 }
 
+/**
+ * @brief Destructor.
+ */
 HexFile::~HexFile()
 {
 	delete m_pFile;
 }
 
+/**
+ * @brief Open dump from memory buffer.
+ * This function opens the hex dump from the memory.
+ * @param [in] buffer Pointer to the buffer to hold the dump data.
+ * @param [in] size Size of the buffer (if known). -1 if size is not known.
+ */
 void HexFile::Open(char * buffer, int size)
 {
 	m_pFile = new chexfile_stream(buffer);
-	m_origType = 0;
 	m_size = size;
 }
 
-
+/**
+ * @brief Load a dump from the file.
+ * This function opens the hex dump from the file in the disk.
+ * @param [in] file Pointer to the file stream.
+ */
 void HexFile::Open(FILE * file)
 {
 	m_pFile = new fhexfile_stream(file);
-	m_origType = 1;
 	int cur = ftell(file);
 	fseek(file, 0, SEEK_END);
 	int pos = ftell(file);
@@ -90,6 +103,10 @@ void HexFile::Open(FILE * file)
 	m_size = pos;
 }
 
+/**
+ * @brief Detemine the hex dump type (simple/formatted).
+ * @return Type of the dump.
+ */
 int HexFile::CheckType()
 {
 	int typ = 0;//type of file (0=just hex digits)
@@ -112,21 +129,38 @@ int HexFile::CheckType()
 	return typ;
 }
 
+/**
+ * @brief Return dump size.
+ * @return Size of the dump in bytes.
+ */
 int HexFile::GetSize() const
 {
 	return m_size;
 }
 
-void HexFile::SetHwnd(HWND wnd)
+/**
+ * @brief Set window handle used for message boxes.
+ * @param [in] hwnd Handle to the window showing message boxes.
+ */
+void HexFile::SetHwnd(HWND hwnd)
 {
-	m_hwnd = wnd;
+	m_hwnd = hwnd;
 }
 
+/**
+ * @brief Return the array having loaded hex dump.
+ * @return Array containing data parsed from the hex dump.
+ */
 SimpleArray<unsigned char> *HexFile::GetArray()
 {
 	return &m_data;
 }
 
+/**
+ * @brief Parse simple hex dump file.
+ * This method parses simple hex dump file having just list of bytes.
+ * @return true if the parsing succeeded, false if there was an error.
+ */
 bool HexFile::ParseSimple()
 {
 	int temp[4] = {0};
@@ -174,6 +208,11 @@ bool HexFile::ParseSimple()
 	return true;
 }
 
+/**
+ * @brief Parse formatted hex dump file.
+ * This method parses Frhed view-style formatted hex dump file.
+ * @return true if the parsing succeeded, false if there was an error.
+ */
 bool HexFile::ParseFormatted()
 {
 	int temp[4] = {0};

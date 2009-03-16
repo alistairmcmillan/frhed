@@ -28,6 +28,12 @@
 
 #include "HexFileStream.h"
 
+/**
+ * @brief A class for loading hex dump files.
+ * This class handles loading hex dump files from a file in the disk or from
+ * memory (clipboard). There are basically two types of dumps, simple files
+ * just listing bytes in the file. And Frhed display-type dump files.
+ */
 class HexFile
 {
 public:
@@ -40,7 +46,7 @@ public:
 	int GetSize() const;
 	bool ParseSimple();
 	bool ParseFormatted();
-	void SetHwnd(HWND wnd);
+	void SetHwnd(HWND hwnd);
 	SimpleArray<unsigned char> *GetArray();
 	bool WasAutoOffsetLen() const;
 	int GetMinOffset() const;
@@ -51,12 +57,11 @@ public:
 	int GetCharset() const;
 
 private:
-	SimpleArray<unsigned char> m_data;
-	hexfile_stream * m_pFile;
-	int m_type;
-	int m_origType;
-	int m_size;
-	HWND m_hwnd;
+	SimpleArray<unsigned char> m_data; /**< Array where data is loaded. */
+	hexfile_stream * m_pFile; /**< Pointer to file stream from which data is read. */
+	int m_type; /**< Dump file type, simple or Frhed display-formatted. */
+	int m_size; /**< Size of the data to read. */
+	HWND m_hwnd; /**< Handle to the window getting dialogs. */
 	bool m_bAutoOffsetLen;
 	int m_minOffsetLen;
 	bool m_bPartialStats;
