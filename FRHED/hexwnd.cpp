@@ -40,11 +40,11 @@
 #include "InvokeHtmlHelp.h"
 #include "clipboard.h"
 #include "BinTrans.h"
-#include "LoadHexFile.h"
 #include "LangArray.h"
 #include "Registry.h"
 #include "Template.h"
 #include "HexDump.h"
+#include "HexFile.h"
 
 #include "idt.h"
 #include "ids.h"
@@ -144,7 +144,7 @@ HexEditorWindow::HexEditorWindow()
 	iAutomaticBPL = 1;
 	bSelected = FALSE;
 	bSelecting = FALSE;
-	dragging = FALSE;
+	dragging = false;
 	iStartOfSelection = 0;
 	iEndOfSelection = 0;
 	hwnd = 0;
@@ -5136,45 +5136,50 @@ int HexEditorWindow::iGetEndOfSelection()
 	return bSelected ? max(iStartOfSelection, iEndOfSelection) : iCurByte;
 }
 
-bool HexEditorWindow::load_hexfile(hexfile_stream &hexin)
+bool HexEditorWindow::load_hexfile(HexFile &hexin)
 {
 	WaitCursor wc;
-	//Variables used below & their functions
-	int typ = 0;//type of file (0=just hex digits)
-	//Check the type of file - if only whitespace & hex then just hex else can be used to set line len etc
-	//There is probably a better way to do this
-	int temp;
-	while ((temp = hexin.lhgetc()) != EOF)
-	{
-		BYTE ct = (BYTE)temp;
-		if (!(isspace(ct) || isxdigit(ct)))
-		{
-			typ = 1;
-			break;
-		}
-	}
-	if (hexin.lhtell() == 0)
+
+	hexin.SetHwnd(hwndMain);
+	int type = hexin.CheckType();
+	if (hexin.GetSize() == 0)
 	{
 		MessageBox(hwnd, "No data present\nCannot continue!", "Import Hexdump", MB_ICONERROR);
 		return false;
 	}
-	hexin.lhseek(0);
 
 	char msg[150] =
 		"Does this data have the same format as the Frhed display?"
 		"\nThis data contains ";
-	strcat(msg, typ ?
+	strcat(msg, type ?
 		"characters other than whitespace and hexdigits. (like Frhed display)" :
 		"only whitespace and hexdigits. (unlike Frhed display)");
+
+	SimpleArray<unsigned char> *ptrArray = NULL;
+	bool ret = true;
 
 	switch (MessageBox(hwnd, msg, "Import Hexdump", MB_YESNOCANCEL))
 	{
 	case IDYES:
-		return load_hexfile_1::StreamIn(*this, hexin); //Display output
+		//return load_hexfile_1::StreamIn(*this, hexin); //Display output
+		ret = hexin.ParseFormatted();
+		ptrArray = hexin.GetArray();
+		DataArray = *ptrArray;
 	case IDNO:
-		return load_hexfile_0::StreamIn(*this, hexin); //just hex & space
+		ret = hexin.ParseSimple();
+		ptrArray = hexin.GetArray();
+		DataArray = *ptrArray;
+		bAutoOffsetLen = hexin.WasAutoOffsetLen();
+		iMinOffsetLen = hexin.GetMinOffset();
+		bPartialStats = hexin.GetPartialStats();
+		iPartialOffset = hexin.GetPartialOffset();
+		iBytesPerLine = hexin.GetBytesPerLine();
+		iAutomaticBPL = hexin.GetAutomaticBPL();
+		iCharacterSet = hexin.GetCharset();
+		//DataArray.Adopt(ptrArray, ptrArray->GetUpperBound(), ptrArray->GetSize());
+		//return load_hexfile_0::StreamIn(*this, hexin); //just hex & space
 	}
-	return FALSE;
+	return ret;
 }
 
 /**
@@ -5221,7 +5226,9 @@ void HexEditorWindow::CMD_open_hexdump()
 		//Import from clipboard
 		if (char *hexin = (char *)GlobalLock(hClipMemory))
 		{
-			done = load_hexfile(chexfile_stream(hexin));
+			HexFile hexfile;
+			hexfile.Open(hexin, -1);
+			done = load_hexfile(hexfile);
 			GlobalUnlock(hClipMemory);
 		}
 		else
@@ -5253,7 +5260,9 @@ void HexEditorWindow::CMD_open_hexdump()
 			MessageBox(hwnd,"Could not get text from the file.\nCannot continue!", "Import Hexdump", MB_ICONERROR);
 			return;
 		}
-		done = load_hexfile(fhexfile_stream(f));
+		HexFile hexfile;
+		hexfile.Open(f);
+		done = load_hexfile(hexfile);
 		fclose(f);
 		if (done)
 			bReadOnly = -1 == _access(szFileName, 02);

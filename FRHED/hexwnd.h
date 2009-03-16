@@ -72,8 +72,7 @@ enum SCROLL_TYPE { SCROLL_NONE, SCROLL_BACK, SCROLL_FORWARD };
 enum EnteringMode { BYTES, CHARS };
 
 class hexfile_stream;
-class load_hexfile_0;
-class load_hexfile_1;
+class HexFile;
 
 interface CDropTarget;
 
@@ -89,8 +88,6 @@ class HexEditorWindow
 , public IHexEditorWindow::Status
 {
 	friend CDropTarget;
-	friend load_hexfile_0;
-	friend load_hexfile_1;
 public:
 	int iGetCharsPerLine();
 	int iGetStartOfSelection();
@@ -122,7 +119,7 @@ public:
 	void CMD_move_copy(bool redraw = 1);
 	void CMD_move_copy(int iMove1stEnd, int iMove2ndEndorLen, bool redraw);
 	void CMD_reverse();
-	bool load_hexfile(hexfile_stream &);
+	bool load_hexfile(HexFile &file);
 	void CMD_open_hexdump();
 	virtual void STDMETHODCALLTYPE status_bar_click(bool left);
 	void CMD_adopt_colours();

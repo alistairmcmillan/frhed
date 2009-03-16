@@ -15,22 +15,17 @@
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 /////////////////////////////////////////////////////////////////////////////
 /** 
- * @file  LoadHexFile.h
+ * @file  HexFileStream.h
  *
- * @brief Hex file loader class declaration.
+ * @brief Definition of the HexFileStream class.
  *
  */
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _LOADHEXFILE_H_
-#define _LOADHEXFILE_H_
+#ifndef _HEXFILE_STREAM_H_
+#define _HEXFILE_STREAM_H_
 
-#include "Simparr.h"
-
-/**
- * @brief Hex data streaming class.
- */
 class hexfile_stream
 {
 public:
@@ -175,48 +170,4 @@ public:
 	}
 };
 
-class load_hexfile_0 : SimpleArray<unsigned char>
-{
-private:
-	HWND hwnd;
-
-	load_hexfile_0(HexEditorWindow &hexwnd)
-	: hwnd(hexwnd.hwnd)
-	{
-	}
-	bool StreamIn(hexfile_stream &);
-
-public:
-	static bool StreamIn(HexEditorWindow &, hexfile_stream &);
-};
-
-class load_hexfile_1 : SimpleArray<unsigned char>
-{
-private:
-	HWND hwnd;
-	int iMinOffsetLen;
-	int bAutoOffsetLen;
-	int iBytesPerLine;
-	int iAutomaticBPL;
-	int iCharacterSet;
-	bool bPartialStats;
-	int iPartialOffset;
-
-	load_hexfile_1(HexEditorWindow &hexwnd)
-	: hwnd(hexwnd.hwnd)
-	, iMinOffsetLen(hexwnd.iMinOffsetLen)
-	, bAutoOffsetLen(hexwnd.bAutoOffsetLen)
-	, iBytesPerLine(hexwnd.iBytesPerLine)
-	, iAutomaticBPL(hexwnd.iAutomaticBPL)
-	, iCharacterSet(hexwnd.iCharacterSet)
-	, bPartialStats(hexwnd.bPartialStats)
-	, iPartialOffset(hexwnd.iPartialOffset)
-	{
-	}
-	bool StreamIn(hexfile_stream &);
-
-public:
-	static bool StreamIn(HexEditorWindow &, hexfile_stream &);
-};
-
-#endif // _LOADHEXFILE_H_
+#endif // _HEXFILE_STREAM_H_
