@@ -61,6 +61,14 @@ static LRESULT CALLBACK WndProcDroppedComboBox(HWND hWnd, UINT uMsg, WPARAM wPar
 
 HWND ViewSettingsDlg::hCbLang;
 
+/**
+ * @brief Available and installed languages enumerator.
+ * This method enumerates all available locales. Then it checks if there is a
+ * matching language file available. If the language file is available the
+ * language is added to the Viewsettings dialog.
+ * @param [in] lpLocaleString Locale identifier string.
+ * @return TRUE to continue enumeration, FALSE otherwise.
+ */
 BOOL ViewSettingsDlg::EnumLocalesProc(LPTSTR lpLocaleString)
 {
 	TCHAR path[MAX_PATH];
@@ -84,9 +92,12 @@ BOOL ViewSettingsDlg::EnumLocalesProc(LPTSTR lpLocaleString)
 					break;
 				j = 0;
 			}
-			int k = SendMessage(hCbLang, CB_ADDSTRING, 0, MAKELONG(langid, f));
-			if (langid == (langArray.m_langid ? langArray.m_langid : LangArray::DefLangId))
-				SendMessage(hCbLang, CB_SETCURSEL, k, 0);
+			if (f)
+			{
+				int k = SendMessage(hCbLang, CB_ADDSTRING, 0, MAKELONG(langid, f));
+				if (langid == (langArray.m_langid ? langArray.m_langid : LangArray::DefLangId))
+					SendMessage(hCbLang, CB_SETCURSEL, k, 0);
+			}
 		}
 	}
 	return TRUE;
