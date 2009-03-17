@@ -143,14 +143,18 @@ void FillWithDialog::hexstring2charstring()
 //used to delete non-hex chars after the user pastes into the hexbox
 void FillWithDialog::deletenonhex(HWND hEd)
 {
-	GetWindowText(hEd,pcFWText,FW_MAX);
-	int ii=0;
-	for (int i =0;pcFWText[i]!='\0';i++)
+	GetWindowText(hEd, pcFWText, FW_MAX);
+	int ii = 0;
+	for (int i = 0; pcFWText[i] != '\0'; i++)
 	{
-		if(isxdigit(pcFWText[i])){pcFWText[ii]=pcFWText[i];ii++;}
+		if (isxdigit(pcFWText[i]))
+		{
+			pcFWText[ii] = pcFWText[i];
+			ii++;
+		}
 	}
-	pcFWText[ii]='\0';
-	SetWindowText(hEd,pcFWText);
+	pcFWText[ii] = '\0';
+	SetWindowText(hEd, pcFWText);
 }
 
 //hex box msg handler
@@ -184,7 +188,7 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 			SendMessage(hEditt, EM_SETLIMITTEXT, (WPARAM)FW_MAX, 0);//limit the amount of text the user can enter
 			SetWindowText(hEditt, pcFWText);//init hex text
 			SetFocus(hEditt);//give the hex box focus
-			EnableWindow(hEditt,!curtyp);
+			EnableWindow(hEditt, !curtyp);
 			oldproc = (LONG_PTR) SetWindowLongPtr(hEditt, GWLP_WNDPROC, (LONG_PTR)HexProc);//override the old proc to be HexProc
 			EnableWindow(GetDlgItem(hDlg, IDC_HEXSTAT),!curtyp);
 
@@ -200,14 +204,24 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 			EnableWindow(GetDlgItem(hDlg, IDC_BROWSE), curtyp);
 			EnableWindow(GetDlgItem(hDlg, IDC_FILESTAT), curtyp);
 
-			hfon = CreateFont(16,0,0,0,FW_NORMAL,0,0,0,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH|FF_DONTCARE,"Symbol");
+			hfon = CreateFont(16, 0, 0, 0, FW_NORMAL, 0, 0, 0,
+					DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+					DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Symbol");
 			inittxt(hDlg);
 			switch (asstyp)
 			{
-			case 0: CheckDlgButton(hDlg, IDC_EQ, BST_CHECKED); break;
-			case 1: CheckDlgButton(hDlg, IDC_OR, BST_CHECKED); break;
-			case 2: CheckDlgButton(hDlg, IDC_AND, BST_CHECKED); break;
-			case 3: CheckDlgButton(hDlg, IDC_XOR, BST_CHECKED); break;
+			case 0: 
+				CheckDlgButton(hDlg, IDC_EQ, BST_CHECKED);
+				break;
+			case 1:
+				CheckDlgButton(hDlg, IDC_OR, BST_CHECKED);
+				break;
+			case 2:
+				CheckDlgButton(hDlg, IDC_AND, BST_CHECKED);
+				break;
+			case 3:
+				CheckDlgButton(hDlg, IDC_XOR, BST_CHECKED);
+				break;
 			}
 			return 0;//stop the system from setting focus to the control handle in (HWND) wParam because we already set focus above
 		}
@@ -220,10 +234,10 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 				if (curtyp)
 				{//1-file
 					GetDlgItemText(hDlg, IDC_FN, szFWFileName, _MAX_PATH);//get file name
-					FWFile = _open(szFWFileName,_O_RDONLY|_O_BINARY);
+					FWFile = _open(szFWFileName, _O_RDONLY | _O_BINARY);
 					if (FWFile == -1)
 					{//if there is error opening
-						MessageBox(hDlg,"Error opening file","Error", MB_ICONERROR);//tell user but don't close dlgbox
+						MessageBox(hDlg, "Error opening file","Error", MB_ICONERROR);//tell user but don't close dlgbox
 						return 1;//didn't process this message
 					}//if
 					FWFilelen = _filelength(FWFile);
@@ -327,8 +341,9 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 					}
 					break;
 				}
-				if (curtyp) _close(FWFile);//close file
-				SetCursor (LoadCursor (NULL, IDC_ARROW));
+				if (curtyp)
+					_close(FWFile);//close file
+				SetCursor(LoadCursor(NULL, IDC_ARROW));
 				iFileChanged = TRUE;//mark as changed
 				bFilestatusChanged = true;
 				repaint();//you tell me
@@ -340,14 +355,14 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 			return 1;//did process this message
 		case MAKEWPARAM(IDC_TYPE, CBN_SELCHANGE):
 			//thing to fill selection with changes
-			curtyp = (char)SendMessage(GetDlgItem(hDlg, IDC_TYPE),CB_GETCURSEL,0,0);//get cursel
-			EnableWindow(GetDlgItem(hDlg, IDC_FN),curtyp);//en/disable fnamebox and browse button
-			EnableWindow(GetDlgItem(hDlg, IDC_BROWSE),curtyp);
-			EnableWindow(GetDlgItem(hDlg, IDC_FILESTAT),curtyp);
-			curtyp=!curtyp;//flip it for the others
-			EnableWindow(GetDlgItem(hDlg, IDC_HEX),curtyp);//en/disable hexboxand relateds
-			EnableWindow(GetDlgItem(hDlg, IDC_HEXSTAT),curtyp);
-			curtyp=!curtyp;//restore original value -not for below -accurate value needed elsewhere
+			curtyp = (char)SendMessage(GetDlgItem(hDlg, IDC_TYPE), CB_GETCURSEL, 0, 0);//get cursel
+			EnableWindow(GetDlgItem(hDlg, IDC_FN), curtyp);//en/disable fnamebox and browse button
+			EnableWindow(GetDlgItem(hDlg, IDC_BROWSE), curtyp);
+			EnableWindow(GetDlgItem(hDlg, IDC_FILESTAT), curtyp);
+			curtyp = !curtyp;//flip it for the others
+			EnableWindow(GetDlgItem(hDlg, IDC_HEX), curtyp);//en/disable hexboxand relateds
+			EnableWindow(GetDlgItem(hDlg, IDC_HEXSTAT), curtyp);
+			curtyp = !curtyp;//restore original value -not for below -accurate value needed elsewhere
 			//set text in boxes down below
 			inittxt(hDlg);
 			break;
