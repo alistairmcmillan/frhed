@@ -26,6 +26,9 @@
 #ifndef _HEXW_DLG_H_
 #define _HEXW_DLG_H_
 
+#include "Simparr.h"
+#include "Resource.h"
+
 void GetWindowText(HWND, SimpleString &);
 void GetDlgItemText(HWND, int, SimpleString &);
 BOOL EnableDlgItem(HWND, int, BOOL);
