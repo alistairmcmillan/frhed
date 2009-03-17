@@ -117,18 +117,7 @@ public:
 	 */
 	chexfile_stream(char *pBuffer): m_pBuf(pBuffer), m_offset(0) { }
 
-	/**
-	 * Get next character from the buffer.
-	 */
-	virtual int lhgetc()
-	{
-		int c = (int)(BYTE)m_pBuf[m_offset];
-		if (c)
-			++m_offset;
-		else
-			c = EOF;
-		return c;
-	}
+	virtual int lhgetc();
 
 	/**
 	 * Return character to the buffer.

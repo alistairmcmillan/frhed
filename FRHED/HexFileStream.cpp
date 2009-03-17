@@ -37,3 +37,16 @@ int hexfile_stream::lheatwhite()
 	lhungetc(c);
 	return c;
 }
+
+/**
+ * Get next character from the buffer.
+ */
+int chexfile_stream::lhgetc()
+{
+	int c = (int)(BYTE)m_pBuf[m_offset];
+	if (c)
+		++m_offset;
+	else
+		c = EOF;
+	return c;
+}
