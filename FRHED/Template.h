@@ -28,6 +28,7 @@ public:
 	~Template();
 
 	void SetDataArray(const SimpleArray<unsigned char> *arr);
+	void SetOriginalFilename(LPCTSTR filename);
 	bool OpenTemplate(LPCTSTR filename);
 	bool LoadTemplateData();
 	void CreateTemplateArray(int curByte);
@@ -42,6 +43,7 @@ protected:
 
 private:
 	int m_filehandle; /**< File handle to template file. */
+	char m_origFilename[MAX_PATH]; /**< Filename of the file in the editor. */
 	char m_filename[MAX_PATH]; /**< Template file name. */
 	int m_filelen; /**< Template file size. */
 	char * m_tmplBuf; /**< Template file data buffer (read from file). */

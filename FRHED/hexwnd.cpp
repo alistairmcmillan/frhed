@@ -4305,6 +4305,7 @@ void HexEditorWindow::CMD_apply_template()
 void HexEditorWindow::apply_template(char *pcTemplate)
 {
 	Template tmpl;
+	tmpl.SetOriginalFilename(filename);
 	bool success = tmpl.OpenTemplate(pcTemplate);
 	if (!success)
 	{

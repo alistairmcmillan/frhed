@@ -60,6 +60,17 @@ void Template::SetDataArray(const SimpleArray<unsigned char> *arr)
 }
 
 /**
+ * @brief Sets the filename of the file in the editor.
+ * This function sets name of the file into whose data the template is been
+ * applied.
+ * @param [in] filename Name of the file in the editor.
+ */
+void Template::SetOriginalFilename(LPCTSTR filename)
+{
+	strcpy(m_origFilename, filename);
+}
+
+/**
  * @brief Open template file.
  * @param [in] filename Filename of the template file to open.
  * @return true if opening succeeds, false otherwise.
@@ -113,10 +124,10 @@ void Template::CreateTemplateArray(int curByte)
 	m_resultArray.SetSize(1, 100);
 	// Print filename and current offset to output.
 	m_resultArray.AppendArray("File: ", 6);
-	m_resultArray.AppendArray(m_filename, strlen(m_filename));
+	m_resultArray.AppendArray(m_origFilename, strlen(m_origFilename));
 	m_resultArray.AppendArray("\r\n", 2);
 	m_resultArray.AppendArray("Template file: ", 15);
-	m_resultArray.AppendArray(m_tmplBuf, strlen(m_tmplBuf));
+	m_resultArray.AppendArray(m_filename, strlen(m_filename));
 	m_resultArray.AppendArray("\r\n", 2);
 	m_resultArray.AppendArray("Applied at offset: ", 19);
 	char buf[16];
