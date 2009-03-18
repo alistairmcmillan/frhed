@@ -30,6 +30,10 @@
 				</ul>
 				<h3>Alpha releases</h3>
 				<ul>
+					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=295443&amp;release_id=669211">
+						Frhed 1.5.1</a> (2009-03-18)</li>
+				</ul>
+				<ul>
 					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=295443&amp;release_id=651776">
 						Frhed 1.3.4</a> (2009-01-06)</li>
 					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=295443&amp;release_id=644901">
