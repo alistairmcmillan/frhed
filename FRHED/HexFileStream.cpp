@@ -32,7 +32,7 @@ int hexfile_stream::lheatwhite()
 	do
 	{
 		c = lhgetc();
-	} while (isspace(c));
+	} while (_istspace(c));
 
 	lhungetc(c);
 	return c;

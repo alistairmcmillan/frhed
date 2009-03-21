@@ -391,7 +391,7 @@ bool HexFile::ParseFormatted()
 				break;
 
 			}
-			else if (!isxdigit(c[0]))
+			else if (!_istxdigit(c[0]))
 			{
 				goto IllegalCharacter;
 			}

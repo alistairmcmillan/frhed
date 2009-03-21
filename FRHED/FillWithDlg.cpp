@@ -147,7 +147,7 @@ void FillWithDialog::deletenonhex(HWND hEd)
 	int ii = 0;
 	for (int i = 0; pcFWText[i] != '\0'; i++)
 	{
-		if (isxdigit(pcFWText[i]))
+		if (_istxdigit(pcFWText[i]))
 		{
 			pcFWText[ii] = pcFWText[i];
 			ii++;
@@ -164,7 +164,7 @@ LRESULT CALLBACK FillWithDialog::HexProc(HWND hEdit, UINT iMsg, WPARAM wParam, L
 	{
 	case WM_CHAR:
 		// only enter chars if they are hex digits or backspace
-		if (!isxdigit((TBYTE)wParam) && wParam != VK_BACK)
+		if (!_istxdigit((TBYTE)wParam) && wParam != VK_BACK)
 		{
 			MessageBeep(MB_ICONEXCLAMATION);
 			return 0;
