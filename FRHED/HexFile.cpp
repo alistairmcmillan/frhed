@@ -38,7 +38,7 @@
  */
 static BYTE Hex2Nibble(BYTE by)
 {
-	assert(isxdigit(by));
+	assert(_istxdigit(by));
 
 	if (_istdigit(by))
 		return by - '0';
@@ -116,7 +116,7 @@ int HexFile::CheckType()
 	while ((temp = m_pFile->lhgetc()) != EOF)
 	{
 		BYTE ct = (BYTE)temp;
-		if (!(isspace(ct) || isxdigit(ct)))
+		if (!(_istspace(ct) || _istxdigit(ct)))
 		{
 			typ = 1;
 			break;
@@ -169,7 +169,7 @@ bool HexFile::ParseSimple()
 	int diio = 1; // ignore invalid chars
 	for (int i = 0 ; (temp[0] = m_pFile->lhgetc()) != EOF ; i++)
 	{
-		if (isxdigit(temp[0]))
+		if (_istxdigit(temp[0]))
 		{
 			if (!flnd)
 			{
@@ -190,7 +190,7 @@ bool HexFile::ParseSimple()
 				m_data[ii] <<= 4;
 			flnd = !flnd;
 		}
-		else if (!isspace(temp[0]) && diio)
+		else if (!_istspace(temp[0]) && diio)
 		{
 			UINT ret = MessageBox(m_hwnd, "Illegal character found.\n"
 					"Ignore further illegal characters?",
@@ -234,9 +234,9 @@ bool HexFile::ParseFormatted()
 			if (temp[0] == EOF)
 				goto UnexpectedEndOfData;
 			c[0] = (BYTE)temp[0];
-			if (isspace(c[0]))
+			if (_istspace(c[0]))
 				break;
-			if (!isxdigit(c[0]) && diio)
+			if (! _istxdigit(c[0]) && diio)
 			{
 				UINT ret = MessageBox(m_hwnd, "Illegal character in offset.\n"
 						"Ignore further invalid offsets?", "Import Hexdump",
@@ -278,7 +278,6 @@ bool HexFile::ParseFormatted()
 					if (!m_data.SetSize(ii))
 						goto OutOfMemory;
 					m_data.ExpandToSize();
-					//memset(m_pT, 0, ii);
 					for (int jj = 0; jj < ii; jj++)
 						m_data[jj] = 0;
 				}
@@ -323,7 +322,7 @@ bool HexFile::ParseFormatted()
 					goto UnexpectedEndOfData;
 				c[i] = (BYTE)temp[i];
 			}
-			if (!(isxdigit(c[0]) && isxdigit(c[1]) && isspace(c[2])))
+			if (!(_istxdigit(c[0]) && _istxdigit(c[1]) && _istspace(c[2])))
 				goto IllegalCharacter;
 			//yes we are fine
 			//store the value no matter what
