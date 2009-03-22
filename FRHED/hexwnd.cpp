@@ -2411,8 +2411,6 @@ int HexEditorWindow::find_bytes(char* ps, int ls, char* pb, int lb, int mode, ch
 	return -1;
 }
 
-
-//Pabs rewrote lbuttonup, mousemove, lbuttondown for drag-drop editing
 //--------------------------------------------------------------------------------------------
 // WM_LBUTTONUP handler.
 int HexEditorWindow::lbuttonup (int xPos, int yPos)
@@ -2547,30 +2545,30 @@ int HexEditorWindow::mousemove(int xPos, int yPos)
 
 //--------------------------------------------------------------------------------------------
 // WM_LBUTTONDOWN handler.
-int HexEditorWindow::lbuttondown ( int nFlags, int xPos, int yPos )
+int HexEditorWindow::lbuttondown(int nFlags, int xPos, int yPos)
 {
 	iLBDownX = xPos;
 	iLBDownY = yPos;
 
-	SetCapture( hwnd );
+	SetCapture(hwnd);
 
-//Pabs inserted - after reading the fuzz report
 	//Someone sent us invalid data
-	if ( ( nFlags & ( ~ (MK_CONTROL|MK_LBUTTON|MK_MBUTTON|MK_RBUTTON|MK_SHIFT) ) ) ||
-		( xPos < 0 || xPos > cxClient ) ||
-		( yPos < 0 || yPos > cyClient ) ){
+	if ((nFlags & (~ (MK_CONTROL | MK_LBUTTON | MK_MBUTTON | MK_RBUTTON | MK_SHIFT))) ||
+		(xPos < 0 || xPos > cxClient) ||
+		(yPos < 0 || yPos > cyClient))
+	{
 		return 0;
 	}
-//end
+
 	get_pos(xPos, yPos);
 	switch (area)
 	{
 		case AREA_OFFSETS:
-			if(!bAutoOffsetLen && iMinOffsetLen>1)
+			if (!bAutoOffsetLen && iMinOffsetLen > 1)
 			{
 				iMinOffsetLen--;
-				save_ini_data ();
-				resize_window ();
+				save_ini_data();
+				resize_window();
 				return 0;
 			}
 		default:
@@ -2582,7 +2580,7 @@ int HexEditorWindow::lbuttondown ( int nFlags, int xPos, int yPos )
 	{
 		if (nibblenum != 2)
 		{
-			int length = DataArray.GetLength();
+			const int length = DataArray.GetLength();
 			if (new_pos == length)
 				new_pos--;
 			if (new_pos < length)
@@ -2590,7 +2588,7 @@ int HexEditorWindow::lbuttondown ( int nFlags, int xPos, int yPos )
 				bSelecting = TRUE;
 				if (iEndOfSelection != new_pos)
 				{
-					int oeos = iEndOfSelection;
+					const int oeos = iEndOfSelection;
 					iEndOfSelection = new_pos;
 					if (!bSelected)
 					{
@@ -2607,14 +2605,11 @@ int HexEditorWindow::lbuttondown ( int nFlags, int xPos, int yPos )
 		/*Set the timer and wait until we know that the user wants some kind of
 		mouse operation. We know this because they will hold the mouse down for
 		some time or they will move the mouse around.*/
-		SetTimer( hwnd, MOUSE_OP_DELAY_TIMER_ID, MouseOpDelay, NULL );
+		SetTimer(hwnd, MOUSE_OP_DELAY_TIMER_ID, MouseOpDelay, NULL);
 		bMouseOpDelayTimerSet = TRUE;
-//		SetCapture( hwnd );
 	}
-
 	return 0;
 }
-//end
 
 //--------------------------------------------------------------------------------------------
 // WM_MOUSEWHEEL handler.
