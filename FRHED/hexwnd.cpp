@@ -631,15 +631,15 @@ void HexEditorWindow::keydown(int key)
 		return;
 	}
 
-	int shift = GetKeyState(VK_SHIFT) < 0;
-	int ctrl = GetKeyState(VK_CONTROL) < 0;
+	const bool shiftDown = (GetAsyncKeyState(VK_SHIFT) & 0x8000) != 0;
+	const bool ctrlDown = (GetAsyncKeyState(VK_CONTROL) &0x8000) != 0;
 
 	int *a;//Data to update
 	int b;//How much to update it by
 	int c;//The original value
 	int sel = bSelected;
 
-	if (shift)
+	if (shiftDown)
 	{
 		a = &iEndOfSelection;
 		if (!bSelected)
@@ -652,7 +652,7 @@ void HexEditorWindow::keydown(int key)
 			c = iEndOfSelection;
 		}
 	}
-	if (!shift || ctrl || key == VK_ESCAPE)
+	if (!shiftDown || ctrlDown || key == VK_ESCAPE)
 	{
 		if (!bSelecting)
 		{
@@ -691,7 +691,7 @@ void HexEditorWindow::keydown(int key)
 			{
 				iStartOfSelection = iCurByte;
 			}
-			if (ctrl && shift)
+			if (ctrlDown && shiftDown)
 			{
 				a = &iEndOfSelection;
 				c = iEndOfSelection;
@@ -703,7 +703,7 @@ void HexEditorWindow::keydown(int key)
 				a = &iCurByte;
 			}
 		}
-		else /*if( bSelected && bSelecting )*/
+		else
 		{
 			a = &iStartOfSelection;
 			c = iStartOfSelection;
@@ -747,14 +747,14 @@ void HexEditorWindow::keydown(int key)
 		*a += b;
 		break;
 	case VK_HOME:
-		if (ctrl)
+		if (ctrlDown)
 			*a = 0;
 		else
 			*a = *a / iBytesPerLine * iBytesPerLine;
 		iCurNibble = 0;
 		break;
 	case VK_END:
-		if (ctrl)
+		if (ctrlDown)
 			*a = lastbyte;
 		else
 			*a = (*a / iBytesPerLine + 1) * iBytesPerLine - 1;
@@ -2505,7 +2505,8 @@ int HexEditorWindow::mousemove(int xPos, int yPos)
 	iMouseX = xPos;
 	iMouseY = yPos;
 
-	bool bLButtonDown = GetCapture() == hwnd && GetKeyState(VK_LBUTTON) < 0;
+	const bool captured = GetCapture() == hwnd;
+	const bool bLButtonDown = (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0 && captured;
 
 	if (!bLButtonDown || bSelecting)
 		get_pos(xPos, yPos);
@@ -5487,9 +5488,9 @@ void HexEditorWindow::status_bar_click(bool left)
 #ifdef _DEBUG
 					/*In debug mode do the internal status thing
 					if ctrl/alt/shift keys are down*/
-					else if (GetKeyState(VK_SHIFT) & 0x8000 ||
-						GetKeyState(VK_CONTROL) & 0x8000 ||
-						GetKeyState(VK_MENU) & 0x8000)
+					else if (GetAsyncKeyState(VK_SHIFT) & 0x8000 ||
+						GetAsyncKeyState(VK_CONTROL) & 0x8000 ||
+						GetAsyncKeyState(VK_MENU) & 0x8000)
 					{
 						command(IDM_INTERNALSTATUS);
 					}
