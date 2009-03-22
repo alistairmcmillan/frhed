@@ -2889,33 +2889,27 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 	int iCopyHexdumpDlgStart, int iCopyHexdumpDlgEnd, char* mem, int memlen)
 {
 	int iCharsPerLine = iGetCharsPerLine();
-
-//Pabs changed - bugfix insert
 	if (iCopyHexdumpDlgEnd < iCopyHexdumpDlgStart)
 		swap(iCopyHexdumpDlgStart, iCopyHexdumpDlgEnd);
-//end
-	// Show wait cursor.
 
-//Pabs removed - see further down
-//Done so that you can select partial lines for non-display output
-//If both on the same line in display output just that line is output
+	//Done so that you can select partial lines for non-display output
+	//If both on the same line in display output just that line is output
 
-//Pabs changed - line insert & following lines indented
 	char *pMem = mem;
 	int buflen;
 	if (iCopyHexdumpType == IDC_EXPORTDISPLAY)
 	{
 		iCopyHexdumpDlgStart = iCopyHexdumpDlgStart / iBytesPerLine * iBytesPerLine;//cut back to the line start
 		iCopyHexdumpDlgEnd = iCopyHexdumpDlgEnd / iBytesPerLine * iBytesPerLine;//cut back to the line start
-//end
+
 		// Number of lines to copy:
 		int linecount = (iCopyHexdumpDlgEnd - iCopyHexdumpDlgStart) / iBytesPerLine + 1;
 		// Req'd mem for lines:
 		// (Every line ended with CR+LF ('\r'+'\n'))
-//Pabs changed - "int" removed - see further up
 		buflen = linecount * (iGetCharsPerLine() + 2) + 1;
-		if (mem && buflen > memlen) return 0;
-//end
+		if (mem && buflen > memlen)
+			return 0;
+
 		// Create hexdump.
 		if (!mem)
 		{
@@ -2934,14 +2928,14 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		memcpy(pMem, dump.GetBuffer(), buflen);
 
 		pMem[buflen - 1] = '\0';
-//Pabs changed - line insert
 	}
 	else if (iCopyHexdumpType == IDC_EXPORTDIGITS)
 	{
 		// Req'd mem for lines:
 		int numchar = iCopyHexdumpDlgEnd - iCopyHexdumpDlgStart + 1;
 		buflen = numchar * 2 + 1;
-		if( mem && buflen > memlen ) return 0;
+		if (mem && buflen > memlen)
+			return 0;
 		// Create hexdump.
 		if (!mem)
 		{
@@ -2974,14 +2968,16 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		char szFileName[_MAX_PATH];
 		strcpy(szFileName, "hexdump.txt");
 		HGLOBAL hg = NULL;
-		if( iCopyHexdumpType == IDC_EXPORTRTF ){
+		if (iCopyHexdumpType == IDC_EXPORTRTF)
+		{
 			hg = (HGLOBAL)pMem;
 			pMem = (char*)GlobalLock(hg);
-			if( !pMem ){
-				GlobalFree( hg );
+			if (!pMem)
+			{
+				GlobalFree(hg);
 				return 0;
 			}
-			strcpy(&szFileName[8],"rtf");
+			strcpy(&szFileName[8], "rtf");
 		}
 
 		// to file.
@@ -2995,7 +2991,8 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
 		if (GetSaveFileName(&ofn))
 		{
-			int filehandle = _open(szFileName, _O_RDWR|_O_CREAT|_O_TRUNC|_O_BINARY, _S_IREAD|_S_IWRITE);
+			int filehandle = _open(szFileName, _O_RDWR | _O_CREAT | _O_TRUNC |
+					_O_BINARY, _S_IREAD | _S_IWRITE);
 			if (filehandle != -1)
 			{
 				// Write file.
@@ -3010,8 +3007,8 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		}//end
 		if (iCopyHexdumpType == IDC_EXPORTRTF)
 		{
-			GlobalUnlock( hg );
-			GlobalFree( hg );
+			GlobalUnlock(hg);
+			GlobalFree(hg);
 			hg = pMem = NULL;
 		}
 	}
@@ -3021,17 +3018,17 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		if (HGLOBAL hGlobal = GlobalAlloc(GHND, buflen))
 		{
 			char *pDest = (char*)GlobalLock(hGlobal);
-			memcpy (pDest, pMem, buflen);
-			GlobalUnlock (hGlobal);
-			OpenClipboard (hwnd);
-			EmptyClipboard ();
-			SetClipboardData (CF_TEXT, hGlobal);
-			CloseClipboard ();
+			memcpy(pDest, pMem, buflen);
+			GlobalUnlock(hGlobal);
+			OpenClipboard(hwnd);
+			EmptyClipboard();
+			SetClipboardData(CF_TEXT, hGlobal);
+			CloseClipboard();
 		}
 		else
-			MessageBox (hwnd, "Not enough memory for hexdump to clipboard.", "Export hexdump", MB_ICONERROR);
+			MessageBox(hwnd, "Not enough memory for hexdump to clipboard.", "Export hexdump", MB_ICONERROR);
 	}
-	else //if (iCopyHexdumpType == IDC_EXPORTRTF)
+	else
 	{
 		// To clipboard.
 		if (OpenClipboard(hwnd))
@@ -3041,7 +3038,7 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 			CloseClipboard();
 		}
 		else
-			MessageBox (hwnd, "Could not hexdump to clipboard.", "Export hexdump", MB_ICONERROR);
+			MessageBox(hwnd, "Could not hexdump to clipboard.", "Export hexdump", MB_ICONERROR);
 		pMem = NULL;
 	}
 	delete [] pMem;
