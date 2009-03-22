@@ -1531,11 +1531,7 @@ void HexEditorWindow::command(int cmd)
 		break;
 
 	default:
-		{
-			char buf[500];
-			sprintf(buf, "Unknown COMMAND-ID %d.", cmd);
-			MessageBox(hwnd, buf, "Frhed ERROR", MB_OK);
-		}
+		_RPTF1(_CRT_ERROR, "Unknown COMMAND-ID %d.", cmd);
 		break;
 	}
 }
