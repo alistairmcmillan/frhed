@@ -824,22 +824,13 @@ void HexEditorWindow::character(char ch)
 	if (bSelecting)
 		return;
 
-//Pabs inserted
 	//This will be handled in HexEditorWindow::keydown
 	if (ch == VK_ESCAPE)
 		return;
-//end
-
-	// If we are in read-only mode, give a warning and return,
-	// except if TAB was pressed.
-	if (bReadOnly && ch != '\t')
-	{
-		MessageBox(hwnd, "Can't change file because read-only mode is engaged!", "Keyboard editing", MB_ICONERROR );
-		return;
-	}
 
 	char c = (char)tolower(ch);
-	if (ch == '\t') // TAB => change EnteringMode.
+	// TAB switches between binary and text panes.
+	if (ch == '\t')
 	{
 		iEnteringMode ^= CHARS ^ BYTES;
 		if (bSelected)
