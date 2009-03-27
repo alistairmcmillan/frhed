@@ -124,6 +124,9 @@
 			<File
 				RelativePath=".\SimpleArray_test.cpp">
 			</File>
+			<File
+				RelativePath=".\test_main.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
