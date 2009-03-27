@@ -177,13 +177,13 @@ int Text2BinTranslator::iIsBytecode(char* src, int len)
 // Get value of *one* bytecode token.
 // Return: value of code.
 // bytecode must be checked before!!
-int Text2BinTranslator::iTranslateOneBytecode( char* dest, char* src, int srclen, int binmode )
+int Text2BinTranslator::iTranslateOneBytecode(char* dest, char* src, int srclen, int binmode)
 {
-	int i, k=0;
+	int i, k = 0;
 	char buf[50];
-	for (i=4; i<srclen; i++)
+	for (i = 4; i < srclen; i++)
 	{
-		if (src[i]=='>')
+		if (src[i] == '>')
 			break;
 		else
 		{
@@ -266,9 +266,9 @@ int Text2BinTranslator::iTranslateOneBytecode( char* dest, char* src, int srclen
 			{
 				char* p = (char*) &fvalue;
 				int i;
-				for (i=0; i<4; i++)
+				for (i = 0; i < 4; i++)
 				{
-					dest[i] = p[3-i];
+					dest[i] = p[3 - i];
 				}
 			}
 			break;
@@ -277,9 +277,9 @@ int Text2BinTranslator::iTranslateOneBytecode( char* dest, char* src, int srclen
 			{
 				char* p = (char*) &dvalue;
 				int i;
-				for (i=0; i<8; i++)
+				for (i = 0; i < 8; i++)
 				{
-					dest[i] = p[7-i];
+					dest[i] = p[7 - i];
 				}
 			}
 			break;
@@ -293,21 +293,21 @@ int Text2BinTranslator::iTranslateOneBytecode( char* dest, char* src, int srclen
 int Text2BinTranslator::iLengthOfTransToBin( char* src, int srclen )
 {
 	int i, destlen = 0, l, k;
-	for (i=0; i<srclen; i++)
+	for (i = 0; i < srclen; i++)
 	{
-		if ((l = iIsBytecode (&(src[i]), srclen-i)) == 0)
+		if ((l = iIsBytecode (&(src[i]), srclen - i)) == 0)
 		{
 			if (src[i] == '\\')
 			{
-				if (i+1 < srclen)
+				if (i + 1 < srclen)
 				{
-					if (src[i+1] == '<')
+					if (src[i + 1] == '<')
 					{
 						// Code for "<" alone without decoding.
 						destlen++;
 						i++;
 					}
-					else if( src[i+1] == '\\' )
+					else if( src[i + 1] == '\\' )
 					{
 						// Code for "\\".
 						destlen++;
@@ -331,9 +331,9 @@ int Text2BinTranslator::iLengthOfTransToBin( char* src, int srclen )
 		else
 		{
 			destlen += l;
-			for (k=i; i<srclen; k++)
+			for (k = i; i < srclen; k++)
 			{
-				if (src[k]=='>')
+				if (src[k] == '>')
 					break;
 			}
 			i = k;
@@ -346,28 +346,28 @@ int Text2BinTranslator::iLengthOfTransToBin( char* src, int srclen )
 // dest must be set to right length before calling.
 int Text2BinTranslator::iCreateBcTranslation( char* dest, char* src, int srclen, int charmode, int binmode )
 {
-	int i, di=0, bclen;
-	for (i=0; i<srclen; i++)
+	int i, di = 0, bclen;
+	for (i = 0; i < srclen; i++)
 	{
-		if ((bclen = iIsBytecode(&(src[i]), srclen-i)) > 0) // Get length of byte-code.
+		if ((bclen = iIsBytecode(&(src[i]), srclen - i)) > 0) // Get length of byte-code.
 		{
 			// Bytecode found.
-			iTranslateOneBytecode (&(dest[di]), &(src[i]), srclen-i, binmode);
+			iTranslateOneBytecode(&(dest[di]), &(src[i]), srclen - i, binmode);
 			di += bclen;
-			i += iFindBytePos( &( src[i] ), '>' );
+			i += iFindBytePos(&(src[i]), '>');
 		}
 		else // Normal character.
 		{
 			if (src[i] == '\\') // Special char "\<" or "\\"?
 			{
-				if (i+1 < srclen)
+				if (i + 1 < srclen)
 				{
-					if (src[i+1] == '<')
+					if (src[i + 1] == '<')
 					{
 						dest[di++] = '<'; // Special char recognized.
 						i++;
 					}
-					else if( src[i+1] == '\\' )
+					else if (src[i + 1] == '\\')
 					{
 						dest[di++] = '\\'; // Special char recognized.
 						i++;
@@ -397,21 +397,21 @@ int Text2BinTranslator::iCreateBcTranslation( char* dest, char* src, int srclen,
 }
 
 //-------------------------------------------------------------------
-Text2BinTranslator::Text2BinTranslator( char* ps )
+Text2BinTranslator::Text2BinTranslator(char* ps)
 {
 	// Create a Text2BinTranslator from a normal char array-string.
 	m_nGrowBy = 64;
 	Clear();
-	SetToString( ps );
+	SetToString(ps);
 }
 
 //-------------------------------------------------------------------
-int Text2BinTranslator::bCompareBin( Text2BinTranslator& tr2, int charmode, int binmode )
+int Text2BinTranslator::bCompareBin(Text2BinTranslator& tr2, int charmode, int binmode)
 {
 	SimpleArray<char> sa1, sa2;
-	GetTrans2Bin( sa1, charmode, binmode );
-	tr2.GetTrans2Bin( sa2, charmode, binmode );
-	return ( sa1 == sa2 );
+	GetTrans2Bin(sa1, charmode, binmode);
+	tr2.GetTrans2Bin(sa2, charmode, binmode);
+	return (sa1 == sa2);
 }
 
 //-------------------------------------------------------------------
@@ -421,14 +421,14 @@ int Text2BinTranslator::iTranslateBytesToBC (char* pd, unsigned char* src, int s
 {
 	int i, k = 0;
 	char buf[16];
-	for (i=0; i<srclen; i++)
+	for (i = 0; i < srclen; i++)
 	{
 		if (src[i] == '<')
 		{
 			pd[k++] = '\\';
 			pd[k++] = '<';
 		}
-		else if( src[i] == '\\' )
+		else if (src[i] == '\\')
 		{
 			pd[k++] = '\\';
 			pd[k++] = '\\';
@@ -437,7 +437,7 @@ int Text2BinTranslator::iTranslateBytesToBC (char* pd, unsigned char* src, int s
 		{
 			pd[k++] = src[i];
 		}
-		else if( src[i]==10 || src[i]==13 )
+		else if (src[i] == 10 || src[i] == 13)
 		{
 			pd[k++] = src[i];
 		}
@@ -447,13 +447,12 @@ int Text2BinTranslator::iTranslateBytesToBC (char* pd, unsigned char* src, int s
 			pd[k++] = 'b';
 			pd[k++] = 'h';
 			pd[k++] = ':';
-			sprintf (buf, "%2.2x", src[i]);
+			sprintf(buf, "%2.2x", src[i]);
 			pd[k++] = buf[0];
 			pd[k++] = buf[1];
 			pd[k++] = '>';
 		}
 	}
 	pd[k] = '\0';
-	return k+1;
+	return k + 1;
 }
-
