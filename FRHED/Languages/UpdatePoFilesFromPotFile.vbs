@@ -24,49 +24,35 @@ Call Main
 ''
 ' ...
 Sub Main
-  Dim oFiles, oFile, sFile, sDir, bPotChanged
+  Dim oLanguages, oLanguage, sLanguage, sDir, bPotChanged
   Dim oEnglishPotContent, oLanguagePoContent
   Dim StartTime, EndTime, Seconds
-  Dim dDate, sBuild
   
   StartTime = Time
   
   InfoBox "Updating PO files from POT file...", 3
   
   sDir = oFSO.GetParentFolderName(Wscript.ScriptFullName)
-
-  dDate = oFSO.GetFile(sDir & "\en-US.pot").DateLastModified
-  sBuild = FormatTimeStamp(dDate) & ".UpdatePoFilesFromPotFile"
-
   Set oEnglishPotContent = GetContentFromPoFile(sDir & "\en-US.pot")
   If oEnglishPotContent.Count = 0 Then Err.Raise vbObjectError, "Sub Main", "Error reading content from en-US.pot"
-  Set oFiles = Wscript.Arguments
-  If oFiles.Count = 0 Then
-    Set oFiles = oFSO.GetFolder(".").Files
-    bPotChanged = Not oFSO.FileExists(sBuild)
-  Else
-    bPotChanged = True
-  End If
-  For Each oFile In oFiles 'For all languages...
-    sFile = CStr(oFile)
-    Select Case UCase(oFSO.GetExtensionName(sFile))
-    Case "UPDATEPOFILESFROMPOTFILE"
-      If oFile.Name <> sBuild Then oFile.Name = sBuild
-      sBuild = ""
-    Case "PO"
-      If bPotChanged Or GetArchiveBit(sFile) Then 'If update necessary...
+  bPotChanged = GetArchiveBit("en-US.pot")
+  Set oLanguages = Wscript.Arguments
+  If oLanguages.Count = 0 Then Set oLanguages = oFSO.GetFolder(".").Files
+  For Each oLanguage In oLanguages 'For all languages...
+    sLanguage = CStr(oLanguage)
+    If LCase(oFSO.GetExtensionName(sLanguage)) = "po" Then
+      If bPotChanged Or GetArchiveBit(sLanguage) Then 'If update necessary...
         If bRunFromCmd Then 'If run from command line...
-          Wscript.Echo oFSO.GetFileName(sFile)
+          Wscript.Echo oFSO.GetFileName(sLanguage)
         End If
-        Set oLanguagePoContent = GetContentFromPoFile(sFile)
+        Set oLanguagePoContent = GetContentFromPoFile(sLanguage)
         If oLanguagePoContent.Count > 0 Then 'If content exists...
-          CreateUpdatedPoFile sFile, oEnglishPotContent, oLanguagePoContent
+          CreateUpdatedPoFile sLanguage, oEnglishPotContent, oLanguagePoContent
         End If
-        SetArchiveBit sFile, False
+        SetArchiveBit sLanguage, False
       End If
-    End Select
+    End If
   Next
-  If sBuild <> "" Then oFSO.CreateTextFile sBuild
 
   EndTime = Time
   Seconds = DateDiff("s", StartTime, EndTime)
@@ -205,14 +191,6 @@ Sub CreateUpdatedPoFile(ByVal sPoPath, ByVal oEnglishPotContent, ByVal oLanguage
   Next
   oPoFile.Close
 End Sub
-
-''
-' ...
-Function FormatTimestamp(now)
-  ' Form an ISO 8601 compliant timestamp without separators. Don't care about timezones.
-  FormatTimestamp = Right("0000" & Year(now), 4) & Right("00" & Month(now), 2) & Right("00" & Day(now), 2) _
-    & "T" & Right("00" & Hour(now), 2) & Right("00" & Minute(now), 2) & Right("00" & Second(now), 2)
-End Function
 
 ''
 ' ...

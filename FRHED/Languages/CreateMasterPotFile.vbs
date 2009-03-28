@@ -23,7 +23,10 @@ Dim oFSO, bRunFromCmd
 
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 
-bRunFromCmd = LCase(oFSO.GetFileName(Wscript.FullName)) = "cscript.exe"
+bRunFromCmd = False
+If LCase(oFSO.GetFileName(Wscript.FullName)) = "cscript.exe" Then
+  bRunFromCmd = True
+End If
 
 Call Main
 
@@ -32,24 +35,28 @@ Call Main
 Sub Main
   Dim oStrings, sCodePage
   Dim StartTime, EndTime, Seconds
-  Dim oFile, dDate, sBuild
+  Dim bNecessary, oFile
   
   StartTime = Time
   
   InfoBox "Creating POT file from heksedit.rc...", 3
-  dDate = oFSO.GetFile("../heksedit.rc").DateLastModified
-  sBuild = FormatTimeStamp(dDate) & ".CreateMasterPotFile"
-  If Not oFSO.FileExists(sBuild) Then
+  
+  bNecessary = True
+  If (oFSO.FileExists("en-US.pot") = True) And (oFSO.FileExists("heksedit.rc") = True) Then 'If the POT and RC file exists...
+    bNecessary = GetArchiveBit("../heksedit.rc") Or GetArchiveBit("en-US.pot") Or GetArchiveBit("heksedit.rc") 'RCs or POT file changed?
+  End If
+  
+  If (bNecessary = True) Then 'If update necessary...
     Set oStrings = GetStringsFromRcFile("../heksedit.rc", sCodePage)
     CreateMasterPotFile "en-US.pot", oStrings, sCodePage
+    SetArchiveBit "../heksedit.rc", False
+    SetArchiveBit "en-US.pot", False
+    SetArchiveBit "heksedit.rc", False
     For Each oFile In oFSO.GetFolder(".").Files 'For all files in the current folder...
-      Select Case UCase(oFSO.GetExtensionName(oFile.Name))
-      Case "CREATEMASTERPOTFILE"
-        oFile.Name = sBuild
-        sBuild = ""
-      End Select
+      If (LCase(oFSO.GetExtensionName(oFile.Name)) = "po") Then 'If a PO file...
+        SetArchiveBit oFile.Path, True
+      End If
     Next
-    If sBuild <> "" Then oFSO.CreateTextFile sBuild
 
     EndTime = Time
     Seconds = DateDiff("s", StartTime, EndTime)
@@ -315,14 +322,6 @@ End Function
 
 ''
 ' ...
-Function FormatTimestamp(now)
-  ' Form an ISO 8601 compliant timestamp without separators. Don't care about timezones.
-  FormatTimestamp = Right("0000" & Year(now), 4) & Right("00" & Month(now), 2) & Right("00" & Day(now), 2) _
-    & "T" & Right("00" & Hour(now), 2) & Right("00" & Minute(now), 2) & Right("00" & Second(now), 2)
-End Function
-
-''
-' ...
 Function InfoBox(ByVal sText, ByVal iSecondsToWait)
   Dim oShell
   
@@ -333,3 +332,28 @@ Function InfoBox(ByVal sText, ByVal iSecondsToWait)
     Wscript.Echo sText
   End If
 End Function
+
+''
+' ...
+Function GetArchiveBit(ByVal sFilePath)
+  Dim oFile
+  GetArchiveBit = False
+  If oFSO.FileExists(sFilePath) Then 'If the file exists...
+    Set oFile = oFSO.GetFile(sFilePath)
+    If (oFile.Attributes And 32) = 32 Then 'If archive bit set...
+      GetArchiveBit = True
+    End If
+  End If
+End Function
+
+''
+' ...
+Sub SetArchiveBit(ByVal sFilePath, ByVal bValue)
+  Dim oFile
+  If oFSO.FileExists(sFilePath) Then 'If the file exists...
+    Set oFile = oFSO.GetFile(sFilePath)
+    If bValue Xor (oFile.Attributes And 32) = 32 Then 'If archive bit different...
+      oFile.Attributes = oFile.Attributes Xor 32
+    End If
+  End If
+End Sub
