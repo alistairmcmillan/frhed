@@ -4576,7 +4576,7 @@ void HexEditorWindow::CMD_findnext()
 			}
 			else
 			{
-				MessageBox(hwnd, "Could not find any more occurances.", "Find next", MB_ICONERROR);
+				MessageBox(hwnd, "Could not find any more occurances.", "Find next", MB_ICONINFORMATION);
 			}
 			delete [] pcFindstring;
 		}
@@ -4659,7 +4659,7 @@ void HexEditorWindow::CMD_findprev()
 			}
 			else
 			{
-				MessageBox(hwnd, "Could not find any more occurances.", "Find previous", MB_ICONERROR);
+				MessageBox(hwnd, "Could not find any more occurances.", "Find previous", MB_ICONINFORMATION);
 			}
 			delete [] pcFindstring;
 		}
