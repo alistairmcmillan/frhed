@@ -30,7 +30,7 @@
 #include "BinTrans.h"
 #include "FindUtil.h"
 
-int FindDlg::iFindDlgMatchCase = 0;
+bool FindDlg::bFindDlgMatchCase = false;
 int FindDlg::iFindDlgDirection = 0;
 
 //GK16AUG2K: additional options for the find dialog
@@ -61,12 +61,16 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			// Translate the selection into bytecode and write it into the edit box buffer.
 			Text2BinTranslator::iTranslateBytesToBC(pcFindDlgBuffer, &DataArray[sel_start], select_len);
 		}
-		SendDlgItemMessage(hDlg, IDC_FIND_TEXT, EM_SETLIMITTEXT, iFindDlgBufLen, 0);
-		SetDlgItemText(hDlg, IDC_FIND_TEXT, pcFindDlgBuffer);
-		//GK16AUG2K
-		CheckDlgButton(hDlg, iFindDlgDirection == -1 ? IDC_FIND_UP : IDC_FIND_DOWN, BST_CHECKED);
-		CheckDlgButton(hDlg, IDC_FIND_MATCHCASE, iFindDlgMatchCase);
-		CheckDlgButton(hDlg, IDC_FIND_UNICODE, iFindDlgUnicode);
+		// Put inside block to allow using local variables to handle dialog data
+		{
+			SendDlgItemMessage(hDlg, IDC_FIND_TEXT, EM_SETLIMITTEXT, iFindDlgBufLen, 0);
+			SetDlgItemText(hDlg, IDC_FIND_TEXT, pcFindDlgBuffer);
+			//GK16AUG2K
+			CheckDlgButton(hDlg, iFindDlgDirection == -1 ? IDC_FIND_UP : IDC_FIND_DOWN, BST_CHECKED);
+			const UINT matchCase = bFindDlgMatchCase ? BST_CHECKED : BST_UNCHECKED;
+			CheckDlgButton(hDlg, IDC_FIND_MATCHCASE, matchCase);
+			CheckDlgButton(hDlg, IDC_FIND_UNICODE, iFindDlgUnicode);
+		}
 		return TRUE;
 
 	case WM_COMMAND:
@@ -76,7 +80,8 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 		case IDOK:
 			if (int srclen = GetDlgItemText(hDlg, IDC_FIND_TEXT, pcFindDlgBuffer, iFindDlgBufLen))
 			{
-				iFindDlgMatchCase = IsDlgButtonChecked(hDlg, IDC_FIND_MATCHCASE);
+				UINT matchCase = IsDlgButtonChecked(hDlg, IDC_FIND_MATCHCASE);
+				bFindDlgMatchCase = matchCase == BST_CHECKED ? true : false;
 				//GK16AUG2K: UNICODE search
 				iFindDlgUnicode = IsDlgButtonChecked(hDlg, IDC_FIND_UNICODE);
 				iFindDlgDirection = IsDlgButtonChecked(hDlg, IDC_FIND_UP) ? -1 : 1;
@@ -104,7 +109,7 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 					{
 						i = findutils_FindBytes((char *)&DataArray[iCurByte + 1],
 								DataArray.GetLength() - iCurByte - 1,
-								pcFindstring, destlen, 1, iFindDlgMatchCase == 1);
+								pcFindstring, destlen, 1, bFindDlgMatchCase);
 						if (i != -1)
 							iCurByte += i + 1;
 					}
@@ -113,7 +118,7 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 					{
 						i = findutils_FindBytes((char *)&DataArray[0],
 							min(iCurByte + (destlen - 1), DataArray.GetLength()),
-							pcFindstring, destlen, -1, iFindDlgMatchCase == 1);
+							pcFindstring, destlen, -1, bFindDlgMatchCase);
 						if (i != -1)
 							iCurByte = i;
 					}

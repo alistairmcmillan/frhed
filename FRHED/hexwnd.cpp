@@ -4506,7 +4506,7 @@ void HexEditorWindow::CMD_findnext()
 			int i = findutils_FindBytes((char *)&DataArray[iCurByte + 1],
 				DataArray.GetLength() - iCurByte - 1,
 				pcFindstring, destlen, 1,
-				FindDlg::iFindDlgMatchCase == 1);
+				FindDlg::bFindDlgMatchCase);
 			SetCursor(LoadCursor(NULL, IDC_ARROW));
 			if (i != -1)
 			{
@@ -4589,7 +4589,7 @@ void HexEditorWindow::CMD_findprev()
 			// of the findstring in the file.
 			int i = findutils_FindBytes((char *)&DataArray[0],
 				min(iCurByte + (destlen - 1), DataArray.GetLength()),
-				pcFindstring, destlen, -1, FindDlg::iFindDlgMatchCase == 1);
+				pcFindstring, destlen, -1, FindDlg::bFindDlgMatchCase);
 			SetCursor(LoadCursor(NULL, IDC_ARROW));
 			if (i != -1)
 			{

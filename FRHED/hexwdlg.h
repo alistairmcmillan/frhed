@@ -156,12 +156,18 @@ private:
 	void ChangeSelInst(HWND hw, char* text);
 };
 
+/**
+ * @brief A find dialog.
+ * This dialog allows user to give a string (as readable text) or byte
+ * sequence to find from the open file. The byte sequence has special
+ * syntax.
+ */
 class FindDlg : public HexEditorWindow
 {
 public:
 	enum { IDD = IDD_FINDDIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-	static int iFindDlgMatchCase;
+	static bool bFindDlgMatchCase; /**< Is the search case-sensitive? */
 	static int iFindDlgDirection;
 	static int iFindDlgUnicode;
 	static int iFindDlgBufLen;
