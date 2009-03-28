@@ -29,6 +29,7 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "BinTrans.h"
+#include "FindUtil.h"
 
 // String containing data to replace.
 SimpleString ReplaceDlg::strToReplaceData;
@@ -66,7 +67,7 @@ int	ReplaceDlg::transl_binary_to_text(char *src, int len)
 
 //-------------------------------------------------------------------
 // Following code by R. Kibria.
-int ReplaceDlg::find_and_select_data(int finddir, char (*cmp)(char))
+int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 {
 	char *tofind;
 	// Create a translation from bytecode to char array of finddata.
@@ -78,18 +79,18 @@ int ReplaceDlg::find_and_select_data(int finddir, char (*cmp)(char))
 	{
 		i += finddir * n;
 		// Find forward.
-		j = find_bytes((char *)&DataArray[i],
+		j = findutils_FindBytes((char *)&DataArray[i],
 			DataArray.GetLength() - i - 1,
-			tofind,	destlen, 1, cmp);
+			tofind,	destlen, 1, case_sensitive);
 		if (j != -1)
 			i += j;
 	}
 	else
 	{
 		// Find backward.
-		j = find_bytes((char *)&DataArray[0],
+		j = findutils_FindBytes((char *)&DataArray[0],
 			min(iCurByte + (destlen - 1), DataArray.GetLength()),
-			tofind, destlen, -1, cmp );
+			tofind, destlen, -1, case_sensitive);
 		if (j != -1)
 			i = j;
 	}
@@ -161,9 +162,9 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 
 void ReplaceDlg::find_directed(HWND hDlg, int finddir, LPCTSTR title)
 {
-	char (*cmp)(char) = IsDlgButtonChecked(hDlg, IDC_MATCHCASE_CHECK) ? equal : lower_case;
 	GetDlgItemText(hDlg, IDC_TO_REPLACE_EDIT, strToReplaceData);
-	if (find_and_select_data(finddir, cmp))
+	bool case_sensitive = IsDlgButtonChecked(hDlg, IDC_MATCHCASE_CHECK) == BST_CHECKED;
+	if (find_and_select_data(finddir, case_sensitive))
 	{
 		adjust_view_for_selection();
 		repaint();
@@ -178,7 +179,7 @@ void ReplaceDlg::find_directed(HWND hDlg, int finddir, LPCTSTR title)
 
 void ReplaceDlg::replace_directed(HWND hDlg, int finddir, LPCTSTR title)
 {
-	char (*cmp)(char) = IsDlgButtonChecked(hDlg, IDC_MATCHCASE_CHECK) ? equal : lower_case;
+	bool case_sensitive = IsDlgButtonChecked(hDlg, IDC_MATCHCASE_CHECK) == BST_CHECKED;
 	GetDlgItemText(hDlg, IDC_TO_REPLACE_EDIT, strToReplaceData);
 	GetDlgItemText(hDlg, IDC_REPLACEWITH_EDIT, strReplaceWithData);
 	iPasteAsText = !IsDlgButtonChecked(hDlg, IDC_USETRANSLATION_CHECK);
@@ -203,7 +204,7 @@ void ReplaceDlg::replace_directed(HWND hDlg, int finddir, LPCTSTR title)
 	}
 	if (finddir)
 	{
-		while (find_and_select_data(finddir, cmp))
+		while (find_and_select_data(finddir, case_sensitive))
 		{
 			occ_num++;
 			replace_selected_data(hDlg);

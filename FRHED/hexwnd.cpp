@@ -45,6 +45,7 @@
 #include "Template.h"
 #include "HexDump.h"
 #include "HexFile.h"
+#include "FindUtil.h"
 
 #include "idt.h"
 #include "ids.h"
@@ -2354,64 +2355,6 @@ int HexEditorWindow::close(const char *caption)
 }
 
 //--------------------------------------------------------------------------------------------
-// Required for the find function.
-char HexEditorWindow::equal(char c)
-{
-	return c;
-}
-
-char HexEditorWindow::lower_case(char c)
-{
-	if (c >= 'A' && c <= 'Z')
-		c = (char)('a' + c - 'A');
-	return c;
-}
-
-//--------------------------------------------------------------------------------------------
-// FIND_BYTES
-// Arguments:
-// ps   = Start position.
-// ls   = Length of src array.
-// pb   = Start of searchstring.
-// lb   = Length searchstring.
-// mode = -1 : backwards search.
-//         1 : forward search.
-// cmp  = pointer to function that is applied to data before comparing.
-//
-// Return:
-// Position of found string or -1 if not there.
-
-int HexEditorWindow::find_bytes(char* ps, int ls, char* pb, int lb, int mode, char (*cmp)(char))
-{
-	int start, inc, end, i;
-	if (mode == 1)
-	{
-		start = 0;
-		inc = 1;
-		end = ls - lb + 1;
-	}
-	else
-	{
-		start = ls - lb;
-		inc = -1;
-		end = 1;
-	}
-
-	for (; mode * start < end; start += inc)
-	{
-		for (i = start; i < start + lb; i++)
-		{
-			if (cmp (ps[i]) != cmp (pb[i - start]))
-				break;
-		}
-		if (i == start + lb)
-			return start;
-	}
-
-	return -1;
-}
-
-//--------------------------------------------------------------------------------------------
 // WM_LBUTTONUP handler.
 int HexEditorWindow::lbuttonup (int xPos, int yPos)
 {
@@ -4560,10 +4503,10 @@ void HexEditorWindow::CMD_findnext()
 		if (int destlen = create_bc_translation(&pcFindstring, FindDlg::pcFindDlgBuffer, srclen))
 		{
 			SetCursor(LoadCursor(NULL, IDC_WAIT));
-			int i = find_bytes((char *)&DataArray[iCurByte + 1],
+			int i = findutils_FindBytes((char *)&DataArray[iCurByte + 1],
 				DataArray.GetLength() - iCurByte - 1,
 				pcFindstring, destlen, 1,
-				FindDlg::iFindDlgMatchCase ? equal : lower_case);
+				FindDlg::iFindDlgMatchCase == 1);
 			SetCursor(LoadCursor(NULL, IDC_ARROW));
 			if (i != -1)
 			{
@@ -4644,9 +4587,9 @@ void HexEditorWindow::CMD_findprev()
 			// you are somewhere in the middle of the findstring with the caret
 			// and you choose "find previous" you usually want to find the beginning
 			// of the findstring in the file.
-			int i = find_bytes((char *)&DataArray[0],
+			int i = findutils_FindBytes((char *)&DataArray[0],
 				min(iCurByte + (destlen - 1), DataArray.GetLength()),
-				pcFindstring, destlen, -1, FindDlg::iFindDlgMatchCase ? equal : lower_case);
+				pcFindstring, destlen, -1, FindDlg::iFindDlgMatchCase == 1);
 			SetCursor(LoadCursor(NULL, IDC_ARROW));
 			if (i != -1)
 			{

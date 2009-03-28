@@ -28,6 +28,7 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "BinTrans.h"
+#include "FindUtil.h"
 
 int FindDlg::iFindDlgMatchCase = 0;
 int FindDlg::iFindDlgDirection = 0;
@@ -97,22 +98,22 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 				if (destlen)
 				{
 					int i;
-					char (*cmp)(char) = iFindDlgMatchCase ? equal : lower_case;
-
 					SetCursor(LoadCursor(NULL, IDC_WAIT));
 					// Find forward.
 					if (iFindDlgDirection == 1)
 					{
-						i = find_bytes((char *)&DataArray[iCurByte + 1], DataArray.GetLength() - iCurByte - 1, pcFindstring, destlen, 1, cmp);
+						i = findutils_FindBytes((char *)&DataArray[iCurByte + 1],
+								DataArray.GetLength() - iCurByte - 1,
+								pcFindstring, destlen, 1, iFindDlgMatchCase == 1);
 						if (i != -1)
 							iCurByte += i + 1;
 					}
 					// Find backward.
 					else
 					{
-						i = find_bytes((char *)&DataArray[0],
+						i = findutils_FindBytes((char *)&DataArray[0],
 							min(iCurByte + (destlen - 1), DataArray.GetLength()),
-							pcFindstring, destlen, -1, cmp);
+							pcFindstring, destlen, -1, iFindDlgMatchCase == 1);
 						if (i != -1)
 							iCurByte = i;
 					}

@@ -175,7 +175,7 @@ public:
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 	int transl_text_to_binary(SimpleArray<char> &out);
 	static int transl_binary_to_text(char *, int);
-	int find_and_select_data(int finddir, char (*cmp)(char));
+	int find_and_select_data(int finddir, bool case_sensitive);
 	int replace_selected_data(HWND);
 	void find_directed(HWND, int finddir, LPCTSTR title);
 	void replace_directed(HWND, int finddir, LPCTSTR title);

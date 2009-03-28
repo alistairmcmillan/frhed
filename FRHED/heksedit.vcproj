@@ -553,6 +553,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="FindUtil.cpp">
+			</File>
+			<File
 				RelativePath="gktools.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -1370,6 +1373,9 @@
 			</File>
 			<File
 				RelativePath="DllProxies.h">
+			</File>
+			<File
+				RelativePath="FindUtil.h">
 			</File>
 			<File
 				RelativePath="gktools.h">
