@@ -16,6 +16,7 @@ Frhed 1.4.2
     -dialogs (r396)
   Bugfix: Offset length was reset after opening View Settings
     -dialog (r403)
+  Bugfix: Help window opened from Frhed was modal (#2590341)
 
 Frhed 1.4.0 - 2009-02-04 (r368)
   Improve Cut-dialog layout (r332)

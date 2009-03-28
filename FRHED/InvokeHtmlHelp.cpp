@@ -56,19 +56,19 @@ void ShowHtmlHelp(UINT uCommand, LPCTSTR path, HWND hParentWindow)
 		{
 			char fullpath[MAX_PATH] = {0};
 			_snprintf(fullpath, MAX_PATH, "%s::/%s", fullHelpPath, path);
-			HtmlHelp(hParentWindow, fullpath, HH_DISPLAY_TOPIC, NULL);
+			HtmlHelp(NULL, fullpath, HH_DISPLAY_TOPIC, NULL);
 		}
 		else
 		{
-			HtmlHelp(hParentWindow, fullHelpPath, HH_DISPLAY_TOPIC, NULL);
+			HtmlHelp(NULL, fullHelpPath, HH_DISPLAY_TOPIC, NULL);
 		}
 	}
 	else if (uCommand == HELP_FINDER)
 	{
-		HtmlHelp(hParentWindow, fullHelpPath, HH_DISPLAY_SEARCH, NULL);
+		HtmlHelp(NULL, fullHelpPath, HH_DISPLAY_SEARCH, NULL);
 	}
 	else if (uCommand == HELP_CONTENTS)
 	{
-		HtmlHelp(hParentWindow, fullHelpPath, HH_DISPLAY_TOC, NULL);
+		HtmlHelp(NULL, fullHelpPath, HH_DISPLAY_TOC, NULL);
 	}
 }
