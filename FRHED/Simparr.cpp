@@ -101,7 +101,6 @@ SimpleString::SimpleString()
 SimpleString::SimpleString(const char* ps)
 {
 	m_nGrowBy = 64;
-	Clear();
 	SetToString(ps);
 }
 

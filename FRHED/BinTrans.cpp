@@ -401,7 +401,6 @@ Text2BinTranslator::Text2BinTranslator(char* ps)
 {
 	// Create a Text2BinTranslator from a normal char array-string.
 	m_nGrowBy = 64;
-	Clear();
 	SetToString(ps);
 }
 
