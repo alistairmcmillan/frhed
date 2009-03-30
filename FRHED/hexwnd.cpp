@@ -2990,28 +2990,6 @@ void HexEditorWindow::CMD_edit_enterdecimalvalue()
 	static_cast<dialog<EnterDecimalValueDlg>*>(this)->DoModal(hwnd);
 }
 
-//-------------------------------------------------------------------
-// Create translation of bytecode-string.
-// Return: Length of resulting string.
-// ppd = pointer to pointer to result, must be delete[]-ed later.
-// If the input string was empty, no translated array is created and zero is returned.
-int HexEditorWindow::create_bc_translation(char **ppd, char *src, int srclen)
-{
-	int destlen = Text2BinTranslator::iLengthOfTransToBin(src, srclen);
-	if (destlen > 0)
-	{
-		*ppd = new char[destlen];
-		Text2BinTranslator::iCreateBcTranslation(*ppd, src, srclen, iCharacterSet, iBinaryMode);
-		return destlen;
-	}
-	else
-	{
-		// Empty input string => don't allocate anything and return 0.
-		*ppd = NULL;
-		return 0;
-	}
-}
-
 /**
  * @brief Cut- and Delete-commands handler.
  * @param [in] iMode 0 if DELETE, 1 if CUT.
@@ -4500,7 +4478,8 @@ void HexEditorWindow::CMD_findnext()
 		// There is a findstring. Create its translation.
 		char *pcFindstring;
 		int srclen = strlen(FindDlg::pcFindDlgBuffer);
-		if (int destlen = create_bc_translation(&pcFindstring, FindDlg::pcFindDlgBuffer, srclen))
+		if (int destlen = create_bc_translation(&pcFindstring,
+			 FindDlg::pcFindDlgBuffer, srclen, iCharacterSet, iBinaryMode))
 		{
 			SetCursor(LoadCursor(NULL, IDC_WAIT));
 			int i = findutils_FindBytes((char *)&DataArray[iCurByte + 1],
@@ -4579,7 +4558,8 @@ void HexEditorWindow::CMD_findprev()
 		// There is a findstring. Create its translation.
 		char *pcFindstring;
 		int srclen = strlen(FindDlg::pcFindDlgBuffer);
-		if (int destlen = create_bc_translation(&pcFindstring, FindDlg::pcFindDlgBuffer, srclen))
+		if (int destlen = create_bc_translation(&pcFindstring,
+			FindDlg::pcFindDlgBuffer, srclen, iCharacterSet, iBinaryMode))
 		{
 			SetCursor(LoadCursor(NULL, IDC_WAIT));
 			// Search the array starting at index 0 to the current byte,

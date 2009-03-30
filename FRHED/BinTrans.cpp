@@ -28,6 +28,29 @@
 #include "hexwnd.h"
 #include "BinTrans.h"
 
+//-------------------------------------------------------------------
+// Create translation of bytecode-string.
+// Return: Length of resulting string.
+// ppd = pointer to pointer to result, must be delete[]-ed later.
+// If the input string was empty, no translated array is created and zero is returned.
+int create_bc_translation(char **ppd, char *src, int srclen, int charset, int binarymode)
+{
+	int destlen = Text2BinTranslator::iLengthOfTransToBin(src, srclen);
+	if (destlen > 0)
+	{
+		*ppd = new char[destlen];
+		Text2BinTranslator::iCreateBcTranslation(*ppd, src, srclen,
+				charset, binarymode);
+		return destlen;
+	}
+	else
+	{
+		// Empty input string => don't allocate anything and return 0.
+		*ppd = NULL;
+		return 0;
+	}
+}
+
 /**
  * @brief Find character from string.
  * @param [in] src String from which the character is searched.

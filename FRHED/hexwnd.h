@@ -201,7 +201,6 @@ public:
 	int CMD_save();
 	int CMD_save_as();
 	int CMD_new(const char *title = 0);
-	int create_bc_translation(char** ppd, char* src, int srclen);
 	void CMD_edit_enterdecimalvalue();
 	int CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType, int iCopyHexdumpDlgStart, int iCopyHexdumpDlgEnd, char *mem = 0, int memlen = 0);
 	void CMD_copy_hexdump();

@@ -25,6 +25,7 @@
 
 #include "precomp.h"
 #include "resource.h"
+#include "BinTrans.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
 
@@ -84,7 +85,8 @@ BOOL PasteDlg::Apply(HWND hDlg)
 	if (iPasteAsText == 0)
 	{
 		char *pc = 0;
-		destlen = create_bc_translation(&pc, pcPastestring, strlen(pcPastestring));
+		destlen = create_bc_translation(&pc, pcPastestring,
+			strlen(pcPastestring), iCharacterSet, iBinaryMode);
 		delete [] pcPastestring;
 		pcPastestring = pc;
 	}

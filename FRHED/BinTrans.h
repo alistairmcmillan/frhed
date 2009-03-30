@@ -28,6 +28,8 @@
 
 #include "Simparr.h"
 
+int create_bc_translation(char** ppd, char* src, int srclen, int charset, int binarymode);
+
 /**
  * @brief A class translating between text export and binary data.
  */

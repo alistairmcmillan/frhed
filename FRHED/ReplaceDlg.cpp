@@ -42,7 +42,8 @@ int ReplaceDlg::transl_text_to_binary(SimpleArray<char> &out)
 {
 	char *pcOut;
 	int destlen = create_bc_translation(&pcOut,
-		(char *)strReplaceWithData, strReplaceWithData.StrLen());
+		(char *)strReplaceWithData, strReplaceWithData.StrLen(),
+		iCharacterSet, iBinaryMode);
 	if (destlen)
 		out.Adopt(pcOut, destlen - 1, destlen);
 	return destlen;
@@ -66,12 +67,12 @@ int	ReplaceDlg::transl_binary_to_text(char *src, int len)
 }
 
 //-------------------------------------------------------------------
-// Following code by R. Kibria.
 int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 {
 	char *tofind;
 	// Create a translation from bytecode to char array of finddata.
-	int destlen = create_bc_translation(&tofind, strToReplaceData, strToReplaceData.StrLen());
+	int destlen = create_bc_translation(&tofind, strToReplaceData,
+		strToReplaceData.StrLen(), iCharacterSet, iBinaryMode);
 	int i = iGetStartOfSelection();
 	int n = iGetEndOfSelection() - i + 1;
 	int j;

@@ -98,7 +98,9 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 				else
 				{
 					// Create findstring.
-					destlen = create_bc_translation(&pcFindstring, pcFindDlgBuffer, srclen);
+					destlen = create_bc_translation(&pcFindstring,
+							pcFindDlgBuffer, srclen, iCharacterSet,
+							iBinaryMode);
 				}
 				if (destlen)
 				{
