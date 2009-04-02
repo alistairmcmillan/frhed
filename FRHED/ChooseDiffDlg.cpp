@@ -29,6 +29,7 @@
 #include "clipboard.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "AnsiConvert.h"
 
 void ChooseDiffDlg::add_diff(HWND hwndList, int diff, int lower, int upper)
 {
@@ -98,11 +99,13 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 {
 	char szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
+	AnsiConvert openAllFiles(S.OpenAllFiles);
+
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);
 	ofn.lStructSize = sizeof ofn;
 	ofn.hwndOwner = hDlg;
-	ofn.lpstrFilter = "All Files (*.*)\0*.*\0\0";
+	ofn.lpstrFilter = openAllFiles;
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = _MAX_PATH;
 	ofn.lpstrTitle = "Choose file to compare with";

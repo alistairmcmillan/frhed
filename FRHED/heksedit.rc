@@ -1375,6 +1375,7 @@ STRINGTABLE
 BEGIN
     IDS_ABOUTFRHEDVER          "Version %u.%u.%u"
     IDS_DIFFLISTITEMFORMAT  "%d) 0x%x=%u to 0x%x=%u (%d bytes)"
+    IDS_OPEN_ALL_FILES      "All Files (*.*)\0*.*\0\0"
 END
 
 #endif    // Englisch (USA) resources

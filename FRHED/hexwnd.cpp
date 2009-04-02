@@ -46,6 +46,7 @@
 #include "HexDump.h"
 #include "HexFile.h"
 #include "FindUtil.h"
+#include "AnsiConvert.h"
 
 #include "idt.h"
 #include "ids.h"
@@ -4047,12 +4048,14 @@ void HexEditorWindow::CMD_open_partially()
 	if (!close("Open partially"))
 		return;
 	char szFileName[_MAX_PATH];
+	AnsiConvert openAllFiles(S.OpenAllFiles);
+
 	szFileName[0] = '\0';
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);
 	ofn.lStructSize = sizeof ofn;
 	ofn.hwndOwner = hwnd;
-	ofn.lpstrFilter = "All Files (*.*)\0*.*\0\0";
+	ofn.lpstrFilter = openAllFiles;
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = _MAX_PATH;
 	ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
@@ -4889,11 +4892,13 @@ void HexEditorWindow::CMD_insertfile()
 {
 	char szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
+	AnsiConvert openAllFiles(S.OpenAllFiles);
+
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);
 	ofn.lStructSize = sizeof ofn;
 	ofn.hwndOwner = hwnd;
-	ofn.lpstrFilter = "All Files (*.*)\0*.*\0\0";
+	ofn.lpstrFilter = openAllFiles;
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = _MAX_PATH;
 	ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;

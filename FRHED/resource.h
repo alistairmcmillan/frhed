@@ -324,6 +324,7 @@
 #define IDC_COMBO1                      1083
 #define IDS_DIFFLISTITEMFORMAT          10001
 #define IDS_ABOUTFRHEDVER               10002
+#define IDS_OPEN_ALL_FILES              10003
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects
