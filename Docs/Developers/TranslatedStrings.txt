@@ -1,0 +1,36 @@
+Using translated string from resource
+-------------------------------------
+$Id$
+
+This document explains how to use translated strings in the code. All
+translated strings in Frhed must be in resource file (FRHED/heksedit.rc). Our
+translation system reads strings from there and generates files translators can
+translate.
+
+NOTE: This is probably a temporary solution. In future this hopefully will
+be simpler operation.
+
+1. Add a new string ID to the FRHED/resource.h file. Use IDS_ -prefix:
+#define IDS_OPEN_ALL_FILES              10003
+
+2. Add the string to FRHED/heksedit.rc file:
+    IDS_OPEN_ALL_FILES      "All Files (*.*)\0*.*\0\0"
+
+3. Add this same ID to the FRHED/StringTable.cpp:
+	IDS_OPEN_ALL_FILES,
+
+4. Add new "variable" name for the string to the FRHED/StringTable.h:
+	T OpenAllFiles;
+
+NOTE: Strings in StringTable.h and Stringtable.cpp must be in exactly same
+order!
+
+5. Add includes to the .cpp file where you are using the string:
+#include "StringTable.h"
+#include "AnsiConvert.h"
+
+6. Create AnsiConvert instance from the string:
+	AnsiConvert openAllFiles(S.OpenAllFiles);
+
+7. Use the AnsiConvert instance in place of the original string:
+	ofn.lpstrFilter = openAllFiles;
