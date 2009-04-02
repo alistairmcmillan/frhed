@@ -16,6 +16,9 @@ Localization:
 * French:
   Frédéric Dectot
 
+* German
+  Tim Gerundt <gerundt@users.sourceforge.net>
+
 
 Other contributors:
 Dario Bagnoli - bug reports and beta testing
