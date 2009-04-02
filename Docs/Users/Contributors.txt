@@ -11,6 +11,12 @@ Developers (@SourceForge):
 Tim Gerundt <gerundt@users.sourceforge.net>
 Jochen Tucht <jtuc@users.sourceforge.net>
 
+Localization:
+
+* French:
+  Frédéric Dectot
+
+
 Other contributors:
 Dario Bagnoli - bug reports and beta testing
 Tom Foth - suggestions
