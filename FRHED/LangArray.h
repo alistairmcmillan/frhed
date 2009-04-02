@@ -25,6 +25,9 @@
 
 #include "Simparr.h"
 
+SimpleString GetLangFileFolder(HINSTANCE hInst);
+
+
 class LangArray : public SimpleArray<char *>
 {
 public:

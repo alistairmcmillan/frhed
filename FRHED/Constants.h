@@ -24,3 +24,6 @@ static const char OptionsRegistryPath[] = "Software\\Frhed";
 
 /** @brief Registry key for Frhed settings. */
 static const char OptionsRegistrySettingsPath[] = "Software\\Frhed\\Settings";
+
+/** @brief Subfolder where language files (PO files) are. */
+static const char LangFileSubFolder[] = "Languages";

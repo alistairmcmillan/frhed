@@ -70,9 +70,10 @@ HWND ViewSettingsDlg::hCbLang;
 BOOL ViewSettingsDlg::EnumLocalesProc(LPTSTR lpLocaleString)
 {
 	TCHAR path[MAX_PATH];
-	GetModuleFileName(hMainInstance, path, MAX_PATH);
-	PathRenameExtension(path, _T(".lng"));
-	LPTSTR name = PathAddBackslash(path);
+	
+	SimpleString modpath = GetLangFileFolder(hMainInstance);
+	_tcscpy(path, modpath);
+	LPTSTR name = path + _tcslen(path);
 	LCID lcid = 0;
 	if (sscanf(lpLocaleString, "%x", &lcid) == 1)
 	{

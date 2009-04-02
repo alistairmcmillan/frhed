@@ -7,6 +7,7 @@ For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 Frhed 1.5.2
   Remove warning message about trying to edit in read-only mode (r420)
   Not finding more strings is not an error, show info icon (r428)
+  Change language subfolder name to "Languages" (r441)
   New translation:
   - French (#2727207)
 

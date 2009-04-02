@@ -24,7 +24,9 @@
 // $Id$
 
 #include "precomp.h"
+#include "Constants.h"
 #include "Simparr.h"
+#include "paths.h"
 #include "LangArray.h"
 #include "VersionData.h"
 
@@ -46,6 +48,26 @@ static char *EatPrefix(char *text, const char *prefix)
 		if (_memicmp(text, prefix, len) == 0)
 			return text + len;
 	return 0;
+}
+
+SimpleString GetLangFileFolder(HINSTANCE hInst)
+{
+	TCHAR path[MAX_PATH] = {0};
+
+	if (_tcslen(LangFileSubFolder) != 0)
+	{
+		paths_GetModulePath(hInst, path, MAX_PATH);
+		_tcscat(path, LangFileSubFolder);
+		_tcscat(path, "\\");
+	}
+	else
+	{
+		GetModuleFileName(hInst, path, MAX_PATH);
+		PathRenameExtension(path, _T(".lng"));
+		LPTSTR name = PathAddBackslash(path);
+	}
+	SimpleString fullpath(path);
+	return fullpath;
 }
 
 LangArray::StringData *LangArray::StringData::Create(const char *ps, size_t length)
@@ -170,13 +192,28 @@ BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid)
 	FILE *f = 0;
 	if (langid && langid != DefLangId)
 	{
-		TCHAR path[MAX_PATH];
+		TCHAR path[MAX_PATH] = {0};
 		GetModuleFileName(hMainInstance, path, MAX_PATH);
 		LPTSTR name = PathFindFileName(path); 
-		LPTSTR ext = PathFindExtension(name);
-		*ext = _T('\0');
-		wsprintf(ext + 1, _T("lng\\%s.lng"), name);
-		*ext = _T('.');
+		if (_tcslen(LangFileSubFolder) > 0)
+		{
+			TCHAR tmpname[MAX_PATH] = {0};
+			_tcscpy(tmpname, name);
+			SimpleString modpath = GetLangFileFolder(hMainInstance);
+			_tcscpy(path, modpath);
+			LPTSTR ext = PathFindExtension(tmpname);
+			*ext = _T('\0');
+			name = path + _tcslen(modpath);
+			_tcscat(path, tmpname);
+			_tcscat(path, _T(".lng"));
+		}
+		else
+		{
+			LPTSTR ext = PathFindExtension(name);
+			*ext = _T('\0');
+			wsprintf(ext + 1, _T("lng\\%s.lng"), name);
+			*ext = _T('.');
+		}
 		if (m_hLangDll == 0)
 		{
 			m_hLangDll = LoadLibrary(path);
