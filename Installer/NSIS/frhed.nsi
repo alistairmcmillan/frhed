@@ -96,6 +96,21 @@ Section "Documentation" SEC02
   CreateShortCut "$SMPROGRAMS\Frhed\Help.lnk" "$INSTDIR\Docs\frhed.chm"
 SectionEnd
 
+SectionGroup "Translations files"
+Section "-Gen files" SEC03
+  SetOutPath "$INSTDIR\Languages"
+  File "..\..\Build\Release\Languages\heksedit.lng"
+SectionEnd
+Section "French" SEC04
+  SetOutPath "$INSTDIR\Languages"
+  File "..\..\FRHED\Languages\fr.po"
+SectionEnd
+Section "German" SEC05
+  SetOutPath "$INSTDIR\Languages"
+  File "..\..\FRHED\Languages\de.po"
+SectionEnd
+SectionGroupEnd
+
 Section -AdditionalIcons
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateShortCut "$SMPROGRAMS\Frhed\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
@@ -117,6 +132,8 @@ SectionEnd
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} "Main executable and required dlls."
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} "Frhed documentation."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC04} "French translation."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC05} "German translation."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 
@@ -148,6 +165,11 @@ Section Uninstall
   Delete "$INSTDIR\Docs\Contributors.txt"
   Delete "$INSTDIR\Docs\History.txt"
   RMDir "$INSTDIR\Docs"
+
+  Delete "$INSTDIR\Languages\heksedit.lng"
+  Delete "$INSTDIR\Languages\fr.po"
+  Delete "$INSTDIR\Languages\de.po"
+  RMDir "$INSTDIR\Languages"
 
   Delete "$SMPROGRAMS\Frhed\Uninstall.lnk"
   Delete "$SMPROGRAMS\Frhed\Website.lnk"
