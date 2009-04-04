@@ -30,7 +30,6 @@ NOTE: Strings in StringTable.h and Stringtable.cpp must be in exactly same
 order!
 
 5. Add includes to the .cpp file where you are using the string:
-#include "StringTable.h"
 #include "LangString.h"
 
 6. Create LangString instance from the string:
