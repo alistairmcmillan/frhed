@@ -4866,10 +4866,7 @@ void HexEditorWindow::CMD_fw()
 void HexEditorWindow::CMD_deletefile()
 {
 	if (IDYES != MessageBox(hwnd, "Are you sure you want to delete this file?",
-			ApplicationName, MB_ICONERROR | MB_YESNO))
-		return;
-	if (IDYES != MessageBox(hwnd,"Are you really really sure you want to delete this file?",
-			ApplicationName, MB_ICONERROR | MB_YESNO))
+			ApplicationName, MB_ICONWARNING | MB_YESNO))
 		return;
 	if (remove(filename) != 0)
 	{
