@@ -30,7 +30,9 @@ order!
 #include "AnsiConvert.h"
 
 6. Create AnsiConvert instance from the string:
-	AnsiConvert openAllFiles(S.OpenAllFiles);
+	AnsiConvert openAllFiles(GetLangString(IDS_OPEN_ALL_FILES));
 
+    GetLangString() is used to get a resource string by its ID.
+    
 7. Use the AnsiConvert instance in place of the original string:
 	ofn.lpstrFilter = openAllFiles;
