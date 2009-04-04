@@ -7,6 +7,10 @@ translated strings in Frhed must be in resource file (FRHED/heksedit.rc). Our
 translation system reads strings from there and generates files translators can
 translate.
 
+There is a helper class LangString that takes care of:
+- getting the string by resource ID
+- converting the string in ANSI build
+
 NOTE: This is probably a temporary solution. In future this hopefully will
 be simpler operation.
 
@@ -27,12 +31,10 @@ order!
 
 5. Add includes to the .cpp file where you are using the string:
 #include "StringTable.h"
-#include "AnsiConvert.h"
+#include "LangString.h"
 
-6. Create AnsiConvert instance from the string:
-	AnsiConvert openAllFiles(GetLangString(IDS_OPEN_ALL_FILES));
+6. Create LangString instance from the string:
+	LangString openAllFiles(IDS_OPEN_ALL_FILES);
 
-    GetLangString() is used to get a resource string by its ID.
-    
-7. Use the AnsiConvert instance in place of the original string:
+7. Use the LangString instance in place of the original string:
 	ofn.lpstrFilter = openAllFiles;
