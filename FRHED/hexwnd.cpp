@@ -46,7 +46,7 @@
 #include "HexDump.h"
 #include "HexFile.h"
 #include "FindUtil.h"
-#include "AnsiConvert.h"
+#include "LangString.h"
 
 #include "idt.h"
 #include "ids.h"
@@ -4048,7 +4048,7 @@ void HexEditorWindow::CMD_open_partially()
 	if (!close("Open partially"))
 		return;
 	char szFileName[_MAX_PATH];
-	AnsiConvert openAllFiles(GetLangString(IDS_OPEN_ALL_FILES));
+	LangString openAllFiles(IDS_OPEN_ALL_FILES);
 
 	szFileName[0] = '\0';
 	OPENFILENAME ofn;
@@ -4889,7 +4889,7 @@ void HexEditorWindow::CMD_insertfile()
 {
 	char szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
-	AnsiConvert openAllFiles(GetLangString(IDS_OPEN_ALL_FILES));
+	LangString openAllFiles(IDS_OPEN_ALL_FILES);
 
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);

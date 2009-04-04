@@ -15,34 +15,47 @@
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 /////////////////////////////////////////////////////////////////////////////
 /** 
- * @file  StringTable.h
+ * @file  LangString.h
  *
- * @brief String table for translated texts.
+ * @brief  Class for converting translated strings from wide char to ANSI.
  *
  */
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _STRING_TABLE_H_
-#define _STRING_TABLE_H_
+#ifndef _LANG_STRING_H_
+#define _LANG_STRING_H_
+
+LPWSTR GetLangString(WORD id);
 
 /**
- * @brief A struct holding resource strings (translated).
- * This struct contains strings loaded from the resource file (English) or
- * from selected translation's PO file.
- *
- * Order of strings here (.h file) and in .cpp file must match!
+ * @brief Helper class for using translated strings.
+ * This class helps using translated strings by:
+ * - hiding ANSI and UNICODE build differences (does conversions when needed)
+ * - getting string by resource ID
  */
-template <class T>
-struct StringTable
+class LangString
 {
-	operator T *() { return reinterpret_cast<T *>(this); }
-	T DiffListItemFormat;
-	T AboutFrhed;
-	T OpenAllFiles;
+private:
+#ifdef UNICODE
+	PCWSTR m_str; /**< Resource string pointer in UNICODE build. */
+#else
+	BSTR m_str; /**< Resource string pointer in ANSI build. */
+#endif
+
+protected:
+	void Convert(PCWSTR text);
+
+public:
+	LangString(PCWSTR text);
+	LangString(WORD id);
+	~LangString();
+
+#ifdef UNICODE
+	operator PCWSTR() { return m_str; }
+#else
+	operator PCSTR() { return (PCSTR)m_str; }
+#endif
 };
 
-extern StringTable<LPWSTR> S;
-extern StringTable<WORD> IDS;
-
-#endif // _STRING_TABLE_H_
+#endif // _LANG_STRING_H_

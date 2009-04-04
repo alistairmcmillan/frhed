@@ -29,7 +29,7 @@
 #include "clipboard.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
-#include "AnsiConvert.h"
+#include "LangString.h"
 
 void ChooseDiffDlg::add_diff(HWND hwndList, int diff, int lower, int upper)
 {
@@ -99,7 +99,7 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 {
 	char szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
-	AnsiConvert openAllFiles(GetLangString(IDS_OPEN_ALL_FILES));
+	LangString openAllFiles(IDS_OPEN_ALL_FILES);
 
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);

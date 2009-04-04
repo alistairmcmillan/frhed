@@ -30,6 +30,7 @@
 #include "StringTable.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 /**
  * @brief Initialize the dialog.
