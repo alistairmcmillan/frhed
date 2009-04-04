@@ -1371,9 +1371,11 @@ BEGIN
     ID_DISK_GOTOLASTTRACK   "Goto last sector"
 END
 
+// Some general strings
 STRINGTABLE 
 BEGIN
-    IDS_ABOUTFRHEDVER          "Version %u.%u.%u"
+    IDS_APPNAME             "Frhed"
+    IDS_ABOUTFRHEDVER       "Version %u.%u.%u"
     IDS_DIFFLISTITEMFORMAT  "%d) 0x%x=%u to 0x%x=%u (%d bytes)"
     IDS_OPEN_ALL_FILES      "All Files (*.*)\0*.*\0\0"
 END

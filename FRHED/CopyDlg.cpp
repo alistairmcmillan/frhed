@@ -28,6 +28,7 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "BinTrans.h"
+#include "LangString.h"
 
 /** @brief Maximum text length in dialog edit boxes. */
 static const int MaxTextLen = 16;
@@ -73,7 +74,8 @@ BOOL CopyDlg::Apply(HWND hDlg)
 		sscanf(buf, "x%x", &iOffset) == 0 &&
 		sscanf(buf, "%d", &iOffset) == 0)
 	{
-		MessageBox(hDlg, "Start offset not recognized.", "Copy", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Start offset not recognized.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	if (IsDlgButtonChecked(hDlg, IDC_COPY_OFFSET))
@@ -82,7 +84,8 @@ BOOL CopyDlg::Apply(HWND hDlg)
 			sscanf(buf, "x%x", &iNumberOfBytes) == 0 &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
-			MessageBox(hDlg, "End offset not recognized.", "Copy", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "End offset not recognized.", app, MB_ICONERROR);
 			return FALSE;
 		}
 		iNumberOfBytes = iNumberOfBytes - iOffset + 1;
@@ -92,7 +95,8 @@ BOOL CopyDlg::Apply(HWND hDlg)
 		if (GetDlgItemText(hDlg, IDC_COPY_BYTECOUNT, buf, 64) &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
-			MessageBox(hDlg, "Number of bytes not recognized.", "Copy", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Number of bytes not recognized.", app, MB_ICONERROR);
 			return FALSE;
 		}
 	}
@@ -100,7 +104,8 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	// DataArray.GetLength ()-iCutOffset = number of bytes from current pos. to end.
 	if (DataArray.GetLength() - iOffset < iNumberOfBytes)
 	{
-		MessageBox(hDlg, "Can't copy more bytes than are present.", "Copy", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Can't copy more bytes than are present.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	// Transfer to cipboard.
@@ -109,7 +114,8 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	if (hGlobal == 0)
 	{
 		// Not enough memory for clipboard.
-		MessageBox(hDlg, "Not enough memory for copying.", "Copy", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Not enough memory for copying.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	WaitCursor wc;

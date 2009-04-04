@@ -27,6 +27,7 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 /**
  * @brief Append the data to current file.
@@ -40,13 +41,17 @@ BOOL AppendDlg::Apply(HWND hDlg)
 	if (GetDlgItemText(hDlg, IDC_APPEND_BYTES, buf, 64) &&
 		sscanf(buf, "%d", &iAppendbytes) == 0)
 	{
-		MessageBox(hDlg, "Number of bytes to append not recognized.", "Append", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Number of bytes to append not recognized.", app,
+				MB_ICONERROR);
 		return FALSE;
 	}
 	int oldupbound = DataArray.GetLength();
 	if (!DataArray.SetSize(DataArray.GetSize() + iAppendbytes))
 	{
-		MessageBox(hDlg, "Not enough memory for appending.", "Append", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Not enough memory for appending.", app,
+				MB_ICONERROR);
 		return FALSE;
 	}
 	DataArray.ExpandToSize();

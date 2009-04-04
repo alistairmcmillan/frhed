@@ -3,6 +3,7 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "BinTrans.h"
+#include "LangString.h"
 
 /** Length of the offset buffer. */
 static const int OffsetLen = 16;
@@ -48,7 +49,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 		sscanf(buf, "x%x", &iOffset) == 0 &&
 		sscanf(buf, "%d", &iOffset) == 0)
 	{
-		MessageBox(hDlg, "Start offset not recognized.", "Cut", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Start offset not recognized.", app, MB_ICONERROR);
 		return FALSE;
 	}
 
@@ -58,7 +60,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 			sscanf(buf, "x%x", &iNumberOfBytes) == 0 &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
-			MessageBox(hDlg, "End offset not recognized.", "Cut", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "End offset not recognized.", app, MB_ICONERROR);
 			return FALSE;
 		}
 		iNumberOfBytes = iNumberOfBytes - iOffset + 1;
@@ -68,7 +71,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 		if (GetDlgItemText(hDlg, IDC_CUT_NUMBYTES, buf, OffsetLen) &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
-			MessageBox(hDlg, "Number of bytes not recognized.", "Cut", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Number of bytes not recognized.", app, MB_ICONERROR);
 			return FALSE;
 		}
 	}
@@ -83,7 +87,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 	// DataArray.GetLength ()-iCutOffset = number of bytes from current pos. to end.
 	if (DataArray.GetLength() - iOffset < iNumberOfBytes)
 	{
-		MessageBox(hDlg, "Can't cut more bytes than are present.", "Cut", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Can't cut more bytes than are present.", app, MB_ICONERROR);
 		return FALSE;
 	}
 
@@ -96,7 +101,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 		if (hGlobal == 0)
 		{
 			// Not enough memory for clipboard.
-			MessageBox(hDlg, "Not enough memory for cutting to clipboard.", "Cut", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Not enough memory for cutting to clipboard.", app, MB_ICONERROR);
 			return FALSE;
 		}
 		WaitCursor wc;
@@ -112,7 +118,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 	// Delete data.
 	if (!DataArray.RemoveAt(iOffset, iNumberOfBytes))
 	{
-		MessageBox(hDlg, "Could not cut data.", "Cut", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Could not cut data.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	iCurByte = iOffset;

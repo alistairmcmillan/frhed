@@ -27,6 +27,7 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 BOOL MoveCopyDlg::OnInitDialog(HWND hw)
 {
@@ -63,7 +64,9 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 		{
 			if (!IsDlgButtonChecked(hw, check[n]))
 			{
-				MessageBox(hw, "You have chosen an offset but it is negative, which is invalid.", "Move/Copy", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(hw, "You have chosen an offset but it is negative, which is invalid.",
+						app, MB_ICONERROR);
 				return FALSE;
 			}
 			// Relative jump. Read offset from next character on.
@@ -75,7 +78,8 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 			// No fields assigned: badly formed number.
 			char msg[80] = {0};
 			_snprintf(msg, RTL_NUMBER_OF(msg) - 1, "The value in box number %d cannot be recognized.", n + 1);
-			MessageBox(hw, msg, "Move/Copy", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hw, msg, app, MB_ICONERROR);
 			return FALSE;
 		}
 		if (buf[0] == '-')
@@ -88,7 +92,9 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 	{
 		if (iMove2ndEndorLen == 0)
 		{
-			MessageBox(hw, "Cannot move/copy a block of zero length", "Move/Copy", MB_OK | MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hw, "Cannot move/copy a block of zero length", app,
+					MB_OK | MB_ICONERROR);
 			return 0;
 		}
 		if (iMove2ndEndorLen > 0)
@@ -103,7 +109,9 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 		iMove2ndEndorLen < 0 ||
 		iMove2ndEndorLen >= clen)
 	{
-		MessageBox(hw, "The chosen block extends into non-existant data.", "Move/Copy", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hw, "The chosen block extends into non-existant data.",
+				app, MB_ICONERROR);
 		return FALSE;
 	}
 
@@ -121,8 +129,9 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 
 	if (iMovePos == iMove1stEnd && iMoveOpTyp == OPTYP_MOVE)
 	{
-		MessageBox(hw, "The block was not moved!", "Move/Copy", MB_ICONEXCLAMATION);
-		EndDialog(hw,0);
+		LangString app(IDS_APPNAME);
+		MessageBox(hw, "The block was not moved!", app, MB_ICONEXCLAMATION);
+		EndDialog(hw, 0);
 		return FALSE;
 	}
 
@@ -130,7 +139,9 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 		iMovePos + iMove2ndEndorLen - iMove1stEnd >= clen :
 		iMovePos > clen))
 	{
-		MessageBox(hw, "Cannot move/copy the block outside the data", "Move/Copy", MB_OK | MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hw, "Cannot move/copy the block outside the data", app,
+				MB_OK | MB_ICONERROR);
 		return FALSE;
 	}
 	CMD_move_copy(iMove1stEnd, iMove2ndEndorLen, true);

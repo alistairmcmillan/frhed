@@ -27,7 +27,6 @@
 #include "resource.h"
 #include "Constants.h"
 #include "paths.h"
-#include "StringTable.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "LangString.h"
@@ -73,7 +72,10 @@ BOOL AboutDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 		{
 			HINSTANCE hi = ShellExecute(hDlg, "open", FrhedHomepageURL, 0, NULL, SW_SHOWNORMAL);
 			if ((UINT)hi <= HINSTANCE_ERROR)
-				MessageBox(hDlg, "Could not call browser.", "Go to homepage", MB_ICONERROR);
+			{
+				LangString app(IDS_APPNAME);
+				MessageBox(hDlg, "Could not call browser.", app, MB_ICONERROR);
+			}
 		}
 		return TRUE;
 
@@ -84,10 +86,11 @@ BOOL AboutDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 					RTL_NUMBER_OF(contrList));
 			if (!paths_DoesFileExist(contrList))
 			{
+				LangString app(IDS_APPNAME);
 				TCHAR buf[4096] = {0};
 				_sntprintf(buf, RTL_NUMBER_OF(buf), "File\n%s\nnot found!",
 						ContributorsList);
-				MessageBox(hDlg, buf, "Frhed", MB_ICONERROR);
+				MessageBox(hDlg, buf, app, MB_ICONERROR);
 			}
 			else
 				paths_OpenFile(hDlg, ContributorsList);

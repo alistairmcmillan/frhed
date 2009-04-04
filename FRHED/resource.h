@@ -322,6 +322,7 @@
 #define IDC_EXPORTDIGITS                1081
 #define IDC_APPICON                     1082
 #define IDC_COMBO1                      1083
+#define IDS_APPNAME                     10000
 #define IDS_DIFFLISTITEMFORMAT          10001
 #define IDS_ABOUTFRHEDVER               10002
 #define IDS_OPEN_ALL_FILES              10003

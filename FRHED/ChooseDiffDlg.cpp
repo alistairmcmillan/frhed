@@ -25,7 +25,6 @@
 
 #include "precomp.h"
 #include "resource.h"
-#include "StringTable.h"
 #include "clipboard.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
@@ -114,7 +113,8 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 	int filehandle = _open(szFileName, _O_RDONLY|_O_BINARY);
 	if (filehandle == -1)
 	{
-		MessageBox(hDlg, "Error while opening file.", "Compare", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Error while opening file.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	BOOL bDone = FALSE;
@@ -141,18 +141,21 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 				else
 				{
 					// No difference.
-					MessageBox(hDlg, "Data matches exactly.", "Compare", MB_ICONINFORMATION);
+					LangString app(IDS_APPNAME);
+					MessageBox(hDlg, "Data matches exactly.", app, MB_ICONINFORMATION);
 				}
 			}
 			else
 			{
-				MessageBox(hDlg, "Error while reading from file.", "Compare", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(hDlg, "Error while reading from file.", app, MB_ICONERROR);
 			}
 			delete[] cmpdata;
 		}
 		else
 		{
-			MessageBox(hDlg, "Not enough memory.", "Compare", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Not enough memory.", app, MB_ICONERROR);
 		}
 	}
 	_close(filehandle);
@@ -168,7 +171,8 @@ BOOL ChooseDiffDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 		{//copy button was pressed
 			if (!OpenClipboard(hwnd)) //open clip
 			{
-				MessageBox(hwnd,"Cannot get access to clipboard.", "Copy", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(hwnd,"Cannot get access to clipboard.", app, MB_ICONERROR);
 				return TRUE;
 			}
 			EmptyClipboard(); //empty clip

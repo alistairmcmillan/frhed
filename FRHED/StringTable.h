@@ -37,6 +37,7 @@ template <class T>
 struct StringTable
 {
 	operator T *() { return reinterpret_cast<T *>(this); }
+	T ApplicationName;
 	T DiffListItemFormat;
 	T AboutFrhed;
 	T OpenAllFiles;

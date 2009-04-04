@@ -27,6 +27,7 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 /** @brief Max length of the offset number. */
 static const int OffsetLen = 16;
@@ -69,14 +70,15 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			sscanf(buf, "x%x", &offset) == 0 &&
 			sscanf(buf, "%d", &offset) == 0)
 		{
-			MessageBox(hDlg, "Start offset not recognized.", "Add bookmark",
-					MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Start offset not recognized.", app, MB_ICONERROR);
 			return TRUE;
 		}
 		if (offset < 0 || offset > DataArray.GetLength())
 		{
+			LangString app(IDS_APPNAME);
 			MessageBox(hDlg, "Can not set bookmark at that position.",
-					"Add bookmark", MB_ICONERROR);
+					app, MB_ICONERROR);
 			return TRUE;
 		}
 		// Is there already a bookmark on this offset?
@@ -84,8 +86,9 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 		{
 			if (pbmkList[i].offset == offset)
 			{
+				LangString app(IDS_APPNAME);
 				MessageBox(hDlg, "There already is a bookmark on that position.",
-						"Add bookmark", MB_ICONERROR);
+						app, MB_ICONERROR);
 				return TRUE;
 			}
 		}
