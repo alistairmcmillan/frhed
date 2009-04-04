@@ -40,7 +40,7 @@ BOOL AboutDlg::OnInitDialog(HWND hDlg)
 	// Set the version information.
 	wchar_t buf[4096];
 	buf[RTL_NUMBER_OF(buf) - 1] = L'\0';
-	_snwprintf(buf, RTL_NUMBER_OF(buf) - 1, S.AboutFrhed,
+	_snwprintf(buf, RTL_NUMBER_OF(buf) - 1, GetLangString(IDS_ABOUTFRHEDVER),
 		FRHED_MAJOR_VERSION, FRHED_MINOR_VERSION, FRHED_SUB_RELEASE_NO);
 	SetDlgItemText(hDlg, IDC_ABOUT_VER, buf);
 	// Set the homepage URL.

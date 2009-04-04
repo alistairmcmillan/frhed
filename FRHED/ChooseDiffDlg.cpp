@@ -35,7 +35,7 @@ void ChooseDiffDlg::add_diff(HWND hwndList, int diff, int lower, int upper)
 {
 	wchar_t buf[100];
 	swprintf(buf,
-		S.DiffListItemFormat, //"%d) 0x%x=%u to 0x%x=%u (%d bytes)",
+		GetLangString(IDS_DIFFLISTITEMFORMAT), //"%d) 0x%x=%u to 0x%x=%u (%d bytes)",
 		diff, lower, lower,	upper, upper, upper - lower + 1);
 	int i;
 	if (IsWindowUnicode(hwndList))
@@ -99,7 +99,7 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 {
 	char szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
-	AnsiConvert openAllFiles(S.OpenAllFiles);
+	AnsiConvert openAllFiles(GetLangString(IDS_OPEN_ALL_FILES));
 
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);

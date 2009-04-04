@@ -4048,7 +4048,7 @@ void HexEditorWindow::CMD_open_partially()
 	if (!close("Open partially"))
 		return;
 	char szFileName[_MAX_PATH];
-	AnsiConvert openAllFiles(S.OpenAllFiles);
+	AnsiConvert openAllFiles(GetLangString(IDS_OPEN_ALL_FILES));
 
 	szFileName[0] = '\0';
 	OPENFILENAME ofn;
@@ -4892,7 +4892,7 @@ void HexEditorWindow::CMD_insertfile()
 {
 	char szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
-	AnsiConvert openAllFiles(S.OpenAllFiles);
+	AnsiConvert openAllFiles(GetLangString(IDS_OPEN_ALL_FILES));
 
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);

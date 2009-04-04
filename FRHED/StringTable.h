@@ -45,4 +45,7 @@ struct StringTable
 extern StringTable<LPWSTR> S;
 extern StringTable<WORD> IDS;
 
+
+LPWSTR GetLangString(WORD id);
+
 #endif // _STRING_TABLE_H_

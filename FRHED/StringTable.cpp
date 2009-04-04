@@ -35,3 +35,21 @@ StringTable<WORD> IDS =
 	IDS_ABOUTFRHEDVER,
 	IDS_OPEN_ALL_FILES,
 };
+
+/**
+ * @brief Get a string from resource.
+ * This function loads a string from resource string table by resource ID.
+ * @param [in] id Resource ID of the string to get.
+ * @return Pointer to string, or NULL if not found.
+ */
+LPWSTR GetLangString(WORD id)
+{
+	for (int i = 0 ; i < RTL_NUMBER_OF(IDS) ; ++i)
+	{
+		if (IDS[i] == id)
+		{
+			return S[i];
+		}
+	}
+	return NULL;
+};
