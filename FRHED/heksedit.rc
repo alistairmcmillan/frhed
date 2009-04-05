@@ -1395,6 +1395,17 @@ BEGIN
     IDS_ABOUT_FILENOTFOUND  "File\n%s\nnot found!"
 END
 
+// Bookmarks
+STRINGTABLE 
+BEGIN
+    IDS_BMK_INVALID_POSITION "Can not set bookmark at that position."
+    IDS_BMK_ALREADY_THERE   "There already is a bookmark on that position."
+    IDS_BMK_EMPTY_FILE      "Can not set bookmark in empty file."
+    IDS_BMK_MAX_AMOUNT      "Can not set any more bookmarks."
+    IDS_BMK_IS_INVALID      "Bookmark points to invalid position."
+    IDS_BMK_NONE_TOREMOVE   "No bookmarks to remove."
+    IDS_BMK_REMOVE_ALL      "Remove all bookmarks?"
+END
 
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////

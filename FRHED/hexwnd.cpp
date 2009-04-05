@@ -3986,13 +3986,15 @@ void HexEditorWindow::CMD_add_bookmark()
 	if (DataArray.GetLength() <= 0)
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "Can not set bookmark in empty file.", app, MB_ICONERROR);
+		LangString emptyFileErr(IDS_BMK_EMPTY_FILE);
+		MessageBox(hwnd, emptyFileErr, app, MB_ICONERROR);
 		return;
 	}
 	if (iBmkCount >= BMKMAX)
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "Can not set any more bookmarks.", app, MB_ICONERROR);
+		LangString cannotSetMoreErr(IDS_BMK_MAX_AMOUNT);
+		MessageBox(hwnd, cannotSetMoreErr, app, MB_ICONERROR);
 		return;
 	}
 	static_cast<dialog<AddBmkDlg>*>(this)->DoModal(hwnd);
@@ -4040,7 +4042,8 @@ void HexEditorWindow::CMD_goto_bookmark(int i)
 	else
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "Bookmark points to invalid position.", app, MB_ICONERROR);
+		LangString bmkInInvalidPos(IDS_BMK_IS_INVALID);
+		MessageBox(hwnd, bmkInInvalidPos, app, MB_ICONERROR);
 	}
 }
 
@@ -4050,7 +4053,8 @@ void HexEditorWindow::CMD_remove_bkm()
 	if (iBmkCount == 0)
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "No bookmarks to remove.", app, MB_ICONERROR);
+		LangString noBookmarkToRemove(IDS_BMK_NONE_TOREMOVE);
+		MessageBox(hwnd, noBookmarkToRemove, app, MB_ICONERROR);
 		return;
 	}
 	static_cast<dialog<RemoveBmkDlg>*>(this)->DoModal(hwnd);
@@ -4062,7 +4066,8 @@ void HexEditorWindow::CMD_remove_bkm()
 void HexEditorWindow::CMD_clear_all_bmk()
 {
 	LangString app(IDS_APPNAME);
-	int response = MessageBox(hwnd, "Really clear all bookmarks?",
+	LangString verifyRemoveAll(IDS_BMK_REMOVE_ALL);
+	int response = MessageBox(hwnd, verifyRemoveAll,
 		app, MB_YESNO | MB_ICONWARNING);
 	if (response != IDYES)
 		return;

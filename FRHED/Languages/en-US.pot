@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?group_id=13216&atid=113216\n"
-"POT-Creation-Date: 2009-04-05 14:58+0000\n"
+"POT-Creation-Date: 2009-04-05 17:07+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: English <frhed-devel@lists.sourceforge.net>\n"
@@ -1857,5 +1857,40 @@ msgstr ""
 #: heksedit.rc:1395
 #, c-format
 msgid "File\n%s\nnot found!"
+msgstr ""
+
+#: heksedit.rc:1401
+#, c-format
+msgid "Can not set bookmark at that position."
+msgstr ""
+
+#: heksedit.rc:1402
+#, c-format
+msgid "There already is a bookmark on that position."
+msgstr ""
+
+#: heksedit.rc:1403
+#, c-format
+msgid "Can not set bookmark in empty file."
+msgstr ""
+
+#: heksedit.rc:1404
+#, c-format
+msgid "Can not set any more bookmarks."
+msgstr ""
+
+#: heksedit.rc:1405
+#, c-format
+msgid "Bookmark points to invalid position."
+msgstr ""
+
+#: heksedit.rc:1406
+#, c-format
+msgid "No bookmarks to remove."
+msgstr ""
+
+#: heksedit.rc:1407
+#, c-format
+msgid "Remove all bookmarks?"
 msgstr ""
 

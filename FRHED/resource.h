@@ -331,6 +331,13 @@
 #define IDS_OFFSET_ERROR                10018
 #define IDS_ABOUT_BROWSER_ERR           10160
 #define IDS_ABOUT_FILENOTFOUND          10161
+#define IDS_BMK_INVALID_POSITION        10177
+#define IDS_BMK_ALREADY_THERE           10178
+#define IDS_BMK_EMPTY_FILE              10179
+#define IDS_BMK_MAX_AMOUNT              10180
+#define IDS_BMK_IS_INVALID              10181
+#define IDS_BMK_NONE_TOREMOVE           10182
+#define IDS_BMK_REMOVE_ALL              10183
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

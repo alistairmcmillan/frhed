@@ -46,6 +46,13 @@ struct StringTable
 	T OffsetErrror;
 	T AboutBrowserError;
 	T AboutFileNotFound;
+	T BookmarkInvalidPos;
+	T BookmarkAlreadyThere;
+	T BookmarkEmptyFile;
+	T BookmarkNoMore;
+	T BookmarkInInvalidPos;
+	T BookmarkNoneToRemove;
+	T BookmarkRemoveAll;
 };
 
 extern StringTable<LPWSTR> S;

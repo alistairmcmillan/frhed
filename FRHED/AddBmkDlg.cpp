@@ -78,8 +78,8 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 		if (offset < 0 || offset > DataArray.GetLength())
 		{
 			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Can not set bookmark at that position.",
-					app, MB_ICONERROR);
+			LangString cannotSetPos(IDS_BMK_INVALID_POSITION);
+			MessageBox(hDlg, cannotSetPos, app, MB_ICONERROR);
 			return TRUE;
 		}
 		// Is there already a bookmark on this offset?
@@ -88,8 +88,8 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			if (pbmkList[i].offset == offset)
 			{
 				LangString app(IDS_APPNAME);
-				MessageBox(hDlg, "There already is a bookmark on that position.",
-						app, MB_ICONERROR);
+				LangString alreadyBmk(IDS_BMK_ALREADY_THERE);
+				MessageBox(hDlg, alreadyBmk, app, MB_ICONERROR);
 				return TRUE;
 			}
 		}
