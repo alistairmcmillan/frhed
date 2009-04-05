@@ -41,6 +41,8 @@ struct StringTable
 	T DiffListItemFormat;
 	T AboutFrhed;
 	T OpenAllFiles;
+	T AboutBrowserError;
+	T AboutFileNotFound;
 };
 
 extern StringTable<LPWSTR> S;

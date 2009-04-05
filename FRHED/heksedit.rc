@@ -1380,6 +1380,14 @@ BEGIN
     IDS_OPEN_ALL_FILES      "All Files (*.*)\0*.*\0\0"
 END
 
+// About-dialog
+STRINGTABLE 
+BEGIN
+    IDS_ABOUT_BROWSER_ERR   "Could not open the browser."
+    IDS_ABOUT_FILENOTFOUND  "File\n%s\nnot found!"
+END
+
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 

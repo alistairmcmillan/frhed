@@ -326,6 +326,8 @@
 #define IDS_DIFFLISTITEMFORMAT          10001
 #define IDS_ABOUTFRHEDVER               10002
 #define IDS_OPEN_ALL_FILES              10003
+#define IDS_ABOUT_BROWSER_ERR           10160
+#define IDS_ABOUT_FILENOTFOUND          10161
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

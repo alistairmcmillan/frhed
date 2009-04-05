@@ -74,7 +74,8 @@ BOOL AboutDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			if ((UINT)hi <= HINSTANCE_ERROR)
 			{
 				LangString app(IDS_APPNAME);
-				MessageBox(hDlg, "Could not call browser.", app, MB_ICONERROR);
+				LangString browserErr(IDS_ABOUT_BROWSER_ERR);
+				MessageBox(hDlg, browserErr, app, MB_ICONERROR);
 			}
 		}
 		return TRUE;
@@ -87,8 +88,9 @@ BOOL AboutDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			if (!paths_DoesFileExist(contrList))
 			{
 				LangString app(IDS_APPNAME);
+				LangString fileNotFound(IDS_ABOUT_FILENOTFOUND);
 				TCHAR buf[4096] = {0};
-				_sntprintf(buf, RTL_NUMBER_OF(buf), "File\n%s\nnot found!",
+				_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, fileNotFound,
 						ContributorsList);
 				MessageBox(hDlg, buf, app, MB_ICONERROR);
 			}

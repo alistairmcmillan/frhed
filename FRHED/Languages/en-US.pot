@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?group_id=13216&atid=113216\n"
-"POT-Creation-Date: 2009-04-02 20:30+0000\n"
+"POT-Creation-Date: 2009-04-05 12:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: English <frhed-devel@lists.sourceforge.net>\n"
@@ -1814,18 +1814,33 @@ msgstr ""
 msgid "Goto last sector"
 msgstr ""
 
-#: heksedit.rc:1376
-#, c-format
-msgid "Version %u.%u.%u"
-msgstr ""
-
 #: heksedit.rc:1377
 #, c-format
-msgid "%d) 0x%x=%u to 0x%x=%u (%d bytes)"
+msgid "Frhed"
 msgstr ""
 
 #: heksedit.rc:1378
 #, c-format
+msgid "Version %u.%u.%u"
+msgstr ""
+
+#: heksedit.rc:1379
+#, c-format
+msgid "%d) 0x%x=%u to 0x%x=%u (%d bytes)"
+msgstr ""
+
+#: heksedit.rc:1380
+#, c-format
 msgid "All Files (*.*)\0*.*\0\0"
+msgstr ""
+
+#: heksedit.rc:1386
+#, c-format
+msgid "Could not open the browser."
+msgstr ""
+
+#: heksedit.rc:1387
+#, c-format
+msgid "File\n%s\nnot found!"
 msgstr ""
 
