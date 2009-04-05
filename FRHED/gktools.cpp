@@ -7,6 +7,7 @@
 #include "gktools.h"
 #include "simparr.h"
 #include "OSTools.h"
+#include "LangString.h"
 
 static PList PartitionInfoList;
 
@@ -212,8 +213,9 @@ INT_PTR OpenDriveDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			BOOL admin = ostools_HaveAdminAccess();
 			if (!admin)
 			{
+				LangString app(IDS_APPNAME);
 				MessageBox(hDlg, _T("You need to have Administrator privileges for getting list of drives."),
-						_T("Access Denied"), MB_OK | MB_ICONSTOP);
+						app, MB_OK | MB_ICONSTOP);
 				return TRUE;
 			}
 			ShowWindow(hDlg, SW_SHOW);
@@ -251,7 +253,8 @@ INT_PTR OpenDriveDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 				IPhysicalDrive *Drive = CreatePhysicalDriveInstance();
 				if (Drive == 0 || !Drive->Open(SelectedPartitionInfo->m_dwDrive))
 				{
-					MessageBox(hwnd, "Unable to open drive", "Open Drive", MB_ICONERROR);
+					LangString app(IDS_APPNAME);
+					MessageBox(hwnd, "Unable to open drive", app, MB_ICONERROR);
 					delete Drive;
 					return TRUE;
 				}

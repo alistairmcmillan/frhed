@@ -358,12 +358,14 @@ int HexEditorWindow::load_file(const char *fname)
 			}
 			else
 			{
-				MessageBox(hwnd, "Error while reading from file.", "Load error", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(hwnd, "Error while reading from file.", app, MB_ICONERROR);
 			}
 		}
 		else
 		{
-			MessageBox(hwnd, "Not enough memory to load file.", "Load error", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hwnd, "Not enough memory to load file.", app, MB_ICONERROR);
 		}
 		_close(filehandle);
 	}
@@ -371,7 +373,8 @@ int HexEditorWindow::load_file(const char *fname)
 	{
 		char buf[500];
 		sprintf(buf, "Error code 0x%x occured while opening file %s.", errno, fname);
-		MessageBox(hwnd, buf, "Load error", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, buf, app, MB_ICONERROR);
 	}
 	if (bLoaded)
 	{
@@ -873,7 +876,9 @@ void HexEditorWindow::character(char ch)
 		// caret at EOF
 		if (!DataArray.InsertAtGrow(iCurByte, 0, 1))
 		{
-			MessageBox (hwnd, "Not enough memory for inserting character.", "Insert mode error", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox (hwnd, "Not enough memory for inserting character.",
+					app, MB_ICONERROR);
 			return;
 		}
 		iCurNibble = 0;
@@ -1411,7 +1416,8 @@ void HexEditorWindow::command(int cmd)
 			{
 				buf2 += sprintf(buf2, "MRU %d=%s\n", i + 1, strMRU[i]);
 			}
-			MessageBox(hwnd, buf, "Internal status", MB_OK);
+			LangString app(IDS_APPNAME);
+			MessageBox(hwnd, buf, app, MB_OK);
 		}
 		break;
 #endif
@@ -2923,14 +2929,18 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 			if (filehandle != -1)
 			{
 				// Write file.
+				LangString app(IDS_APPNAME);
 				if (_write(filehandle, pMem, buflen - 1) != -1)
-					MessageBox(hwnd, "Hexdump saved.", "Export hexdump", MB_ICONINFORMATION);
+					MessageBox(hwnd, "Hexdump saved.", app, MB_ICONINFORMATION);
 				else
-					MessageBox(hwnd, "Could not save Hexdump.", "Export hexdump", MB_ICONERROR);
+					MessageBox(hwnd, "Could not save Hexdump.", app, MB_ICONERROR);
 				_close(filehandle);
 			}
 			else
-				MessageBox(hwnd, "Could not save Hexdump.", "Export hexdump", MB_ICONERROR);
+			{
+				LangString app(IDS_APPNAME);
+				MessageBox(hwnd, "Could not save Hexdump.", app, MB_ICONERROR);
+			}
 		}//end
 		if (iCopyHexdumpType == IDC_EXPORTRTF)
 		{
@@ -2953,7 +2963,11 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 			CloseClipboard();
 		}
 		else
-			MessageBox(hwnd, "Not enough memory for hexdump to clipboard.", "Export hexdump", MB_ICONERROR);
+		{
+			LangString app(IDS_APPNAME);
+			MessageBox(hwnd, "Not enough memory for hexdump to clipboard.",
+					app, MB_ICONERROR);
+		}
 	}
 	else
 	{
@@ -2965,7 +2979,10 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 			CloseClipboard();
 		}
 		else
-			MessageBox(hwnd, "Could not hexdump to clipboard.", "Export hexdump", MB_ICONERROR);
+		{
+			LangString app(IDS_APPNAME);
+			MessageBox(hwnd, "Could not hexdump to clipboard.", app, MB_ICONERROR);
+		}
 		pMem = NULL;
 	}
 	delete [] pMem;
@@ -3085,7 +3102,8 @@ int HexEditorWindow::CMD_save_as()
 	int filehandle = _open(szFileName, _O_RDWR|_O_CREAT|_O_TRUNC|_O_BINARY, _S_IREAD|_S_IWRITE);
 	if (filehandle == -1)
 	{
-		MessageBox(hwnd, "Could not save file.", "Save as", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "Could not save file.", app, MB_ICONERROR);
 		return 0;
 	}
 	int done = 0;
@@ -3103,7 +3121,8 @@ int HexEditorWindow::CMD_save_as()
 	}
 	else
 	{
-		MessageBox(hwnd, "Could not save file.", "Save as", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "Could not save file.", app, MB_ICONERROR);
 	}
 	_close(filehandle);
 	set_wnd_title();
@@ -3133,9 +3152,10 @@ int HexEditorWindow::CMD_save()
 		//& we need a copy of the file to be present for saving a partially opened file
 		if (!CopyFile(filename, newname, TRUE))
 		{
+			LangString app(IDS_APPNAME);
 			MessageBox(hwnd,
 				"Could not backup file\n"
-				"Backup aborted, Save continuing", "Backup", MB_ICONWARNING);
+				"Backup aborted, Save continuing", app, MB_ICONWARNING);
 		}
 	}
 	int done = 0;
@@ -3145,7 +3165,8 @@ int HexEditorWindow::CMD_save()
 		int filehandle = _open(filename, _O_RDWR|_O_BINARY);
 		if (filehandle == -1)
 		{
-			MessageBox(hwnd, "Could not save partially opened file.", "Save", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hwnd, "Could not save partially opened file.", app, MB_ICONERROR);
 			return 0;
 		}
 		int nbl = DataArray.GetLength(); // Length of the DataArray
@@ -3170,7 +3191,8 @@ int HexEditorWindow::CMD_save()
 				_lseeki64(filehandle, i + r, SEEK_SET);
 				if (-1 == _write(filehandle, &tmp, 1))
 				{
-					MessageBox(hwnd, "Could not move data in the file.", "Save", MB_ICONERROR);
+					LangString app(IDS_APPNAME);
+					MessageBox(hwnd, "Could not move data in the file.", app, MB_ICONERROR);
 					_close(filehandle);
 					return 0;
 				}
@@ -3181,7 +3203,8 @@ int HexEditorWindow::CMD_save()
 				if (_lseeki64(filehandle, iPartialFileLen + r, SEEK_SET) == -1 ||
 					!SetEndOfFile((HANDLE)_get_osfhandle(filehandle)))
 				{
-					MessageBox(hwnd, "Could not resize the file.", "Save", MB_ICONERROR);
+					LangString app(IDS_APPNAME);
+					MessageBox(hwnd, "Could not resize the file.", app, MB_ICONERROR);
 					_close(filehandle);
 					return 0;
 				}
@@ -3189,11 +3212,13 @@ int HexEditorWindow::CMD_save()
 		}
 		if (_lseeki64(filehandle, iPartialOffset, 0) == -1)
 		{
-			MessageBox(hwnd, "Could not seek in file.", "Save", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hwnd, "Could not seek in file.", app, MB_ICONERROR);
 		}
 		else if (_write( filehandle, DataArray, nbl) == -1)
 		{
-			MessageBox(hwnd, "Could not write data to file.", "Save", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hwnd, "Could not write data to file.", app, MB_ICONERROR);
 		}
 		else
 		{
@@ -3209,12 +3234,14 @@ int HexEditorWindow::CMD_save()
 	int filehandle = _open(filename, _O_RDWR|_O_CREAT|_O_TRUNC|_O_BINARY, _S_IREAD|_S_IWRITE);
 	if (filehandle == -1)
 	{
-		MessageBox(hwnd, "Could not save file.", "Save", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "Could not save file.", app, MB_ICONERROR);
 		return 0;
 	}
 	if (_write(filehandle, DataArray, DataArray.GetLength()) == -1)
 	{
-		MessageBox(hwnd, "Could not write data to file.", "Save", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "Could not write data to file.", app, MB_ICONERROR);
 	}
 	else
 	{
@@ -3520,8 +3547,9 @@ void HexEditorWindow::save_ini_data()
 	}
 	else
 	{
+		LangString app(IDS_APPNAME);
 		MessageBox(hwnd, "Could not save preferences to registry.",
-				ApplicationName, MB_ICONERROR);
+				app, MB_ICONERROR);
 	}
 }
 
@@ -3939,8 +3967,9 @@ void HexEditorWindow::CMD_MRU_selected(int i)
 	}
 	else
 	{
+		LangString app(IDS_APPNAME);
 		MessageBox(hwnd, "This file could not be accessed and\n"
-			"will be removed from the MRU list.", "MRU list", MB_ICONERROR);
+			"will be removed from the MRU list.", app, MB_ICONERROR);
 		--iMRU_count;
 		for ( ; i < iMRU_count ; i++)
 			strcpy(strMRU[i], strMRU[i + 1]);
@@ -3953,12 +3982,14 @@ void HexEditorWindow::CMD_add_bookmark()
 {
 	if (DataArray.GetLength() <= 0)
 	{
-		MessageBox(hwnd, "Can not set bookmark in empty file.", "Add bookmark", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "Can not set bookmark in empty file.", app, MB_ICONERROR);
 		return;
 	}
 	if (iBmkCount >= BMKMAX)
 	{
-		MessageBox(hwnd, "Can not set any more bookmarks.", "Add bookmark", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "Can not set any more bookmarks.", app, MB_ICONERROR);
 		return;
 	}
 	static_cast<dialog<AddBmkDlg>*>(this)->DoModal(hwnd);
@@ -4005,7 +4036,8 @@ void HexEditorWindow::CMD_goto_bookmark(int i)
 	}
 	else
 	{
-		MessageBox(hwnd, "Bookmark points to invalid position.", "Go to bookmark", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "Bookmark points to invalid position.", app, MB_ICONERROR);
 	}
 }
 
@@ -4014,7 +4046,8 @@ void HexEditorWindow::CMD_remove_bkm()
 {
 	if (iBmkCount == 0)
 	{
-		MessageBox(hwnd, "No bookmarks to remove.", "Remove bookmark", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "No bookmarks to remove.", app, MB_ICONERROR);
 		return;
 	}
 	static_cast<dialog<RemoveBmkDlg>*>(this)->DoModal(hwnd);
@@ -4025,8 +4058,9 @@ void HexEditorWindow::CMD_remove_bkm()
  */
 void HexEditorWindow::CMD_clear_all_bmk()
 {
+	LangString app(IDS_APPNAME);
 	int response = MessageBox(hwnd, "Really clear all bookmarks?",
-		"Clear all bookmarks", MB_YESNO | MB_ICONWARNING);
+		app, MB_YESNO | MB_ICONWARNING);
 	if (response != IDYES)
 		return;
 	while (iBmkCount)
@@ -4064,9 +4098,10 @@ void HexEditorWindow::CMD_open_partially()
 	OpenPartiallyDlg::filehandle = _open(szFileName, _O_RDONLY|_O_BINARY);
 	if (OpenPartiallyDlg::filehandle == -1)
 	{
+		LangString app(IDS_APPNAME);
 		char buf[500];
 		sprintf(buf, "Error code 0x%x occured while opening file %s.", errno, szFileName);
-		MessageBox(hwnd, buf, "Open partially", MB_ICONERROR);
+		MessageBox(hwnd, buf, app, MB_ICONERROR);
 		return;
 	}
 	int response = static_cast<dialog<OpenPartiallyDlg>*>(this)->DoModal(hwnd);
@@ -4160,12 +4195,13 @@ void HexEditorWindow::dropfiles(HDROP hDrop)
 	if (SUCCEEDED(hres))
 	{
 		// Trying to open a link file: decision by user required.
+		LangString app(IDS_APPNAME);
 		int ret = MessageBox( hwnd,
 			"You are trying to open a link file.\n"
 			"Click on Yes if you want to open the file linked to,\n"
 			"or click on No if you want to open the link file itself.\n"
 			"Choose Cancel if you want to abort opening.",
-			ApplicationName, MB_YESNOCANCEL | MB_ICONWARNING);
+			app, MB_YESNOCANCEL | MB_ICONWARNING);
 		switch( ret )
 		{
 		case IDYES:
@@ -4183,7 +4219,8 @@ void HexEditorWindow::CMD_apply_template()
 {
 	if (DataArray.GetLength() == 0)
 	{
-		MessageBox(hwnd, "File is empty.", "Template error", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "File is empty.", app, MB_ICONERROR);
 		return;
 	}
 	// Get name of template file.
@@ -4213,18 +4250,20 @@ void HexEditorWindow::apply_template(char *pcTemplate)
 	bool success = tmpl.OpenTemplate(pcTemplate);
 	if (!success)
 	{
+		LangString app(IDS_APPNAME);
 		char buf[500];
 		sprintf(buf, "Could not open template file %s.", pcTemplate);
-		MessageBox(hwnd, buf, "Template error", MB_ICONERROR);
+		MessageBox(hwnd, buf, app, MB_ICONERROR);
 		return;
 	}
 
 	success = tmpl.LoadTemplateData();
 	if (!success)
 	{
+		LangString app(IDS_APPNAME);
 		char buf[500];
 		sprintf(buf, "Could not load template from file %s.", pcTemplate);
-		MessageBox(hwnd, buf, "Template error", MB_ICONERROR);
+		MessageBox(hwnd, buf, app, MB_ICONERROR);
 		return;
 	}
 
@@ -4288,8 +4327,9 @@ HRESULT HexEditorWindow::ResolveIt(LPCSTR lpszLinkFile, LPSTR lpszPath)
  */
 void HexEditorWindow::CMD_colors_to_default()
 {
+	LangString app(IDS_APPNAME);
 	if (MessageBox(hwnd, "Really reset colors to default values?",
-			ApplicationName, MB_YESNO | MB_ICONWARNING) == IDYES)
+			app, MB_YESNO | MB_ICONWARNING) == IDYES)
 	{
 		iBmkColor = RGB( 255, 0, 0 );
 		iSelBkColorValue = RGB( 255, 255, 0 );
@@ -4501,7 +4541,9 @@ void HexEditorWindow::CMD_findnext()
 			}
 			else
 			{
-				MessageBox(hwnd, "Could not find any more occurances.", "Find next", MB_ICONINFORMATION);
+				LangString app(IDS_APPNAME);
+				MessageBox(hwnd, "Could not find any more occurances.", app,
+						MB_ICONINFORMATION);
 			}
 			delete [] pcFindstring;
 		}
@@ -4515,7 +4557,8 @@ void HexEditorWindow::CMD_findnext()
 	{
 		//Can't call CMD_find cause it won't alloc a new buffer
 		// There is no findstring.
-		MessageBox(hwnd, "String to find not specified.", "Find next", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "String to find not specified.", app, MB_ICONERROR);
 	}
 }
 
@@ -4585,7 +4628,9 @@ void HexEditorWindow::CMD_findprev()
 			}
 			else
 			{
-				MessageBox(hwnd, "Could not find any more occurances.", "Find previous", MB_ICONINFORMATION);
+				LangString app(IDS_APPNAME);
+				MessageBox(hwnd, "Could not find any more occurances.", app,
+						MB_ICONINFORMATION);
 			}
 			delete [] pcFindstring;
 		}
@@ -4600,7 +4645,8 @@ void HexEditorWindow::CMD_findprev()
 	else
 	{
 		// There is no findstring.
-		MessageBox(hwnd, "String to find not specified.", "Find previous", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "String to find not specified.", app, MB_ICONERROR);
 	}
 }
 
@@ -4612,7 +4658,11 @@ void HexEditorWindow::CMD_summon_text_edit()
 		return;
 	HINSTANCE hi = ShellExecute( hwnd, "open", TexteditorName, filename, NULL, SW_SHOWNORMAL );
 	if ((int) hi <= HINSTANCE_ERROR)
-		MessageBox(hwnd, "An error occured when calling the text editor.", "Open in text editor", MB_ICONERROR);
+	{
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "An error occured when calling the text editor.",
+			app, MB_ICONERROR);
+	}
 }
 
 //-------------------------------------------------------------------
@@ -4865,12 +4915,13 @@ void HexEditorWindow::CMD_fw()
 
 void HexEditorWindow::CMD_deletefile()
 {
+	LangString app(IDS_APPNAME);
 	if (IDYES != MessageBox(hwnd, "Are you sure you want to delete this file?",
-			ApplicationName, MB_ICONWARNING | MB_YESNO))
+			app, MB_ICONWARNING | MB_YESNO))
 		return;
 	if (remove(filename) != 0)
 	{
-		MessageBox(hwnd, "Could not delete file.", "Delete file", MB_ICONERROR);
+		MessageBox(hwnd, "Could not delete file.", app, MB_ICONERROR);
 		return;
 	}
 	//Remove from MRU
@@ -4906,7 +4957,8 @@ void HexEditorWindow::CMD_insertfile()
 	int fhandle = _open(szFileName, _O_RDONLY|_O_BINARY);
 	if (fhandle == -1)
 	{
-		MessageBox(hwnd, "Error opening file", "Insert file", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "Error opening file", app, MB_ICONERROR);
 		return;
 	}
 	int inslen = _filelength(fhandle);
@@ -4977,13 +5029,15 @@ void HexEditorWindow::CMD_insertfile()
 			}
 			else
 			{
-				MessageBox(hwnd, "Could not insert data", "Insert file", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(hwnd, "Could not insert data", app, MB_ICONERROR);
 			}
 		}
 	}
 	else
 	{
-		MessageBox(hwnd, "Error checking file size", "Insert file", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "Error checking file size", app, MB_ICONERROR);
 	}
 	_close(fhandle);
 }
@@ -5019,7 +5073,10 @@ void HexEditorWindow::CMD_saveselas()
 			_close(filehandle);
 		}
 		if (complain)
-			MessageBox(hwnd, complain, "Save as", MB_ICONERROR);
+		{
+			LangString app(IDS_APPNAME);
+			MessageBox(hwnd, complain, app, MB_ICONERROR);
+		}
 	}
 	repaint();
 }
@@ -5050,7 +5107,8 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 	int type = hexin.CheckType();
 	if (hexin.GetSize() == 0)
 	{
-		MessageBox(hwnd, "No data present\nCannot continue!", "Import Hexdump", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hwnd, "No data present\nCannot continue!", app, MB_ICONERROR);
 		return false;
 	}
 
@@ -5064,7 +5122,8 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 	SimpleArray<unsigned char> *ptrArray = NULL;
 	bool ret = true;
 
-	switch (MessageBox(hwnd, msg, "Import Hexdump", MB_YESNOCANCEL))
+	LangString app(IDS_APPNAME);
+	switch (MessageBox(hwnd, msg, app, MB_YESNOCANCEL))
 	{
 	case IDYES:
 		//return load_hexfile_1::StreamIn(*this, hexin); //Display output
@@ -5105,11 +5164,12 @@ void HexEditorWindow::CMD_open_hexdump()
 		//Check if user wants to use clipboard
 		if (hClipMemory)
 		{
+			LangString app(IDS_APPNAME);
 			switch (MessageBox(hwnd,
 				"There is text on the clipboard.\n"
 				"Do you want to import from\n"
 				"the clipboard instead of a file?",
-				"Import Hexdump",
+				app,
 				MB_YESNOCANCEL))
 			{
 			case IDCANCEL:
@@ -5139,7 +5199,9 @@ void HexEditorWindow::CMD_open_hexdump()
 		}
 		else
 		{
-			MessageBox(hwnd, "Could not get text from the clipboard.\nCannot continue!", "Import Hexdump", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hwnd, "Could not get text from the clipboard.\nCannot continue!",
+					app, MB_ICONERROR);
 		}
 		CloseClipboard();
 	}
@@ -5163,7 +5225,9 @@ void HexEditorWindow::CMD_open_hexdump()
 		FILE *f = fopen(szFileName, "rb");
 		if (f == 0)
 		{
-			MessageBox(hwnd,"Could not get text from the file.\nCannot continue!", "Import Hexdump", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hwnd,"Could not get text from the file.\nCannot continue!",
+				app, MB_ICONERROR);
 			return;
 		}
 		HexFile hexfile;
@@ -5592,8 +5656,9 @@ void HexEditorWindow::status_bar_click(bool left)
  */
 void HexEditorWindow::CMD_adopt_colours()
 {
+	LangString app(IDS_APPNAME);
 	if (MessageBox(hwnd, "Really adopt the operating system colour scheme?",
-			ApplicationName, MB_YESNO | MB_ICONWARNING) == IDYES)
+			app, MB_YESNO | MB_ICONWARNING) == IDYES)
 	{
 		iTextColorValue = GetSysColor(COLOR_WINDOWTEXT);
 		iBkColorValue = GetSysColor(COLOR_WINDOW);
@@ -5663,7 +5728,8 @@ void HexEditorWindow::CMD_move_copy(int iMove1stEnd, int iMove2ndEndorLen, bool 
 		int len = iMove2ndEndorLen - iMove1stEnd + 1;
 		if (!DataArray.SetSize(clen + len))
 		{
-			MessageBox(hwnd, "Not enough memory", "Move/Copy", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hwnd, "Not enough memory", app, MB_ICONERROR);
 			return;
 		}
 		else

@@ -4,6 +4,7 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "LangArray.h"
+#include "LangString.h"
 
 void GetWindowText(HWND hwnd, SimpleString &str)
 {
@@ -115,7 +116,8 @@ INT_PTR ChangeInstDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 			}
 			if (iLoadInst == -1)
 			{
-				MessageBox(hwnd,"No instance data present","Change Instance",MB_OK);
+				LangString app(IDS_APPNAME);
+				MessageBox(hwnd, "No instance data present", app, MB_OK);
 				EndDialog(hw, IDCANCEL);
 				return TRUE;
 			}

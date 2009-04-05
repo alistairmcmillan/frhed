@@ -28,6 +28,7 @@
 #include "BinTrans.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 static HWND hwndNextViewer = NULL;
 
@@ -78,7 +79,9 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 	iPasteTimes = GetDlgItemInt(hDlg, IDC_FPASTE_PASTETIMES, 0, TRUE);
 	if (iPasteTimes <= 0)
 	{
-		MessageBox(hDlg, "Number of times to paste must be at least 1.", "Paste", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Number of times to paste must be at least 1.", app,
+				MB_ICONERROR);
 		return FALSE;
 	}
 	iPasteSkip = GetDlgItemInt(hDlg, IDC_FPASTE_SKIPS, 0, TRUE);
@@ -86,7 +89,9 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 	int i = SendMessage(list, LB_GETCURSEL, 0, 0);
 	if (i == LB_ERR)
 	{
-		MessageBox(hDlg, "You need to select a clipboard format to use.", "Paste", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "You need to select a clipboard format to use.", app,
+				MB_ICONERROR);
 		return FALSE;
 	}
 	UINT uFormat = SendMessage(list, LB_GETITEMDATA, i, 0);
@@ -139,7 +144,8 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 	}
 	if (destlen == 0)
 	{
-		MessageBox(hDlg, "Tried to paste zero-length array.", "Paste", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Tried to paste zero-length array.", app, MB_ICONERROR);
 		delete [] pcPastestring;
 		return FALSE;
 	}
@@ -159,7 +165,8 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 		{
 			if (!DataArray.InsertAtGrow(i, (unsigned char*)pcPastestring, 0, destlen))
 			{
-				MessageBox(hDlg, "Not enough memory for inserting.", "Paste", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(hDlg, "Not enough memory for inserting.", app, MB_ICONERROR);
 				break;
 			}
 			i += destlen + iPasteSkip;
@@ -174,7 +181,8 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 		// Enough space for writing?
 		if (DataArray.GetLength() - iCurByte < (iPasteSkip + destlen) * iPasteTimes)
 		{
-			MessageBox(hDlg, "Not enough space for overwriting.", "Paste", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Not enough space for overwriting.", app, MB_ICONERROR);
 			delete [] pcPastestring;
 			return TRUE;
 		}
@@ -283,6 +291,11 @@ void FastPasteDlg::RefreshClipboardFormats(HWND hDlg)
 	}
 }
 
+/**
+ * @brief Dialog control message handler.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] wParam Control ID.
+ */
 BOOL FastPasteDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 {
 	switch (wParam)

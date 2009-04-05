@@ -27,6 +27,7 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 BOOL SelectBlockDlg::OnInitDialog(HWND hDlg)
 {
@@ -51,14 +52,16 @@ BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			sscanf(buf, "x%x", &iStartOfSelSetting) == 0 &&
 			sscanf(buf, "%d", &iStartOfSelSetting) == 0)
 		{
-			MessageBox(hDlg, "Start offset not recognized.", "Select block", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Start offset not recognized.", app, MB_ICONERROR);
 			return TRUE;
 		}
 		if (GetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSETEND, buf, 128) &&
 			sscanf(buf, "x%x", &iEndOfSelSetting) == 0 &&
 			sscanf(buf, "%d", &iEndOfSelSetting) == 0)
 		{
-			MessageBox(hDlg, "End offset not recognized.", "Select block", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "End offset not recognized.", app, MB_ICONERROR);
 			return TRUE;
 		}
 		//make the selection valid if it is not

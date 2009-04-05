@@ -27,6 +27,7 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 C_ASSERT(sizeof(FillWithDialog) == sizeof(HexEditorWindow)); // disallow instance members
 
@@ -237,19 +238,23 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 					FWFile = _open(szFWFileName, _O_RDONLY | _O_BINARY);
 					if (FWFile == -1)
 					{//if there is error opening
-						MessageBox(hDlg, "Error opening file","Error", MB_ICONERROR);//tell user but don't close dlgbox
+						LangString app(IDS_APPNAME);
+						MessageBox(hDlg, "Error opening file", app, MB_ICONERROR);//tell user but don't close dlgbox
 						return 1;//didn't process this message
 					}//if
 					FWFilelen = _filelength(FWFile);
 					if (FWFilelen == 0)
 					{//if filelen is zero
-						MessageBox(hDlg, "Can't fill a selection with a file of zero size.", "Error", MB_ICONERROR);//tell user but don't close dlgbox
+						LangString app(IDS_APPNAME);
+						MessageBox(hDlg, "Can't fill a selection with a file of zero size.",
+								app, MB_ICONERROR);//tell user but don't close dlgbox
 						_close(FWFile);//close file
 						return 1;//didn't process this message
 					}//if
 					else if (FWFilelen == -1)
 					{//error returned by _filelength
-						MessageBox(hDlg, "Error opening file", "Error", MB_ICONERROR);//tell user but don't close dlgbox
+						LangString app(IDS_APPNAME);
+						MessageBox(hDlg, "Error opening file", app, MB_ICONERROR);//tell user but don't close dlgbox
 						_close(FWFile);//close file
 						return 1;//didn't process this message
 					}//elseif
@@ -258,13 +263,17 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 				{//0-input
 					if (!buflen)
 					{//no hex input
-						MessageBox(hDlg, "Can't fill a selection with a string of zero size.", "Error", MB_ICONERROR);//tell user but don't close dlgbox
+						LangString app(IDS_APPNAME);
+						MessageBox(hDlg, "Can't fill a selection with a string of zero size.",
+								app, MB_ICONERROR);//tell user but don't close dlgbox
 						return 1;//didn't process this message
 					}//if
 					int i = GetDlgItemText(hDlg, IDC_HEX, pcFWText, FW_MAX);
 					if (i == 0 || i == FW_MAX - 1)
 					{//error
-						MessageBox(hDlg, "Too great a number of bytes to fill with or some other error.", "Error", MB_ICONERROR);//tell user but don't close dlgbox
+						LangString app(IDS_APPNAME);
+						MessageBox(hDlg, "Too great a number of bytes to fill with or some other error.",
+								app, MB_ICONERROR);//tell user but don't close dlgbox
 						return 1;//didn't process this message
 					}//if
 					hexstring2charstring();//just in case

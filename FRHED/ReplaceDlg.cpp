@@ -30,6 +30,7 @@
 #include "hexwdlg.h"
 #include "BinTrans.h"
 #include "FindUtil.h"
+#include "LangString.h"
 
 // String containing data to replace.
 SimpleString ReplaceDlg::strToReplaceData;
@@ -114,7 +115,8 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 {
 	if (!bSelected)
 	{
-		MessageBox(hDlg, "Data to replace must be selected.", "Replace", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Data to replace must be selected.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	int i = iGetStartOfSelection();
@@ -124,7 +126,8 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 		// Selected data is to be deleted, since replace-with data is empty string.
 		if (!DataArray.Replace(i, n, 0, 0))
 		{
-			MessageBox(hDlg, "Could not delete selected data.", "Replace", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Could not delete selected data.", app, MB_ICONERROR);
 			return FALSE;
 		}
 		bSelected = FALSE;
@@ -135,7 +138,8 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 		// Replace with non-zero-length data.
 		if (!DataArray.Replace(i, n, (unsigned char *)(char *)strReplaceWithData, strReplaceWithData.StrLen()))
 		{
-			MessageBox(hDlg, "Replacing failed.", "Replace", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Replacing failed.", app, MB_ICONERROR);
 			return FALSE;
 		}
 		iEndOfSelection = iStartOfSelection + strReplaceWithData.StrLen() - 1;
@@ -146,12 +150,14 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 		SimpleArray<char> out;
 		if (!transl_text_to_binary(out))
 		{
-			MessageBox(hDlg, "Could not translate text to binary.", "Replace", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Could not translate text to binary.", app, MB_ICONERROR);
 			return FALSE;
 		}
 		if (!DataArray.Replace(i, n, (unsigned char*)(char*)out, out.GetLength()))
 		{
-			MessageBox(hDlg, "Replacing failed.", "Replace", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Replacing failed.", app, MB_ICONERROR);
 			return FALSE;
 		}
 		iEndOfSelection = iStartOfSelection + out.GetLength() - 1;
@@ -189,7 +195,8 @@ void ReplaceDlg::replace_directed(HWND hDlg, int finddir, LPCTSTR title)
 	Text2BinTranslator tr_find(strToReplaceData), tr_replace(strReplaceWithData);
 	if (tr_find.bCompareBin(tr_replace, iCharacterSet, iBinaryMode))
 	{
-		MessageBox(hDlg, _T("To-replace and replace-with data are same."), _T("Replace all following occurances"), MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, _T("To-replace and replace-with data are same."), app, MB_ICONERROR);
 		return;
 	}
 	WaitCursor wc;
@@ -239,7 +246,8 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			int select_len = iGetEndOfSelection() - sel_start + 1;
 			if (!transl_binary_to_text((char *)&DataArray[sel_start], select_len))
 			{
-				MessageBox(hDlg, _T("Could not use selection as replace target."), _T("Replace"), MB_OK);
+				LangString app(IDS_APPNAME);
+				MessageBox(hDlg, _T("Could not use selection as replace target."), app, MB_OK);
 				EndDialog(hDlg, IDCANCEL);
 				return TRUE;
 			}

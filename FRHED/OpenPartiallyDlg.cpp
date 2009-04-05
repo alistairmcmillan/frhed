@@ -27,6 +27,7 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 int OpenPartiallyDlg::filehandle = 0;
 bool OpenPartiallyDlg::bShowFileStatsPL = false;
@@ -68,14 +69,16 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 	if (GetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTES, buf, 128) &&
 		sscanf(buf, "%u", &numBytesPl) == 0)
 	{
-		MessageBox(hDlg, "Number of bytes not recognized.", "Open partially", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Number of bytes not recognized.", app, MB_ICONERROR);
 		return FALSE;
 	}
 
 	if (numBytesPl >= INT_MAX)
 	{
+		LangString app(IDS_APPNAME);
 		MessageBox(hDlg, "Cannot open more than 2 GB of data.",
-				"Open partially", MB_ICONERROR);
+				app, MB_ICONERROR);
 		return FALSE;
 	}
 
@@ -86,8 +89,9 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		iStartPL = iPLFileLen - numBytesPl;
 		if (iStartPL < 0)
 		{
+			LangString app(IDS_APPNAME);
 			MessageBox(hDlg, "Specified number of bytes to load\ngreater than file size.",
-					"Open partially", MB_ICONERROR);
+					app, MB_ICONERROR);
 			return FALSE;
 		}
 	}
@@ -95,12 +99,14 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		sscanf(buf, "x%llx", &iStartPL) == 0 &&
 		sscanf(buf, "%lld", &iStartPL) == 0)
 	{
-		MessageBox(hDlg, "Start offset not recognized.", "Open partially", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Start offset not recognized.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	if (iStartPL + numBytesPl > iPLFileLen)
 	{
-		MessageBox(hDlg, "Too many bytes to load.", "Open partially", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Too many bytes to load.", app, MB_ICONERROR);
 		return FALSE;
 	}
 
@@ -122,12 +128,14 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		else
 		{
 			DataArray.ClearAll();
-			MessageBox(hDlg, "Error while reading from file.", "Open partially", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Error while reading from file.", app, MB_ICONERROR);
 		}
 	}
 	else
 	{
-		MessageBox(hDlg, "Not enough memory to load file.", "Open partially", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Not enough memory to load file.", app, MB_ICONERROR);
 	}
 	return done;
 }

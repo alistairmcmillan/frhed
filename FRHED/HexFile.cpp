@@ -27,6 +27,8 @@
 #include "Simparr.h"
 #include "HexFile.h"
 #include "HexFileStream.h"
+#include "resource.h"
+#include "LangString.h"
 
 /**
  * @brief Convert hex byte to numeric value.
@@ -175,9 +177,10 @@ bool HexFile::ParseSimple()
 			{
 				if (!m_data.SetSize(ii + 1))
 				{
+					LangString app(IDS_APPNAME);
 					UINT ret = MessageBox(m_hwnd, "Not enough memory to import data.\n"
 							"Cannot continue!\nDo you want to keep what has been found so far?",
-							"Import Hexdump", MB_YESNO | MB_ICONERROR);
+							app, MB_YESNO | MB_ICONERROR);
 					return IDYES == ret;
 				}
 				m_data.ExpandToSize();
@@ -192,9 +195,10 @@ bool HexFile::ParseSimple()
 		}
 		else if (!_istspace(temp[0]) && diio)
 		{
+			LangString app(IDS_APPNAME);
 			UINT ret = MessageBox(m_hwnd, "Illegal character found.\n"
 					"Ignore further illegal characters?",
-					"Import Hexdump", MB_YESNOCANCEL | MB_ICONERROR);
+					app, MB_YESNOCANCEL | MB_ICONERROR);
 			switch (ret)
 			{
 			case IDYES:
@@ -215,6 +219,7 @@ bool HexFile::ParseSimple()
  */
 bool HexFile::ParseFormatted()
 {
+	LangString app(IDS_APPNAME);
 	int temp[4] = {0};
 	unsigned char c[4] = {0};
 	int i, ii = 0, ls, bpl, fo = 0, fol;
@@ -239,7 +244,7 @@ bool HexFile::ParseFormatted()
 			if (! _istxdigit(c[0]) && diio)
 			{
 				UINT ret = MessageBox(m_hwnd, "Illegal character in offset.\n"
-						"Ignore further invalid offsets?", "Import Hexdump",
+						"Ignore further invalid offsets?", app,
 						MB_YESNOCANCEL | MB_ICONERROR);
 				switch (ret)
 				{
@@ -271,7 +276,7 @@ bool HexFile::ParseFormatted()
 				sprintf(msg,
 					"The first offset found was 0x%x, which is greater than zero.\n"
 					"Do you want to insert %d null bytes at the start of the data?", tmp, tmp);
-				UINT ret = MessageBox(m_hwnd, msg, "Import Hexdump", MB_YESNO | MB_ICONWARNING);
+				UINT ret = MessageBox(m_hwnd, msg, app, MB_YESNO | MB_ICONWARNING);
 				if (ret == IDYES)
 				{
 					ii = tmp;
@@ -291,7 +296,7 @@ bool HexFile::ParseFormatted()
 			else if (ii + fo != tmp)
 			{
 				UINT ret = MessageBox(m_hwnd, "Invalid offset found.\n"
-						"Ignore further invalid offsets?", "Import Hexdump",
+						"Ignore further invalid offsets?", app,
 						MB_YESNOCANCEL | MB_ICONWARNING);
 				switch (ret)
 				{
@@ -423,7 +428,7 @@ BadData:
 					{
 						UINT ret = MessageBox(m_hwnd, "Character data does not agree with hex data.\n"
 								"Ignore further mismatched data?\nNB: Hex data will be used when ignoring.",
-								"Import Hexdump", MB_YESNOCANCEL | MB_ICONWARNING);
+								app, MB_YESNOCANCEL | MB_ICONWARNING);
 						switch (ret)
 						{
 						case IDYES:
@@ -458,11 +463,14 @@ NextLine:
 IllegalCharacter:
 	//someone has been buggering with the file & the syntax is screwed up
 	//the next digit is not hex ' ' or '_'
-	return IDYES == MessageBox(m_hwnd, "Illegal character in hex data.\nCannot continue!\nDo you want to keep what has been found so far?", "Import Hexdump", MB_YESNO | MB_ICONERROR);//bad file
+	return IDYES == MessageBox(m_hwnd, "Illegal character in hex data.\nCannot continue!\nDo you want to keep what has been found so far?",
+			app, MB_YESNO | MB_ICONERROR);//bad file
 UnexpectedEndOfData:
-	return IDYES == MessageBox(m_hwnd, "Unexpected end of data found\nCannot continue!\nDo you want to keep what has been found so far?", "Import Hexdump", MB_YESNO | MB_ICONERROR);
+	return IDYES == MessageBox(m_hwnd, "Unexpected end of data found\nCannot continue!\nDo you want to keep what has been found so far?",
+			app, MB_YESNO | MB_ICONERROR);
 OutOfMemory:
-	return IDYES == MessageBox(m_hwnd, "Not enough memory to import data.\nCannot continue!\nDo you want to keep what has been found so far?", "Import Hexdump", MB_YESNO | MB_ICONERROR);
+	return IDYES == MessageBox(m_hwnd, "Not enough memory to import data.\nCannot continue!\nDo you want to keep what has been found so far?",
+			app, MB_YESNO | MB_ICONERROR);
 }
 
 bool HexFile::WasAutoOffsetLen() const

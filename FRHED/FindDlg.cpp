@@ -29,6 +29,7 @@
 #include "hexwdlg.h"
 #include "BinTrans.h"
 #include "FindUtil.h"
+#include "LangString.h"
 
 bool FindDlg::bFindDlgMatchCase = false;
 int FindDlg::iFindDlgDirection = 0;
@@ -54,7 +55,8 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			int findlen = Text2BinTranslator::iBytes2BytecodeDestLen((char *)&DataArray[sel_start], select_len);
 			if (findlen > iFindDlgBufLen)
 			{
-				MessageBox(hDlg, "Selection too large.", "Find", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(hDlg, "Selection too large.", app, MB_ICONERROR);
 				EndDialog(hDlg, IDCANCEL);
 				return TRUE;
 			}
@@ -93,7 +95,8 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 				if (iFindDlgUnicode)
 				{
 					pcFindstring = new char[srclen * 2];
-					destlen = MultiByteToWideChar(CP_ACP, 0, pcFindDlgBuffer, srclen, (WCHAR *)pcFindstring, srclen) * 2;
+					destlen = MultiByteToWideChar(CP_ACP, 0, pcFindDlgBuffer,
+							srclen, (WCHAR *)pcFindstring, srclen) * 2;
 				}
 				else
 				{
@@ -136,18 +139,23 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 						repaint();
 					}
 					else
-						MessageBox(hDlg, "Could not find data.", "Find", MB_ICONWARNING);
+					{
+						LangString app(IDS_APPNAME);
+						MessageBox(hDlg, "Could not find data.", app, MB_ICONWARNING);
+					}
 					//GK16AUG2K
 				}
 				else
 				{
-					MessageBox(hDlg, "Findstring is zero bytes long.", "Find", MB_ICONERROR);
+					LangString app(IDS_APPNAME);
+					MessageBox(hDlg, "Findstring is zero bytes long.", app, MB_ICONERROR);
 				}
 				delete[] pcFindstring;
 			}
 			else
 			{
-				MessageBox(hDlg, "Findstring is zero bytes long.", "Find", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(hDlg, "Findstring is zero bytes long.", app, MB_ICONERROR);
 			}
 			// fall through
 		case IDCANCEL:

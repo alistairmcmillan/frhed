@@ -28,6 +28,7 @@
 #include "BinTrans.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 /**
  * @brief Initialize the dialog.
@@ -74,7 +75,8 @@ BOOL PasteDlg::Apply(HWND hDlg)
 	iPasteTimes = GetDlgItemInt(hDlg, IDC_PASTE_TIMES, 0, TRUE);
 	if (iPasteTimes <= 0)
 	{
-		MessageBox(hDlg, "Number of times to paste must be at least 1.", "Paste", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Number of times to paste must be at least 1.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	iPasteSkip = GetDlgItemInt(hDlg, IDC_PASTE_SKIPBYTES, 0, TRUE);
@@ -92,7 +94,8 @@ BOOL PasteDlg::Apply(HWND hDlg)
 	}
 	if (destlen == 0)
 	{
-		MessageBox(hDlg, "Tried to paste zero-length array.", "Paste", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Tried to paste zero-length array.", app, MB_ICONERROR);
 		delete [] pcPastestring;
 		return FALSE;
 	}
@@ -112,7 +115,8 @@ BOOL PasteDlg::Apply(HWND hDlg)
 		{
 			if (!DataArray.InsertAtGrow(i, (unsigned char*)pcPastestring, 0, destlen))
 			{
-				MessageBox(hDlg, "Not enough memory for inserting.", "Paste", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(hDlg, "Not enough memory for inserting.", app, MB_ICONERROR);
 				break;
 			}
 			i += destlen + iPasteSkip;
@@ -128,7 +132,8 @@ BOOL PasteDlg::Apply(HWND hDlg)
 		// DataArray.GetLength()-iCurByte = number of bytes from including curbyte to end.
 		if (DataArray.GetLength() - iCurByte < (iPasteSkip + destlen) * iPasteTimes)
 		{
-			MessageBox(hDlg, "Not enough space for overwriting.", "Paste", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			MessageBox(hDlg, "Not enough space for overwriting.", app, MB_ICONERROR);
 			delete [] pcPastestring;
 			return TRUE;
 		}

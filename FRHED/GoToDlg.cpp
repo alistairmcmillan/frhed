@@ -27,6 +27,7 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 /** Size of offset edit and buffer. */
 static const UINT EditLen = 16;
@@ -63,7 +64,8 @@ BOOL GoToDlg::Apply(HWND hDlg)
 	if (sscanf(buffer + r, "x%x", &offset) == 0 &&
 		sscanf(buffer + r, "%d", &offset) == 0)
 	{
-		MessageBox(hDlg, "Offset not recognized.", "Go to", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Offset not recognized.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	if (r)

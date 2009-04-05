@@ -27,9 +27,15 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 int EnterDecimalValueDlg::iDecValDlgSize = 1;
 
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE.
+ */
 BOOL EnterDecimalValueDlg::OnInitDialog(HWND hDlg)
 {
 	int iDecValDlgValue = 0;
@@ -60,6 +66,11 @@ BOOL EnterDecimalValueDlg::OnInitDialog(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Apply values from the dialog when dialog is closed.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE if values are valid, FALSE if there are errors.
+ */
 BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 {
 	iDecValDlgSize =
@@ -72,7 +83,8 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 			TRUE);
 	if (!translated)
 	{
-		MessageBox(hDlg, "Decimal value not recognized.", "Enter decimal value", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Decimal value not recognized.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	int iDecValDlgOffset;
@@ -80,24 +92,29 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 		sscanf(buf, "%d", &iDecValDlgOffset) == 0 && 
 		sscanf(buf, "x%x", &iDecValDlgOffset) == 0)
 	{
-		MessageBox(hDlg, "Offset not recognized.", "Enter decimal value", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Offset not recognized.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	int iDecValDlgTimes = GetDlgItemInt(hDlg, IDC_DECIMAL_TIMES, &translated,
 			TRUE);
 	if (!translated)
 	{
-		MessageBox(hDlg, "Number of times not recognized.", "Enter decimal value", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Number of times not recognized.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	if (iDecValDlgOffset < 0 || iDecValDlgOffset > DataArray.GetUpperBound())
 	{
-		MessageBox(hDlg, "Invalid start offset.", "Enter decimal value", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Invalid start offset.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	if (iDecValDlgOffset + iDecValDlgSize * iDecValDlgTimes > DataArray.GetLength())
 	{
-		MessageBox(hDlg, "Not enough space for writing decimal values.", "Enter decimal value", MB_ICONERROR);
+		LangString app(IDS_APPNAME);
+		MessageBox(hDlg, "Not enough space for writing decimal values.", app,
+				MB_ICONERROR);
 		return FALSE;
 	}
 	WaitCursor wc;
@@ -153,6 +170,9 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Dialog message handler.
+ */
 INT_PTR EnterDecimalValueDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)

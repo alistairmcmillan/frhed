@@ -27,6 +27,7 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
 INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 {
@@ -51,7 +52,8 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 				sscanf(buf, "x%x", &iStartOfSelSetting) == 0 &&
 				sscanf(buf, "%d", &iStartOfSelSetting) == 0)
 			{
-				MessageBox(h, "Start offset not recognized.", "Reverse bytes", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(h, "Start offset not recognized.", app, MB_ICONERROR);
 				return TRUE;
 			}
 			if (GetDlgItemText(h, IDC_REVERSE_OFFSETEND, buf, RTL_NUMBER_OF(buf)) &&
@@ -63,7 +65,8 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 			}
 			if (iEndOfSelSetting == iStartOfSelSetting)
 			{
-				MessageBox(h, "Cannot reverse the order of one byte.", "Reverse bytes", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(h, "Cannot reverse the order of one byte.", app, MB_ICONERROR);
 				return TRUE;
 			}
 
@@ -74,7 +77,9 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 			maxb = DataArray.GetUpperBound();
 			if (iStartOfSelSetting < 0 || iEndOfSelSetting > maxb)
 			{
-				MessageBox(h, "The chosen block extends into non-existant data.\nThe offsets will be shifted to correct positions.", "Reverse bytes", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				MessageBox(h, "The chosen block extends into non-existant data.\nThe offsets will be shifted to correct positions.",
+						"app", MB_ICONERROR);
 			}
 
 			if (iStartOfSelSetting < 0)
