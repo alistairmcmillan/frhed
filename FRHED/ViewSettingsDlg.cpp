@@ -28,6 +28,7 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "LangArray.h"
+#include "LangString.h"
 
 static WNDPROC NTAPI SubclassAW(HWND hWnd, WNDPROC wndproc)
 {
@@ -280,11 +281,12 @@ void ViewSettingsDlg::SelectEditor(HWND hDlg)
 {
 	char szFileName[MAX_PATH];
 	szFileName[0] = '\0';
+	LangString allFiles(IDS_OPEN_ALL_FILES);
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);
 	ofn.lStructSize = sizeof ofn;
 	ofn.hwndOwner = hwnd;
-	ofn.lpstrFilter = "All Files (*.*)\0*.*\0\0";
+	ofn.lpstrFilter = allFiles;
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;

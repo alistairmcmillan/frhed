@@ -2914,11 +2914,12 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		}
 
 		// to file.
+		LangString allFiles(IDS_OPEN_ALL_FILES);
 		OPENFILENAME ofn;
 		ZeroMemory(&ofn, sizeof ofn);
 		ofn.lStructSize = sizeof ofn;
 		ofn.hwndOwner = hwnd;
-		ofn.lpstrFilter = "All Files (*.*)\0*.*\0\0";
+		ofn.lpstrFilter = allFiles;
 		ofn.lpstrFile = szFileName;
 		ofn.nMaxFile = _MAX_PATH;
 		ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
@@ -3088,11 +3089,12 @@ int HexEditorWindow::CMD_save_as()
 	szFileName[0] = '\0';
 	if (Drive == 0)
 		strcpy(szFileName, filename);
+	LangString allFiles(IDS_OPEN_ALL_FILES);
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);
 	ofn.lStructSize = sizeof ofn;
 	ofn.hwndOwner = hwnd;
-	ofn.lpstrFilter = "All Files (*.*)\0*.*\0\0";
+	ofn.lpstrFilter = allFiles;
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = _MAX_PATH;
 	ofn.Flags = OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
@@ -3263,11 +3265,12 @@ void HexEditorWindow::CMD_open()
 		return;
 	char szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
+	LangString allFiles(IDS_OPEN_ALL_FILES);
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);
 	ofn.lStructSize = sizeof ofn;
 	ofn.hwndOwner = hwnd;
-	ofn.lpstrFilter = "All Files (*.*)\0*.*\0\0";
+	ofn.lpstrFilter = allFiles;
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = _MAX_PATH;
 	ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
@@ -5046,11 +5049,12 @@ void HexEditorWindow::CMD_saveselas()
 {
 	char szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
+	LangString allFiles(IDS_OPEN_ALL_FILES);
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);
 	ofn.lStructSize = sizeof ofn;
 	ofn.hwndOwner = hwnd;
-	ofn.lpstrFilter = "All Files (*.*)\0*.*\0\0";
+	ofn.lpstrFilter = allFiles;
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = _MAX_PATH;
 	ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;

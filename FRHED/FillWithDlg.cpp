@@ -378,12 +378,13 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 		case IDC_BROWSE:
 			{
 				//prepare OPENFILENAME for the file open common dlg box
+				LangString allFiles(IDS_OPEN_ALL_FILES);
 				szFWFileName[0] = '\0';
 				OPENFILENAME ofn;
 				ZeroMemory(&ofn, sizeof ofn);
 				ofn.lStructSize = sizeof ofn;
 				ofn.hwndOwner = hDlg;
-				ofn.lpstrFilter = "All Files (*.*)\0*.*\0\0";
+				ofn.lpstrFilter = allFiles;
 				ofn.lpstrFile = szFWFileName;
 				ofn.nMaxFile = _MAX_PATH;
 				ofn.Flags = OFN_PATHMUSTEXIST | OFN_HIDEREADONLY | OFN_FILEMUSTEXIST;
