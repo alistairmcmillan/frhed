@@ -96,7 +96,7 @@ BEGIN
         MENUITEM "Toggle h&ex/character editing\tTAB", IDM_CHANGE_MODE
         MENUITEM "Toggle keyboard I&nsert/Overwrite mode\tIns", 
                                                 IDA_INSERTMODETOGGLE
-        MENUITEM "Read-only mode on/off\tAlt+R", IDM_EDIT_READONLYMODE
+        MENUITEM "Read-only mode\tAlt+R",       IDM_EDIT_READONLYMODE
         MENUITEM SEPARATOR
         MENUITEM "&Find...\tCtrl+F",            IDM_FIND
         MENUITEM "Replace...\tCtrl+H",          IDM_REPLACE

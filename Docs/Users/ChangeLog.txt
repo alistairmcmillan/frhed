@@ -9,6 +9,7 @@ Frhed 1.5.2
   Not finding more strings is not an error, show info icon (r428)
   Change language subfolder name to "Languages" (r441)
   Don't ask twice about file deletion (r446)
+  Simpler Read-only mode -menutext (#2480587)
   New translation:
   - French (#2727207)
 
