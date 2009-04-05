@@ -1380,6 +1380,14 @@ BEGIN
     IDS_OPEN_ALL_FILES      "All Files (*.*)\0*.*\0\0"
 END
 
+// General - offsets
+STRINGTABLE 
+BEGIN
+    IDS_OFFSET_START_ERROR  "Start offset not recognized."
+    IDS_OFFSET_END_ERROR    "End offset not recognized."
+    IDS_OFFSET_ERROR        "Offset not recognized."
+END
+
 // About-dialog
 STRINGTABLE 
 BEGIN

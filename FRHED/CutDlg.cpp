@@ -50,7 +50,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 		sscanf(buf, "%d", &iOffset) == 0)
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Start offset not recognized.", app, MB_ICONERROR);
+		LangString startOffsetErr(IDS_OFFSET_START_ERROR);
+		MessageBox(hDlg, startOffsetErr, app, MB_ICONERROR);
 		return FALSE;
 	}
 
@@ -61,7 +62,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
 			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "End offset not recognized.", app, MB_ICONERROR);
+			LangString endOffsetErr(IDS_OFFSET_END_ERROR);
+			MessageBox(hDlg, endOffsetErr, app, MB_ICONERROR);
 			return FALSE;
 		}
 		iNumberOfBytes = iNumberOfBytes - iOffset + 1;

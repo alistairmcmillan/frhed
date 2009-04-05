@@ -93,7 +93,8 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 		sscanf(buf, "x%x", &iDecValDlgOffset) == 0)
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Offset not recognized.", app, MB_ICONERROR);
+		LangString offsetErr(IDS_OFFSET_ERROR);
+		MessageBox(hDlg, offsetErr, app, MB_ICONERROR);
 		return FALSE;
 	}
 	int iDecValDlgTimes = GetDlgItemInt(hDlg, IDC_DECIMAL_TIMES, &translated,

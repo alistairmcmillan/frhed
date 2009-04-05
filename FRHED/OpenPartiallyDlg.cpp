@@ -100,7 +100,8 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		sscanf(buf, "%lld", &iStartPL) == 0)
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Start offset not recognized.", app, MB_ICONERROR);
+		LangString startOffsetErr(IDS_OFFSET_START_ERROR);
+		MessageBox(hDlg, startOffsetErr, app, MB_ICONERROR);
 		return FALSE;
 	}
 	if (iStartPL + numBytesPl > iPLFileLen)

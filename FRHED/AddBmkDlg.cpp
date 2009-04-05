@@ -71,7 +71,8 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			sscanf(buf, "%d", &offset) == 0)
 		{
 			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Start offset not recognized.", app, MB_ICONERROR);
+			LangString startOffsetErr(IDS_OFFSET_START_ERROR);
+			MessageBox(hDlg, startOffsetErr, app, MB_ICONERROR);
 			return TRUE;
 		}
 		if (offset < 0 || offset > DataArray.GetLength())

@@ -326,6 +326,9 @@
 #define IDS_DIFFLISTITEMFORMAT          10001
 #define IDS_ABOUTFRHEDVER               10002
 #define IDS_OPEN_ALL_FILES              10003
+#define IDS_OFFSET_START_ERROR          10016
+#define IDS_OFFSET_END_ERROR            10017
+#define IDS_OFFSET_ERROR                10018
 #define IDS_ABOUT_BROWSER_ERR           10160
 #define IDS_ABOUT_FILENOTFOUND          10161
 #define IDM_OLE_DRAG_DROP               40142

@@ -53,14 +53,17 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 				sscanf(buf, "%d", &iStartOfSelSetting) == 0)
 			{
 				LangString app(IDS_APPNAME);
-				MessageBox(h, "Start offset not recognized.", app, MB_ICONERROR);
+				LangString startOffsetErr(IDS_OFFSET_START_ERROR);
+				MessageBox(h, startOffsetErr, app, MB_ICONERROR);
 				return TRUE;
 			}
 			if (GetDlgItemText(h, IDC_REVERSE_OFFSETEND, buf, RTL_NUMBER_OF(buf)) &&
 				sscanf(buf, "x%x", &iEndOfSelSetting) == 0 &&
 				sscanf(buf, "%d", &iEndOfSelSetting) == 0)
 			{
-				MessageBox(h, "End offset not recognized.", "Reverse bytes", MB_ICONERROR);
+				LangString app(IDS_APPNAME);
+				LangString endOffsetErr(IDS_OFFSET_END_ERROR);
+				MessageBox(h, endOffsetErr, app, MB_ICONERROR);
 				return TRUE;
 			}
 			if (iEndOfSelSetting == iStartOfSelSetting)

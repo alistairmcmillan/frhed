@@ -65,7 +65,8 @@ BOOL GoToDlg::Apply(HWND hDlg)
 		sscanf(buffer + r, "%d", &offset) == 0)
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Offset not recognized.", app, MB_ICONERROR);
+		LangString offsetErr(IDS_OFFSET_ERROR);
+		MessageBox(hDlg, offsetErr, app, MB_ICONERROR);
 		return FALSE;
 	}
 	if (r)

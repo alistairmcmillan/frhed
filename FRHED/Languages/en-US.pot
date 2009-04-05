@@ -2,13 +2,13 @@
 # Released under the "GNU General Public License"
 #
 # ID line follows -- this is updated by SVN
-# $Id: $
+# $Id$
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?group_id=13216&atid=113216\n"
-"POT-Creation-Date: 2009-04-05 12:54+0000\n"
+"POT-Creation-Date: 2009-04-05 14:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: English <frhed-devel@lists.sourceforge.net>\n"
@@ -220,7 +220,7 @@ msgstr ""
 
 #: heksedit.rc:99
 #, c-format
-msgid "Read-only mode on/off\tAlt+R"
+msgid "Read-only mode\tAlt+R"
 msgstr ""
 
 #: heksedit.rc:101
@@ -1836,10 +1836,25 @@ msgstr ""
 
 #: heksedit.rc:1386
 #, c-format
-msgid "Could not open the browser."
+msgid "Start offset not recognized."
 msgstr ""
 
 #: heksedit.rc:1387
+#, c-format
+msgid "End offset not recognized."
+msgstr ""
+
+#: heksedit.rc:1388
+#, c-format
+msgid "Offset not recognized."
+msgstr ""
+
+#: heksedit.rc:1394
+#, c-format
+msgid "Could not open the browser."
+msgstr ""
+
+#: heksedit.rc:1395
 #, c-format
 msgid "File\n%s\nnot found!"
 msgstr ""

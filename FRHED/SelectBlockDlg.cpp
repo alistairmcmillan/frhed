@@ -53,7 +53,8 @@ BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			sscanf(buf, "%d", &iStartOfSelSetting) == 0)
 		{
 			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Start offset not recognized.", app, MB_ICONERROR);
+			LangString startOffsetErr(IDS_OFFSET_START_ERROR);
+			MessageBox(hDlg, startOffsetErr, app, MB_ICONERROR);
 			return TRUE;
 		}
 		if (GetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSETEND, buf, 128) &&
@@ -61,7 +62,8 @@ BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			sscanf(buf, "%d", &iEndOfSelSetting) == 0)
 		{
 			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "End offset not recognized.", app, MB_ICONERROR);
+			LangString endOffsetErr(IDS_OFFSET_END_ERROR);
+			MessageBox(hDlg, endOffsetErr, app, MB_ICONERROR);
 			return TRUE;
 		}
 		//make the selection valid if it is not

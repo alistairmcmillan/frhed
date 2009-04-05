@@ -41,6 +41,9 @@ struct StringTable
 	T DiffListItemFormat;
 	T AboutFrhed;
 	T OpenAllFiles;
+	T OffsetStartError;
+	T OffsetEndError;
+	T OffsetErrror;
 	T AboutBrowserError;
 	T AboutFileNotFound;
 };
