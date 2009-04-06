@@ -103,11 +103,11 @@ Section "-Gen files" SEC03
 SectionEnd
 Section "French" SEC04
   SetOutPath "$INSTDIR\Languages"
-  File "..\..\FRHED\Languages\fr.po"
+  File "..\..\Translations\Frhed\fr.po"
 SectionEnd
 Section "German" SEC05
   SetOutPath "$INSTDIR\Languages"
-  File "..\..\FRHED\Languages\de.po"
+  File "..\..\Translations\Frhed\de.po"
 SectionEnd
 SectionGroupEnd
 
