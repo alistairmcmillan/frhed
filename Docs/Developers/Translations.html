@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Translations.html</title>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <style type="text/css">
+  <!--
+    body {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: Verdana,sans-serif;
+      font-size: small;
+    }
+    code,pre {
+      font-family: 'Lucida Console',monospace;
+      font-size: 1em;
+    }
+    h1,h2,h3,h4,h5,h6 {
+      font-family: Tahoma,Verdana,sans-serif;
+      color: #9A3;
+    }
+    pre {
+      margin-left: 25px;
+      margin-right: 25px;
+      padding: 5px;
+      background-color: #EEE;
+      border-left: 10px solid #CCC;
+    }
+  -->
+  </style>
+</head>
+<body>
+<h2>Translations instructions</h2>
+<ul>
+  <li><a href="#translate">I want to translate into my own language</a></li>
+  <li><a href="#whatToTranslate">What can I translate?</a></li>
+  <li><a href="#frhed">Translating Frhed</a>
+    <ul>
+      <li><a href="#frhed_new">Add new language to Frhed</a></li>
+      <li><a href="#frhed_update">Update existing language</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h3><a name="translate">I want to translate into my own language</a></h3>
+<p>If you are interested in translating Frhed to your own language, we'd
+be happy to include your language as well.</p>
+
+<p>Frhed executable translations are based on per-language PO files. PO
+files are text files which have original English string and translated strings
+listed together. </p>
+
+<h3><a name="whatToTranslate">What can I translate?</a></h3>
+<p>Listings below show what you can actually translate for Frhed. And what is
+not useful to translate.</p>
+
+<p>You can translate:</p>
+<ul>
+  <li>Frhed program (visible strings, dialogs, messageboxes)</li>
+</ul>
+
+<p>Currently you cannot translate:</p>
+<ul>
+  <li>Installer</li>
+  <li>User manual</li>
+  <li>Web site</li>
+  <li>Various other documentation</li>
+</ul>
+
+<p>Yes, it is a short list. We have just added ability to translate program and
+will work enabling more translatable components. Help is welcome with that
+work too.</p>
+
+<h3><a name="frhed">Translating Frhed</a></h3>
+<p>We use <a href="http://en.wikipedia.org/wiki/Gettext">gettext</a> PO files
+for the translation of the Frhed program. <acronym title="Portable Object">
+PO</acronym> files are plain text, so you can even translate using a normal text
+editor. But we recommend that you use <a href="http://www.poedit.net/">poEdit
+</a> or other tools that can handle and manipulate PO files.</p>
+
+<p class="note"><b>NOTE:</b> We are not using gettext itself as a translation
+system, we only use PO- and POT-files as files to have translations. Our
+translation system is custom-made for Frhed. Most of the system is derived
+from <a href="http://winmerge.org/">WinMerge</a>.</p>
+
+<h4>The Quick Way</h4>
+<p>The easiest and fastest way to improve existing translation is to edit
+<code><em>languagecode</em>.PO</code> file from <code>Translationns/Frhed/</code>
+-folder. The PO files are text files so most editor programs can be used. Edit
+the file, save it and start Frhed. The changes should be visible in Frhed.</p>
+
+<p>This is the fastest way to improve and fix translations. And we of course
+accept changes done this way. However there is a better way too, but it is
+more work.</p>
+
+<h4>The Recommended Way</h4>
+<p>Grab a copy of the source code from 
+<a href="https://sourceforge.net/scm/?type=svn&group_id=236485">Subversion</a>
+or go to <a href="http://frhed.sourceforge.net/">our home page</a> and download
+the latest archive with sources. If you can't find it, then please
+<a href="mailto:frhed-support@lists.sourceforge.net">ask us</a> and we will
+send the file to you.</p>
+
+<p>The PO template <code>English.pot</code> and the <code><em>languagecode</em>
+.po</code> translation files are located under the<code>
+<a href="http://frhed.svn.sourceforge.net/viewvc/frhed/trunk/Translations/Frhed/">
+Translations\Frhed\</a></code> folder in the source code.</p>
+
+<h4><a name="frhed_new">Add new language to Frhed</a></h4>
+<ol>
+  <li><p>Copy and rename <code>English.pot</code> to <code><em>languagecode</em>
+  .po</code>, where <em>languagecode</em> is the ISO 639 language code of your
+  language. Eg. German language's code is 'de' and the po file is 
+  <code>de.po</code></p></li>
+  <li><p>Now translate what you can using <a href="http://www.poedit.net/">
+  poEdit</a>. If you are not sure with one or the other translation, mark it as
+  fuzzy. You can enter a comment in poEdit to give some information about your
+  thoughts to other translators.</p></li>
+  <li><p>Once you have translated all the strings, then you need to upload your
+  PO file to our <a href="http://sourceforge.net/tracker/?group_id=236485&atid=1100165">
+  patch tracker</a> (please leave your contact information in case there are
+  any problems that need to be resolved). In case you have problems uploading
+  the patch, you can also send it to us by <a href="mailto:frhed-support@lists.sourceforge.net">
+  e-mail</a>.</p></li>
+  <li><p>One of the developers will review your translation; if there
+  are problems, we will contact you to get them resolved. When everything is
+  working your translation will be committed to the source control and included
+  in the next release of Frhed.</p></li>
+  <li><p>When the next major release is imminent, we will notify you again to
+  give you a chance to update the translation with any new/changed strings.
+  </p></li>
+</ol>
+
+<h4><a name="frhed_update">Update existing language</a></h4>
+<ol>
+  <li>Get the <code>English.pot</code> template and the <code><em>languagecode
+  </em>.po</code> file you want to improve.</li>
+  <li>Start <a href="http://www.poedit.net/">poEdit</a> with <code><em>
+  YourLanguage</em>.po</code> and select <em>Update from .pot file</em> from the
+  "Catalog" menu.</li>
+  <li>Select <code>English.pot</code> and wait until poEdit has finished merging
+  the template and the current translation.</li>
+  <li>The <em>untranslated</em> strings (and <em>fuzzy</em> translations) are
+  always at the top of the list.</li>
+  <li>Translate what you can and upload the resulting PO file to SF.net
+  <a href="http://sourceforge.net/tracker/?group_id=236485&atid=1100165">as a
+  patch</a>.</li>
+</ol>
+</body>
+</html>
