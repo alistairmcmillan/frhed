@@ -9,6 +9,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
+  include('sidenav.inc');
+
   /**
    * ...
    */
@@ -121,26 +123,44 @@
      * get the side navigation from the page
      */
     function getSideNavigation() {
+      $sidenaventry = new SideNavEntry('', 'Frhed');
+      $sidenaventry->addSubEntry('/', 'Home');
+      $sidenaventry->addSubEntry('/screenshots/', 'Screenshots');
+      $sidenaventry->addSubEntry('http://sourceforge.net/projects/frhed', 'Project Page');
+      $sidenaventry->addSubEntry('/frhed_pad.xml', 'PAD File');
+      $sidenaventries[] = $sidenaventry;
+      $sidenaventry = new SideNavEntry('', 'Support');
+      $sidenaventry->addSubEntry('http://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485', 'Bugs');
+      $sidenaventry->addSubEntry('http://sourceforge.net/tracker/?atid=1100166&amp;group_id=236485', 'Feature Requests');
+      $sidenaventry->addSubEntry('http://apps.sourceforge.net/phpbb/frhed/', 'Forums');
+      $sidenaventry->addSubEntry('http://sourceforge.net/mail/?group_id=236485', 'Mailing Lists');
+      $sidenaventries[] = $sidenaventry;
+      $sidenaventry = new SideNavEntry('', 'Links');
+      $sidenaventry->addSubEntry('http://www.kibria.de/frhed.html', 'Original Version', 'Original version from Raihan Kibria');
+      $sidenaventry->addSubEntry('http://winmerge.org/', 'WinMerge');
+      $sidenaventries[] = $sidenaventry;
+      
       $temp = "<div id=\"sidenav\">\n";
-      $temp .= "  <h2>Frhed</h2>\n";
-      $temp .= "  <ul>\n";
-      $temp .= "    <li><a href=\"/\">Home</a></li>\n";
-      $temp .= "    <li><a href=\"/screenshots/\">Screenshots</a></li>\n";
-      $temp .= "    <li><a href=\"http://sourceforge.net/projects/frhed\">Project Page</a></li>\n";
-      $temp .= "    <li><a href=\"/frhed_pad.xml\">PAD File</a></li>\n";
-      $temp .= "  </ul>\n";
-      $temp .= "  <h2>Support</h2>\n";
-      $temp .= "  <ul>\n";
-      $temp .= "    <li><a href=\"http://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485\">Bugs</a></li>\n";
-      $temp .= "    <li><a href=\"http://sourceforge.net/tracker/?atid=1100166&amp;group_id=236485\">Feature Requests</a></li>\n";
-      $temp .= "    <li><a href=\"http://apps.sourceforge.net/phpbb/frhed/\">Forums</a></li>\n";
-      $temp .= "    <li><a href=\"http://sourceforge.net/mail/?group_id=236485\">Mailing Lists</a></li>\n";
-      $temp .= "  </ul>\n";
-      $temp .= "  <h2>Links</h2>\n";
-      $temp .= "  <ul>\n";
-      $temp .= "    <li><a href=\"http://www.kibria.de/frhed.html\" title=\"Original version from Raihan Kibria\">Original Version</a></li>\n";
-      $temp .= "    <li><a href=\"http://winmerge.org/\">WinMerge</a></li>\n";
-      $temp .= "  </ul>\n";
+      foreach ($sidenaventries as $sidenaventry) { //for all sidenav entries...
+        $temp .= "  <h2>" . $sidenaventry->getTitle() . "</h2>\n";
+        $subsidenaventries = $sidenaventry->getSubEntries();
+        if (!empty($subsidenaventries)) { //if sub sidenav entries exists...
+          $temp .= "  <ul>\n";
+          foreach ($subsidenaventries as $subsidenaventry) { //for all sub sidenav entries...
+            $tooltiptext = '';
+            if ($subsidenaventry->getToolTipText() != '') { //if tool tip text exists...
+              $tooltiptext = " title=\"" . $subsidenaventry->getToolTipText() . "\"";
+            }
+            if ($subsidenaventry->isCurrent() == true) { //if current sub sidenav entry...
+              $temp .= "    <li><strong><a href=\"" . $subsidenaventry->getLink() . "\"" . $tooltiptext . ">" . $subsidenaventry->getTitle() . "</a></strong></li>\n";
+            }
+            else {
+              $temp .= "    <li><a href=\"" . $subsidenaventry->getLink() . "\"" . $tooltiptext . ">" . $subsidenaventry->getTitle() . "</a></li>\n";
+            }
+          }
+          $temp .= "  </ul>\n";
+        }
+      }
       $temp .= "  <h2>Donate</h2>\n";
       $temp .= "  <p>Support this project by donating money.</p>\n";
       $temp .= "  <a href=\"http://sourceforge.net/donate/index.php?group_id=236485\"><img src=\"http://images.sourceforge.net/images/project-support.jpg\" width=\"88\" height=\"32\" style=\"border:none;\" alt=\"Support this project\" /></a>\n";
