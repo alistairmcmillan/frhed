@@ -6,7 +6,7 @@ Option Explicit
 ' Released under the "GNU General Public License"
 '
 ' ID line follows -- this is updated by SVN
-' $Id: CreateMasterPotFile.vbs 4974 2008-01-29 23:10:28Z gerundt $
+' $Id$
 
 Const ForReading = 1
 
