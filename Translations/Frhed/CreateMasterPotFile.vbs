@@ -43,13 +43,13 @@ Sub Main
   
   bNecessary = True
   If (oFSO.FileExists("en-US.pot") = True) And (oFSO.FileExists("heksedit.rc") = True) Then 'If the POT and RC file exists...
-    bNecessary = GetArchiveBit("../heksedit.rc") Or GetArchiveBit("en-US.pot") Or GetArchiveBit("heksedit.rc") 'RCs or POT file changed?
+    bNecessary = GetArchiveBit("../../Frhed/heksedit.rc") Or GetArchiveBit("en-US.pot") Or GetArchiveBit("heksedit.rc") 'RCs or POT file changed?
   End If
   
   If (bNecessary = True) Then 'If update necessary...
-    Set oStrings = GetStringsFromRcFile("../heksedit.rc", sCodePage)
+    Set oStrings = GetStringsFromRcFile("../../Frhed/heksedit.rc", sCodePage)
     CreateMasterPotFile "en-US.pot", oStrings, sCodePage
-    SetArchiveBit "../heksedit.rc", False
+    SetArchiveBit "../../Frhed/heksedit.rc", False
     SetArchiveBit "en-US.pot", False
     SetArchiveBit "heksedit.rc", False
     For Each oFile In oFSO.GetFolder(".").Files 'For all files in the current folder...
