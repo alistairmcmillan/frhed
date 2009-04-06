@@ -129,15 +129,15 @@ def set_resource_version(file):
     print 'Update version number to resource(s)...'
     SetVersions.process_versions(file)
 
-# def setup_translations():
-#     """Updates translation files by running scripts in Src/Languages."""
-#
-#     # Scripts must be run from the directory where they reside
-#     curdir = os.getcwd()
-#     os.chdir('Src/Languages')
-#     call(['cscript', '/nologo', 'CreateMasterPotFile.vbs'])
-#     call(['cscript', '/nologo', 'UpdatePoFilesFromPotFile.vbs'])
-#     os.chdir(curdir)
+def setup_translations():
+    """Updates translation files by running scripts in Translations/Frhed."""
+
+    # Scripts must be run from the directory where they reside
+    curdir = os.getcwd()
+    os.chdir('Translations/Frhed')
+    call(['cscript', '/nologo', 'CreateMasterPotFile.vbs'])
+    call(['cscript', '/nologo', 'UpdatePoFilesFromPotFile.vbs'])
+    os.chdir(curdir)
 
 def get_and_create_dist_folder(folder):
     """Formats a folder name for version-specific distribution folder
@@ -242,8 +242,8 @@ def create_bin_folders(bin_folder, dist_src_folder):
     cur_path = os.getcwd()
     os.chdir(bin_folder)
     print 'Create binary distribution folder structure...'
-    #lang_folder = os.path.join(bin_folder, 'Languages')
-    #os.mkdir(lang_folder)
+    lang_folder = os.path.join(bin_folder, 'Languages')
+    os.mkdir(lang_folder)
     doc_folder = os.path.join(bin_folder, 'Docs')
     os.mkdir(doc_folder)
     os.chdir(cur_path)
@@ -254,7 +254,7 @@ def create_bin_folders(bin_folder, dist_src_folder):
     shutil.copy('build/release/heksedit.dll', bin_folder)
     shutil.copy('build/release/RAWIO32.dll', bin_folder)
 
-    #copy_po_files(lang_folder)
+    copy_po_files(lang_folder)
 
     shutil.copy('build/Manual/htmlhelp/Frhed.chm', doc_folder)
     shutil.copy('Docs/Users/ChangeLog.txt', doc_folder)
@@ -265,7 +265,7 @@ def create_bin_folders(bin_folder, dist_src_folder):
 def copy_po_files(dest_folder):
     """Copies all PO files to destination folder."""
 
-    lang_folder = 'Src/Languages'
+    lang_folder = 'Translations/Frhed'
     files = os.listdir(lang_folder)
 
     print 'Copying PO files to binary folder...'
