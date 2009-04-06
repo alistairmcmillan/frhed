@@ -104,8 +104,8 @@ def cleanup_build():
 
         if os.path.exists('build/release/heksedit.lng'):
             shutil.rmtree('build/release/heksedit.lng', True)
-        if os.path.exists('build/Help'):
-            shutil.rmtree('build/Help', True)
+        if os.path.exists('build/Manual'):
+            shutil.rmtree('build/Manual', True)
 
     except EnvironmentError, einst:
         print 'Error deleting files: '
