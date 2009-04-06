@@ -1378,6 +1378,14 @@ BEGIN
     IDS_ABOUTFRHEDVER       "Version %u.%u.%u"
     IDS_DIFFLISTITEMFORMAT  "%d) 0x%x=%u to 0x%x=%u (%d bytes)"
     IDS_OPEN_ALL_FILES      "All Files (*.*)\0*.*\0\0"
+    IDS_UNTITLED            "Untitled"
+    IDS_FONT_ANSI           "ANSI"
+    IDS_FONT_OEM            "OEM"
+    IDS_MODE_READONLY       "READ"
+    IDS_MODE_OVERWRITE      "OVR"
+    IDS_MODE_INSERT         "INS"
+    IDS_STATUS_LITTLE_ENDIAN "L"
+    IDS_STATUS_BIG_ENDIAN   "B"
 END
 
 // General - offsets

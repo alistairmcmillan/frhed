@@ -326,6 +326,14 @@
 #define IDS_DIFFLISTITEMFORMAT          10001
 #define IDS_ABOUTFRHEDVER               10002
 #define IDS_OPEN_ALL_FILES              10003
+#define IDS_UNTITLED                    10004
+#define IDS_FONT_ANSI                   10005
+#define IDS_FONT_OEM                    10006
+#define IDS_MODE_READONLY               10007
+#define IDS_MODE_OVERWRITE              10008
+#define IDS_MODE_INSERT                 10009
+#define IDS_STATUS_LITTLE_ENDIAN        10010
+#define IDS_STATUS_BIG_ENDIAN           10011
 #define IDS_OFFSET_START_ERROR          10016
 #define IDS_OFFSET_END_ERROR            10017
 #define IDS_OFFSET_ERROR                10018

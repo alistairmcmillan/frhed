@@ -41,6 +41,14 @@ struct StringTable
 	T DiffListItemFormat;
 	T AboutFrhed;
 	T OpenAllFiles;
+	T Untitled;
+	T FontAnsi;
+	T FontOem;
+	T ModeReadOnly;
+	T ModeOverwrite;
+	T ModeInsert;
+	T StatusLittleEndian;
+	T StatusBigEndian;
 	T OffsetStartError;
 	T OffsetEndError;
 	T OffsetErrror;

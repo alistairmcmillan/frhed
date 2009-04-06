@@ -174,7 +174,8 @@ HexEditorWindow::HexEditorWindow()
 	iCurByte = 0;
 	DataArray.ClearAll();
 	DataArray.SetGrowBy(100);
-	strcpy(filename, "Untitled");
+	LangString untitled(IDS_UNTITLED);
+	_tcscpy(filename, untitled);
 	area = AREA_NONE;
 }
 
@@ -1590,39 +1591,52 @@ void HexEditorWindow::format_bit_string(char* buf, BYTE by)
  */
 void HexEditorWindow::statusbar_chset_and_editmode()
 {
-	char buf[20] = {0};
+	TCHAR buf[20] = {0};
+	buf[0] = '\t';
 
 	// Character set, input mode or read-only, binary mode.
 	switch (iCharacterSet)
 	{
 	case ANSI_FIXED_FONT:
-		sprintf (buf, "\tANSI");
+		{
+			LangString ansi(IDS_FONT_ANSI);	
+			_tcscat(buf, ansi);
+		}
 		break;
-
 	case OEM_FIXED_FONT:
-		sprintf (buf, "\tOEM");
+		{
+			LangString oem(IDS_FONT_OEM);
+			_tcscat(buf, oem);
+		}
 		break;
 	}
 
+	_tcscat(buf, _T(" / "));
 	if (bReadOnly)
 	{
-		strcat (buf, " / READ");
+		LangString read(IDS_MODE_READONLY);
+		_tcscat(buf, read);
 	}
 	else if (bInsertMode)
 	{
-		strcat(buf, " / INS");
+		LangString insert(IDS_MODE_INSERT);
+		_tcscat(buf, insert);
 	}
 	else
 	{
-		strcat(buf, " / OVR");
+		LangString over(IDS_MODE_OVERWRITE);
+		_tcscat(buf, over);
 	}
+	_tcscat(buf, _T(" / "));
 	if (iBinaryMode == ENDIAN_LITTLE)
 	{
-		strcat(buf, " / L"); // Intel
+		LangString little(IDS_STATUS_LITTLE_ENDIAN);
+		_tcscat(buf, little); // Intel
 	}
 	else if (iBinaryMode == ENDIAN_BIG)
 	{
-		strcat(buf, " / B"); // Motorola
+		LangString big(IDS_STATUS_BIG_ENDIAN);
+		_tcscat(buf, big); // Motorola
 	}
 	SendMessage(hwndStatusBar, SB_SETTEXT, 1, (LPARAM) buf);
 }
@@ -3074,7 +3088,8 @@ int HexEditorWindow::CMD_new(const char *title)
 	bPartialOpen = false;
 	// Delete old data.
 	DataArray.ClearAll();
-	strcpy(filename, "Untitled");
+	LangString untitled(IDS_UNTITLED);
+	_tcscpy(filename, untitled);
 	resize_window();
 	return 1;
 }
@@ -5249,7 +5264,8 @@ void HexEditorWindow::CMD_open_hexdump()
 	if (done)
 	{
 		//Successful
-		strcpy(filename, "Untitled");
+		LangString untitled(IDS_UNTITLED);
+		_tcscpy(filename, untitled);
 		iVscrollPos = iCurByte = iCurNibble = 0;
 		bPartialOpen = bPartialStats = false;
 		iFileChanged =
