@@ -7,7 +7,6 @@ Frhed Folder Structure
    - Users
      - Manual
  - FRHED
-   - Languages
    - res
  - Installer
    - NSIS
@@ -16,6 +15,8 @@ Frhed Folder Structure
  - Testing
    - GoogleTest
  - Tools
+ - Translations
+   - Frhed
  - Web
 
 
@@ -33,9 +34,6 @@ Frhed/Docs/Users/Manual
 
 Frhed/FRHED/
  - Frhed executable and heksedit.dll codes, main source folder.
-
-Frhed/FRHED/Languages
- - Frhed translations and related files (scripts) 
 
 Frhed/FRHED/res
  - Frhed/heksedit resource files (images, icons etc)
@@ -60,6 +58,9 @@ Frhed/Testing/GoogleTest
 
 Frhed/Tools/
  - Scripts and other needed tools
+
+Frhed/Translations/Frhed
+ - Frhed executable translations and related files (scripts) 
 
 Frhed/Web/
  - Frhed web site files
