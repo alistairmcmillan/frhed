@@ -20,6 +20,8 @@
 				<h2>Download</h2>
 				<h3>Stable releases</h3>
 				<ul>
+					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=308801&amp;release_id=674196">
+						Frhed 1.4.2</a> (2009-04-07)</li>
 					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=308801&amp;release_id=658634">
 						Frhed 1.4.0</a> (2009-02-04)</li>
 				</ul>
