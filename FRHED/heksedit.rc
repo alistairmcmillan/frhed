@@ -124,8 +124,8 @@ BEGIN
         MENUITEM "Scroll down a page\tCtrl+Page Down", IDM_SCROLL_NEXT
         MENUITEM SEPARATOR
         MENUITEM "Zoom in\tCtrl++", IDM_ZOOMIN
-		MENUITEM "Zoom out\tCtrl+-", IDM_ZOOMOUT
-		MENUITEM "Zoom normal\tCtrl+*", IDM_ZOOMNORMAL
+        MENUITEM "Zoom out\tCtrl+-", IDM_ZOOMOUT
+        MENUITEM "Zoom normal\tCtrl+*", IDM_ZOOMNORMAL
     END
     POPUP "&Options"
     BEGIN
