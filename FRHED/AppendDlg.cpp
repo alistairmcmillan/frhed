@@ -42,16 +42,16 @@ BOOL AppendDlg::Apply(HWND hDlg)
 		sscanf(buf, "%d", &iAppendbytes) == 0)
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Number of bytes to append not recognized.", app,
-				MB_ICONERROR);
+		LangString msg(IDS_APPEND_UNKNOWN_AMOUNT);
+		MessageBox(hDlg, msg, app, MB_ICONERROR);
 		return FALSE;
 	}
 	int oldupbound = DataArray.GetLength();
 	if (!DataArray.SetSize(DataArray.GetSize() + iAppendbytes))
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Not enough memory for appending.", app,
-				MB_ICONERROR);
+		LangString msg(IDS_APPEND_NO_MEM);
+		MessageBox(hDlg, msg, app, MB_ICONERROR);
 		return FALSE;
 	}
 	DataArray.ExpandToSize();
@@ -64,6 +64,14 @@ BOOL AppendDlg::Apply(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR AppendDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)

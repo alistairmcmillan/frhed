@@ -1415,6 +1415,13 @@ BEGIN
     IDS_BMK_REMOVE_ALL      "Remove all bookmarks?"
 END
 
+// Appending
+STRINGTABLE 
+BEGIN
+    IDS_APPEND_UNKNOWN_AMOUNT "Number of bytes to append not recognized."
+    IDS_APPEND_NO_MEM       "Not enough memory for appending."
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 

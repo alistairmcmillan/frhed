@@ -357,6 +357,9 @@ private:
 	BOOL Apply(HWND);
 };
 
+/**
+ * @brief A dialog for appending bytes to the file.
+ */
 class AppendDlg : public HexEditorWindow
 {
 public:

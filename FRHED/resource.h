@@ -346,6 +346,8 @@
 #define IDS_BMK_IS_INVALID              10181
 #define IDS_BMK_NONE_TOREMOVE           10182
 #define IDS_BMK_REMOVE_ALL              10183
+#define IDS_APPEND_UNKNOWN_AMOUNT       10192
+#define IDS_APPEND_NO_MEM               10193
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects
