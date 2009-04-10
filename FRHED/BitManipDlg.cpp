@@ -37,7 +37,7 @@ BOOL BitManipDlg::OnInitDialog(HWND hDlg)
 {
 	TCHAR buf[64];
 	LangString manip(IDS_BITMANIP_AT_OFFSET);
-	sprintf(buf, manip, iCurByte, iCurByte);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, manip, iCurByte, iCurByte);
 	SetDlgItemText(hDlg, IDC_MANIPBITS, buf);
 	BYTE cBitValue = DataArray[iCurByte];
 	if (cBitValue & 1)
@@ -95,8 +95,9 @@ BOOL BitManipDlg::Apply(HWND hDlg, WPARAM wParam)
 	}
 	TCHAR buf[64];
 	LangString value(IDS_BITMANIP_VALUE);
-	sprintf(buf, value,	(unsigned char)cBitValue,
-			(signed char)cBitValue, (unsigned char)cBitValue);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, value,
+			(unsigned char)cBitValue, (signed char)cBitValue,
+			(unsigned char)cBitValue);
 	SetDlgItemText(hDlg, IDC_MANIPBITS_VALUE, buf);
 	return FALSE;
 }
