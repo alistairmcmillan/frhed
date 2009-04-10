@@ -2,3 +2,6 @@
  Order Deny,Allow
  Deny from all
 </FilesMatch>
+
+#Redirect PAD download URL to current Frhed version...
+Redirect permanent /Frhed-Setup.exe http://downloads.sourceforge.net/frhed/Frhed-1.4.2-Setup.exe

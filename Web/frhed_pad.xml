@@ -34,9 +34,9 @@
 	</Company_Info>
 	<Program_Info>
 		<Program_Name>Frhed</Program_Name>
-		<Program_Version>1.4.0</Program_Version>
-		<Program_Release_Month>02</Program_Release_Month>
-		<Program_Release_Day>04</Program_Release_Day>
+		<Program_Version>1.4.2</Program_Version>
+		<Program_Release_Month>04</Program_Release_Month>
+		<Program_Release_Day>07</Program_Release_Day>
 		<Program_Release_Year>2009</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
@@ -51,8 +51,8 @@
 		<Program_Category_Class>System Utilities::Text/Document Editors</Program_Category_Class>
 		<Program_System_Requirements />
 		<File_Info>
-			<File_Size_Bytes>530241</File_Size_Bytes>
-			<File_Size_K>517.81</File_Size_K>
+			<File_Size_Bytes>531238</File_Size_Bytes>
+			<File_Size_K>518.79</File_Size_K>
 			<File_Size_MB>0.51</File_Size_MB>
 		</File_Info>
 		<Expire_Info>
@@ -84,8 +84,8 @@
 			<Application_XML_File_URL>http://frhed.sourceforge.net/frhed_pad.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
-			<Primary_Download_URL>http://downloads.sourceforge.net/frhed/Frhed-1.4.0-Setup.exe</Primary_Download_URL>
-			<Secondary_Download_URL />
+			<Primary_Download_URL>http://frhed.sourceforge.net/Frhed-Setup.exe</Primary_Download_URL>
+			<Secondary_Download_URL>http://downloads.sourceforge.net/frhed/Frhed-1.4.2-Setup.exe</Secondary_Download_URL>
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
 		</Download_URLs>
