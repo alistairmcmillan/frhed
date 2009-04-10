@@ -15,18 +15,26 @@
    * ...
    */
   class Page {
-    var $_title, $_charset;
+    var $_lang, $_title, $_charset;
     var $_description, $_keywords, $_rssfeeds;
 
     /**
      * Constructor
      */
     function Page() {
+      $this->_lang = 'en';
       $this->_title = 'Frhed';
-      $this->_charset = 'ISO-8859-1';
+      $this->_charset = 'UTF-8';
       $this->_description = '';
       $this->_keywords = '';
       $this->_rssfeeds = array();
+    }
+
+    /**
+     * set the language from the page
+     */
+    function setLang($lang) {
+      $this->_lang = $lang;
     }
 
     /**
@@ -72,7 +80,7 @@
         $this->_title = $title;
       }
       $temp = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n";
-      $temp .= "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n";
+      $temp .= "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"" . $this->_lang . "\">\n";
       $temp .= "<head>\n";
       $temp .= "  <title>" . $this->_title . "</title>\n";
       $temp .= "  <meta http-equiv=\"content-type\" content=\"text/html; charset=" . $this->_charset . "\"/>\n";
