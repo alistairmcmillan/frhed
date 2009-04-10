@@ -370,6 +370,9 @@ private:
 	BOOL Apply(HWND);
 };
 
+/**
+ * @brief A dialog for manipulating single bits in selected byte.
+ */
 class BitManipDlg : public HexEditorWindow
 {
 public:

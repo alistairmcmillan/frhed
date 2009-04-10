@@ -27,11 +27,17 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangString.h"
 
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ */
 BOOL BitManipDlg::OnInitDialog(HWND hDlg)
 {
-	char buf[64];
-	sprintf(buf, "Manipulate bits at offset 0x%x=%d", iCurByte, iCurByte);
+	TCHAR buf[64];
+	LangString manip(IDS_BITMANIP_AT_OFFSET);
+	sprintf(buf, manip, iCurByte, iCurByte);
 	SetDlgItemText(hDlg, IDC_MANIPBITS, buf);
 	BYTE cBitValue = DataArray[iCurByte];
 	if (cBitValue & 1)
@@ -54,6 +60,12 @@ BOOL BitManipDlg::OnInitDialog(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Apply the manipulation.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] wParam Command user selected.
+ * @return TRUE if bytes were copied, FALSE otherwise.
+ */
 BOOL BitManipDlg::Apply(HWND hDlg, WPARAM wParam)
 {
 	BYTE cBitValue = 0;
@@ -81,13 +93,22 @@ BOOL BitManipDlg::Apply(HWND hDlg, WPARAM wParam)
 		repaint();
 		return TRUE;
 	}
-	char buf[64];
-	sprintf(buf, "Value: 0x%x , %d signed, %u unsigned.",
-		(unsigned char)cBitValue, (signed char)cBitValue, (unsigned char)cBitValue);
+	TCHAR buf[64];
+	LangString value(IDS_BITMANIP_VALUE);
+	sprintf(buf, value,	(unsigned char)cBitValue,
+			(signed char)cBitValue, (unsigned char)cBitValue);
 	SetDlgItemText(hDlg, IDC_MANIPBITS_VALUE, buf);
 	return FALSE;
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR BitManipDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)

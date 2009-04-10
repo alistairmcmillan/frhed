@@ -348,6 +348,8 @@
 #define IDS_BMK_REMOVE_ALL              10183
 #define IDS_APPEND_UNKNOWN_AMOUNT       10192
 #define IDS_APPEND_NO_MEM               10193
+#define IDS_BITMANIP_AT_OFFSET          10208
+#define IDS_BITMANIP_VALUE              10209
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

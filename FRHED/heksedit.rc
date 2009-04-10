@@ -1425,6 +1425,13 @@ BEGIN
     IDS_APPEND_NO_MEM       "Not enough memory for appending."
 END
 
+// Bit manipulation
+STRINGTABLE 
+BEGIN
+    IDS_BITMANIP_AT_OFFSET  "Manipulate bits at offset 0x%x=%d"
+    IDS_BITMANIP_VALUE      "Value: 0x%x, %d signed, %u unsigned."
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 
