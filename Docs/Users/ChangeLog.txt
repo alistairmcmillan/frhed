@@ -10,6 +10,7 @@ Frhed 1.5.2
   Change language subfolder name to "Languages" (r441)
   Don't ask twice about file deletion (r446)
   Simpler Read-only mode -menutext (#2480587)
+  Add Find and Replace sub menu (#2750555)
   New translation:
   - French (#2727207)
 

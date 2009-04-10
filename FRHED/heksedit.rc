@@ -98,10 +98,13 @@ BEGIN
                                                 IDA_INSERTMODETOGGLE
         MENUITEM "Read-only mode\tAlt+R",       IDM_EDIT_READONLYMODE
         MENUITEM SEPARATOR
-        MENUITEM "&Find...\tCtrl+F",            IDM_FIND
-        MENUITEM "Replace...\tCtrl+H",          IDM_REPLACE
-        MENUITEM "Find previous\tF3",           IDM_FINDPREV
-        MENUITEM "Find next\tF4",               IDM_FINDNEXT
+        POPUP "&Find and Replace"
+        BEGIN
+            MENUITEM "&Find...\tCtrl+F",            IDM_FIND
+            MENUITEM "&Replace...\tCtrl+H",         IDM_REPLACE
+            MENUITEM "Find &previous\tF3",          IDM_FINDPREV
+            MENUITEM "Find &next\tF4",              IDM_FINDNEXT
+        END
         MENUITEM "&Go To...\tCtrl+G",           IDM_GO_TO
         MENUITEM SEPARATOR
         MENUITEM "Enter decimal &value...\tCtrl+D", 
