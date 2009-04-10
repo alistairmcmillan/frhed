@@ -4,15 +4,13 @@ $Id$
 
 This document explains how to use translated strings in the code. All
 translated strings in Frhed must be in resource file (FRHED/heksedit.rc). Our
-translation system reads strings from there and generates files translators can
-translate.
+translation system reads strings from there and generates POT/PO files that
+translators can translate.
 
-There is a helper class LangString that takes care of:
-- getting the string by resource ID
-- converting the string in ANSI build
+There is a helper class LangString that takes care of getting the string by
+resource ID.
 
-NOTE: This is probably a temporary solution. In future this hopefully will
-be simpler operation.
+To add a new translated string:
 
 1. Add a new string ID to the FRHED/resource.h file. Use IDS_ -prefix:
 #define IDS_OPEN_ALL_FILES              10003
@@ -20,14 +18,8 @@ be simpler operation.
 2. Add the string to FRHED/heksedit.rc file:
     IDS_OPEN_ALL_FILES      "All Files (*.*)\0*.*\0\0"
 
-3. Add this same ID to the FRHED/StringTable.cpp:
-	IDS_OPEN_ALL_FILES,
-
-4. Add new "variable" name for the string to the FRHED/StringTable.h:
-	T OpenAllFiles;
-
-NOTE: Strings in StringTable.h and Stringtable.cpp must be in exactly same
-order!
+3. Add this same ID to the FRHED/StringTable.inl:
+DECLARE(IDS_OPEN_ALL_FILES)
 
 5. Add includes to the .cpp file where you are using the string:
 #include "LangString.h"
