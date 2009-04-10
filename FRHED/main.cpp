@@ -39,16 +39,6 @@ HINSTANCE hMainInstance;
 
 LRESULT CALLBACK MainWndProc(HWND, UINT, WPARAM, LPARAM);
 
-static BOOL NTAPI IsNT()
-{
-	OSVERSIONINFO osvi;
-	ZeroMemory(&osvi, sizeof osvi);
-	osvi.dwOSVersionInfoSize = sizeof osvi;
-	if (!GetVersionEx(&osvi))
-		osvi.dwPlatformId = 0;
-	return osvi.dwPlatformId == VER_PLATFORM_WIN32_NT;
-}
-
 static BOOL CALLBACK WndEnumProcCountInstances(HWND hwnd, LPARAM lParam)
 {
 	TCHAR buf[64];
@@ -67,11 +57,14 @@ static HexEditorWindow *pHexWnd = 0;
 /**
  * @brief The application starting point.
  */
-int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *szCmdLine, int)
+int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *, int)
 {
 	OleInitialize(NULL);
 	InitCommonControls();
 
+	LPWSTR szExePath = GetCommandLineW();
+	LPWSTR szCmdLine = PathGetArgsW(szExePath);
+	
 	// Load the heksedit component.
 	static const TCHAR pe_heksedit[] = _T("heksedit.dll");
 	hMainInstance = LoadLibrary(pe_heksedit);
@@ -137,8 +130,8 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *szCmdLine, int)
 	if (*szCmdLine != '\0')
 	{
 		// Command line not empty: open a file on startup.
-		char *p = szCmdLine;
-		char *q = szCmdLine;
+		LPWSTR p = szCmdLine;
+		LPWSTR q = szCmdLine;
 		DWORD dwStart = 0, dwLength = 0, dwEnd = 0; // MF cmd line parms
 		while ((*p = *q) != '\0')
 		{
@@ -149,15 +142,15 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *szCmdLine, int)
 				{
 				case 'S': // Start offset
 				case 's':
-					dwStart = strtoul(++q, &q, 0);
+					dwStart = wcstoul(++q, &q, 0);
 					break;
 				case 'L': // Length of selection
 				case 'l':
-					dwLength = strtoul(++q, &q, 0);
+					dwLength = wcstoul(++q, &q, 0);
 					break;
 				case 'E': // End of selection
 				case 'e':
-					dwEnd = strtoul(++q, &q, 0);
+					dwEnd = wcstoul(++q, &q, 0);
 					break;
 				}
 				// fall through
@@ -170,33 +163,7 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *szCmdLine, int)
 		}
 		if (dwLength)
 			dwEnd = dwStart + dwLength - 1;
-		char lpszPath[MAX_PATH];
-		HRESULT hres = pHexWnd->ResolveIt(szCmdLine, lpszPath);
-		if (SUCCEEDED(hres))
-		{
-			// Trying to open a link file: decision by user required.
-			int ret = MessageBox(hwndMain,
-				"You are trying to open a link file.\n"
-				"Click on Yes if you want to open the file linked to,\n"
-				"or click on No if you want to open the link file itself.\n"
-				"Choose Cancel if you want to abort opening.",
-				ApplicationName, MB_YESNOCANCEL | MB_ICONWARNING );
-			switch( ret )
-			{
-			case IDYES:
-				pHexWnd->load_file(lpszPath);
-				break;
-			case IDNO:
-				pHexWnd->load_file(szCmdLine);
-				break;
-			case IDCANCEL:
-				break;
-			}
-		}
-		else
-		{
-			pHexWnd->load_file(szCmdLine);
-		}
+		pHexWnd->open_file(szCmdLine);
 		if (dwEnd)
 			pHexWnd->CMD_setselection(dwStart, dwEnd);
 	}
@@ -225,17 +192,16 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		hwndMain = hwnd;
 		hwndToolBar = CreateTBar(hwnd, hMainInstance);
-		SendMessage(hwndToolBar, CCM_SETUNICODEFORMAT, TRUE, 0);
 		hwndHex = CreateWindowEx(WS_EX_CLIENTEDGE,
 			szHexClassA, 0,
 			WS_TABSTOP | WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL,
 			10, 10, 100, 100, hwnd, 0, hMainInstance, 0);
+		SendMessage(hwndToolBar, CCM_SETUNICODEFORMAT, IsWindowUnicode(hwndHex), 0);
 		pHexWnd = (HexEditorWindow *)GetWindowLongPtr(hwndHex, GWL_USERDATA);
 		if (!pHexWnd)
 			return -1;
 		hwndStatusBar = CreateStatusWindow(
-			CCS_BOTTOM | WS_CHILD | WS_VISIBLE | SBARS_SIZEGRIP,
-			"Ready", hwnd, 2);
+			CCS_BOTTOM | WS_CHILD | WS_VISIBLE | SBARS_SIZEGRIP, 0, hwnd, 2);
 		pHexWnd->hwndMain = hwnd;
 		pHexWnd->hwndToolBar = hwndToolBar;
 		pHexWnd->hwndStatusBar = hwndStatusBar;
@@ -304,9 +270,18 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				if (code == TBN_GETINFOTIPW)
 				{
 					NMTBGETINFOTIPW *pi = (NMTBGETINFOTIPW *)lParam;
-					if (BSTR text = pHexWnd->load_string(pi->iItem))
+					if (PSTR text = pHexWnd->load_string(pi->iItem))
 					{
-						StrCpyNW(pi->pszText, text, pi->cchTextMax);
+						StrCpyNW(pi->pszText, (PWSTR)text, pi->cchTextMax);
+						pHexWnd->free_string(text);
+					}
+				}
+				else if (code == TBN_GETINFOTIPA)
+				{
+					NMTBGETINFOTIPA *pi = (NMTBGETINFOTIPA *)lParam;
+					if (PSTR text = pHexWnd->load_string(pi->iItem))
+					{
+						StrCpyNA(pi->pszText, text, pi->cchTextMax);
 						pHexWnd->free_string(text);
 					}
 				}

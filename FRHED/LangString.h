@@ -26,36 +26,24 @@
 #ifndef _LANG_STRING_H_
 #define _LANG_STRING_H_
 
-LPWSTR GetLangString(WORD id);
+#include "StringTable.h"
 
 /**
  * @brief Helper class for using translated strings.
  * This class helps using translated strings by:
- * - hiding ANSI and UNICODE build differences (does conversions when needed)
  * - getting string by resource ID
  */
 class LangString
 {
 private:
-#ifdef UNICODE
-	PCWSTR m_str; /**< Resource string pointer in UNICODE build. */
-#else
-	BSTR m_str; /**< Resource string pointer in ANSI build. */
-#endif
-
-protected:
-	void Convert(PCWSTR text);
+	PCTSTR m_str; /**< Resource string pointer. */
 
 public:
-	LangString(PCWSTR text);
+	LangString(PCTSTR text);
 	LangString(WORD id);
 	~LangString();
 
-#ifdef UNICODE
-	operator PCWSTR() { return m_str; }
-#else
-	operator PCSTR() { return (PCSTR)m_str; }
-#endif
+	operator PCTSTR() { return m_str; }
 };
 
 #endif // _LANG_STRING_H_

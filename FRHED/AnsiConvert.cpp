@@ -25,13 +25,30 @@
 #include "precomp.h"
 #include "AnsiConvert.h"
 
-AnsiConvert::AnsiConvert(PCWSTR text, UINT codepage)
+MakeAnsi::MakeAnsi(PCWSTR text, UINT codepage, int textlen)
 : m_bstr(0)
 {
-	int len = WideCharToMultiByte(codepage, 0, text, -1, 0, 0, 0, 0);
-	if (len)
+	if (text)
 	{
-		m_bstr = SysAllocStringByteLen(0, len - 1);
-		WideCharToMultiByte(codepage, 0, text, -1, (PSTR)m_bstr, len, 0, 0);
+		int len = WideCharToMultiByte(codepage, 0, text, textlen, 0, 0, 0, 0);
+		if (len)
+		{
+			m_bstr = SysAllocStringByteLen(0, len - 1);
+			WideCharToMultiByte(codepage, 0, text, textlen, (PSTR)m_bstr, len, 0, 0);
+		}
+	}
+}
+
+MakeWide::MakeWide(PCSTR text, UINT codepage, int textlen)
+: m_bstr(0)
+{
+	if (text)
+	{
+		int len = MultiByteToWideChar(codepage, 0, text, textlen, 0, 0);
+		if (len)
+		{
+			m_bstr = SysAllocStringLen(0, len - 1);
+			MultiByteToWideChar(codepage, 0, text, textlen, m_bstr, len);
+		}
 	}
 }

@@ -28,6 +28,7 @@
 #include "precomp.h"
 #include "resource.h"
 #include "Constants.h"
+#include "AnsiConvert.h"
 #include "Simparr.h"
 #include "StringTable.h"
 #include "VersionData.h"
@@ -260,20 +261,27 @@ static LPWSTR NTAPI LoadStringResource(HMODULE hModule, UINT uStringID)
 	return pwchMem;
 }
 
-static LPWSTR NTAPI LoadResString(UINT uStringID)
+static LPTSTR NTAPI LoadResString(UINT uStringID)
 {
 	HINSTANCE hinst = langArray.m_hLangDll ? langArray.m_hLangDll : hMainInstance;
-	LPWSTR text = LoadStringResource(hinst, uStringID);
-	if (text)
+	LPTSTR text = 0;
+	if (LPWSTR p = LoadStringResource(hinst, uStringID))
 	{
-		text = SysAllocStringLen(text + 1, (WORD)*text);
+		UINT n = (WORD)*p++;
+#ifdef UNICODE
+		text = SysAllocStringLen(p, n);
+#else
+		UINT cb = WideCharToMultiByte(CP_ACP, 0, p, n, 0, 0, 0, 0);
+		text = (PSTR)SysAllocStringByteLen(0, cb);
+		WideCharToMultiByte(CP_ACP, 0, p, n, text, cb, 0, 0);
+#endif
 		if (langArray.m_hLangDll)
 		{
 			int line = 0;
-			if (LPWSTR p = wcschr(text, L':'))
-				line = _wtoi(p + 1);
-			SysFreeString(text);
-			text = langArray.TranslateStringW(line);
+			if (LPTSTR p = _tcschr(text, _T(':')))
+				line = _ttoi(p + 1);
+			SysFreeString((BSTR)text);
+			text = langArray.TranslateString(line);
 		}
 	}
 	return text;
@@ -288,7 +296,8 @@ void HexEditorWindow::LoadStringTable()
 void HexEditorWindow::FreeStringTable()
 {
 	for (int i = 0 ; i < RTL_NUMBER_OF(S) ; ++i)
-		SysFreeString(S[i]);
+		SysFreeString((BSTR)S[i]);
+
 }
 
 /**
@@ -301,10 +310,7 @@ BOOL HexEditorWindow::load_lang(LANGID langid)
 	LoadStringTable();
 	if (hwndMain)
 	{
-		HMENU hMenu = IsWindowUnicode(hwndMain) ?
-			langArray.LoadMenuW(hMainInstance, MAKEINTRESOURCEW(IDR_MAINMENU)) :
-			langArray.LoadMenuA(hMainInstance, MAKEINTRESOURCEA(IDR_MAINMENU));
-		if (hMenu)
+		if (HMENU hMenu = load_menu(IDR_MAINMENU))
 		{
 			HMENU hMenuDestroy = ::GetMenu(hwndMain);
 			if (::SetMenu(hwndMain, hMenu))
@@ -317,7 +323,7 @@ BOOL HexEditorWindow::load_lang(LANGID langid)
 /**
  * @brief Load a string.
  */
-BSTR HexEditorWindow::load_string(UINT uStringID)
+LPTSTR HexEditorWindow::load_string(UINT uStringID)
 {
 	return LoadResString(uStringID);
 }
@@ -325,9 +331,17 @@ BSTR HexEditorWindow::load_string(UINT uStringID)
 /**
  * @brief Free a string obtained through load_string().
  */
-void HexEditorWindow::free_string(BSTR text)
+void HexEditorWindow::free_string(LPTSTR text)
 {
-	SysFreeString(text);
+	SysFreeString((BSTR)text);
+}
+
+/**
+ * @brief Load a menu.
+ */
+HMENU HexEditorWindow::load_menu(UINT id)
+{
+	return langArray.LoadMenu(hMainInstance, MAKEINTRESOURCE(id));
 }
 
 /**
@@ -395,6 +409,44 @@ int HexEditorWindow::load_file(const char *fname)
 		iFileChanged = FALSE;
 	}
 	resize_window();
+	return bLoaded;
+}
+
+/**
+ * @brief Open a file specified on the command line.
+ * @note Function takes a wide string even in ANSI build.
+ */
+int HexEditorWindow::open_file(LPCWSTR wszCmdLine)
+{
+	W2T szCmdLine = wszCmdLine;
+	int bLoaded = FALSE;
+	TCHAR lpszPath[MAX_PATH];
+	HRESULT hres = ResolveIt(szCmdLine, lpszPath);
+	if (SUCCEEDED(hres))
+	{
+		// Trying to open a link file: decision by user required.
+		int ret = MessageBox(hwnd,
+			_T("You are trying to open a link file.\n")
+			_T("Click on Yes if you want to open the file linked to,\n")
+			_T("or click on No if you want to open the link file itself.\n")
+			_T("Choose Cancel if you want to abort opening."),
+			ApplicationName, MB_YESNOCANCEL | MB_ICONQUESTION);
+		switch (ret)
+		{
+		case IDYES:
+			bLoaded = load_file(lpszPath);
+			break;
+		case IDNO:
+			bLoaded = load_file(szCmdLine);
+			break;
+		case IDCANCEL:
+			break;
+		}
+	}
+	else
+	{
+		bLoaded = load_file(szCmdLine);
+	}
 	return bLoaded;
 }
 

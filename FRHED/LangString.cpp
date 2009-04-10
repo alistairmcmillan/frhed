@@ -28,37 +28,14 @@
 #include "LangString.h"
 
 /**
- * @brief Get a string from resource.
- * This function loads a string from resource string table by resource ID.
- * @param [in] id Resource ID of the string to get.
- * @return Pointer to string, or NULL if not found.
- */
-LPWSTR GetLangString(WORD id)
-{
-	for (int i = 0 ; i < RTL_NUMBER_OF(IDS) ; ++i)
-	{
-		if (IDS[i] == id)
-		{
-			return S[i];
-		}
-	}
-	return NULL;
-};
-
-/**
  * @brief Construct the string from given string.
  * In ANSI build the wide string needs to be converted to ANSI string.
  * In UNICODE build we just store the pointer (no new copy).
  * @param [in] text Text to use.
  */
-LangString::LangString(PCWSTR text)
-: m_str(0)
+LangString::LangString(PCTSTR text)
+: m_str(text)
 {
-#ifdef UNICODE
-	m_str = text;
-#else
-	Convert(text);
-#endif
 }
 
 /**
@@ -68,14 +45,16 @@ LangString::LangString(PCWSTR text)
  * @param [in] text Text to use.
  */
 LangString::LangString(WORD id)
-: m_str(0)
+: m_str(NULL)
 {
-	LPWSTR str = GetLangString(id);
-#ifdef UNICODE
-	m_str = str;
-#else
-	Convert(str);
-#endif
+	for (int i = 0 ; i < RTL_NUMBER_OF(IDS) ; ++i)
+	{
+		if (IDS[i] == id)
+		{
+			m_str = S[i];
+			break;
+		}
+	}
 }
 
 /**
@@ -83,21 +62,4 @@ LangString::LangString(WORD id)
  */
 LangString::~LangString()
 {
-#ifndef UNICODE
-	SysFreeString(m_str);
-#endif
-}
-
-/**
- * @brief Convert wide string to ANSI string.
- * @param [in] text Wide string to convert.
- */
-void LangString::Convert(PCWSTR text)
-{
-	int len = WideCharToMultiByte(CP_ACP, 0, text, -1, 0, 0, 0, 0);
-	if (len)
-	{
-		m_str = SysAllocStringByteLen(0, len - 1);
-		WideCharToMultiByte(CP_ACP, 0, text, -1, (PSTR)m_str, len, 0, 0);
-	}
 }

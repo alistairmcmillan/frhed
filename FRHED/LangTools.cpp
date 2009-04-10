@@ -32,32 +32,11 @@ LangArray langArray;
 
 void NTAPI TranslateDialog(HWND hwnd)
 {
-	if (IsWindowUnicode(hwnd))
-		langArray.TranslateDialogW(hwnd);
-	else
-		langArray.TranslateDialogA(hwnd);
+	langArray.TranslateDialog(hwnd);
 }
 
 INT_PTR NTAPI ShowModalDialog(UINT idd, HWND hwnd, DLGPROC dlgproc, LPVOID param)
 {
 	HINSTANCE hinst = langArray.m_hLangDll ? langArray.m_hLangDll : hMainInstance;
-	return IsWindowUnicode(hwnd)
-	? DialogBoxParamW(hinst, MAKEINTRESOURCEW(idd), hwnd, dlgproc, (LPARAM)param)
-	: DialogBoxParamA(hinst, MAKEINTRESOURCEA(idd), hwnd, dlgproc, (LPARAM)param);
-}
-
-void NTAPI SetWindowText(HWND hwnd, PCWSTR text)
-{
-	if (IsWindowUnicode(hwnd))
-		SetWindowTextW(hwnd, text);
-	else
-		SetWindowTextA(hwnd, AnsiConvert(text, langArray.m_codepage));
-}
-
-void NTAPI SetDlgItemText(HWND hwnd, int id, PCWSTR text)
-{
-	if (IsWindowUnicode(hwnd))
-		SetDlgItemTextW(hwnd, id, text);
-	else
-		SetDlgItemTextA(hwnd, id, AnsiConvert(text, langArray.m_codepage));
+	return DialogBoxParam(hinst, MAKEINTRESOURCE(idd), hwnd, dlgproc, (LPARAM)param);
 }

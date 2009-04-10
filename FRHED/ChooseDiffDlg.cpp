@@ -32,23 +32,11 @@
 
 void ChooseDiffDlg::add_diff(HWND hwndList, int diff, int lower, int upper)
 {
-	wchar_t buf[100];
-	swprintf(buf,
+	TCHAR buf[100];
+	_stprintf(buf,
 		GetLangString(IDS_DIFFLISTITEMFORMAT), //"%d) 0x%x=%u to 0x%x=%u (%d bytes)",
 		diff, lower, lower,	upper, upper, upper - lower + 1);
-	int i;
-	if (IsWindowUnicode(hwndList))
-	{
-		i = SendMessageW(hwndList, LB_ADDSTRING, 0, (LPARAM)buf);
-	}
-	else
-	{
-		char bufA[100];
-		WideCharToMultiByte(CP_ACP, 0, buf, -1, bufA, sizeof bufA, 0, 0);
-		lower = WideCharToMultiByte(CP_ACP, 0, buf, lower, 0, 0, 0, 0);
-		upper = WideCharToMultiByte(CP_ACP, 0, buf, upper, 0, 0, 0, 0);
-		i = SendMessageA(hwndList, LB_ADDSTRING, 0, (LPARAM)bufA);
-	}
+	int i = SendMessage(hwndList, LB_ADDSTRING, 0, (LPARAM)buf);
 	SendMessage(hwndList, LB_SETITEMDATA, i, MAKELONG(lower, upper));
 }
 

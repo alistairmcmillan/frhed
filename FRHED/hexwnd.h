@@ -244,10 +244,12 @@ public:
 	Status *STDMETHODCALLTYPE get_status();
 	int STDMETHODCALLTYPE translate_accelerator(MSG *);
 	BOOL STDMETHODCALLTYPE load_lang(LANGID);
-	BSTR STDMETHODCALLTYPE load_string(UINT);
-	void STDMETHODCALLTYPE free_string(BSTR);
+	LPTSTR STDMETHODCALLTYPE load_string(UINT);
+	void STDMETHODCALLTYPE free_string(LPTSTR);
+	HMENU STDMETHODCALLTYPE load_menu(UINT);
 
 	virtual int STDMETHODCALLTYPE load_file(const char* fname);
+	virtual int STDMETHODCALLTYPE open_file(LPCWSTR);
 	int file_is_loadable(const char* fname);
 	int at_window_create(HWND hw, HINSTANCE hI);
 	void set_focus();

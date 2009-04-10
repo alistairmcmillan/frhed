@@ -37,33 +37,14 @@ template <class T>
 struct StringTable
 {
 	operator T *() { return reinterpret_cast<T *>(this); }
-	T ApplicationName;
-	T DiffListItemFormat;
-	T AboutFrhed;
-	T OpenAllFiles;
-	T Untitled;
-	T FontAnsi;
-	T FontOem;
-	T ModeReadOnly;
-	T ModeOverwrite;
-	T ModeInsert;
-	T StatusLittleEndian;
-	T StatusBigEndian;
-	T OffsetStartError;
-	T OffsetEndError;
-	T OffsetErrror;
-	T AboutBrowserError;
-	T AboutFileNotFound;
-	T BookmarkInvalidPos;
-	T BookmarkAlreadyThere;
-	T BookmarkEmptyFile;
-	T BookmarkNoMore;
-	T BookmarkInInvalidPos;
-	T BookmarkNoneToRemove;
-	T BookmarkRemoveAll;
+#	define DECLARE(X) T m_##X;
+#	include "StringTable.inl"
+#	undef DECLARE
 };
 
-extern StringTable<LPWSTR> S;
+extern StringTable<LPTSTR> S;
 extern StringTable<WORD> IDS;
+
+#define GetLangString(id) ::S.m_##id
 
 #endif // _STRING_TABLE_H_
