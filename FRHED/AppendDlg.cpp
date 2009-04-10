@@ -36,10 +36,11 @@
  */
 BOOL AppendDlg::Apply(HWND hDlg)
 {
-	char buf[64];
+	const int bufsize = 64;
+	TCHAR buf[bufsize + 1] = {0};
 	int iAppendbytes;
-	if (GetDlgItemText(hDlg, IDC_APPEND_BYTES, buf, 64) &&
-		sscanf(buf, "%d", &iAppendbytes) == 0)
+	if (GetDlgItemText(hDlg, IDC_APPEND_BYTES, buf, bufsize) &&
+		_stscanf(buf, _T("%d"), &iAppendbytes) == 0)
 	{
 		LangString app(IDS_APPNAME);
 		LangString msg(IDS_APPEND_UNKNOWN_AMOUNT);
