@@ -148,6 +148,7 @@ INT_PTR ChangeInstDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 			EndDialog(hw, w);
 			return TRUE;
 		}
+		break;
 
 	case WM_HELP:
 		OnHelp(hw);
