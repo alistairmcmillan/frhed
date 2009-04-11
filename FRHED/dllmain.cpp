@@ -53,18 +53,32 @@ LRESULT CALLBACK HexWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
  * @brief Export what is needed to be a COM in-process server.
  */
 #pragma comment(linker, "/EXPORT:DllRegisterServer=_DllRegisterServer@0")
+#pragma comment(linker, "/EXPORT:DllUnregisterServer=_DllUnregisterServer@0")
 #pragma comment(linker, "/EXPORT:DllGetClassObject=_DllGetClassObject@12")
+
+/**
+ * @brief InProcServer32 subkey.
+ */
+static const TCHAR InProcServer32[] =
+	_T("CLSID\\{BCA3CA6B-CC6B-4F79-A2C2-DDBE864B1C90}\\InProcServer32");
 
 /**
  * @brief Register this DLL as an in-process server.
  */
 STDAPI DllRegisterServer()
 {
-	static const TCHAR subkey[] =
-		_T("CLSID\\{BCA3CA6B-CC6B-4F79-A2C2-DDBE864B1C90}\\InProcServer32");
 	TCHAR path[MAX_PATH];
 	DWORD cb = GetModuleFileName(hMainInstance, path, MAX_PATH) * sizeof(TCHAR);
-	LONG err = RegSetValue(HKEY_CLASSES_ROOT, subkey, REG_SZ, path, cb);
+	LONG err = RegSetValue(HKEY_CLASSES_ROOT, InProcServer32, REG_SZ, path, cb);
+	return HRESULT_FROM_WIN32(err);
+}
+
+/**
+ * @brief Unregister this DLL as an in-process server.
+ */
+STDAPI DllUnregisterServer()
+{
+	LONG err = RegDeleteKey(HKEY_CLASSES_ROOT, InProcServer32);
 	return HRESULT_FROM_WIN32(err);
 }
 
