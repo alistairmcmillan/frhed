@@ -5240,13 +5240,8 @@ void HexEditorWindow::CMD_open_hexdump()
 		//Check if user wants to use clipboard
 		if (hClipMemory)
 		{
-			LangString app(IDS_APPNAME);
-			switch (MessageBox(hwnd,
-				"There is text on the clipboard.\n"
-				"Do you want to import from\n"
-				"the clipboard instead of a file?",
-				app,
-				MB_YESNOCANCEL))
+			LangString importCB(IDS_IMPORT_FROM_CB);
+			switch (MessageBox(hwnd, importCB, MB_YESNOCANCEL))
 			{
 			case IDCANCEL:
 				CloseClipboard();
@@ -5275,9 +5270,8 @@ void HexEditorWindow::CMD_open_hexdump()
 		}
 		else
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hwnd, "Could not get text from the clipboard.\nCannot continue!",
-					app, MB_ICONERROR);
+			LangString cannotGet(IDS_CANNOT_GET_CB_TEXT);
+			MessageBox(hwnd, cannotGet, MB_ICONERROR);
 		}
 		CloseClipboard();
 	}

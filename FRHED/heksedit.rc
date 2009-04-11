@@ -1453,6 +1453,12 @@ END
 STRINGTABLE 
 BEGIN
     IDS_CANNOT_ACCESS_CLIPBOARD "Cannot get access to clipboard."
+    IDS_CANNOT_LOCK_CLIPBOARD "Cannot lock clipboard."
+    IDS_CLIPBOARD_NO_MEM    "Not enough memory for copying."
+    IDS_CLIPBOARD_COPY_TO   "\nDo you want the above output to be copied to the clipboard?\n"
+    IDS_CLIPBOARD_SELECT_FORMAT "You need to select a clipboard format to use."
+    IDS_CANNOT_GET_CB_TEXT  "Could not get text from the clipboard.\nCannot continue!"
+    IDS_IMPORT_FROM_CB      "There is text on the clipboard.\nDo you want to import from\nthe clipboard instead of a file?"
 END
 
 #endif    // Englisch (USA) resources

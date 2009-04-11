@@ -358,6 +358,12 @@
 #define IDS_DIFF_REMAINING_BYTES        10227
 #define IDS_DIFF_NO_DIFF                10228
 #define IDS_CANNOT_ACCESS_CLIPBOARD     10240
+#define IDS_CANNOT_LOCK_CLIPBOARD       10241
+#define IDS_CLIPBOARD_NO_MEM            10242
+#define IDS_CLIPBOARD_COPY_TO           10243
+#define IDS_CLIPBOARD_SELECT_FORMAT     10244
+#define IDS_CANNOT_GET_CB_TEXT          10245
+#define IDS_IMPORT_FROM_CB              10246
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

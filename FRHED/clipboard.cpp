@@ -58,12 +58,18 @@ void TextToClipboard(HWND hwnd, char *text, int len)
 		else
 		{//failed to get pointer to global mem
 			GlobalFree(hGlobal);
-			MessageBox(hwnd,"Cannot lock clipboard.", "Copy", MB_ICONERROR);
+			LangString app(IDS_APPNAME);
+			LangString cannotLock(IDS_CANNOT_LOCK_CLIPBOARD);
+			MessageBox(hwnd, cannotLock, app, MB_ICONERROR);
 		}
 		SetCursor (LoadCursor (NULL, IDC_ARROW));//user can stop waiting
 	}
 	else// failed to allocate global mem
-		MessageBox(hwnd, "Not enough memory for copying.", "Copy", MB_ICONERROR);
+	{
+		LangString app(IDS_APPNAME);
+		LangString noMem(IDS_CLIPBOARD_NO_MEM);
+		MessageBox(hwnd, noMem, app, MB_ICONERROR);
+	}
 }
 
 //Pabs changed - mutated TextToClipboard into two functions
@@ -78,7 +84,8 @@ void MessageCopyBox(HWND hwnd, LPTSTR text, LPCTSTR caption, UINT type)
 	int len = lstrlen(text);//get the # bytes needed to store the string (not counting '\0')
 	//& get where we have to put a '\0' character later
 	// RK: Added "?" to end of string.
-	lstrcat(text, "\nDo you want the above output to be copied to the clipboard?\n");
+	LangString copyTo(IDS_CLIPBOARD_COPY_TO);
+	lstrcat(text, copyTo);
 	if (IDYES == MessageBox(hwnd, text, caption, MB_YESNO | type))
 	{
 		//user wants to copy output

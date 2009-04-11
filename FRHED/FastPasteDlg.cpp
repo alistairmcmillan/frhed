@@ -89,9 +89,8 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 	int i = SendMessage(list, LB_GETCURSEL, 0, 0);
 	if (i == LB_ERR)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "You need to select a clipboard format to use.", app,
-				MB_ICONERROR);
+		LangString selectFormat(IDS_CLIPBOARD_SELECT_FORMAT);
+		MessageBox(hDlg, selectFormat, MB_ICONERROR);
 		return FALSE;
 	}
 	UINT uFormat = SendMessage(list, LB_GETITEMDATA, i, 0);
