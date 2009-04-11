@@ -121,7 +121,7 @@ public:
 	void CMD_reverse();
 	bool load_hexfile(HexFile &file);
 	void CMD_open_hexdump();
-	virtual void STDMETHODCALLTYPE status_bar_click(bool left);
+	void status_bar_click(bool left);
 	void CMD_adopt_colours();
 
 	//General OLEDD options
@@ -168,7 +168,7 @@ public:
 	void CMD_goto();
 	void apply_template(char *pcTemplate);
 	void CMD_apply_template();
-	virtual void STDMETHODCALLTYPE dropfiles(HDROP);
+	void dropfiles(HDROP);
 	void CMD_open_partially();
 	void CMD_clear_all_bmk();
 	void CMD_remove_bkm();
@@ -234,27 +234,28 @@ public:
 	HexEditorWindow();
 	~HexEditorWindow();
 
+	unsigned STDMETHODCALLTYPE get_interface_version();
 	void STDMETHODCALLTYPE resize_window();
 	unsigned char *STDMETHODCALLTYPE get_buffer(int);
 	int STDMETHODCALLTYPE get_length();
 	void STDMETHODCALLTYPE set_sibling(IHexEditorWindow *);
-	void STDMETHODCALLTYPE set_status_bar(HWND);
 	Colors *STDMETHODCALLTYPE get_colors();
 	Settings *STDMETHODCALLTYPE get_settings();
 	Status *STDMETHODCALLTYPE get_status();
 	int STDMETHODCALLTYPE translate_accelerator(MSG *);
-	BOOL STDMETHODCALLTYPE load_lang(LANGID);
+	BOOL STDMETHODCALLTYPE load_lang(LANGID langid, LPCWSTR langdir = NULL);
 	LPTSTR STDMETHODCALLTYPE load_string(UINT);
 	void STDMETHODCALLTYPE free_string(LPTSTR);
 	HMENU STDMETHODCALLTYPE load_menu(UINT);
 
-	virtual int STDMETHODCALLTYPE load_file(const char* fname);
+	int load_file(LPCTSTR);
 	virtual int STDMETHODCALLTYPE open_file(LPCWSTR);
 	int file_is_loadable(const char* fname);
-	int at_window_create(HWND hw, HINSTANCE hI);
+	int at_window_create(HWND, HINSTANCE);
+	void set_control_bar(HWND);
 	void set_focus();
 	void kill_focus();
-	int lbuttondown( int nFlags, int xPos, int yPos);
+	int lbuttondown(int nFlags, int xPos, int yPos);
 	void snap_caret();
 	void keydown(int key);
 	void character(char ch);
@@ -263,6 +264,7 @@ public:
 	void hscroll(int cmd);
 	int paint();
 	virtual void STDMETHODCALLTYPE command(int cmd);
+	void notify(NMHDR *);
 	int destroy_window();
 	virtual void STDMETHODCALLTYPE set_wnd_title();
 	void set_caret_pos();

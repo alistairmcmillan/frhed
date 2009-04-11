@@ -195,6 +195,12 @@ HexEditorWindow::~HexEditorWindow()
 }
 
 //--------------------------------------------------------------------------------------------
+unsigned HexEditorWindow::get_interface_version()
+{
+	return HEKSEDIT_INTERFACE_VERSION;
+}
+
+//--------------------------------------------------------------------------------------------
 unsigned char *HexEditorWindow::get_buffer(int len)
 {
 	if (!DataArray.SetSize(len))
@@ -212,11 +218,6 @@ int HexEditorWindow::get_length()
 void HexEditorWindow::set_sibling(IHexEditorWindow *p)
 {
 	sibling = p;
-}
-
-void HexEditorWindow::set_status_bar(HWND h)
-{
-	hwndStatusBar = h;
 }
 
 HexEditorWindow::Colors *HexEditorWindow::get_colors()
@@ -303,10 +304,12 @@ void HexEditorWindow::FreeStringTable()
 /**
  * @brief Load translations for given language if present.
  */
-BOOL HexEditorWindow::load_lang(LANGID langid)
+BOOL HexEditorWindow::load_lang(LANGID langid, LPCWSTR langdir)
 {
+	if (langdir == NULL)
+		langdir = LangFileSubFolder;
 	FreeStringTable();
-	BOOL bDone = langArray.Load(hMainInstance, langid);
+	BOOL bDone = langArray.Load(hMainInstance, langid, static_cast<W2T>(langdir));
 	LoadStringTable();
 	if (hwndMain)
 	{
@@ -349,7 +352,7 @@ HMENU HexEditorWindow::load_menu(UINT id)
  * @param [in] fname Name of file to load.
  * @return TRUE if the file was loaded succesfully, FALSE otherwise.
  */
-int HexEditorWindow::load_file(const char *fname)
+int HexEditorWindow::load_file(LPCTSTR fname)
 {
 	WaitCursor wc;
 	int bLoaded = FALSE;
@@ -483,6 +486,21 @@ int HexEditorWindow::at_window_create(HWND hw, HINSTANCE hI)
 			RegisterDragDrop(hwnd, target);
 	}
 	return TRUE;
+}
+
+//-------------------------------------------------------------------
+// Set member for passed-in control bar handle.
+void HexEditorWindow::set_control_bar(HWND hwndBar)
+{
+	if (hwndBar == FindWindowEx(hwnd, NULL, _T("ToolbarWindow32"), NULL))
+	{
+		hwndToolBar = hwndBar;
+	}
+	else if (hwndBar == FindWindowEx(hwnd, NULL, _T("msctls_statusbar32"), NULL))
+	{
+		hwndStatusBar = hwndBar;
+	}
+	SendMessage(hwndBar, CCM_SETUNICODEFORMAT, sizeof(TCHAR) == sizeof(WCHAR), 0);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1594,6 +1612,30 @@ void HexEditorWindow::command(int cmd)
 	default:
 		_RPTF1(_CRT_ERROR, "Unknown COMMAND-ID %d.", cmd);
 		break;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+void HexEditorWindow::notify(NMHDR *pNMHDR)
+{
+	HWND hwndFrom = pNMHDR->hwndFrom;
+	UINT code = pNMHDR->code;
+	if (hwndFrom == hwndStatusBar)
+	{
+		if (code == NM_CLICK || code == NM_RCLICK)
+			status_bar_click(code == NM_CLICK);
+	}
+	else if (hwndFrom == hwndToolBar)
+	{
+		if (code == TBN_GETINFOTIP)
+		{
+			NMTBGETINFOTIP *pNM = reinterpret_cast<NMTBGETINFOTIP *>(pNMHDR);
+			if (LPTSTR text = load_string(pNM->iItem))
+			{
+				StrCpyN(pNM->pszText, text, pNM->cchTextMax);
+				free_string(text);
+			}
+		}
 	}
 }
 
@@ -4810,12 +4852,25 @@ int HexEditorWindow::OnWndMsg( HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lPara
 		command(LOWORD(wParam));
 		break;
 
+	case WM_NOTIFY:
+		notify(reinterpret_cast<NMHDR *>(lParam));
+		break;
+
 	case WM_TIMER:
 		timer(wParam, lParam);
 		break;
 
 	case WM_DESTROY:
 		destroy_window();
+		break;
+
+	case WM_PARENTNOTIFY:
+		switch (LOWORD(wParam))
+		{
+		case WM_CREATE:
+			set_control_bar(reinterpret_cast<HWND>(lParam));
+			break;
+		}
 		break;
 
 	case WM_HELP:

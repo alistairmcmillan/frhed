@@ -25,9 +25,6 @@
 
 #include "Simparr.h"
 
-SimpleString GetLangFileFolder(HINSTANCE hInst);
-
-
 class LangArray : public SimpleArray<char *>
 {
 public:
@@ -47,7 +44,7 @@ public:
 	~LangArray();
 	void ExpandToSize();
 	void ClearAll();
-	BOOL Load(HINSTANCE hMainInstance, LANGID langid);
+	BOOL Load(HINSTANCE hMainInstance, LANGID langid, LPCTSTR langdir);
 	PTSTR TranslateString(int line);
 	void TranslateDialog(HWND);
 	void TranslateMenu(HMENU);

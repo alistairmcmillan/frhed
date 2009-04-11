@@ -24,9 +24,7 @@
 // $Id$
 
 #include "precomp.h"
-#include "Constants.h"
 #include "Simparr.h"
-#include "paths.h"
 #include "LangArray.h"
 #include "VersionData.h"
 
@@ -48,26 +46,6 @@ static char *EatPrefix(char *text, const char *prefix)
 		if (_memicmp(text, prefix, len) == 0)
 			return text + len;
 	return 0;
-}
-
-SimpleString GetLangFileFolder(HINSTANCE hInst)
-{
-	TCHAR path[MAX_PATH] = {0};
-
-	if (_tcslen(LangFileSubFolder) != 0)
-	{
-		paths_GetModulePath(hInst, path, MAX_PATH);
-		_tcscat(path, LangFileSubFolder);
-		_tcscat(path, "\\");
-	}
-	else
-	{
-		GetModuleFileName(hInst, path, MAX_PATH);
-		PathRenameExtension(path, _T(".lng"));
-		LPTSTR name = PathAddBackslash(path);
-	}
-	SimpleString fullpath(path);
-	return fullpath;
 }
 
 LangArray::StringData *LangArray::StringData::Create(const char *ps, size_t length)
@@ -177,7 +155,7 @@ static void unslash(unsigned codepage, char *p)
 	} while (c != '\0');
 }
 
-BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid)
+BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid, LPCTSTR langdir)
 {
 	if (m_langid == langid)
 		return TRUE;
@@ -192,31 +170,14 @@ BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid)
 	FILE *f = 0;
 	if (langid && langid != DefLangId)
 	{
-		TCHAR path[MAX_PATH] = {0};
+		TCHAR path[MAX_PATH];
 		GetModuleFileName(hMainInstance, path, MAX_PATH);
-		LPTSTR name = PathFindFileName(path); 
-		if (_tcslen(LangFileSubFolder) > 0)
-		{
-			TCHAR tmpname[MAX_PATH] = {0};
-			_tcscpy(tmpname, name);
-			SimpleString modpath = GetLangFileFolder(hMainInstance);
-			_tcscpy(path, modpath);
-			LPTSTR ext = PathFindExtension(tmpname);
-			*ext = _T('\0');
-			name = path + _tcslen(modpath);
-			_tcscat(path, tmpname);
-			_tcscat(path, _T(".lng"));
-		}
-		else
-		{
-			LPTSTR ext = PathFindExtension(name);
-			*ext = _T('\0');
-			wsprintf(ext + 1, _T("lng\\%s.lng"), name);
-			*ext = _T('.');
-		}
+		PathRemoveFileSpec(path);
+		PathAppend(path, langdir);
+		PathAppend(path, _T("heksedit.lng"));
 		if (m_hLangDll == 0)
 		{
-			m_hLangDll = LoadLibrary(path);
+			m_hLangDll = LoadLibraryEx(path, NULL, LOAD_LIBRARY_AS_DATAFILE);
 			if (m_hLangDll == 0)
 				return FALSE;
 		}
@@ -290,7 +251,7 @@ BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid)
 			}
 		}
 		PathRemoveFileSpec(path);
-		name = PathAddBackslash(path);
+		LPTSTR name = PathAddBackslash(path);
 		// Look for a .po file that matches the given langid.
 		// Possible cases in order of precedence:
 		// (1) Country specific translation for given country, e.g. de-CH.po

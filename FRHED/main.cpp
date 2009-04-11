@@ -33,7 +33,7 @@
 #include "toolbar.h"
 
 static const char szMainClass[] = "frhed wndclass";
-static const char szHexClassA[] = "hekseditA_" SHARPEN(FRHED_VERSION_4);
+static const char szHexClass[] = "heksedit";
 
 HINSTANCE hMainInstance;
 
@@ -191,20 +191,18 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 		hwndMain = hwnd;
-		hwndToolBar = CreateTBar(hwnd, hMainInstance);
-		hwndHex = CreateWindowEx(WS_EX_CLIENTEDGE,
-			szHexClassA, 0,
+		hwndHex = CreateWindowEx(WS_EX_CLIENTEDGE, szHexClass, 0,
 			WS_TABSTOP | WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL,
 			10, 10, 100, 100, hwnd, 0, hMainInstance, 0);
-		SendMessage(hwndToolBar, CCM_SETUNICODEFORMAT, IsWindowUnicode(hwndHex), 0);
 		pHexWnd = (HexEditorWindow *)GetWindowLongPtr(hwndHex, GWL_USERDATA);
 		if (!pHexWnd)
 			return -1;
+		hwndToolBar = CreateTBar(hwndHex, hMainInstance);
+		SetParent(hwndToolBar, hwnd);
 		hwndStatusBar = CreateStatusWindow(
-			CCS_BOTTOM | WS_CHILD | WS_VISIBLE | SBARS_SIZEGRIP, 0, hwnd, 2);
+			CCS_BOTTOM | WS_CHILD | WS_VISIBLE | SBARS_SIZEGRIP, 0, hwndHex, 2);
+		SetParent(hwndStatusBar, hwnd);
 		pHexWnd->hwndMain = hwnd;
-		pHexWnd->hwndToolBar = hwndToolBar;
-		pHexWnd->hwndStatusBar = hwndStatusBar;
 		pHexWnd->bSaveIni = TRUE;
 		pHexWnd->bCenterCaret = TRUE;
 		pHexWnd->load_lang((LANGID)GetThreadLocale());
@@ -253,39 +251,6 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			int parts[] = { MulDiv(cx, 4, 6), MulDiv(cx, 5, 6), cx };
 			SendMessage(hwndStatusBar, SB_SETPARTS, RTL_NUMBER_OF(parts), (LPARAM)parts);
 			MoveWindow(hwndHex, 0, cyToolBar, cx, cy - cyToolBar - cyStatusBar, TRUE);
-		}
-		break;
-	case WM_NOTIFY:
-		{
-			NMHDR *pn = (NMHDR *)lParam;
-			HWND hwndFrom = pn->hwndFrom;
-			UINT code = pn->code;
-			if (hwndFrom == hwndStatusBar)
-			{
-				if (code == NM_CLICK || code == NM_RCLICK)
-					pHexWnd->status_bar_click(code == NM_CLICK);
-			}
-			else if (hwndFrom == hwndToolBar)
-			{
-				if (code == TBN_GETINFOTIPW)
-				{
-					NMTBGETINFOTIPW *pi = (NMTBGETINFOTIPW *)lParam;
-					if (PSTR text = pHexWnd->load_string(pi->iItem))
-					{
-						StrCpyNW(pi->pszText, (PWSTR)text, pi->cchTextMax);
-						pHexWnd->free_string(text);
-					}
-				}
-				else if (code == TBN_GETINFOTIPA)
-				{
-					NMTBGETINFOTIPA *pi = (NMTBGETINFOTIPA *)lParam;
-					if (PSTR text = pHexWnd->load_string(pi->iItem))
-					{
-						StrCpyNA(pi->pszText, text, pi->cchTextMax);
-						pHexWnd->free_string(text);
-					}
-				}
-			}
 		}
 		break;
 	case WM_DESTROY:

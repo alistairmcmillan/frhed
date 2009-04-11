@@ -26,6 +26,10 @@
 #ifndef _HEKSEDIT_H_
 #define _HEKSEDIT_H_
 
+#ifndef HEKSEDIT_INTERFACE_VERSION
+#define HEKSEDIT_INTERFACE_VERSION 1
+#endif
+
 /**
  * @brief Interface for the Hexeditor window.
  * @note This file is published to hosting applications. Do not add global declarations.
@@ -81,10 +85,10 @@ public:
 		int iEndOfSelection;
 	};
 
+	virtual unsigned STDMETHODCALLTYPE get_interface_version() = 0;
 	virtual unsigned char *STDMETHODCALLTYPE get_buffer(int) = 0;
 	virtual int STDMETHODCALLTYPE get_length() = 0;
 	virtual void STDMETHODCALLTYPE set_sibling(IHexEditorWindow *) = 0;
-	virtual void STDMETHODCALLTYPE set_status_bar(HWND) = 0;
 	virtual Colors *STDMETHODCALLTYPE get_colors() = 0;
 	virtual Settings *STDMETHODCALLTYPE get_settings() = 0;
 	virtual Status *STDMETHODCALLTYPE get_status() = 0;
@@ -103,9 +107,7 @@ public:
 	virtual void STDMETHODCALLTYPE CMD_edit_clear() = 0;
 	virtual BOOL STDMETHODCALLTYPE select_next_diff(BOOL bFromStart) = 0;
 	virtual BOOL STDMETHODCALLTYPE select_prev_diff(BOOL bFromEnd) = 0;
-	virtual BOOL STDMETHODCALLTYPE load_lang(LANGID) = 0;
-	virtual LPTSTR STDMETHODCALLTYPE load_string(UINT) = 0;
-	virtual void STDMETHODCALLTYPE free_string(LPTSTR) = 0;
+	virtual BOOL STDMETHODCALLTYPE load_lang(LANGID langid, LPCWSTR langdir = NULL) = 0;
 	virtual void STDMETHODCALLTYPE CMD_zoom(int) = 0;
 	virtual void STDMETHODCALLTYPE CMD_select_all() = 0;
 };

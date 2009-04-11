@@ -26,4 +26,4 @@ static const char OptionsRegistryPath[] = "Software\\Frhed";
 static const char OptionsRegistrySettingsPath[] = "Software\\Frhed\\Settings";
 
 /** @brief Subfolder where language files (PO files) are. */
-static const char LangFileSubFolder[] = "Languages";
+static const WCHAR LangFileSubFolder[] = L"Languages";

@@ -29,11 +29,8 @@
 #include "hexwdlg.h"
 #include "LangArray.h"
 #include "LangString.h"
-
-static WNDPROC NTAPI SubclassAW(HWND hWnd, WNDPROC wndproc)
-{
-	return (WNDPROC)SetWindowLongPtr(hWnd, GWLP_WNDPROC, (LONG_PTR)wndproc);
-}
+#include "Constants.h"
+#include "AnsiConvert.h"
 
 static WNDPROC DefWndProcDroppedComboBox = 0;
 
@@ -51,7 +48,7 @@ static LRESULT CALLBACK WndProcDroppedComboBox(HWND hWnd, UINT uMsg, WPARAM wPar
 				rcLb.left -= rcLb.right - cxScreen;
 			if (rcLb.left < 0)
 				rcLb.left = 0;
-			::SetWindowPos(hLb, 0, rcLb.left, rcLb.top, 0, 0, SWP_NOSIZE|SWP_NOZORDER);
+			::SetWindowPos(hLb, 0, rcLb.left, rcLb.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 		}
 		break;
 	}
@@ -59,6 +56,8 @@ static LRESULT CALLBACK WndProcDroppedComboBox(HWND hWnd, UINT uMsg, WPARAM wPar
 }
 
 HWND ViewSettingsDlg::hCbLang;
+
+static BOOL fAllLanguages = FALSE;
 
 /**
  * @brief Available and installed languages enumerator.
@@ -71,10 +70,10 @@ HWND ViewSettingsDlg::hCbLang;
 BOOL ViewSettingsDlg::EnumLocalesProc(LPTSTR lpLocaleString)
 {
 	TCHAR path[MAX_PATH];
-	
-	SimpleString modpath = GetLangFileFolder(hMainInstance);
-	_tcscpy(path, modpath);
-	LPTSTR name = path + _tcslen(path);
+	GetModuleFileName(hMainInstance, path, MAX_PATH);
+	PathRemoveFileSpec(path);
+	PathAppend(path, static_cast<W2T>(LangFileSubFolder));
+	LPTSTR name = PathAddBackslash(path);
 	LCID lcid = 0;
 	if (sscanf(lpLocaleString, "%x", &lcid) == 1)
 	{
@@ -92,7 +91,8 @@ BOOL ViewSettingsDlg::EnumLocalesProc(LPTSTR lpLocaleString)
 					break;
 				j = 0;
 			}
-			if (f)
+			// If SHIFT is pressed while opening the dropdown list, throw in whatever we can possibly support.
+			if (f || fAllLanguages)
 			{
 				int k = SendMessage(hCbLang, CB_ADDSTRING, 0, MAKELONG(langid, f));
 				if (langid == (langArray.m_langid ? langArray.m_langid : LangArray::DefLangId))
@@ -222,7 +222,17 @@ BOOL ViewSettingsDlg::OnInitDialog(HWND hDlg)
 	CheckDlgButton(hDlg, IDC_SETTINGS_ADJOFFSET, checked);
 	SetDlgItemText(hDlg, IDC_SETTINGS_EDITOR, TexteditorName);
 	hCbLang = GetDlgItem(hDlg, IDC_SETTINGS_LANGUAGE);
+	// Adjust dropped control width.
 	SendMessage(hCbLang, CB_SETDROPPEDWIDTH, 698, 0);
+	// Adjust dropped control height to about half of screen.
+	RECT rc;
+	GetWindowRect(hCbLang, &rc);
+	int cyScreen = GetSystemMetrics(SM_CYSCREEN);
+	int cyEdit = rc.bottom - rc.top;
+	int cyItem = SendMessage(hCbLang, CB_GETITEMHEIGHT, 0, 0);
+	SetWindowPos(hCbLang, NULL, 0, 0, rc.right - rc.left, (cyScreen / 2 - cyEdit) / cyItem * cyItem + cyEdit + 2, SWP_NOMOVE | SWP_NOZORDER);
+	// Populate the dropdown list.
+	fAllLanguages = FALSE;
 	EnumSystemLocales(EnumLocalesProc, LCID_SUPPORTED);
 	return TRUE;
 }
@@ -317,15 +327,21 @@ INT_PTR ViewSettingsDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 			}
 			return TRUE;
 		case MAKEWPARAM(IDC_SETTINGS_LANGUAGE, CBN_DROPDOWN):
+			if (fAllLanguages == FALSE && GetKeyState(VK_SHIFT) < 0)
+			{
+				fAllLanguages = TRUE;
+				SendMessage((HWND)lParam, CB_RESETCONTENT, 0, 0);
+				EnumSystemLocales(EnumLocalesProc, LCID_SUPPORTED);
+			}
 			if (DefWndProcDroppedComboBox == 0)
 			{
-				DefWndProcDroppedComboBox = SubclassAW((HWND)lParam, WndProcDroppedComboBox);
+				DefWndProcDroppedComboBox = SubclassWindow((HWND)lParam, WndProcDroppedComboBox);
 			}
 			return TRUE;
 		case MAKEWPARAM(IDC_SETTINGS_LANGUAGE, CBN_CLOSEUP):
 			if (DefWndProcDroppedComboBox)
 			{
-				SubclassAW((HWND)lParam, DefWndProcDroppedComboBox);
+				SubclassWindow((HWND)lParam, DefWndProcDroppedComboBox);
 				DefWndProcDroppedComboBox = 0;
 			}
 			return TRUE;
