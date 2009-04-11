@@ -3,7 +3,6 @@
 #include "Constants.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
-#include "LangArray.h"
 #include "LangString.h"
 
 void GetWindowText(HWND hwnd, SimpleString &str)
@@ -29,6 +28,12 @@ BOOL IsDlgItemEnabled(HWND hwnd, int id)
 {
 	hwnd = GetDlgItem(hwnd, id);
 	return IsWindowEnabled(hwnd);
+}
+
+int MessageBox(HWND hwnd, LPCTSTR text, UINT type)
+{
+	LPCTSTR app = GetLangString(IDS_APPNAME);
+	return MessageBox(hwnd, text, app, type);
 }
 
 C_ASSERT(sizeof(DragDropOptionsDlg) == sizeof(HexEditorWindow)); // disallow instance members
@@ -95,7 +100,7 @@ INT_PTR DragDropOptionsDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 INT_PTR ChangeInstDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 {
 	//God damn spinners make life easy
-	switch(m)
+	switch (m)
 	{
 	case WM_INITDIALOG:
 		{
@@ -139,9 +144,9 @@ INT_PTR ChangeInstDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 		switch (w)
 		{
 		case IDOK:
-			iInstCount = SendDlgItemMessage(hw,IDC_LINST,UDM_GETPOS,0,0);
+			iInstCount = SendDlgItemMessage(hw, IDC_LINST, UDM_GETPOS, 0, 0);
 			read_ini_data();
-			iInstCount = SendDlgItemMessage(hw,IDC_SINST,UDM_GETPOS,0,0);
+			iInstCount = SendDlgItemMessage(hw, IDC_SINST, UDM_GETPOS, 0, 0);
 			resize_window();
 			// fall through
 		case IDCANCEL:
