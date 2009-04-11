@@ -28,16 +28,16 @@
 #include "clipboard.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
-#include "LangString.h"
+#include "StringTable.h"
 
 void ChooseDiffDlg::add_diff(HWND hwndList, int diff, int lower, int upper)
 {
 	TCHAR buf[100];
 	_stprintf(buf,
-		GetLangString(IDS_DIFFLISTITEMFORMAT), //"%d) 0x%x=%u to 0x%x=%u (%d bytes)",
+		// "%d) 0x%x=%u to 0x%x=%u (%d bytes)"
+		GetLangString(IDS_DIFFLISTITEMFORMAT),
 		diff, lower, lower,	upper, upper, upper - lower + 1);
-	int i = SendMessage(hwndList, LB_ADDSTRING, 0, (LPARAM)buf);
-	SendMessage(hwndList, LB_SETITEMDATA, i, MAKELONG(lower, upper));
+	SendMessage(hwndList, LB_ADDSTRING, 0, (LPARAM)buf);
 }
 
 //-------------------------------------------------------------------
@@ -86,13 +86,12 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 {
 	char szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
-	LangString openAllFiles(IDS_OPEN_ALL_FILES);
 
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);
 	ofn.lStructSize = sizeof ofn;
 	ofn.hwndOwner = hDlg;
-	ofn.lpstrFilter = openAllFiles;
+	ofn.lpstrFilter = GetLangString(IDS_OPEN_ALL_FILES);
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = _MAX_PATH;
 	ofn.lpstrTitle = "Choose file to compare with";
@@ -101,8 +100,7 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 	int filehandle = _open(szFileName, _O_RDONLY|_O_BINARY);
 	if (filehandle == -1)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Error while opening file.", app, MB_ICONERROR);
+		MessageBox(hDlg, "Error while opening file.", MB_ICONERROR);
 		return FALSE;
 	}
 	BOOL bDone = FALSE;
@@ -129,21 +127,18 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 				else
 				{
 					// No difference.
-					LangString app(IDS_APPNAME);
-					MessageBox(hDlg, "Data matches exactly.", app, MB_ICONINFORMATION);
+					MessageBox(hDlg, "Data matches exactly.", MB_ICONINFORMATION);
 				}
 			}
 			else
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hDlg, "Error while reading from file.", app, MB_ICONERROR);
+				MessageBox(hDlg, "Error while reading from file.", MB_ICONERROR);
 			}
 			delete[] cmpdata;
 		}
 		else
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Not enough memory.", app, MB_ICONERROR);
+			MessageBox(hDlg, "Not enough memory.", MB_ICONERROR);
 		}
 	}
 	_close(filehandle);
@@ -159,8 +154,7 @@ BOOL ChooseDiffDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 		{//copy button was pressed
 			if (!OpenClipboard(hwnd)) //open clip
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hwnd,"Cannot get access to clipboard.", app, MB_ICONERROR);
+				MessageBox(hwnd, "Cannot get access to clipboard.", MB_ICONERROR);
 				return TRUE;
 			}
 			EmptyClipboard(); //empty clip
@@ -207,21 +201,12 @@ BOOL ChooseDiffDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 			int i = SendMessage(hwndList, LB_GETCURSEL, 0, 0);
 			if (i != -1)
 			{
-				DWORD dw = SendMessage(hwndList, LB_GETITEMDATA, i, 0);
-				if (IsWindowUnicode(hwndList))
-				{
-					wchar_t buf[100];
-					SendMessageW(hwndList, LB_GETTEXT, i, (LPARAM)buf);
-					iStartOfSelection = StrToIntW(buf + LOWORD(dw));
-					iEndOfSelection = StrToIntW(buf + HIWORD(dw));
-				}
-				else
-				{
-					char buf[100];
-					SendMessageA(hwndList, LB_GETTEXT, i, (LPARAM)buf);
-					iStartOfSelection = StrToIntA(buf + LOWORD(dw));
-					iEndOfSelection = StrToIntA(buf + HIWORD(dw));
-				}
+				TCHAR buf[100];
+				SendMessage(hwndList, LB_GETTEXT, i, (LPARAM)buf);
+				i = _stscanf(buf,
+					// "%d) 0x%x=%u to 0x%x=%u (%d bytes)"
+					GetLangString(IDS_DIFFLISTITEMFORMAT),
+					&i, &i, &iStartOfSelection, &i, &iEndOfSelection, &i);
 				iStartOfSelection += iCurByte;
 				iEndOfSelection += iCurByte;
 				iCurByte = iStartOfSelection;
@@ -257,4 +242,3 @@ INT_PTR ChooseDiffDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPara
 	}
 	return FALSE;
 }
-
