@@ -129,8 +129,8 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		else
 		{
 			DataArray.ClearAll();
-			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Error while reading from file.", app, MB_ICONERROR);
+			LangString readErr(IDS_ERR_READING_FILE);
+			MessageBox(hDlg, readErr, MB_ICONERROR);
 		}
 	}
 	else

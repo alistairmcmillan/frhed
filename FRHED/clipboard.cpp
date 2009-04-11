@@ -25,6 +25,8 @@
 
 #include "precomp.h"
 #include "clipboard.h"
+#include "resource.h"
+#include "LangString.h"
 
 //============================================================================================
 
@@ -47,7 +49,11 @@ void TextToClipboard(HWND hwnd, char *text, int len)
 				CloseClipboard(); //close clip
 			}
 			else //failed to open clip
-				MessageBox(hwnd,"Cannot get access to clipboard.", "Copy", MB_ICONERROR);
+			{
+				LangString app(IDS_APPNAME);
+				LangString noAccess(IDS_CANNOT_ACCESS_CLIPBOARD);
+				MessageBox(hwnd, noAccess, app, MB_ICONERROR);
+			}
 		}
 		else
 		{//failed to get pointer to global mem

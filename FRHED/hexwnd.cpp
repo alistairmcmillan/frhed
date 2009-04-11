@@ -373,8 +373,8 @@ int HexEditorWindow::load_file(const char *fname)
 			}
 			else
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hwnd, "Error while reading from file.", app, MB_ICONERROR);
+				LangString readErr(IDS_ERR_READING_FILE);
+				MessageBox(hwnd, readErr, MB_ICONERROR);
 			}
 		}
 		else

@@ -29,6 +29,7 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "StringTable.h"
+#include "LangString.h"
 
 void ChooseDiffDlg::add_diff(HWND hwndList, int diff, int lower, int upper)
 {
@@ -94,13 +95,14 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 	ofn.lpstrFilter = GetLangString(IDS_OPEN_ALL_FILES);
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = _MAX_PATH;
-	ofn.lpstrTitle = "Choose file to compare with";
+	ofn.lpstrTitle = GetLangString(IDS_DIFF_CHOOSEFILE);
 	if (!GetOpenFileName(&ofn))
 		return FALSE;
 	int filehandle = _open(szFileName, _O_RDONLY|_O_BINARY);
 	if (filehandle == -1)
 	{
-		MessageBox(hDlg, "Error while opening file.", MB_ICONERROR);
+		LangString errOpen(IDS_DIFF_ERROPEN);
+		MessageBox(hDlg, errOpen, MB_ICONERROR);
 		return FALSE;
 	}
 	BOOL bDone = FALSE;
@@ -117,9 +119,11 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 				if (int diff = get_diffs(hwndList, (char *)&DataArray[iCurByte], DataArray.GetLength() - iCurByte, cmpdata, filelen))
 				{
 					char buf[100];
-					sprintf(buf, "%d areas of difference found.", diff);
+					LangString diffsFound(IDS_DIFF_AREAS_FOUND);
+					sprintf(buf, diffsFound, diff);
 					SetDlgItemText(hDlg, IDC_NUMDIFFS, buf);
-					sprintf(buf, "Remaining loaded data size: %d, size of file on disk: %d.", iSrcFileLen, iDestFileLen);
+					LangString remainingData(IDS_DIFF_REMAINING_BYTES);
+					sprintf(buf, remainingData, iSrcFileLen, iDestFileLen);
 					SetDlgItemText(hDlg, IDC_CHOOSEDIFF_FSIZES, buf);
 					SendMessage(hwndList, LB_SETCURSEL, 0, 0);
 					bDone = TRUE;
@@ -127,18 +131,21 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 				else
 				{
 					// No difference.
-					MessageBox(hDlg, "Data matches exactly.", MB_ICONINFORMATION);
+					LangString noDiff(IDS_DIFF_NO_DIFF);
+					MessageBox(hDlg, noDiff, MB_ICONINFORMATION);
 				}
 			}
 			else
 			{
-				MessageBox(hDlg, "Error while reading from file.", MB_ICONERROR);
+				LangString readErr(IDS_ERR_READING_FILE);
+				MessageBox(hDlg, readErr, MB_ICONERROR);
 			}
 			delete[] cmpdata;
 		}
 		else
 		{
-			MessageBox(hDlg, "Not enough memory.", MB_ICONERROR);
+			LangString noMem(IDS_NO_MEMORY);
+			MessageBox(hDlg, noMem, MB_ICONERROR);
 		}
 	}
 	_close(filehandle);
@@ -154,7 +161,8 @@ BOOL ChooseDiffDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 		{//copy button was pressed
 			if (!OpenClipboard(hwnd)) //open clip
 			{
-				MessageBox(hwnd, "Cannot get access to clipboard.", MB_ICONERROR);
+				LangString errClipboard(IDS_CANNOT_ACCESS_CLIPBOARD);
+				MessageBox(hwnd, errClipboard, MB_ICONERROR);
 				return TRUE;
 			}
 			EmptyClipboard(); //empty clip

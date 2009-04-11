@@ -1399,6 +1399,13 @@ BEGIN
     IDS_OFFSET_ERROR        "Offset not recognized."
 END
 
+// General - errors
+STRINGTABLE 
+BEGIN
+    IDS_ERR_READING_FILE    "Error while reading from file."
+    IDS_NO_MEMORY           "Not enough memory."
+END
+
 // About-dialog
 STRINGTABLE 
 BEGIN
@@ -1430,6 +1437,22 @@ STRINGTABLE
 BEGIN
     IDS_BITMANIP_AT_OFFSET  "Manipulate bits at offset 0x%x=%d"
     IDS_BITMANIP_VALUE      "Value: 0x%x, %d signed, %u unsigned."
+END
+
+// Diffing
+STRINGTABLE 
+BEGIN
+    IDS_DIFF_CHOOSEFILE     "Choose file to compare with"
+    IDS_DIFF_ERROPEN        "Error while opening file."
+    IDS_DIFF_AREAS_FOUND    "%d areas of difference found."
+    IDS_DIFF_REMAINING_BYTES "Remaining loaded data size: %d, size of file on disk: %d."
+    IDS_DIFF_NO_DIFF        "Data matches exactly."
+END
+
+// Clipboard
+STRINGTABLE 
+BEGIN
+    IDS_CANNOT_ACCESS_CLIPBOARD "Cannot get access to clipboard."
 END
 
 #endif    // Englisch (USA) resources

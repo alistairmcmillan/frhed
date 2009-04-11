@@ -337,6 +337,8 @@
 #define IDS_OFFSET_START_ERROR          10016
 #define IDS_OFFSET_END_ERROR            10017
 #define IDS_OFFSET_ERROR                10018
+#define IDS_ERR_READING_FILE            10032
+#define IDS_NO_MEMORY                   10033
 #define IDS_ABOUT_BROWSER_ERR           10160
 #define IDS_ABOUT_FILENOTFOUND          10161
 #define IDS_BMK_INVALID_POSITION        10177
@@ -350,6 +352,12 @@
 #define IDS_APPEND_NO_MEM               10193
 #define IDS_BITMANIP_AT_OFFSET          10208
 #define IDS_BITMANIP_VALUE              10209
+#define IDS_DIFF_CHOOSEFILE             10224
+#define IDS_DIFF_ERROPEN                10225
+#define IDS_DIFF_AREAS_FOUND            10226
+#define IDS_DIFF_REMAINING_BYTES        10227
+#define IDS_DIFF_NO_DIFF                10228
+#define IDS_CANNOT_ACCESS_CLIPBOARD     10240
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects
