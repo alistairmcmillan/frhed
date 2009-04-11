@@ -30,8 +30,6 @@
  * @brief A struct holding resource strings (translated).
  * This struct contains strings loaded from the resource file (English) or
  * from selected translation's PO file.
- *
- * Order of strings here (.h file) and in .cpp file must match!
  */
 template <class T>
 struct StringTable

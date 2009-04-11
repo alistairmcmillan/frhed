@@ -1,3 +1,8 @@
+// Resource string template file.
+// All resource strings must appear in this file to be translatable.
+//
+// $Id$
+
 // General strings
 DECLARE(IDS_APPNAME)
 DECLARE(IDS_DIFFLISTITEMFORMAT)
