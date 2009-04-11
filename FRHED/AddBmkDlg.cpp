@@ -39,7 +39,7 @@ static const int OffsetLen = 16;
  */
 BOOL AddBmkDlg::OnInitDialog(HWND hDlg)
 {
-	char buf[OffsetLen + 1] = {0};
+	TCHAR buf[OffsetLen + 1] = {0};
 	_sntprintf(buf, RTL_NUMBER_OF(buf), _T("x%x"), iCurByte);
 	SetDlgItemText(hDlg, IDC_BMKADD_OFFSET, buf);
 	
@@ -60,15 +60,15 @@ BOOL AddBmkDlg::OnInitDialog(HWND hDlg)
  */
 BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 {
-	char buf[OffsetLen + 1] = {0};
+	TCHAR buf[OffsetLen + 1] = {0};
 	int i, offset;
-	char name[BMKTEXTMAX] = {0};
+	TCHAR name[BMKTEXTMAX] = {0};
 	switch (wParam)
 	{
 	case IDOK:
 		if (GetDlgItemText(hDlg, IDC_BMKADD_OFFSET, buf, OffsetLen) &&
-			sscanf(buf, "x%x", &offset) == 0 &&
-			sscanf(buf, "%d", &offset) == 0)
+			_stscanf(buf, _T("x%x"), &offset) == 0 &&
+			_stscanf(buf, _T("%d"), &offset) == 0)
 		{
 			LangString app(IDS_APPNAME);
 			LangString startOffsetErr(IDS_OFFSET_START_ERROR);
@@ -96,7 +96,7 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 		// No bookmark on that position yet.
 		pbmkList[iBmkCount].offset = offset;
 		pbmkList[iBmkCount].name = GetDlgItemText(hDlg, IDC_BMKADD_NAME, name,
-					BMKTEXTMAX) ? strdup(name) : 0;
+				BMKTEXTMAX) ? _tcsdup(name) : 0;
 		iBmkCount++;
 		repaint();
 		// fall through
@@ -107,6 +107,14 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	return FALSE;
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR AddBmkDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
