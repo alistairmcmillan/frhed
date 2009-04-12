@@ -381,6 +381,10 @@
 #define IDS_DECI_UNKNOWN_TIMES          10305
 #define IDS_DECI_INVALID_START          10306
 #define IDS_DECI_NO_SPACE               10307
+#define IDS_PASTE_ATLEAST_ONCE          10320
+#define IDS_PASTE_WAS_EMPTY             10321
+#define IDS_PASTE_NO_MEM                10322
+#define IDS_PASTE_NO_SPACE              10323
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

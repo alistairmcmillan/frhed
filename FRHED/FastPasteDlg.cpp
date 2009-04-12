@@ -79,9 +79,8 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 	iPasteTimes = GetDlgItemInt(hDlg, IDC_FPASTE_PASTETIMES, 0, TRUE);
 	if (iPasteTimes <= 0)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Number of times to paste must be at least 1.", app,
-				MB_ICONERROR);
+		LangString atleastOnce(IDS_PASTE_ATLEAST_ONCE);
+		MessageBox(hDlg, atleastOnce, MB_ICONERROR);
 		return FALSE;
 	}
 	iPasteSkip = GetDlgItemInt(hDlg, IDC_FPASTE_SKIPS, 0, TRUE);
@@ -143,8 +142,8 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 	}
 	if (destlen == 0)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Tried to paste zero-length array.", app, MB_ICONERROR);
+		LangString zeroLenArray(IDS_PASTE_WAS_EMPTY);
+		MessageBox(hDlg, zeroLenArray, MB_ICONERROR);
 		delete [] pcPastestring;
 		return FALSE;
 	}
@@ -164,8 +163,8 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 		{
 			if (!DataArray.InsertAtGrow(i, (unsigned char*)pcPastestring, 0, destlen))
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hDlg, "Not enough memory for inserting.", app, MB_ICONERROR);
+				LangString noMem(IDS_PASTE_NO_MEM);
+				MessageBox(hDlg, noMem, MB_ICONERROR);
 				break;
 			}
 			i += destlen + iPasteSkip;
@@ -180,8 +179,8 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 		// Enough space for writing?
 		if (DataArray.GetLength() - iCurByte < (iPasteSkip + destlen) * iPasteTimes)
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Not enough space for overwriting.", app, MB_ICONERROR);
+			LangString noSpace(IDS_PASTE_NO_SPACE);
+			MessageBox(hDlg, noSpace, MB_ICONERROR);
 			delete [] pcPastestring;
 			return TRUE;
 		}
@@ -324,6 +323,14 @@ BOOL FastPasteDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 	return FALSE;
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR FastPasteDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)

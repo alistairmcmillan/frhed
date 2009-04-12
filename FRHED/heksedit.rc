@@ -1510,6 +1510,15 @@ BEGIN
     IDS_DECI_NO_SPACE       "Not enough space for writing decimal values."
 END
 
+// Paste-dialog(s)
+STRINGTABLE 
+BEGIN
+    IDS_PASTE_ATLEAST_ONCE  "Number of times to paste must be at least 1."
+    IDS_PASTE_WAS_EMPTY     "Tried to paste zero-length array."
+    IDS_PASTE_NO_MEM        "Not enough memory for inserting."
+    IDS_PASTE_NO_SPACE      "Not enough space for overwriting."
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 
