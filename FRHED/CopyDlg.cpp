@@ -106,8 +106,8 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	// DataArray.GetLength ()-iCutOffset = number of bytes from current pos. to end.
 	if (DataArray.GetLength() - iOffset < iNumberOfBytes)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Can't copy more bytes than are present.", app, MB_ICONERROR);
+		LangString copyTooMany(IDS_COPY_TOO_MANY);
+		MessageBox(hDlg, copyTooMany, MB_ICONERROR);
 		return FALSE;
 	}
 	// Transfer to cipboard.
@@ -116,8 +116,8 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	if (hGlobal == 0)
 	{
 		// Not enough memory for clipboard.
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Not enough memory for copying.", app, MB_ICONERROR);
+		LangString noMem(IDS_COPY_NO_MEM);
+		MessageBox(hDlg, noMem, MB_ICONERROR);
 		return FALSE;
 	}
 	WaitCursor wc;
@@ -131,6 +131,14 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR CopyDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)

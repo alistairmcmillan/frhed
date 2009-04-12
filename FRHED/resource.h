@@ -370,6 +370,8 @@
 #define IDS_CLIPBOARD_SELECT_FORMAT     10244
 #define IDS_CANNOT_GET_CB_TEXT          10245
 #define IDS_IMPORT_FROM_CB              10246
+#define IDS_COPY_TOO_MANY               10256
+#define IDS_COPY_NO_MEM                 10257
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects
