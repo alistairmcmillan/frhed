@@ -1494,6 +1494,13 @@ BEGIN
     IDS_CUT_FAILED          "Could not cut the data."
 END
 
+// Delete-dialog
+STRINGTABLE 
+BEGIN
+    IDS_DELETE_TOO_MANY     "Can't delete more bytes than are present."
+    IDS_DELETE_FAILED       "Could not delete data."
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 

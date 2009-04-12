@@ -375,6 +375,8 @@
 #define IDS_CUT_TOO_MANY                10272
 #define IDS_CUT_NO_MEM                  10273
 #define IDS_CUT_FAILED                  10274
+#define IDS_DELETE_TOO_MANY             10288
+#define IDS_DELETE_FAILED               10289
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects
