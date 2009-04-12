@@ -13,36 +13,36 @@ static const int OffsetLen = 16;
  * @param [in] hDlg Handle to the dialog.
  * @return TRUE
  */
-BOOL CutDlg::OnInitDialog(HWND hDlg)
+BOOL DeleteDlg::OnInitDialog(HWND hDlg)
 {
 	int iStart = iGetStartOfSelection();
 	int iEnd = iGetEndOfSelection();
 	char buf[OffsetLen + 1] = {0};
 
 	sprintf(buf, "x%x", iStart);
-	SetDlgItemText(hDlg, IDC_CUT_STARTOFFSET, buf);
+	SetDlgItemText(hDlg, IDC_DELETE_STARTOFFSET, buf);
 	sprintf(buf, "x%x", iEnd);
 
-	CheckDlgButton(hDlg, IDC_CUT_INCLUDEOFFSET, BST_CHECKED);
-	SetDlgItemText(hDlg, IDC_CUT_ENDOFFSET, buf);
-	SetDlgItemInt(hDlg, IDC_CUT_NUMBYTES, iEnd - iStart + 1, TRUE);
+	CheckDlgButton(hDlg, IDC_DELETE_INCLUDEOFFSET, BST_CHECKED);
+	SetDlgItemText(hDlg, IDC_DELETE_ENDOFFSET, buf);
+	SetDlgItemInt(hDlg, IDC_DELETE_NUMBYTES, iEnd - iStart + 1, TRUE);
 
 	return TRUE;
 }
 
 /**
- * @brief Cut the data.
- * This function cuts the data based on values user entered to the dialog.
+ * @brief Delete the data.
+ * This function deletes the data based on values user entered to the dialog.
  * @param [in] hDlg Handle to the dialog.
- * @return TRUE if the cutting succeeded, FALSE otherwise.
+ * @return TRUE if the deleting succeeded, FALSE otherwise.
  */
-BOOL CutDlg::Apply(HWND hDlg)
+BOOL DeleteDlg::Apply(HWND hDlg)
 {
 	char buf[OffsetLen + 1] = {0};
 	int iOffset;
 	int iNumberOfBytes;
 
-	if (GetDlgItemText(hDlg, IDC_CUT_STARTOFFSET, buf, OffsetLen) &&
+	if (GetDlgItemText(hDlg, IDC_DELETE_STARTOFFSET, buf, OffsetLen) &&
 		sscanf(buf, "x%x", &iOffset) == 0 &&
 		sscanf(buf, "%d", &iOffset) == 0)
 	{
@@ -52,9 +52,9 @@ BOOL CutDlg::Apply(HWND hDlg)
 		return FALSE;
 	}
 
-	if (IsDlgButtonChecked(hDlg, IDC_CUT_INCLUDEOFFSET))
+	if (IsDlgButtonChecked(hDlg, IDC_DELETE_INCLUDEOFFSET))
 	{
-		if (GetDlgItemText(hDlg, IDC_CUT_ENDOFFSET, buf, OffsetLen) &&
+		if (GetDlgItemText(hDlg, IDC_DELETE_ENDOFFSET, buf, OffsetLen) &&
 			sscanf(buf, "x%x", &iNumberOfBytes) == 0 &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
@@ -67,7 +67,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 	}
 	else
 	{// Get number of bytes.
-		if (GetDlgItemText(hDlg, IDC_CUT_NUMBYTES, buf, OffsetLen) &&
+		if (GetDlgItemText(hDlg, IDC_DELETE_NUMBYTES, buf, OffsetLen) &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
 			LangString app(IDS_APPNAME);
@@ -81,34 +81,15 @@ BOOL CutDlg::Apply(HWND hDlg)
 	if (DataArray.GetLength() - iOffset < iNumberOfBytes)
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Can't cut more bytes than are present.", app, MB_ICONERROR);
+		MessageBox(hDlg, "Can't delete more bytes than are present.", app, MB_ICONERROR);
 		return FALSE;
 	}
-
-	// Transfer to cipboard.
-	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen((char*) &DataArray[iOffset], iNumberOfBytes);
-	HGLOBAL hGlobal = GlobalAlloc(GHND, destlen);
-	if (hGlobal == 0)
-	{
-		// Not enough memory for clipboard.
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Not enough memory for cutting to clipboard.", app, MB_ICONERROR);
-		return FALSE;
-	}
-	WaitCursor wc;
-	char *pd = (char *)GlobalLock(hGlobal);
-	Text2BinTranslator::iTranslateBytesToBC(pd, &DataArray[iOffset], iNumberOfBytes);
-	GlobalUnlock(hGlobal);
-	OpenClipboard(hwnd);
-	EmptyClipboard();
-	SetClipboardData(CF_TEXT, hGlobal);
-	CloseClipboard();
 
 	// Delete data.
 	if (!DataArray.RemoveAt(iOffset, iNumberOfBytes))
 	{
 		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Could not cut data.", app, MB_ICONERROR);
+		MessageBox(hDlg, "Could not delete data.", app, MB_ICONERROR);
 		return FALSE;
 	}
 	iCurByte = iOffset;
@@ -131,7 +112,7 @@ BOOL CutDlg::Apply(HWND hDlg)
  * @param [in] lParam Second message parameter (depends on message).
  * @return TRUE if message was handled, FALSE if ignored.
  */
-INT_PTR CutDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
+INT_PTR DeleteDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
 	{
@@ -154,12 +135,12 @@ INT_PTR CutDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		// Check for controls
 		switch (LOWORD(wParam))
 		{
-		case IDC_CUT_INCLUDEOFFSET:  
-		case IDC_CUT_NUMBEROFBYTES:
-			EnableWindow(GetDlgItem(hDlg, IDC_CUT_NUMBYTES),
-						IsDlgButtonChecked(hDlg, IDC_CUT_NUMBEROFBYTES));
-			EnableWindow(GetDlgItem(hDlg, IDC_CUT_ENDOFFSET),
-						IsDlgButtonChecked(hDlg, IDC_CUT_INCLUDEOFFSET));
+		case IDC_DELETE_INCLUDEOFFSET:  
+		case IDC_DELETE_NUMBEROFBYTES:
+			EnableWindow(GetDlgItem(hDlg, IDC_DELETE_NUMBYTES),
+						IsDlgButtonChecked(hDlg, IDC_DELETE_NUMBEROFBYTES));
+			EnableWindow(GetDlgItem(hDlg, IDC_DELETE_ENDOFFSET),
+						IsDlgButtonChecked(hDlg, IDC_DELETE_INCLUDEOFFSET));
 			return TRUE;
 		}
 		break;

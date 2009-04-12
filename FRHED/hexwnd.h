@@ -204,7 +204,6 @@ public:
 	void CMD_edit_enterdecimalvalue();
 	int CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType, int iCopyHexdumpDlgStart, int iCopyHexdumpDlgEnd, char *mem = 0, int memlen = 0);
 	void CMD_copy_hexdump();
-	void CMD_edit_cut(int iMode);
 	void STDMETHODCALLTYPE CMD_edit_cut();
 	void STDMETHODCALLTYPE CMD_edit_copy();
 	void STDMETHODCALLTYPE CMD_edit_paste();

@@ -13,6 +13,7 @@
 #define IDD_FINDDIALOG                  108
 #define IDI_FRHED                       109
 #define IDD_ABOUTDIALOG                 111
+#define IDD_DELETEDIALOG                112
 #define IDD_HEXDUMPDIALOG               113
 #define IDD_DECIMALDIALOG               115
 #define IDD_PASTEDIALOG                 116
@@ -246,7 +247,6 @@
 #define IDC_CUT_NUMBYTES                351
 #define IDC_CUT_NUMBEROFBYTES           352
 #define IDC_CUT_ENDOFFSET               353
-#define IDC_CUT_CLIPBOARD               354
 #define IDC_COPY_STARTOFFSET            355
 #define IDC_COPY_OFFSET                 356
 #define IDC_COPY_BYTES                  357
@@ -312,6 +312,11 @@
 #define IDC_DROPPED_FILES               417
 #define IDC_FPASTE_TXT                  418
 #define IDC_SETTINGS_EDITORSELECT       419
+#define IDC_DELETE_STARTOFFSET          420
+#define IDC_DELETE_INCLUDEOFFSET        421
+#define IDC_DELETE_NUMBEROFBYTES        422
+#define IDC_DELETE_ENDOFFSET            423
+#define IDC_DELETE_NUMBYTES             424
 #define IDC_ENABLE_DRAG                 1074
 #define IDC_ALWAYS_CHOOSE               1075
 #define IDC_DROP_BIN_DATA               1076

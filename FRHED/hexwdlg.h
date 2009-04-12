@@ -320,8 +320,8 @@ private:
 };
 
 /**
- * @brief A dialog for Cut- and Delete-features.
- * This dialog handles both Cut- and Delete-features. The dialog shows
+ * @brief A dialog for Cut-feature.
+ * This dialog handles cutting bytes from the file. The dialog shows
  * selection (if any) start- and end-offesets. Also the selection
  * (if any) length in bytes is shown. User can edit these values before
  * the operation.
@@ -331,15 +331,25 @@ class CutDlg : public HexEditorWindow
 public:
 	enum { IDD = IDD_CUTDIALOG };
 
-	/** @brief Cut modes. */
-	enum CUT_MODE
-	{
-		CUT_CUT, /**< Cut text to clipboard. */
-		CUT_DELETE, /**< Delete text without copying to clipboard. */
-	};
+	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
+private:
+	BOOL OnInitDialog(HWND);
+	BOOL Apply(HWND);
+};
+
+/**
+ * @brief A dialog for Delete-feature.
+ * This dialog handles deleting bytes from the file. The dialog shows
+ * selection (if any) start- and end-offesets. Also the selection
+ * (if any) length in bytes is shown. User can edit these values before
+ * the operation.
+ */
+class DeleteDlg : public HexEditorWindow
+{
+public:
+	enum { IDD = IDD_DELETEDIALOG };
 
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-	static CUT_MODE iCutMode; /**< Selected cut-mode. */
 private:
 	BOOL OnInitDialog(HWND);
 	BOOL Apply(HWND);
