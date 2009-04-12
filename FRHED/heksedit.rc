@@ -1421,6 +1421,7 @@ STRINGTABLE
 BEGIN
     IDS_ERR_READING_FILE    "Error while reading from file."
     IDS_NO_MEMORY           "Not enough memory."
+    IDS_BYTES_NOT_KNOWN     "Number of bytes not recognized."
 END
 
 // About-dialog

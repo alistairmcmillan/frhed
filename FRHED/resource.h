@@ -344,6 +344,7 @@
 #define IDS_OFFSET_ERROR                10018
 #define IDS_ERR_READING_FILE            10032
 #define IDS_NO_MEMORY                   10033
+#define IDS_BYTES_NOT_KNOWN             10034
 #define IDS_ABOUT_BROWSER_ERR           10160
 #define IDS_ABOUT_FILENOTFOUND          10161
 #define IDS_BMK_INVALID_POSITION        10177

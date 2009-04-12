@@ -97,8 +97,8 @@ BOOL CopyDlg::Apply(HWND hDlg)
 		if (GetDlgItemText(hDlg, IDC_COPY_BYTECOUNT, buf, 64) &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Number of bytes not recognized.", app, MB_ICONERROR);
+			LangString notRecognized(IDS_BYTES_NOT_KNOWN);
+			MessageBox(hDlg, notRecognized, MB_ICONERROR);
 			return FALSE;
 		}
 	}
