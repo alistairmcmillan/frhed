@@ -377,6 +377,10 @@
 #define IDS_CUT_FAILED                  10274
 #define IDS_DELETE_TOO_MANY             10288
 #define IDS_DELETE_FAILED               10289
+#define IDS_DECI_UNKNOWN                10304
+#define IDS_DECI_UNKNOWN_TIMES          10305
+#define IDS_DECI_INVALID_START          10306
+#define IDS_DECI_NO_SPACE               10307
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

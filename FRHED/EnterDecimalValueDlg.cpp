@@ -83,8 +83,8 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 			TRUE);
 	if (!translated)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Decimal value not recognized.", app, MB_ICONERROR);
+		LangString notRecognized(IDS_DECI_UNKNOWN);
+		MessageBox(hDlg, notRecognized, MB_ICONERROR);
 		return FALSE;
 	}
 	int iDecValDlgOffset;
@@ -101,21 +101,20 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 			TRUE);
 	if (!translated)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Number of times not recognized.", app, MB_ICONERROR);
+		LangString unknownTimes(IDS_DECI_UNKNOWN_TIMES);
+		MessageBox(hDlg, unknownTimes, MB_ICONERROR);
 		return FALSE;
 	}
 	if (iDecValDlgOffset < 0 || iDecValDlgOffset > DataArray.GetUpperBound())
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Invalid start offset.", app, MB_ICONERROR);
+		LangString invalidStart(IDS_DECI_INVALID_START);
+		MessageBox(hDlg, invalidStart, MB_ICONERROR);
 		return FALSE;
 	}
 	if (iDecValDlgOffset + iDecValDlgSize * iDecValDlgTimes > DataArray.GetLength())
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Not enough space for writing decimal values.", app,
-				MB_ICONERROR);
+		LangString noSpace(IDS_DECI_NO_SPACE);
+		MessageBox(hDlg, noSpace, MB_ICONERROR);
 		return FALSE;
 	}
 	WaitCursor wc;
@@ -172,7 +171,12 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 }
 
 /**
- * @brief Dialog message handler.
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
  */
 INT_PTR EnterDecimalValueDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {

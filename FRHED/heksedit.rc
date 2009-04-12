@@ -1501,6 +1501,15 @@ BEGIN
     IDS_DELETE_FAILED       "Could not delete data."
 END
 
+// Enter Decimal value-dialog
+STRINGTABLE 
+BEGIN
+    IDS_DECI_UNKNOWN        "Decimal value not recognized."
+    IDS_DECI_UNKNOWN_TIMES  "Number of times not recognized."
+    IDS_DECI_INVALID_START  "Invalid start offset."
+    IDS_DECI_NO_SPACE       "Not enough space for writing decimal values."
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 
