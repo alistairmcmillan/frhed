@@ -87,6 +87,6 @@ STDAPI DllUnregisterServer()
  */
 STDAPI DllGetClassObject(REFCLSID, REFIID, LPVOID *ppv)
 {
-	*ppv = NULL;
-	return CLASS_E_CLASSNOTAVAILABLE;
+	// Return an IMalloc just to return something.
+	return CoGetMalloc(1, reinterpret_cast<IMalloc **>(ppv));
 }
