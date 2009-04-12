@@ -372,6 +372,9 @@
 #define IDS_IMPORT_FROM_CB              10246
 #define IDS_COPY_TOO_MANY               10256
 #define IDS_COPY_NO_MEM                 10257
+#define IDS_CUT_TOO_MANY                10272
+#define IDS_CUT_NO_MEM                  10273
+#define IDS_CUT_FAILED                  10274
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

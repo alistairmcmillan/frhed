@@ -1486,6 +1486,14 @@ BEGIN
     IDS_COPY_NO_MEM         "Not enough memory for copying."
 END
 
+// Cut-dialog
+STRINGTABLE 
+BEGIN
+    IDS_CUT_TOO_MANY        "Can't cut more bytes than are present."
+    IDS_CUT_NO_MEM          "Not enough memory for cutting to clipboard."
+    IDS_CUT_FAILED          "Could not cut the data."
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 

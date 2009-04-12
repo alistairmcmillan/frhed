@@ -46,9 +46,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 		sscanf(buf, "x%x", &iOffset) == 0 &&
 		sscanf(buf, "%d", &iOffset) == 0)
 	{
-		LangString app(IDS_APPNAME);
 		LangString startOffsetErr(IDS_OFFSET_START_ERROR);
-		MessageBox(hDlg, startOffsetErr, app, MB_ICONERROR);
+		MessageBox(hDlg, startOffsetErr, MB_ICONERROR);
 		return FALSE;
 	}
 
@@ -58,9 +57,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 			sscanf(buf, "x%x", &iNumberOfBytes) == 0 &&
 			sscanf(buf, "%d", &iNumberOfBytes) == 0)
 		{
-			LangString app(IDS_APPNAME);
 			LangString endOffsetErr(IDS_OFFSET_END_ERROR);
-			MessageBox(hDlg, endOffsetErr, app, MB_ICONERROR);
+			MessageBox(hDlg, endOffsetErr, MB_ICONERROR);
 			return FALSE;
 		}
 		iNumberOfBytes = iNumberOfBytes - iOffset + 1;
@@ -80,8 +78,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 	// DataArray.GetLength ()-iCutOffset = number of bytes from current pos. to end.
 	if (DataArray.GetLength() - iOffset < iNumberOfBytes)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Can't cut more bytes than are present.", app, MB_ICONERROR);
+		LangString tooMany(IDS_CUT_TOO_MANY);
+		MessageBox(hDlg, tooMany, MB_ICONERROR);
 		return FALSE;
 	}
 
@@ -91,8 +89,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 	if (hGlobal == 0)
 	{
 		// Not enough memory for clipboard.
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Not enough memory for cutting to clipboard.", app, MB_ICONERROR);
+		LangString noMem(IDS_CUT_NO_MEM);
+		MessageBox(hDlg, noMem, MB_ICONERROR);
 		return FALSE;
 	}
 	WaitCursor wc;
@@ -107,8 +105,8 @@ BOOL CutDlg::Apply(HWND hDlg)
 	// Delete data.
 	if (!DataArray.RemoveAt(iOffset, iNumberOfBytes))
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Could not cut data.", app, MB_ICONERROR);
+		LangString cutFailed(IDS_CUT_FAILED);
+		MessageBox(hDlg, cutFailed, MB_ICONERROR);
 		return FALSE;
 	}
 	iCurByte = iOffset;
