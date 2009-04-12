@@ -556,14 +556,10 @@ void HexEditorWindow::resize_window()
 	x = length / iBytesPerLine * iBytesPerLine;//value of the last offset
 	if (bPartialStats)
 		x += iPartialOffset;
-	iMaxOffsetLen = 0;
+	iMaxOffsetLen = 1;
 	//length of last offset
-	val = x;
-	while (val > 0)
-	{
+	while (x & ~0 << 4 * iMaxOffsetLen)
 		++iMaxOffsetLen;
-		val <<= 4;
-	}
 	if (bAutoOffsetLen)
 		iMinOffsetLen = iMaxOffsetLen;
 	else if (iMaxOffsetLen < iMinOffsetLen)
