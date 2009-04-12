@@ -52,9 +52,9 @@ LRESULT CALLBACK HexWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 /**
  * @brief Export what is needed to be a COM in-process server.
  */
-#pragma comment(linker, "/EXPORT:DllRegisterServer=_DllRegisterServer@0")
-#pragma comment(linker, "/EXPORT:DllUnregisterServer=_DllUnregisterServer@0")
-#pragma comment(linker, "/EXPORT:DllGetClassObject=_DllGetClassObject@12")
+#pragma comment(linker, "/EXPORT:DllRegisterServer=_DllRegisterServer@0,PRIVATE")
+#pragma comment(linker, "/EXPORT:DllUnregisterServer=_DllUnregisterServer@0,PRIVATE")
+#pragma comment(linker, "/EXPORT:DllGetClassObject=_DllGetClassObject@12,PRIVATE")
 
 /**
  * @brief InProcServer32 subkey.
