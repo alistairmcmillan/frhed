@@ -382,8 +382,8 @@ int HexEditorWindow::load_file(LPCTSTR fname)
 		}
 		else
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hwnd, "Not enough memory to load file.", app, MB_ICONERROR);
+			LangString noMem(IDS_NO_MEM_FOR_FILE);
+			MessageBox(hwnd, noMem, MB_ICONERROR);
 		}
 		_close(filehandle);
 	}
@@ -5834,8 +5834,8 @@ void HexEditorWindow::CMD_move_copy(int iMove1stEnd, int iMove2ndEndorLen, bool 
 		int len = iMove2ndEndorLen - iMove1stEnd + 1;
 		if (!DataArray.SetSize(clen + len))
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hwnd, "Not enough memory", app, MB_ICONERROR);
+			LangString noMem(IDS_NO_MEMORY);
+			MessageBox(hwnd, noMem, MB_ICONERROR);
 			return;
 		}
 		else

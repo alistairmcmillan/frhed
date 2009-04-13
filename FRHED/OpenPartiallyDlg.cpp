@@ -135,8 +135,8 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 	}
 	else
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Not enough memory to load file.", app, MB_ICONERROR);
+		LangString noMem(IDS_NO_MEM_FOR_FILE);
+		MessageBox(hDlg, noMem, MB_ICONERROR);
 	}
 	return done;
 }

@@ -346,6 +346,7 @@
 #define IDS_NO_MEMORY                   10033
 #define IDS_BYTES_NOT_KNOWN             10034
 #define IDS_ERR_OPENING_FILE            10035
+#define IDS_NO_MEM_FOR_FILE             10036
 #define IDS_ABOUT_BROWSER_ERR           10160
 #define IDS_ABOUT_FILENOTFOUND          10161
 #define IDS_BMK_INVALID_POSITION        10177

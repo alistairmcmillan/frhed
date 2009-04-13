@@ -1423,6 +1423,7 @@ BEGIN
     IDS_NO_MEMORY           "Not enough memory."
     IDS_BYTES_NOT_KNOWN     "Number of bytes not recognized."
     IDS_ERR_OPENING_FILE    "Error opening file."
+    IDS_NO_MEM_FOR_FILE     "Not enough memory to load file."
 END
 
 // About-dialog
