@@ -27,22 +27,22 @@
 #include "version.h"
 #include "Constants.h"
 #include "Registry.h"
+#include "shtools.h"
 #include "regtools.h"
 
 BOOL contextpresent()
 {
 	HKEY key1;
-	LONG res = RegOpenKeyEx(HKEY_CLASSES_ROOT, "*\\shell\\Open in Frhed\\command", 0, KEY_ALL_ACCESS, &key1);
+	LONG res = RegOpenKeyEx(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed\\command"), 0, KEY_READ, &key1);
 	if (res == ERROR_SUCCESS) //succeeded check if has the required keys & data
 	{
-		char stringval[ _MAX_PATH ];
-		char exepath[ _MAX_PATH ];
-		long len = 0;//dummy
-		strcpy(exepath, _pgmptr);
-		strcat(exepath," %1");
+		TCHAR stringval[MAX_PATH];
+		long len = sizeof stringval;
 		RegQueryValue(key1, NULL, stringval, &len);
+		PathRemoveArgs(stringval);
+		PathUnquoteSpaces(stringval);
 		RegCloseKey(key1);
-		if (strcmp(stringval, exepath))
+		if (PathsEqual(stringval, _pgmptr) == 0)
 			return 1;
 	}
 	return 0;
@@ -50,26 +50,25 @@ BOOL contextpresent()
 
 BOOL defaultpresent()
 {
-	char stringval[_MAX_PATH];
-	long len = _MAX_PATH;
-	LONG res = RegQueryValue(HKEY_CLASSES_ROOT, "Unknown\\shell", stringval, &len);
-	return res == ERROR_SUCCESS && strcmp(stringval, "Open in Frhed") == 0;
+	TCHAR stringval[MAX_PATH];
+	long len = sizeof stringval;
+	LONG res = RegQueryValue(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), stringval, &len);
+	return res == ERROR_SUCCESS && _tcscmp(stringval, _T("Open in Frhed")) == 0;
 }
 
 BOOL unknownpresent()
 {
 	HKEY key1;
-	LONG res;
-	res = RegOpenKeyEx( HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in Frhed\\command", 0, KEY_ALL_ACCESS, &key1 );
-	if( res == ERROR_SUCCESS ){//succeeded check if has the required keys & data
-		char stringval[ _MAX_PATH ];
-		char exepath[ _MAX_PATH ];
-		long len = 0;//dummy
-		strcpy( exepath, _pgmptr );
-		strcat(exepath," %1");
-		RegQueryValue(key1,NULL,stringval,&len);
+	LONG res = RegOpenKeyEx(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed\\command"), 0, KEY_READ, &key1);
+	if (res == ERROR_SUCCESS) //succeeded check if has the required keys & data
+	{
+		TCHAR stringval[MAX_PATH];
+		long len = sizeof stringval;
+		RegQueryValue(key1, NULL, stringval, &len);
+		PathRemoveArgs(stringval);
+		PathUnquoteSpaces(stringval);
 		RegCloseKey(key1);
-		if(strcmp(stringval, exepath))
+		if (PathsEqual(stringval, _pgmptr) == 0)
 			return 1;
 	}
 	return 0;
@@ -78,8 +77,7 @@ BOOL unknownpresent()
 BOOL oldpresent()
 {
 	HKEY hk;
-	LONG res = RegOpenKeyEx(HKEY_CURRENT_USER, OptionsRegistryPath, 0,
-			KEY_ALL_ACCESS, &hk);
+	LONG res = RegOpenKeyEx(HKEY_CURRENT_USER, OptionsRegistryPath, 0, KEY_READ, &hk);
 	if (res == ERROR_SUCCESS)
 	{
 		TCHAR subkeynam[MAX_PATH] = {0};
@@ -106,7 +104,7 @@ BOOL frhedpresent()
 {
 	//Check if frhed\subreleaseno exists
 	HKEY hk;
-	if (ERROR_SUCCESS != RegOpenKey(HKEY_CURRENT_USER, OptionsRegistrySettingsPath, &hk))
+	if (ERROR_SUCCESS != RegOpenKeyEx(HKEY_CURRENT_USER, OptionsRegistrySettingsPath, 0, KEY_READ, &hk))
 		return FALSE;
 	RegCloseKey(hk);
 	return TRUE;
@@ -121,7 +119,7 @@ BOOL linkspresent()
 	TCHAR keyname[64] = {0};
 	_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
 			OptionsRegistrySettingsPath);
-	if (ERROR_SUCCESS != RegOpenKey(HKEY_CURRENT_USER, keyname, &hk))
+	if (ERROR_SUCCESS != RegOpenKeyEx(HKEY_CURRENT_USER, keyname, 0, KEY_READ, &hk))
 		return FALSE;
 	RegCloseKey(hk);
 	return TRUE;

@@ -73,7 +73,7 @@ void TraverseFolders::Recurse()
 			if (cr)
 			{//findnfix
 				PathStripPath(rn);//strip to file name
-				si = _stricmp(rn, "heksedit.exe");
+				si = _stricmp(rn, "frhed.exe");
 			}
 			else
 			{
