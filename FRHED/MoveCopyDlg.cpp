@@ -27,8 +27,13 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangArray.h"
 #include "LangString.h"
 
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ */
 BOOL MoveCopyDlg::OnInitDialog(HWND hw)
 {
 	char buf[30] = {0};
@@ -64,9 +69,8 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 		{
 			if (!IsDlgButtonChecked(hw, check[n]))
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hw, "You have chosen an offset but it is negative, which is invalid.",
-						app, MB_ICONERROR);
+				LangString negativeOffset(IDS_CM_NEGATIVE_OFFSET);
+				MessageBox(hw, negativeOffset, MB_ICONERROR);
 				return FALSE;
 			}
 			// Relative jump. Read offset from next character on.
@@ -77,9 +81,8 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 		{
 			// No fields assigned: badly formed number.
 			char msg[80] = {0};
-			_snprintf(msg, RTL_NUMBER_OF(msg) - 1, "The value in box number %d cannot be recognized.", n + 1);
-			LangString app(IDS_APPNAME);
-			MessageBox(hw, msg, app, MB_ICONERROR);
+			_snprintf(msg, RTL_NUMBER_OF(msg) - 1, GetLangString(IDS_CM_INVALID_DATA), n + 1);
+			MessageBox(hw, msg, MB_ICONERROR);
 			return FALSE;
 		}
 		if (buf[0] == '-')
@@ -92,9 +95,8 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 	{
 		if (iMove2ndEndorLen == 0)
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hw, "Cannot move/copy a block of zero length", app,
-					MB_OK | MB_ICONERROR);
+			LangString zeroLen(IDS_CM_ZERO_LEN);
+			MessageBox(hw, zeroLen, MB_OK | MB_ICONERROR);
 			return 0;
 		}
 		if (iMove2ndEndorLen > 0)
@@ -109,9 +111,8 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 		iMove2ndEndorLen < 0 ||
 		iMove2ndEndorLen >= clen)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hw, "The chosen block extends into non-existant data.",
-				app, MB_ICONERROR);
+		LangString invalidBlock(IDS_CM_INVALID_BLOCK);
+		MessageBox(hw, invalidBlock, MB_ICONERROR);
 		return FALSE;
 	}
 
@@ -129,8 +130,8 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 
 	if (iMovePos == iMove1stEnd && iMoveOpTyp == OPTYP_MOVE)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hw, "The block was not moved!", app, MB_ICONEXCLAMATION);
+		LangString notMoved(IDS_CM_NOT_MOVED);
+		MessageBox(hw, notMoved, MB_ICONEXCLAMATION);
 		EndDialog(hw, 0);
 		return FALSE;
 	}
@@ -139,15 +140,21 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 		iMovePos + iMove2ndEndorLen - iMove1stEnd >= clen :
 		iMovePos > clen))
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hw, "Cannot move/copy the block outside the data", app,
-				MB_OK | MB_ICONERROR);
+		LangString outsideData(IDS_CM_OUTSIDE_DATA);
+		MessageBox(hw, outsideData,	MB_OK | MB_ICONERROR);
 		return FALSE;
 	}
 	CMD_move_copy(iMove1stEnd, iMove2ndEndorLen, true);
 	return TRUE;
 }
 
+/**
+ * @brief Handle dialog commands.
+ * @param [in] hDlg Hanle to the dialog.
+ * @param [in] wParam The command to handle.
+ * @param [in] lParam Optional parameter for the command.
+ * @return TRUE if the command was handled, FALSE otherwise.
+ */
 BOOL MoveCopyDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 {
 	switch (wParam)
@@ -163,6 +170,14 @@ BOOL MoveCopyDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	return FALSE;
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR MoveCopyDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)

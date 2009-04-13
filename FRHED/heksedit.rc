@@ -1528,6 +1528,17 @@ BEGIN
     IDS_FILL_TOO_MANY_BYTES "Too many bytes to fill with or some other error."
 END
 
+// Copy/move bytes -dialog
+STRINGTABLE 
+BEGIN
+    IDS_CM_NEGATIVE_OFFSET "You have chosen an offset but it is negative, which is invalid."
+    IDS_CM_INVALID_DATA    "The value in box number %d cannot be recognized."
+    IDS_CM_ZERO_LEN        "Cannot move/copy a block of zero length"
+    IDS_CM_INVALID_BLOCK   "The chosen block extends into non-existant data."
+    IDS_CM_NOT_MOVED       "The block was not moved!"
+    IDS_CM_OUTSIDE_DATA    "Cannot move/copy the block outside the data"
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 
