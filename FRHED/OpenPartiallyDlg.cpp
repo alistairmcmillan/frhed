@@ -27,6 +27,7 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "LangArray.h"
 #include "LangString.h"
 
 int OpenPartiallyDlg::filehandle = 0;
@@ -42,7 +43,7 @@ BOOL OpenPartiallyDlg::OnInitDialog(HWND hDlg)
 	__int64 iPLFileLen = _filelengthi64(filehandle);
 	char buf[128] = {0};
 	SetDlgItemText(hDlg, IDC_OPENPARTIAL_OFFSET, "x0");
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "&Size of file: %lld. Load how many bytes:", iPLFileLen);
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, GetLangString(IDS_PARTIAL_LOAD_BYTES), iPLFileLen);
 	SetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTECOUNT, buf);
 	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%lld", iPLFileLen);
 	SetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTES, buf);
@@ -76,9 +77,8 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 
 	if (numBytesPl >= INT_MAX)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Cannot open more than 2 GB of data.",
-				app, MB_ICONERROR);
+		LangString tooBig(IDS_PARTIAL_TOO_BIG);
+		MessageBox(hDlg, tooBig, MB_ICONERROR);
 		return FALSE;
 	}
 
@@ -89,9 +89,8 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		iStartPL = iPLFileLen - numBytesPl;
 		if (iStartPL < 0)
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Specified number of bytes to load\ngreater than file size.",
-					app, MB_ICONERROR);
+			LangString biggerThan(IDS_PARTIAL_BIGGER);
+			MessageBox(hDlg, biggerThan, MB_ICONERROR);
 			return FALSE;
 		}
 	}
@@ -106,8 +105,8 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 	}
 	if (iStartPL + numBytesPl > iPLFileLen)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Too many bytes to load.", app, MB_ICONERROR);
+		LangString manyBytes(IDS_PARTIAL_TOO_MANY_BYTES);
+		MessageBox(hDlg, manyBytes, MB_ICONERROR);
 		return FALSE;
 	}
 
@@ -141,6 +140,14 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 	return done;
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR OpenPartiallyDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)

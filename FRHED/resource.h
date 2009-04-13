@@ -396,6 +396,10 @@
 #define IDS_CM_INVALID_BLOCK            10355
 #define IDS_CM_NOT_MOVED                10356
 #define IDS_CM_OUTSIDE_DATA             10357
+#define IDS_PARTIAL_LOAD_BYTES          10368
+#define IDS_PARTIAL_TOO_BIG             10387
+#define IDS_PARTIAL_BIGGER              10388
+#define IDS_PARTIAL_TOO_MANY_BYTES      10389
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

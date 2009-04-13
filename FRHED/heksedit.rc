@@ -1540,6 +1540,15 @@ BEGIN
     IDS_CM_OUTSIDE_DATA    "Cannot move/copy the block outside the data"
 END
 
+// Open partially -dialog
+STRINGTABLE 
+BEGIN
+    IDS_PARTIAL_LOAD_BYTES "&Size of file: %lld bytes. Load how many bytes:"
+    IDS_PARTIAL_TOO_BIG    "Cannot open more than 2 GB of data."
+    IDS_PARTIAL_BIGGER     "Specified number of bytes to load greater than file size."
+    IDS_PARTIAL_TOO_MANY_BYTES "Too many bytes to load."
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 
