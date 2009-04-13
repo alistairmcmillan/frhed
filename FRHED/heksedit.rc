@@ -1422,6 +1422,7 @@ BEGIN
     IDS_ERR_READING_FILE    "Error while reading from file."
     IDS_NO_MEMORY           "Not enough memory."
     IDS_BYTES_NOT_KNOWN     "Number of bytes not recognized."
+    IDS_ERR_OPENING_FILE    "Error opening file."
 END
 
 // About-dialog
@@ -1517,6 +1518,14 @@ BEGIN
     IDS_PASTE_WAS_EMPTY     "Tried to paste zero-length array."
     IDS_PASTE_NO_MEM        "Not enough memory for inserting."
     IDS_PASTE_NO_SPACE      "Not enough space for overwriting."
+END
+
+// Fill with -dialog
+STRINGTABLE 
+BEGIN
+    IDS_FILL_ZERO_SIZE_FILE "Can't fill a selection with a file of zero size."
+    IDS_FILL_ZERO_SIZE_STR  "Can't fill a selection with a string of zero size."
+    IDS_FILL_TOO_MANY_BYTES "Too many bytes to fill with or some other error."
 END
 
 #endif    // Englisch (USA) resources

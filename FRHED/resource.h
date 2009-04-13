@@ -345,6 +345,7 @@
 #define IDS_ERR_READING_FILE            10032
 #define IDS_NO_MEMORY                   10033
 #define IDS_BYTES_NOT_KNOWN             10034
+#define IDS_ERR_OPENING_FILE            10035
 #define IDS_ABOUT_BROWSER_ERR           10160
 #define IDS_ABOUT_FILENOTFOUND          10161
 #define IDS_BMK_INVALID_POSITION        10177
@@ -385,6 +386,9 @@
 #define IDS_PASTE_WAS_EMPTY             10321
 #define IDS_PASTE_NO_MEM                10322
 #define IDS_PASTE_NO_SPACE              10323
+#define IDS_FILL_ZERO_SIZE_FILE         10336
+#define IDS_FILL_ZERO_SIZE_STR          10337
+#define IDS_FILL_TOO_MANY_BYTES         10338
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

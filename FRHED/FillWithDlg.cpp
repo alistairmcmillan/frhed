@@ -179,6 +179,14 @@ LRESULT CALLBACK FillWithDialog::HexProc(HWND hEdit, UINT iMsg, WPARAM wParam, L
 	return CallWindowProc((WNDPROC)oldproc, hEdit, iMsg, wParam, lParam);
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
@@ -238,23 +246,22 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 					FWFile = _open(szFWFileName, _O_RDONLY | _O_BINARY);
 					if (FWFile == -1)
 					{//if there is error opening
-						LangString app(IDS_APPNAME);
-						MessageBox(hDlg, "Error opening file", app, MB_ICONERROR);//tell user but don't close dlgbox
+						LangString errOpen(IDS_ERR_OPENING_FILE);
+						MessageBox(hDlg, errOpen, MB_ICONERROR);//tell user but don't close dlgbox
 						return 1;//didn't process this message
 					}//if
 					FWFilelen = _filelength(FWFile);
 					if (FWFilelen == 0)
 					{//if filelen is zero
-						LangString app(IDS_APPNAME);
-						MessageBox(hDlg, "Can't fill a selection with a file of zero size.",
-								app, MB_ICONERROR);//tell user but don't close dlgbox
+						LangString zeroSize(IDS_FILL_ZERO_SIZE_FILE);
+						MessageBox(hDlg, zeroSize, MB_ICONERROR);//tell user but don't close dlgbox
 						_close(FWFile);//close file
 						return 1;//didn't process this message
 					}//if
 					else if (FWFilelen == -1)
 					{//error returned by _filelength
-						LangString app(IDS_APPNAME);
-						MessageBox(hDlg, "Error opening file", app, MB_ICONERROR);//tell user but don't close dlgbox
+						LangString errOpen(IDS_ERR_OPENING_FILE);
+						MessageBox(hDlg, errOpen, MB_ICONERROR);//tell user but don't close dlgbox
 						_close(FWFile);//close file
 						return 1;//didn't process this message
 					}//elseif
@@ -263,17 +270,15 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 				{//0-input
 					if (!buflen)
 					{//no hex input
-						LangString app(IDS_APPNAME);
-						MessageBox(hDlg, "Can't fill a selection with a string of zero size.",
-								app, MB_ICONERROR);//tell user but don't close dlgbox
+						LangString zeroSize(IDS_FILL_ZERO_SIZE_STR);
+						MessageBox(hDlg, zeroSize, MB_ICONERROR);//tell user but don't close dlgbox
 						return 1;//didn't process this message
 					}//if
 					int i = GetDlgItemText(hDlg, IDC_HEX, pcFWText, FW_MAX);
 					if (i == 0 || i == FW_MAX - 1)
 					{//error
-						LangString app(IDS_APPNAME);
-						MessageBox(hDlg, "Too great a number of bytes to fill with or some other error.",
-								app, MB_ICONERROR);//tell user but don't close dlgbox
+						LangString tooManyBytes(IDS_FILL_TOO_MANY_BYTES);
+						MessageBox(hDlg, tooManyBytes, MB_ICONERROR);//tell user but don't close dlgbox
 						return 1;//didn't process this message
 					}//if
 					hexstring2charstring();//just in case
