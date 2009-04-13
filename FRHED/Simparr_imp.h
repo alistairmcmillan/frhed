@@ -343,15 +343,9 @@ template<class T> int SimpleArray<T>::SetSize(int nNewSize, int nGrowBy )
 		return TRUE;
 	}
 
-	T* pT = NULL;
-	try
-	{
-		pT = new T[nNewSize];
-	}
-	catch (...)
-	{
+	T* pT = new T[nNewSize];
+	if (pT == NULL)
 		return FALSE;
-	}
 	int i = 0;
 	if (m_nUpperBound < nNewSize)
 	{
