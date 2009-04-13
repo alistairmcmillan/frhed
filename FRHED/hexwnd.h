@@ -116,7 +116,7 @@ public:
 	void CMD_saveselas();
 	void CMD_deletefile();
 	void CMD_insertfile();
-	void CMD_move_copy(bool redraw = 1);
+	void CMD_move_copy(bool redraw = true);
 	void CMD_move_copy(int iMove1stEnd, int iMove2ndEndorLen, bool redraw);
 	void CMD_reverse();
 	bool load_hexfile(HexFile &file);
