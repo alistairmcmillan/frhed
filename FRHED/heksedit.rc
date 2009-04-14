@@ -1556,6 +1556,22 @@ BEGIN
     IDS_REVERSE_BLOCK_EXTEND "The chosen block extends into non-existant data. The offsets will be shifted to correct positions."
 END
 
+// Status bar
+STRINGTABLE 
+BEGIN
+    IDS_SBAR_SELECTED_OFFSET "Selected: Offset %d=0x%x to %d=0x%x (%d byte(s))"
+    IDS_SBAR_NSEL_OFFSET   "Offset %d=0x%x"
+    IDS_SBAR_BITS          "Bits"
+    IDS_SBAR_UNSIGNED      "Unsigned"
+    IDS_SBAR_BYTE_SHORT    "B"
+    IDS_SBAR_END           "END"
+    IDS_SBAR_WORD_SHORT    "W"
+    IDS_SBAR_LONG_SHORT    "L"
+    IDS_SBAR_SIGNED        "Signed"
+    IDS_SBAR_SIZE          "Size"
+    IDS_SBAR_NO_FILE       "No file loaded"
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 

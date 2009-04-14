@@ -1755,13 +1755,13 @@ void HexEditorWindow::set_wnd_title()
 		{
 			if (iEndOfSelection >= iStartOfSelection)
 			{
-				sprintf (buf, "Selected: Offset %d=0x%x to %d=0x%x (%d byte(s))",
+				sprintf (buf, GetLangString(IDS_SBAR_SELECTED_OFFSET),
 					iStartOfSelection, iStartOfSelection,
 					iEndOfSelection, iEndOfSelection, iEndOfSelection - iStartOfSelection+1);
 			}
 			else
 			{
-				sprintf (buf, "Selected: Offset %d=0x%x to %d=0x%x (%d byte(s))",
+				sprintf (buf, GetLangString(IDS_SBAR_SELECTED_OFFSET),
 					iEndOfSelection, iEndOfSelection,
 					iStartOfSelection, iStartOfSelection, iStartOfSelection-iEndOfSelection+1);
 			}
@@ -1769,12 +1769,14 @@ void HexEditorWindow::set_wnd_title()
 		}
 		else // Normal display.
 		{
-			sprintf (buf, "Offset %d=0x%x", iCurByte, iCurByte);
+			sprintf (buf, GetLangString(IDS_SBAR_NSEL_OFFSET), iCurByte, iCurByte);
 			int wordval, longval;
 			char buf2[80];
 			if (DataArray.GetLength() - iCurByte > 0)
 			{//if we are not looking at the End byte
-				strcat(buf, "   Bits=");//append stuff to status text
+				strcat(buf, "   ");
+				strcat(buf, GetLangString(IDS_SBAR_BITS));
+				strcat(buf, "=");//append stuff to status text
 				BYTE by = DataArray[iCurByte];
 				format_bit_string(buf2, by);
 				strcat(buf, buf2);//append to status text
@@ -1788,9 +1790,12 @@ void HexEditorWindow::set_wnd_title()
 					// UNSIGNED LITTLEENDIAN_MODE
 					// Decimal value of byte.
 					if (DataArray.GetLength() - iCurByte >= 1)
-						sprintf(buf2, "\tUnsigned: B:%u", (unsigned int) DataArray[iCurByte]);
+					{
+						sprintf(buf2, "\t%s: %s:%u", GetLangString(IDS_SBAR_UNSIGNED),
+							GetLangString(IDS_SBAR_BYTE_SHORT), (unsigned int) DataArray[iCurByte]);
+					}
 					else
-						sprintf(buf2, "\tEND");
+						sprintf(buf2, "\t%s", GetLangString(IDS_SBAR_END));
 					strcat(buf, buf2);
 
 					// Space enough for a word?
@@ -1798,7 +1803,8 @@ void HexEditorWindow::set_wnd_title()
 					{
 						// Space enough for a word.
 						wordval = (DataArray[iCurByte + 1] << 8) | DataArray[iCurByte];
-						sprintf (buf2, ",W:%u", (unsigned int) wordval);
+						sprintf (buf2, ",%s:%u", GetLangString(IDS_SBAR_WORD_SHORT),
+								(unsigned int) wordval);
 						strcat (buf, buf2);
 					}
 					if (DataArray.GetLength() - iCurByte >= 4)
@@ -1806,7 +1812,8 @@ void HexEditorWindow::set_wnd_title()
 						// Space enough for a longword.
 						longval = wordval | (((DataArray[iCurByte + 3] << 8) |
 								DataArray[iCurByte + 2]) << 16);
-						sprintf (buf2, ",L:%u", (unsigned int) longval);
+						sprintf (buf2, ",%s:%u", GetLangString(IDS_SBAR_LONG_SHORT),
+								(unsigned int) longval);
 						strcat (buf, buf2);
 					}
 				}
@@ -1815,9 +1822,10 @@ void HexEditorWindow::set_wnd_title()
 					// UNSIGNED BIGENDIAN_MODE
 					// Decimal value of byte.
 					if (DataArray.GetLength() - iCurByte >= 1)
-						sprintf (buf2, "\tUnsigned: B:%u", (unsigned int) DataArray[iCurByte]);
+						sprintf (buf2, "\t%s: %s:%u", GetLangString(IDS_SBAR_UNSIGNED),
+								GetLangString(IDS_SBAR_BYTE_SHORT), (unsigned int) DataArray[iCurByte]);
 					else
-						sprintf (buf2, "\tEND");
+						sprintf (buf2, "\t%s", GetLangString(IDS_SBAR_END));
 					strcat(buf, buf2);
 
 					// Space enough for a word?
@@ -1825,7 +1833,8 @@ void HexEditorWindow::set_wnd_title()
 					{
 						// Space enough for a word.
 						wordval = (DataArray[iCurByte] << 8) | DataArray[iCurByte + 1];
-						sprintf (buf2, ",W:%u", (unsigned int) wordval);
+						sprintf (buf2, ",%s:%u", GetLangString(IDS_SBAR_WORD_SHORT),
+								(unsigned int) wordval);
 						strcat (buf, buf2);
 					}
 					if (DataArray.GetLength() - iCurByte >= 4)
@@ -1833,7 +1842,8 @@ void HexEditorWindow::set_wnd_title()
 						// Space enough for a longword.
 						longval = (wordval << 16) | (DataArray[iCurByte + 2] <<	8) |
 								(DataArray[iCurByte + 3]);
-						sprintf (buf2, ",L:%u", (unsigned int) longval);
+						sprintf (buf2, ",%s:%u", GetLangString(IDS_SBAR_LONG_SHORT),
+								(unsigned int) longval);
 						strcat (buf, buf2);
 					}
 				}
@@ -1845,9 +1855,11 @@ void HexEditorWindow::set_wnd_title()
 					// SIGNED LITTLEENDIAN_MODE
 					// Decimal value of byte.
 					if (DataArray.GetLength() - iCurByte >= 1)
-						sprintf (buf2, "\tSigned: B:%d", (int) (signed char) DataArray[iCurByte]);
+						sprintf (buf2, "\t%s: %s:%d", GetLangString(IDS_SBAR_SIGNED),
+								GetLangString(IDS_SBAR_BYTE_SHORT),
+								(int) (signed char) DataArray[iCurByte]);
 					else
-						sprintf (buf2, "\tEND");
+						sprintf (buf2, "\t%s", GetLangString(IDS_SBAR_END));
 					strcat (buf, buf2);
 
 					// Space enough for a word?
@@ -1855,7 +1867,8 @@ void HexEditorWindow::set_wnd_title()
 					{
 						// Space enough for a word.
 						wordval = (DataArray[iCurByte + 1] << 8) | DataArray[iCurByte];
-						sprintf (buf2, ",W:%d", (int) (signed short) wordval);
+						sprintf (buf2, ",%s:%d", GetLangString(IDS_SBAR_WORD_SHORT),
+								(int) (signed short) wordval);
 						strcat (buf, buf2);
 					}
 					if (DataArray.GetLength() - iCurByte >= 4)
@@ -1863,7 +1876,8 @@ void HexEditorWindow::set_wnd_title()
 						// Space enough for a longword.
 						longval = wordval | (((DataArray[iCurByte + 3] << 8) |
 								DataArray[iCurByte + 2]) << 16);
-						sprintf (buf2, ",L:%d", (signed int) longval);
+						sprintf (buf2, ",%s:%d", GetLangString(IDS_SBAR_LONG_SHORT),
+								(signed int) longval);
 						strcat (buf, buf2);
 					}
 				}
@@ -1872,9 +1886,11 @@ void HexEditorWindow::set_wnd_title()
 					// SIGNED BIGENDIAN_MODE
 					// Decimal value of byte.
 					if (DataArray.GetLength() - iCurByte >= 1)
-						sprintf (buf2, "\tSigned: B:%d", (signed char) DataArray[iCurByte]);
+						sprintf (buf2, "\t%s: %s:%d", GetLangString(IDS_SBAR_SIGNED),
+								GetLangString(IDS_SBAR_BYTE_SHORT),
+								(signed char) DataArray[iCurByte]);
 					else
-						sprintf (buf2, "\tEND");
+						sprintf (buf2, "\t%s", GetLangString(IDS_SBAR_END));
 					strcat (buf, buf2);
 
 					// Space enough for a word.
@@ -1882,7 +1898,8 @@ void HexEditorWindow::set_wnd_title()
 					{
 						// Space enough for a longword.
 						wordval = (DataArray[iCurByte] << 8) | DataArray[iCurByte + 1];
-						sprintf (buf2, ",W:%d", (int) (signed short) wordval);
+						sprintf (buf2, ",%s:%d", GetLangString(IDS_SBAR_WORD_SHORT),
+								(int) (signed short) wordval);
 						strcat (buf, buf2);
 					}
 					if (DataArray.GetLength() - iCurByte >= 4)
@@ -1890,7 +1907,8 @@ void HexEditorWindow::set_wnd_title()
 						// Space enough for a longword.
 						longval = (wordval<<16) | (DataArray[iCurByte + 2] << 8) |
 								(DataArray[iCurByte + 3]);
-						sprintf (buf2, ",L:%d", (signed int) longval);
+						sprintf (buf2, ",%s:%d", GetLangString(IDS_SBAR_LONG_SHORT),
+								(signed int) longval);
 						strcat (buf, buf2);
 					}
 				}
@@ -1901,14 +1919,14 @@ void HexEditorWindow::set_wnd_title()
 		statusbar_chset_and_editmode();
 
 		// File size.
-		sprintf(buf, "\tSize: %u", DataArray.GetLength());
+		sprintf(buf, "\t%s: %u", GetLangString(IDS_SBAR_SIZE), DataArray.GetLength());
 		SendMessage(hwndStatusBar, SB_SETTEXT, 2, (LPARAM) buf);
 	}
 	else
 	{
 		if (hwndMain)
 			SetWindowText(hwndMain, ApplicationName);
-		SendMessage(hwndStatusBar, WM_SETTEXT, 0, (LPARAM) "No file loaded");
+		SendMessage(hwndStatusBar, WM_SETTEXT, 0, (LPARAM) GetLangString(IDS_SBAR_NO_FILE));
 	}
 }
 

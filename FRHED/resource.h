@@ -402,6 +402,17 @@
 #define IDS_PARTIAL_TOO_MANY_BYTES      10389
 #define IDS_REVERSE_ONE_BYTE            10400
 #define IDS_REVERSE_BLOCK_EXTEND        10401
+#define IDS_SBAR_SELECTED_OFFSET        11008
+#define IDS_SBAR_NSEL_OFFSET            11009
+#define IDS_SBAR_BITS                   11010
+#define IDS_SBAR_UNSIGNED               11011
+#define IDS_SBAR_BYTE_SHORT             11012
+#define IDS_SBAR_END                    11013
+#define IDS_SBAR_WORD_SHORT             11014
+#define IDS_SBAR_LONG_SHORT             11015
+#define IDS_SBAR_SIGNED                 11016
+#define IDS_SBAR_SIZE                   11017
+#define IDS_SBAR_NO_FILE                11018
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects
