@@ -26,9 +26,11 @@
 #ifndef _SHTOOLS_H_
 #define _SHTOOLS_H_
 
-HRESULT CreateLink(LPCSTR lpszPathObj, LPCSTR lpszPathLink);
-HRESULT ResolveIt(HWND hwnd, LPCSTR lpszLinkFile, LPSTR lpszPath);
-HRESULT PathsEqual(LPCSTR, LPCSTR);
-void GetLongPathNameWin32(LPCSTR lpszShortPath, LPSTR lpszLongPath);
+STDAPI CreateLink(LPCTSTR lpszPathObj, LPCTSTR lpszPathLink);
+STDAPI CreateLinkToMe(LPCTSTR lpszPathLink);
+STDAPI ResolveIt(HWND hwnd, LPCTSTR lpszLinkFile, LPTSTR lpszPath);
+STDAPI PathsEqual(LPCTSTR, LPCTSTR);
+STDAPI PathPointsToMe(LPCTSTR);
+STDAPI GetLongPathNameWin32(LPCTSTR lpszShortPath, LPTSTR lpszLongPath);
 
 #endif // _SHTOOLS_H_

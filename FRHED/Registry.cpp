@@ -42,7 +42,7 @@ BOOL contextpresent()
 		PathRemoveArgs(stringval);
 		PathUnquoteSpaces(stringval);
 		RegCloseKey(key1);
-		if (PathsEqual(stringval, _pgmptr) == 0)
+		if (PathPointsToMe(stringval) == 0)
 			return 1;
 	}
 	return 0;
@@ -68,7 +68,7 @@ BOOL unknownpresent()
 		PathRemoveArgs(stringval);
 		PathUnquoteSpaces(stringval);
 		RegCloseKey(key1);
-		if (PathsEqual(stringval, _pgmptr) == 0)
+		if (PathPointsToMe(stringval) == 0)
 			return 1;
 	}
 	return 0;
