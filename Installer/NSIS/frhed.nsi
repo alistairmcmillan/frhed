@@ -90,6 +90,10 @@ Section "ProgramFiles" SEC01
   File "..\..\Docs\Users\History.txt"
 SectionEnd
 
+Section -RegisterDLLs
+  RegDLL "$INSTDIR\heksedit.dll"
+SectionEnd
+
 Section "Documentation" SEC02
   SetOutPath "$INSTDIR\Docs"
   File "..\..\Build\Manual\htmlhelp\frhed.chm"
@@ -148,6 +152,8 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
+  UnRegDLL "$INSTDIR\heksedit.dll"
+
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"
   Delete "$INSTDIR\frhed.chm"

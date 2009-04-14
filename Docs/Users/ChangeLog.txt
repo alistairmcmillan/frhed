@@ -13,6 +13,7 @@ Frhed 1.5.2
   Add Find and Replace sub menu (#2750555)
   Make Cut- and Delete-dialogs separate dialogs (#2750573)
   Remove "Cut to clipboard" from Cut/Delete dialogs (#2750573)
+  Installer: register heksedit.dll (r519)
   New translation:
   - French (#2727207)
 
