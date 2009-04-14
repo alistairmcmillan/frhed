@@ -1549,6 +1549,13 @@ BEGIN
     IDS_PARTIAL_TOO_MANY_BYTES "Too many bytes to load."
 END
 
+// Reverse bytes -dialog
+STRINGTABLE 
+BEGIN
+    IDS_REVERSE_ONE_BYTE     "Cannot reverse single byte."
+    IDS_REVERSE_BLOCK_EXTEND "The chosen block extends into non-existant data. The offsets will be shifted to correct positions."
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 

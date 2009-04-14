@@ -400,6 +400,8 @@
 #define IDS_PARTIAL_TOO_BIG             10387
 #define IDS_PARTIAL_BIGGER              10388
 #define IDS_PARTIAL_TOO_MANY_BYTES      10389
+#define IDS_REVERSE_ONE_BYTE            10400
+#define IDS_REVERSE_BLOCK_EXTEND        10401
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

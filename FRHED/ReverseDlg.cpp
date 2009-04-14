@@ -29,6 +29,14 @@
 #include "hexwdlg.h"
 #include "LangString.h"
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] h Handle to the dialog.
+ * @param [in] m The message.
+ * @param [in] w The command in the message.
+ * @param [in] l The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 {
 	TCHAR buf[32];
@@ -52,24 +60,22 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 				sscanf(buf, "x%x", &iStartOfSelSetting) == 0 &&
 				sscanf(buf, "%d", &iStartOfSelSetting) == 0)
 			{
-				LangString app(IDS_APPNAME);
 				LangString startOffsetErr(IDS_OFFSET_START_ERROR);
-				MessageBox(h, startOffsetErr, app, MB_ICONERROR);
+				MessageBox(h, startOffsetErr, MB_ICONERROR);
 				return TRUE;
 			}
 			if (GetDlgItemText(h, IDC_REVERSE_OFFSETEND, buf, RTL_NUMBER_OF(buf)) &&
 				sscanf(buf, "x%x", &iEndOfSelSetting) == 0 &&
 				sscanf(buf, "%d", &iEndOfSelSetting) == 0)
 			{
-				LangString app(IDS_APPNAME);
 				LangString endOffsetErr(IDS_OFFSET_END_ERROR);
-				MessageBox(h, endOffsetErr, app, MB_ICONERROR);
+				MessageBox(h, endOffsetErr, MB_ICONERROR);
 				return TRUE;
 			}
 			if (iEndOfSelSetting == iStartOfSelSetting)
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(h, "Cannot reverse the order of one byte.", app, MB_ICONERROR);
+				LangString singleByte(IDS_REVERSE_ONE_BYTE);
+				MessageBox(h, singleByte, MB_ICONERROR);
 				return TRUE;
 			}
 
@@ -80,9 +86,8 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 			maxb = DataArray.GetUpperBound();
 			if (iStartOfSelSetting < 0 || iEndOfSelSetting > maxb)
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(h, "The chosen block extends into non-existant data.\nThe offsets will be shifted to correct positions.",
-						"app", MB_ICONERROR);
+				LangString extendBlock(IDS_REVERSE_BLOCK_EXTEND);
+				MessageBox(h, extendBlock, MB_ICONERROR);
 			}
 
 			if (iStartOfSelSetting < 0)
