@@ -99,7 +99,7 @@ void TraverseFolders::Recurse()
 					li.iItem++;
 				}
 				strcat(rn,"\\Frhed.lnk");//put the name backon
-				CreateLink(_pgmptr,rn);//create the new link
+				CreateLinkToMe(rn);//create the new link
 			}
 		} while (_findnext(S, &F) == 0);
 		_findclose(S);
@@ -222,7 +222,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 					//Just in case
 					PathAddBackslash(buf);
 					strncat(buf, FrhedLink, RTL_NUMBER_OF(buf) - strlen(buf));
-					CreateLink(_pgmptr,buf);
+					CreateLinkToMe(buf);
 				}
 				RegCloseKey(hk);
 			}
@@ -312,7 +312,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 							//Just in case
 							PathAddBackslash(szDir);
 							strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - RTL_NUMBER_OF(FrhedLink));
-							CreateLink(_pgmptr,szDir);
+							CreateLinkToMe(szDir);
 						}
 						else
 						{
@@ -345,7 +345,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 									//Add to the filesystem
 									PathAddBackslash(szDir);
 									strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
-									CreateLink(_pgmptr,szDir);
+									CreateLinkToMe(szDir);
 								}
 							}
 							else if (LOWORD(w) == IDC_MOVE)
@@ -384,7 +384,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 									strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
 									PathAddBackslash(cursel);
 									strncat(cursel, FrhedLink, RTL_NUMBER_OF(cursel) - strlen(cursel));
-									CreateLink(_pgmptr,cursel);//Just in case
+									CreateLinkToMe(cursel);//Just in case
 									rename(cursel,szDir);
 								}
 							}
@@ -522,7 +522,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 						ListView_InsertItem(list, &item);
 						PathAddBackslash(valbuf);
 						strncat(valbuf, FrhedLink, RTL_NUMBER_OF(valbuf) - strlen(valbuf));
-						CreateLink(_pgmptr, valbuf);
+						CreateLinkToMe( valbuf);
 					}
 					if (ERROR_NO_MORE_ITEMS == ret)
 						break;
@@ -588,7 +588,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 					//Just in case
 					PathAddBackslash(szDir);
 					strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
-					CreateLink(_pgmptr,szDir);
+					CreateLinkToMe(szDir);
 				}
 				else{
 					LVITEM item;
@@ -614,7 +614,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 						RegCloseKey(hk);
 						PathAddBackslash(szDir);
 						strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
-						CreateLink(_pgmptr,szDir);
+						CreateLinkToMe(szDir);
 					}
 				}
 			}
