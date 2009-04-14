@@ -503,8 +503,11 @@ void HexEditorWindow::set_control_bar(HWND hwndBar)
 	SendMessage(hwndBar, CCM_SETUNICODEFORMAT, sizeof(TCHAR) == sizeof(WCHAR), 0);
 }
 
-//--------------------------------------------------------------------------------------------
-// Window was resized to new width of cx and new height of cy.
+/**
+ * @brief Re-calculate draw settings after window has been resized.
+ * This function re-calculates offset length, bytes per line etc after the
+ * window has been resized.
+ */
 void HexEditorWindow::resize_window()
 {
 	RECT rcClient;
@@ -543,6 +546,16 @@ void HexEditorWindow::resize_window()
 	cyClient = rcClient.bottom;
 	cxBuffer = max(1, cxClient / cxChar);
 	cyBuffer = max(1, cyClient / cyChar);
+
+	iMaxOffsetLen = 1;
+	//length of last offset
+	while (x & ~0 << 4 * iMaxOffsetLen)
+		++iMaxOffsetLen;
+	if (bAutoOffsetLen)
+		iMinOffsetLen = iMaxOffsetLen;
+	else if (iMaxOffsetLen < iMinOffsetLen)
+		iMaxOffsetLen = iMinOffsetLen;
+
 	// Adjust bytes per line to width of window.
 	// cxBuffer = maximal width of client-area in chars.
 	if (iAutomaticBPL)
@@ -556,14 +569,6 @@ void HexEditorWindow::resize_window()
 	x = length / iBytesPerLine * iBytesPerLine;//value of the last offset
 	if (bPartialStats)
 		x += iPartialOffset;
-	iMaxOffsetLen = 1;
-	//length of last offset
-	while (x & ~0 << 4 * iMaxOffsetLen)
-		++iMaxOffsetLen;
-	if (bAutoOffsetLen)
-		iMinOffsetLen = iMaxOffsetLen;
-	else if (iMaxOffsetLen < iMinOffsetLen)
-		iMaxOffsetLen = iMinOffsetLen;
 
 	// Caret or end of selection will be vertically centered if line not visible.
 	if (bCenterCaret)
