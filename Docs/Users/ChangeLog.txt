@@ -7,13 +7,18 @@ For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 Frhed 1.5.2
   Remove warning message about trying to edit in read-only mode (r420)
   Not finding more strings is not an error, show info icon (r428)
-  Change language subfolder name to "Languages" (r441)
   Don't ask twice about file deletion (r446)
   Simpler Read-only mode -menutext (#2480587)
   Add Find and Replace sub menu (#2750555)
   Make Cut- and Delete-dialogs separate dialogs (#2750573)
   Remove "Cut to clipboard" from Cut/Delete dialogs (#2750573)
+  hexedit.dll Revised hosting interface (official version 1) (r492)
   Installer: register heksedit.dll (r519)
+  Enable translations:
+  - Simplify translating / loading translated strings in code
+  - Install translation files (r443, r460)
+  - Make lots of messages/strings translatable
+  - Change language subfolder name to "Languages" (r441)
   New translation:
   - French (#2727207)
 
