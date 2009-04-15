@@ -1406,6 +1406,7 @@ BEGIN
     IDS_MODE_INSERT         "INS"
     IDS_STATUS_LITTLE_ENDIAN "L"
     IDS_STATUS_BIG_ENDIAN   "B"
+    IDS_OPEN_SHORTCUT       "You are trying to open a link file.\nClick on Yes if you want to open the file linked to,\nor click on No if you want to open the link file itself.\nChoose Cancel if you want to abort opening."
 END
 
 // General - offsets
@@ -1424,6 +1425,13 @@ BEGIN
     IDS_BYTES_NOT_KNOWN     "Number of bytes not recognized."
     IDS_ERR_OPENING_FILE    "Error opening file."
     IDS_NO_MEM_FOR_FILE     "Not enough memory to load file."
+    IDS_FILE_SAVE_ERROR     "Could not save the file."
+    IDS_FILE_BACKUP_ERROR   "Could not backup file!\nBackup aborted, Save continuing."
+    IDS_ERR_SAVE_PARTIAL    "Could not save partially opened file."
+    IDS_ERR_MOVE_DATA       "Could not move data in the file."
+    IDS_ERR_RESIZE_FILE     "Could not resize the file."
+    IDS_ERR_SEEK_FILE       "Could not seek in file."
+    IDS_ERR_WRITE_FILE      "Could not write data to file."
 END
 
 // About-dialog

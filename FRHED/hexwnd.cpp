@@ -428,12 +428,8 @@ int HexEditorWindow::open_file(LPCWSTR wszCmdLine)
 	if (SUCCEEDED(hres))
 	{
 		// Trying to open a link file: decision by user required.
-		int ret = MessageBox(hwnd,
-			_T("You are trying to open a link file.\n")
-			_T("Click on Yes if you want to open the file linked to,\n")
-			_T("or click on No if you want to open the link file itself.\n")
-			_T("Choose Cancel if you want to abort opening."),
-			ApplicationName, MB_YESNOCANCEL | MB_ICONQUESTION);
+		int ret = MessageBox(hwnd, GetLangString(IDS_OPEN_SHORTCUT),
+				MB_YESNOCANCEL | MB_ICONQUESTION);
 		switch (ret)
 		{
 		case IDYES:
@@ -3215,8 +3211,7 @@ int HexEditorWindow::CMD_save_as()
 	int filehandle = _open(szFileName, _O_RDWR|_O_CREAT|_O_TRUNC|_O_BINARY, _S_IREAD|_S_IWRITE);
 	if (filehandle == -1)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "Could not save file.", app, MB_ICONERROR);
+		MessageBox(hwnd, GetLangString(IDS_FILE_SAVE_ERROR), MB_ICONERROR);
 		return 0;
 	}
 	int done = 0;
@@ -3234,8 +3229,7 @@ int HexEditorWindow::CMD_save_as()
 	}
 	else
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "Could not save file.", app, MB_ICONERROR);
+		MessageBox(hwnd, GetLangString(IDS_FILE_SAVE_ERROR), MB_ICONERROR);
 	}
 	_close(filehandle);
 	set_wnd_title();
@@ -3265,10 +3259,7 @@ int HexEditorWindow::CMD_save()
 		//& we need a copy of the file to be present for saving a partially opened file
 		if (!CopyFile(filename, newname, TRUE))
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hwnd,
-				"Could not backup file\n"
-				"Backup aborted, Save continuing", app, MB_ICONWARNING);
+			MessageBox(hwnd, GetLangString(IDS_FILE_BACKUP_ERROR), MB_ICONWARNING);
 		}
 	}
 	int done = 0;
@@ -3278,8 +3269,7 @@ int HexEditorWindow::CMD_save()
 		int filehandle = _open(filename, _O_RDWR|_O_BINARY);
 		if (filehandle == -1)
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hwnd, "Could not save partially opened file.", app, MB_ICONERROR);
+			MessageBox(hwnd, GetLangString(IDS_ERR_SAVE_PARTIAL), MB_ICONERROR);
 			return 0;
 		}
 		int nbl = DataArray.GetLength(); // Length of the DataArray
@@ -3305,7 +3295,7 @@ int HexEditorWindow::CMD_save()
 				if (-1 == _write(filehandle, &tmp, 1))
 				{
 					LangString app(IDS_APPNAME);
-					MessageBox(hwnd, "Could not move data in the file.", app, MB_ICONERROR);
+					MessageBox(hwnd, GetLangString(IDS_ERR_MOVE_DATA), MB_ICONERROR);
 					_close(filehandle);
 					return 0;
 				}
@@ -3316,8 +3306,7 @@ int HexEditorWindow::CMD_save()
 				if (_lseeki64(filehandle, iPartialFileLen + r, SEEK_SET) == -1 ||
 					!SetEndOfFile((HANDLE)_get_osfhandle(filehandle)))
 				{
-					LangString app(IDS_APPNAME);
-					MessageBox(hwnd, "Could not resize the file.", app, MB_ICONERROR);
+					MessageBox(hwnd, GetLangString(IDS_ERR_RESIZE_FILE), MB_ICONERROR);
 					_close(filehandle);
 					return 0;
 				}
@@ -3325,13 +3314,12 @@ int HexEditorWindow::CMD_save()
 		}
 		if (_lseeki64(filehandle, iPartialOffset, 0) == -1)
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hwnd, "Could not seek in file.", app, MB_ICONERROR);
+			MessageBox(hwnd, GetLangString(IDS_ERR_SEEK_FILE), MB_ICONERROR);
 		}
 		else if (_write( filehandle, DataArray, nbl) == -1)
 		{
 			LangString app(IDS_APPNAME);
-			MessageBox(hwnd, "Could not write data to file.", app, MB_ICONERROR);
+			MessageBox(hwnd, GetLangString(IDS_ERR_WRITE_FILE), MB_ICONERROR);
 		}
 		else
 		{
@@ -3347,14 +3335,12 @@ int HexEditorWindow::CMD_save()
 	int filehandle = _open(filename, _O_RDWR|_O_CREAT|_O_TRUNC|_O_BINARY, _S_IREAD|_S_IWRITE);
 	if (filehandle == -1)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "Could not save file.", app, MB_ICONERROR);
+		MessageBox(hwnd, GetLangString(IDS_FILE_SAVE_ERROR), MB_ICONERROR);
 		return 0;
 	}
 	if (_write(filehandle, DataArray, DataArray.GetLength()) == -1)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "Could not write data to file.", app, MB_ICONERROR);
+		MessageBox(hwnd, GetLangString(IDS_ERR_WRITE_FILE), MB_ICONERROR);
 	}
 	else
 	{

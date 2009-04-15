@@ -339,6 +339,7 @@
 #define IDS_MODE_INSERT                 10009
 #define IDS_STATUS_LITTLE_ENDIAN        10010
 #define IDS_STATUS_BIG_ENDIAN           10011
+#define IDS_OPEN_SHORTCUT               10012
 #define IDS_OFFSET_START_ERROR          10016
 #define IDS_OFFSET_END_ERROR            10017
 #define IDS_OFFSET_ERROR                10018
@@ -347,6 +348,13 @@
 #define IDS_BYTES_NOT_KNOWN             10034
 #define IDS_ERR_OPENING_FILE            10035
 #define IDS_NO_MEM_FOR_FILE             10036
+#define IDS_FILE_SAVE_ERROR             10037
+#define IDS_FILE_BACKUP_ERROR           10038
+#define IDS_ERR_SAVE_PARTIAL            10039
+#define IDS_ERR_MOVE_DATA               10040
+#define IDS_ERR_RESIZE_FILE             10041
+#define IDS_ERR_SEEK_FILE               10042
+#define IDS_ERR_WRITE_FILE              10043
 #define IDS_ABOUT_BROWSER_ERR           10160
 #define IDS_ABOUT_FILENOTFOUND          10161
 #define IDS_BMK_INVALID_POSITION        10177
