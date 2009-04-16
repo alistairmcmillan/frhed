@@ -1,9 +1,11 @@
 <?php
   include('engine/page.inc');
+  include('engine/simplepie/simplepie.inc');
   
   $page = new Page;
   $page->setDescription('Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially.');
   $page->setKeywords('Frhed, free, hex editor, binary file, load partially, hexdump, compare');
+  $page->addRssFeed('http://sourceforge.net/export/rss2_projnews.php?group_id=236485', 'Frhed Project News');
   $page->printHead('Frhed - Free hex editor');
 ?>
 				<p>Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially.</p>
@@ -16,6 +18,20 @@
 					<li>Search for any combination of text and binary values</li>
 					<li>Compare files</li>
 				</ul>
+
+<?php
+  $page->printRssHeading('Project News', 'http://sourceforge.net/export/rss2_projnews.php?group_id=236485');
+  $feed = new SimplePie();
+  $feed->set_feed_url('http://sourceforge.net/export/rss2_projnews.php?group_id=236485');
+  $feed->set_cache_location('./engine/simplepie/cache');
+  $feed->init();
+  print("<ul class=\"rssfeeditems\">\n");
+  foreach ($feed->get_items(0, 3) as $item) { //for the last 3 news items...
+    print("  <li><a href=\"".$item->get_link()."\">".$item->get_title()."</a> <em>".$item->get_date('Y-m-d')."</em></li>\n");
+  }
+  print("  <li><a href=\"http://sourceforge.net/news/?group_id=236485\">View all news &hellip;</a></li>\n");
+  print("</ul>\n");
+?>
 
 				<h2>Download</h2>
 				<h3>Stable releases</h3>

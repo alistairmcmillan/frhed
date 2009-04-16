@@ -128,6 +128,38 @@
     }
     
     /**
+     * print a <h2> heading with a RSS feed link
+     */
+    function printRssHeading($title, $rssfeedurl) {
+      print("<h2>" . $title . " " . $this->getRssFeedLink($rssfeedurl) . "</h2>\n");
+    }
+
+    /**
+     * print a <h3> heading with a RSS feed link
+     */
+    function printRssSubHeading($title, $rssfeedurl) {
+      print("<h3>" . $title . " " . $this->getRssFeedLink($rssfeedurl) . "</h3>\n");
+    }
+
+    /**
+     * get a RSS feed link
+     */
+    function getRssFeedLink($url, $text = '') {
+      $temp = "<a href=\"" . $url . "\"><img src=\"/engine/images/rss.png\" alt=\"RSS\" style=\"border:none;\" /></a>";
+      if ($text != '') { //if WITH text...
+        $temp .= " <a href=\"" . $url . "\"> " . $text . "</a>";
+      }
+      return $temp;
+    }
+
+    /**
+     * print a RSS feed link
+     */
+    function printRssFeedLink($url, $text = '') {
+      print($this->getRssFeedLink($url, $text));
+    }
+    
+    /**
      * get the side navigation from the page
      */
     function getSideNavigation() {
