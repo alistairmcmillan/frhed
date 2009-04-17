@@ -5,8 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RAWIO32", "RAWIO32\RAWIO32.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Frhed", "frhed\frhed.vcproj", "{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}"
 	ProjectSection(ProjectDependencies) = postProject
-		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E} = {656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}
 		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C} = {CA40E925-32C7-47E6-8C2C-75FBF3A9805C}
+		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E} = {656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "heksedit", "FRHED\heksedit.vcproj", "{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}"
@@ -17,6 +17,8 @@ Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
 		Release = Release
+		UnicodeDebug = UnicodeDebug
+		UnicodeRelease = UnicodeRelease
 	EndGlobalSection
 	GlobalSection(ProjectDependencies) = postSolution
 	EndGlobalSection
@@ -25,14 +27,26 @@ Global
 		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.Debug.Build.0 = Debug|Win32
 		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.Release.ActiveCfg = Release|Win32
 		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.Release.Build.0 = Release|Win32
+		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.UnicodeDebug.ActiveCfg = Debug|Win32
+		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.UnicodeDebug.Build.0 = Debug|Win32
+		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.UnicodeRelease.ActiveCfg = Release|Win32
+		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.UnicodeRelease.Build.0 = Release|Win32
 		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.Debug.ActiveCfg = Debug|Win32
 		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.Debug.Build.0 = Debug|Win32
 		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.Release.ActiveCfg = Release|Win32
 		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.Release.Build.0 = Release|Win32
+		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.UnicodeDebug.ActiveCfg = UnicodeDebug|Win32
+		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.UnicodeDebug.Build.0 = UnicodeDebug|Win32
+		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.UnicodeRelease.ActiveCfg = UnicodeDebug|Win32
+		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.UnicodeRelease.Build.0 = UnicodeDebug|Win32
 		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.Debug.ActiveCfg = Debug|Win32
 		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.Debug.Build.0 = Debug|Win32
 		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.Release.ActiveCfg = Release|Win32
 		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.Release.Build.0 = Release|Win32
+		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.UnicodeDebug.ActiveCfg = UnicodeDebug|Win32
+		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.UnicodeDebug.Build.0 = UnicodeDebug|Win32
+		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.UnicodeRelease.ActiveCfg = UnicodeRelease|Win32
+		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.UnicodeRelease.Build.0 = UnicodeRelease|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
