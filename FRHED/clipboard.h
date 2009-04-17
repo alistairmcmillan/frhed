@@ -26,8 +26,8 @@
 #ifndef _CLIPBOARD_H_
 #define _CLIPBOARD_H_
 
-void TextToClipboard(HWND hwnd, char *text);
-void TextToClipboard(HWND hwnd, char *text, int len);
+void TextToClipboard(HWND hwnd, TCHAR *text);
+void TextToClipboard(HWND hwnd, TCHAR *text, int len);
 void MessageCopyBox(HWND hwnd, LPTSTR text, LPCTSTR caption, UINT type);
 
 #endif // _CLIPBOARD_H_

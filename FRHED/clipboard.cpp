@@ -28,27 +28,31 @@
 #include "resource.h"
 #include "LangString.h"
 
-//============================================================================================
-
-void TextToClipboard(HWND hwnd, char *text, int len)
+/**
+ * @brief Copy text to clipboard.
+ * @param [in] hwnd Parent window handle.
+ * @param [in] text Text to copy.
+ * @param [in] len Lenght of the text in characters.
+ */
+void TextToClipboard(HWND hwnd, TCHAR *text, int len)
 {
-	// Changed for pabs's patch to compare files command.
-	if (HGLOBAL hGlobal = GlobalAlloc(GHND, len))
+	const int size = (len + 1) * sizeof(TCHAR);
+	if (HGLOBAL hGlobal = GlobalAlloc(GHND, size))
 	{
-		SetCursor (LoadCursor (NULL, IDC_WAIT)); //tell user to wait
-		if (char *pd = (char *)GlobalLock(hGlobal)) // get pointer to clip data
+		SetCursor(LoadCursor (NULL, IDC_WAIT));
+		if (TCHAR *pd = (TCHAR *)GlobalLock(hGlobal))
 		{
-			//succesfuly got pointer
-			lstrcpyn(pd, text, len);//copy Text into global mem
-			GlobalUnlock(hGlobal);//unlock global mem
+			// Succesfully got pointer
+			_tcsncpy(pd, text, len);
+			GlobalUnlock(hGlobal);
 			if (OpenClipboard(hwnd))
 			{
-				// open clip
-				EmptyClipboard(); //empty clip
-				SetClipboardData(CF_TEXT, hGlobal);//copy to clip
-				CloseClipboard(); //close clip
+				// Open clip
+				EmptyClipboard();
+				SetClipboardData(CF_TEXT, hGlobal);
+				CloseClipboard();
 			}
-			else //failed to open clip
+			else // Failed to open clip
 			{
 				LangString app(IDS_APPNAME);
 				LangString noAccess(IDS_CANNOT_ACCESS_CLIPBOARD);
@@ -56,42 +60,44 @@ void TextToClipboard(HWND hwnd, char *text, int len)
 			}
 		}
 		else
-		{//failed to get pointer to global mem
+		{
+			// Failed to get pointer to global mem
 			GlobalFree(hGlobal);
 			LangString app(IDS_APPNAME);
 			LangString cannotLock(IDS_CANNOT_LOCK_CLIPBOARD);
 			MessageBox(hwnd, cannotLock, app, MB_ICONERROR);
 		}
-		SetCursor (LoadCursor (NULL, IDC_ARROW));//user can stop waiting
+		SetCursor (LoadCursor (NULL, IDC_ARROW));
 	}
-	else// failed to allocate global mem
+	else
 	{
+		// Failed to allocate global mem
 		LangString app(IDS_APPNAME);
 		LangString noMem(IDS_CLIPBOARD_NO_MEM);
 		MessageBox(hwnd, noMem, app, MB_ICONERROR);
 	}
 }
 
-//Pabs changed - mutated TextToClipboard into two functions
-void TextToClipboard(HWND hwnd, char *text)
+/**
+ * @brief Copy text to clipboard.
+ * @param [in] hwnd Parent window handle.
+ * @param [in] text Text to copy.
+ */
+void TextToClipboard(HWND hwnd, TCHAR *text)
 {
-	int len = 1 + strlen(text);
+	int len = _tcslen(text);
 	TextToClipboard(hwnd, text, len);
 }
 
 void MessageCopyBox(HWND hwnd, LPTSTR text, LPCTSTR caption, UINT type)
 {
-	int len = lstrlen(text);//get the # bytes needed to store the string (not counting '\0')
-	//& get where we have to put a '\0' character later
-	// RK: Added "?" to end of string.
+	int len = _tcslen(text);
 	LangString copyTo(IDS_CLIPBOARD_COPY_TO);
-	lstrcat(text, copyTo);
+	_tcscat(text, copyTo);
 	if (IDYES == MessageBox(hwnd, text, caption, MB_YESNO | type))
 	{
-		//user wants to copy output
-		text[len] = '\0';//Remove the line added above
-		//Pabs removed & replaced with TextToClipboard
-		TextToClipboard(hwnd, text, len + 1);
+		// User wants to copy output
+		text[len] = '\0'; // Remove the line added above
+		TextToClipboard(hwnd, text, len);
 	}
-//user doesn't want to copy output
 }
