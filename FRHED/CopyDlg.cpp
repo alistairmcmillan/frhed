@@ -42,10 +42,10 @@ BOOL CopyDlg::OnInitDialog(HWND hDlg)
 {
 	int iStart = iGetStartOfSelection();
 	int iEnd = iGetEndOfSelection();
-	char buf[32] = {0};
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iStart);
+	TCHAR buf[32] = {0};
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iStart);
 	SetDlgItemText(hDlg, IDC_COPY_STARTOFFSET, buf);
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iEnd);
+	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iEnd);
 	SetDlgItemText(hDlg, IDC_COPY_OFFSETEDIT, buf);
 	SetDlgItemInt(hDlg, IDC_COPY_BYTECOUNT, iEnd - iStart + 1, TRUE);
 	CheckDlgButton(hDlg, IDC_COPY_OFFSET, BST_CHECKED);
@@ -67,12 +67,13 @@ BOOL CopyDlg::OnInitDialog(HWND hDlg)
  */
 BOOL CopyDlg::Apply(HWND hDlg)
 {
-	char buf[64] = {0};
+	const int bufSize = 64;
+	TCHAR buf[bufSize + 1] = {0};
 	int iOffset;
 	int iNumberOfBytes;
-	if (GetDlgItemText(hDlg, IDC_COPY_STARTOFFSET, buf, 64) &&
-		sscanf(buf, "x%x", &iOffset) == 0 &&
-		sscanf(buf, "%d", &iOffset) == 0)
+	if (GetDlgItemText(hDlg, IDC_COPY_STARTOFFSET, buf, bufSize) &&
+		_stscanf(buf, _T("x%x"), &iOffset) == 0 &&
+		_stscanf(buf, _T("%d"), &iOffset) == 0)
 	{
 		LangString app(IDS_APPNAME);
 		LangString startOffsetErr(IDS_OFFSET_START_ERROR);
@@ -81,9 +82,9 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	}
 	if (IsDlgButtonChecked(hDlg, IDC_COPY_OFFSET))
 	{
-		if (GetDlgItemText(hDlg, IDC_COPY_OFFSETEDIT, buf, 64) &&
-			sscanf(buf, "x%x", &iNumberOfBytes) == 0 &&
-			sscanf(buf, "%d", &iNumberOfBytes) == 0)
+		if (GetDlgItemText(hDlg, IDC_COPY_OFFSETEDIT, buf, bufSize) &&
+			_stscanf(buf, _T("x%x"), &iNumberOfBytes) == 0 &&
+			_stscanf(buf, _T("%d"), &iNumberOfBytes) == 0)
 		{
 			LangString app(IDS_APPNAME);
 			LangString endOffsetErr(IDS_OFFSET_END_ERROR);
@@ -94,8 +95,8 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	}
 	else
 	{// Get number of bytes.
-		if (GetDlgItemText(hDlg, IDC_COPY_BYTECOUNT, buf, 64) &&
-			sscanf(buf, "%d", &iNumberOfBytes) == 0)
+		if (GetDlgItemText(hDlg, IDC_COPY_BYTECOUNT, buf, bufSize) &&
+			_stscanf(buf, _T("%d"), &iNumberOfBytes) == 0)
 		{
 			LangString notRecognized(IDS_BYTES_NOT_KNOWN);
 			MessageBox(hDlg, notRecognized, MB_ICONERROR);
@@ -110,7 +111,7 @@ BOOL CopyDlg::Apply(HWND hDlg)
 		MessageBox(hDlg, copyTooMany, MB_ICONERROR);
 		return FALSE;
 	}
-	// Transfer to cipboard.
+	// Transfer to clipboard.
 	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen((char*) &DataArray[iOffset], iNumberOfBytes);
 	HGLOBAL hGlobal = GlobalAlloc(GHND, destlen);
 	if (hGlobal == 0)
@@ -121,7 +122,7 @@ BOOL CopyDlg::Apply(HWND hDlg)
 		return FALSE;
 	}
 	WaitCursor wc;
-	char *pd = (char *)GlobalLock(hGlobal);
+	TCHAR *pd = (TCHAR *)GlobalLock(hGlobal);
 	Text2BinTranslator::iTranslateBytesToBC(pd, &DataArray[iOffset], iNumberOfBytes);
 	GlobalUnlock(hGlobal);
 	OpenClipboard(hwnd);
