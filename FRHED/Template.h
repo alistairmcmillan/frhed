@@ -35,19 +35,19 @@ public:
 	void ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByte);
 	char * GetResult();
 
-	void apply_template_on_memory(char* pcTpl, int tpl_len, SimpleArray<char>& ResultArray);
+	void apply_template_on_memory(TCHAR* pcTpl, int tpl_len, SimpleArray<TCHAR>& ResultArray);
 
 protected:
-	int ignore_non_code(char* pcTpl, int tpl_len, int& index);
-	int read_tpl_token(char* pcTpl, int tpl_len, int& index, char* name);
+	int ignore_non_code(TCHAR* pcTpl, int tpl_len, int& index);
+	int read_tpl_token(TCHAR* pcTpl, int tpl_len, int& index, TCHAR* name);
 
 private:
 	int m_filehandle; /**< File handle to template file. */
-	char m_origFilename[MAX_PATH]; /**< Filename of the file in the editor. */
-	char m_filename[MAX_PATH]; /**< Template file name. */
+	TCHAR m_origFilename[MAX_PATH]; /**< Filename of the file in the editor. */
+	TCHAR m_filename[MAX_PATH]; /**< Template file name. */
 	int m_filelen; /**< Template file size. */
-	char * m_tmplBuf; /**< Template file data buffer (read from file). */
-	SimpleArray<char> m_resultArray; /**< Result array for applied template. */
+	TCHAR * m_tmplBuf; /**< Template file data buffer (read from file). */
+	SimpleArray<TCHAR> m_resultArray; /**< Result array for applied template. */
 	SimpleArray<BYTE> *m_pDataArray; /**< Original data. */
 };
 

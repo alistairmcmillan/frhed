@@ -67,7 +67,7 @@ void Template::SetDataArray(const SimpleArray<BYTE> *arr)
  */
 void Template::SetOriginalFilename(LPCTSTR filename)
 {
-	strcpy(m_origFilename, filename);
+	_tcscpy(m_origFilename, filename);
 }
 
 /**
@@ -77,12 +77,12 @@ void Template::SetOriginalFilename(LPCTSTR filename)
  */
 bool Template::OpenTemplate(LPCTSTR filename)
 {
-	m_filehandle = _open(filename, _O_RDONLY|_O_BINARY);
+	m_filehandle = _topen(filename, _O_RDONLY | _O_BINARY);
 	if (m_filehandle == -1)
 		return false;
 	else
 	{
-		strcpy(m_filename, filename);
+		_tcscpy(m_filename, filename);
 		return true;
 	}
 }
@@ -100,10 +100,10 @@ bool Template::LoadTemplateData()
 	if (m_filelen == 0)
 		return false;
 
-	m_tmplBuf = new char[m_filelen + 1];
+	m_tmplBuf = new TCHAR[m_filelen + 1];
 	if (m_tmplBuf)
 	{
-		memset(m_tmplBuf, 0, m_filelen + 1);
+		memset(m_tmplBuf, 0, (m_filelen + 1) * sizeof(TCHAR));
 		int ret = _read(m_filehandle, m_tmplBuf, m_filelen);
 		if (ret == -1)
 		{
@@ -124,15 +124,15 @@ void Template::CreateTemplateArray(int curByte)
 	m_resultArray.SetSize(1, 100);
 	// Print filename and current offset to output.
 	m_resultArray.AppendArray("File: ", 6);
-	m_resultArray.AppendArray(m_origFilename, strlen(m_origFilename));
+	m_resultArray.AppendArray(m_origFilename, _tcslen(m_origFilename));
 	m_resultArray.AppendArray("\r\n", 2);
 	m_resultArray.AppendArray("Template file: ", 15);
-	m_resultArray.AppendArray(m_filename, strlen(m_filename));
+	m_resultArray.AppendArray(m_filename, _tcslen(m_filename));
 	m_resultArray.AppendArray("\r\n", 2);
 	m_resultArray.AppendArray("Applied at offset: ", 19);
-	char buf[16];
-	sprintf(buf, "%d\r\n\r\n", curByte);
-	m_resultArray.AppendArray(buf, strlen(buf));
+	TCHAR buf[16];
+	_stprintf(buf, "%d\r\n\r\n", curByte);
+	m_resultArray.AppendArray(buf, _tcslen(buf));
 }
 
 //-------------------------------------------------------------------
@@ -151,13 +151,13 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 		{
 			// index now points to first code character.
 			// Get var type.
-			char cmd[TPL_TYPE_MAXLEN]; // This holds the variable type, like byte or word.
+			TCHAR cmd[TPL_TYPE_MAXLEN]; // This holds the variable type, like byte or word.
 			if (read_tpl_token(m_tmplBuf, m_filelen, index, cmd) == TRUE)
 			{
 				// cmd holds 0-terminated var type, index set to position of first space-
 				// character after the type. Now test if valid type was given.
 				//---- type BYTE ---------------------------------
-				if (strcmp(cmd, "BYTE") == 0 || strcmp(cmd, "char") == 0)
+				if (_tcscmp(cmd, _T("BYTE")) == 0 || _tcscmp(cmd, _T("char")) == 0)
 				{
 					// This is a byte/char.
 					if (ignore_non_code(m_tmplBuf, m_filelen, index) == TRUE)
@@ -166,29 +166,29 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 						if (m_pDataArray->GetLength() - fpos >= 1)
 						{
 							// Read var name.
-							char name[TPL_NAME_MAXLEN];
+							TCHAR name[TPL_NAME_MAXLEN];
 							// index is set to a non-space character by last call to ignore_non_code.
 							// Therefore the variable name can be read into buffer name.
 							read_tpl_token(m_tmplBuf, m_filelen, index, name);
 							// Write variable type and name to output.
-							m_resultArray.AppendArray(cmd, strlen(cmd));
+							m_resultArray.AppendArray(cmd, _tcslen(cmd));
 							m_resultArray.Append(' ');
-							m_resultArray.AppendArray(name, strlen(name));
+							m_resultArray.AppendArray(name, _tcslen(name));
 							// Write value to output.
-							char buf[TPL_NAME_MAXLEN + 200];
+							TCHAR buf[TPL_NAME_MAXLEN + 200];
 							if ((*m_pDataArray)[fpos] != 0)
 							{
-								sprintf(buf, " = %d (signed) = %u (unsigned) = 0x%x = \'%c\'\r\n",
+								_stprintf(buf, " = %d (signed) = %u (unsigned) = 0x%x = \'%c\'\r\n",
 									(int) (signed char) (*m_pDataArray)[fpos], (*m_pDataArray)[fpos],
 									(*m_pDataArray)[fpos], (*m_pDataArray)[fpos]);
 							}
 							else
 							{
-								sprintf(buf, " = %d (signed) = %u (unsigned) = 0x%x\r\n",
+								_stprintf(buf, " = %d (signed) = %u (unsigned) = 0x%x\r\n",
 									(int) (signed char) (*m_pDataArray)[fpos], (*m_pDataArray)[fpos],
 									(*m_pDataArray)[fpos]);
 							}
-							m_resultArray.AppendArray(buf, strlen(buf));
+							m_resultArray.AppendArray(buf, _tcslen(buf));
 							// Increase pointer for next variable.
 							fpos += 1;
 						}
@@ -206,7 +206,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 						return;
 					}
 				}
-				else if (strcmp(cmd, "WORD") == 0 || strcmp(cmd, "short") == 0)
+				else if (_tcscmp(cmd, _T("WORD")) == 0 || _tcscmp(cmd, _T("short")) == 0)
 				{
 					// This is a word.
 					if (ignore_non_code(m_tmplBuf, m_filelen, index) == TRUE)
@@ -215,13 +215,13 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 						if (m_pDataArray->GetLength() - fpos >= 2)
 						{
 							// Read var name.
-							char name[TPL_NAME_MAXLEN];
+							TCHAR name[TPL_NAME_MAXLEN];
 							read_tpl_token(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
-							m_resultArray.AppendArray(cmd, strlen(cmd));
+							m_resultArray.AppendArray(cmd, _tcslen(cmd));
 							m_resultArray.Append(' ');
 							// Write variable name to output.
-							m_resultArray.AppendArray(name, strlen(name));
+							m_resultArray.AppendArray(name, _tcslen(name));
 							WORD wd;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
@@ -233,13 +233,13 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 								int i;
 								for (i = 0; i < 2; i++)
 								{
-									((char*)&wd)[i] = (*m_pDataArray)[fpos + 1 - i];
+									((TCHAR*)&wd)[i] = (*m_pDataArray)[fpos + 1 - i];
 								}
 							}
-							char buf[TPL_NAME_MAXLEN + 200];
-							sprintf(buf, " = %d (signed) = %u (unsigned) = 0x%x\r\n",
+							TCHAR buf[TPL_NAME_MAXLEN + 200];
+							_stprintf(buf, " = %d (signed) = %u (unsigned) = 0x%x\r\n",
 									(int) (signed short) wd, wd, wd );
-							m_resultArray.AppendArray(buf, strlen(buf));
+							m_resultArray.AppendArray(buf, _tcslen(buf));
 							fpos += 2;
 						}
 						else
@@ -254,8 +254,8 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 						return; // No more code: missing name.
 					}
 				}
-				else if (strcmp(cmd, "DWORD") == 0 || strcmp(cmd, "int") == 0 ||
-					strcmp(cmd, "long") == 0 || strcmp(cmd, "LONG") == 0 )
+				else if (_tcscmp(cmd, _T("DWORD")) == 0 || _tcscmp(cmd, _T("int")) == 0 ||
+					_tcscmp(cmd, _T("long")) == 0 || _tcscmp(cmd, _T("LONG")) == 0 )
 				{
 					// This is a longword.
 					if (ignore_non_code(m_tmplBuf, m_filelen, index) == TRUE)
@@ -264,13 +264,13 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 						if (m_pDataArray->GetLength() - fpos >= 4)
 						{
 							// Read var name.
-							char name[TPL_NAME_MAXLEN];
+							TCHAR name[TPL_NAME_MAXLEN];
 							read_tpl_token(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
-							m_resultArray.AppendArray(cmd, strlen(cmd));
+							m_resultArray.AppendArray(cmd, _tcslen(cmd));
 							m_resultArray.Append(' ');
 							// Write variable name to output.
-							m_resultArray.AppendArray(name, strlen(name));
+							m_resultArray.AppendArray(name, _tcslen(name));
 							DWORD dw;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
@@ -283,8 +283,8 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 								for (i = 0; i < 4; i++)
 									((char*)&dw)[i] = (*m_pDataArray)[fpos + 3 - i];
 							}
-							char buf[TPL_NAME_MAXLEN + 200];
-							sprintf(buf, " = %d (signed) = %u (unsigned) = 0x%x\r\n",
+							TCHAR buf[TPL_NAME_MAXLEN + 200];
+							_stprintf(buf, " = %d (signed) = %u (unsigned) = 0x%x\r\n",
 										(signed long) dw, (unsigned long) dw, dw);
 							m_resultArray.AppendArray( buf, strlen(buf) );
 							fpos += 4;
@@ -301,7 +301,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 						return; // No more code: missing name.
 					}
 				}
-				else if (strcmp(cmd, "float") == 0)
+				else if (_tcscmp(cmd, _T("float")) == 0)
 				{
 					// This is a float.
 					if (ignore_non_code(m_tmplBuf, m_filelen, index) == TRUE)
@@ -310,13 +310,13 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 						if (m_pDataArray->GetLength() - fpos >= 4)
 						{
 							// Read var name.
-							char name[TPL_NAME_MAXLEN];
+							TCHAR name[TPL_NAME_MAXLEN];
 							read_tpl_token(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
-							m_resultArray.AppendArray(cmd, strlen(cmd));
+							m_resultArray.AppendArray(cmd, _tcslen(cmd));
 							m_resultArray.Append(' ');
 							// Write variable name to output.
-							m_resultArray.AppendArray(name, strlen(name));
+							m_resultArray.AppendArray(name, _tcslen(name));
 							float f;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
@@ -329,9 +329,9 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 								for (i = 0; i < 4; i++)
 									((char*)&f)[i] = (*m_pDataArray)[fpos + 3 - i];
 							}
-							char buf[TPL_NAME_MAXLEN + 200];
-							sprintf(buf, " = %f = 0x%x\r\n", f, (unsigned long) *((int*) &f));
-							m_resultArray.AppendArray(buf, strlen(buf));
+							TCHAR buf[TPL_NAME_MAXLEN + 200];
+							_stprintf(buf, " = %f = 0x%x\r\n", f, (unsigned long) *((int*) &f));
+							m_resultArray.AppendArray(buf, _tcslen(buf));
 							fpos += 4;
 						}
 						else
@@ -346,7 +346,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 						return; // No more code: missing name.
 					}
 				}
-				else if (strcmp(cmd, "double") == 0)
+				else if (_tcscmp(cmd, _T("double")) == 0)
 				{
 					// This is a double.
 					if (ignore_non_code(m_tmplBuf, m_filelen, index) == TRUE)
@@ -355,13 +355,13 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 						if (m_pDataArray->GetLength() - fpos >= 8)
 						{
 							// Read var name.
-							char name[TPL_NAME_MAXLEN];
+							TCHAR name[TPL_NAME_MAXLEN];
 							read_tpl_token(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
-							m_resultArray.AppendArray(cmd, strlen(cmd));
+							m_resultArray.AppendArray(cmd, _tcslen(cmd));
 							m_resultArray.Append(' ');
 							// Write variable name to output.
-							m_resultArray.AppendArray(name, strlen(name));
+							m_resultArray.AppendArray(name, _tcslen(name));
 							double d;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
@@ -374,9 +374,9 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 								for (i = 0; i < 8; i++)
 									((char*)&d)[i] = (*m_pDataArray)[fpos + 7 - i];
 							}
-							char buf[TPL_NAME_MAXLEN + 200];
-							sprintf(buf, " = %g\r\n", d);
-							m_resultArray.AppendArray(buf, strlen(buf));
+							TCHAR buf[TPL_NAME_MAXLEN + 200];
+							_stprintf(buf, " = %g\r\n", d);
+							m_resultArray.AppendArray(buf, _tcslen(buf));
 							fpos += 8;
 						}
 						else
@@ -394,7 +394,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 				else
 				{
 					m_resultArray.AppendArray("ERROR: Unknown variable type \"", 30);
-					m_resultArray.AppendArray(cmd, strlen(cmd));
+					m_resultArray.AppendArray(cmd, _tcslen(cmd));
 					m_resultArray.Append('\"');
 					return;
 				}
@@ -414,9 +414,9 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 		}
 	}
 	// No more code left in m_tmplBuf.
-	char buf[128];
-	sprintf(buf, "\r\n-> Length of template = %d bytes.\r\n", fpos - curByte);
-	m_resultArray.AppendArray(buf, strlen(buf));
+	TCHAR buf[128];
+	_stprintf(buf, "\r\n-> Length of template = %d bytes.\r\n", fpos - curByte);
+	m_resultArray.AppendArray(buf, _tcslen(buf));
 	m_resultArray.Append('\0');
 }
 
