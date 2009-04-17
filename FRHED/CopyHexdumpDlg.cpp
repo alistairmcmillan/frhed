@@ -31,6 +31,10 @@
 int CopyHexdumpDlg::iCopyHexdumpMode = 0;
 int CopyHexdumpDlg::iCopyHexdumpType = IDC_EXPORTDISPLAY;
 
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ */
 BOOL CopyHexdumpDlg::OnInitDialog(HWND hDlg)
 {
 	int iCopyHexdumpDlgStart, iCopyHexdumpDlgEnd;
@@ -47,40 +51,45 @@ BOOL CopyHexdumpDlg::OnInitDialog(HWND hDlg)
 		iCopyHexdumpDlgStart = iGetStartOfSelection();
 		iCopyHexdumpDlgEnd = iGetEndOfSelection();
 	}
-	char buf[16] = {0};
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%x", iCopyHexdumpDlgStart);
+	TCHAR buf[16] = {0};
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("%x"), iCopyHexdumpDlgStart);
 	SetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET, buf);
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%x", iCopyHexdumpDlgEnd);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("%x"), iCopyHexdumpDlgEnd);
 	SetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET2, buf);
 	CheckDlgButton(hDlg, iCopyHexdumpMode ? IDC_HEXDUMP_EXPORTCLIPB :
 			IDC_HEXDUMP_EXPORTFILE, BST_CHECKED);
-//Pabs changed - line insert
 	CheckDlgButton(hDlg, iCopyHexdumpType, BST_CHECKED);
-//end
 	return TRUE;
 }
 
+/**
+ * @brief Handle dialog commands.
+ * @param [in] hDlg Hanle to the dialog.
+ * @param [in] wParam The command to handle.
+ * @param [in] lParam Optional parameter for the command.
+ * @return TRUE if the command was handled, FALSE otherwise.
+ */
 BOOL CopyHexdumpDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 {
 	int iCopyHexdumpDlgStart, iCopyHexdumpDlgEnd;
-	char buf[16] = {0};
+	const int bufSize = 16;
+	TCHAR buf[bufSize + 1] = {0};
 	switch (wParam)
 	{
 	case IDOK:
-		if (GetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET, buf, 16) &&
-			sscanf(buf, "%x", &iCopyHexdumpDlgStart) &&
-			GetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET2, buf, 16) &&
-			sscanf(buf, "%x", &iCopyHexdumpDlgEnd))
+		if (GetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET, buf, bufSize) &&
+			_stscanf(buf, _T("%x"), &iCopyHexdumpDlgStart) &&
+			GetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET2, buf, bufSize) &&
+			_stscanf(buf, _T("%x"), &iCopyHexdumpDlgEnd))
 		{
 			iCopyHexdumpMode = IsDlgButtonChecked(hDlg, IDC_HEXDUMP_EXPORTCLIPB);
-//Pabs changed - line insert
 			if (IsDlgButtonChecked(hDlg, IDC_EXPORTDISPLAY))
 				iCopyHexdumpType = IDC_EXPORTDISPLAY;
 			else if (IsDlgButtonChecked(hDlg, IDC_EXPORTDIGITS))
 				iCopyHexdumpType = IDC_EXPORTDIGITS;
 			else if (IsDlgButtonChecked(hDlg, IDC_EXPORTRTF))
 				iCopyHexdumpType = IDC_EXPORTRTF;
-//end
+
 			EndDialog(hDlg, wParam);
 			WaitCursor w1;
 			CMD_copy_hexdump(iCopyHexdumpMode, iCopyHexdumpType, iCopyHexdumpDlgStart, iCopyHexdumpDlgEnd);
@@ -93,8 +102,15 @@ BOOL CopyHexdumpDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	}
 	return FALSE;
 }
-//-------------------------------------------------------------------
-INT_PTR CopyHexdumpDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
+
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */INT_PTR CopyHexdumpDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
 	{
