@@ -96,8 +96,8 @@ BOOL BitManipDlg::Apply(HWND hDlg, WPARAM wParam)
 	TCHAR buf[64];
 	LangString value(IDS_BITMANIP_VALUE);
 	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, value,
-			(unsigned char)cBitValue, (signed char)cBitValue,
-			(unsigned char)cBitValue);
+			(BYTE)cBitValue, (signed char)cBitValue,
+			(BYTE)cBitValue);
 	SetDlgItemText(hDlg, IDC_MANIPBITS_VALUE, buf);
 	return FALSE;
 }

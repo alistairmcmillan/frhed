@@ -201,7 +201,7 @@ unsigned HexEditorWindow::get_interface_version()
 }
 
 //--------------------------------------------------------------------------------------------
-unsigned char *HexEditorWindow::get_buffer(int len)
+BYTE *HexEditorWindow::get_buffer(int len)
 {
 	if (!DataArray.SetSize(len))
 		return 0;
@@ -2099,9 +2099,9 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	assert(startpos <= DataArray.GetLength());
 
 	int length = get_length();
-	unsigned char *buffer = get_buffer(length);
+	BYTE *buffer = get_buffer(length);
 	int sibling_length = sibling->get_length();
-	unsigned char *sibling_buffer = sibling->get_buffer(sibling_length);
+	BYTE *sibling_buffer = sibling->get_buffer(sibling_length);
 
 	char linbuf[16] = {0};
 
@@ -2150,7 +2150,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	// Write bytes.
 	for (i = startpos ; i <= endpos ; i++)
 	{
-		unsigned char u = ' ';
+		BYTE u = ' ';
 		if (i < length)
 		{
 			u = buffer[i];
@@ -4885,9 +4885,9 @@ BOOL HexEditorWindow::select_next_diff(BOOL bFromStart)
 {
 	BOOL bDone = FALSE;
 	int length = get_length();
-	unsigned char *buffer = get_buffer(length);
+	BYTE *buffer = get_buffer(length);
 	int sibling_length = sibling->get_length();
-	unsigned char *sibling_buffer = sibling->get_buffer(sibling_length);
+	BYTE *sibling_buffer = sibling->get_buffer(sibling_length);
 	int i = bFromStart ? 0 : bSelected ? iGetEndOfSelection() + 1 : iCurByte;
 	while (i < length && i < sibling_length && buffer[i] == sibling_buffer[i])
 		++i;
@@ -4912,9 +4912,9 @@ BOOL HexEditorWindow::select_prev_diff(BOOL bFromEnd)
 {
 	BOOL bDone = FALSE;
 	int length = get_length();
-	unsigned char *buffer = get_buffer(length);
+	BYTE *buffer = get_buffer(length);
 	int sibling_length = sibling->get_length();
-	unsigned char *sibling_buffer = sibling->get_buffer(sibling_length);
+	BYTE *sibling_buffer = sibling->get_buffer(sibling_length);
 	int i = bFromEnd ? length : iGetStartOfSelection();
 	if (i > sibling_length)
 		i = sibling_length;
@@ -5238,7 +5238,7 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 		"characters other than whitespace and hexdigits. (like Frhed display)" :
 		"only whitespace and hexdigits. (unlike Frhed display)");
 
-	SimpleArray<unsigned char> *ptrArray = NULL;
+	SimpleArray<BYTE> *ptrArray = NULL;
 	bool ret = true;
 
 	LangString app(IDS_APPNAME);

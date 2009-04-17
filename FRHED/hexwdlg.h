@@ -106,8 +106,8 @@ private:
 	static char curtyp;//filling with input-0 or file-1
 	static char asstyp;
 	void inittxt(HWND);
-	static unsigned char input(int);
-	static unsigned char file(int);
+	static BYTE input(int);
+	static BYTE file(int);
 	static void hexstring2charstring();
 	static void deletenonhex(HWND);
 	static LRESULT CALLBACK HexProc(HWND, UINT, WPARAM, LPARAM);

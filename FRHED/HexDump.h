@@ -44,7 +44,7 @@ public:
 	void Write(unsigned startInd, unsigned endInd);
 
 private:
-	SimpleArray<unsigned char> *m_pData;
+	SimpleArray<BYTE> *m_pData;
 	char *m_pBuffer;
 	int m_bytesPerLine;
 	int m_charsPerLine;

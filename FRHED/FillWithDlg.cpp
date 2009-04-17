@@ -101,15 +101,15 @@ void FillWithDialog::inittxt(HWND hDlg)
 //-------------------------------------------------------------------
 // Following code by Pabs.
 
-unsigned char FillWithDialog::input(int index)
+BYTE FillWithDialog::input(int index)
 {
 	return buf[index];
 }
 
 //see CMD_fw below
-unsigned char FillWithDialog::file(int index)
+BYTE FillWithDialog::file(int index)
 {
-	unsigned char x;
+	BYTE x;
 	_lseek(FWFile, index, SEEK_SET);
 	_read(FWFile,&x,1);
 	return x;
@@ -296,7 +296,7 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 
 				// go ahead
 				SetCursor(LoadCursor(NULL,IDC_WAIT));
-				unsigned char (*fnc)(int);
+				BYTE (*fnc)(int);
 				int iStartOfSelSetting;
 				int iEndOfSelSetting;
 				int iimax;

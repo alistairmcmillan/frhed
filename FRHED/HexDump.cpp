@@ -65,9 +65,9 @@ void HexDump::SetOffsets(int minLen, int maxLen)
 	m_offsetMaxLen = maxLen;
 }
 
-void HexDump::SetArray(const SimpleArray<unsigned char> *dataArray)
+void HexDump::SetArray(const SimpleArray<BYTE> *dataArray)
 {
-	m_pData = const_cast<SimpleArray<unsigned char>*>(dataArray);
+	m_pData = const_cast<SimpleArray<BYTE>*>(dataArray);
 }
 
 void HexDump::CreateBuffer(unsigned size)

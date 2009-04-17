@@ -439,7 +439,7 @@ int Text2BinTranslator::bCompareBin(Text2BinTranslator& tr2, int charmode, int b
 //-------------------------------------------------------------------
 // Translate an array of bytes to a text string using special syntax.
 // Return: Length of string including zero-byte.
-int Text2BinTranslator::iTranslateBytesToBC (char* pd, unsigned char* src, int srclen)
+int Text2BinTranslator::iTranslateBytesToBC (char* pd, BYTE* src, int srclen)
 {
 	int i, k = 0;
 	char buf[16];

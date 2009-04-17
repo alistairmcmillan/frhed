@@ -113,7 +113,7 @@ BOOL PasteDlg::Apply(HWND hDlg)
 		int i = iCurByte;
 		for (int k = 0 ; k < iPasteTimes ; k++)
 		{
-			if (!DataArray.InsertAtGrow(i, (unsigned char*)pcPastestring, 0, destlen))
+			if (!DataArray.InsertAtGrow(i, (BYTE*)pcPastestring, 0, destlen))
 			{
 				LangString noMem(IDS_PASTE_NO_MEM);
 				MessageBox(hDlg, noMem, MB_ICONERROR);

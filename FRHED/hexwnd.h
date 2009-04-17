@@ -235,7 +235,7 @@ public:
 
 	unsigned STDMETHODCALLTYPE get_interface_version();
 	void STDMETHODCALLTYPE resize_window();
-	unsigned char *STDMETHODCALLTYPE get_buffer(int);
+	BYTE *STDMETHODCALLTYPE get_buffer(int);
 	int STDMETHODCALLTYPE get_length();
 	void STDMETHODCALLTYPE set_sibling(IHexEditorWindow *);
 	Colors *STDMETHODCALLTYPE get_colors();
@@ -313,7 +313,7 @@ protected:
 	HFONT hFont;
 	bool bInsertMode; /**< Editing mode is in insert-mode? */
 	bool bFileNeverSaved;
-	SimpleArray<unsigned char> DataArray;
+	SimpleArray<BYTE> DataArray;
 	int bLButtonDown, bSelecting, iLBDownX, iLBDownY;
 	int cxChar, cxCaps, cyChar, cxClient, cyClient, cxBuffer, cyBuffer, iNumlines;
 	int iByteSpace, iCharSpace;

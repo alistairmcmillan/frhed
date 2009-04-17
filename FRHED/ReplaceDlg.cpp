@@ -61,7 +61,7 @@ int	ReplaceDlg::transl_binary_to_text(char *src, int len)
 	strToReplaceData.ExpandToSize();
 	if (char *pd = strToReplaceData)
 	{
-		Text2BinTranslator::iTranslateBytesToBC(pd, (unsigned char*) src, len);
+		Text2BinTranslator::iTranslateBytesToBC(pd, (BYTE*) src, len);
 		return TRUE;
 	}
 	return FALSE;
@@ -136,7 +136,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 	else if (iPasteAsText)
 	{
 		// Replace with non-zero-length data.
-		if (!DataArray.Replace(i, n, (unsigned char *)(char *)strReplaceWithData, strReplaceWithData.StrLen()))
+		if (!DataArray.Replace(i, n, (BYTE*)(char *)strReplaceWithData, strReplaceWithData.StrLen()))
 		{
 			LangString app(IDS_APPNAME);
 			MessageBox(hDlg, "Replacing failed.", app, MB_ICONERROR);
@@ -154,7 +154,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 			MessageBox(hDlg, "Could not translate text to binary.", app, MB_ICONERROR);
 			return FALSE;
 		}
-		if (!DataArray.Replace(i, n, (unsigned char*)(char*)out, out.GetLength()))
+		if (!DataArray.Replace(i, n, (BYTE*)(char*)out, out.GetLength()))
 		{
 			LangString app(IDS_APPNAME);
 			MessageBox(hDlg, "Replacing failed.", app, MB_ICONERROR);

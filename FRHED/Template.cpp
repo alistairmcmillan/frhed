@@ -54,9 +54,9 @@ Template::~Template()
  * data will not be modified.
  * @param [in] arr Original data.
  */
-void Template::SetDataArray(const SimpleArray<unsigned char> *arr)
+void Template::SetDataArray(const SimpleArray<BYTE> *arr)
 {
-	m_pDataArray = const_cast<SimpleArray<unsigned char> *>(arr);
+	m_pDataArray = const_cast<SimpleArray<BYTE> *>(arr);
 }
 
 /**

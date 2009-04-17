@@ -47,7 +47,7 @@ public:
 	bool ParseSimple();
 	bool ParseFormatted();
 	void SetHwnd(HWND hwnd);
-	SimpleArray<unsigned char> *GetArray();
+	SimpleArray<BYTE> *GetArray();
 	bool WasAutoOffsetLen() const;
 	int GetMinOffset() const;
 	bool GetPartialStats() const;
@@ -57,7 +57,7 @@ public:
 	int GetCharset() const;
 
 private:
-	SimpleArray<unsigned char> m_data; /**< Array where data is loaded. */
+	SimpleArray<BYTE> m_data; /**< Array where data is loaded. */
 	hexfile_stream * m_pFile; /**< Pointer to file stream from which data is read. */
 	int m_type; /**< Dump file type, simple or Frhed display-formatted. */
 	int m_size; /**< Size of the data to read. */

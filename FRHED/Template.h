@@ -27,7 +27,7 @@ public:
 	Template();
 	~Template();
 
-	void SetDataArray(const SimpleArray<unsigned char> *arr);
+	void SetDataArray(const SimpleArray<BYTE> *arr);
 	void SetOriginalFilename(LPCTSTR filename);
 	bool OpenTemplate(LPCTSTR filename);
 	bool LoadTemplateData();
@@ -48,7 +48,7 @@ private:
 	int m_filelen; /**< Template file size. */
 	char * m_tmplBuf; /**< Template file data buffer (read from file). */
 	SimpleArray<char> m_resultArray; /**< Result array for applied template. */
-	SimpleArray<unsigned char> *m_pDataArray; /**< Original data. */
+	SimpleArray<BYTE> *m_pDataArray; /**< Original data. */
 };
 
 #endif // _TEMPLATE_H_

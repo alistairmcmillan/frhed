@@ -153,7 +153,7 @@ void HexFile::SetHwnd(HWND hwnd)
  * @brief Return the array having loaded hex dump.
  * @return Array containing data parsed from the hex dump.
  */
-SimpleArray<unsigned char> *HexFile::GetArray()
+SimpleArray<BYTE> *HexFile::GetArray()
 {
 	return &m_data;
 }
@@ -221,7 +221,7 @@ bool HexFile::ParseFormatted()
 {
 	LangString app(IDS_APPNAME);
 	int temp[4] = {0};
-	unsigned char c[4] = {0};
+	BYTE c[4] = {0};
 	int i, ii = 0, ls, bpl, fo = 0, fol;
 	int dim = 1, diio = 1;
 	bool flnd = true;
