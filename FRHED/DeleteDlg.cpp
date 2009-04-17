@@ -1,3 +1,28 @@
+/////////////////////////////////////////////////////////////////////////////
+//    License (GPLv2+):
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful, but
+//    WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//    General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+/////////////////////////////////////////////////////////////////////////////
+/** 
+ * @file  DeleteDlg.cpp
+ *
+ * @brief Implementation of the Delete dialog.
+ *
+ */
+// ID line follows -- this is updated by SVN
+// $Id$
+
 #include "precomp.h"
 #include "resource.h"
 #include "hexwnd.h"
@@ -17,11 +42,11 @@ BOOL DeleteDlg::OnInitDialog(HWND hDlg)
 {
 	int iStart = iGetStartOfSelection();
 	int iEnd = iGetEndOfSelection();
-	char buf[OffsetLen + 1] = {0};
+	TCHAR buf[OffsetLen + 1] = {0};
 
-	sprintf(buf, "x%x", iStart);
+	_stprintf(buf, _T("x%x"), iStart);
 	SetDlgItemText(hDlg, IDC_DELETE_STARTOFFSET, buf);
-	sprintf(buf, "x%x", iEnd);
+	_stprintf(buf, _T("x%x"), iEnd);
 
 	CheckDlgButton(hDlg, IDC_DELETE_INCLUDEOFFSET, BST_CHECKED);
 	SetDlgItemText(hDlg, IDC_DELETE_ENDOFFSET, buf);
@@ -38,13 +63,13 @@ BOOL DeleteDlg::OnInitDialog(HWND hDlg)
  */
 BOOL DeleteDlg::Apply(HWND hDlg)
 {
-	char buf[OffsetLen + 1] = {0};
+	TCHAR buf[OffsetLen + 1] = {0};
 	int iOffset;
 	int iNumberOfBytes;
 
 	if (GetDlgItemText(hDlg, IDC_DELETE_STARTOFFSET, buf, OffsetLen) &&
-		sscanf(buf, "x%x", &iOffset) == 0 &&
-		sscanf(buf, "%d", &iOffset) == 0)
+		_stscanf(buf, _T("x%x"), &iOffset) == 0 &&
+		_stscanf(buf, _T("%d"), &iOffset) == 0)
 	{
 		LangString startOffsetErr(IDS_OFFSET_START_ERROR);
 		MessageBox(hDlg, startOffsetErr, MB_ICONERROR);
@@ -54,8 +79,8 @@ BOOL DeleteDlg::Apply(HWND hDlg)
 	if (IsDlgButtonChecked(hDlg, IDC_DELETE_INCLUDEOFFSET))
 	{
 		if (GetDlgItemText(hDlg, IDC_DELETE_ENDOFFSET, buf, OffsetLen) &&
-			sscanf(buf, "x%x", &iNumberOfBytes) == 0 &&
-			sscanf(buf, "%d", &iNumberOfBytes) == 0)
+			_stscanf(buf, _T("x%x"), &iNumberOfBytes) == 0 &&
+			_stscanf(buf, _T("%d"), &iNumberOfBytes) == 0)
 		{
 			LangString endOffsetErr(IDS_OFFSET_END_ERROR);
 			MessageBox(hDlg, endOffsetErr, MB_ICONERROR);
@@ -66,7 +91,7 @@ BOOL DeleteDlg::Apply(HWND hDlg)
 	else
 	{// Get number of bytes.
 		if (GetDlgItemText(hDlg, IDC_DELETE_NUMBYTES, buf, OffsetLen) &&
-			sscanf(buf, "%d", &iNumberOfBytes) == 0)
+			_stscanf(buf, _T("%d"), &iNumberOfBytes) == 0)
 		{
 			LangString notRecognized(IDS_BYTES_NOT_KNOWN);
 			MessageBox(hDlg, notRecognized, MB_ICONERROR);
