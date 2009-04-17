@@ -75,7 +75,7 @@ BOOL ViewSettingsDlg::EnumLocalesProc(LPTSTR lpLocaleString)
 	PathAppend(path, static_cast<W2T>(LangFileSubFolder));
 	LPTSTR name = PathAddBackslash(path);
 	LCID lcid = 0;
-	if (sscanf(lpLocaleString, "%x", &lcid) == 1)
+	if (_stscanf(lpLocaleString, _T("%x"), &lcid) == 1)
 	{
 		LANGID langid = (LANGID)lcid;
 		if (int i = GetLocaleInfo(langid, LOCALE_SISO639LANGNAME, name, 4))
@@ -85,7 +85,7 @@ BOOL ViewSettingsDlg::EnumLocalesProc(LPTSTR lpLocaleString)
 			BOOL f = langid == LangArray::DefLangId;
 			while (f == 0)
 			{
-				strcpy(name + i + j, ".po");
+				_tcscpy(name + i + j, _T(".po"));
 				f = PathFileExists(path);
 				if (j == 0 || SUBLANGID(langid) != SUBLANG_DEFAULT)
 					break;
@@ -289,24 +289,31 @@ BOOL ViewSettingsDlg::Apply(HWND hDlg)
  */
 void ViewSettingsDlg::SelectEditor(HWND hDlg)
 {
-	char szFileName[MAX_PATH];
+	TCHAR szFileName[MAX_PATH];
 	szFileName[0] = '\0';
-	LangString allFiles(IDS_OPEN_ALL_FILES);
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);
 	ofn.lStructSize = sizeof ofn;
 	ofn.hwndOwner = hwnd;
-	ofn.lpstrFilter = allFiles;
+	ofn.lpstrFilter = GetLangString(IDS_OPEN_ALL_FILES);
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
 	if (GetOpenFileName(&ofn))
 	{
-		strncpy(TexteditorName, szFileName, MAX_PATH);
+		_tcsncpy(TexteditorName, szFileName, MAX_PATH);
 		SetDlgItemText(hDlg, IDC_SETTINGS_EDITOR, TexteditorName);
 	}
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR ViewSettingsDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
