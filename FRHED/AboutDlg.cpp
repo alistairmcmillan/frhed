@@ -70,7 +70,8 @@ BOOL AboutDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 
 	case IDC_ABOUT_OPENURL:
 		{
-			HINSTANCE hi = ShellExecute(hDlg, "open", FrhedHomepageURL, 0, NULL, SW_SHOWNORMAL);
+			HINSTANCE hi = ShellExecute(hDlg, _T("open"), FrhedHomepageURL,
+					0, NULL, SW_SHOWNORMAL);
 			if ((UINT)hi <= HINSTANCE_ERROR)
 			{
 				LangString app(IDS_APPNAME);
