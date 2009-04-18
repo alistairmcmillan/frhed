@@ -15,12 +15,12 @@
  * @param [in] ps String to append.
  * @return TRUE
  */
-int SimpleString::AppendString(const char* ps)
+int SimpleString::AppendString(LPCTSTR ps)
 {
 	if (m_nUpperBound == ARR_EMPTY)
 		return SetToString(ps);
 	else
-		InsertAtGrow(m_nUpperBound, ps, 0, strlen(ps));
+		InsertAtGrow(m_nUpperBound, ps, 0, _tcslen(ps));
 	return TRUE;
 }
 
@@ -29,7 +29,7 @@ int SimpleString::AppendString(const char* ps)
  * @param [in] ps String to replace current content.
  * @return TRUE.
  */
-int SimpleString::SetToString(const char* ps)
+int SimpleString::SetToString(LPCTSTR ps)
 {
 	Clear();
 	return AppendString(ps);
@@ -40,7 +40,7 @@ int SimpleString::SetToString(const char* ps)
  * @param [in] ps String to replace current content.
  * @return TRUE.
  */
-SimpleString& SimpleString::operator=(const char* ps)
+SimpleString& SimpleString::operator=(LPCTSTR ps)
 {
 	SetToString(ps);
 	return *this;
@@ -62,7 +62,7 @@ SimpleString& SimpleString::operator=(const SimpleString &str)
  * @param [in] ps String to append.
  * @return New string (given string appended).
  */
-SimpleString& SimpleString::operator+=(const char* ps)
+SimpleString& SimpleString::operator+=(LPCTSTR ps)
 {
 	if (m_nUpperBound == ARR_EMPTY)
 		SetToString(ps);
@@ -78,7 +78,7 @@ SimpleString& SimpleString::operator+=(const char* ps)
 int SimpleString::StrLen() const
 {
 	if (m_pT != NULL)
-		return strlen(m_pT);
+		return _tcslen(m_pT);
 	else
 		return 0;
 }
@@ -98,7 +98,7 @@ SimpleString::SimpleString()
  * Create a SimpleString from a normal char array-string.
  * @param [in] ps String to use as initial value.
  */
-SimpleString::SimpleString(const char* ps)
+SimpleString::SimpleString(LPCTSTR ps)
 {
 	m_nGrowBy = 64;
 	SetToString(ps);
@@ -141,7 +141,7 @@ bool SimpleString::IsEmpty() const
  * @param [in] ps2 Second string to concat.
  * @return String with given strings combined.
  */
-SimpleString operator+(const SimpleString &ps1, const char* ps2)
+SimpleString operator+(const SimpleString &ps1, LPCTSTR ps2)
 {
 	SimpleString s1;
 	s1 += ps1;
@@ -155,7 +155,7 @@ SimpleString operator+(const SimpleString &ps1, const char* ps2)
  * @param [in] ps2 Second string to concat.
  * @return String with given strings combined.
  */
-SimpleString operator+(const char* ps1, const SimpleString &ps2)
+SimpleString operator+(LPCTSTR ps1, const SimpleString &ps2)
 {
 	SimpleString s1;
 	s1 += ps1;
