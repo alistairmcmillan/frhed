@@ -69,7 +69,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 
 	if (GetDlgItemText(hDlg, IDC_CUT_STARTOFFSET, buf, OffsetLen) &&
 		_stscanf(buf, _T("x%x"), &iOffset) == 0 &&
-		sscanf(buf, _T("%d"), &iOffset) == 0)
+		_stscanf(buf, _T("%d"), &iOffset) == 0)
 	{
 		LangString startOffsetErr(IDS_OFFSET_START_ERROR);
 		MessageBox(hDlg, startOffsetErr, MB_ICONERROR);
@@ -109,7 +109,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 	}
 
 	// Transfer to cipboard.
-	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen((char*) &DataArray[iOffset], iNumberOfBytes);
+	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR*) &DataArray[iOffset], iNumberOfBytes);
 	HGLOBAL hGlobal = GlobalAlloc(GHND, destlen);
 	if (hGlobal == 0)
 	{
