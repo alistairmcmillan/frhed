@@ -43,7 +43,7 @@ void ChooseDiffDlg::add_diff(HWND hwndList, int diff, int lower, int upper)
 
 //-------------------------------------------------------------------
 // Transfer offsets of differences to pdiff.
-int ChooseDiffDlg::get_diffs(HWND hwndList, char *ps, int sl, char *pd, int dl)
+int ChooseDiffDlg::get_diffs(HWND hwndList, TCHAR *ps, int sl, TCHAR *pd, int dl)
 {
 	int lower, upper;
 	int i = 0, diff = 0, type = 1;
@@ -83,9 +83,14 @@ int ChooseDiffDlg::get_diffs(HWND hwndList, char *ps, int sl, char *pd, int dl)
 	return diff;
 }
 
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to dialog.
+ * @return TRUE
+ */
 BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 {
-	char szFileName[_MAX_PATH];
+	TCHAR szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
 
 	OPENFILENAME ofn;
@@ -98,7 +103,7 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 	ofn.lpstrTitle = GetLangString(IDS_DIFF_CHOOSEFILE);
 	if (!GetOpenFileName(&ofn))
 		return FALSE;
-	int filehandle = _open(szFileName, _O_RDONLY|_O_BINARY);
+	int filehandle = _topen(szFileName, _O_RDONLY|_O_BINARY);
 	if (filehandle == -1)
 	{
 		LangString errOpen(IDS_DIFF_ERROPEN);
@@ -110,20 +115,20 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 	{
 		int iDestFileLen = filelen;
 		int iSrcFileLen = DataArray.GetLength() - iCurByte;
-		if (char *cmpdata = new char[filelen])
+		if (TCHAR *cmpdata = new TCHAR[filelen])
 		{
 			// Read data.
 			if (_read(filehandle, cmpdata, filelen) != -1)
 			{
 				HWND hwndList = GetDlgItem(hDlg, IDC_CHOOSEDIFF_DIFFLIST);
-				if (int diff = get_diffs(hwndList, (char *)&DataArray[iCurByte], DataArray.GetLength() - iCurByte, cmpdata, filelen))
+				if (int diff = get_diffs(hwndList, (TCHAR *)&DataArray[iCurByte], DataArray.GetLength() - iCurByte, cmpdata, filelen))
 				{
-					char buf[100];
+					TCHAR buf[100];
 					LangString diffsFound(IDS_DIFF_AREAS_FOUND);
-					sprintf(buf, diffsFound, diff);
+					_stprintf(buf, diffsFound, diff);
 					SetDlgItemText(hDlg, IDC_NUMDIFFS, buf);
 					LangString remainingData(IDS_DIFF_REMAINING_BYTES);
-					sprintf(buf, remainingData, iSrcFileLen, iDestFileLen);
+					_stprintf(buf, remainingData, iSrcFileLen, iDestFileLen);
 					SetDlgItemText(hDlg, IDC_CHOOSEDIFF_FSIZES, buf);
 					SendMessage(hwndList, LB_SETCURSEL, 0, 0);
 					bDone = TRUE;
@@ -152,6 +157,12 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 	return bDone;
 }
 
+/**
+ * @brief Handle dialog commands.
+ * @param [in] hDlg Handle to dialog.
+ * @param [in] wParam First param (depends on command).
+ * @return TRUE if command (message) was handled, FALSE if not.
+ */
 BOOL ChooseDiffDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 {
 	switch (wParam)
@@ -231,7 +242,14 @@ BOOL ChooseDiffDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 	return FALSE;
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR ChooseDiffDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
