@@ -89,6 +89,9 @@ public:
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 };
 
+/**
+ * A dialog for filling area with bytes.
+ */
 class FillWithDialog : public HexEditorWindow
 {
 public:
@@ -96,15 +99,15 @@ public:
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 private:
 	enum { FW_MAX = 1024 }; //max bytes to fill with
-	static char pcFWText[FW_MAX];//hex representation of bytes to fill with
-	static char buf[FW_MAX];//bytes to fill with
+	static TCHAR pcFWText[FW_MAX];//hex representation of bytes to fill with
+	static TCHAR buf[FW_MAX];//bytes to fill with
 	static int buflen;//number of bytes to fill with
-	static char szFWFileName[_MAX_PATH];//fill with file name
+	static TCHAR szFWFileName[_MAX_PATH];//fill with file name
 	static int FWFile,FWFilelen;//fill with file and len
 	static LONG_PTR oldproc;//old hex box proc
 	static HFONT hfon;//needed so possible to display infinity char in fill with dlg box
-	static char curtyp;//filling with input-0 or file-1
-	static char asstyp;
+	static TCHAR curtyp;//filling with input-0 or file-1
+	static TCHAR asstyp;
 	void inittxt(HWND);
 	static BYTE input(int);
 	static BYTE file(int);
@@ -190,6 +193,9 @@ public:
 	static SimpleString strReplaceWithData;
 };
 
+/**
+ * @brief A dialog for chooding diffed file.
+ */
 class ChooseDiffDlg : public HexEditorWindow
 {
 public:
@@ -199,7 +205,7 @@ private:
 	BOOL OnInitDialog(HWND);
 	BOOL OnCommand(HWND, WPARAM, LPARAM);
 	void add_diff(HWND hwndList, int diff, int lower, int upper);
-	int get_diffs(HWND hwndList, char *ps, int sl, char *pd, int dl);
+	int get_diffs(HWND hwndList, TCHAR *ps, int sl, TCHAR *pd, int dl);
 };
 
 class CopyHexdumpDlg : public HexEditorWindow

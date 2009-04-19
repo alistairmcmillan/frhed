@@ -32,17 +32,17 @@
 C_ASSERT(sizeof(FillWithDialog) == sizeof(HexEditorWindow)); // disallow instance members
 
 //Pabs changed - line insert
-char FillWithDialog::pcFWText[FW_MAX];//hex representation of bytes to fill with
-char FillWithDialog::buf[FW_MAX];//bytes to fill with
+TCHAR FillWithDialog::pcFWText[FW_MAX];//hex representation of bytes to fill with
+TCHAR FillWithDialog::buf[FW_MAX];//bytes to fill with
 int FillWithDialog::buflen;//number of bytes to fill with
-char FillWithDialog::szFWFileName[_MAX_PATH];//fill with file name
+TCHAR FillWithDialog::szFWFileName[_MAX_PATH];//fill with file name
 int FillWithDialog::FWFile;//fill with file
 int FillWithDialog::FWFilelen;//fill with file len
 LONG_PTR FillWithDialog::oldproc;//old hex box proc
 //LONG cmdoldproc;//old command box proc
 HFONT FillWithDialog::hfon;//needed so possible to display infinity char in fill with dlg box
-char FillWithDialog::curtyp;//filling with input-0 or file-1
-char FillWithDialog::asstyp;
+TCHAR FillWithDialog::curtyp;//filling with input-0 or file-1
+TCHAR FillWithDialog::asstyp;
 //see CMD_fw below
 
 void FillWithDialog::inittxt(HWND hDlg)
@@ -60,40 +60,40 @@ void FillWithDialog::inittxt(HWND hDlg)
 		iEndOfSelSetting = DataArray.GetUpperBound();
 	}
 	//init all the readonly boxes down below
-	char bufff[250] = {0};
+	TCHAR bufff[250] = {0};
 	int tteemmpp = 1 + abs(iStartOfSelSetting - iEndOfSelSetting);
-	_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x", iStartOfSelSetting, iStartOfSelSetting);
+	_sntprintf(bufff, RTL_NUMBER_OF(bufff) - 1, _T("%d=0x%x"), iStartOfSelSetting, iStartOfSelSetting);
 	SetDlgItemText(hDlg, IDC_STS,bufff);
-	_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x", iEndOfSelSetting, iEndOfSelSetting);
+	_sntprintf(bufff, RTL_NUMBER_OF(bufff) - 1, _T("%d=0x%x"), iEndOfSelSetting, iEndOfSelSetting);
 	SetDlgItemText(hDlg, IDC_ES,bufff);
-	_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x",tteemmpp,tteemmpp);
+	_sntprintf(bufff, RTL_NUMBER_OF(bufff) - 1, _T("%d=0x%x"),tteemmpp,tteemmpp);
 	SetDlgItemText(hDlg, IDC_SS,bufff);
 	if (curtyp)
 	{//1-file
-		SetDlgItemText(hDlg,IDC_SI, "???");
-		SetDlgItemText(hDlg,IDC_IFS, "???");
-		SetDlgItemText(hDlg,IDC_R, "???");
+		SetDlgItemText(hDlg,IDC_SI, _T("???"));
+		SetDlgItemText(hDlg,IDC_IFS, _T("???"));
+		SetDlgItemText(hDlg,IDC_R, _T("???"));
 	}
 	else
 	{//0-input
-		_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x", buflen, buflen);
+		_sntprintf(bufff, RTL_NUMBER_OF(bufff) - 1, _T("%d=0x%x"), buflen, buflen);
 		SetDlgItemText(hDlg,IDC_SI, bufff);
 		if (buflen)
 		{
 			int d = tteemmpp / buflen;
 			int m = tteemmpp % buflen;
-			_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x", d, d);
+			_sntprintf(bufff, RTL_NUMBER_OF(bufff) - 1, _T("%d=0x%x"), d, d);
 			SetDlgItemText(hDlg,IDC_IFS, bufff);
 			HFONT hfdef = (HFONT)SendMessage(hDlg, WM_GETFONT, 0, 0);
 			SendDlgItemMessage(hDlg,IDC_IFS,WM_SETFONT,(WPARAM) hfdef, MAKELPARAM(TRUE, 0));
-			_snprintf(bufff, RTL_NUMBER_OF(bufff) - 1, "%d=0x%x", m, m);
+			_sntprintf(bufff, RTL_NUMBER_OF(bufff) - 1, _T("%d=0x%x"), m, m);
 			SetDlgItemText(hDlg,IDC_R, bufff);
 		}
 		else
 		{
-			SetDlgItemText(hDlg,IDC_IFS, "\xa5");//set to infinity symbol
+			SetDlgItemText(hDlg,IDC_IFS, _T("\xa5"));//set to infinity symbol
 			SendDlgItemMessage(hDlg,IDC_IFS,WM_SETFONT,(WPARAM) hfon,MAKELPARAM(TRUE, 0));
-			SetDlgItemText(hDlg,IDC_R, "0=0x0");
+			SetDlgItemText(hDlg,IDC_R, _T("0=0x0"));
 		}
 	}
 }
@@ -119,7 +119,7 @@ BYTE FillWithDialog::file(int index)
 void FillWithDialog::hexstring2charstring()
 {
 	// RK: removed definition of variable "a".
-	int i, ii = strlen(pcFWText);
+	int i, ii =_tcslen(pcFWText);
 	if (ii % 2)//if number of hex digits is odd
 	{
 		//concatenate them
@@ -135,7 +135,7 @@ void FillWithDialog::hexstring2charstring()
 		buf[ii]=a;//store it
 		*/
 		// Replaced with this line:
-		sscanf(pcFWText + i, "%2x", buf + ii);//get byte from the hexstring
+		_stscanf(pcFWText + i, _T("%2x"), buf + ii);//get byte from the hexstring
 		ii++;
 	}//for
 	buflen = ii;//store length
@@ -202,8 +202,8 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 			EnableWindow(GetDlgItem(hDlg, IDC_HEXSTAT),!curtyp);
 
 			HWND typ = GetDlgItem(hDlg, IDC_TYPE);
-			SendMessage(typ, CB_ADDSTRING ,0, (LPARAM)"Input");
-			SendMessage(typ, CB_ADDSTRING ,0, (LPARAM)"File");
+			SendMessage(typ, CB_ADDSTRING ,0, (LPARAM)_T("Input"));
+			SendMessage(typ, CB_ADDSTRING ,0, (LPARAM)_T("File"));
 			SendMessage(typ, CB_SETCURSEL, (WPARAM)curtyp,0);//set cursel to previous
 
 			//en/disable filename box and browse button
@@ -215,7 +215,7 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 
 			hfon = CreateFont(16, 0, 0, 0, FW_NORMAL, 0, 0, 0,
 					DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-					DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Symbol");
+					DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, _T("Symbol"));
 			inittxt(hDlg);
 			switch (asstyp)
 			{
@@ -243,7 +243,7 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 				if (curtyp)
 				{//1-file
 					GetDlgItemText(hDlg, IDC_FN, szFWFileName, _MAX_PATH);//get file name
-					FWFile = _open(szFWFileName, _O_RDONLY | _O_BINARY);
+					FWFile = _topen(szFWFileName, _O_RDONLY | _O_BINARY);
 					if (FWFile == -1)
 					{//if there is error opening
 						LangString errOpen(IDS_ERR_OPENING_FILE);
