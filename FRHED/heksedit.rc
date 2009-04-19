@@ -1564,6 +1564,27 @@ BEGIN
     IDS_REVERSE_BLOCK_EXTEND "The chosen block extends into non-existant data. The offsets will be shifted to correct positions."
 END
 
+// Shortcuts-dialog
+STRINGTABLE 
+BEGIN
+    IDS_SCUT_LINKNAMES     "link names are ""Frhed.lnk"""
+    IDS_SCUT_ALREADY_CONTAINS "This folder already contains a file called ""Frhed.lnk"""
+    IDS_SCUT_CAN_ADD       """Frhed.lnk"" can be added to this folder"
+    IDS_SCUT_CANNOT_ADD    """Frhed.lnk"" cannot be added to this folder"
+    IDS_SCUT_CAN_SEARCH    "Frhed can start searching here"
+    IDS_SCUT_CANNOT_SEARCH "Frhed cannot start the search from here"
+    IDS_SCUT_CANNOT_SAVE   "Could not Save shortcut entries"
+    IDS_SCUT_CANNOT_MOVE   "Cannot move more than 1 link at a time"
+    IDS_SCUT_NO_LINK_MOVE  "No link selected to move"
+    IDS_SCUT_CANNOT_FIND   "Couldn't find the selected item"
+    IDS_SCUT_PLACE_LINK    "Place a link to Frhed in..."
+    IDS_SCUT_MOVE_LINK     "Move the link to Frhed to..."
+    IDS_SCUT_ALREADY_LINK  "There is already a link in that folder"
+    IDS_SCUT_UPDATE_LINKS  "Existing links to old versions of Frhed will be updated to this version\nAre you sure you want to continue"
+    IDS_SCUT_SEARCH_FOLDER "Pick a folder to start searching in."
+    IDS_SCUT_NO_SELECT_DEL "No links selected to delete"
+END
+
 // Status bar
 STRINGTABLE 
 BEGIN
