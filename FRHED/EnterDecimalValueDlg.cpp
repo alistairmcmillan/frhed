@@ -53,9 +53,9 @@ BOOL EnterDecimalValueDlg::OnInitDialog(HWND hDlg)
 		else
 			iDecValDlgValue = (int)DataArray[iCurByte];
 	}
-	char buf[16] = {0};
+	TCHAR buf[16] = {0};
 	SetDlgItemInt(hDlg, IDC_DECIMAL_VALUE, iDecValDlgValue, TRUE);
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iCurByte);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iCurByte);
 	SetDlgItemText(hDlg, IDC_DECIMAL_OFFSET, buf);
 	SetDlgItemInt(hDlg, IDC_DECIMAL_TIMES, 1, TRUE);
 	CheckDlgButton(hDlg,
@@ -77,7 +77,7 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 		IsDlgButtonChecked(hDlg, IDC_DECIMAL_DWORD) ? 4 :
 		IsDlgButtonChecked(hDlg, IDC_DECIMAL_WORD) ? 2 :
 		1;
-	char buf[16] = {0};
+	TCHAR buf[16] = {0};
 	BOOL translated;
 	int iDecValDlgValue = GetDlgItemInt(hDlg, IDC_DECIMAL_VALUE, &translated,
 			TRUE);
@@ -89,8 +89,8 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 	}
 	int iDecValDlgOffset;
 	if (GetDlgItemText(hDlg, IDC_DECIMAL_OFFSET, buf, 16) &&
-		sscanf(buf, "%d", &iDecValDlgOffset) == 0 && 
-		sscanf(buf, "x%x", &iDecValDlgOffset) == 0)
+		_stscanf(buf, _T("%d"), &iDecValDlgOffset) == 0 && 
+		_stscanf(buf, _T("x%x"), &iDecValDlgOffset) == 0)
 	{
 		LangString app(IDS_APPNAME);
 		LangString offsetErr(IDS_OFFSET_ERROR);
