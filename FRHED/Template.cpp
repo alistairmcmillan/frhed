@@ -452,7 +452,7 @@ LPCTSTR Template::GetResult()
 //-------------------------------------------------------------------
 // This will set index to the position of the next non-space-character.
 // Return is FALSE if there are no non-spaces left up to the end of the array.
-int Template::ignore_non_code(char* pcTpl, int tpl_len, int& index)
+int Template::ignore_non_code(TCHAR* pcTpl, int tpl_len, int& index)
 {
 	while (index < tpl_len)
 	{
