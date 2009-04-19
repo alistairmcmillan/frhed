@@ -421,6 +421,23 @@
 #define IDS_SBAR_SIGNED                 11016
 #define IDS_SBAR_SIZE                   11017
 #define IDS_SBAR_NO_FILE                11018
+#define IDS_TPL_FILENAME                12000
+#define IDS_TPL_TEMPLATE_FILE           12001
+#define IDS_TPL_APPLIED_AT              12002
+#define IDS_TPL_FMT_BYTE_0              12003
+#define IDS_TPL_FMT_BYTE                12004
+#define IDS_TPL_ERR_NOSPC_BYTE          12005
+#define IDS_TPL_ERR_NO_VAR              12006
+#define IDS_TPL_FMT_WORD                12007
+#define IDS_TPL_ERR_NOSPC_WORD          12008
+#define IDS_TPL_FTM_DWORD               12009
+#define IDS_TPL_ERR_NOSPC_DWORD         12010
+#define IDS_TPL_FMT_FLOAT               12011
+#define IDS_TPL_ERR_NOSPC_FLOAT         12012
+#define IDS_TPL_FMT_DOUBLE              12013
+#define IDS_TPL_ERR_NOSPC_DOUBLE        12014
+#define IDS_TPL_ERR_UNK_TYPE            12015
+#define IDS_TPL_LENGTH                  12016
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

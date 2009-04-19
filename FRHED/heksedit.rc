@@ -1580,6 +1580,33 @@ BEGIN
     IDS_SBAR_NO_FILE       "No file loaded"
 END
 
+// Template
+STRINGTABLE 
+BEGIN
+    IDS_TPL_FILENAME        "File:"
+    IDS_TPL_TEMPLATE_FILE   "Template file:"
+    IDS_TPL_APPLIED_AT      "Applied at offset:"
+    IDS_TPL_FMT_BYTE_0      "= %d (signed) = %u (unsigned) = 0x%x = '%c'"
+    IDS_TPL_FMT_BYTE        "= %d (signed) = %u (unsigned) = 0x%x"
+    IDS_TPL_ERR_NOSPC_BYTE  "ERROR: not enough space for byte-size data."
+    IDS_TPL_ERR_NO_VAR      "ERROR: missing variable name."
+    IDS_TPL_FMT_WORD        "= %d (signed) = %u (unsigned) = 0x%x"
+    IDS_TPL_ERR_NOSPC_WORD  "ERROR: not enough space for WORD-size data."
+    IDS_TPL_FTM_DWORD       "= %d (signed) = %u (unsigned) = 0x%x"
+    IDS_TPL_ERR_NOSPC_DWORD "ERROR: not enough space for DWORD-size data."
+    IDS_TPL_FMT_FLOAT       "= %f = 0x%x"
+    IDS_TPL_ERR_NOSPC_FLOAT "ERROR: not enough space for float-size data."
+    IDS_TPL_FMT_DOUBLE      "= %g"
+    IDS_TPL_ERR_NOSPC_DOUBLE "ERROR: not enough space for double-size data."
+    IDS_TPL_ERR_UNK_TYPE    "ERROR: Unknown variable type:"
+END
+
+// Template (continued)
+STRINGTABLE 
+BEGIN
+   IDS_TPL_LENGTH           "-> Length of template = %d bytes."
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 

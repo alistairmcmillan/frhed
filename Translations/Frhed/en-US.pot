@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?group_id=13216&atid=113216\n"
-"POT-Creation-Date: 2009-04-15 21:45+0000\n"
+"POT-Creation-Date: 2009-04-19 14:09+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: English <frhed-devel@lists.sourceforge.net>\n"
@@ -1305,6 +1305,7 @@ msgid "Fill selection with:"
 msgstr ""
 
 #: heksedit.rc:807
+#: heksedit.rc:1586
 #, c-format
 msgid "File:"
 msgstr ""
@@ -2289,5 +2290,77 @@ msgstr ""
 #: heksedit.rc:1580
 #, c-format
 msgid "No file loaded"
+msgstr ""
+
+#: heksedit.rc:1587
+#, c-format
+msgid "Template file:"
+msgstr ""
+
+#: heksedit.rc:1588
+#, c-format
+msgid "Applied at offset:"
+msgstr ""
+
+#: heksedit.rc:1589
+#, c-format
+msgid "= %d (signed) = %u (unsigned) = 0x%x = '%c'"
+msgstr ""
+
+#: heksedit.rc:1590
+#: heksedit.rc:1593
+#: heksedit.rc:1595
+#, c-format
+msgid "= %d (signed) = %u (unsigned) = 0x%x"
+msgstr ""
+
+#: heksedit.rc:1591
+#, c-format
+msgid "ERROR: not enough space for byte-size data."
+msgstr ""
+
+#: heksedit.rc:1592
+#, c-format
+msgid "ERROR: missing variable name."
+msgstr ""
+
+#: heksedit.rc:1594
+#, c-format
+msgid "ERROR: not enough space for WORD-size data."
+msgstr ""
+
+#: heksedit.rc:1596
+#, c-format
+msgid "ERROR: not enough space for DWORD-size data."
+msgstr ""
+
+#: heksedit.rc:1597
+#, c-format
+msgid "= %f = 0x%x"
+msgstr ""
+
+#: heksedit.rc:1598
+#, c-format
+msgid "ERROR: not enough space for float-size data."
+msgstr ""
+
+#: heksedit.rc:1599
+#, c-format
+msgid "= %g"
+msgstr ""
+
+#: heksedit.rc:1600
+#, c-format
+msgid "ERROR: not enough space for double-size data."
+msgstr ""
+
+#: heksedit.rc:1601
+#, c-format
+msgid "ERROR: Unknown variable type:"
+msgstr ""
+
+#: heksedit.rc:1607
+#, c-format
+msgid "-> Length of template = %d bytes."
 msgstr ""
 
