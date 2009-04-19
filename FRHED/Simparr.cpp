@@ -67,7 +67,7 @@ SimpleString& SimpleString::operator+=(LPCTSTR ps)
 	if (m_nUpperBound == ARR_EMPTY)
 		SetToString(ps);
 	else
-		InsertAtGrow(m_nUpperBound, ps, 0, strlen(ps));
+		InsertAtGrow(m_nUpperBound, ps, 0, _tcslen(ps));
 	return *this;
 }
 
