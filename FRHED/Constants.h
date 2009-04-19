@@ -8,22 +8,22 @@
 // $Id$
 
 /** @brief Application name used in the GUI. */
-const char ApplicationName[] = "Frhed";
+const TCHAR ApplicationName[] = _T("Frhed");
 
 /** @brief Frhed homepage URL. */
-const char FrhedHomepageURL[] = "http://frhed.sourceforge.net/";
+const TCHAR FrhedHomepageURL[] = _T("http://frhed.sourceforge.net/");
 
 /** @brief Filename of the contributors list. */
-const char ContributorsList[] = "Docs\\Contributors.txt";
+const TCHAR ContributorsList[] = _T("Docs\\Contributors.txt");
 
 /** @brief HtmlHelp file to open from Frhed program folder. */
-static const char HtmlHelpFile[] = "docs\\frhed.chm";
+const TCHAR HtmlHelpFile[] = _T("docs\\frhed.chm");
 
 /** @brief Registry key for Frhed. */
-static const char OptionsRegistryPath[] = "Software\\Frhed";
+const TCHAR OptionsRegistryPath[] = _T("Software\\Frhed");
 
 /** @brief Registry key for Frhed settings. */
-static const char OptionsRegistrySettingsPath[] = "Software\\Frhed\\Settings";
+const TCHAR OptionsRegistrySettingsPath[] = _T("Software\\Frhed\\Settings");
 
 /** @brief Subfolder where language files (PO files) are. */
-static const WCHAR LangFileSubFolder[] = L"Languages";
+const WCHAR LangFileSubFolder[] = L"Languages";
