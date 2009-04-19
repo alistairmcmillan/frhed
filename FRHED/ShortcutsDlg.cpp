@@ -29,6 +29,8 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "StringTable.h"
+#include "LangString.h"
 
 class TraverseFolders
 {
@@ -125,7 +127,7 @@ BOOL ShortcutsDlg::OnInitDialog(HWND hw)
 	ZeroMemory(&col, sizeof col);
 	col.mask = LVCF_TEXT | LVCF_WIDTH;
 	col.fmt = LVCFMT_LEFT;
-	col.pszText = "link names are \"Frhed.lnk\"";
+	col.pszText = GetLangString(IDS_SCUT_LINKNAMES);
 	col.cx = 153;
 	ListView_InsertColumn(GetDlgItem(hw, IDC_SHORTCUT_LINKS), 0, &col);
 	//Load links from the registry
@@ -149,7 +151,7 @@ int CALLBACK ShortcutsDlg::BrowseCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 			if (PathFileExists(szDir))
 			{
 				SendMessage(hw,BFFM_ENABLEOK,0,0);//Disable
-				SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"This folder already contains a file called \"Frhed.lnk\"");
+				SendMessage(hw, BFFM_SETSTATUSTEXT, 0, (LPARAM)GetLangString(IDS_SCUT_ALREADY_CONTAINS));
 			}
 			else
 			{
@@ -160,19 +162,19 @@ int CALLBACK ShortcutsDlg::BrowseCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 					_close(fh);
 					remove(szDir);
 					SendMessage(hw,BFFM_ENABLEOK,0,1);//Enable
-					SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"\"Frhed.lnk\" can be added to this folder");
+					SendMessage(hw, BFFM_SETSTATUSTEXT, 0, (LPARAM)GetLangString(IDS_SCUT_CAN_ADD));
 				}
 				else
 				{
 					SendMessage(hw,BFFM_ENABLEOK,0,0);//Disable
-					SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"\"Frhed.lnk\" cannot be added to this folder");
+					SendMessage(hw, BFFM_SETSTATUSTEXT, 0, (LPARAM)GetLangString(IDS_SCUT_CANNOT_ADD));
 				}
 			}
 		}
 		else
 		{
 			SendMessage(hw,BFFM_ENABLEOK,0,0);//Disable
-			SendMessage(hw,BFFM_SETSTATUSTEXT,0,(LPARAM)"\"Frhed.lnk\" cannot be added to this folder");
+			SendMessage(hw, BFFM_SETSTATUSTEXT, 0, (LPARAM)GetLangString(IDS_SCUT_CANNOT_ADD));
 		}
 	}
 	return 0;
@@ -186,7 +188,7 @@ int CALLBACK ShortcutsDlg::SearchCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 		BOOL ret = SHGetPathFromIDList((LPITEMIDLIST) l ,szDir) && PathIsDirectory(szDir);
 		SendMessage(hw, BFFM_ENABLEOK, 0, ret);//Enable/Disable
 		SendMessage(hw, BFFM_SETSTATUSTEXT, 0,
-			(LPARAM)(ret ? "Frhed can start searching here" : "Frhed cannot start the search from here"));
+			(LPARAM)(ret ? GetLangString(IDS_SCUT_CAN_SEARCH) : GetLangString(IDS_SCUT_CANNOT_SEARCH)));
 	}
 	return 0;
 }
@@ -227,7 +229,10 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				RegCloseKey(hk);
 			}
 			else
-				MessageBox(hw,"Could not Save shortcut entries", "Shortcuts",MB_OK);
+			{
+				LangString msg(IDS_SCUT_CANNOT_SAVE);
+				MessageBox(hw, msg, MB_OK);
+			}
 
 			//If the key is empty after this kill it (to prevent re-enabling of "Remove frhed")
 			SHDeleteEmptyKey(HKEY_CURRENT_USER, keyname);
@@ -256,18 +261,21 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				di = ListView_GetSelectedCount(list);
 				if (di > 1)
 				{
-					MessageBox(hw,"Can't move more than 1 link at a time","Move link",MB_OK);
+					LangString msg(IDS_SCUT_CANNOT_MOVE);
+					MessageBox(hw, msg, MB_OK);
 					return TRUE;
 				}
 				else if(di != 1)
 				{
-					MessageBox(hw,"No link selected to move","Move link",MB_OK);
+					LangString msg(IDS_SCUT_NO_LINK_MOVE);
+					MessageBox(hw, msg, MB_OK);
 					return TRUE;
 				}
 				di = ListView_GetNextItem(list, (UINT)-1, LVNI_SELECTED);
 				if (di == -1)
 				{
-					MessageBox(hw,"Couldn't find the selected item","Move link",MB_OK);
+					LangString msg(IDS_SCUT_CANNOT_FIND);
+					MessageBox(hw, msg, MB_OK);
 					return TRUE;
 				}
 			}
@@ -278,9 +286,9 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				bi.hwndOwner = hw;
 				bi.lpfn = BrowseCallbackProc;
 				if (LOWORD(w) == IDC_ADD)
-					bi.lpszTitle = "Place a link to Frhed in...";
+					bi.lpszTitle = GetLangString(IDS_SCUT_PLACE_LINK);
 				else if (LOWORD(w) == IDC_MOVE)
-					bi.lpszTitle = "Move the link to Frhed to...";
+					bi.lpszTitle = GetLangString(IDS_SCUT_MOVE_LINK);
 
 				pidl = SHBrowseForFolder(&bi);
 				if (pidl)
@@ -308,7 +316,8 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 						char valnam[_MAX_PATH+1];
 						if (done)
 						{
-							MessageBox(hw,"There is already a link in that folder","Add/Move",MB_OK);
+							LangString msg(IDS_SCUT_ALREADY_LINK);
+							MessageBox(hw, msg, MB_OK);
 							//Just in case
 							PathAddBackslash(szDir);
 							strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - RTL_NUMBER_OF(FrhedLink));
@@ -402,7 +411,8 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 		{
 			//Go through the file system searching for links to this exe
 			//-Thanks to Raihan for the traversing code this was based on.
-			if (LOWORD(w) == IDC_FIND_AND_FIX && IDNO == MessageBox(hw,"Existing links to old versions of Frhed will be updated to this version\nAre you sure you want to continue","Find & fix",MB_YESNO))
+			LangString msgUpdate(IDS_SCUT_UPDATE_LINKS);
+			if (LOWORD(w) == IDC_FIND_AND_FIX && IDNO == MessageBox(hw, msgUpdate, MB_YESNO))
 				return TRUE;
 			//Find a spot to start from
 			LPMALLOC pMalloc;
@@ -415,7 +425,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_STATUSTEXT ;
 				bi.hwndOwner = hw;
 				bi.lpfn = SearchCallbackProc;
-				bi.lpszTitle = "Pick a folder to start searching in.";
+				bi.lpszTitle = GetLangString(IDS_SCUT_SEARCH_FOLDER);
 
 				pidl = SHBrowseForFolder(&bi);
 				if (pidl)
@@ -445,7 +455,8 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			int di = ListView_GetSelectedCount(list);
 			if (di == 0)
 			{
-				MessageBox(hw,"No links selected to delete","Delete links",MB_OK);
+				LangString msg(IDS_SCUT_NO_SELECT_DEL);
+				MessageBox(hw, msg, MB_OK);
 				return TRUE;
 			}
 			for( ; ; )
@@ -584,7 +595,8 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				}//end of the loop
 				if (done)
 				{
-					MessageBox(hw,"There is already a link in that folder","Add",MB_OK);
+					LangString msg(IDS_SCUT_ALREADY_LINK);
+					MessageBox(hw, msg, MB_OK);
 					//Just in case
 					PathAddBackslash(szDir);
 					strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
