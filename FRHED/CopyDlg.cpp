@@ -112,7 +112,7 @@ BOOL CopyDlg::Apply(HWND hDlg)
 		return FALSE;
 	}
 	// Transfer to clipboard.
-	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen((char*) &DataArray[iOffset], iNumberOfBytes);
+	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR*) &DataArray[iOffset], iNumberOfBytes);
 	HGLOBAL hGlobal = GlobalAlloc(GHND, destlen);
 	if (hGlobal == 0)
 	{
