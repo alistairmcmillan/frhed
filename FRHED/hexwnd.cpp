@@ -4376,8 +4376,8 @@ void HexEditorWindow::apply_template(char *pcTemplate)
 	tmpl.CreateTemplateArray(iCurByte);
 	tmpl.ApplyTemplate(iBinaryMode, iCurByte);
 
-	char *pcTmplText = tmpl.GetResult();
-	ShowModalDialog(IDD_TMPL_RESULT_DIALOG, hwnd, TmplDisplayDlgProc, pcTmplText);
+	LPCTSTR pcTmplText = tmpl.GetResult();
+	ShowModalDialog(IDD_TMPL_RESULT_DIALOG, hwnd, TmplDisplayDlgProc, (LPVOID) pcTmplText);
 }
 
 /**

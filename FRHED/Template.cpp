@@ -25,6 +25,7 @@
 
 #include "precomp.h"
 #include "Template.h"
+#include "UnicodeString.h"
 
 /**
  * @brief Constructor.
@@ -121,18 +122,17 @@ bool Template::LoadTemplateData()
  */
 void Template::CreateTemplateArray(int curByte)
 {
-	m_resultArray.SetSize(1, 100);
 	// Print filename and current offset to output.
-	m_resultArray.AppendArray("File: ", 6);
-	m_resultArray.AppendArray(m_origFilename, _tcslen(m_origFilename));
-	m_resultArray.AppendArray("\r\n", 2);
-	m_resultArray.AppendArray("Template file: ", 15);
-	m_resultArray.AppendArray(m_filename, _tcslen(m_filename));
-	m_resultArray.AppendArray("\r\n", 2);
-	m_resultArray.AppendArray("Applied at offset: ", 19);
+	m_resultString += "File: ";
+	m_resultString += m_origFilename;
+	m_resultString += "\r\n";
+	m_resultString += "Template file: ";
+	m_resultString += m_filename;
+	m_resultString += "\r\n";
+	m_resultString += "Applied at offset: ";
 	TCHAR buf[16];
 	_stprintf(buf, "%d\r\n\r\n", curByte);
-	m_resultArray.AppendArray(buf, _tcslen(buf));
+	m_resultString += buf;
 }
 
 //-------------------------------------------------------------------
@@ -171,9 +171,9 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							// Therefore the variable name can be read into buffer name.
 							read_tpl_token(m_tmplBuf, m_filelen, index, name);
 							// Write variable type and name to output.
-							m_resultArray.AppendArray(cmd, _tcslen(cmd));
-							m_resultArray.Append(' ');
-							m_resultArray.AppendArray(name, _tcslen(name));
+							m_resultString += cmd;
+							m_resultString += " ";
+							m_resultString += name;
 							// Write value to output.
 							TCHAR buf[TPL_NAME_MAXLEN + 200];
 							if ((*m_pDataArray)[fpos] != 0)
@@ -188,13 +188,13 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 									(int) (signed char) (*m_pDataArray)[fpos], (*m_pDataArray)[fpos],
 									(*m_pDataArray)[fpos]);
 							}
-							m_resultArray.AppendArray(buf, _tcslen(buf));
+							m_resultString += buf;
 							// Increase pointer for next variable.
 							fpos += 1;
 						}
 						else
 						{
-							m_resultArray.AppendArray("ERROR: not enough space for byte-size datum.", 45);
+							m_resultString += "ERROR: not enough space for byte-size datum.";
 							return;
 						}
 					}
@@ -202,7 +202,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 					{
 						// No non-spaces after variable type up to end of array, so
 						// no space for variable name.
-						m_resultArray.AppendArray("ERROR: missing variable name.", 29);
+						m_resultString += "ERROR: missing variable name.";
 						return;
 					}
 				}
@@ -218,10 +218,10 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							TCHAR name[TPL_NAME_MAXLEN];
 							read_tpl_token(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
-							m_resultArray.AppendArray(cmd, _tcslen(cmd));
-							m_resultArray.Append(' ');
+							m_resultString += cmd;
+							m_resultString += " ";
 							// Write variable name to output.
-							m_resultArray.AppendArray(name, _tcslen(name));
+							m_resultString += name;
 							WORD wd;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
@@ -239,18 +239,18 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							TCHAR buf[TPL_NAME_MAXLEN + 200];
 							_stprintf(buf, " = %d (signed) = %u (unsigned) = 0x%x\r\n",
 									(int) (signed short) wd, wd, wd );
-							m_resultArray.AppendArray(buf, _tcslen(buf));
+							m_resultString += buf;
 							fpos += 2;
 						}
 						else
 						{
-							m_resultArray.AppendArray("ERROR: not enough space for WORD.", 34);
+							m_resultString += "ERROR: not enough space for WORD.";
 							return;
 						}
 					}
 					else
 					{
-						m_resultArray.AppendArray("ERROR: missing variable name.", 29);
+						m_resultString += "ERROR: missing variable name.";
 						return; // No more code: missing name.
 					}
 				}
@@ -267,10 +267,10 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							TCHAR name[TPL_NAME_MAXLEN];
 							read_tpl_token(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
-							m_resultArray.AppendArray(cmd, _tcslen(cmd));
-							m_resultArray.Append(' ');
+							m_resultString += cmd;
+							m_resultString += " ";
 							// Write variable name to output.
-							m_resultArray.AppendArray(name, _tcslen(name));
+							m_resultString += name;
 							DWORD dw;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
@@ -286,18 +286,18 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							TCHAR buf[TPL_NAME_MAXLEN + 200];
 							_stprintf(buf, " = %d (signed) = %u (unsigned) = 0x%x\r\n",
 										(signed long) dw, (unsigned long) dw, dw);
-							m_resultArray.AppendArray( buf, strlen(buf) );
+							m_resultString += buf;
 							fpos += 4;
 						}
 						else
 						{
-							m_resultArray.AppendArray("ERROR: not enough space for DWORD.", 34);
+							m_resultString += "ERROR: not enough space for DWORD.";
 							return;
 						}
 					}
 					else
 					{
-						m_resultArray.AppendArray("ERROR: missing variable name.", 29);
+						m_resultString += "ERROR: missing variable name.";
 						return; // No more code: missing name.
 					}
 				}
@@ -313,10 +313,10 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							TCHAR name[TPL_NAME_MAXLEN];
 							read_tpl_token(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
-							m_resultArray.AppendArray(cmd, _tcslen(cmd));
-							m_resultArray.Append(' ');
+							m_resultString += cmd;
+							m_resultString += " ";
 							// Write variable name to output.
-							m_resultArray.AppendArray(name, _tcslen(name));
+							m_resultString += name;
 							float f;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
@@ -331,18 +331,18 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							}
 							TCHAR buf[TPL_NAME_MAXLEN + 200];
 							_stprintf(buf, " = %f = 0x%x\r\n", f, (unsigned long) *((int*) &f));
-							m_resultArray.AppendArray(buf, _tcslen(buf));
+							m_resultString += buf;
 							fpos += 4;
 						}
 						else
 						{
-							m_resultArray.AppendArray("ERROR: not enough space for float.", 34);
+							m_resultString += "ERROR: not enough space for float.";
 							return;
 						}
 					}
 					else
 					{
-						m_resultArray.AppendArray("ERROR: missing variable name.", 29);
+						m_resultString += "ERROR: missing variable name.";
 						return; // No more code: missing name.
 					}
 				}
@@ -358,10 +358,10 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							TCHAR name[TPL_NAME_MAXLEN];
 							read_tpl_token(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
-							m_resultArray.AppendArray(cmd, _tcslen(cmd));
-							m_resultArray.Append(' ');
+							m_resultString += cmd;
+							m_resultString += " ";
 							// Write variable name to output.
-							m_resultArray.AppendArray(name, _tcslen(name));
+							m_resultString += name;
 							double d;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
@@ -376,26 +376,26 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							}
 							TCHAR buf[TPL_NAME_MAXLEN + 200];
 							_stprintf(buf, " = %g\r\n", d);
-							m_resultArray.AppendArray(buf, _tcslen(buf));
+							m_resultString += buf;
 							fpos += 8;
 						}
 						else
 						{
-							m_resultArray.AppendArray("ERROR: not enough space for double.", 35);
+							m_resultString += "ERROR: not enough space for double.";
 							return;
 						}
 					}
 					else
 					{
-						m_resultArray.AppendArray("ERROR: missing variable name.", 29);
+						m_resultString += "ERROR: missing variable name.";
 						return; // No more code: missing name.
 					}
 				}
 				else
 				{
-					m_resultArray.AppendArray("ERROR: Unknown variable type \"", 30);
-					m_resultArray.AppendArray(cmd, _tcslen(cmd));
-					m_resultArray.Append('\"');
+					m_resultString += "ERROR: Unknown variable type \"";
+					m_resultString += cmd;
+					m_resultString += "\"";
 					return;
 				}
 			}
@@ -403,7 +403,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 			{
 				// After the type there is only the array end. Therefore
 				// no space for a variable name.
-				m_resultArray.AppendArray("ERROR: Missing variable name.", 29);
+				m_resultString += "ERROR: Missing variable name.";
 				return;
 			}
 		}
@@ -416,13 +416,12 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 	// No more code left in m_tmplBuf.
 	TCHAR buf[128];
 	_stprintf(buf, "\r\n-> Length of template = %d bytes.\r\n", fpos - curByte);
-	m_resultArray.AppendArray(buf, _tcslen(buf));
-	m_resultArray.Append('\0');
+	m_resultString += buf;
 }
 
-char * Template::GetResult()
+LPCTSTR Template::GetResult()
 {
-	return m_resultArray;
+	return m_resultString.c_str();
 }
 
 //-------------------------------------------------------------------
@@ -454,7 +453,7 @@ int Template::ignore_non_code(char* pcTpl, int tpl_len, int& index)
 // with a zero-byte. index is set to position of the first space-
 // character. Return is false if there is only the array end after the
 // keyword. In that case index is set to tpl_len.
-int Template::read_tpl_token(char* pcTpl, int tpl_len, int& index, char* dest)
+int Template::read_tpl_token(TCHAR* pcTpl, int tpl_len, int& index, TCHAR* dest)
 {
 	int i = 0;
 	while (index + i < tpl_len)

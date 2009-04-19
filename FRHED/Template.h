@@ -11,6 +11,7 @@
 #define _TEMPLATE_H_
 
 #include "Simparr.h"
+#include "UnicodeString.h"
 #include "hexwnd.h"  // For HexEditorWindow::BYTE_ENDIAN
 
 /** @brief Maximum length of the type in template. */
@@ -33,7 +34,7 @@ public:
 	bool LoadTemplateData();
 	void CreateTemplateArray(int curByte);
 	void ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByte);
-	char * GetResult();
+	LPCTSTR GetResult();
 
 	void apply_template_on_memory(TCHAR* pcTpl, int tpl_len, SimpleArray<TCHAR>& ResultArray);
 
@@ -47,7 +48,7 @@ private:
 	TCHAR m_filename[MAX_PATH]; /**< Template file name. */
 	int m_filelen; /**< Template file size. */
 	TCHAR * m_tmplBuf; /**< Template file data buffer (read from file). */
-	SimpleArray<TCHAR> m_resultArray; /**< Result array for applied template. */
+	String m_resultString; /**< Resulting string for applied template. */
 	SimpleArray<BYTE> *m_pDataArray; /**< Original data. */
 };
 
