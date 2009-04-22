@@ -2,6 +2,7 @@
 #include "idt.h"
 #include "hexwnd.h"
 #include "resource.h"
+#include "LangString.h"
 
 /*The #ifndef __CYGWIN__s are there because cygwin/mingw doesn't yet have
 certain APIs in their import libraries. Specifically _wremove, _wopen & GetEnhMetaFileBits.*/
@@ -26,18 +27,18 @@ INT_PTR DragDropDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 	{
 	case WM_INITDIALOG:
 		{
-			CheckDlgButton( h, effect ? IDC_COPY : IDC_MOVE, TRUE );
-			if( !(allowable_effects & DROPEFFECT_MOVE) )
-				EnableWindow( GetDlgItem( h, IDC_MOVE ), FALSE );
-			if( !(allowable_effects & DROPEFFECT_COPY) )
-				EnableWindow( GetDlgItem( h, IDC_COPY ), FALSE );
+			CheckDlgButton(h, effect ? IDC_COPY : IDC_MOVE, TRUE);
+			if (!(allowable_effects & DROPEFFECT_MOVE))
+				EnableWindow(GetDlgItem(h, IDC_MOVE), FALSE);
+			if (!(allowable_effects & DROPEFFECT_COPY))
+				EnableWindow(GetDlgItem(h, IDC_COPY), FALSE);
 			HWND list = GetDlgItem(h, IDC_DAND_LIST);
 			if (numformatetcs && formatetcs)
 			{
 				LVCOLUMN col;
 				ZeroMemory(&col, sizeof col);
 				ListView_InsertColumn(list, 0, &col);
-				char szFormatName[100];
+				TCHAR szFormatName[100];
 				UINT i;
 				for (i = 0 ; i < numformatetcs ; i++)
 				{
@@ -68,11 +69,11 @@ INT_PTR DragDropDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 							default:
 								if (temp >= CF_PRIVATEFIRST && temp <= CF_PRIVATELAST)
 								{
-									sprintf(szFormatName, "CF_PRIVATE_%d", temp - CF_PRIVATEFIRST);
+									_stprintf(szFormatName, _T("CF_PRIVATE_%d"), temp - CF_PRIVATEFIRST);
 								}
 								else if (temp >= CF_GDIOBJFIRST && temp <= CF_GDIOBJLAST)
 								{
-									sprintf(szFormatName, "CF_GDIOBJ_%d", temp - CF_GDIOBJFIRST);
+									_stprintf(szFormatName, _T("CF_GDIOBJ_%d"), temp - CF_GDIOBJFIRST);
 								}
 								//Format ideas for future: hex number, system/msdn constant, registered format, WM_ASKFORMATNAME, tickbox for delay rendered or not*/
 								/*else if(temp>0xC000&&temp<0xFFFF)
@@ -81,7 +82,7 @@ INT_PTR DragDropDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 								}*/
 								else
 								{
-									sprintf(szFormatName, "0x%.8x", temp);
+									_stprintf(szFormatName, _T("0x%.8x"), temp);
 								}
 							break;
 						}
@@ -113,7 +114,9 @@ INT_PTR DragDropDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 					formats = (UINT*)malloc(numformats * sizeof *formats);
 					if (formats == 0)
 					{
-						MessageBox(h, "Not enough memory", "Drag-drop", MB_ICONERROR);
+						LangString msg(IDS_NO_MEMORY);
+						LangString app(IDS_APPNAME);
+						MessageBox(h, msg, app, MB_ICONERROR);
 						return TRUE;
 					}
 					LVITEM temp;
@@ -141,32 +144,40 @@ INT_PTR DragDropDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 				ZeroMemory(item, sizeof item);
 				//If anyone knows a better way to swap two items please send a patch
 				item[0].iItem = ListView_GetNextItem(list, (UINT)-1, LVNI_SELECTED);
-				if(item[0].iItem==-1) item[0].iItem = ListView_GetNextItem(list, (UINT)-1, LVNI_FOCUSED);
-				if(item[0].iItem==-1)
+				if (item[0].iItem==-1)
+					item[0].iItem = ListView_GetNextItem(list, (UINT)-1, LVNI_FOCUSED);
+				if (item[0].iItem==-1)
 				{
 					MessageBox(h, "Select an item to move.", "Drag-drop", MB_OK);
 					SetFocus(list);
 					return TRUE;
 				}
-				item[0].mask = LVIF_TEXT|LVIF_PARAM|LVIF_STATE;
+				item[0].mask = LVIF_TEXT | LVIF_PARAM | LVIF_STATE;
 				item[0].stateMask = (UINT)-1;
-				char text[2][100];
+				TCHAR text[2][100];
 				item[0].pszText = text[0];
-				item[0].cchTextMax = sizeof(text[0]);
+				item[0].cchTextMax = RTL_NUMBER_OF(text[0]);
 				item[1] = item[0];
 				item[1].pszText = text[1];
-				if(LOWORD(w)==IDC_UP){
-					if(item[1].iItem==0) item[1].iItem=numformatetcs-1;
-					else item[1].iItem--;
-				} else {
-					if( (UINT)item[1].iItem==numformatetcs-1 ) item[1].iItem = 0;
-					else item[1].iItem++;
+				if (LOWORD(w) == IDC_UP)
+				{
+					if (item[1].iItem == 0)
+						item[1].iItem=numformatetcs - 1;
+					else
+						item[1].iItem--;
+				}
+				else
+				{
+					if ((UINT)item[1].iItem == numformatetcs - 1)
+						item[1].iItem = 0;
+					else
+						item[1].iItem++;
 				}
 				ListView_GetItem(list, &item[0]);
 				ListView_GetItem(list, &item[1]);
-				swap(item[0].iItem,item[1].iItem);
-				item[0].state |= LVIS_FOCUSED|LVIS_SELECTED;
-				item[1].state &= ~(LVIS_FOCUSED|LVIS_SELECTED);
+				swap(item[0].iItem, item[1].iItem);
+				item[0].state |= LVIS_FOCUSED | LVIS_SELECTED;
+				item[1].state &= ~(LVIS_FOCUSED | LVIS_SELECTED);
 				ListView_SetItem(list, &item[0]);
 				ListView_SetItem(list, &item[1]);
 				SetFocus(list);
@@ -208,10 +219,13 @@ STDMETHODIMP CDropTarget::QueryInterface( REFIID iid, void** ppvObject )
 
 	*ppvObject = NULL;
 
-	if ( iid == IID_IUnknown ) *ppvObject = (IUnknown*)this;
-	else if ( iid == IID_IDropTarget ) *ppvObject = (IDropTarget*)this;
+	if (iid == IID_IUnknown)
+		*ppvObject = (IUnknown*)this;
+	else if (iid == IID_IDropTarget)
+		*ppvObject = (IDropTarget*)this;
 
-	if(*ppvObject){
+	if(*ppvObject)
+	{
 		((IUnknown*)*ppvObject)->AddRef();
 		return S_OK;
 	}
@@ -464,15 +478,19 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 		//Get the available formats
 		for(;;)
 		{
-			void *temp = realloc(fel, ( numfe + 1 ) * sizeof(FORMATETC));
-			if( temp != NULL ){
+			void *temp = realloc(fel, (numfe + 1) * sizeof(FORMATETC));
+			if (temp != NULL)
+			{
 				fel = (FORMATETC*) temp;
 				temp = NULL;
 				int r;
-				r = iefe->Next( 1, &fel[numfe], NULL);
-				if( r != S_OK ) break;//No more formats
+				r = iefe->Next(1, &fel[numfe], NULL);
+				if (r != S_OK)
+					break;//No more formats
 				numfe++;
-			} else if( fel == NULL ) {
+			}
+			else if (fel == NULL)
+			{
 				//We only go here if nothing could be allocated
 #ifdef _DEBUG
 				printf("Not enough memory for the drag-drop format list\n");
@@ -591,10 +609,14 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 			{
 				//Get len
 				size_t len = 0;
-				switch( stm.tymed ){
-					case TYMED_HGLOBAL: len = GlobalSize( stm.hGlobal ); break;
+				switch (stm.tymed)
+				{
+					case TYMED_HGLOBAL:
+						len = GlobalSize(stm.hGlobal);
+						break;
 #ifndef __CYGWIN__
-					case TYMED_FILE:{
+					case TYMED_FILE:
+					{
 						int fh = _wopen( stm.lpszFileName, _O_BINARY | _O_RDONLY );
 						if( fh != -1 ){
 							len = _filelength( fh );
