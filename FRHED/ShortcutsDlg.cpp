@@ -36,8 +36,8 @@ class TraverseFolders
 {
 public:
 	HWND hwlist;
-	char rn[MAX_PATH];
-	char vn[50];
+	TCHAR rn[MAX_PATH];
+	TCHAR vn[50];
 	LVITEM li;
 	LVFINDINFO fi;
 	BOOL cr;
@@ -64,35 +64,35 @@ TraverseFolders::TraverseFolders(HWND h)
 //Thanks to Raihan for the code this was based on - see his web page
 void TraverseFolders::Recurse()
 {
-	_finddata_t F;
+	_tfinddata_t F;
 	int S;
 	//First find all the links
-	if ((S = _findfirst ("*.lnk", &F)) != -1)
+	if ((S = _tfindfirst(_T("*.lnk"), &F)) != -1)
 	{
-		do if ( !( F.attrib & _A_SUBDIR ) && !ResolveIt(NULL,F.name,rn) )
+		do if ( !( F.attrib & _A_SUBDIR ) && !ResolveIt(NULL, F.name, rn) )
 		{
 			int si;
 			if (cr)
 			{//findnfix
 				PathStripPath(rn);//strip to file name
-				si = _stricmp(rn, "frhed.exe");
+				si = _tcsicmp(rn, _T("frhed.exe"));
 			}
 			else
 			{
-				si = PathsEqual(_pgmptr, rn);//update
+				si = PathsEqual(_tpgmptr, rn);//update
 			}
 			if (si == 0)
 			{
-				_fullpath( rn, F.name, MAX_PATH);
-				remove(rn);//get rid of the file if we are fixing (in case of 2 links to frhed in same dir & links with the wrong name)
-				char *fnam = PathFindFileName(rn);
+				_tfullpath(rn, F.name, MAX_PATH);
+				_tremove(rn);//get rid of the file if we are fixing (in case of 2 links to frhed in same dir & links with the wrong name)
+				TCHAR *fnam = PathFindFileName(rn);
 				fnam[-1] = 0; //strip the file name (& '\\') off
 				if (-1 == ListView_FindItem(hwlist, -1, &fi)) //Not present yet
 				{
 					//Insert the item
-					ListView_InsertItem(hwlist,&li);
+					ListView_InsertItem(hwlist, &li);
 					//Add to the Registry
-					sprintf(vn,"%d",li.iItem);
+					_stprintf(vn, _T("%d"), li.iItem);
 					TCHAR keyname[64] = {0};
 					_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
 							OptionsRegistrySettingsPath);
@@ -100,22 +100,22 @@ void TraverseFolders::Recurse()
 							fnam - rn);
 					li.iItem++;
 				}
-				strcat(rn,"\\Frhed.lnk");//put the name backon
+				_tcscat(rn, _T("\\Frhed.lnk"));//put the name backon
 				CreateLinkToMe(rn);//create the new link
 			}
-		} while (_findnext(S, &F) == 0);
+		} while (_tfindnext(S, &F) == 0);
 		_findclose(S);
 	}
 	//Then find all the subdirs
-	if ((S = _findfirst ("*", &F)) != -1)
+	if ((S = _tfindfirst(_T("*"), &F)) != -1)
 	{
 		//except "." && ".."
-		do if (F.attrib & _A_SUBDIR && strstr("..", F.name) == 0)
+		do if (F.attrib & _A_SUBDIR && _tcsstr(_T(".."), F.name) == 0)
 		{
-			_chdir(F.name);
+			_tchdir(F.name);
 			Recurse();
-			_chdir("..");
-		} while (_findnext(S, &F) == 0);
+			_tchdir(_T(".."));
+		} while (_tfindnext(S, &F) == 0);
 		_findclose(S);
 	}
 }
@@ -138,42 +138,42 @@ BOOL ShortcutsDlg::OnInitDialog(HWND hw)
 
 int CALLBACK ShortcutsDlg::BrowseCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 {
-	static const char FrhedLink[] = "Frhed.lnk";
+	static const TCHAR FrhedLink[] = _T("Frhed.lnk");
 	//If the folder exists & doesn't contain a link then enabled
 	// Set the status window to the currently selected path.
 	if (m == BFFM_SELCHANGED)
 	{
-		char szDir[MAX_PATH] = {0};
+		TCHAR szDir[MAX_PATH] = {0};
 		if (SHGetPathFromIDList((LPITEMIDLIST) l ,szDir) && PathIsDirectory(szDir))
 		{
 			PathAddBackslash(szDir);
-			strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
+			_tcsncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - _tcslen(szDir));
 			if (PathFileExists(szDir))
 			{
-				SendMessage(hw,BFFM_ENABLEOK,0,0);//Disable
+				SendMessage(hw, BFFM_ENABLEOK, 0, 0);//Disable
 				SendMessage(hw, BFFM_SETSTATUSTEXT, 0, (LPARAM)GetLangString(IDS_SCUT_ALREADY_CONTAINS));
 			}
 			else
 			{
 				//If there is any other (faster/easier) way to test whether the file-system is writeable or not Please let me know - Pabs
-				int fh = _creat(szDir,_S_IWRITE);
+				int fh = _tcreat(szDir, _S_IWRITE);
 				if (fh != -1)
 				{
 					_close(fh);
-					remove(szDir);
-					SendMessage(hw,BFFM_ENABLEOK,0,1);//Enable
+					_tremove(szDir);
+					SendMessage(hw, BFFM_ENABLEOK, 0, 1);//Enable
 					SendMessage(hw, BFFM_SETSTATUSTEXT, 0, (LPARAM)GetLangString(IDS_SCUT_CAN_ADD));
 				}
 				else
 				{
-					SendMessage(hw,BFFM_ENABLEOK,0,0);//Disable
+					SendMessage(hw, BFFM_ENABLEOK, 0, 0);//Disable
 					SendMessage(hw, BFFM_SETSTATUSTEXT, 0, (LPARAM)GetLangString(IDS_SCUT_CANNOT_ADD));
 				}
 			}
 		}
 		else
 		{
-			SendMessage(hw,BFFM_ENABLEOK,0,0);//Disable
+			SendMessage(hw, BFFM_ENABLEOK, 0, 0);//Disable
 			SendMessage(hw, BFFM_SETSTATUSTEXT, 0, (LPARAM)GetLangString(IDS_SCUT_CANNOT_ADD));
 		}
 	}
@@ -184,7 +184,7 @@ int CALLBACK ShortcutsDlg::SearchCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 {
 	if (m == BFFM_SELCHANGED)
 	{
-		char szDir[MAX_PATH] = {0};
+		TCHAR szDir[MAX_PATH] = {0};
 		BOOL ret = SHGetPathFromIDList((LPITEMIDLIST) l ,szDir) && PathIsDirectory(szDir);
 		SendMessage(hw, BFFM_ENABLEOK, 0, ret);//Enable/Disable
 		SendMessage(hw, BFFM_SETSTATUSTEXT, 0,
@@ -195,7 +195,7 @@ int CALLBACK ShortcutsDlg::SearchCallbackProc(HWND hw, UINT m, LPARAM l, LPARAM)
 
 BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 {
-	static const char FrhedLink[] = "Frhed.lnk";
+	static const TCHAR FrhedLink[] = _T("Frhed.lnk");
 	switch (LOWORD(w))
 	{
 	case IDCANCEL:
@@ -210,20 +210,20 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			HKEY hk;
 			if (ERROR_SUCCESS == RegCreateKey(HKEY_CURRENT_USER, keyname, &hk))
 			{
-				char valnam[50] = {0};//value name
-				char buf[_MAX_PATH + 1] = {0};//location of the link (all links named frhed.lnk)
-				HWND list = GetDlgItem (hw, IDC_SHORTCUT_LINKS);//get the list
+				TCHAR valnam[50] = {0};//value name
+				TCHAR buf[MAX_PATH + 1] = {0};//location of the link (all links named frhed.lnk)
+				HWND list = GetDlgItem(hw, IDC_SHORTCUT_LINKS);//get the list
 				int num = ListView_GetItemCount(list);//get the # items in the list
 				int len;
 				for (int i = 0; i < num; i++)
 				{
-					_snprintf(valnam, RTL_NUMBER_OF(valnam), "%d", i);
+					_sntprintf(valnam, RTL_NUMBER_OF(valnam), _T("%d"), i);
 					ListView_GetItemText(list, i, 0, buf, _MAX_PATH + 1);
-					len = strlen(buf) + 1;
-					RegSetValueEx(hk,valnam,0,REG_SZ,(BYTE*)buf,len);
+					len = _tcslen(buf) + 1;
+					RegSetValueEx(hk, valnam, 0, REG_SZ, (BYTE*)buf, len);
 					//Just in case
 					PathAddBackslash(buf);
-					strncat(buf, FrhedLink, RTL_NUMBER_OF(buf) - strlen(buf));
+					_tcsncat(buf, FrhedLink, RTL_NUMBER_OF(buf) - _tcslen(buf));
 					CreateLinkToMe(buf);
 				}
 				RegCloseKey(hk);
@@ -249,14 +249,14 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			//& add it
 
 			BROWSEINFO bi;
-			CHAR szDir[MAX_PATH] = {0};
+			TCHAR szDir[MAX_PATH] = {0};
 			LPITEMIDLIST pidl;
 			LPMALLOC pMalloc;
 			HWND list = GetDlgItem(hw, IDC_SHORTCUT_LINKS);
 			int di = -1;
 			HKEY hk;
 
-			if (LOWORD(w)==IDC_MOVE)
+			if (LOWORD(w) == IDC_MOVE)
 			{
 				di = ListView_GetSelectedCount(list);
 				if (di > 1)
@@ -265,7 +265,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 					MessageBox(hw, msg, MB_OK);
 					return TRUE;
 				}
-				else if(di != 1)
+				else if (di != 1)
 				{
 					LangString msg(IDS_SCUT_NO_LINK_MOVE);
 					MessageBox(hw, msg, MB_OK);
@@ -281,7 +281,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			}
 			if (SUCCEEDED(SHGetMalloc(&pMalloc)))
 			{
-				ZeroMemory(&bi,sizeof(bi));
+				ZeroMemory(&bi, sizeof(bi));
 				bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_STATUSTEXT ;
 				bi.hwndOwner = hw;
 				bi.lpfn = BrowseCallbackProc;
@@ -298,29 +298,29 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 						//Check if the item is already in the list
 						int num = ListView_GetItemCount(list);//get the # items in the list
 						int done = 0;
-						char path[MAX_PATH] = {0};
-						char buf[_MAX_PATH + 1] = {0};
+						TCHAR path[MAX_PATH] = {0};
+						TCHAR buf[MAX_PATH + 1] = {0};
 
-						strncpy(path, szDir, RTL_NUMBER_OF(path));
-						_strupr(path);
+						_tcsncpy(path, szDir, RTL_NUMBER_OF(path));
+						_tcsupr(path);
 						for (int i = 0; i < num; i++)
 						{
-							ListView_GetItemText(list, i, 0, buf,_MAX_PATH+1);//get the string
-							_strupr(buf);
-							if(!strncmp(buf, path, RTL_NUMBER_OF(buf)))
+							ListView_GetItemText(list, i, 0, buf, MAX_PATH + 1);//get the string
+							_tcsupr(buf);
+							if (!_tcsncmp(buf, path, RTL_NUMBER_OF(buf)))
 							{
 								done = 1;
 								break;
 							}
 						}//end of the loop
-						char valnam[_MAX_PATH+1];
+						TCHAR valnam[MAX_PATH + 1];
 						if (done)
 						{
 							LangString msg(IDS_SCUT_ALREADY_LINK);
 							MessageBox(hw, msg, MB_OK);
 							//Just in case
 							PathAddBackslash(szDir);
-							strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - RTL_NUMBER_OF(FrhedLink));
+							_tcsncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - RTL_NUMBER_OF(FrhedLink));
 							CreateLinkToMe(szDir);
 						}
 						else
@@ -333,7 +333,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 							{
 								//Add to the list
 								LVITEM item;
-								ZeroMemory(&item,sizeof(item));
+								ZeroMemory(&item, sizeof(item));
 								item.mask = LVIF_TEXT;
 								item.pszText = szDir;
 								item.iItem = num;
@@ -343,17 +343,17 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 								{
 									for (DWORD i = 0 ; ; i++)
 									{
-										_snprintf(valnam, RTL_NUMBER_OF(valnam) - 1, "%d", i);
+										_sntprintf(valnam, RTL_NUMBER_OF(valnam) - 1, _T("%d"), i);
 										if (ERROR_FILE_NOT_FOUND == RegQueryValueEx(hk, valnam, 0, NULL, NULL, NULL))
 										{
-											RegSetValueEx(hk, valnam, 0, REG_SZ, (BYTE*)szDir, strlen(szDir) + 1);
+											RegSetValueEx(hk, valnam, 0, REG_SZ, (BYTE*)szDir, _tcslen(szDir) + 1);
 											break;
 										}
 									}
 									RegCloseKey(hk);
 									//Add to the filesystem
 									PathAddBackslash(szDir);
-									strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
+									_tcsncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - _tcslen(szDir));
 									CreateLinkToMe(szDir);
 								}
 							}
@@ -361,25 +361,25 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 							{
 								//Move the old one to the new loc
 								DWORD valnamsize, typ;
-								char valbuf[_MAX_PATH + 1] = {0};
-								DWORD valbufsize,ret;
-								char cursel[_MAX_PATH + 1] = {0};
+								TCHAR valbuf[MAX_PATH + 1] = {0};
+								DWORD valbufsize, ret;
+								TCHAR cursel[MAX_PATH + 1] = {0};
 								//Get the old path
-								ListView_GetItemText(list, di, 0, cursel, _MAX_PATH + 1);
-								_strupr(cursel);
+								ListView_GetItemText(list, di, 0, cursel, MAX_PATH + 1);
+								_tcsupr(cursel);
 								//Set the new path in the registry
 								if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, keyname, 0, KEY_ALL_ACCESS, &hk))
 								{
 									for (DWORD i = 0; ; i++)
 									{
 										typ = 0;
-										valnamsize = valbufsize = _MAX_PATH + 1;
+										valnamsize = valbufsize = MAX_PATH + 1;
 										valbuf[0] = valnam[0] = 0;
-										ret = RegEnumValue(hk,i,valnam,&valnamsize,0,&typ,(BYTE*) valbuf,&valbufsize);
-										_strupr(valbuf);
-										if (typ == REG_SZ && valbuf[0] != 0 && !strcmp(valbuf ,cursel))
+										ret = RegEnumValue(hk, i, valnam, &valnamsize, 0, &typ, (BYTE*) valbuf, &valbufsize);
+										_tcsupr(valbuf);
+										if (typ == REG_SZ && valbuf[0] != 0 && !_tcscmp(valbuf ,cursel))
 										{
-											RegSetValueEx(hk,valnam,0,REG_SZ,(BYTE*)szDir,strlen(szDir)+1);
+											RegSetValueEx(hk, valnam, 0, REG_SZ, (BYTE*)szDir, _tcslen(szDir) + 1);
 											break;
 										}
 										if (ERROR_NO_MORE_ITEMS == ret)
@@ -387,14 +387,14 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 									}
 									RegCloseKey(hk);
 									//Set the new path
-									ListView_SetItemText(list,di, 0, szDir);
+									ListView_SetItemText(list, di, 0, szDir);
 									//Move the actual file
 									PathAddBackslash(szDir);
-									strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
+									_tcsncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - _tcslen(szDir));
 									PathAddBackslash(cursel);
-									strncat(cursel, FrhedLink, RTL_NUMBER_OF(cursel) - strlen(cursel));
+									_tcsncat(cursel, FrhedLink, RTL_NUMBER_OF(cursel) - _tcslen(cursel));
 									CreateLinkToMe(cursel);//Just in case
-									rename(cursel,szDir);
+									_trename(cursel, szDir);
 								}
 							}
 						}
@@ -421,7 +421,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			{
 				BROWSEINFO bi;
 				LPITEMIDLIST pidl;
-				ZeroMemory(&bi,sizeof(bi));
+				ZeroMemory(&bi, sizeof(bi));
 				bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_STATUSTEXT ;
 				bi.hwndOwner = hw;
 				bi.lpfn = SearchCallbackProc;
@@ -430,11 +430,11 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				pidl = SHBrowseForFolder(&bi);
 				if (pidl)
 				{
-					CHAR szDir[MAX_PATH] = {0};
-					if (SHGetPathFromIDList(pidl,szDir))
+					TCHAR szDir[MAX_PATH] = {0};
+					if (SHGetPathFromIDList(pidl, szDir))
 					{
 						WaitCursor wc;//Wait until finished
-						_chdir(szDir);//Set the dir to start searching in
+						_tchdir(szDir);//Set the dir to start searching in
 						TraverseFolders tf = GetDlgItem(hw, IDC_SHORTCUT_LINKS);//Set the list hwnd;
 						tf.cr = LOWORD(w) == IDC_FIND_AND_FIX;//any frhed.exe if 1 else _pgmptr
 						tf.Recurse();//Search
@@ -450,7 +450,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			TCHAR keyname[64] = {0};
 			_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
 					OptionsRegistrySettingsPath);
-			HWND list = GetDlgItem (hw, IDC_SHORTCUT_LINKS);//get the list
+			HWND list = GetDlgItem(hw, IDC_SHORTCUT_LINKS);//get the list
 			//Delete the selected links from the registry & the filesystem
 			int di = ListView_GetSelectedCount(list);
 			if (di == 0)
@@ -464,25 +464,25 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				di = ListView_GetNextItem(list, (UINT)-1, LVNI_SELECTED);
 				if (di == -1)
 					break;
-				char valnam[_MAX_PATH + 1] = {0};
+				TCHAR valnam[MAX_PATH + 1] = {0};
 				DWORD valnamsize, typ;
-				char valbuf[_MAX_PATH + 1] = {0};
+				TCHAR valbuf[MAX_PATH + 1] = {0};
 				DWORD valbufsize, ret;
-				char delbuf[_MAX_PATH + 1] = {0};
-				ListView_GetItemText(list, di, 0, delbuf, _MAX_PATH + 1);
-				_strupr(delbuf);
-				ListView_DeleteItem(list,di);
+				TCHAR delbuf[MAX_PATH + 1] = {0};
+				ListView_GetItemText(list, di, 0, delbuf, MAX_PATH + 1);
+				_tcsupr(delbuf);
+				ListView_DeleteItem(list, di);
 				HKEY hk;
 				if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, keyname, 0, KEY_ALL_ACCESS, &hk))
 				{
 					for (DWORD i = 0; ; i++)
 					{
 						typ = 0;
-						valnamsize = valbufsize = _MAX_PATH+1;
+						valnamsize = valbufsize = MAX_PATH+1;
 						valbuf[0] = valnam[0] = 0;
-						ret = RegEnumValue(hk,i,valnam,&valnamsize,0,&typ,(BYTE*) valbuf,&valbufsize);
-						_strupr(valbuf);
-						if (typ == REG_SZ && valbuf[0] != 0 && !strcmp(valbuf, delbuf))
+						ret = RegEnumValue(hk, i, valnam, &valnamsize, 0, &typ, (BYTE*) valbuf, &valbufsize);
+						_tcsupr(valbuf);
+						if (typ == REG_SZ && valbuf[0] != 0 && !_tcscmp(valbuf, delbuf))
 						{
 							RegDeleteValue(hk, valnam);
 							break;
@@ -492,8 +492,8 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 					}
 					RegCloseKey(hk);
 					PathAddBackslash(delbuf);
-					strncat(delbuf, FrhedLink, RTL_NUMBER_OF(delbuf) - strlen(delbuf));
-					remove(delbuf);
+					_tcsncat(delbuf, FrhedLink, RTL_NUMBER_OF(delbuf) - _tcslen(delbuf));
+					_tremove(delbuf);
 				}
 				SHDeleteEmptyKey(HKEY_CURRENT_USER, keyname);
 			}
@@ -506,10 +506,10 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
 					OptionsRegistrySettingsPath);
 			HKEY hk;
-			char valnam[_MAX_PATH + 1] = {0};
-			DWORD valnamsize = _MAX_PATH + 1, typ;
-			char valbuf[_MAX_PATH + 1] = {0};
-			DWORD valbufsize = _MAX_PATH + 1, ret;
+			TCHAR valnam[MAX_PATH + 1] = {0};
+			DWORD valnamsize = MAX_PATH + 1, typ;
+			TCHAR valbuf[MAX_PATH + 1] = {0};
+			DWORD valbufsize = MAX_PATH + 1, ret;
 			HWND list = GetDlgItem(hw, IDC_SHORTCUT_LINKS);
 			//Delete list
 			ListView_DeleteAllItems(list);
@@ -523,7 +523,7 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				for (DWORD i = 0 ; ; i++)
 				{
 					typ = 0;
-					valnamsize = valbufsize = _MAX_PATH+1;
+					valnamsize = valbufsize = MAX_PATH + 1;
 					valbuf[0] = valnam[0] = 0;
 					ret = RegEnumValue(hk, i, valnam, &valnamsize, 0, &typ, (BYTE*) valbuf, &valbufsize);
 					if (typ == REG_SZ && valbuf[0] != 0 && PathIsDirectory(valbuf))
@@ -532,8 +532,8 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 						item.iItem = i;
 						ListView_InsertItem(list, &item);
 						PathAddBackslash(valbuf);
-						strncat(valbuf, FrhedLink, RTL_NUMBER_OF(valbuf) - strlen(valbuf));
-						CreateLinkToMe( valbuf);
+						_tcsncat(valbuf, FrhedLink, RTL_NUMBER_OF(valbuf) - _tcslen(valbuf));
+						CreateLinkToMe(valbuf);
 					}
 					if (ERROR_NO_MORE_ITEMS == ret)
 						break;
@@ -556,23 +556,23 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 			_sntprintf(keyname, RTL_NUMBER_OF(keyname), _T("%s\\links"),
 					OptionsRegistrySettingsPath);
 			HKEY hk;
-			if (ERROR_SUCCESS==RegOpenKey(HKEY_CURRENT_USER,"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders",&hk))
+			if (ERROR_SUCCESS == RegOpenKey(HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"), &hk))
 			{
-				char szDir[_MAX_PATH + 1] = {0};
-				DWORD len = _MAX_PATH + 1;
+				TCHAR szDir[MAX_PATH + 1] = {0};
+				DWORD len = MAX_PATH + 1;
 				//Get the path from the registry
 				switch(LOWORD(w)){
 					case IDC_START:
-						RegQueryValueEx(hk,"Start Menu",0,NULL,(BYTE*)szDir,&len);
+						RegQueryValueEx(hk, _T("Start Menu"), 0, NULL, (BYTE*)szDir, &len);
 					break;
 					case IDC_PROGRAMS:
-						RegQueryValueEx(hk,"Programs",0,NULL,(BYTE*)szDir,&len);
+						RegQueryValueEx(hk, _T("Programs"), 0, NULL, (BYTE*)szDir, &len);
 					break;
 					case IDC_SENDTO:
-						RegQueryValueEx(hk,"SendTo",0,NULL,(BYTE*)szDir,&len);
+						RegQueryValueEx(hk, _T("SendTo"), 0, NULL, (BYTE*)szDir, &len);
 					break;
 					case IDC_DESKTOP:
-						RegQueryValueEx(hk,"Desktop",0,NULL,(BYTE*)szDir,&len);
+						RegQueryValueEx(hk, _T("Desktop"), 0, NULL, (BYTE*)szDir, &len);
 					break;
 				}
 				RegCloseKey(hk);
@@ -580,15 +580,16 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 				HWND list = GetDlgItem(hw, IDC_SHORTCUT_LINKS);
 				int num = ListView_GetItemCount(list);//get the # items in the list
 				int done = 0;
-				char path[_MAX_PATH + 1]= {0};
-				char buf[_MAX_PATH + 1] = {0};
-				strncpy(path, szDir, RTL_NUMBER_OF(path));
-				_strupr(path);
+				TCHAR path[_MAX_PATH + 1]= {0};
+				TCHAR buf[_MAX_PATH + 1] = {0};
+				_tcsnccpy(path, szDir, RTL_NUMBER_OF(path));
+				_tcsupr(path);
 				for (int i = 0; i < num; i++)
 				{//loop num times
-					ListView_GetItemText(list,i,0,buf,_MAX_PATH+1);//get the string
-					_strupr(buf);//convert to upper since strcmp is case sensitive & Win32 is not
-					if(!strcmp(buf,path)){
+					ListView_GetItemText(list, i, 0, buf, MAX_PATH + 1);//get the string
+					_tcsupr(buf);//convert to upper since strcmp is case sensitive & Win32 is not
+					if (!_tcscmp(buf, path))
+					{
 						done = 1;
 						break;
 					}
@@ -599,33 +600,33 @@ BOOL ShortcutsDlg::OnCommand(HWND hw, WPARAM w, LPARAM l)
 					MessageBox(hw, msg, MB_OK);
 					//Just in case
 					PathAddBackslash(szDir);
-					strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
+					_tcsncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - _tcslen(szDir));
 					CreateLinkToMe(szDir);
 				}
 				else{
 					LVITEM item;
-					ZeroMemory(&item,sizeof(item));
-					item.mask=LVIF_TEXT;
+					ZeroMemory(&item, sizeof(item));
+					item.mask = LVIF_TEXT;
 					item.pszText = szDir;
 					item.iItem = num;
 					ListView_InsertItem(list, &item);
-					char valnam[_MAX_PATH + 1] = {0};
+					TCHAR valnam[MAX_PATH + 1] = {0};
 					if (ERROR_SUCCESS == RegCreateKey(HKEY_CURRENT_USER, keyname, &hk))
 					{
 						//Find a value name that does not exist
 						for (DWORD i = 0; ; i++)
 						{
-							_snprintf(valnam, RTL_NUMBER_OF(valnam) - 1, "%d", i);
+							_sntprintf(valnam, RTL_NUMBER_OF(valnam) - 1, _T("%d"), i);
 							if (ERROR_FILE_NOT_FOUND == RegQueryValueEx(hk, valnam, 0, NULL, NULL, NULL))
 							{
 								//Add the value to the registry
-								RegSetValueEx(hk, valnam, 0,REG_SZ, (BYTE*)szDir, strlen(szDir) + 1);
+								RegSetValueEx(hk, valnam, 0,REG_SZ, (BYTE*)szDir, _tcslen(szDir) + 1);
 								break;
 							}
 						}
 						RegCloseKey(hk);
 						PathAddBackslash(szDir);
-						strncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - strlen(szDir));
+						_tcsncat(szDir, FrhedLink, RTL_NUMBER_OF(szDir) - _tcslen(szDir));
 						CreateLinkToMe(szDir);
 					}
 				}
