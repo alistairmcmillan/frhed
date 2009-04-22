@@ -288,6 +288,9 @@ private:
 	void RefreshClipboardFormats(HWND);
 };
 
+/**
+ * @brief A dialog for Moving bytes.
+ */
 class MoveCopyDlg : public HexEditorWindow
 {
 public:

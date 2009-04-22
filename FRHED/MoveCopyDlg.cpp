@@ -36,15 +36,15 @@
  */
 BOOL MoveCopyDlg::OnInitDialog(HWND hw)
 {
-	char buf[30] = {0};
+	TCHAR buf[30] = {0};
 	int iMove1stEnd = iGetStartOfSelection();
 	int iMove2ndEndorLen = iGetEndOfSelection();
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iMove1stEnd);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iMove1stEnd);
 	SetDlgItemText (hw, IDC_1STOFFSET, buf);
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iMove2ndEndorLen);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iMove2ndEndorLen);
 	SetDlgItemText (hw, IDC_2NDDELIM, buf);
 	CheckDlgButton (hw, IDC_OTHEREND, BST_CHECKED);
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iMovePos);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iMovePos);
 	SetDlgItemText(hw, IDC_MOVEMENT, buf);
 	CheckDlgButton(hw, IDC_FPOS, BST_CHECKED);
 	if (iMoveOpTyp == OPTYP_MOVE)
@@ -56,7 +56,7 @@ BOOL MoveCopyDlg::OnInitDialog(HWND hw)
 
 BOOL MoveCopyDlg::Apply(HWND hw)
 {
-	char buf[30] = {0};
+	TCHAR buf[30] = {0};
 	const int dlgitems[3] = { IDC_1STOFFSET, IDC_2NDDELIM, IDC_MOVEMENT };
 	const int check[3] = { 0, IDC_LEN, IDC_FORWARD };
 	int vals[3];
@@ -76,12 +76,12 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 			// Relative jump. Read offset from next character on.
 			i++;
 		}
-		if (sscanf(&buf[i], "x%x", &vals[n]) == 0 &&
-			sscanf(&buf[i], "%d", &vals[n]) == 0)
+		if (_stscanf(&buf[i], _T("x%x"), &vals[n]) == 0 &&
+			_stscanf(&buf[i], _T("%d"), &vals[n]) == 0)
 		{
 			// No fields assigned: badly formed number.
-			char msg[80] = {0};
-			_snprintf(msg, RTL_NUMBER_OF(msg) - 1, GetLangString(IDS_CM_INVALID_DATA), n + 1);
+			TCHAR msg[80] = {0};
+			_sntprintf(msg, RTL_NUMBER_OF(msg) - 1, GetLangString(IDS_CM_INVALID_DATA), n + 1);
 			MessageBox(hw, msg, MB_ICONERROR);
 			return FALSE;
 		}
