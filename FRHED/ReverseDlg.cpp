@@ -46,9 +46,9 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 	switch (m)
 	{
 	case WM_INITDIALOG:
-		_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iGetStartOfSelection());
+		_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iGetStartOfSelection());
 		SetDlgItemText (h, IDC_REVERSE_OFFSET, buf);
-		_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", iGetEndOfSelection());
+		_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iGetEndOfSelection());
 		SetDlgItemText(h, IDC_REVERSE_OFFSETEND, buf);
 		return TRUE;
 
@@ -57,16 +57,16 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 		{
 		case IDOK:
 			if (GetDlgItemText(h, IDC_REVERSE_OFFSET, buf, RTL_NUMBER_OF(buf)) &&
-				sscanf(buf, "x%x", &iStartOfSelSetting) == 0 &&
-				sscanf(buf, "%d", &iStartOfSelSetting) == 0)
+				_stscanf(buf, _T("x%x"), &iStartOfSelSetting) == 0 &&
+				_stscanf(buf, _T("%d"), &iStartOfSelSetting) == 0)
 			{
 				LangString startOffsetErr(IDS_OFFSET_START_ERROR);
 				MessageBox(h, startOffsetErr, MB_ICONERROR);
 				return TRUE;
 			}
 			if (GetDlgItemText(h, IDC_REVERSE_OFFSETEND, buf, RTL_NUMBER_OF(buf)) &&
-				sscanf(buf, "x%x", &iEndOfSelSetting) == 0 &&
-				sscanf(buf, "%d", &iEndOfSelSetting) == 0)
+				_stscanf(buf, _T("x%x"), &iEndOfSelSetting) == 0 &&
+				_stscanf(buf, _T("%d"), &iEndOfSelSetting) == 0)
 			{
 				LangString endOffsetErr(IDS_OFFSET_END_ERROR);
 				MessageBox(h, endOffsetErr, MB_ICONERROR);
