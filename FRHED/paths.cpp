@@ -94,5 +94,5 @@ void paths_OpenFile(HWND hwnd, LPCTSTR file)
 	paths_GetModulePath(GetModuleHandle(NULL), filepath, MAX_PATH);
 	const int len = _tcslen(filepath);
 	_tcsncat(filepath, file, MAX_PATH - len);
-	ShellExecute(hwnd, "open", "notepad.exe", filepath, NULL, SW_SHOWNORMAL);
+	ShellExecute(hwnd, _T("open"), _T("notepad.exe"), filepath, NULL, SW_SHOWNORMAL);
 }
