@@ -86,7 +86,7 @@ BOOL oldpresent()
 			res = RegEnumKey(hk ,i, subkeynam, MAX_PATH);
 			if (res == ERROR_NO_MORE_ITEMS)
 				break;
-			else if (0 != strcmp(subkeynam, OptionsRegistrySettingsPath))
+			else if (0 != _tcscmp(subkeynam, OptionsRegistrySettingsPath))
 			{
 				RegCloseKey(hk);
 				return TRUE;
