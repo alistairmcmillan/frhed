@@ -82,13 +82,13 @@ BOOL PasteDlg::Apply(HWND hDlg)
 	iPasteSkip = GetDlgItemInt(hDlg, IDC_PASTE_SKIPBYTES, 0, TRUE);
 	HWND hwndEdit1 = GetDlgItem(hDlg, IDC_PASTE_CLIPBOARD);
 	int destlen = GetWindowTextLength(hwndEdit1) + 1;
-	char *pcPastestring = new char[destlen];
+	TCHAR *pcPastestring = new TCHAR[destlen];
 	destlen = GetWindowText(hwndEdit1, pcPastestring, destlen);
 	if (iPasteAsText == 0)
 	{
-		char *pc = 0;
+		TCHAR *pc = 0;
 		destlen = create_bc_translation(&pc, pcPastestring,
-			strlen(pcPastestring), iCharacterSet, iBinaryMode);
+			_tcslen(pcPastestring), iCharacterSet, iBinaryMode);
 		delete [] pcPastestring;
 		pcPastestring = pc;
 	}
