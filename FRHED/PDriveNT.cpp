@@ -2,7 +2,7 @@
 #include "physicaldrive.h"
 #include "PDriveNT.h"
 
-BOOL PNtPhysicalDrive::GetDriveLayout( LPBYTE lpbMemory, DWORD dwSize )
+BOOL PNtPhysicalDrive::GetDriveLayout(LPBYTE lpbMemory, DWORD dwSize)
 {
 	DWORD junk;
 
@@ -14,7 +14,7 @@ BOOL PNtPhysicalDrive::GetDriveLayout( LPBYTE lpbMemory, DWORD dwSize )
 		NULL);
 } // GetDriveLayout()
 
-BOOL PNtPhysicalDrive::GetDriveLayoutEx( LPBYTE lpbMemory, DWORD dwSize )
+BOOL PNtPhysicalDrive::GetDriveLayoutEx(LPBYTE lpbMemory, DWORD dwSize)
 {
 	DWORD junk;
 
@@ -26,7 +26,7 @@ BOOL PNtPhysicalDrive::GetDriveLayoutEx( LPBYTE lpbMemory, DWORD dwSize )
 		NULL);
 } // GetDriveLayout()
 
-BOOL PNtPhysicalDrive::GetDriveGeometry( DISK_GEOMETRY* lpDG )
+BOOL PNtPhysicalDrive::GetDriveGeometry(DISK_GEOMETRY* lpDG)
 {
 	DWORD junk;
 
@@ -38,7 +38,7 @@ BOOL PNtPhysicalDrive::GetDriveGeometry( DISK_GEOMETRY* lpDG )
 		NULL);
 } // GetDriveGeometry()
 
-BOOL PNtPhysicalDrive::GetDriveGeometryEx( DISK_GEOMETRY_EX* lpDG, DWORD dwSize )
+BOOL PNtPhysicalDrive::GetDriveGeometryEx(DISK_GEOMETRY_EX* lpDG, DWORD dwSize)
 {
 	DWORD junk;
 
@@ -50,18 +50,18 @@ BOOL PNtPhysicalDrive::GetDriveGeometryEx( DISK_GEOMETRY_EX* lpDG, DWORD dwSize 
 		NULL);
 } // GetDriveGeometry()
 
-BOOL PNtPhysicalDrive::Open( int iDrive )
+BOOL PNtPhysicalDrive::Open(int iDrive)
 {
 	Close();
 
-	CHAR szPath[256];
-	sprintf( szPath, "\\\\.\\PhysicalDrive%d", iDrive );
+	TCHAR szPath[256];
+	_stprintf(szPath, _T("\\\\.\\PhysicalDrive%d"), iDrive);
 
-	m_hDevice = CreateFile( szPath, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, 0, 0 );
-	if(m_hDevice != INVALID_HANDLE_VALUE)
+	m_hDevice = CreateFile(szPath, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, 0, 0);
+	if (m_hDevice != INVALID_HANDLE_VALUE)
 	{
 		DISK_GEOMETRY dg;
-		if( GetDriveGeometry(&dg) )
+		if (GetDriveGeometry(&dg))
 		{
 			m_BytesPerSector = dg.BytesPerSector;
 			return TRUE;
@@ -72,20 +72,20 @@ BOOL PNtPhysicalDrive::Open( int iDrive )
 
 void PNtPhysicalDrive::Close()
 {
-	if(m_hDevice != INVALID_HANDLE_VALUE)
+	if (m_hDevice != INVALID_HANDLE_VALUE)
 	{
-		CloseHandle( m_hDevice );
+		CloseHandle(m_hDevice);
 		m_hDevice = INVALID_HANDLE_VALUE;
 	}
 }
 
-BOOL PNtPhysicalDrive::ReadAbsolute( LPBYTE lpbMemory, DWORD dwSize, INT64 Sector )
+BOOL PNtPhysicalDrive::ReadAbsolute(LPBYTE lpbMemory, DWORD dwSize, INT64 Sector)
 {
 	LARGE_INTEGER li;
 	li.QuadPart = Sector;
 	li.QuadPart *= m_BytesPerSector;
 	SetFilePointer(m_hDevice, li.LowPart, &li.HighPart, FILE_BEGIN);
-	return ReadFile(m_hDevice, lpbMemory, dwSize, &li.LowPart, 0 );
+	return ReadFile(m_hDevice, lpbMemory, dwSize, &li.LowPart, 0);
 } // ReadAbsolute()
 
 PNtPhysicalDrive::PNtPhysicalDrive()

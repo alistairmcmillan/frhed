@@ -35,13 +35,13 @@ public:
 	virtual ~PNtPhysicalDrive();
 
 	// path must look like this: "\\.\PhysicalDrive0" (of course, \ maps to \\, and \\ to \\\\)
-	BOOL Open( int iDrive );
+	BOOL Open(int iDrive);
 	void Close();
-	BOOL GetDriveGeometry( DISK_GEOMETRY* lpDG );
-	BOOL GetDriveGeometryEx( DISK_GEOMETRY_EX* lpDG, DWORD dwSize );
-	BOOL GetDriveLayout( LPBYTE lpbMemory, DWORD dwSize );
-	BOOL GetDriveLayoutEx( LPBYTE lpbMemory, DWORD dwSize );
-	BOOL ReadAbsolute( LPBYTE lpbMemory, DWORD dwSize, INT64 Sector );
+	BOOL GetDriveGeometry(DISK_GEOMETRY* lpDG);
+	BOOL GetDriveGeometryEx(DISK_GEOMETRY_EX* lpDG, DWORD dwSize);
+	BOOL GetDriveLayout(LPBYTE lpbMemory, DWORD dwSize);
+	BOOL GetDriveLayoutEx(LPBYTE lpbMemory, DWORD dwSize);
+	BOOL ReadAbsolute(LPBYTE lpbMemory, DWORD dwSize, INT64 Sector);
 	BOOL IsOpen();
 
 	HANDLE m_hDevice;
