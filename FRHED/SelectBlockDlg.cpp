@@ -29,19 +29,30 @@
 #include "hexwdlg.h"
 #include "LangString.h"
 
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ */
 BOOL SelectBlockDlg::OnInitDialog(HWND hDlg)
 {
-	char buf[128] = {0};
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", bSelected ? iStartOfSelection : iCurByte);
+	TCHAR buf[128] = {0};
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), bSelected ? iStartOfSelection : iCurByte);
 	SetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSET, buf);
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "x%x", bSelected ? iEndOfSelection : iCurByte);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), bSelected ? iEndOfSelection : iCurByte);
 	SetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSETEND, buf);
 	return TRUE;
 }
 
+/**
+ * @brief Handle dialog commands.
+ * @param [in] hDlg Hanle to the dialog.
+ * @param [in] wParam The command to handle.
+ * @param [in] lParam Optional parameter for the command.
+ * @return TRUE if the command was handled, FALSE otherwise.
+ */
 BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 {
-	char buf[128] = {0};
+	TCHAR buf[128] = {0};
 	int iStartOfSelSetting;
 	int iEndOfSelSetting;
 	int maxb;
@@ -49,8 +60,8 @@ BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	{
 	case IDOK:
 		if (GetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSET, buf, 128) &&
-			sscanf(buf, "x%x", &iStartOfSelSetting) == 0 &&
-			sscanf(buf, "%d", &iStartOfSelSetting) == 0)
+			_stscanf(buf, _T("x%x"), &iStartOfSelSetting) == 0 &&
+			_stscanf(buf, _T("%d"), &iStartOfSelSetting) == 0)
 		{
 			LangString app(IDS_APPNAME);
 			LangString startOffsetErr(IDS_OFFSET_START_ERROR);
@@ -58,8 +69,8 @@ BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		if (GetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSETEND, buf, 128) &&
-			sscanf(buf, "x%x", &iEndOfSelSetting) == 0 &&
-			sscanf(buf, "%d", &iEndOfSelSetting) == 0)
+			_stscanf(buf, _T("x%x"), &iEndOfSelSetting) == 0 &&
+			_stscanf(buf, _T("%d"), &iEndOfSelSetting) == 0)
 		{
 			LangString app(IDS_APPNAME);
 			LangString endOffsetErr(IDS_OFFSET_END_ERROR);
@@ -89,6 +100,14 @@ BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	return FALSE;
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR SelectBlockDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
