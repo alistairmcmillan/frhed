@@ -1432,6 +1432,7 @@ BEGIN
     IDS_ERR_RESIZE_FILE     "Could not resize the file."
     IDS_ERR_SEEK_FILE       "Could not seek in file."
     IDS_ERR_WRITE_FILE      "Could not write data to file."
+    IDS_ERR_HELP_NOT_FOUND  "Help file\n%s\nnot found!"
 END
 
 // About-dialog

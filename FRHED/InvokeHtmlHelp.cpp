@@ -28,6 +28,9 @@
 #include <tchar.h>
 #include "Constants.h"
 #include "paths.h"
+#include "resource.h"
+#include "LangString.h"
+#include "StringTable.h"
 
 /**
  * @brief Show HTML help.
@@ -44,9 +47,10 @@ void ShowHtmlHelp(UINT uCommand, LPCTSTR path, HWND hParentWindow)
 	if (!paths_DoesFileExist(fullHelpPath))
 	{
 		TCHAR msg[500] = {0};
-		_sntprintf(msg, RTL_NUMBER_OF(msg) - 1, "Help file\n%s\nnot found!",
+		LangString app(IDS_APPNAME);
+		_sntprintf(msg, RTL_NUMBER_OF(msg) - 1, GetLangString(IDS_ERR_HELP_NOT_FOUND),
 				fullHelpPath);
-		MessageBox(hParentWindow, msg, "Frhed", MB_ICONERROR);
+		MessageBox(hParentWindow, msg, app, MB_ICONERROR);
 		return;
 	}
 
@@ -54,8 +58,8 @@ void ShowHtmlHelp(UINT uCommand, LPCTSTR path, HWND hParentWindow)
 	{
 		if (path != NULL)
 		{
-			char fullpath[MAX_PATH] = {0};
-			_snprintf(fullpath, MAX_PATH, "%s::/%s", fullHelpPath, path);
+			TCHAR fullpath[MAX_PATH] = {0};
+			_sntprintf(fullpath, MAX_PATH, _T("%s::/%s"), fullHelpPath, path);
 			HtmlHelp(NULL, fullpath, HH_DISPLAY_TOPIC, NULL);
 		}
 		else
