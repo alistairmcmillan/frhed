@@ -1586,6 +1586,14 @@ BEGIN
     IDS_SCUT_NO_SELECT_DEL "No links selected to delete"
 END
 
+// Find-dialog
+STRINGTABLE 
+BEGIN
+    IDS_FIND_SEL_TOO_LARGE "Selection too large."
+    IDS_FIND_CANNOT_FIND   "Could not find data."
+    IDS_FIND_EMPTY_STRING  "Findstring is zero bytes long."
+END
+
 // Status bar
 STRINGTABLE 
 BEGIN

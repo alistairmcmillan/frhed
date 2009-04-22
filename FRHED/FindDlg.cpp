@@ -55,8 +55,8 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			int findlen = Text2BinTranslator::iBytes2BytecodeDestLen((char *)&DataArray[sel_start], select_len);
 			if (findlen > iFindDlgBufLen)
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hDlg, "Selection too large.", app, MB_ICONERROR);
+				LangString largeSel(IDS_FIND_SEL_TOO_LARGE);
+				MessageBox(hDlg, largeSel, MB_ICONERROR);
 				EndDialog(hDlg, IDCANCEL);
 				return TRUE;
 			}
@@ -140,22 +140,22 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 					}
 					else
 					{
-						LangString app(IDS_APPNAME);
-						MessageBox(hDlg, "Could not find data.", app, MB_ICONWARNING);
+						LangString msg(IDS_FIND_CANNOT_FIND);
+						MessageBox(hDlg, msg, MB_ICONWARNING);
 					}
 					//GK16AUG2K
 				}
 				else
 				{
-					LangString app(IDS_APPNAME);
-					MessageBox(hDlg, "Findstring is zero bytes long.", app, MB_ICONERROR);
+					LangString msg(IDS_FIND_EMPTY_STRING);
+					MessageBox(hDlg, msg, MB_ICONERROR);
 				}
 				delete[] pcFindstring;
 			}
 			else
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hDlg, "Findstring is zero bytes long.", app, MB_ICONERROR);
+				LangString msg(IDS_FIND_EMPTY_STRING);
+				MessageBox(hDlg, msg, MB_ICONERROR);
 			}
 			// fall through
 		case IDCANCEL:

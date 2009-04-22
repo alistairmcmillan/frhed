@@ -429,6 +429,9 @@
 #define IDS_SCUT_UPDATE_LINKS           10429
 #define IDS_SCUT_SEARCH_FOLDER          10430
 #define IDS_SCUT_NO_SELECT_DEL          10431
+#define IDS_FIND_SEL_TOO_LARGE          10448
+#define IDS_FIND_CANNOT_FIND            10449
+#define IDS_FIND_EMPTY_STRING           10450
 #define IDS_SBAR_SELECTED_OFFSET        11008
 #define IDS_SBAR_NSEL_OFFSET            11009
 #define IDS_SBAR_BITS                   11010
