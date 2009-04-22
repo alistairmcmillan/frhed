@@ -390,7 +390,7 @@ int HexEditorWindow::load_file(LPCTSTR fname)
 	else
 	{
 		TCHAR buf[500];
-		_stprintf(buf, "Error code 0x%x occured while opening file %s.", errno, fname);
+		_stprintf(buf, GetLangString(IDS_ERR_FILE_OPEN_CODE), errno, fname);
 		MessageBox(hwnd, buf, MB_ICONERROR);
 	}
 	if (bLoaded)
@@ -1646,15 +1646,15 @@ int HexEditorWindow::destroy_window()
  */
 void HexEditorWindow::set_and_format_title()
 {
-	char buf[512];
-	sprintf(buf, "[%s", filename);
+	TCHAR buf[512];
+	_stprintf(buf, _T("[%s"), filename);
 	if (iFileChanged)
-		strcat(buf, " *");
-	strcat (buf, "]");
+		_tcscat(buf, _T(" *"));
+	_tcscat(buf, _T("]"));
 	if (bPartialOpen)
-		strcat (buf, " - P");
-	strcat (buf, " - ");
-	strcat (buf, ApplicationName);
+		_tcscat(buf, _T(" - P"));
+	_tcscat(buf, _T(" - "));
+	_tcscat(buf, ApplicationName);
 	SetWindowText (hwndMain, buf);
 }
 
@@ -1663,7 +1663,7 @@ void HexEditorWindow::set_and_format_title()
  * @param [in] buf Buffer where to format the string.
  * @param [in] by Byte whose bits are formatted.
  */
-void HexEditorWindow::format_bit_string(char* buf, BYTE by)
+void HexEditorWindow::format_bit_string(TCHAR* buf, BYTE by)
 {
 	int i;
 	for (i = 0; i < 8; i++)
@@ -1733,7 +1733,7 @@ void HexEditorWindow::statusbar_chset_and_editmode()
  */
 void HexEditorWindow::set_wnd_title()
 {
-	char buf[512];
+	TCHAR buf[512];
 
 	if (filename[0] != '\0')
 	{
@@ -1748,13 +1748,13 @@ void HexEditorWindow::set_wnd_title()
 		{
 			if (iEndOfSelection >= iStartOfSelection)
 			{
-				sprintf (buf, GetLangString(IDS_SBAR_SELECTED_OFFSET),
+				_stprintf(buf, GetLangString(IDS_SBAR_SELECTED_OFFSET),
 					iStartOfSelection, iStartOfSelection,
 					iEndOfSelection, iEndOfSelection, iEndOfSelection - iStartOfSelection+1);
 			}
 			else
 			{
-				sprintf (buf, GetLangString(IDS_SBAR_SELECTED_OFFSET),
+				_stprintf(buf, GetLangString(IDS_SBAR_SELECTED_OFFSET),
 					iEndOfSelection, iEndOfSelection,
 					iStartOfSelection, iStartOfSelection, iStartOfSelection-iEndOfSelection+1);
 			}
@@ -1762,19 +1762,19 @@ void HexEditorWindow::set_wnd_title()
 		}
 		else // Normal display.
 		{
-			sprintf (buf, GetLangString(IDS_SBAR_NSEL_OFFSET), iCurByte, iCurByte);
+			_stprintf(buf, GetLangString(IDS_SBAR_NSEL_OFFSET), iCurByte, iCurByte);
 			int wordval, longval;
-			char buf2[80];
+			TCHAR buf2[80];
 			if (DataArray.GetLength() - iCurByte > 0)
 			{//if we are not looking at the End byte
-				strcat(buf, "   ");
-				strcat(buf, GetLangString(IDS_SBAR_BITS));
-				strcat(buf, "=");//append stuff to status text
+				_tcscat(buf, _T("   "));
+				_tcscat(buf, GetLangString(IDS_SBAR_BITS));
+				_tcscat(buf, _T("="));//append stuff to status text
 				BYTE by = DataArray[iCurByte];
 				format_bit_string(buf2, by);
-				strcat(buf, buf2);//append to status text
+				_tcscat(buf, buf2);//append to status text
 			}
-			strcat (buf, "\t");//add that \t back on to the status text
+			_tcscat(buf, _T("\t"));//add that \t back on to the status text
 			if (bUnsignedView) // Values signed/unsigned?
 			{
 				// UNSIGNED
@@ -1784,30 +1784,30 @@ void HexEditorWindow::set_wnd_title()
 					// Decimal value of byte.
 					if (DataArray.GetLength() - iCurByte >= 1)
 					{
-						sprintf(buf2, "\t%s: %s:%u", GetLangString(IDS_SBAR_UNSIGNED),
+						_stprintf(buf2, _T("\t%s: %s:%u"), GetLangString(IDS_SBAR_UNSIGNED),
 							GetLangString(IDS_SBAR_BYTE_SHORT), (unsigned int) DataArray[iCurByte]);
 					}
 					else
-						sprintf(buf2, "\t%s", GetLangString(IDS_SBAR_END));
-					strcat(buf, buf2);
+						_stprintf(buf2, _T("\t%s"), GetLangString(IDS_SBAR_END));
+					_tcscat(buf, buf2);
 
 					// Space enough for a word?
 					if (DataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a word.
 						wordval = (DataArray[iCurByte + 1] << 8) | DataArray[iCurByte];
-						sprintf (buf2, ",%s:%u", GetLangString(IDS_SBAR_WORD_SHORT),
+						_stprintf(buf2, _T(",%s:%u"), GetLangString(IDS_SBAR_WORD_SHORT),
 								(unsigned int) wordval);
-						strcat (buf, buf2);
+						_tcscat(buf, buf2);
 					}
 					if (DataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
 						longval = wordval | (((DataArray[iCurByte + 3] << 8) |
 								DataArray[iCurByte + 2]) << 16);
-						sprintf (buf2, ",%s:%u", GetLangString(IDS_SBAR_LONG_SHORT),
+						_stprintf(buf2, _T(",%s:%u"), GetLangString(IDS_SBAR_LONG_SHORT),
 								(unsigned int) longval);
-						strcat (buf, buf2);
+						_tcscat(buf, buf2);
 					}
 				}
 				else
@@ -1815,29 +1815,29 @@ void HexEditorWindow::set_wnd_title()
 					// UNSIGNED BIGENDIAN_MODE
 					// Decimal value of byte.
 					if (DataArray.GetLength() - iCurByte >= 1)
-						sprintf (buf2, "\t%s: %s:%u", GetLangString(IDS_SBAR_UNSIGNED),
+						_stprintf(buf2, _T("\t%s: %s:%u"), GetLangString(IDS_SBAR_UNSIGNED),
 								GetLangString(IDS_SBAR_BYTE_SHORT), (unsigned int) DataArray[iCurByte]);
 					else
-						sprintf (buf2, "\t%s", GetLangString(IDS_SBAR_END));
-					strcat(buf, buf2);
+						_stprintf(buf2, _T("\t%s"), GetLangString(IDS_SBAR_END));
+					_tcscat(buf, buf2);
 
 					// Space enough for a word?
 					if (DataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a word.
 						wordval = (DataArray[iCurByte] << 8) | DataArray[iCurByte + 1];
-						sprintf (buf2, ",%s:%u", GetLangString(IDS_SBAR_WORD_SHORT),
+						_stprintf(buf2, _T(",%s:%u"), GetLangString(IDS_SBAR_WORD_SHORT),
 								(unsigned int) wordval);
-						strcat (buf, buf2);
+						_tcscat(buf, buf2);
 					}
 					if (DataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
 						longval = (wordval << 16) | (DataArray[iCurByte + 2] <<	8) |
 								(DataArray[iCurByte + 3]);
-						sprintf (buf2, ",%s:%u", GetLangString(IDS_SBAR_LONG_SHORT),
+						_stprintf(buf2, _T(",%s:%u"), GetLangString(IDS_SBAR_LONG_SHORT),
 								(unsigned int) longval);
-						strcat (buf, buf2);
+						_tcscat(buf, buf2);
 					}
 				}
 			}
@@ -1848,30 +1848,30 @@ void HexEditorWindow::set_wnd_title()
 					// SIGNED LITTLEENDIAN_MODE
 					// Decimal value of byte.
 					if (DataArray.GetLength() - iCurByte >= 1)
-						sprintf (buf2, "\t%s: %s:%d", GetLangString(IDS_SBAR_SIGNED),
+						_stprintf(buf2, _T("\t%s: %s:%d"), GetLangString(IDS_SBAR_SIGNED),
 								GetLangString(IDS_SBAR_BYTE_SHORT),
 								(int) (signed char) DataArray[iCurByte]);
 					else
-						sprintf (buf2, "\t%s", GetLangString(IDS_SBAR_END));
-					strcat (buf, buf2);
+						_stprintf(buf2, _T("\t%s"), GetLangString(IDS_SBAR_END));
+					_tcscat(buf, buf2);
 
 					// Space enough for a word?
 					if (DataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a word.
 						wordval = (DataArray[iCurByte + 1] << 8) | DataArray[iCurByte];
-						sprintf (buf2, ",%s:%d", GetLangString(IDS_SBAR_WORD_SHORT),
+						_stprintf(buf2, _T(",%s:%d"), GetLangString(IDS_SBAR_WORD_SHORT),
 								(int) (signed short) wordval);
-						strcat (buf, buf2);
+						_tcscat(buf, buf2);
 					}
 					if (DataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
 						longval = wordval | (((DataArray[iCurByte + 3] << 8) |
 								DataArray[iCurByte + 2]) << 16);
-						sprintf (buf2, ",%s:%d", GetLangString(IDS_SBAR_LONG_SHORT),
+						_stprintf(buf2, _T(",%s:%d"), GetLangString(IDS_SBAR_LONG_SHORT),
 								(signed int) longval);
-						strcat (buf, buf2);
+						_tcscat(buf, buf2);
 					}
 				}
 				else
@@ -1879,30 +1879,30 @@ void HexEditorWindow::set_wnd_title()
 					// SIGNED BIGENDIAN_MODE
 					// Decimal value of byte.
 					if (DataArray.GetLength() - iCurByte >= 1)
-						sprintf (buf2, "\t%s: %s:%d", GetLangString(IDS_SBAR_SIGNED),
+						_stprintf(buf2, _T("\t%s: %s:%d"), GetLangString(IDS_SBAR_SIGNED),
 								GetLangString(IDS_SBAR_BYTE_SHORT),
 								(signed char) DataArray[iCurByte]);
 					else
-						sprintf (buf2, "\t%s", GetLangString(IDS_SBAR_END));
-					strcat (buf, buf2);
+						_stprintf(buf2, _T("\t%s"), GetLangString(IDS_SBAR_END));
+					_tcscat (buf, buf2);
 
 					// Space enough for a word.
 					if (DataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a longword.
 						wordval = (DataArray[iCurByte] << 8) | DataArray[iCurByte + 1];
-						sprintf (buf2, ",%s:%d", GetLangString(IDS_SBAR_WORD_SHORT),
+						_stprintf(buf2, _T(",%s:%d"), GetLangString(IDS_SBAR_WORD_SHORT),
 								(int) (signed short) wordval);
-						strcat (buf, buf2);
+						_tcscat(buf, buf2);
 					}
 					if (DataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
-						longval = (wordval<<16) | (DataArray[iCurByte + 2] << 8) |
+						longval = (wordval << 16) | (DataArray[iCurByte + 2] << 8) |
 								(DataArray[iCurByte + 3]);
-						sprintf (buf2, ",%s:%d", GetLangString(IDS_SBAR_LONG_SHORT),
+						_stprintf(buf2, _T(",%s:%d"), GetLangString(IDS_SBAR_LONG_SHORT),
 								(signed int) longval);
-						strcat (buf, buf2);
+						_tcscat(buf, buf2);
 					}
 				}
 			}
@@ -1912,7 +1912,7 @@ void HexEditorWindow::set_wnd_title()
 		statusbar_chset_and_editmode();
 
 		// File size.
-		sprintf(buf, "\t%s: %u", GetLangString(IDS_SBAR_SIZE), DataArray.GetLength());
+		_stprintf(buf, _T("\t%s: %u"), GetLangString(IDS_SBAR_SIZE), DataArray.GetLength());
 		SendMessage(hwndStatusBar, SB_SETTEXT, 2, (LPARAM) buf);
 	}
 	else
@@ -2078,7 +2078,7 @@ void HexEditorWindow::mark_char(HDC hdc)
 		InvalidateRect(hwnd, &r, FALSE);
 }
 
-void HexEditorWindow::print_text(HDC hdc, int x, int y, char *pch, int cch)
+void HexEditorWindow::print_text(HDC hdc, int x, int y, TCHAR *pch, int cch)
 {
 	RECT rc = { x * cxChar, y * cyChar, rc.left + cch * cxChar, rc.top + cyChar };
 	ExtTextOut(hdc, rc.left, rc.top, ETO_OPAQUE, &rc, pch, cch, 0);
@@ -2100,7 +2100,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	int sibling_length = sibling->get_length();
 	BYTE *sibling_buffer = sibling->get_buffer(sibling_length);
 
-	char linbuf[16] = {0};
+	TCHAR linbuf[16] = {0};
 
 	int iBkColor = PALETTERGB (GetRValue(iBkColorValue),GetGValue(iBkColorValue),GetBValue(iBkColorValue));
 	int iTextColor = PALETTERGB (GetRValue(iTextColorValue),GetGValue(iTextColorValue),GetBValue(iTextColorValue));
@@ -2120,7 +2120,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	int m = iMaxOffsetLen + iByteSpace;
 
 	// Write offset.
-	int i = _sntprintf(linbuf, RTL_NUMBER_OF(linbuf) -1, "%*.*x",
+	int i = _sntprintf(linbuf, RTL_NUMBER_OF(linbuf) -1, _T("%*.*x"),
 			iMinOffsetLen, iMinOffsetLen, bPartialStats ?
 			startpos + iPartialOffset : startpos);
 	if (i != -1)
@@ -2152,13 +2152,13 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 		{
 			u = buffer[i];
 			char c = (char)(u >> 4);
-			if( c < 10 )
+			if (c < 10)
 				c += '0';
 			else
 				c = (char)(c - 10 + 'a');
 			linbuf[0] = c;
 			c = (char)(u & 0x0f);
-			if( c < 10 )
+			if (c < 10)
 				c += '0';
 			else
 				c = (char)(c - 10 + 'a');
@@ -2191,7 +2191,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 			++m;
 		print_text(hdc, x, y, linbuf, m);
 		x += m;
-		print_text(hdc, z, y, (char *)&u, 1);
+		print_text(hdc, z, y, (TCHAR *)&u, 1);
 		z += 1;
 	}
 
@@ -2216,7 +2216,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	int el = startpos + iBytesPerLine - 1;
 	int chpos;
 	// Brush for bookmark borders.
-	for( i = 0; i < iBmkCount; i++ )
+	for (i = 0; i < iBmkCount; i++)
 	{
 		int offset = pbmkList[i].offset;
 		// Print the bookmark if it is within the file.
@@ -2467,7 +2467,7 @@ int HexEditorWindow::initmenupopup(WPARAM w, LPARAM l)
  * @param [in] caption Messagebox caption, "Exit" if NULL.
  * @return 0 if Frhed cannot be closed, 1 if we can close Frhed.
  */
-int HexEditorWindow::close(const char *caption)
+int HexEditorWindow::close(LPCTSTR caption)
 {
 	if (iFileChanged)
 	{
@@ -3017,7 +3017,7 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 	if (iCopyHexdumpMode == 0)
 	{
 		// to file.
-		char szFileName[_MAX_PATH];
+		TCHAR szFileName[MAX_PATH];
 		strcpy(szFileName, "hexdump.txt");
 		HGLOBAL hg = NULL;
 		if (iCopyHexdumpType == IDC_EXPORTRTF)
@@ -3247,7 +3247,7 @@ int HexEditorWindow::CMD_save()
 //Pabs inserted
 	if (bMakeBackups)
 	{//Assume the filename is valid & has a length
-		int len = strlen(filename);
+		int len = _tcslen(filename);
 		TCHAR newname[RTL_NUMBER_OF(filename) + 4];
 		_tcscpy(newname, filename);
 		_tcscat(newname, _T(".bak"));
@@ -3555,7 +3555,7 @@ void HexEditorWindow::read_ini_data(TCHAR *key)
 		{
 			const int fname_size = 64;
 			TCHAR fname[fname_size] = {0};
-			_snprintf(fname, fname_size - 1, _T("MRU_File%d"), i + 1);
+			_sntprintf(fname, fname_size - 1, _T("MRU_File%d"), i + 1);
 			datasize = _MAX_PATH;
 			res = RegQueryValueEx(key1, fname, NULL, NULL, (BYTE*) strMRU[i], &datasize);
 		}
@@ -3580,63 +3580,63 @@ void HexEditorWindow::save_ini_data()
 	HKEY key1;
 
 	const int keyname_size = 64;
-	char keyname[keyname_size] = {0};
-	_snprintf(keyname, keyname_size - 1, "%s\\%d", OptionsRegistrySettingsPath,
+	TCHAR keyname[keyname_size] = {0};
+	_sntprintf(keyname, keyname_size - 1, _T("%s\\%d"), OptionsRegistrySettingsPath,
 			iInstCount);
 
 	LONG res = RegCreateKey(HKEY_CURRENT_USER, keyname, &key1);
 	if (res == ERROR_SUCCESS)
 	{
-		RegSetValueEx( key1, "iTextColorValue", 0, REG_DWORD, (CONST BYTE*) &iTextColorValue, sizeof( int ) );
-		RegSetValueEx( key1, "iBkColorValue", 0, REG_DWORD, (CONST BYTE*) &iBkColorValue, sizeof( int ) );
-		RegSetValueEx( key1, "iSepColorValue", 0, REG_DWORD, (CONST BYTE*) &iSepColorValue, sizeof( int ) );
-		RegSetValueEx( key1, "iSelTextColorValue", 0, REG_DWORD, (CONST BYTE*) &iSelTextColorValue, sizeof( int ) );
-		RegSetValueEx( key1, "iSelBkColorValue", 0, REG_DWORD, (CONST BYTE*) &iSelBkColorValue, sizeof( int ) );
-		RegSetValueEx( key1, "iBmkColor", 0, REG_DWORD, (CONST BYTE*) &iBmkColor, sizeof( int ) );
+		RegSetValueEx(key1, _T("iTextColorValue"), 0, REG_DWORD, (CONST BYTE*) &iTextColorValue, sizeof(int));
+		RegSetValueEx(key1, _T("iBkColorValue"), 0, REG_DWORD, (CONST BYTE*) &iBkColorValue, sizeof(int));
+		RegSetValueEx(key1, _T("iSepColorValue"), 0, REG_DWORD, (CONST BYTE*) &iSepColorValue, sizeof(int));
+		RegSetValueEx(key1, _T("iSelTextColorValue"), 0, REG_DWORD, (CONST BYTE*) &iSelTextColorValue, sizeof(int));
+		RegSetValueEx(key1, _T("iSelBkColorValue"), 0, REG_DWORD, (CONST BYTE*) &iSelBkColorValue, sizeof(int));
+		RegSetValueEx(key1, _T("iBmkColor"), 0, REG_DWORD, (CONST BYTE*) &iBmkColor, sizeof(int));
 
-		RegSetValueEx( key1, "iAutomaticBPL", 0, REG_DWORD, (CONST BYTE*) &iAutomaticBPL, sizeof( int ) );
-		RegSetValueEx( key1, "iBytesPerLine", 0, REG_DWORD, (CONST BYTE*) &iBytesPerLine, sizeof( int ) );
-		RegSetValueEx( key1, "iOffsetLen", 0, REG_DWORD, (CONST BYTE*) &iMinOffsetLen, sizeof( int ) );//Pabs replaced "iOffsetLen" with "iMinOffsetLen"
-		RegSetValueEx( key1, "iCharacterSet", 0, REG_DWORD, (CONST BYTE*) &iCharacterSet, sizeof( int ) );
-		RegSetValueEx( key1, "iFontSize", 0, REG_DWORD, (CONST BYTE*) &iFontSize, sizeof( int ) );
-		RegSetValueEx( key1, "bOpenReadOnly", 0, REG_DWORD, (CONST BYTE*) &bOpenReadOnly, sizeof( int ) );
+		RegSetValueEx(key1, _T("iAutomaticBPL"), 0, REG_DWORD, (CONST BYTE*) &iAutomaticBPL, sizeof(int));
+		RegSetValueEx(key1, _T("iBytesPerLine"), 0, REG_DWORD, (CONST BYTE*) &iBytesPerLine, sizeof(int));
+		RegSetValueEx(key1, _T("iOffsetLen"), 0, REG_DWORD, (CONST BYTE*) &iMinOffsetLen, sizeof(int));//Pabs replaced "iOffsetLen" with "iMinOffsetLen"
+		RegSetValueEx(key1, _T("iCharacterSet"), 0, REG_DWORD, (CONST BYTE*) &iCharacterSet, sizeof(int));
+		RegSetValueEx(key1, _T("iFontSize"), 0, REG_DWORD, (CONST BYTE*) &iFontSize, sizeof(int));
+		RegSetValueEx(key1, _T("bOpenReadOnly"), 0, REG_DWORD, (CONST BYTE*) &bOpenReadOnly, sizeof(int));
 
 //Pabs inserted
-		RegSetValueEx( key1, "bMakeBackups", 0, REG_DWORD, (CONST BYTE*) &bMakeBackups, sizeof( int ) );
-		RegSetValueEx( key1, "bAutoOffsetLen", 0, REG_DWORD, (CONST BYTE*) &bAutoOffsetLen, sizeof( int ) );
-		RegSetValueEx( key1, "enable_drop", 0, REG_DWORD, (CONST BYTE*) &enable_drop, sizeof( int ) );
-		RegSetValueEx( key1, "enable_drag", 0, REG_DWORD, (CONST BYTE*) &enable_drag, sizeof( int ) );
-		RegSetValueEx( key1, "enable_scroll_delay_dd", 0, REG_DWORD, (CONST BYTE*) &enable_scroll_delay_dd, sizeof( int ) );
-		RegSetValueEx( key1, "enable_scroll_delay_sel", 0, REG_DWORD, (CONST BYTE*) &enable_scroll_delay_sel, sizeof( int ) );
-		RegSetValueEx( key1, "always_pick_move_copy", 0, REG_DWORD, (CONST BYTE*) &always_pick_move_copy, sizeof( int ) );
-		RegSetValueEx( key1, "prefer_CF_HDROP", 0, REG_DWORD, (CONST BYTE*) &prefer_CF_HDROP, sizeof( int ) );
-		RegSetValueEx( key1, "prefer_CF_BINARYDATA", 0, REG_DWORD, (CONST BYTE*) &prefer_CF_BINARYDATA, sizeof( int ) );
-		RegSetValueEx( key1, "prefer_CF_TEXT", 0, REG_DWORD, (CONST BYTE*) &prefer_CF_TEXT, sizeof( int ) );
-		RegSetValueEx( key1, "output_CF_BINARYDATA", 0, REG_DWORD, (CONST BYTE*) &output_CF_BINARYDATA, sizeof( int ) );
-		RegSetValueEx( key1, "output_CF_TEXT", 0, REG_DWORD, (CONST BYTE*) &output_CF_TEXT, sizeof( int ) );
-		RegSetValueEx( key1, "output_text_special", 0, REG_DWORD, (CONST BYTE*) &output_text_special, sizeof( int ) );
-		RegSetValueEx( key1, "output_text_hexdump_display", 0, REG_DWORD, (CONST BYTE*) &output_text_hexdump_display, sizeof( int ) );
-		RegSetValueEx( key1, "output_CF_RTF", 0, REG_DWORD, (CONST BYTE*) &output_CF_RTF, sizeof( int ) );
+		RegSetValueEx(key1, _T("bMakeBackups"), 0, REG_DWORD, (CONST BYTE*) &bMakeBackups, sizeof(int));
+		RegSetValueEx(key1, _T("bAutoOffsetLen"), 0, REG_DWORD, (CONST BYTE*) &bAutoOffsetLen, sizeof(int));
+		RegSetValueEx(key1, _T("enable_drop"), 0, REG_DWORD, (CONST BYTE*) &enable_drop, sizeof(int));
+		RegSetValueEx(key1, _T("enable_drag"), 0, REG_DWORD, (CONST BYTE*) &enable_drag, sizeof(int));
+		RegSetValueEx(key1, _T("enable_scroll_delay_dd"), 0, REG_DWORD, (CONST BYTE*) &enable_scroll_delay_dd, sizeof(int));
+		RegSetValueEx(key1, _T("enable_scroll_delay_sel"), 0, REG_DWORD, (CONST BYTE*) &enable_scroll_delay_sel, sizeof(int));
+		RegSetValueEx(key1, _T("always_pick_move_copy"), 0, REG_DWORD, (CONST BYTE*) &always_pick_move_copy, sizeof(int));
+		RegSetValueEx(key1, _T("prefer_CF_HDROP"), 0, REG_DWORD, (CONST BYTE*) &prefer_CF_HDROP, sizeof(int));
+		RegSetValueEx(key1, _T("prefer_CF_BINARYDATA"), 0, REG_DWORD, (CONST BYTE*) &prefer_CF_BINARYDATA, sizeof(int));
+		RegSetValueEx(key1, _T("prefer_CF_TEXT"), 0, REG_DWORD, (CONST BYTE*) &prefer_CF_TEXT, sizeof(int));
+		RegSetValueEx(key1, _T("output_CF_BINARYDATA"), 0, REG_DWORD, (CONST BYTE*) &output_CF_BINARYDATA, sizeof(int));
+		RegSetValueEx(key1, _T("output_CF_TEXT"), 0, REG_DWORD, (CONST BYTE*) &output_CF_TEXT, sizeof(int));
+		RegSetValueEx(key1, _T("output_text_special"), 0, REG_DWORD, (CONST BYTE*) &output_text_special, sizeof(int));
+		RegSetValueEx(key1, _T("output_text_hexdump_display"), 0, REG_DWORD, (CONST BYTE*) &output_text_hexdump_display, sizeof(int));
+		RegSetValueEx(key1, _T("output_CF_RTF"), 0, REG_DWORD, (CONST BYTE*) &output_CF_RTF, sizeof(int));
 //end
 		LCID lcid = MAKELCID(langArray.m_langid, 0);
-		RegSetValueEx( key1, "locale", 0, REG_DWORD, (CONST BYTE*) &lcid, sizeof lcid);
+		RegSetValueEx(key1, _T("locale"), 0, REG_DWORD, (CONST BYTE*) &lcid, sizeof lcid);
 
 		SHSetValue(key1, 0, _T("TexteditorName"), REG_SZ, TexteditorName, _tcslen(TexteditorName) * sizeof(TCHAR));
 		SHSetValue(key1, 0, _T("EncodeDlls"), REG_SZ, EncodeDlls, _tcslen(EncodeDlls) * sizeof(TCHAR));
 
-		RegSetValueEx( key1, "iWindowShowCmd", 0, REG_DWORD, (CONST BYTE*) &iWindowShowCmd, sizeof( int ) );
-		RegSetValueEx( key1, "iWindowX", 0, REG_DWORD, (CONST BYTE*) &iWindowX, sizeof( int ) );
-		RegSetValueEx( key1, "iWindowY", 0, REG_DWORD, (CONST BYTE*) &iWindowY, sizeof( int ) );
-		RegSetValueEx( key1, "iWindowWidth", 0, REG_DWORD, (CONST BYTE*) &iWindowWidth, sizeof( int ) );
-		RegSetValueEx( key1, "iWindowHeight", 0, REG_DWORD, (CONST BYTE*) &iWindowHeight, sizeof( int ) );
+		RegSetValueEx(key1, _T("iWindowShowCmd"), 0, REG_DWORD, (CONST BYTE*) &iWindowShowCmd, sizeof(int));
+		RegSetValueEx(key1, _T("iWindowX"), 0, REG_DWORD, (CONST BYTE*) &iWindowX, sizeof(int));
+		RegSetValueEx(key1, _T("iWindowY"), 0, REG_DWORD, (CONST BYTE*) &iWindowY, sizeof(int));
+		RegSetValueEx(key1, _T("iWindowWidth"), 0, REG_DWORD, (CONST BYTE*) &iWindowWidth, sizeof(int));
+		RegSetValueEx(key1, _T("iWindowHeight"), 0, REG_DWORD, (CONST BYTE*) &iWindowHeight, sizeof(int));
 
-		RegSetValueEx( key1, "iMRU_count", 0, REG_DWORD, (CONST BYTE*) &iMRU_count, sizeof( int ) );
+		RegSetValueEx(key1, _T("iMRU_count"), 0, REG_DWORD, (CONST BYTE*) &iMRU_count, sizeof(int));
 		int i;
-		char fname[keyname_size] = {0};
+		TCHAR fname[keyname_size] = {0};
 		for (i = 1; i <= MRUMAX; i++)
 		{
-			_snprintf( fname, keyname_size - 1, "MRU_File%d", i );
-			RegSetValueEx( key1, fname, 0, REG_SZ, (CONST BYTE*) &(strMRU[i-1][0]), strlen( &(strMRU[i-1][0]) ) + 1 );
+			_sntprintf(fname, keyname_size - 1, _T("MRU_File%d"), i );
+			RegSetValueEx(key1, fname, 0, REG_SZ, (CONST BYTE*) &(strMRU[i-1][0]), _tcslen(&(strMRU[i-1][0])) + 1);
 		}
 
 		// Close registry.
@@ -3644,9 +3644,7 @@ void HexEditorWindow::save_ini_data()
 	}
 	else
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "Could not save preferences to registry.",
-				app, MB_ICONERROR);
+		MessageBox(hwnd, GetLangString(IDS_ERR_WRITING_OPTIONS), MB_ICONERROR);
 	}
 }
 

@@ -356,6 +356,8 @@
 #define IDS_ERR_SEEK_FILE               10042
 #define IDS_ERR_WRITE_FILE              10043
 #define IDS_ERR_HELP_NOT_FOUND          10044
+#define IDS_ERR_FILE_OPEN_CODE          10045
+#define IDS_ERR_WRITING_OPTIONS         10046
 #define IDS_ABOUT_BROWSER_ERR           10160
 #define IDS_ABOUT_FILENOTFOUND          10161
 #define IDS_BMK_INVALID_POSITION        10177

@@ -218,7 +218,7 @@ public:
 	void EnableDriveButtons(BOOL bEnable);
 	BOOL queryCommandEnabled(UINT id);
 
-	virtual int STDMETHODCALLTYPE close(const char *caption = 0);
+	virtual int STDMETHODCALLTYPE close(LPCTSTR caption = 0);
 	virtual int STDMETHODCALLTYPE initmenupopup(WPARAM w, LPARAM l);
 	void adjust_view_for_caret();
 	void print_line(HDC hdc, int line, HBRUSH hbr);
@@ -267,7 +267,7 @@ public:
 	int destroy_window();
 	virtual void STDMETHODCALLTYPE set_wnd_title();
 	void set_caret_pos();
-	void print_text(HDC hdc, int x, int y, char *pch, int cch);
+	void print_text(HDC hdc, int x, int y, TCHAR *pch, int cch);
 	virtual HRESULT STDMETHODCALLTYPE ResolveIt(LPCSTR lpszLinkFile, LPSTR lpszPath);
 	void OnHelp(HWND hwnd);
 
@@ -329,7 +329,7 @@ protected:
 	INT64 CurrentSectorNumber;
 
 	void set_and_format_title();
-	void format_bit_string(char* buf, BYTE by);
+	void format_bit_string(TCHAR* buf, BYTE by);
 	void statusbar_chset_and_editmode();
 };
 
