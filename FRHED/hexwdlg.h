@@ -146,6 +146,9 @@ public:
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 };
 
+/**
+ * @brief A dialog that upgrades settings from previous version.
+ */
 class UpgradeDlg : public HexEditorWindow
 {
 public:
