@@ -40,12 +40,12 @@ bool OpenPartiallyDlg::bShowFileStatsPL = false;
  */
 BOOL OpenPartiallyDlg::OnInitDialog(HWND hDlg)
 {
-	__int64 iPLFileLen = _filelengthi64(filehandle);
-	char buf[128] = {0};
-	SetDlgItemText(hDlg, IDC_OPENPARTIAL_OFFSET, "x0");
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, GetLangString(IDS_PARTIAL_LOAD_BYTES), iPLFileLen);
+	INT64 iPLFileLen = _filelengthi64(filehandle);
+	TCHAR buf[128] = {0};
+	SetDlgItemText(hDlg, IDC_OPENPARTIAL_OFFSET, _T("x0"));
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, GetLangString(IDS_PARTIAL_LOAD_BYTES), iPLFileLen);
 	SetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTECOUNT, buf);
-	_snprintf(buf, RTL_NUMBER_OF(buf) - 1, "%lld", iPLFileLen);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("%lld"), iPLFileLen);
 	SetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTES, buf);
 	CheckDlgButton(hDlg, IDC_OPENPARTIAL_BEGINOFF, BST_CHECKED);
 	const UINT state = bShowFileStatsPL ? BST_CHECKED : BST_UNCHECKED;
@@ -60,15 +60,16 @@ BOOL OpenPartiallyDlg::OnInitDialog(HWND hDlg)
  */
 BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 {
-	const __int64 iPLFileLen = _filelengthi64(filehandle);
+	const INT64 iPLFileLen = _filelengthi64(filehandle);
 	const UINT state = IsDlgButtonChecked(hDlg, IDC_OPENPARTIAL_RELOFFSET);
 	bShowFileStatsPL = state == BST_CHECKED;
-	char buf[128] = {0};
+	const int bufLen = 128;
+	TCHAR buf[bufLen + 1] = {0};
 	UINT numBytesPl; // Bytes to read
 	
 	// Only complain about wrong offset in start offset editbox if loading from start.
-	if (GetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTES, buf, 128) &&
-		sscanf(buf, "%u", &numBytesPl) == 0)
+	if (GetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTES, buf, bufLen) &&
+		_stscanf(buf, _T("%u"), &numBytesPl) == 0)
 	{
 		LangString notRecognized(IDS_BYTES_NOT_KNOWN);
 		MessageBox(hDlg, notRecognized, MB_ICONERROR);
@@ -82,7 +83,7 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		return FALSE;
 	}
 
-	__int64 iStartPL;
+	INT64 iStartPL;
 	if (IsDlgButtonChecked(hDlg, IDC_OPENPARTIAL_ENDBYTES))
 	{
 		// Load from end of file: arguments must be adapted.
@@ -94,9 +95,9 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 			return FALSE;
 		}
 	}
-	else if (GetDlgItemText(hDlg, IDC_OPENPARTIAL_OFFSET, buf, 128) &&
-		sscanf(buf, "x%llx", &iStartPL) == 0 &&
-		sscanf(buf, "%lld", &iStartPL) == 0)
+	else if (GetDlgItemText(hDlg, IDC_OPENPARTIAL_OFFSET, buf, bufLen) &&
+		_stscanf(buf, _T("x%llx"), &iStartPL) == 0 &&
+		_stscanf(buf, _T("%lld"), &iStartPL) == 0)
 	{
 		LangString app(IDS_APPNAME);
 		LangString startOffsetErr(IDS_OFFSET_START_ERROR);
