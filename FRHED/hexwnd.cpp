@@ -60,16 +60,16 @@ static void EnableToolbarButton(HWND toolbar, int ID, BOOL bEnable);
 	#define CF_RTF TEXT("Rich Text Format")
 #endif
 
-const CLIPFORMAT CF_BINARYDATA = (CLIPFORMAT)RegisterClipboardFormat("BinaryData");
+const CLIPFORMAT CF_BINARYDATA = (CLIPFORMAT)RegisterClipboardFormat(_T("BinaryData"));
 const CLIPFORMAT CF_RICH_TEXT_FORMAT = (CLIPFORMAT)RegisterClipboardFormat(CF_RTF);
 
 
-int HexEditorWindow::MouseOpDist = GetProfileInt("Windows", "DragMinDist", DD_DEFDRAGMINDIST);
-int HexEditorWindow::MouseOpDelay = GetProfileInt("Windows", "DragDelay", DD_DEFDRAGDELAY);
+int HexEditorWindow::MouseOpDist = GetProfileInt(_T("Windows"), _T("DragMinDist"), DD_DEFDRAGMINDIST);
+int HexEditorWindow::MouseOpDelay = GetProfileInt(_T("Windows"), _T("DragDelay"), DD_DEFDRAGDELAY);
 //We use the size of the font instead
 //int HexEditorWindow::ScrollInset = GetProfileInt("Windows", "DragScrollInset", DD_DEFSCROLLINSET);
-int HexEditorWindow::ScrollDelay = GetProfileInt("Windows", "DragScrollDelay", DD_DEFSCROLLDELAY);
-int HexEditorWindow::ScrollInterval = GetProfileInt("Windows", "DragScrollInterval", DD_DEFSCROLLINTERVAL);
+int HexEditorWindow::ScrollDelay = GetProfileInt(_T("Windows"), _T("DragScrollDelay"), DD_DEFSCROLLDELAY);
+int HexEditorWindow::ScrollInterval = GetProfileInt(_T("Windows"), _T("DragScrollInterval"), DD_DEFSCROLLINTERVAL);
 
 int HexEditorWindow::iPasteAsText = 0;
 int HexEditorWindow::iPasteTimes = 1;
@@ -128,7 +128,7 @@ HexEditorWindow::HexEditorWindow()
 
 	iMRU_count = MRUMAX;
 	while (iMRU_count)
-		sprintf(strMRU[--iMRU_count], "dummy%d", iMRU_count);
+		_stprintf(strMRU[--iMRU_count], _T("dummy%d"), iMRU_count);
 
 	bFilestatusChanged = true;
 	iBinaryMode = ENDIAN_LITTLE;
@@ -356,7 +356,7 @@ int HexEditorWindow::load_file(LPCTSTR fname)
 {
 	WaitCursor wc;
 	int bLoaded = FALSE;
-	int filehandle = _open(fname, _O_RDONLY|_O_BINARY);
+	int filehandle = _topen(fname, _O_RDONLY|_O_BINARY);
 	if (filehandle != -1)
 	{
 		int filelen = _filelength(filehandle);
@@ -366,7 +366,7 @@ int HexEditorWindow::load_file(LPCTSTR fname)
 		{
 			DataArray.ExpandToSize();
 			// If read-only mode on opening is enabled or the file is read only:
-			bReadOnly = bOpenReadOnly || -1 == _access(fname, 02); //Pabs added call to _access
+			bReadOnly = bOpenReadOnly || -1 == _taccess(fname, 02); //Pabs added call to _access
 			// Load the file.
 			if (filelen == 0 || _read(filehandle, DataArray, filelen) != -1)
 			{
@@ -389,10 +389,9 @@ int HexEditorWindow::load_file(LPCTSTR fname)
 	}
 	else
 	{
-		char buf[500];
-		sprintf(buf, "Error code 0x%x occured while opening file %s.", errno, fname);
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, buf, app, MB_ICONERROR);
+		TCHAR buf[500];
+		_stprintf(buf, "Error code 0x%x occured while opening file %s.", errno, fname);
+		MessageBox(hwnd, buf, MB_ICONERROR);
 	}
 	if (bLoaded)
 	{
@@ -944,9 +943,7 @@ void HexEditorWindow::character(char ch)
 		// caret at EOF
 		if (!DataArray.InsertAtGrow(iCurByte, 0, 1))
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox (hwnd, "Not enough memory for inserting character.",
-					app, MB_ICONERROR);
+			MessageBox(hwnd, _T("Not enough memory for inserting character."), MB_ICONERROR);
 			return;
 		}
 		iCurNibble = 0;
@@ -1222,19 +1219,19 @@ void HexEditorWindow::command(int cmd)
 	case IDM_CONTEXT:
 		if (MF_CHECKED == GetMenuState(hMenu, IDM_CONTEXT, 0))
 		{
-			RegDeleteKey(HKEY_CLASSES_ROOT, "*\\shell\\Open in Frhed\\command"); //WinNT requires the key to have no subkeys
-			RegDeleteKey(HKEY_CLASSES_ROOT, "*\\shell\\Open in Frhed");
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed\\command")); //WinNT requires the key to have no subkeys
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed"));
 		}
 		else
 		{
 			HKEY key1;
 			LONG res = RegCreateKey(HKEY_CLASSES_ROOT,
-				"*\\shell\\Open in Frhed\\command",
+				_T("*\\shell\\Open in Frhed\\command"),
 				&key1);
 			if (res == ERROR_SUCCESS)
 			{
-				char cmd[MAX_PATH];
-				int len = sprintf(cmd, "%s %%1", _pgmptr);
+				TCHAR cmd[MAX_PATH];
+				int len = _stprintf(cmd, _T("%s %%1"), _pgmptr);
 				RegSetValue(key1, NULL, REG_SZ, cmd, len);
 			}
 		}
@@ -1243,9 +1240,9 @@ void HexEditorWindow::command(int cmd)
 		if (MF_CHECKED == GetMenuState(hMenu, IDM_UNKNOWN, 0))
 		{
 			HKEY hk;
-			RegDeleteKey(HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in Frhed\\command"); //WinNT requires the key to have no subkeys
-			RegDeleteKey(HKEY_CLASSES_ROOT, "Unknown\\shell\\Open in Frhed");
-			if (ERROR_SUCCESS == RegOpenKey(HKEY_CLASSES_ROOT, "Unknown\\shell", &hk))
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed\\command")); //WinNT requires the key to have no subkeys
+			RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed"));
+			if (ERROR_SUCCESS == RegOpenKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), &hk))
 			{
 				RegDeleteValue(hk, NULL);
 				RegCloseKey(hk);
@@ -1255,12 +1252,12 @@ void HexEditorWindow::command(int cmd)
 		{
 			HKEY key1;
 			LONG res = RegCreateKey(HKEY_CLASSES_ROOT,
-				"Unknown\\shell\\Open in Frhed\\command",
+				_T("Unknown\\shell\\Open in Frhed\\command"),
 				&key1);
 			if (res == ERROR_SUCCESS)
 			{
-				char cmd[MAX_PATH];
-				int len = sprintf(cmd, "%s %%1", _pgmptr);
+				TCHAR cmd[MAX_PATH];
+				int len = _stprintf(cmd, _T("%s %%1"), _pgmptr);
 				RegSetValue(key1, NULL, REG_SZ, cmd, len);
 			}
 		}
@@ -1269,7 +1266,7 @@ void HexEditorWindow::command(int cmd)
 		if (MF_CHECKED == GetMenuState(hMenu, IDM_DEFAULT, 0))
 		{
 			HKEY hk;
-			if (ERROR_SUCCESS == RegOpenKey(HKEY_CLASSES_ROOT, "Unknown\\shell", &hk))
+			if (ERROR_SUCCESS == RegOpenKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), &hk))
 			{
 				RegDeleteValue(hk, NULL);
 				RegCloseKey(hk);
@@ -1277,7 +1274,7 @@ void HexEditorWindow::command(int cmd)
 		}
 		else
 		{
-			RegSetValue(HKEY_CLASSES_ROOT, "Unknown\\shell", REG_SZ, "Open in Frhed", 13);
+			RegSetValue(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), REG_SZ, _T("Open in Frhed"), 13);
 		}
 		break;
 //end
@@ -3192,10 +3189,10 @@ int HexEditorWindow::CMD_new(const char *title)
  */
 int HexEditorWindow::CMD_save_as()
 {
-	char szFileName[_MAX_PATH];
+	TCHAR szFileName[MAX_PATH];
 	szFileName[0] = '\0';
 	if (Drive == 0)
-		strcpy(szFileName, filename);
+		_tcscpy(szFileName, filename);
 	LangString allFiles(IDS_OPEN_ALL_FILES);
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);
@@ -3208,7 +3205,7 @@ int HexEditorWindow::CMD_save_as()
 	if (!GetSaveFileName(&ofn))
 		return 0;
 	WaitCursor w1;
-	int filehandle = _open(szFileName, _O_RDWR|_O_CREAT|_O_TRUNC|_O_BINARY, _S_IREAD|_S_IWRITE);
+	int filehandle = _topen(szFileName, _O_RDWR|_O_CREAT|_O_TRUNC|_O_BINARY, _S_IREAD|_S_IWRITE);
 	if (filehandle == -1)
 	{
 		MessageBox(hwnd, GetLangString(IDS_FILE_SAVE_ERROR), MB_ICONERROR);
@@ -3251,10 +3248,10 @@ int HexEditorWindow::CMD_save()
 	if (bMakeBackups)
 	{//Assume the filename is valid & has a length
 		int len = strlen(filename);
-		char newname[sizeof filename + 4];
-		strcpy(newname, filename);
-		strcat(newname, ".bak");
-		remove(newname);
+		TCHAR newname[RTL_NUMBER_OF(filename) + 4];
+		_tcscpy(newname, filename);
+		_tcscat(newname, _T(".bak"));
+		_tremove(newname);
 		//Must use Win32 here as the CRT has no copy function only rename
 		//& we need a copy of the file to be present for saving a partially opened file
 		if (!CopyFile(filename, newname, TRUE))
@@ -3266,7 +3263,7 @@ int HexEditorWindow::CMD_save()
 	// File is partially loaded => must be saved partially or saved as.
 	if (bPartialOpen)
 	{
-		int filehandle = _open(filename, _O_RDWR|_O_BINARY);
+		int filehandle = _topen(filename, _O_RDWR|_O_BINARY);
 		if (filehandle == -1)
 		{
 			MessageBox(hwnd, GetLangString(IDS_ERR_SAVE_PARTIAL), MB_ICONERROR);
@@ -3275,8 +3272,8 @@ int HexEditorWindow::CMD_save()
 		int nbl = DataArray.GetLength(); // Length of the DataArray
 		if (nbl != iPartialOpenLen)
 		{
-			__int64 i = iPartialOffset + iPartialOpenLen; // loop var & start of loop
-			__int64 e = iPartialFileLen - 1; // end of loop
+			INT64 i = iPartialOffset + iPartialOpenLen; // loop var & start of loop
+			INT64 e = iPartialFileLen - 1; // end of loop
 			int n = 1; // loop increment
 			if (nbl > iPartialOpenLen)
 			{//Bigger .'. we need to start at the end
@@ -3332,7 +3329,7 @@ int HexEditorWindow::CMD_save()
 		return done;
 	}
 
-	int filehandle = _open(filename, _O_RDWR|_O_CREAT|_O_TRUNC|_O_BINARY, _S_IREAD|_S_IWRITE);
+	int filehandle = _topen(filename, _O_RDWR|_O_CREAT|_O_TRUNC|_O_BINARY, _S_IREAD|_S_IWRITE);
 	if (filehandle == -1)
 	{
 		MessageBox(hwnd, GetLangString(IDS_FILE_SAVE_ERROR), MB_ICONERROR);
@@ -3358,9 +3355,9 @@ int HexEditorWindow::CMD_save()
 //-------------------------------------------------------------------
 void HexEditorWindow::CMD_open()
 {
-	if (!close("Open"))
+	if (!close(_T("Open")))
 		return;
-	char szFileName[_MAX_PATH];
+	TCHAR szFileName[MAX_PATH];
 	szFileName[0] = '\0';
 	LangString allFiles(IDS_OPEN_ALL_FILES);
 	OPENFILENAME ofn;
@@ -3484,18 +3481,18 @@ void HexEditorWindow::CMD_color_settings(COLORREF *pColor)
  * @todo Some error checking for reading values would be nice...
  * @todo Remove @p key after the Upgrade-feature and dialog have been removed.
  */
-void HexEditorWindow::read_ini_data(char *key)
+void HexEditorWindow::read_ini_data(TCHAR *key)
 {
 	// Is there any data for frhed in the registry?
 	HKEY key1;
 	const int keyname_size = 64;
-	char keyname[keyname_size] = {0};
+	TCHAR keyname[keyname_size] = {0};
 	LONG res;
 	if (key == 0)
-		_snprintf(keyname, keyname_size - 1, "%s\\%d", OptionsRegistrySettingsPath,
+		_sntprintf(keyname, keyname_size - 1, _T("%s\\%d"), OptionsRegistrySettingsPath,
 				iInstCount);
 	else
-		_snprintf(keyname, keyname_size - 1, "%s\\%s\\%d", OptionsRegistrySettingsPath, key,
+		_sntprintf(keyname, keyname_size - 1, _T("%s\\%s\\%d"), OptionsRegistrySettingsPath, key,
 				iInstCount);
 
 	res = RegOpenKeyEx(HKEY_CURRENT_USER, keyname, 0, KEY_ALL_ACCESS, &key1);
@@ -3504,40 +3501,40 @@ void HexEditorWindow::read_ini_data(char *key)
 		// There is data: read it.
 		DWORD datasize = sizeof( int );
 		LONG res;
-		res = RegQueryValueEx( key1, "iTextColorValue", NULL, NULL, (BYTE*) &iTextColorValue, &datasize );
-		res = RegQueryValueEx( key1, "iBkColorValue", NULL, NULL, (BYTE*) &iBkColorValue, &datasize );
-		res = RegQueryValueEx( key1, "iSepColorValue", NULL, NULL, (BYTE*) &iSepColorValue, &datasize );
-		res = RegQueryValueEx( key1, "iSelTextColorValue", NULL, NULL, (BYTE*) &iSelTextColorValue, &datasize );
-		res = RegQueryValueEx( key1, "iSelBkColorValue", NULL, NULL, (BYTE*) &iSelBkColorValue, &datasize );
-		res = RegQueryValueEx( key1, "iBmkColor", NULL, NULL, (BYTE*) &iBmkColor, &datasize );
+		res = RegQueryValueEx(key1, _T("iTextColorValue"), NULL, NULL, (BYTE*) &iTextColorValue, &datasize);
+		res = RegQueryValueEx(key1, _T("iBkColorValue"), NULL, NULL, (BYTE*) &iBkColorValue, &datasize);
+		res = RegQueryValueEx(key1, _T("iSepColorValue"), NULL, NULL, (BYTE*) &iSepColorValue, &datasize);
+		res = RegQueryValueEx(key1, _T("iSelTextColorValue"), NULL, NULL, (BYTE*) &iSelTextColorValue, &datasize);
+		res = RegQueryValueEx(key1, _T("iSelBkColorValue"), NULL, NULL, (BYTE*) &iSelBkColorValue, &datasize);
+		res = RegQueryValueEx(key1, _T("iBmkColor"), NULL, NULL, (BYTE*) &iBmkColor, &datasize);
 
-		res = RegQueryValueEx( key1, "iAutomaticBPL", NULL, NULL, (BYTE*) &iAutomaticBPL, &datasize );
-		res = RegQueryValueEx( key1, "iBytesPerLine", NULL, NULL, (BYTE*) &iBytesPerLine, &datasize );
-		res = RegQueryValueEx( key1, "iOffsetLen", NULL, NULL, (BYTE*) &iMinOffsetLen, &datasize );//Pabs replaced "iOffsetLen" with "iMinOffsetLen"
-		res = RegQueryValueEx( key1, "iCharacterSet", NULL, NULL, (BYTE*) &iCharacterSet, &datasize );
-		res = RegQueryValueEx( key1, "iFontSize", NULL, NULL, (BYTE*) &iFontSize, &datasize );
-		res = RegQueryValueEx( key1, "bOpenReadOnly", NULL, NULL, (BYTE*) &bOpenReadOnly, &datasize );
+		res = RegQueryValueEx(key1, _T("iAutomaticBPL"), NULL, NULL, (BYTE*) &iAutomaticBPL, &datasize);
+		res = RegQueryValueEx(key1, _T("iBytesPerLine"), NULL, NULL, (BYTE*) &iBytesPerLine, &datasize);
+		res = RegQueryValueEx(key1, _T("iOffsetLen"), NULL, NULL, (BYTE*) &iMinOffsetLen, &datasize);//Pabs replaced "iOffsetLen" with "iMinOffsetLen"
+		res = RegQueryValueEx(key1, _T("iCharacterSet"), NULL, NULL, (BYTE*) &iCharacterSet, &datasize);
+		res = RegQueryValueEx(key1, _T("iFontSize"), NULL, NULL, (BYTE*) &iFontSize, &datasize);
+		res = RegQueryValueEx(key1, _T("bOpenReadOnly"), NULL, NULL, (BYTE*) &bOpenReadOnly, &datasize);
 
 //Pabs inserted
-		res = RegQueryValueEx( key1, "bMakeBackups", NULL, NULL, (BYTE*) &bMakeBackups, &datasize );
-		res = RegQueryValueEx( key1, "bAutoOffsetLen", NULL, NULL, (BYTE*) &bAutoOffsetLen, &datasize );
-		res = RegQueryValueEx( key1, "enable_drop", NULL, NULL, (BYTE*) &enable_drop, &datasize );
-		res = RegQueryValueEx( key1, "enable_drag", NULL, NULL, (BYTE*) &enable_drag, &datasize );
-		res = RegQueryValueEx( key1, "enable_scroll_delay_dd", NULL, NULL, (BYTE*) &enable_scroll_delay_dd, &datasize );
-		res = RegQueryValueEx( key1, "enable_scroll_delay_sel", NULL, NULL, (BYTE*) &enable_scroll_delay_sel, &datasize );
-		res = RegQueryValueEx( key1, "always_pick_move_copy", NULL, NULL, (BYTE*) &always_pick_move_copy, &datasize );
-		res = RegQueryValueEx( key1, "prefer_CF_HDROP", NULL, NULL, (BYTE*) &prefer_CF_HDROP, &datasize );
-		res = RegQueryValueEx( key1, "prefer_CF_BINARYDATA", NULL, NULL, (BYTE*) &prefer_CF_BINARYDATA, &datasize );
-		res = RegQueryValueEx( key1, "prefer_CF_TEXT", NULL, NULL, (BYTE*) &prefer_CF_TEXT, &datasize );
-		res = RegQueryValueEx( key1, "output_CF_BINARYDATA", NULL, NULL, (BYTE*) &output_CF_BINARYDATA, &datasize );
-		res = RegQueryValueEx( key1, "output_CF_TEXT", NULL, NULL, (BYTE*) &output_CF_TEXT, &datasize );
-		res = RegQueryValueEx( key1, "output_text_special", NULL, NULL, (BYTE*) &output_text_special, &datasize );
-		res = RegQueryValueEx( key1, "output_text_hexdump_display", NULL, NULL, (BYTE*) &output_text_hexdump_display, &datasize );
+		res = RegQueryValueEx(key1, _T("bMakeBackups"), NULL, NULL, (BYTE*) &bMakeBackups, &datasize);
+		res = RegQueryValueEx(key1, _T("bAutoOffsetLen"), NULL, NULL, (BYTE*) &bAutoOffsetLen, &datasize);
+		res = RegQueryValueEx(key1, _T("enable_drop"), NULL, NULL, (BYTE*) &enable_drop, &datasize);
+		res = RegQueryValueEx(key1, _T("enable_drag"), NULL, NULL, (BYTE*) &enable_drag, &datasize);
+		res = RegQueryValueEx(key1, _T("enable_scroll_delay_dd"), NULL, NULL, (BYTE*) &enable_scroll_delay_dd, &datasize);
+		res = RegQueryValueEx(key1, _T("enable_scroll_delay_sel"), NULL, NULL, (BYTE*) &enable_scroll_delay_sel, &datasize);
+		res = RegQueryValueEx(key1, _T("always_pick_move_copy"), NULL, NULL, (BYTE*) &always_pick_move_copy, &datasize);
+		res = RegQueryValueEx(key1, _T("prefer_CF_HDROP"), NULL, NULL, (BYTE*) &prefer_CF_HDROP, &datasize);
+		res = RegQueryValueEx(key1, _T("prefer_CF_BINARYDATA"), NULL, NULL, (BYTE*) &prefer_CF_BINARYDATA, &datasize);
+		res = RegQueryValueEx(key1, _T("prefer_CF_TEXT"), NULL, NULL, (BYTE*) &prefer_CF_TEXT, &datasize);
+		res = RegQueryValueEx(key1, _T("output_CF_BINARYDATA"), NULL, NULL, (BYTE*) &output_CF_BINARYDATA, &datasize);
+		res = RegQueryValueEx(key1, _T("output_CF_TEXT"), NULL, NULL, (BYTE*) &output_CF_TEXT, &datasize);
+		res = RegQueryValueEx(key1, _T("output_text_special"), NULL, NULL, (BYTE*) &output_text_special, &datasize);
+		res = RegQueryValueEx(key1, _T("output_text_hexdump_display"), NULL, NULL, (BYTE*) &output_text_hexdump_display, &datasize);
 //end
-		res = RegQueryValueEx( key1, "always_pick_move_copy", NULL, NULL, (BYTE*) &always_pick_move_copy, &datasize );
+		res = RegQueryValueEx(key1, _T("always_pick_move_copy"), NULL, NULL, (BYTE*) &always_pick_move_copy, &datasize);
 
 		LCID lcid = 0;
-		res = RegQueryValueEx( key1, "locale", NULL, NULL, (BYTE*) &lcid, &datasize );
+		res = RegQueryValueEx(key1, _T("locale"), NULL, NULL, (BYTE*) &lcid, &datasize);
 		load_lang((LANGID)lcid);
 
 		datasize = sizeof TexteditorName;
@@ -3546,19 +3543,19 @@ void HexEditorWindow::read_ini_data(char *key)
 		datasize = sizeof EncodeDlls;
 		res = SHGetValue(key1, 0, _T("EncodeDlls"), 0, EncodeDlls, &datasize);
 
-		res = RegQueryValueEx( key1, "iWindowShowCmd", NULL, NULL, (BYTE*) &iWindowShowCmd, &datasize );
-		res = RegQueryValueEx( key1, "iWindowX", NULL, NULL, (BYTE*) &iWindowX, &datasize );
-		res = RegQueryValueEx( key1, "iWindowY", NULL, NULL, (BYTE*) &iWindowY, &datasize );
-		res = RegQueryValueEx( key1, "iWindowWidth", NULL, NULL, (BYTE*) &iWindowWidth, &datasize );
-		res = RegQueryValueEx( key1, "iWindowHeight", NULL, NULL, (BYTE*) &iWindowHeight, &datasize );
+		res = RegQueryValueEx(key1, _T("iWindowShowCmd"), NULL, NULL, (BYTE*) &iWindowShowCmd, &datasize);
+		res = RegQueryValueEx(key1, _T("iWindowX"), NULL, NULL, (BYTE*) &iWindowX, &datasize);
+		res = RegQueryValueEx(key1, _T("iWindowY"), NULL, NULL, (BYTE*) &iWindowY, &datasize);
+		res = RegQueryValueEx(key1, _T("iWindowWidth"), NULL, NULL, (BYTE*) &iWindowWidth, &datasize);
+		res = RegQueryValueEx(key1, _T("iWindowHeight"), NULL, NULL, (BYTE*) &iWindowHeight, &datasize);
 
-		res = RegQueryValueEx( key1, "iMRU_count", NULL, NULL, (BYTE*) &iMRU_count, &datasize );
+		res = RegQueryValueEx(key1, _T("iMRU_count"), NULL, NULL, (BYTE*) &iMRU_count, &datasize);
 		int i;
 		for (i = 0 ; i < MRUMAX ; i++)
 		{
 			const int fname_size = 64;
-			char fname[fname_size] = {0};
-			_snprintf(fname, fname_size - 1, "MRU_File%d", i + 1);
+			TCHAR fname[fname_size] = {0};
+			_snprintf(fname, fname_size - 1, _T("MRU_File%d"), i + 1);
 			datasize = _MAX_PATH;
 			res = RegQueryValueEx(key1, fname, NULL, NULL, (BYTE*) strMRU[i], &datasize);
 		}

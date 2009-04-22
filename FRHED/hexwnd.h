@@ -191,7 +191,7 @@ public:
 	void CMD_edit_append();
 	virtual void STDMETHODCALLTYPE save_ini_data();
 //Pabs inserted "char* key = NULL"
-	virtual void STDMETHODCALLTYPE read_ini_data(char *key = 0);
+	virtual void STDMETHODCALLTYPE read_ini_data(TCHAR *key = 0);
 //end
 	void CMD_color_settings(COLORREF* pColor);
 	void CMD_view_settings();
@@ -297,14 +297,14 @@ protected:
 	static int iPasteSkip;
 
 	int bOpenReadOnly;//Pabs inserted ", iPartialOpenLen, iPartialFileLen, bPartialStats"
-	__int64 iPartialOffset, iPartialFileLen;
+	INT64 iPartialOffset, iPartialFileLen;
 	bool bPartialOpen; /**< Was file opened partially? */
 	int iPartialOpenLen; /**< Length of the partially opened block from file. */
 	bool bPartialStats;
 	int iBmkCount; /**< Count of bookmarks. */
 	bookmark pbmkList[BMKMAX]; /**< List of bookmarks. */
 	int iMRU_count; /**< Count of MRU list items active. */
-	char strMRU[MRUMAX][_MAX_PATH]; /**< List of MRU items. */
+	TCHAR strMRU[MRUMAX][_MAX_PATH]; /**< List of MRU items. */
 	bool bFilestatusChanged;
 	int bScrollTimerSet;
 	int iMouseX; /**< Current mouse X position. */
@@ -317,7 +317,7 @@ protected:
 	int bLButtonDown, bSelecting, iLBDownX, iLBDownY;
 	int cxChar, cxCaps, cyChar, cxClient, cyClient, cxBuffer, cyBuffer, iNumlines;
 	int iByteSpace, iCharSpace;
-	char filename[_MAX_PATH];
+	TCHAR filename[_MAX_PATH];
 	HWND hwnd;
 	HINSTANCE hInstance;
 	IHexEditorWindow *sibling;
