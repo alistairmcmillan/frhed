@@ -32,7 +32,7 @@
 /** Size of offset edit and buffer. */
 static const UINT EditLen = 16;
 
-char GoToDlg::buffer[EditLen + 1];
+TCHAR GoToDlg::buffer[EditLen + 1];
 
 /**
  * Initialize the dialog.
@@ -57,16 +57,15 @@ BOOL GoToDlg::OnInitDialog(HWND hDlg)
 BOOL GoToDlg::Apply(HWND hDlg)
 {
 	int offset, i = 0, r = 0;
-	GetDlgItemText(hDlg, IDC_GOTO_OFFSET, buffer, sizeof buffer);
+	GetDlgItemText(hDlg, IDC_GOTO_OFFSET, buffer, RTL_NUMBER_OF(buffer));
 	// For a relative jump, read offset from 2nd character on.
 	if (buffer[0] == '+' || buffer[0] == '-')
 		r = 1;
-	if (sscanf(buffer + r, "x%x", &offset) == 0 &&
-		sscanf(buffer + r, "%d", &offset) == 0)
+	if (_stscanf(buffer + r, _T("x%x"), &offset) == 0 &&
+		_stscanf(buffer + r, _T("%d"), &offset) == 0)
 	{
-		LangString app(IDS_APPNAME);
 		LangString offsetErr(IDS_OFFSET_ERROR);
-		MessageBox(hDlg, offsetErr, app, MB_ICONERROR);
+		MessageBox(hDlg, offsetErr, MB_ICONERROR);
 		return FALSE;
 	}
 	if (r)
