@@ -26,9 +26,9 @@
 #include "precomp.h"
 #include "FindUtil.h"
 
-static char equal(char c);
-static char lower_case(char c);
-static int find_bytes(char* ps, int ls, char* pb, int lb, int mode, char (*cmp)(char));
+static TCHAR equal(TCHAR c);
+static TCHAR lower_case(TCHAR c);
+static int find_bytes(TCHAR* ps, int ls, TCHAR* pb, int lb, int mode, TCHAR (*cmp)(TCHAR));
 
 /**
  * @brief Find bytes in buffer.
@@ -42,23 +42,23 @@ static int find_bytes(char* ps, int ls, char* pb, int lb, int mode, char (*cmp)(
  * @param [in] case_sensitive If true, performs case-sensitive search.
  * @return Position of found string or -1 if not there.
 */
-int findutils_FindBytes(char* ps, int ls, char* pb, int lb, int mode, bool case_sensitive)
+int findutils_FindBytes(TCHAR* ps, int ls, TCHAR* pb, int lb, int mode, bool case_sensitive)
 {
-	char (*cmp)(char) = case_sensitive ? equal : lower_case;
+	TCHAR (*cmp)(TCHAR) = case_sensitive ? equal : lower_case;
 	return find_bytes(ps, ls, pb, lb, mode, cmp);
 }
 
 //--------------------------------------------------------------------------------------------
 // Required for the find function.
-char equal(char c)
+TCHAR equal(TCHAR c)
 {
 	return c;
 }
 
-char lower_case(char c)
+TCHAR lower_case(TCHAR c)
 {
 	if (c >= 'A' && c <= 'Z')
-		c = (char)('a' + c - 'A');
+		c = (TCHAR)('a' + c - 'A');
 	return c;
 }
 
@@ -74,7 +74,7 @@ char lower_case(char c)
  * @param [in] cmp pointer to function that is applied to data before comparing.
  * @return Position of found string or -1 if not there.
 */
-int find_bytes(char* ps, int ls, char* pb, int lb, int mode, char (*cmp)(char))
+int find_bytes(TCHAR* ps, int ls, TCHAR* pb, int lb, int mode, TCHAR (*cmp)(TCHAR))
 {
 	int start, inc, end, i;
 	if (mode == 1)

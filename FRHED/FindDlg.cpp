@@ -38,7 +38,7 @@ int FindDlg::iFindDlgDirection = 0;
 int FindDlg::iFindDlgUnicode = 0;
 int FindDlg::iFindDlgBufLen = 64 * 1024 - 1;
 
-char *FindDlg::pcFindDlgBuffer = (char *)LocalAlloc(LPTR, iFindDlgBufLen);
+TCHAR *FindDlg::pcFindDlgBuffer = (TCHAR *)LocalAlloc(LPTR, iFindDlgBufLen);
 
 INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 {
@@ -52,7 +52,7 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			int sel_start = iGetStartOfSelection();
 			int select_len = iGetEndOfSelection() - sel_start + 1;
 			// Get the length of the bytecode representation of the selection (including zero-byte at end).
-			int findlen = Text2BinTranslator::iBytes2BytecodeDestLen((char *)&DataArray[sel_start], select_len);
+			int findlen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR *)&DataArray[sel_start], select_len);
 			if (findlen > iFindDlgBufLen)
 			{
 				LangString largeSel(IDS_FIND_SEL_TOO_LARGE);
@@ -89,12 +89,12 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 				iFindDlgDirection = IsDlgButtonChecked(hDlg, IDC_FIND_UP) ? -1 : 1;
 				// Copy text in Edit-Control. Return the number of characters
 				// in the Edit-control minus the zero byte at the end.
-				char *pcFindstring = 0;
+				TCHAR *pcFindstring = 0;
 				//GK16AUG2K
 				int destlen;
 				if (iFindDlgUnicode)
 				{
-					pcFindstring = new char[srclen * 2];
+					pcFindstring = new TCHAR[srclen * 2];
 					destlen = MultiByteToWideChar(CP_ACP, 0, pcFindDlgBuffer,
 							srclen, (WCHAR *)pcFindstring, srclen) * 2;
 				}
@@ -112,7 +112,7 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 					// Find forward.
 					if (iFindDlgDirection == 1)
 					{
-						i = findutils_FindBytes((char *)&DataArray[iCurByte + 1],
+						i = findutils_FindBytes((TCHAR *)&DataArray[iCurByte + 1],
 								DataArray.GetLength() - iCurByte - 1,
 								pcFindstring, destlen, 1, bFindDlgMatchCase);
 						if (i != -1)
@@ -121,7 +121,7 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 					// Find backward.
 					else
 					{
-						i = findutils_FindBytes((char *)&DataArray[0],
+						i = findutils_FindBytes((TCHAR *)&DataArray[0],
 							min(iCurByte + (destlen - 1), DataArray.GetLength()),
 							pcFindstring, destlen, -1, bFindDlgMatchCase);
 						if (i != -1)

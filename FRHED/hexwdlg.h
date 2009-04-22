@@ -178,7 +178,7 @@ public:
 	static int iFindDlgDirection;
 	static int iFindDlgUnicode;
 	static int iFindDlgBufLen;
-	static char *pcFindDlgBuffer;
+	static TCHAR *pcFindDlgBuffer;
 };
 
 class ReplaceDlg : public HexEditorWindow

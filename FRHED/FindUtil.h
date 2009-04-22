@@ -26,6 +26,6 @@
 #ifndef _FIND_UTIL_H_
 #define _FIND_UTIL_H_
 
-int findutils_FindBytes(char* ps, int ls, char* pb, int lb, int mode, bool case_sensitive);
+int findutils_FindBytes(TCHAR* ps, int ls, TCHAR* pb, int lb, int mode, bool case_sensitive);
 
 #endif // _FIND_UTIL_H_
