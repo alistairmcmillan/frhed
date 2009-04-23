@@ -93,7 +93,7 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 		return FALSE;
 	}
 	UINT uFormat = SendMessage(list, LB_GETITEMDATA, i, 0);
-	char *pcPastestring = 0;
+	TCHAR *pcPastestring = 0;
 	int destlen = 0;
 	BOOL bPasteBinary = FALSE;
 	BOOL bPasteUnicode = FALSE;
@@ -104,9 +104,9 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 			int gsize = GlobalSize(hClipMemory);
 			if (gsize)
 			{
-				char *pClipMemory = (char *)GlobalLock(hClipMemory);
-				pcPastestring = new char[gsize];
-				memcpy (pcPastestring, pClipMemory, gsize);
+				TCHAR *pClipMemory = (TCHAR *)GlobalLock(hClipMemory);
+				pcPastestring = new TCHAR[gsize];
+				memcpy(pcPastestring, pClipMemory, gsize * sizeof(TCHAR));
 				GlobalUnlock(hClipMemory);
 			}
 			switch (uFormat)
@@ -129,13 +129,13 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 	{
 		if (iPasteAsText)
 		{
-			destlen = bPasteUnicode ? 2 * wcslen((WCHAR *)pcPastestring) : strlen(pcPastestring);
+			destlen = bPasteUnicode ? 2 * wcslen((WCHAR *)pcPastestring) : _tcslen(pcPastestring);
 		}
 		else
 		{
-			char *pc = 0;
+			TCHAR *pc = 0;
 			destlen = create_bc_translation(&pc, pcPastestring,
-				strlen(pcPastestring), iCharacterSet, iBinaryMode);
+				_tcslen(pcPastestring), iCharacterSet, iBinaryMode);
 			delete [] pcPastestring;
 			pcPastestring = pc;
 		}
@@ -214,9 +214,9 @@ void FastPasteDlg::RefreshClipboardFormats(HWND hDlg)
 	{
 		UINT uFormat;
 		int i;
-		char szFormatName[100];
-		char SetSel = 0;
-		LPCSTR lpFormatName;
+		TCHAR szFormatName[100];
+		TCHAR SetSel = 0;
+		LPTSTR lpFormatName;
 
 		uFormat = EnumClipboardFormats(0);
 		while (uFormat)
@@ -231,10 +231,10 @@ void FastPasteDlg::RefreshClipboardFormats(HWND hDlg)
 				//Get the name of the standard clipboard format.
 				switch (uFormat)
 				{
-					#define CASE(a,b) case a: lpFormatName = #a; SetSel = b; break;
+					#define CASE(a,b) case a: lpFormatName = _T(#a); SetSel = b; break;
 						CASE(CF_TEXT,1)
 					#undef CASE
-					#define CASE(a) case a: lpFormatName = #a; break;
+					#define CASE(a) case a: lpFormatName = _T(#a); break;
 						CASE(CF_BITMAP) CASE(CF_METAFILEPICT) CASE(CF_SYLK)
 						CASE(CF_DIF) CASE(CF_TIFF) CASE(CF_OEMTEXT)
 						CASE(CF_DIB) CASE(CF_PALETTE) CASE(CF_PENDATA)
@@ -249,7 +249,7 @@ void FastPasteDlg::RefreshClipboardFormats(HWND hDlg)
 					default:
 						if (i != i)
 							;
-						#define CASE(a) else if(uFormat>a##FIRST&&uFormat<a##LAST) sprintf(szFormatName,#a "%d",uFormat-a##FIRST);
+						#define CASE(a) else if(uFormat>a##FIRST&&uFormat<a##LAST) _stprintf(szFormatName,_T(#a) _T("%d"),uFormat-a##FIRST);
 							CASE(CF_PRIVATE) CASE(CF_GDIOBJ)
 						#undef CASE
 						/*Format ideas for future: hex number, system/msdn constant, registered format, WM_ASKFORMATNAME, tickbox for delay rendered or not*/
@@ -265,7 +265,7 @@ void FastPasteDlg::RefreshClipboardFormats(HWND hDlg)
 
 			if (lpFormatName == NULL)
 			{
-				sprintf(szFormatName, "0x%.8x", uFormat);
+				_stprintf(szFormatName, _T("0x%.8x"), uFormat);
 				lpFormatName = szFormatName;
 			}
 
