@@ -432,6 +432,14 @@
 #define IDS_FIND_SEL_TOO_LARGE          10448
 #define IDS_FIND_CANNOT_FIND            10449
 #define IDS_FIND_EMPTY_STRING           10450
+#define IDS_DRIVES_NEED_ADMIN           10464
+#define IDS_DRIVES_ERR_OPEN             10465
+#define IDS_DRIVES_CYLINDERS            10466
+#define IDS_DRIVES_SECTORS              10467
+#define IDS_DRIVES_TRACSPERCYL          10468
+#define IDS_DRIVES_SECTPERTRACK         10469
+#define IDS_DRIVES_BYTESPERSECT         10470
+#define IDS_DRIVES_TOTALBYTES           10471
 #define IDS_SBAR_SELECTED_OFFSET        11008
 #define IDS_SBAR_NSEL_OFFSET            11009
 #define IDS_SBAR_BITS                   11010

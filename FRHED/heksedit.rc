@@ -1433,6 +1433,8 @@ BEGIN
     IDS_ERR_SEEK_FILE       "Could not seek in file."
     IDS_ERR_WRITE_FILE      "Could not write data to file."
     IDS_ERR_HELP_NOT_FOUND  "Help file\n%s\nnot found!"
+    IDS_ERR_FILE_OPEN_CODE  "Error code 0x%x occured while opening file %s."
+    IDS_ERR_WRITING_OPTIONS "Could not save preferences to registry."
 END
 
 // About-dialog
@@ -1592,6 +1594,19 @@ BEGIN
     IDS_FIND_SEL_TOO_LARGE "Selection too large."
     IDS_FIND_CANNOT_FIND   "Could not find data."
     IDS_FIND_EMPTY_STRING  "Findstring is zero bytes long."
+END
+
+// Drives-dialog
+STRINGTABLE
+BEGIN
+    IDS_DRIVES_NEED_ADMIN  "You need to have Administrator privileges for getting list of drives."
+    IDS_DRIVES_ERR_OPEN    "Unable to open drive"
+    IDS_DRIVES_CYLINDERS   "Cylinders"
+    IDS_DRIVES_SECTORS     "Sectors"
+    IDS_DRIVES_TRACSPERCYL "Tracks per cylinder"
+    IDS_DRIVES_SECTPERTRACK "Sectors per track"
+    IDS_DRIVES_BYTESPERSECT "Bytes per sector"
+    IDS_DRIVES_TOTALBYTES  "Total size in bytes"
 END
 
 // Status bar

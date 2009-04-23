@@ -1,8 +1,8 @@
 #ifndef gktools_h
 #define gktools_h
 
-BOOL WINAPI GetDllExportNames( LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize );
-BOOL WINAPI GetDllImportNames( LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize );
+BOOL WINAPI GetDllExportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize);
+BOOL WINAPI GetDllImportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize);
 
 struct s_MEMORY_ENCODING;
 
@@ -12,14 +12,14 @@ typedef struct s_MEMORY_ENCODING
 {
 	LPBYTE lpbMemory;
 	DWORD dwSize;
-	LPCSTR lpszArguments;
+	LPCTSTR lpszArguments;
 	BOOL bEncode;
 	LPFNEncodeMemoryFunction fpEncodeFunc;
 } MEMORY_CODING, *LPMEMORY_CODING;
 
 typedef struct _MEMORY_CODING_DESCRIPTION
 {
-	LPCSTR lpszDescription;
+	LPCTSTR lpszDescription;
 	LPFNEncodeMemoryFunction fpEncodeFunc;
 } MEMORY_CODING_DESCRIPTION, *LPMEMORY_CODING_DESCRIPTION;
 
@@ -28,8 +28,11 @@ typedef LPMEMORY_CODING_DESCRIPTION (WINAPI* LPFNGetMemoryCodings)();
 
 extern PartitionInfo* SelectedPartitionInfo;
 
-BOOL WINAPI GetMemoryCoding( HINSTANCE hInstance, HWND hParent, LPMEMORY_CODING p, LPCSTR lpszDlls );
+BOOL WINAPI GetMemoryCoding(HINSTANCE hInstance, HWND hParent, LPMEMORY_CODING p, LPCTSTR lpszDlls);
 
+/**
+ * @brief A dialog for selecting encoder DLL.
+ */
 class EncodeDecodeDialog : public HexEditorWindow
 {
 public:
@@ -37,6 +40,9 @@ public:
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 };
 
+/**
+ * @brief A dialog for opening disk drives.
+ */
 class OpenDriveDialog : public HexEditorWindow
 {
 public:
@@ -44,6 +50,9 @@ public:
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 };
 
+/**
+ * @brief A dialog for moving in disk.
+ */
 class GotoTrackDialog : public HexEditorWindow
 {
 public:

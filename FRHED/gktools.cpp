@@ -2,16 +2,18 @@
 #include "DllProxies.h"
 #include <imagehlp.h>
 #include <ctype.h>
+#include "UnicodeString.h"
 #include "resource.h"
 #include "hexwnd.h"
 #include "gktools.h"
 #include "simparr.h"
 #include "OSTools.h"
 #include "LangString.h"
+#include "StringTable.h"
 
 static PList PartitionInfoList;
 
-BOOL WINAPI GetDllExportNames( LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize )
+BOOL WINAPI GetDllExportNames(LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize)
 {
 	struct IMAGEHLP *IMAGEHLP = ::IMAGEHLP;
 	if (IMAGEHLP == 0)
@@ -45,7 +47,7 @@ BOOL WINAPI GetDllExportNames( LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpu
 	return bDone;
 }
 
-BOOL WINAPI GetDllImportNames( LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize )
+BOOL WINAPI GetDllImportNames(LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize)
 {
 	struct IMAGEHLP *IMAGEHLP = ::IMAGEHLP;
 	if (IMAGEHLP == 0)
@@ -121,8 +123,8 @@ void WINAPI Rot13Encoder( LPMEMORY_CODING p )
 
 MEMORY_CODING_DESCRIPTION BuiltinEncoders[] =
 {
-	{ "ROT-13", Rot13Encoder },
-	{ "XOR -1", XorEncoder },
+	{ _T("ROT-13"), Rot13Encoder },
+	{ _T("XOR -1"), XorEncoder },
 	{ 0, 0 }
 };
 
@@ -141,15 +143,20 @@ INT_PTR EncodeDecodeDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 	{
 	case WM_INITDIALOG:
 		{
-			SimpleString buffer((LPSTR)(LPCSTR)EncodeDlls);
-			LPCSTR lpszToken = strtok(buffer, ";");
+			//SimpleString buffer((LPTSTR)(LPCTSTR)EncodeDlls);
+			//LPCSTR lpszToken = strtok(buffer, ";");
 			HWND hListbox = GetDlgItem(hDlg, IDC_ENCODE_LIST);
 			AddEncoders(hListbox, BuiltinEncoders);
-			while (lpszToken)
+
+			String buffer(EncodeDlls);
+			size_t prev_ind = 0;
+			size_t ind = buffer.find_first_of(';');
+			while (prev_ind != buffer.npos && ind != buffer.npos)
 			{
-				HMODULE hLibrary = GetModuleHandle(lpszToken);
+				String dll = buffer.substr(prev_ind, ind - prev_ind);
+				HMODULE hLibrary = GetModuleHandle(dll.c_str());
 				if (hLibrary == 0)
-					hLibrary = LoadLibrary(lpszToken);
+					hLibrary = LoadLibrary(dll.c_str());
 				if (hLibrary)
 				{
 					if (LPFNGetMemoryCodings callback = (LPFNGetMemoryCodings)
@@ -158,7 +165,9 @@ INT_PTR EncodeDecodeDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 						AddEncoders(hListbox, callback());
 					}
 				}
-				lpszToken = strtok(0, ";");
+				//lpszToken = strtok(0, ";");
+				prev_ind = ind;
+				ind = buffer.find_first_of(';', prev_ind + 1);
 			}
 			SendMessage(hListbox, LB_SETCURSEL, 0, 0);
 			CheckDlgButton(hDlg, IDC_ENCODE_ENC, BST_CHECKED);
@@ -171,7 +180,7 @@ INT_PTR EncodeDecodeDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 		case IDOK:
 			{
 				MEMORY_CODING mc;
-				CHAR szBuffer[1024];
+				TCHAR szBuffer[1024];
 				GetDlgItemText(hDlg, IDC_ENCODE_ARGS, szBuffer, sizeof(szBuffer));
 				mc.bEncode = IsDlgButtonChecked(hDlg, IDC_ENCODE_ENC);
 				mc.lpszArguments = szBuffer;
@@ -214,8 +223,8 @@ INT_PTR OpenDriveDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			if (!admin)
 			{
 				LangString app(IDS_APPNAME);
-				MessageBox(hDlg, _T("You need to have Administrator privileges for getting list of drives."),
-						app, MB_OK | MB_ICONSTOP);
+				LangString needAdmin(IDS_DRIVES_NEED_ADMIN);
+				MessageBox(hDlg, needAdmin, app, MB_OK | MB_ICONSTOP);
 				return TRUE;
 			}
 			ShowWindow(hDlg, SW_SHOW);
@@ -254,7 +263,8 @@ INT_PTR OpenDriveDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 				if (Drive == 0 || !Drive->Open(SelectedPartitionInfo->m_dwDrive))
 				{
 					LangString app(IDS_APPNAME);
-					MessageBox(hwnd, "Unable to open drive", app, MB_ICONERROR);
+					LangString err(IDS_DRIVES_ERR_OPEN);
+					MessageBox(hwnd, err, app, MB_ICONERROR);
 					delete Drive;
 					return TRUE;
 				}
@@ -284,9 +294,9 @@ INT_PTR GotoTrackDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 	{
 	case WM_INITDIALOG:
 		{
-			CHAR szTempBuffer[10240];
+			TCHAR szTempBuffer[10240];
 
-			sprintf(szTempBuffer, "%I64d", CurrentSectorNumber);
+			_stprintf(szTempBuffer, _T("%I64d"), CurrentSectorNumber);
 			SetDlgItemText(hDlg, IDC_DRIVE_TRACK, szTempBuffer);
 
 			DISK_GEOMETRY dg;
@@ -297,18 +307,24 @@ INT_PTR GotoTrackDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 			TotalSizeInBytes *= dg.TracksPerCylinder;
 			TotalSizeInBytes *= dg.Cylinders.QuadPart;
 
-			sprintf(szTempBuffer,
-				"Cylinders = %I64d\r\n"
-				"Sectors = %I64d\r\n"
-				"TracksPerCylinder = %ld\r\n"
-				"SectorsPerTrack = %ld\r\n"
-				"BytesPerSector = %ld\r\n"
-				"TotalSizeInBytes = %I64d\r\n",
+			_stprintf(szTempBuffer,
+				_T("%s = %I64d\r\n")
+				_T("%s = %I64d\r\n")
+				_T("%s = %ld\r\n")
+				_T("%s = %ld\r\n")
+				_T("%s = %ld\r\n")
+				_T("%s = %I64d\r\n"),
+				GetLangString(IDS_DRIVES_CYLINDERS),
 				dg.Cylinders.QuadPart,
+				GetLangString(IDS_DRIVES_SECTORS),
 				SelectedPartitionInfo->m_NumberOfSectors,
+				GetLangString(IDS_DRIVES_TRACSPERCYL),
 				dg.TracksPerCylinder,
+				GetLangString(IDS_DRIVES_SECTPERTRACK),
 				dg.SectorsPerTrack,
+				GetLangString(IDS_DRIVES_BYTESPERSECT),
 				dg.BytesPerSector,
+				GetLangString(IDS_DRIVES_TOTALBYTES),
 				TotalSizeInBytes);
 
 			SetDlgItemText(hDlg, IDC_DRIVE_INFO, szTempBuffer);
@@ -320,11 +336,11 @@ INT_PTR GotoTrackDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPa
 		{
 		case IDOK:
 			{
-				CHAR szBuffer[256];
-				GetDlgItemText(hDlg, IDC_DRIVE_TRACK, szBuffer, sizeof(szBuffer));
+				TCHAR szBuffer[256];
+				GetDlgItemText(hDlg, IDC_DRIVE_TRACK, szBuffer, RTL_NUMBER_OF(szBuffer));
 
 				INT64 TempCurrentSectorNumber = 0;
-				sscanf(szBuffer, "%I64d", &TempCurrentSectorNumber);
+				_stscanf(szBuffer, _T("%I64d"), &TempCurrentSectorNumber);
 				if (TempCurrentSectorNumber < 0 ||
 					TempCurrentSectorNumber >= SelectedPartitionInfo->m_NumberOfSectors)
 				{
