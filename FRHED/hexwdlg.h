@@ -223,6 +223,9 @@ private:
 	BOOL OnCommand(HWND, WPARAM, LPARAM);
 };
 
+/**
+ * @brief A dialog for adding bookmark.
+ */
 class AddBmkDlg : public HexEditorWindow
 {
 public:
@@ -233,6 +236,9 @@ private:
 	BOOL OnCommand(HWND, WPARAM, LPARAM);
 };
 
+/**
+ * @brief A dialog for removing bookmark.
+ */
 class RemoveBmkDlg : public HexEditorWindow
 {
 public:

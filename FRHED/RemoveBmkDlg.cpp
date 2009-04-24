@@ -28,13 +28,18 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ */
 BOOL RemoveBmkDlg::OnInitDialog(HWND hDlg)
 {
-	char buf[128] = {0};
+	TCHAR buf[128] = {0};
 	HWND hwndList = GetDlgItem(hDlg, IDC_REMOVEBMK_LIST);
 	for (int i = 0 ; i < iBmkCount ; i++)
 	{
-		_snprintf(buf, RTL_NUMBER_OF(buf) - 1, pbmkList[i].name ? "%d) 0x%x:%s" : "%d) 0x%x",
+		_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, pbmkList[i].name ?
+			_T("%d) 0x%x:%s") : _T("%d) 0x%x"),
 			i + 1, pbmkList[i].offset, pbmkList[i].name);
 		SendMessage(hwndList, LB_ADDSTRING, 0, (LPARAM)buf);
 	}
@@ -42,6 +47,13 @@ BOOL RemoveBmkDlg::OnInitDialog(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Handle dialog commands.
+ * @param [in] hDlg Hanle to the dialog.
+ * @param [in] wParam The command to handle.
+ * @param [in] lParam Optional parameter for the command.
+ * @return TRUE if the command was handled, FALSE otherwise.
+ */
 BOOL RemoveBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 {
 	int i;
@@ -49,7 +61,7 @@ BOOL RemoveBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	{
 	case IDOK:
 		i = SendDlgItemMessage(hDlg, IDC_REMOVEBMK_LIST, LB_GETCURSEL, 0, 0);
-		if (char *name = pbmkList[i].name)
+		if (TCHAR *name = pbmkList[i].name)
 		{
 			free(name);
 			name = NULL;
@@ -66,6 +78,14 @@ BOOL RemoveBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	return FALSE;
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR RemoveBmkDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
