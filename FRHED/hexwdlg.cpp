@@ -112,8 +112,8 @@ INT_PTR ChangeInstDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 			{
 				int i = iLoadInst + 1;
 				const int num_size = 64;
-				char num[num_size] = {0};
-				_snprintf(num, num_size - 1, "%s\\%d", OptionsRegistrySettingsPath, i);
+				TCHAR num[num_size] = {0};
+				_sntprintf(num, num_size - 1, _T("%s\\%d"), OptionsRegistrySettingsPath, i);
 				if (ERROR_SUCCESS != RegOpenKeyEx(HKEY_CURRENT_USER, num, 0, KEY_EXECUTE, &hk))
 					break;
 				RegCloseKey(hk);//Close the key - just testing if it exists
@@ -122,7 +122,7 @@ INT_PTR ChangeInstDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 			if (iLoadInst == -1)
 			{
 				LangString app(IDS_APPNAME);
-				MessageBox(hwnd, "No instance data present", app, MB_OK);
+				MessageBox(hwnd, _T("No instance data present"), app, MB_OK);
 				EndDialog(hw, IDCANCEL);
 				return TRUE;
 			}
