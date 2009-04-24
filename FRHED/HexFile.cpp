@@ -29,6 +29,7 @@
 #include "HexFileStream.h"
 #include "resource.h"
 #include "LangString.h"
+#include "StringTable.h"
 
 /**
  * @brief Convert hex byte to numeric value.
@@ -84,7 +85,7 @@ HexFile::~HexFile()
  * @param [in] buffer Pointer to the buffer to hold the dump data.
  * @param [in] size Size of the buffer (if known). -1 if size is not known.
  */
-void HexFile::Open(char * buffer, int size)
+void HexFile::Open(TCHAR * buffer, int size)
 {
 	m_pFile = new chexfile_stream(buffer);
 	m_size = size;
@@ -178,8 +179,8 @@ bool HexFile::ParseSimple()
 				if (!m_data.SetSize(ii + 1))
 				{
 					LangString app(IDS_APPNAME);
-					UINT ret = MessageBox(m_hwnd, "Not enough memory to import data.\n"
-							"Cannot continue!\nDo you want to keep what has been found so far?",
+					LangString msg(IDS_HEXF_NO_MEM);
+					UINT ret = MessageBox(m_hwnd, msg,
 							app, MB_YESNO | MB_ICONERROR);
 					return IDYES == ret;
 				}
@@ -196,8 +197,8 @@ bool HexFile::ParseSimple()
 		else if (!_istspace(temp[0]) && diio)
 		{
 			LangString app(IDS_APPNAME);
-			UINT ret = MessageBox(m_hwnd, "Illegal character found.\n"
-					"Ignore further illegal characters?",
+			LangString msg(IDS_HEXF_ILLEGAL_CHAR);
+			UINT ret = MessageBox(m_hwnd, msg,
 					app, MB_YESNOCANCEL | MB_ICONERROR);
 			switch (ret)
 			{
@@ -243,8 +244,8 @@ bool HexFile::ParseFormatted()
 				break;
 			if (! _istxdigit(c[0]) && diio)
 			{
-				UINT ret = MessageBox(m_hwnd, "Illegal character in offset.\n"
-						"Ignore further invalid offsets?", app,
+				LangString illOffset(IDS_HEXF_ILLEGAL_OFFS);
+				UINT ret = MessageBox(m_hwnd, illOffset, app,
 						MB_YESNOCANCEL | MB_ICONERROR);
 				switch (ret)
 				{
@@ -272,10 +273,9 @@ bool HexFile::ParseFormatted()
 			m_pFile->scanf("%x", &tmp);
 			if (flnd && tmp)
 			{
-				char msg[150];
-				sprintf(msg,
-					"The first offset found was 0x%x, which is greater than zero.\n"
-					"Do you want to insert %d null bytes at the start of the data?", tmp, tmp);
+				TCHAR msg[150];
+				LangString nonzeroOffset(IDS_HEXF_NONZERO_START);
+				_stprintf(msg, nonzeroOffset, tmp, tmp);
 				UINT ret = MessageBox(m_hwnd, msg, app, MB_YESNO | MB_ICONWARNING);
 				if (ret == IDYES)
 				{
@@ -295,8 +295,8 @@ bool HexFile::ParseFormatted()
 			}
 			else if (ii + fo != tmp)
 			{
-				UINT ret = MessageBox(m_hwnd, "Invalid offset found.\n"
-						"Ignore further invalid offsets?", app,
+				LangString invOffset(IDS_HEXF_INV_OFFSET);
+				UINT ret = MessageBox(m_hwnd, invOffset, app,
 						MB_YESNOCANCEL | MB_ICONWARNING);
 				switch (ret)
 				{
@@ -426,8 +426,8 @@ bool HexFile::ParseFormatted()
 BadData:
 					if (dim)
 					{
-						UINT ret = MessageBox(m_hwnd, "Character data does not agree with hex data.\n"
-								"Ignore further mismatched data?\nNB: Hex data will be used when ignoring.",
+						LangString dataMismatch(IDS_HEXF_CHAR_HEX_NO_MATCH);
+						UINT ret = MessageBox(m_hwnd, dataMismatch,
 								app, MB_YESNOCANCEL | MB_ICONWARNING);
 						switch (ret)
 						{
@@ -463,13 +463,13 @@ NextLine:
 IllegalCharacter:
 	//someone has been buggering with the file & the syntax is screwed up
 	//the next digit is not hex ' ' or '_'
-	return IDYES == MessageBox(m_hwnd, "Illegal character in hex data.\nCannot continue!\nDo you want to keep what has been found so far?",
+	return IDYES == MessageBox(m_hwnd, GetLangString(IDS_HEXF_ERR_INV_CHAR),
 			app, MB_YESNO | MB_ICONERROR);//bad file
 UnexpectedEndOfData:
-	return IDYES == MessageBox(m_hwnd, "Unexpected end of data found\nCannot continue!\nDo you want to keep what has been found so far?",
+	return IDYES == MessageBox(m_hwnd, GetLangString(IDS_HEXF_ERR_EOF),
 			app, MB_YESNO | MB_ICONERROR);
 OutOfMemory:
-	return IDYES == MessageBox(m_hwnd, "Not enough memory to import data.\nCannot continue!\nDo you want to keep what has been found so far?",
+	return IDYES == MessageBox(m_hwnd, GetLangString(IDS_HEXF_NO_MEM),
 			app, MB_YESNO | MB_ICONERROR);
 }
 

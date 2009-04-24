@@ -440,6 +440,14 @@
 #define IDS_DRIVES_SECTPERTRACK         10469
 #define IDS_DRIVES_BYTESPERSECT         10470
 #define IDS_DRIVES_TOTALBYTES           10471
+#define IDS_HEXF_NO_MEM                 10480
+#define IDS_HEXF_ILLEGAL_CHAR           10481
+#define IDS_HEXF_ILLEGAL_OFFS           10482
+#define IDS_HEXF_NONZERO_START          10483
+#define IDS_HEXF_INV_OFFSET             10484
+#define IDS_HEXF_CHAR_HEX_NO_MATCH      10485
+#define IDS_HEXF_ERR_INV_CHAR           10486
+#define IDS_HEXF_ERR_EOF                10487
 #define IDS_SBAR_SELECTED_OFFSET        11008
 #define IDS_SBAR_NSEL_OFFSET            11009
 #define IDS_SBAR_BITS                   11010
