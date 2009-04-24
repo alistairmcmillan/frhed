@@ -40,7 +40,7 @@ public:
 	HexFile();
 	~HexFile();
 
-	void Open(char * buffer, int size = -1);
+	void Open(TCHAR * buffer, int size = -1);
 	void Open(FILE * file);
 	int CheckType();
 	int GetSize() const;

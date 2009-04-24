@@ -34,7 +34,7 @@ public:
 	virtual int lhungetc(int) = 0;
 	virtual long lhtell() = 0;
 	virtual int lhseek(long) = 0;
-	virtual int scanf(const char *, int *) = 0;
+	virtual int scanf(LPCTSTR, int *) = 0;
 	int lheatwhite();
 };
 
@@ -95,9 +95,9 @@ public:
 	 * @param [in] p Pointer where to put the read integer.
 	 * @return Count of read integers.
 	 */
-	virtual int scanf(const char *fmt, int *p)
+	virtual int scanf(LPCTSTR fmt, int *p)
 	{
-		return fscanf(m_hexfile, fmt, p);
+		return _ftscanf(m_hexfile, fmt, p);
 	}
 };
 
@@ -107,7 +107,7 @@ public:
 class chexfile_stream : public hexfile_stream
 {
 private:
-	char *m_pBuf; /**< Start address of the hex data buffer. */
+	TCHAR *m_pBuf; /**< Start address of the hex data buffer. */
 	long m_offset; /**< Offset in the buffer. */
 
 public:
@@ -115,7 +115,7 @@ public:
 	 * Constructor.
 	 * @param [in] pBuffer Pointer to begin of read buffer.
 	 */
-	chexfile_stream(char *pBuffer): m_pBuf(pBuffer), m_offset(0) { }
+	chexfile_stream(TCHAR *pBuffer): m_pBuf(pBuffer), m_offset(0) { }
 
 	virtual int lhgetc();
 
@@ -153,9 +153,9 @@ public:
 	 * @param [in] p Pointer where to put the read integer.
 	 * @return Count of read integers.
 	 */
-	virtual int scanf(const char *fmt, int *p)
+	virtual int scanf(LPCTSTR fmt, int *p)
 	{
-		return sscanf(m_pBuf + m_offset, fmt, p);
+		return _stscanf(m_pBuf + m_offset, fmt, p);
 	}
 };
 

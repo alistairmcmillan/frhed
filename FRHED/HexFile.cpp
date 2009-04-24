@@ -270,7 +270,7 @@ bool HexFile::ParseFormatted()
 		{
 			int tmp = 0;
 			m_pFile->lhseek(ls);
-			m_pFile->scanf("%x", &tmp);
+			m_pFile->scanf(_T("%x"), &tmp);
 			if (flnd && tmp)
 			{
 				TCHAR msg[150];
@@ -337,7 +337,7 @@ bool HexFile::ParseFormatted()
 			//do this so that we don't overwrite memory outside the DataArray
 			// - because sscanf requires an int for storage
 			int tmp = 0;
-			sscanf((char*)c, "%x", &tmp);//save it to tmp
+			_stscanf((TCHAR*)c, _T("%x"), &tmp);//save it to tmp
 			m_data[ii] = (BYTE)tmp;
 			ii++;//next byte
 
