@@ -37,7 +37,7 @@
  *   shell link is to be stored.
  * @return The result of calling the member functions of the interfaces.
  */
-STDAPI CreateLink(LPCSTR lpszPathObj, LPCSTR lpszPathLink)
+STDAPI CreateLink(LPCTSTR lpszPathObj, LPCTSTR lpszPathLink)
 {
 	HRESULT hres;
 	IShellLink *psl;
