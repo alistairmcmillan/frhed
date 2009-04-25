@@ -79,7 +79,7 @@ void TraverseFolders::Recurse()
 			}
 			else
 			{
-				si = PathsEqual(_tpgmptr, rn);//update
+				si = PathPointsToMe(rn);//update
 			}
 			if (si == 0)
 			{
