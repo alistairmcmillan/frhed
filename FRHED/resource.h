@@ -448,6 +448,13 @@
 #define IDS_HEXF_CHAR_HEX_NO_MATCH      10485
 #define IDS_HEXF_ERR_INV_CHAR           10486
 #define IDS_HEXF_ERR_EOF                10487
+#define IDS_REPL_NO_DATA                10496
+#define IDS_REPL_CANT_DELETE            10497
+#define IDS_REPL_FAILED                 10498
+#define IDS_REPL_CANNOT_CONVERT         10499
+#define IDS_REPL_SAME_STRS              10500
+#define IDS_REPL_COUNT                  10501
+#define IDS_REPL_BAD_SELECT             10502
 #define IDS_SBAR_SELECTED_OFFSET        11008
 #define IDS_SBAR_NSEL_OFFSET            11009
 #define IDS_SBAR_BITS                   11010

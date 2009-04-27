@@ -115,8 +115,8 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 {
 	if (!bSelected)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, "Data to replace must be selected.", app, MB_ICONERROR);
+		LangString noData(IDS_REPL_NO_DATA);
+		MessageBox(hDlg, noData, MB_ICONERROR);
 		return FALSE;
 	}
 	int i = iGetStartOfSelection();
@@ -126,8 +126,8 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 		// Selected data is to be deleted, since replace-with data is empty string.
 		if (!DataArray.Replace(i, n, 0, 0))
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Could not delete selected data.", app, MB_ICONERROR);
+			LangString couldNotDelete(IDS_REPL_CANT_DELETE);
+			MessageBox(hDlg, couldNotDelete, MB_ICONERROR);
 			return FALSE;
 		}
 		bSelected = FALSE;
@@ -138,8 +138,8 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 		// Replace with non-zero-length data.
 		if (!DataArray.Replace(i, n, (BYTE*)(char *)strReplaceWithData, strReplaceWithData.StrLen()))
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Replacing failed.", app, MB_ICONERROR);
+			LangString failed(IDS_REPL_FAILED);
+			MessageBox(hDlg, failed, MB_ICONERROR);
 			return FALSE;
 		}
 		iEndOfSelection = iStartOfSelection + strReplaceWithData.StrLen() - 1;
@@ -150,14 +150,14 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 		SimpleArray<char> out;
 		if (!transl_text_to_binary(out))
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Could not translate text to binary.", app, MB_ICONERROR);
+			LangString cannotConvert(IDS_REPL_CANNOT_CONVERT);
+			MessageBox(hDlg, cannotConvert, MB_ICONERROR);
 			return FALSE;
 		}
 		if (!DataArray.Replace(i, n, (BYTE*)(char*)out, out.GetLength()))
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hDlg, "Replacing failed.", app, MB_ICONERROR);
+			LangString failed(IDS_REPL_FAILED);
+			MessageBox(hDlg, failed, MB_ICONERROR);
 			return FALSE;
 		}
 		iEndOfSelection = iStartOfSelection + out.GetLength() - 1;
@@ -167,7 +167,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 	return TRUE;
 }
 
-void ReplaceDlg::find_directed(HWND hDlg, int finddir, LPCTSTR title)
+void ReplaceDlg::find_directed(HWND hDlg, int finddir)
 {
 	GetDlgItemText(hDlg, IDC_TO_REPLACE_EDIT, strToReplaceData);
 	bool case_sensitive = IsDlgButtonChecked(hDlg, IDC_MATCHCASE_CHECK) == BST_CHECKED;
@@ -180,11 +180,12 @@ void ReplaceDlg::find_directed(HWND hDlg, int finddir, LPCTSTR title)
 	}
 	else
 	{
-		MessageBox(hDlg, _T("Could not find data."), title, MB_ICONWARNING);
+		LangString notFound(IDS_FIND_CANNOT_FIND);
+		MessageBox(hDlg, notFound, MB_ICONWARNING);
 	}
 }
 
-void ReplaceDlg::replace_directed(HWND hDlg, int finddir, LPCTSTR title)
+void ReplaceDlg::replace_directed(HWND hDlg, int finddir, bool showCount)
 {
 	bool case_sensitive = IsDlgButtonChecked(hDlg, IDC_MATCHCASE_CHECK) == BST_CHECKED;
 	GetDlgItemText(hDlg, IDC_TO_REPLACE_EDIT, strToReplaceData);
@@ -195,8 +196,8 @@ void ReplaceDlg::replace_directed(HWND hDlg, int finddir, LPCTSTR title)
 	Text2BinTranslator tr_find(strToReplaceData), tr_replace(strReplaceWithData);
 	if (tr_find.bCompareBin(tr_replace, iCharacterSet, iBinaryMode))
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hDlg, _T("To-replace and replace-with data are same."), app, MB_ICONERROR);
+		LangString sameStrings(IDS_REPL_SAME_STRS);
+		MessageBox(hDlg, sameStrings, MB_ICONERROR);
 		return;
 	}
 	WaitCursor wc;
@@ -224,16 +225,24 @@ void ReplaceDlg::replace_directed(HWND hDlg, int finddir, LPCTSTR title)
 		adjust_view_for_selection();
 		resize_window();
 		synch_sibling();
-		if (title)
+
+		if (showCount)
 		{
-			TCHAR tbuf[80];
-			_stprintf(tbuf, _T("%d occurences replaced."), occ_num);
-			MessageBox(hDlg, tbuf, title, MB_ICONINFORMATION);
+			TCHAR tbuf[100];
+			_stprintf(tbuf, GetLangString(IDS_REPL_COUNT), occ_num);
+			MessageBox(hDlg, tbuf, MB_ICONINFORMATION);
 		}
 	}
 }
 
-//-------------------------------------------------------------------
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
@@ -246,8 +255,8 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			int select_len = iGetEndOfSelection() - sel_start + 1;
 			if (!transl_binary_to_text((char *)&DataArray[sel_start], select_len))
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hDlg, _T("Could not use selection as replace target."), app, MB_OK);
+				LangString badSelect(IDS_REPL_BAD_SELECT);
+				MessageBox(hDlg, badSelect, MB_OK);
 				EndDialog(hDlg, IDCANCEL);
 				return TRUE;
 			}
@@ -268,23 +277,23 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 
 		case IDC_FINDNEXT_BUTTON:
-			find_directed(hDlg, 1, _T("Replace/Find forward"));
+			find_directed(hDlg, 1);
 			break;
 
 		case IDC_FINDPREVIOUS_BUTTON:
-			find_directed(hDlg, -1, _T("Replace/Find backward"));
+			find_directed(hDlg, -1);
 			break;
 
 		case IDC_FOLLOCC_BUTTON:
-			replace_directed(hDlg, 1, _T("Replace/Replace all following"));
+			replace_directed(hDlg, 1, true);
 			break;
 
 		case IDC_PREVOCC_BUTTON:
-			replace_directed(hDlg, -1, _T("Replace/Replace all previous"));
+			replace_directed(hDlg, -1, true);
 			break;
 
 		case IDC_REPLACE_BUTTON:
-			replace_directed(hDlg, 0, NULL);
+			replace_directed(hDlg, 0, false);
 			break;
 		}
 		break;

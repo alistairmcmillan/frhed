@@ -1622,6 +1622,18 @@ BEGIN
     IDS_HEXF_ERR_EOF       "Unexpected end of data found\nCannot continue!\nDo you want to keep what has been found so far?"
 END
 
+// Replace-dialog
+STRINGTABLE
+BEGIN
+    IDS_REPL_NO_DATA       "Data to replace must be selected."
+    IDS_REPL_CANT_DELETE   "Could not delete selected data."
+    IDS_REPL_FAILED        "Replacing failed."
+    IDS_REPL_CANNOT_CONVERT "Could not translate text to binary."
+    IDS_REPL_SAME_STRS     "To-replace and replace-with data are same."
+    IDS_REPL_COUNT         "%d occurences replaced."
+    IDS_REPL_BAD_SELECT    "Could not use selection as replace target."
+END
+
 // Status bar
 STRINGTABLE 
 BEGIN

@@ -190,8 +190,8 @@ public:
 	static int transl_binary_to_text(char *, int);
 	int find_and_select_data(int finddir, bool case_sensitive);
 	int replace_selected_data(HWND);
-	void find_directed(HWND, int finddir, LPCTSTR title);
-	void replace_directed(HWND, int finddir, LPCTSTR title);
+	void find_directed(HWND, int finddir);
+	void replace_directed(HWND, int finddir, bool showCount);
 	static SimpleString strToReplaceData;
 	static SimpleString strReplaceWithData;
 };
