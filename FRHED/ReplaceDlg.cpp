@@ -39,11 +39,11 @@ SimpleString ReplaceDlg::strReplaceWithData;
 
 //-------------------------------------------------------------------
 // Translate the text in the string to binary data and store in the array.
-int ReplaceDlg::transl_text_to_binary(SimpleArray<char> &out)
+int ReplaceDlg::transl_text_to_binary(SimpleArray<TCHAR> &out)
 {
-	char *pcOut;
+	TCHAR *pcOut;
 	int destlen = create_bc_translation(&pcOut,
-		(char *)strReplaceWithData, strReplaceWithData.StrLen(),
+		(TCHAR *)strReplaceWithData, strReplaceWithData.StrLen(),
 		iCharacterSet, iBinaryMode);
 	if (destlen)
 		out.Adopt(pcOut, destlen - 1, destlen);
@@ -53,13 +53,13 @@ int ReplaceDlg::transl_text_to_binary(SimpleArray<char> &out)
 //-------------------------------------------------------------------
 // Create a text representation of an array of bytes and save it in
 // a SimpleString object.
-int	ReplaceDlg::transl_binary_to_text(char *src, int len)
+int	ReplaceDlg::transl_binary_to_text(TCHAR *src, int len)
 {
 	// How long will the text representation of array of bytes be?
 	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen(src, len);
 	strToReplaceData.SetSize(destlen);
 	strToReplaceData.ExpandToSize();
-	if (char *pd = strToReplaceData)
+	if (TCHAR *pd = strToReplaceData)
 	{
 		Text2BinTranslator::iTranslateBytesToBC(pd, (BYTE*) src, len);
 		return TRUE;
@@ -70,7 +70,7 @@ int	ReplaceDlg::transl_binary_to_text(char *src, int len)
 //-------------------------------------------------------------------
 int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 {
-	char *tofind;
+	TCHAR *tofind;
 	// Create a translation from bytecode to char array of finddata.
 	int destlen = create_bc_translation(&tofind, strToReplaceData,
 		strToReplaceData.StrLen(), iCharacterSet, iBinaryMode);
@@ -81,7 +81,7 @@ int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 	{
 		i += finddir * n;
 		// Find forward.
-		j = findutils_FindBytes((char *)&DataArray[i],
+		j = findutils_FindBytes((TCHAR *)&DataArray[i],
 			DataArray.GetLength() - i - 1,
 			tofind,	destlen, 1, case_sensitive);
 		if (j != -1)
@@ -90,7 +90,7 @@ int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 	else
 	{
 		// Find backward.
-		j = findutils_FindBytes((char *)&DataArray[0],
+		j = findutils_FindBytes((TCHAR *)&DataArray[0],
 			min(iCurByte + (destlen - 1), DataArray.GetLength()),
 			tofind, destlen, -1, case_sensitive);
 		if (j != -1)
@@ -136,7 +136,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 	else if (iPasteAsText)
 	{
 		// Replace with non-zero-length data.
-		if (!DataArray.Replace(i, n, (BYTE*)(char *)strReplaceWithData, strReplaceWithData.StrLen()))
+		if (!DataArray.Replace(i, n, (BYTE*)(TCHAR *)strReplaceWithData, strReplaceWithData.StrLen()))
 		{
 			LangString failed(IDS_REPL_FAILED);
 			MessageBox(hDlg, failed, MB_ICONERROR);
@@ -147,14 +147,14 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 	else
 	{
 		// Input string contains special-syntax-coded binary data.
-		SimpleArray<char> out;
+		SimpleArray<TCHAR> out;
 		if (!transl_text_to_binary(out))
 		{
 			LangString cannotConvert(IDS_REPL_CANNOT_CONVERT);
 			MessageBox(hDlg, cannotConvert, MB_ICONERROR);
 			return FALSE;
 		}
-		if (!DataArray.Replace(i, n, (BYTE*)(char*)out, out.GetLength()))
+		if (!DataArray.Replace(i, n, (BYTE*)(TCHAR*)out, out.GetLength()))
 		{
 			LangString failed(IDS_REPL_FAILED);
 			MessageBox(hDlg, failed, MB_ICONERROR);
@@ -253,7 +253,7 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		{
 			int sel_start = iGetStartOfSelection();
 			int select_len = iGetEndOfSelection() - sel_start + 1;
-			if (!transl_binary_to_text((char *)&DataArray[sel_start], select_len))
+			if (!transl_binary_to_text((TCHAR *)&DataArray[sel_start], select_len))
 			{
 				LangString badSelect(IDS_REPL_BAD_SELECT);
 				MessageBox(hDlg, badSelect, MB_OK);
@@ -262,9 +262,9 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		CheckDlgButton(hDlg, IDC_USETRANSLATION_CHECK, !iPasteAsText);
-		if (char *pstr = strToReplaceData)
+		if (TCHAR *pstr = strToReplaceData)
 			SetDlgItemText(hDlg, IDC_TO_REPLACE_EDIT, pstr);
-		if (char *pstr = strReplaceWithData)
+		if (TCHAR *pstr = strReplaceWithData)
 			SetDlgItemText(hDlg, IDC_REPLACEWITH_EDIT, pstr);
 		return TRUE;
 
