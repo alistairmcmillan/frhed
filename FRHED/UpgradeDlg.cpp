@@ -29,6 +29,8 @@
 #include "regtools.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "StringTable.h"
+#include "LangString.h"
 
 #define nibble2hex(c) ( (c) < 10 ? (c) + '0': (c) - 10 + 'a' )
 #define NIBBLE2HEX(c) ( (c) < 10 ? (c) + '0': (c) - 10 + 'A' )
@@ -60,7 +62,7 @@ BOOL UpgradeDlg::OnInitDialog(HWND hDlg)
 {
 	int i;
 	HKEY hk;
-	char subkeynam[MAX_PATH + 1] = {0};
+	TCHAR subkeynam[MAX_PATH + 1] = {0};
 	LVITEM item;
 	ZeroMemory(&item, sizeof(LVITEM));
 	item.mask = LVIF_TEXT ;
@@ -77,7 +79,7 @@ BOOL UpgradeDlg::OnInitDialog(HWND hDlg)
 	ZeroMemory(&col, sizeof(col));
 	col.mask = LVCF_TEXT | LVCF_WIDTH ;
 	col.fmt = LVCFMT_LEFT;
-	col.pszText = "HKCU\\Software\\Frhed";
+	col.pszText = _T("HKCU\\Software\\Frhed");
 	col.cx = 165;
 	ListView_InsertColumn(list, 0, &col);
 
@@ -105,13 +107,13 @@ BOOL UpgradeDlg::OnInitDialog(HWND hDlg)
 	col.mask = LVCF_TEXT | LVCF_WIDTH;
 	col.fmt = LVCFMT_LEFT;
 	col.cx = 105;
-	col.pszText = "Option";
+	col.pszText = GetLangString(IDS_UPDLG_OPTION);
 	ListView_InsertColumn(list, 0, &col);
 	ZeroMemory(&col, sizeof(col));
 	col.mask = LVCF_TEXT | LVCF_WIDTH;
 	col.fmt = LVCFMT_LEFT;
 	col.cx = 105;
-	col.pszText = "Value";
+	col.pszText = GetLangString(IDS_UPDLG_VALUE);
 	ListView_InsertColumn(list, 1, &col);
 
 	list = GetDlgItem(hDlg, IDC_LINKS);
@@ -121,7 +123,7 @@ BOOL UpgradeDlg::OnInitDialog(HWND hDlg)
 	col.mask = LVCF_TEXT | LVCF_WIDTH;
 	col.fmt = LVCFMT_LEFT;
 	col.cx = 155;
-	col.pszText = "Links";
+	col.pszText = GetLangString(IDS_UPDLG_LINKS);
 	ListView_InsertColumn(list, 0, &col);
 
 	list = GetDlgItem(hDlg, IDC_MRU);
@@ -131,7 +133,7 @@ BOOL UpgradeDlg::OnInitDialog(HWND hDlg)
 	col.mask = LVCF_TEXT | LVCF_WIDTH;
 	col.fmt = LVCFMT_LEFT;
 	col.cx = 185;
-	col.pszText = "MRU Files";
+	col.pszText = GetLangString(IDS_UPDLG_MRUFILES);
 	ListView_InsertColumn(list, 0, &col);
 	HICON hIcon = LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(IDI_FRHED));
 	SendDlgItemMessage(hDlg, IDC_DISPLAY, WM_SETICON, 1, (LPARAM)hIcon);
@@ -148,8 +150,8 @@ BOOL UpgradeDlg::OnInitDialog(HWND hDlg)
 BOOL UpgradeDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 {
 	HWND insts = GetDlgItem(hDlg, IDC_INSTS);
-	char keynam[MAX_PATH];
-	strncpy(keynam, OptionsRegistryPath, RTL_NUMBER_OF(keynam));
+	TCHAR keynam[MAX_PATH];
+	_tcsncpy(keynam, OptionsRegistryPath, RTL_NUMBER_OF(keynam));
 	LVCOLUMN col;
 	switch (wParam)
 	{
@@ -162,32 +164,31 @@ BOOL UpgradeDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			HWND vers = GetDlgItem(hDlg, IDC_VERS);
 			int i = ListView_GetNextItem(vers, (UINT)-1, LVNI_SELECTED);
 			ListView_GetItemText(vers, i, 0, &keynam[15], MAX_PATH - 15);
-			if (!strcmp(&keynam[15], OptionsRegistrySettingsPath))
+			if (!_tcscmp(&keynam[15], OptionsRegistrySettingsPath))
 			{
 				//If that key was this version don't copy
-				MessageBox(hDlg,
-					"You can't copy the registry data of the selected version\n"
-					"to the current one because it is the current one!", "Copy", MB_OK);
+				LangString msg(IDS_UPDLG_CANT_COPY_CURR);
+				MessageBox(hDlg, msg, MB_OK);
 				return 0;
 			}
 
 			//Open the reg key to load from
 			if (ERROR_SUCCESS == RegOpenKey(HKEY_CURRENT_USER, keynam, &lk))
 			{
-				char cver[_MAX_PATH+1];
-				strncpy(cver, OptionsRegistryPath, RTL_NUMBER_OF(cver));
+				TCHAR cver[_MAX_PATH+1];
+				_tcsncpy(cver, OptionsRegistryPath, RTL_NUMBER_OF(cver));
 				int i;
 				int numi = ListView_GetItemCount(insts);
 				int len;
-				int lenc = strlen(cver);
-				strncat(keynam, "\\", RTL_NUMBER_OF(keynam) - strlen(keynam));
+				int lenc = _tcslen(cver);
+				_tcsncat(keynam, _T("\\"), RTL_NUMBER_OF(keynam) - _tcslen(keynam));
 				for (i = 0; i < numi; i++)
 				{
 					if (ListView_GetCheckState(insts, i))
 					{
-						len = strlen(keynam);
+						len = _tcslen(keynam);
 						ListView_GetItemText(insts, i, 0, &keynam[len], MAX_PATH + 1 - len);//get the inst
-						strcpy(&cver[lenc], &keynam[len]);
+						_tcscpy(&cver[lenc], &keynam[len]);
 						RegCopyValues(HKEY_CURRENT_USER, keynam, HKEY_CURRENT_USER, cver);//copy the key
 						keynam[len] = cver[lenc] = 0;
 					}//if cur inst checked
@@ -196,14 +197,17 @@ BOOL UpgradeDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 				SendMessage(hDlg, WM_INITDIALOG, 0, 0);//Readd all the instances
 			}
 			else
-				MessageBox(hDlg, "Could not open the selected version key","Copy", MB_OK);
+			{
+				LangString msg(IDS_CANT_OPEN_VER);
+				MessageBox(hDlg, msg, MB_OK);
+			}
 		}
 		return 0;
 	case IDC_READ:
 		{
 			//Get the instance
 			int i = ListView_GetNextItem(insts, (UINT)-1, LVNI_SELECTED);
-			char text[MAX_PATH] = {0};
+			TCHAR text[MAX_PATH] = {0};
 			ListView_GetItemText(insts, i, 0, text, MAX_PATH);
 			//Get the version
 			ZeroMemory(&col, sizeof(col));
@@ -214,7 +218,7 @@ BOOL UpgradeDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			//Save the current instance
 			int tmp = iInstCount;
 			//Set the instance to read from
-			iInstCount = atoi(text);
+			iInstCount = _ttoi(text);
 			//Read the data
 			read_ini_data(keynam);
 			//Reset the instance
@@ -239,13 +243,13 @@ BOOL UpgradeDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 						if (ListView_GetCheckState(insts, i))
 						{
 							ListView_GetItemText(vers, v, 0, &keynam[15], MAX_PATH + 1 - 15);//get the ver
-							strncat(keynam, "\\", RTL_NUMBER_OF(keynam) - strlen(keynam));
-							len = strlen(keynam);
+							_tcsncat(keynam, _T("\\"), RTL_NUMBER_OF(keynam) - _tcslen(keynam));
+							len = _tcslen(keynam);
 							ListView_GetItemText(insts, i, 0, &keynam[len], MAX_PATH + 1 - len);//get the inst
 							RegDeleteKey(HKEY_CURRENT_USER, keynam);//delete the key
 							keynam[len - 1] = 0;//cut off the "\\<inst>"
 							SHDeleteEmptyKey(HKEY_CURRENT_USER, keynam);//Delete an empty key
-							if (strcmp(&keynam[15], OptionsRegistrySettingsPath) == 0)
+							if (_tcscmp(&keynam[15], OptionsRegistrySettingsPath) == 0)
 								bSaveIni = 0;//If that key was this version don't save
 						}//if cur inst checked
 					}//loop insts
@@ -267,7 +271,7 @@ BOOL UpgradeDlg::OnNotify(HWND hw, WPARAM w, LPARAM l)
 		if (nml->uChanged == LVIF_STATE &&
 			(nml->uNewState & LVIS_FOCUSED) > (nml->uOldState & LVIS_FOCUSED))
 		{
-			char text[_MAX_PATH+1];
+			TCHAR text[_MAX_PATH+1];
 			switch (nmh->idFrom)
 			{
 			case IDC_VERS:
@@ -325,7 +329,7 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 		DrawEdge (dc, &rt, BDR_SUNKENOUTER, BF_RECT);
 		HFONT fon = (HFONT) SendMessage(GetParent(hw), WM_GETFONT, 0, 0);
 		HFONT ofon = (HFONT) SelectObject(dc, fon);
-		char statusbuf[]=  "ANSI / READ";
+		TCHAR statusbuf[]=  _T("ANSI / READ");
 		int i = 0;
 		int len = 11;
 		if (DispData.iCharacterSet != ANSI_FIXED_FONT)
@@ -339,7 +343,7 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 		if (!DispData.bOpenReadOnly)
 		{
 			statusbuf[7] = 0;
-			strcat(statusbuf, "OVR");
+			_tcscat(statusbuf, _T("OVR"));
 			len--;
 		}
 		SIZE s;
@@ -396,24 +400,24 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 		if (mol < DispData.iOffsetLen)
 			mol = DispData.iOffsetLen;
 		len = mol + 4 + 4 * tmp;
-		char* linebuf = new char[len];
+		TCHAR* linebuf = new TCHAR[len];
 		if (!linebuf)
 			return 0;
 		//Offset & 2 spaces
 		int tol = DispData.bAutoOffsetLen ? mol : DispData.iOffsetLen;
-		sprintf(linebuf, "%*.*x", tol, tol, 0); // The fix caused a crash
-		p = strlen(linebuf);
+		_stprintf(linebuf, _T("%*.*x"), tol, tol, 0); // The fix caused a crash
+		p = _tcslen(linebuf);
 		mol += 2;
 		memset(linebuf + p, ' ', mol - p);
 		linebuf[mol] = 0;
-		p = strlen(linebuf);
+		p = _tcslen(linebuf);
 		//numchars
 		for (i = 0 ; i < tmp ; i++)
 		{
 			int ii = (i >> 4) & 0x0f;
-			linebuf[p++] = (char)nibble2hex(ii);
+			linebuf[p++] = (TCHAR)nibble2hex(ii);
 			ii = i & 0x0f;
-			linebuf[p++] = (char)nibble2hex(ii);
+			linebuf[p++] = (TCHAR)nibble2hex(ii);
 			linebuf[p++] = ' ';
 		}
 		linebuf[p++] = ' ';
@@ -423,7 +427,7 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 			(
 				DispData.iCharacterSet == OEM_FIXED_FONT && i != 0 ||
 				(i >= 32 && i <= 126 || i >= 160 && i <= 255 || i >= 145 && i <= 146)
-			) ? (char)i : '.';
+			) ? (TCHAR)i : '.';
 		}
 		linebuf[p] = 0;
 
@@ -439,19 +443,19 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 		SetTextColor(dc, DispData.iSelTextColorValue);
 
 		//Create the text
-		sprintf(linebuf, "%*.*x", tol, tol, tmp); // The fix caused a crash
-		p = strlen(linebuf);
+		_stprintf(linebuf, _T("%*.*x"), tol, tol, tmp); // The fix caused a crash
+		p = _tcslen(linebuf);
 		memset(linebuf + p,' ', mol - p);
 		linebuf[mol] = 0;
 		mol -= 2;
-		p=strlen(linebuf);
+		p = _tcslen(linebuf);
 		//numchars
 		for (i = 0 ; i < tmp - 1 ; i++)
 		{
 			int ii = ((tmp + i) >> 4) & 0x0f;
-			linebuf[p++] = (char)nibble2hex(ii);
+			linebuf[p++] = (TCHAR)nibble2hex(ii);
 			ii = (tmp+i) & 0x0f;
-			linebuf[p++] = (char)nibble2hex(ii);
+			linebuf[p++] = (TCHAR)nibble2hex(ii);
 			linebuf[p++] = ' ';
 		}
 		linebuf[p++] = '_';
@@ -465,7 +469,7 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 			(
 				DispData.iCharacterSet == OEM_FIXED_FONT && ii != 0 ||
 				(ii >= 32 && ii <= 126 || ii >= 160 && ii <= 255 || ii >= 145 && ii <= 146)
-			) ? (char)ii : '.';
+			) ? (TCHAR)ii : '.';
 		}
 		linebuf[p++] = ' ';
 		linebuf[p] = 0;
@@ -553,7 +557,7 @@ INT_PTR UpgradeDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 //Delete all items from all lists
 //init the insts list
-void UpgradeDlg::ChangeSelVer(HWND hw, char* text)
+void UpgradeDlg::ChangeSelVer(HWND hw, TCHAR* text)
 {
 	HWND insts = GetDlgItem(hw, IDC_INSTS);
 	HWND instdata = GetDlgItem(hw, IDC_INSTDATA);
@@ -608,9 +612,9 @@ void UpgradeDlg::ChangeSelVer(HWND hw, char* text)
 	}
 
 	//Add all the links
-	strncat(keyname, "\\links", RTL_NUMBER_OF(keyname) - strlen(keyname));
-	char* valnam = subkeynam;
-	char valbuf[_MAX_PATH + 1] = {0};
+	_tcsncat(keyname, _T("\\links"), RTL_NUMBER_OF(keyname) - _tcslen(keyname));
+	TCHAR* valnam = subkeynam;
+	TCHAR valbuf[_MAX_PATH + 1] = {0};
 	DWORD valnamsize;
 	DWORD valbufsize;
 	DWORD typ;
@@ -635,10 +639,10 @@ void UpgradeDlg::ChangeSelVer(HWND hw, char* text)
 		}
 		RegCloseKey(hk);
 	}
-	SetDlgItemText(hw, IDC_DISPLAY, "");
+	SetDlgItemText(hw, IDC_DISPLAY, _T(""));
 }
 
-void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
+void UpgradeDlg::ChangeSelInst(HWND hw, TCHAR* text)
 {
 	HWND insts = GetDlgItem(hw, IDC_INSTS);
 	HWND instdata = GetDlgItem(hw, IDC_INSTDATA);
@@ -649,7 +653,7 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 
 	//Assemble the keyname
 	TCHAR keynam[MAX_PATH];
-	strncpy(keynam, OptionsRegistryPath, RTL_NUMBER_OF(keynam));
+	_tcsncpy(keynam, OptionsRegistryPath, RTL_NUMBER_OF(keynam));
 	LVCOLUMN col;
 	ZeroMemory(&col, sizeof col);
 	col.mask = LVCF_TEXT;
@@ -663,7 +667,7 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 	{
 		//Add all the data
 		BYTE databuf[_MAX_PATH + 1] = {0};
-		char szText[_MAX_PATH + 1] = {0};
+		TCHAR szText[_MAX_PATH + 1] = {0};
 
 		int mrucount = 0;
 
@@ -673,36 +677,36 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 
 		static struct
 		{
-			const char *name;	// registry value names
-			const char *text;	// names to go in the list box
+			TCHAR *name;	// registry value names
+			TCHAR *text;	// names to go in the list box
 			int offset;
 			} dict[] = {
 			// Color values
-			{ "iTextColorValue",		"Text Color",			FIELD_OFFSET(DispDataStruct, iTextColorValue)		},
-			{ "iBkColorValue",			"Back Color",			FIELD_OFFSET(DispDataStruct, iBkColorValue)			},
-			{ "iSepColorValue",			"Separator Color",		FIELD_OFFSET(DispDataStruct, iSepColorValue)		},
-			{ "iSelTextColorValue",		"Selected Text Color",	FIELD_OFFSET(DispDataStruct, iSelTextColorValue)	},
-			{ "iSelBkColorValue",		"Selected Back Color",	FIELD_OFFSET(DispDataStruct, iSelBkColorValue)		},
-			{ "iBmkColor",				"Bookmark Color",		FIELD_OFFSET(DispDataStruct, iBmkColor)				},
+			{ _T("iTextColorValue"),	_T("Text Color"),		FIELD_OFFSET(DispDataStruct, iTextColorValue)		},
+			{ _T("iBkColorValue"),		_T("Back Color"),		FIELD_OFFSET(DispDataStruct, iBkColorValue)			},
+			{ _T("iSepColorValue"),		_T("Separator Color"),	FIELD_OFFSET(DispDataStruct, iSepColorValue)		},
+			{ _T("iSelTextColorValue"),	_T("Selected Text Color"),	FIELD_OFFSET(DispDataStruct, iSelTextColorValue)	},
+			{ _T("iSelBkColorValue"),	_T("Selected Back Color"),	FIELD_OFFSET(DispDataStruct, iSelBkColorValue)		},
+			{ _T("iBmkColor"),			_T("Bookmark Color"),	FIELD_OFFSET(DispDataStruct, iBmkColor)				},
 			// signed integers
-			{ "iBytesPerLine",			"Bytes Per Line",		FIELD_OFFSET(DispDataStruct, iBytesPerLine)			},
-			{ "iOffsetLen",				"Offset Len",			FIELD_OFFSET(DispDataStruct, iOffsetLen)			},
-			{ "iFontSize",				"Font Size",			FIELD_OFFSET(DispDataStruct, iFontSize)				},
-			{ "iWindowX",				"Window XPos",			-1													},
-			{ "iWindowY",				"Window YPos",			-1													},
-			{ "iWindowWidth",			"Window Width",			-1													},
-			{ "iWindowHeight",			"Window Height",		-1													},
-			{ "iMRU_count",				"# MRU items",			-1													},
+			{ _T("iBytesPerLine"),		_T("Bytes Per Line"),	FIELD_OFFSET(DispDataStruct, iBytesPerLine)			},
+			{ _T("iOffsetLen"),			_T("Offset Len"),		FIELD_OFFSET(DispDataStruct, iOffsetLen)			},
+			{ _T("iFontSize"),			_T("Font Size"),		FIELD_OFFSET(DispDataStruct, iFontSize)				},
+			{ _T("iWindowX"),			_T("Window XPos"),		-1													},
+			{ _T("iWindowY"),			_T("Window YPos"),		-1													},
+			{ _T("iWindowWidth"),		_T("Window Width"),		-1													},
+			{ _T("iWindowHeight"),		_T("Window Height"),	-1													},
+			{ _T("iMRU_count"),			_T("# MRU items"),		-1													},
 			// Bool
-			{ "iAutomaticBPL",			"Automatic BPL",		FIELD_OFFSET(DispDataStruct, iAutomaticBPL)			},
-			{ "bAutoOffsetLen",			"Auto Offset Len",		FIELD_OFFSET(DispDataStruct, bAutoOffsetLen)		},
-			{ "bOpenReadOnly",			"Open Read Only",		FIELD_OFFSET(DispDataStruct, bOpenReadOnly)			},
-			{ "bMakeBackups",			"Make backups",			FIELD_OFFSET(DispDataStruct, bMakeBackups)			},
+			{ _T("iAutomaticBPL"),		_T("Automatic BPL"),	FIELD_OFFSET(DispDataStruct, iAutomaticBPL)			},
+			{ _T("bAutoOffsetLen"),		_T("Auto Offset Len"),	FIELD_OFFSET(DispDataStruct, bAutoOffsetLen)		},
+			{ _T("bOpenReadOnly"),		_T("Open Read Only"),	FIELD_OFFSET(DispDataStruct, bOpenReadOnly)			},
+			{ _T("bMakeBackups"),		_T("Make backups"),		FIELD_OFFSET(DispDataStruct, bMakeBackups)			},
 			// Multiple different values
-			{ "iWindowShowCmd",			"Window Show Cmd",		FIELD_OFFSET(DispDataStruct, iWindowShowCmd)		},
-			{ "iCharacterSet",			"Character Set",		FIELD_OFFSET(DispDataStruct, iCharacterSet)			},
+			{ _T("iWindowShowCmd"),		_T("Window Show Cmd"),	FIELD_OFFSET(DispDataStruct, iWindowShowCmd)		},
+			{ _T("iCharacterSet"),		_T("Character Set"),	FIELD_OFFSET(DispDataStruct, iCharacterSet)			},
 			// Strings
-			{ "TexteditorName",			"Text Editor Name",		-1													},
+			{ _T("TexteditorName"),		_T("Text Editor Name"),	-1													},
 		};
 		int i = 0;
 		for ( ; i < RTL_NUMBER_OF(dict) ; i++)
@@ -710,62 +714,62 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 			DWORD typ;
 			DWORD datasize = sizeof databuf;
 			item.iItem = i;
-			item.pszText = (char *)dict[i].text;
+			item.pszText = (TCHAR *)dict[i].text;
 			ListView_InsertItem(instdata, &item);
-			item.pszText = (char *)dict[i].name;
+			item.pszText = (TCHAR *)dict[i].name;
 			ZeroMemory(databuf, sizeof databuf);
 			RegQueryValueEx(hk, item.pszText, NULL, &typ, databuf, &datasize);
 			int offset = dict[item.iItem].offset;
 			if (offset >= 0)
-				*(int *)((char *)&DispData + offset) = *(int*)databuf;
+				*(int *)((TCHAR *)&DispData + offset) = *(int*)databuf;
 			if (i == 13)
 				mrucount = *(int*)databuf;
 			if (i < 6)
 			{
-				_snprintf(szText, RTL_NUMBER_OF(szText) - 1, "RGB - %u,%u,%u",
+				_sntprintf(szText, RTL_NUMBER_OF(szText) - 1, _T("RGB - %u,%u,%u"),
 					(unsigned)databuf[0], (unsigned)databuf[1], (unsigned)databuf[2]);
 			}
 			else if (i < 6 + 8)
 			{
-				_snprintf(szText, RTL_NUMBER_OF(szText) - 1, "%u", *(int*)databuf);
+				_sntprintf(szText, RTL_NUMBER_OF(szText) - 1, _T("%u"), *(int*)databuf);
 			}
 			else if (i < 6 + 8 + 4)
 			{
-				strcpy(szText, databuf[0] ? "True" : "False");
+				_tcscpy(szText, databuf[0] ? _T("True") : _T("False"));
 			}
 			else if (i < 6 + 8 + 4 + 1)
 			{
 				switch (*(int*)databuf)
 				{
 					case SW_HIDE:
-						strcpy(szText, "Hide");
+						_tcscpy(szText, _T("Hide"));
 						break;
 					case SW_MINIMIZE:
-						strcpy(szText, "Minimize");
+						_tcscpy(szText, _T("Minimize"));
 						break;
 					case SW_RESTORE:
-						strcpy(szText, "Restore");
+						_tcscpy(szText, _T("Restore"));
 						break;
 					case SW_SHOW:
-						strcpy(szText, "Show");
+						_tcscpy(szText, _T("Show"));
 						break;
 					case SW_SHOWMAXIMIZED:
-						strcpy(szText, "Show Maximized");
+						_tcscpy(szText, _T("Show Maximized"));
 						break;
 					case SW_SHOWMINIMIZED:
-						strcpy(szText, "Show Minimized");
+						_tcscpy(szText, _T("Show Minimized"));
 						break;
 					case SW_SHOWMINNOACTIVE:
-						strcpy(szText, "Show MinNoactive");
+						_tcscpy(szText, _T("Show MinNoactive"));
 						break;
 					case SW_SHOWNA:
-						strcpy(szText, "Show NA");
+						_tcscpy(szText, _T("Show NA"));
 						break;
 					case SW_SHOWNOACTIVATE:
-						strcpy(szText, "Show Noactivate");
+						_tcscpy(szText, _T("Show Noactivate"));
 						break;
 					case SW_SHOWNORMAL:
-						strcpy(szText, "Show Normal");
+						_tcscpy(szText, _T("Show Normal"));
 						break;
 				}
 			}
@@ -774,25 +778,25 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 				switch (*(int*)databuf)
 				{
 					case ANSI_FIXED_FONT:
-						strcpy(szText, "ANSI");
+						_tcscpy(szText, _T("ANSI"));
 						break;
 					case OEM_FIXED_FONT:
-						strcpy(szText, "OEM");
+						_tcscpy(szText, _T("OEM"));
 						break;
 				}
 			}
 			else if (i < 6 + 8 + 4 + 1 + 1 + 2)
-				strcpy(szText, (char *)databuf);
+				_tcscpy(szText, (TCHAR *)databuf);
 			else
-				strcpy(szText, "?");
+				_tcscpy(szText, _T("?"));
 			ListView_SetItemText(instdata, item.iItem, 1, szText);
 			item.iItem++;
 		}
-		item.pszText = (char *)databuf;
+		item.pszText = (TCHAR *)databuf;
 		//Add all the MRUs
 		for (i = 0 ; i < mrucount ; i++ )
 		{
-			_snprintf(szText, RTL_NUMBER_OF(szText) - 1, "MRU_File%d", i + 1);
+			_sntprintf(szText, RTL_NUMBER_OF(szText) - 1, _T("MRU_File%d"), i + 1);
 			DWORD datasize = sizeof databuf;
 			ZeroMemory(databuf, sizeof databuf);
 			RegQueryValueEx(hk, szText, NULL, NULL, databuf, &datasize);
@@ -801,6 +805,6 @@ void UpgradeDlg::ChangeSelInst(HWND hw, char* text)
 		}
 		RegCloseKey(hk);
 		//Paint the display box
-		SetDlgItemText(hw, IDC_DISPLAY, "Frhed Display");
+		SetDlgItemText(hw, IDC_DISPLAY, _T("Frhed Display"));
 	}
 }

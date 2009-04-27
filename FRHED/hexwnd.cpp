@@ -1388,7 +1388,7 @@ void HexEditorWindow::command(int cmd)
 			{
 				buf2 += sprintf(buf2, "\nNot enough space for double size value.\n");
 			}
-			MessageCopyBox(hwnd, buf, "Floating point values", MB_ICONINFORMATION);
+			MessageCopyBox(hwnd, buf, MB_ICONINFORMATION);
 		}
 		break;
 
@@ -3757,7 +3757,7 @@ void HexEditorWindow::CMD_properties()
 		sprintf(buf + strlen(buf), "\nFile size: %d bytes = %d kilobytes.\n", DataArray.GetLength(), DataArray.GetLength()/1024);
 	}
 	sprintf(buf + strlen(buf), "\nNumber of hexdump lines: %d.\n", iNumlines);
-	MessageCopyBox(hwnd, buf, "File properties", MB_ICONINFORMATION);
+	MessageCopyBox(hwnd, buf, MB_ICONINFORMATION);
 }
 
 //-------------------------------------------------------------------
@@ -4417,7 +4417,7 @@ void HexEditorWindow::CMD_goto()
 // Resolve link files for opening from command line.
 // Copied from compiler documentation.
 
-HRESULT HexEditorWindow::ResolveIt(LPCSTR lpszLinkFile, LPSTR lpszPath)
+HRESULT HexEditorWindow::ResolveIt(LPCTSTR lpszLinkFile, LPTSTR lpszPath)
 {
 	return ::ResolveIt(hwndMain, lpszLinkFile, lpszPath);
 }

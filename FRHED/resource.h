@@ -455,6 +455,12 @@
 #define IDS_REPL_SAME_STRS              10500
 #define IDS_REPL_COUNT                  10501
 #define IDS_REPL_BAD_SELECT             10502
+#define IDS_UPDLG_OPTION                10512
+#define IDS_UPDLG_VALUE                 10513
+#define IDS_UPDLG_LINKS                 10514
+#define IDS_UPDLG_MRUFILES              10515
+#define IDS_UPDLG_CANT_COPY_CURR        10516
+#define IDS_CANT_OPEN_VER               10517
 #define IDS_SBAR_SELECTED_OFFSET        11008
 #define IDS_SBAR_NSEL_OFFSET            11009
 #define IDS_SBAR_BITS                   11010

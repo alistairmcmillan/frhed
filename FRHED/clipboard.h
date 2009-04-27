@@ -28,6 +28,6 @@
 
 void TextToClipboard(HWND hwnd, TCHAR *text);
 void TextToClipboard(HWND hwnd, TCHAR *text, int len);
-void MessageCopyBox(HWND hwnd, LPTSTR text, LPCTSTR caption, UINT type);
+void MessageCopyBox(HWND hwnd, LPTSTR text, UINT type);
 
 #endif // _CLIPBOARD_H_

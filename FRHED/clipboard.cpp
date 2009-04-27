@@ -89,12 +89,13 @@ void TextToClipboard(HWND hwnd, TCHAR *text)
 	TextToClipboard(hwnd, text, len);
 }
 
-void MessageCopyBox(HWND hwnd, LPTSTR text, LPCTSTR caption, UINT type)
+void MessageCopyBox(HWND hwnd, LPTSTR text, UINT type)
 {
+	LangString app(IDS_APPNAME);
 	int len = _tcslen(text);
 	LangString copyTo(IDS_CLIPBOARD_COPY_TO);
 	_tcscat(text, copyTo);
-	if (IDYES == MessageBox(hwnd, text, caption, MB_YESNO | type))
+	if (IDYES == MessageBox(hwnd, text, app, MB_YESNO | type))
 	{
 		// User wants to copy output
 		text[len] = '\0'; // Remove the line added above

@@ -159,8 +159,8 @@ private:
 	BOOL OnCommand(HWND, WPARAM, LPARAM);
 	BOOL OnNotify(HWND, WPARAM, LPARAM);
 	BOOL OnDrawitem(HWND, WPARAM, LPARAM);
-	void ChangeSelVer(HWND hw, char* text);
-	void ChangeSelInst(HWND hw, char* text);
+	void ChangeSelVer(HWND hw, TCHAR* text);
+	void ChangeSelInst(HWND hw, TCHAR* text);
 };
 
 /**
