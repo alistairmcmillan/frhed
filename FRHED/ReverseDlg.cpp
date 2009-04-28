@@ -40,8 +40,8 @@
 INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 {
 	TCHAR buf[32];
-	int iStartOfSelSetting;
-	int iEndOfSelSetting;
+	int iStartOfSelSetting = 0;
+	int iEndOfSelSetting = 0;
 	int maxb;
 	switch (m)
 	{

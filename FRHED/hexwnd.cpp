@@ -708,9 +708,9 @@ void HexEditorWindow::keydown(int key)
 	const bool shiftDown = (GetAsyncKeyState(VK_SHIFT) & 0x8000) != 0;
 	const bool ctrlDown = (GetAsyncKeyState(VK_CONTROL) &0x8000) != 0;
 
-	int *a;//Data to update
-	int b;//How much to update it by
-	int c;//The original value
+	int *a = NULL;//Data to update
+	int b = 0;//How much to update it by
+	int c =  0;//The original value
 	int sel = bSelected;
 
 	if (shiftDown)
@@ -1765,7 +1765,8 @@ void HexEditorWindow::set_wnd_title()
 		else // Normal display.
 		{
 			_stprintf(buf, GetLangString(IDS_SBAR_NSEL_OFFSET), iCurByte, iCurByte);
-			int wordval, longval;
+			int wordval = 0;
+			int longval = 0;
 			TCHAR buf2[80];
 			if (DataArray.GetLength() - iCurByte > 0)
 			{//if we are not looking at the End byte
@@ -3256,7 +3257,6 @@ int HexEditorWindow::CMD_save()
 //Pabs inserted
 	if (bMakeBackups)
 	{//Assume the filename is valid & has a length
-		int len = _tcslen(filename);
 		TCHAR newname[RTL_NUMBER_OF(filename) + 4];
 		_tcscpy(newname, filename);
 		_tcscat(newname, _T(".bak"));

@@ -223,7 +223,7 @@ bool HexFile::ParseFormatted()
 	LangString app(IDS_APPNAME);
 	int temp[4] = {0};
 	BYTE c[4] = {0};
-	int i, ii = 0, ls, bpl, fo = 0, fol;
+	int i, ii = 0, ls = 0, bpl, fo = 0, fol = 0;
 	int dim = 1, diio = 1;
 	bool flnd = true;
 	m_bAutoOffsetLen = true;

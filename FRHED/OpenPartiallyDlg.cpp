@@ -65,7 +65,7 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 	bShowFileStatsPL = state == BST_CHECKED;
 	const int bufLen = 128;
 	TCHAR buf[bufLen + 1] = {0};
-	UINT numBytesPl; // Bytes to read
+	UINT numBytesPl = 0; // Bytes to read
 	
 	// Only complain about wrong offset in start offset editbox if loading from start.
 	if (GetDlgItemText(hDlg, IDC_OPENPARTIAL_BYTES, buf, bufLen) &&
@@ -83,7 +83,7 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		return FALSE;
 	}
 
-	INT64 iStartPL;
+	INT64 iStartPL = 0;
 	if (IsDlgButtonChecked(hDlg, IDC_OPENPARTIAL_ENDBYTES))
 	{
 		// Load from end of file: arguments must be adapted.

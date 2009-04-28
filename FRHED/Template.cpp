@@ -232,7 +232,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							m_resultString += _T(" ");
 							// Write variable name to output.
 							m_resultString += name;
-							WORD wd;
+							WORD wd = 0;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
 							{
@@ -284,7 +284,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							m_resultString += _T(" ");
 							// Write variable name to output.
 							m_resultString += name;
-							DWORD dw;
+							DWORD dw = 0;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
 							{
@@ -332,7 +332,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							m_resultString += _T(" ");
 							// Write variable name to output.
 							m_resultString += name;
-							float f;
+							float f = 0.0;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
 							{
@@ -380,7 +380,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							m_resultString += _T(" ");
 							// Write variable name to output.
 							m_resultString += name;
-							double d;
+							double d = 0.0;
 							// Get value depending on binary mode.
 							if (binaryMode == HexEditorWindow::ENDIAN_LITTLE)
 							{

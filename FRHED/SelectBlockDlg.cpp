@@ -53,8 +53,8 @@ BOOL SelectBlockDlg::OnInitDialog(HWND hDlg)
 BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 {
 	TCHAR buf[128] = {0};
-	int iStartOfSelSetting;
-	int iEndOfSelSetting;
+	int iStartOfSelSetting = 0;
+	int iEndOfSelSetting =  0;
 	int maxb;
 	switch (wParam)
 	{
