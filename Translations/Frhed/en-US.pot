@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?group_id=13216&atid=113216\n"
-"POT-Creation-Date: 2009-04-19 14:09+0000\n"
+"POT-Creation-Date: 2009-04-28 17:39+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: English <frhed-devel@lists.sourceforge.net>\n"
@@ -619,6 +619,7 @@ msgstr ""
 #: heksedit.rc:1080
 #: heksedit.rc:1093
 #: heksedit.rc:1111
+#: heksedit.rc:1713
 #, c-format
 msgid "Cancel"
 msgstr ""
@@ -870,6 +871,7 @@ msgstr ""
 #: heksedit.rc:1012
 #: heksedit.rc:1031
 #: heksedit.rc:1375
+#: heksedit.rc:1712
 #, c-format
 msgid "Copy"
 msgstr ""
@@ -1305,7 +1307,7 @@ msgid "Fill selection with:"
 msgstr ""
 
 #: heksedit.rc:807
-#: heksedit.rc:1586
+#: heksedit.rc:1679
 #, c-format
 msgid "File:"
 msgstr ""
@@ -1573,11 +1575,13 @@ msgid "Data"
 msgstr ""
 
 #: heksedit.rc:962
+#: heksedit.rc:1654
 #, c-format
 msgid "Links"
 msgstr ""
 
 #: heksedit.rc:968
+#: heksedit.rc:1655
 #, c-format
 msgid "MRU Files"
 msgstr ""
@@ -1665,6 +1669,7 @@ msgstr ""
 
 #: heksedit.rc:1010
 #: heksedit.rc:1029
+#: heksedit.rc:1711
 #, c-format
 msgid "Move"
 msgstr ""
@@ -1885,13 +1890,13 @@ msgid "INS"
 msgstr ""
 
 #: heksedit.rc:1407
-#: heksedit.rc:1577
+#: heksedit.rc:1670
 #, c-format
 msgid "L"
 msgstr ""
 
 #: heksedit.rc:1408
-#: heksedit.rc:1574
+#: heksedit.rc:1667
 #, c-format
 msgid "B"
 msgstr ""
@@ -1976,391 +1981,826 @@ msgstr ""
 msgid "Could not write data to file."
 msgstr ""
 
+#: heksedit.rc:1435
+#, c-format
+msgid "Help file\n%s\nnot found!"
+msgstr ""
+
+#: heksedit.rc:1436
+#, c-format
+msgid "Error code 0x%x occured while opening file %s."
+msgstr ""
+
+#: heksedit.rc:1437
+#, c-format
+msgid "Could not save preferences to registry."
+msgstr ""
+
+#: heksedit.rc:1438
+#, c-format
+msgid "File is empty."
+msgstr ""
+
+#: heksedit.rc:1439
+#, c-format
+msgid "An error occured when calling the text editor."
+msgstr ""
+
 #: heksedit.rc:1440
 #, c-format
-msgid "Could not open the browser."
+msgid "Could not insert data"
 msgstr ""
 
 #: heksedit.rc:1441
 #, c-format
-msgid "File\n%s\nnot found!"
+msgid "Error checking file size"
 msgstr ""
 
-#: heksedit.rc:1447
+#: heksedit.rc:1442
 #, c-format
-msgid "Can not set bookmark at that position."
+msgid "No data present. Cannot continue!"
 msgstr ""
 
-#: heksedit.rc:1448
+#: heksedit.rc:1443
 #, c-format
-msgid "There already is a bookmark on that position."
+msgid "Could not get text from the file.\nCannot continue!"
 msgstr ""
 
 #: heksedit.rc:1449
 #, c-format
-msgid "Can not set bookmark in empty file."
+msgid "Could not open the browser."
 msgstr ""
 
 #: heksedit.rc:1450
 #, c-format
-msgid "Can not set any more bookmarks."
+msgid "File\n%s\nnot found!"
 msgstr ""
 
-#: heksedit.rc:1451
+#: heksedit.rc:1456
 #, c-format
-msgid "Bookmark points to invalid position."
+msgid "Can not set bookmark at that position."
 msgstr ""
 
-#: heksedit.rc:1452
+#: heksedit.rc:1457
 #, c-format
-msgid "No bookmarks to remove."
+msgid "There already is a bookmark on that position."
 msgstr ""
 
-#: heksedit.rc:1453
+#: heksedit.rc:1458
 #, c-format
-msgid "Remove all bookmarks?"
+msgid "Can not set bookmark in empty file."
 msgstr ""
 
 #: heksedit.rc:1459
 #, c-format
-msgid "Number of bytes to append not recognized."
+msgid "Can not set any more bookmarks."
 msgstr ""
 
 #: heksedit.rc:1460
 #, c-format
+msgid "Bookmark points to invalid position."
+msgstr ""
+
+#: heksedit.rc:1461
+#, c-format
+msgid "No bookmarks to remove."
+msgstr ""
+
+#: heksedit.rc:1462
+#, c-format
+msgid "Remove all bookmarks?"
+msgstr ""
+
+#: heksedit.rc:1468
+#, c-format
+msgid "Number of bytes to append not recognized."
+msgstr ""
+
+#: heksedit.rc:1469
+#, c-format
 msgid "Not enough memory for appending."
-msgstr ""
-
-#: heksedit.rc:1466
-#, c-format
-msgid "Manipulate bits at offset 0x%x=%d"
-msgstr ""
-
-#: heksedit.rc:1467
-#, c-format
-msgid "Value: 0x%x, %d signed, %u unsigned."
-msgstr ""
-
-#: heksedit.rc:1473
-#, c-format
-msgid "Choose file to compare with"
-msgstr ""
-
-#: heksedit.rc:1474
-#, c-format
-msgid "Error while opening file."
 msgstr ""
 
 #: heksedit.rc:1475
 #, c-format
-msgid "%d areas of difference found."
+msgid "Manipulate bits at offset 0x%x=%d"
 msgstr ""
 
 #: heksedit.rc:1476
 #, c-format
-msgid "Remaining loaded data size: %d, size of file on disk: %d."
+msgid "Value: 0x%x, %d signed, %u unsigned."
 msgstr ""
 
-#: heksedit.rc:1477
+#: heksedit.rc:1482
 #, c-format
-msgid "Data matches exactly."
+msgid "Choose file to compare with"
 msgstr ""
 
 #: heksedit.rc:1483
 #, c-format
-msgid "Cannot get access to clipboard."
+msgid "Error while opening file."
 msgstr ""
 
 #: heksedit.rc:1484
 #, c-format
-msgid "Cannot lock clipboard."
+msgid "%d areas of difference found."
 msgstr ""
 
 #: heksedit.rc:1485
-#: heksedit.rc:1496
 #, c-format
-msgid "Not enough memory for copying."
+msgid "Remaining loaded data size: %d, size of file on disk: %d."
 msgstr ""
 
 #: heksedit.rc:1486
 #, c-format
-msgid "\nDo you want the above output to be copied to the clipboard?\n"
+msgid "Data matches exactly."
 msgstr ""
 
-#: heksedit.rc:1487
+#: heksedit.rc:1492
 #, c-format
-msgid "You need to select a clipboard format to use."
+msgid "Cannot get access to clipboard."
 msgstr ""
 
-#: heksedit.rc:1488
+#: heksedit.rc:1493
 #, c-format
-msgid "Could not get text from the clipboard.\nCannot continue!"
+msgid "Cannot lock clipboard."
 msgstr ""
 
-#: heksedit.rc:1489
+#: heksedit.rc:1494
+#: heksedit.rc:1505
 #, c-format
-msgid "There is text on the clipboard.\nDo you want to import from\nthe clipboard instead of a file?"
+msgid "Not enough memory for copying."
 msgstr ""
 
 #: heksedit.rc:1495
 #, c-format
-msgid "Can't copy more bytes than are present."
+msgid "\nDo you want the above output to be copied to the clipboard?\n"
 msgstr ""
 
-#: heksedit.rc:1502
+#: heksedit.rc:1496
 #, c-format
-msgid "Can't cut more bytes than are present."
+msgid "You need to select a clipboard format to use."
 msgstr ""
 
-#: heksedit.rc:1503
+#: heksedit.rc:1497
 #, c-format
-msgid "Not enough memory for cutting to clipboard."
+msgid "Could not get text from the clipboard.\nCannot continue!"
+msgstr ""
+
+#: heksedit.rc:1498
+#, c-format
+msgid "There is text on the clipboard.\nDo you want to import from\nthe clipboard instead of a file?"
 msgstr ""
 
 #: heksedit.rc:1504
 #, c-format
-msgid "Could not cut the data."
-msgstr ""
-
-#: heksedit.rc:1510
-#, c-format
-msgid "Can't delete more bytes than are present."
+msgid "Can't copy more bytes than are present."
 msgstr ""
 
 #: heksedit.rc:1511
 #, c-format
-msgid "Could not delete data."
+msgid "Can't cut more bytes than are present."
 msgstr ""
 
-#: heksedit.rc:1517
+#: heksedit.rc:1512
 #, c-format
-msgid "Decimal value not recognized."
+msgid "Not enough memory for cutting to clipboard."
 msgstr ""
 
-#: heksedit.rc:1518
+#: heksedit.rc:1513
 #, c-format
-msgid "Number of times not recognized."
+msgid "Could not cut the data."
 msgstr ""
 
 #: heksedit.rc:1519
 #, c-format
-msgid "Invalid start offset."
+msgid "Can't delete more bytes than are present."
 msgstr ""
 
 #: heksedit.rc:1520
 #, c-format
-msgid "Not enough space for writing decimal values."
+msgid "Could not delete data."
 msgstr ""
 
 #: heksedit.rc:1526
 #, c-format
-msgid "Number of times to paste must be at least 1."
+msgid "Decimal value not recognized."
 msgstr ""
 
 #: heksedit.rc:1527
 #, c-format
-msgid "Tried to paste zero-length array."
+msgid "Number of times not recognized."
 msgstr ""
 
 #: heksedit.rc:1528
 #, c-format
-msgid "Not enough memory for inserting."
+msgid "Invalid start offset."
 msgstr ""
 
 #: heksedit.rc:1529
 #, c-format
-msgid "Not enough space for overwriting."
+msgid "Not enough space for writing decimal values."
 msgstr ""
 
 #: heksedit.rc:1535
 #, c-format
-msgid "Can't fill a selection with a file of zero size."
+msgid "Number of times to paste must be at least 1."
 msgstr ""
 
 #: heksedit.rc:1536
 #, c-format
-msgid "Can't fill a selection with a string of zero size."
+msgid "Tried to paste zero-length array."
 msgstr ""
 
 #: heksedit.rc:1537
 #, c-format
-msgid "Too many bytes to fill with or some other error."
+msgid "Not enough memory for inserting."
 msgstr ""
 
-#: heksedit.rc:1543
+#: heksedit.rc:1538
 #, c-format
-msgid "You have chosen an offset but it is negative, which is invalid."
+msgid "Not enough space for overwriting."
 msgstr ""
 
 #: heksedit.rc:1544
 #, c-format
-msgid "The value in box number %d cannot be recognized."
+msgid "Can't fill a selection with a file of zero size."
 msgstr ""
 
 #: heksedit.rc:1545
 #, c-format
-msgid "Cannot move/copy a block of zero length"
+msgid "Can't fill a selection with a string of zero size."
 msgstr ""
 
 #: heksedit.rc:1546
 #, c-format
-msgid "The chosen block extends into non-existant data."
+msgid "Too many bytes to fill with or some other error."
 msgstr ""
 
-#: heksedit.rc:1547
+#: heksedit.rc:1552
 #, c-format
-msgid "The block was not moved!"
+msgid "You have chosen an offset but it is negative, which is invalid."
 msgstr ""
 
-#: heksedit.rc:1548
+#: heksedit.rc:1553
 #, c-format
-msgid "Cannot move/copy the block outside the data"
+msgid "The value in box number %d cannot be recognized."
 msgstr ""
 
 #: heksedit.rc:1554
 #, c-format
-msgid "&Size of file: %lld bytes. Load how many bytes:"
+msgid "Cannot move/copy a block of zero length"
 msgstr ""
 
 #: heksedit.rc:1555
 #, c-format
-msgid "Cannot open more than 2 GB of data."
+msgid "The chosen block extends into non-existant data."
 msgstr ""
 
 #: heksedit.rc:1556
 #, c-format
-msgid "Specified number of bytes to load greater than file size."
+msgid "The block was not moved!"
 msgstr ""
 
 #: heksedit.rc:1557
 #, c-format
-msgid "Too many bytes to load."
+msgid "Cannot move/copy the block outside the data"
 msgstr ""
 
 #: heksedit.rc:1563
 #, c-format
-msgid "Cannot reverse single byte."
+msgid "&Size of file: %lld bytes. Load how many bytes:"
 msgstr ""
 
 #: heksedit.rc:1564
 #, c-format
-msgid "The chosen block extends into non-existant data. The offsets will be shifted to correct positions."
+msgid "Cannot open more than 2 GB of data."
 msgstr ""
 
-#: heksedit.rc:1570
+#: heksedit.rc:1565
 #, c-format
-msgid "Selected: Offset %d=0x%x to %d=0x%x (%d byte(s))"
+msgid "Specified number of bytes to load greater than file size."
 msgstr ""
 
-#: heksedit.rc:1571
+#: heksedit.rc:1566
 #, c-format
-msgid "Offset %d=0x%x"
+msgid "Too many bytes to load."
 msgstr ""
 
 #: heksedit.rc:1572
 #, c-format
-msgid "Bits"
+msgid "Cannot reverse single byte."
 msgstr ""
 
 #: heksedit.rc:1573
 #, c-format
-msgid "Unsigned"
-msgstr ""
-
-#: heksedit.rc:1575
-#, c-format
-msgid "END"
-msgstr ""
-
-#: heksedit.rc:1576
-#, c-format
-msgid "W"
-msgstr ""
-
-#: heksedit.rc:1578
-#, c-format
-msgid "Signed"
+msgid "The chosen block extends into non-existant data. The offsets will be shifted to correct positions."
 msgstr ""
 
 #: heksedit.rc:1579
 #, c-format
-msgid "Size"
+msgid "link names are \"Frhed.lnk\""
 msgstr ""
 
 #: heksedit.rc:1580
 #, c-format
-msgid "No file loaded"
+msgid "This folder already contains a file called \"Frhed.lnk\""
+msgstr ""
+
+#: heksedit.rc:1581
+#, c-format
+msgid "\"Frhed.lnk\" can be added to this folder"
+msgstr ""
+
+#: heksedit.rc:1582
+#, c-format
+msgid "\"Frhed.lnk\" cannot be added to this folder"
+msgstr ""
+
+#: heksedit.rc:1583
+#, c-format
+msgid "Frhed can start searching here"
+msgstr ""
+
+#: heksedit.rc:1584
+#, c-format
+msgid "Frhed cannot start the search from here"
+msgstr ""
+
+#: heksedit.rc:1585
+#, c-format
+msgid "Could not Save shortcut entries"
+msgstr ""
+
+#: heksedit.rc:1586
+#, c-format
+msgid "Cannot move more than 1 link at a time"
 msgstr ""
 
 #: heksedit.rc:1587
 #, c-format
-msgid "Template file:"
+msgid "No link selected to move"
 msgstr ""
 
 #: heksedit.rc:1588
 #, c-format
-msgid "Applied at offset:"
+msgid "Couldn't find the selected item"
 msgstr ""
 
 #: heksedit.rc:1589
 #, c-format
-msgid "= %d (signed) = %u (unsigned) = 0x%x = '%c'"
+msgid "Place a link to Frhed in..."
 msgstr ""
 
 #: heksedit.rc:1590
-#: heksedit.rc:1593
-#: heksedit.rc:1595
 #, c-format
-msgid "= %d (signed) = %u (unsigned) = 0x%x"
+msgid "Move the link to Frhed to..."
 msgstr ""
 
 #: heksedit.rc:1591
 #, c-format
-msgid "ERROR: not enough space for byte-size data."
+msgid "There is already a link in that folder"
 msgstr ""
 
 #: heksedit.rc:1592
 #, c-format
-msgid "ERROR: missing variable name."
+msgid "Existing links to old versions of Frhed will be updated to this version\nAre you sure you want to continue"
+msgstr ""
+
+#: heksedit.rc:1593
+#, c-format
+msgid "Pick a folder to start searching in."
 msgstr ""
 
 #: heksedit.rc:1594
 #, c-format
-msgid "ERROR: not enough space for WORD-size data."
-msgstr ""
-
-#: heksedit.rc:1596
-#, c-format
-msgid "ERROR: not enough space for DWORD-size data."
-msgstr ""
-
-#: heksedit.rc:1597
-#, c-format
-msgid "= %f = 0x%x"
-msgstr ""
-
-#: heksedit.rc:1598
-#, c-format
-msgid "ERROR: not enough space for float-size data."
-msgstr ""
-
-#: heksedit.rc:1599
-#, c-format
-msgid "= %g"
+msgid "No links selected to delete"
 msgstr ""
 
 #: heksedit.rc:1600
 #, c-format
-msgid "ERROR: not enough space for double-size data."
+msgid "Selection too large."
 msgstr ""
 
 #: heksedit.rc:1601
 #, c-format
+msgid "Could not find data."
+msgstr ""
+
+#: heksedit.rc:1602
+#, c-format
+msgid "Findstring is zero bytes long."
+msgstr ""
+
+#: heksedit.rc:1603
+#, c-format
+msgid "Could not find any more occurances."
+msgstr ""
+
+#: heksedit.rc:1604
+#, c-format
+msgid "String to find not specified."
+msgstr ""
+
+#: heksedit.rc:1610
+#, c-format
+msgid "You need to have Administrator privileges for getting list of drives."
+msgstr ""
+
+#: heksedit.rc:1611
+#, c-format
+msgid "Unable to open drive"
+msgstr ""
+
+#: heksedit.rc:1612
+#, c-format
+msgid "Cylinders"
+msgstr ""
+
+#: heksedit.rc:1613
+#, c-format
+msgid "Sectors"
+msgstr ""
+
+#: heksedit.rc:1614
+#, c-format
+msgid "Tracks per cylinder"
+msgstr ""
+
+#: heksedit.rc:1615
+#, c-format
+msgid "Sectors per track"
+msgstr ""
+
+#: heksedit.rc:1616
+#, c-format
+msgid "Bytes per sector"
+msgstr ""
+
+#: heksedit.rc:1617
+#, c-format
+msgid "Total size in bytes"
+msgstr ""
+
+#: heksedit.rc:1618
+#, c-format
+msgid "%s:Sector %I64d"
+msgstr ""
+
+#: heksedit.rc:1624
+#, c-format
+msgid "Not enough memory to import data.\nCannot continue!\nDo you want to keep what has been found so far?"
+msgstr ""
+
+#: heksedit.rc:1625
+#, c-format
+msgid "Illegal character found.\nIgnore further illegal characters?"
+msgstr ""
+
+#: heksedit.rc:1626
+#, c-format
+msgid "Illegal character in offset.\nIgnore further invalid offsets?"
+msgstr ""
+
+#: heksedit.rc:1627
+#, c-format
+msgid "The first offset found was 0x%x, which is greater than zero.\nDo you want to insert %d null bytes at the start of the data?"
+msgstr ""
+
+#: heksedit.rc:1628
+#, c-format
+msgid "Invalid offset found.\nIgnore further invalid offsets?"
+msgstr ""
+
+#: heksedit.rc:1629
+#, c-format
+msgid "Character data does not agree with hex data.\nIgnore further mismatched data?\nNB: Hex data will be used when ignoring."
+msgstr ""
+
+#: heksedit.rc:1630
+#, c-format
+msgid "Illegal character in hex data.\nCannot continue!\nDo you want to keep what has been found so far?"
+msgstr ""
+
+#: heksedit.rc:1631
+#, c-format
+msgid "Unexpected end of data found\nCannot continue!\nDo you want to keep what has been found so far?"
+msgstr ""
+
+#: heksedit.rc:1632
+#, c-format
+msgid "Does this data have the same format as the Frhed display?\nThis data contains "
+msgstr ""
+
+#: heksedit.rc:1633
+#, c-format
+msgid "characters other than whitespace and hexdigits. (like Frhed display)"
+msgstr ""
+
+#: heksedit.rc:1634
+#, c-format
+msgid "only whitespace and hexdigits. (unlike Frhed display)"
+msgstr ""
+
+#: heksedit.rc:1640
+#, c-format
+msgid "Data to replace must be selected."
+msgstr ""
+
+#: heksedit.rc:1641
+#, c-format
+msgid "Could not delete selected data."
+msgstr ""
+
+#: heksedit.rc:1642
+#, c-format
+msgid "Replacing failed."
+msgstr ""
+
+#: heksedit.rc:1643
+#, c-format
+msgid "Could not translate text to binary."
+msgstr ""
+
+#: heksedit.rc:1644
+#, c-format
+msgid "To-replace and replace-with data are same."
+msgstr ""
+
+#: heksedit.rc:1645
+#, c-format
+msgid "%d occurences replaced."
+msgstr ""
+
+#: heksedit.rc:1646
+#, c-format
+msgid "Could not use selection as replace target."
+msgstr ""
+
+#: heksedit.rc:1652
+#, c-format
+msgid "Option"
+msgstr ""
+
+#: heksedit.rc:1653
+#, c-format
+msgid "Value"
+msgstr ""
+
+#: heksedit.rc:1656
+#, c-format
+msgid "You can't copy the registry data of the selected version nto the current one because it is the current one!"
+msgstr ""
+
+#: heksedit.rc:1657
+#, c-format
+msgid "Could not open the selected version key"
+msgstr ""
+
+#: heksedit.rc:1663
+#, c-format
+msgid "Selected: Offset %d=0x%x to %d=0x%x (%d byte(s))"
+msgstr ""
+
+#: heksedit.rc:1664
+#, c-format
+msgid "Offset %d=0x%x"
+msgstr ""
+
+#: heksedit.rc:1665
+#, c-format
+msgid "Bits"
+msgstr ""
+
+#: heksedit.rc:1666
+#, c-format
+msgid "Unsigned"
+msgstr ""
+
+#: heksedit.rc:1668
+#, c-format
+msgid "END"
+msgstr ""
+
+#: heksedit.rc:1669
+#, c-format
+msgid "W"
+msgstr ""
+
+#: heksedit.rc:1671
+#, c-format
+msgid "Signed"
+msgstr ""
+
+#: heksedit.rc:1672
+#, c-format
+msgid "Size"
+msgstr ""
+
+#: heksedit.rc:1673
+#, c-format
+msgid "No file loaded"
+msgstr ""
+
+#: heksedit.rc:1680
+#, c-format
+msgid "Template file:"
+msgstr ""
+
+#: heksedit.rc:1681
+#, c-format
+msgid "Applied at offset:"
+msgstr ""
+
+#: heksedit.rc:1682
+#, c-format
+msgid "= %d (signed) = %u (unsigned) = 0x%x = '%c'"
+msgstr ""
+
+#: heksedit.rc:1683
+#: heksedit.rc:1686
+#: heksedit.rc:1688
+#, c-format
+msgid "= %d (signed) = %u (unsigned) = 0x%x"
+msgstr ""
+
+#: heksedit.rc:1684
+#, c-format
+msgid "ERROR: not enough space for byte-size data."
+msgstr ""
+
+#: heksedit.rc:1685
+#, c-format
+msgid "ERROR: missing variable name."
+msgstr ""
+
+#: heksedit.rc:1687
+#, c-format
+msgid "ERROR: not enough space for WORD-size data."
+msgstr ""
+
+#: heksedit.rc:1689
+#, c-format
+msgid "ERROR: not enough space for DWORD-size data."
+msgstr ""
+
+#: heksedit.rc:1690
+#, c-format
+msgid "= %f = 0x%x"
+msgstr ""
+
+#: heksedit.rc:1691
+#, c-format
+msgid "ERROR: not enough space for float-size data."
+msgstr ""
+
+#: heksedit.rc:1692
+#, c-format
+msgid "= %g"
+msgstr ""
+
+#: heksedit.rc:1693
+#, c-format
+msgid "ERROR: not enough space for double-size data."
+msgstr ""
+
+#: heksedit.rc:1694
+#, c-format
 msgid "ERROR: Unknown variable type:"
 msgstr ""
 
-#: heksedit.rc:1607
+#: heksedit.rc:1700
 #, c-format
 msgid "-> Length of template = %d bytes."
+msgstr ""
+
+#: heksedit.rc:1701
+#, c-format
+msgid "Template files (*.tpl)\0*.tpl\0\0"
+msgstr ""
+
+#: heksedit.rc:1702
+#, c-format
+msgid "Choose template file"
+msgstr ""
+
+#: heksedit.rc:1703
+#, c-format
+msgid "Could not open template file %s."
+msgstr ""
+
+#: heksedit.rc:1704
+#, c-format
+msgid "Could not load template from file %s."
+msgstr ""
+
+#: heksedit.rc:1710
+#, c-format
+msgid "Select an item to move."
+msgstr ""
+
+#: heksedit.rc:1714
+#, c-format
+msgid "No data to insert"
+msgstr ""
+
+#: heksedit.rc:1715
+#, c-format
+msgid "TYMED_ISTORAGE is not supported for drag-drop."
+msgstr ""
+
+#: heksedit.rc:1721
+#, c-format
+msgid "float size value:\n%g\n"
+msgstr ""
+
+#: heksedit.rc:1722
+#, c-format
+msgid "Not enough space for float size value.\n"
+msgstr ""
+
+#: heksedit.rc:1723
+#, c-format
+msgid "\ndouble size value:\n%g\n"
+msgstr ""
+
+#: heksedit.rc:1724
+#, c-format
+msgid "\nNot enough space for double size value.\n"
+msgstr ""
+
+#: heksedit.rc:1725
+#, c-format
+msgid "File name and path: "
+msgstr ""
+
+#: heksedit.rc:1726
+#, c-format
+msgid "\nPartially opened at offset 0x%x = %d.\nNumber of bytes read: %d = %d kilobytes.\n"
+msgstr ""
+
+#: heksedit.rc:1727
+#, c-format
+msgid "\nFile size: %d bytes = %d kilobytes.\n"
+msgstr ""
+
+#: heksedit.rc:1728
+#, c-format
+msgid "\nNumber of hexdump lines: %d.\n"
+msgstr ""
+
+#: heksedit.rc:1729
+#, c-format
+msgid "This file could not be accessed and will be removed from the MRU list."
+msgstr ""
+
+#: heksedit.rc:1730
+#, c-format
+msgid "Really reset colors to default values?"
+msgstr ""
+
+#: heksedit.rc:1731
+#, c-format
+msgid "Are you sure you want to delete this file?"
+msgstr ""
+
+#: heksedit.rc:1732
+#, c-format
+msgid "Could not delete file."
+msgstr ""
+
+#: heksedit.rc:1733
+#, c-format
+msgid "Really adopt the operating system colour scheme?"
+msgstr ""
+
+#: heksedit.rc:1739
+#, c-format
+msgid "Do you want to save your changes?"
+msgstr ""
+
+#: heksedit.rc:1745
+#, c-format
+msgid "Hexdump saved."
+msgstr ""
+
+#: heksedit.rc:1746
+#, c-format
+msgid "Could not save Hexdump."
+msgstr ""
+
+#: heksedit.rc:1747
+#, c-format
+msgid "Not enough memory for copying hexdump to clipboard."
+msgstr ""
+
+#: heksedit.rc:1748
+#, c-format
+msgid "Could not copy hexdump to clipboard."
+msgstr ""
+
+#: heksedit.rc:1749
+#, c-format
+msgid "Hex Dump files(*.txt,*.hex)\0*.txt;*.hex\0All Files (*.*)\0*.*\0"
 msgstr ""
 
