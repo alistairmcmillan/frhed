@@ -495,6 +495,20 @@
 #define IDS_DD_MENU_CANCEL              13011
 #define IDS_DD_NO_DATA                  13012
 #define IDS_DD_TYMED_NOTSUP             13013
+#define IDS_FLOAT_SIZE                  13024
+#define IDS_FLOAT_NOSPACE               13025
+#define IDS_DOUBLE_SIZE                 13026
+#define IDS_DOUBLE_NOSPACE              13027
+#define IDS_FPROP_NAME                  13028
+#define IDS_FPROP_PARTIAL_OPEN          13029
+#define IDS_FPROP_FSIZE                 13030
+#define IDS_FPROP_HDUMP_LINES           13031
+#define IDS_MRU_REMOVING                13032
+#define IDS_SAVE_MODIFIED               14000
+#define IDS_HDUMP_SAVED                 15008
+#define IDS_HDUMP_SAVE_FAIL             15009
+#define IDS_HDUMP_NO_MEM_CL             15010
+#define IDS_HDUMP_CL_FAIL               15011
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

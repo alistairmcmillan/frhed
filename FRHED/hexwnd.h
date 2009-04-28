@@ -218,7 +218,7 @@ public:
 	void EnableDriveButtons(BOOL bEnable);
 	BOOL queryCommandEnabled(UINT id);
 
-	virtual int STDMETHODCALLTYPE close(LPCTSTR caption = 0);
+	virtual int STDMETHODCALLTYPE close();
 	virtual int STDMETHODCALLTYPE initmenupopup(WPARAM w, LPARAM l);
 	void adjust_view_for_caret();
 	void print_line(HDC hdc, int line, HBRUSH hbr);
@@ -249,7 +249,7 @@ public:
 
 	int load_file(LPCTSTR);
 	virtual int STDMETHODCALLTYPE open_file(LPCWSTR);
-	int file_is_loadable(const char* fname);
+	int file_is_loadable(LPCTSTR fname);
 	int at_window_create(HWND, HINSTANCE);
 	void set_control_bar(HWND);
 	void set_focus();

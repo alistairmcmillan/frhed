@@ -53,6 +53,8 @@
 #include "ids.h"
 #include "ido.h"
 
+const TCHAR DefaultHexdumpFile[] = _T("hexdump.txt");
+
 static void EnableToolbarButton(HWND toolbar, int ID, BOOL bEnable);
 
 //CF_RTF defined in Richedit.h, but we don't include it cause that would be overkill
@@ -449,9 +451,9 @@ int HexEditorWindow::open_file(LPCWSTR wszCmdLine)
 }
 
 //--------------------------------------------------------------------------------------------
-int HexEditorWindow::file_is_loadable(const char *fname)
+int HexEditorWindow::file_is_loadable(LPCTSTR fname)
 {
-	int filehandle = _open(fname, _O_RDONLY|_O_BINARY);
+	int filehandle = _topen(fname, _O_RDONLY | _O_BINARY);
 	if (filehandle == -1)
 		return FALSE;
 	_close(filehandle);
@@ -1354,8 +1356,8 @@ void HexEditorWindow::command(int cmd)
 
 	case IDM_READFLOAT:
 		{
-			char buf[500];
-			char *buf2 = buf;
+			TCHAR buf[500];
+			TCHAR *buf2 = buf;
 			buf[0] = '\0';
 			union
 			{
@@ -1370,11 +1372,11 @@ void HexEditorWindow::command(int cmd)
 				memcpy(&u, &DataArray[iCurByte], sizeof u.fval);
 				if (iBinaryMode == ENDIAN_BIG)
 					reverse_bytes(u.bytes, u.bytes + sizeof u.fval - 1);
-				buf2 += sprintf(buf2, "float size value:\n%g\n", u.fval);
+				buf2 += _stprintf(buf2, GetLangString(IDS_FLOAT_SIZE), u.fval);
 			}
 			else
 			{
-				buf2 += sprintf(buf2, "Not enough space for float size value.\n");
+				buf2 += _stprintf(buf2, GetLangString(IDS_FLOAT_NOSPACE));
 			}
 			if (iBytesAhead >= sizeof u.dval)
 			{
@@ -1382,11 +1384,11 @@ void HexEditorWindow::command(int cmd)
 				memcpy(&u, &DataArray[iCurByte], sizeof u.dval);
 				if (iBinaryMode == ENDIAN_BIG)
 					reverse_bytes(u.bytes, u.bytes + sizeof u.dval - 1);
-				buf2 += sprintf(buf2, "\ndouble size value:\n%g\n", u.dval);
+				buf2 += _stprintf(buf2, GetLangString(IDS_DOUBLE_SIZE), u.dval);
 			}
 			else
 			{
-				buf2 += sprintf(buf2, "\nNot enough space for double size value.\n");
+				buf2 += _stprintf(buf2, GetLangString(IDS_DOUBLE_NOSPACE));
 			}
 			MessageCopyBox(hwnd, buf, MB_ICONINFORMATION);
 		}
@@ -2464,15 +2466,14 @@ int HexEditorWindow::initmenupopup(WPARAM w, LPARAM l)
 
 /**
  * @brief Handler on window closing.
- * @param [in] caption Messagebox caption, "Exit" if NULL.
  * @return 0 if Frhed cannot be closed, 1 if we can close Frhed.
  */
-int HexEditorWindow::close(LPCTSTR caption)
+int HexEditorWindow::close()
 {
 	if (iFileChanged)
 	{
-		int res = MessageBox(hwnd, "Do you want to save your changes?",
-			caption ? caption : "Exit", MB_YESNOCANCEL | MB_ICONWARNING);
+		LangString msg(IDS_SAVE_MODIFIED);
+		int res = MessageBox(hwnd, msg, MB_YESNOCANCEL | MB_ICONWARNING);
 		if (res == IDCANCEL || res == IDYES && !(bFileNeverSaved ? CMD_save_as() : CMD_save()))
 			//User doesn't want to quit or User wants to save and the save was unsuccessful
 			return 0;//Don't exit
@@ -3018,7 +3019,7 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 	{
 		// to file.
 		TCHAR szFileName[MAX_PATH];
-		strcpy(szFileName, "hexdump.txt");
+		_tcscpy(szFileName, DefaultHexdumpFile);
 		HGLOBAL hg = NULL;
 		if (iCopyHexdumpType == IDC_EXPORTRTF)
 		{
@@ -3029,7 +3030,7 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 				GlobalFree(hg);
 				return 0;
 			}
-			strcpy(&szFileName[8], "rtf");
+			_tcscpy(&szFileName[8], _T("rtf"));
 		}
 
 		// to file.
@@ -3044,22 +3045,27 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
 		if (GetSaveFileName(&ofn))
 		{
-			int filehandle = _open(szFileName, _O_RDWR | _O_CREAT | _O_TRUNC |
+			int filehandle = _topen(szFileName, _O_RDWR | _O_CREAT | _O_TRUNC |
 					_O_BINARY, _S_IREAD | _S_IWRITE);
 			if (filehandle != -1)
 			{
 				// Write file.
-				LangString app(IDS_APPNAME);
 				if (_write(filehandle, pMem, buflen - 1) != -1)
-					MessageBox(hwnd, "Hexdump saved.", app, MB_ICONINFORMATION);
+				{
+					LangString msg(IDS_HDUMP_SAVED);
+					MessageBox(hwnd, msg, MB_ICONINFORMATION);
+				}
 				else
-					MessageBox(hwnd, "Could not save Hexdump.", app, MB_ICONERROR);
+				{
+					LangString msg(IDS_HDUMP_SAVE_FAIL);
+					MessageBox(hwnd, msg, MB_ICONERROR);
+				}
 				_close(filehandle);
 			}
 			else
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hwnd, "Could not save Hexdump.", app, MB_ICONERROR);
+				LangString msg(IDS_HDUMP_SAVE_FAIL);
+				MessageBox(hwnd, msg, MB_ICONERROR);
 			}
 		}//end
 		if (iCopyHexdumpType == IDC_EXPORTRTF)
@@ -3084,9 +3090,8 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		}
 		else
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hwnd, "Not enough memory for hexdump to clipboard.",
-					app, MB_ICONERROR);
+			LangString msg(IDS_HDUMP_NO_MEM_CL);
+			MessageBox(hwnd, msg, MB_ICONERROR);
 		}
 	}
 	else
@@ -3100,8 +3105,8 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		}
 		else
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hwnd, "Could not hexdump to clipboard.", app, MB_ICONERROR);
+			LangString msg(IDS_HDUMP_CL_FAIL);
+			MessageBox(hwnd, msg, MB_ICONERROR);
 		}
 		pMem = NULL;
 	}
@@ -3151,7 +3156,7 @@ void HexEditorWindow::CMD_edit_clear()
  */
 int HexEditorWindow::CMD_new(const char *title)
 {
-	if (!close(title))
+	if (!close())
 		return 0;
 	EnableDriveButtons(FALSE);
 
@@ -3355,7 +3360,7 @@ int HexEditorWindow::CMD_save()
 //-------------------------------------------------------------------
 void HexEditorWindow::CMD_open()
 {
-	if (!close(_T("Open")))
+	if (!close())
 		return;
 	TCHAR szFileName[MAX_PATH];
 	szFileName[0] = '\0';
@@ -3742,21 +3747,22 @@ void HexEditorWindow::make_font()
 //-------------------------------------------------------------------
 void HexEditorWindow::CMD_properties()
 {
-	char buf[1000];
-	char *pc;
-	sprintf(buf, "File name and path: ");
-	GetFullPathName(filename, 500, buf + strlen(buf), &pc);
+	TCHAR buf[1000];
+	TCHAR *pc;
+	_stprintf(buf, GetLangString(IDS_FPROP_NAME));
+	GetFullPathName(filename, 500, buf + _tcslen(buf), &pc);
 	if (bPartialOpen)
 	{
-		sprintf(buf + strlen(buf), "\nPartially opened at offset 0x%x = %d.\n"
-			"Number of bytes read: %d = %d kilobytes.\n",
+		_stprintf(buf + _tcslen(buf), GetLangString(IDS_FPROP_PARTIAL_OPEN),
 			iPartialOffset, iPartialOffset, DataArray.GetLength(), DataArray.GetLength()/1024);
 	}
 	else
 	{
-		sprintf(buf + strlen(buf), "\nFile size: %d bytes = %d kilobytes.\n", DataArray.GetLength(), DataArray.GetLength()/1024);
+		_stprintf(buf + _tcslen(buf), GetLangString(IDS_FPROP_FSIZE),
+				DataArray.GetLength(), DataArray.GetLength()/1024);
 	}
-	sprintf(buf + strlen(buf), "\nNumber of hexdump lines: %d.\n", iNumlines);
+	_stprintf(buf + _tcslen(buf), GetLangString(IDS_FPROP_HDUMP_LINES),
+			iNumlines);
 	MessageCopyBox(hwnd, buf, MB_ICONINFORMATION);
 }
 
@@ -3885,11 +3891,13 @@ void HexEditorWindow::start_mouse_operation()
 			if (output_text_special)
 			{
 				//The special syntax
-				destlen = Text2BinTranslator::iBytes2BytecodeDestLen((char*) &DataArray[iStartOfSelSetting], iEndOfSelSetting-iStartOfSelSetting+1);
-				sm.hGlobal = GlobalAlloc(GHND|GMEM_DDESHARE, destlen);
+				destlen = Text2BinTranslator::iBytes2BytecodeDestLen(
+						(TCHAR*) &DataArray[iStartOfSelSetting],
+						iEndOfSelSetting-iStartOfSelSetting + 1);
+				sm.hGlobal = GlobalAlloc(GHND | GMEM_DDESHARE, destlen);
 				if (sm.hGlobal)
 				{
-					if (char *p = (char *)GlobalLock(sm.hGlobal))
+					if (TCHAR *p = (TCHAR *)GlobalLock(sm.hGlobal))
 					{
 						Text2BinTranslator::iTranslateBytesToBC(p, &DataArray[iStartOfSelSetting], iEndOfSelSetting-iStartOfSelSetting+1);
 						madedata = true;
@@ -4005,7 +4013,7 @@ void HexEditorWindow::CMD_select_block()
 void HexEditorWindow::update_MRU()
 {
 	int i = 0;
-	while (i < iMRU_count && strcmp(strMRU[i], filename) != 0)
+	while (i < iMRU_count && _tcscmp(strMRU[i], filename) != 0)
 		++i;
 	if (i == iMRU_count) // Name not yet in list.
 		if (iMRU_count < MRUMAX)
@@ -4013,8 +4021,8 @@ void HexEditorWindow::update_MRU()
 		else
 			--i;
 	while (int j = i)
-		strcpy(strMRU[j], strMRU[--i]);
-	strcpy(strMRU[0], filename); // Put chosen name at top.
+		_tcscpy(strMRU[j], strMRU[--i]);
+	_tcscpy(strMRU[0], filename); // Put chosen name at top.
 	save_ini_data();
 }
 
@@ -4056,18 +4064,17 @@ void HexEditorWindow::CMD_MRU_selected(int i)
 
 	if (file_is_loadable(strMRU[i]))
 	{
-		if (!close("Open"))
+		if (!close())
 			return;
 		load_file(strMRU[i]);
 	}
 	else
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "This file could not be accessed and\n"
-			"will be removed from the MRU list.", app, MB_ICONERROR);
+		LangString msg(IDS_MRU_REMOVING);
+		MessageBox(hwnd, msg, MB_ICONERROR);
 		--iMRU_count;
 		for ( ; i < iMRU_count ; i++)
-			strcpy(strMRU[i], strMRU[i + 1]);
+			_tcscpy(strMRU[i], strMRU[i + 1]);
 		save_ini_data();
 	}
 }
@@ -4077,16 +4084,14 @@ void HexEditorWindow::CMD_add_bookmark()
 {
 	if (DataArray.GetLength() <= 0)
 	{
-		LangString app(IDS_APPNAME);
 		LangString emptyFileErr(IDS_BMK_EMPTY_FILE);
-		MessageBox(hwnd, emptyFileErr, app, MB_ICONERROR);
+		MessageBox(hwnd, emptyFileErr, MB_ICONERROR);
 		return;
 	}
 	if (iBmkCount >= BMKMAX)
 	{
-		LangString app(IDS_APPNAME);
 		LangString cannotSetMoreErr(IDS_BMK_MAX_AMOUNT);
-		MessageBox(hwnd, cannotSetMoreErr, app, MB_ICONERROR);
+		MessageBox(hwnd, cannotSetMoreErr, MB_ICONERROR);
 		return;
 	}
 	static_cast<dialog<AddBmkDlg>*>(this)->DoModal(hwnd);
@@ -4105,14 +4110,14 @@ void HexEditorWindow::make_bookmark_list(HMENU menu)
 	if (iBmkCount > 0)
 	{
 		AppendMenu(menu, MF_SEPARATOR, 0, 0);
-		char buf[128];
+		TCHAR buf[128];
 		for (int i = 0 ; i < iBmkCount ; i++)
 		{
 			if (pbmkList[i].name)
-				sprintf(buf, "&%d %s (0x%x)", i + 1, pbmkList[i].name,
+				_stprintf(buf, _T("&%d %s (0x%x)"), i + 1, pbmkList[i].name,
 						pbmkList[i].offset);
 			else
-				sprintf(buf, "&%d 0x%x", i + 1, pbmkList[i].offset,
+				_stprintf(buf, _T("&%d 0x%x"), i + 1, pbmkList[i].offset,
 						pbmkList[i].name);
 			AppendMenu(menu, pbmkList[i].offset <= DataArray.GetLength() ?
 				MF_ENABLED : MF_GRAYED, IDM_BOOKMARK1 + i, buf);
@@ -4179,9 +4184,9 @@ void HexEditorWindow::CMD_clear_all_bmk()
  */
 void HexEditorWindow::CMD_open_partially()
 {
-	if (!close("Open partially"))
+	if (!close())
 		return;
-	char szFileName[_MAX_PATH];
+	TCHAR szFileName[_MAX_PATH];
 	LangString openAllFiles(IDS_OPEN_ALL_FILES);
 
 	szFileName[0] = '\0';
@@ -4195,13 +4200,12 @@ void HexEditorWindow::CMD_open_partially()
 	ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
 	if (!GetOpenFileName(&ofn))
 		return;
-	OpenPartiallyDlg::filehandle = _open(szFileName, _O_RDONLY|_O_BINARY);
+	OpenPartiallyDlg::filehandle = _topen(szFileName, _O_RDONLY|_O_BINARY);
 	if (OpenPartiallyDlg::filehandle == -1)
 	{
-		LangString app(IDS_APPNAME);
-		char buf[500];
-		sprintf(buf, "Error code 0x%x occured while opening file %s.", errno, szFileName);
-		MessageBox(hwnd, buf, app, MB_ICONERROR);
+		TCHAR buf[500];
+		_stprintf(buf, GetLangString(IDS_ERR_FILE_OPEN_CODE), errno, szFileName);
+		MessageBox(hwnd, buf, MB_ICONERROR);
 		return;
 	}
 	int response = static_cast<dialog<OpenPartiallyDlg>*>(this)->DoModal(hwnd);
@@ -4209,8 +4213,8 @@ void HexEditorWindow::CMD_open_partially()
 	if (response != IDOK)
 		return;
 	// If read-only mode on opening is enabled or the file is read only:
-	bReadOnly = bOpenReadOnly || -1 == _access(szFileName, 02); //Pabs added call to _access
-	strcpy(filename, szFileName);
+	bReadOnly = bOpenReadOnly || -1 == _taccess(szFileName, 02); //Pabs added call to _access
+	_tcscpy(filename, szFileName);
 	bFileNeverSaved = false;
 	bFilestatusChanged = true;
 	bFileNeverSaved = false;
@@ -4285,7 +4289,7 @@ void HexEditorWindow::dropfiles(HDROP hDrop)
 	if (hwndMain)
 		SetForegroundWindow(hwndMain);
 
-	if (!close("Open"))
+	if (!close())
 		return;
 
 	char lpszTarget[_MAX_PATH];
@@ -5266,7 +5270,7 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
  */
 void HexEditorWindow::CMD_open_hexdump()
 {
-	if (!close("Import Hexdump"))
+	if (!close())
 		return;
 
 	HGLOBAL hClipMemory = 0;

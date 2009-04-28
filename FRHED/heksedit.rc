@@ -1699,6 +1699,35 @@ BEGIN
    IDS_DD_TYMED_NOTSUP     "TYMED_ISTORAGE is not supported for drag-drop."
 END
 
+// Misc messages
+STRINGTABLE
+BEGIN
+   IDS_FLOAT_SIZE          "float size value:\n%g\n"
+   IDS_FLOAT_NOSPACE       "Not enough space for float size value.\n"
+   IDS_DOUBLE_SIZE         "\ndouble size value:\n%g\n"
+   IDS_DOUBLE_NOSPACE      "\nNot enough space for double size value.\n"
+   IDS_FPROP_NAME          "File name and path: "
+   IDS_FPROP_PARTIAL_OPEN  "\nPartially opened at offset 0x%x = %d.\nNumber of bytes read: %d = %d kilobytes.\n"
+   IDS_FPROP_FSIZE         "\nFile size: %d bytes = %d kilobytes.\n"
+   IDS_FPROP_HDUMP_LINES   "\nNumber of hexdump lines: %d.\n"
+   IDS_MRU_REMOVING        "This file could not be accessed and will be removed from the MRU list."
+END
+
+// Saving file
+STRINGTABLE
+BEGIN
+   IDS_SAVE_MODIFIED       "Do you want to save your changes?"
+END
+
+// Saving file
+STRINGTABLE
+BEGIN
+   IDS_HDUMP_SAVED         "Hexdump saved."
+   IDS_HDUMP_SAVE_FAIL     "Could not save Hexdump."
+   IDS_HDUMP_NO_MEM_CL     "Not enough memory for copying hexdump to clipboard."
+   IDS_HDUMP_CL_FAIL       "Could not copy hexdump to clipboard."
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 
