@@ -5218,17 +5218,15 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 	int type = hexin.CheckType();
 	if (hexin.GetSize() == 0)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "No data present\nCannot continue!", app, MB_ICONERROR);
+		LangString msg(IDS_ERR_NO_DATA);
+		MessageBox(hwnd, msg, MB_ICONERROR);
 		return false;
 	}
 
-	char msg[150] =
-		"Does this data have the same format as the Frhed display?"
-		"\nThis data contains ";
-	strcat(msg, type ?
-		"characters other than whitespace and hexdigits. (like Frhed display)" :
-		"only whitespace and hexdigits. (unlike Frhed display)");
+	TCHAR msg[150];
+	_tcscat(msg, GetLangString(IDS_HEXF_OPEN_FORMAT1));
+	_tcscat(msg, type ? GetLangString(IDS_HEXF_OPEN_FORMAT2) :
+		GetLangString(IDS_HEXF_OPEN_FORMAT3));
 
 	SimpleArray<BYTE> *ptrArray = NULL;
 	bool ret = true;
@@ -5296,7 +5294,7 @@ void HexEditorWindow::CMD_open_hexdump()
 	if (hClipMemory)
 	{
 		//Import from clipboard
-		if (char *hexin = (char *)GlobalLock(hClipMemory))
+		if (TCHAR *hexin = (TCHAR *)GlobalLock(hClipMemory))
 		{
 			HexFile hexfile;
 			hexfile.Open(hexin, -1);
@@ -5314,25 +5312,24 @@ void HexEditorWindow::CMD_open_hexdump()
 	{
 		//Import from file
 		//Initialize the struct
-		char szFileName[_MAX_PATH];
+		TCHAR szFileName[_MAX_PATH];
 		szFileName[0] = '\0';
 		OPENFILENAME ofn;
 		ZeroMemory(&ofn, sizeof ofn);
 		ofn.lStructSize = sizeof ofn;
 		ofn.hwndOwner = hwnd;
-		ofn.lpstrFilter = "Hex Dump files(*.txt,*.hex)\0*.txt;*.hex\0All Files (*.*)\0*.*\0";
+		ofn.lpstrFilter = GetLangString(IDS_HDUMP_FILE_PATTERN);
 		ofn.lpstrFile = szFileName;
 		ofn.nMaxFile = _MAX_PATH;
 		ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
 		if (!GetOpenFileName(&ofn))
 			return;
 		//Set up variables for the function
-		FILE *f = fopen(szFileName, "rb");
+		FILE *f = _tfopen(szFileName, _T("rb"));
 		if (f == 0)
 		{
-			LangString app(IDS_APPNAME);
-			MessageBox(hwnd,"Could not get text from the file.\nCannot continue!",
-				app, MB_ICONERROR);
+			LangString msg(IDS_ERR_CANNOT_GET_TEXT);
+			MessageBox(hwnd, msg, MB_ICONERROR);
 			return;
 		}
 		HexFile hexfile;
@@ -5340,7 +5337,7 @@ void HexEditorWindow::CMD_open_hexdump()
 		done = load_hexfile(hexfile);
 		fclose(f);
 		if (done)
-			bReadOnly = -1 == _access(szFileName, 02);
+			bReadOnly = -1 == _taccess(szFileName, 02);
 	}
 	if (done)
 	{
@@ -5392,7 +5389,7 @@ void HexEditorWindow::status_bar_click(bool left)
 
 	//Som variables used below
 	int r, len, cn;
-	char* text;
+	TCHAR* text;
 	SIZE s;
 	HFONT fon[2];
 	HDC dc;
@@ -5403,8 +5400,9 @@ void HexEditorWindow::status_bar_click(bool left)
 		//In one of the rects that requires the text & fonts
 		//Initialize
 		len = LOWORD(SendMessage(hwndStatusBar, SB_GETTEXTLENGTH, n, 0));
-		text = new char[len+1];
-		if( !text ) return;//Leave if we can't get the text
+		text = new TCHAR[len+1];
+		if (!text)
+			return;//Leave if we can't get the text
 		SendMessage(hwndStatusBar, SB_GETTEXT, n, (LPARAM)text);
 		//This font stuff plagued me for ages but know that you
 		//need to put the right font in the dc as it won't have the right one
@@ -5480,7 +5478,7 @@ void HexEditorWindow::status_bar_click(bool left)
 			//offset, bits, space, un/signed, values
 
 			//Find the start of the un/signed bit
-			char *st = text;
+			TCHAR *st = text;
 			for (i = 0 ; i < len ; i++)
 			{
 				if (text[i] == '\t' && text[i + 1] == '\t')
@@ -5496,7 +5494,7 @@ void HexEditorWindow::status_bar_click(bool left)
 				break;
 
 			//Get the start of the un/signed bit in client coords
-			len = strlen(st);
+			len = _tcslen(st);
 			GetTextExtentPoint32(dc, st, len, &s);
 			r = rt.right - s.cx;
 
@@ -5511,7 +5509,7 @@ void HexEditorWindow::status_bar_click(bool left)
 			{
 				r = p.x - rt.left;
 				st = text;
-				len = strlen(st);
+				len = _tcslen(st);
 			}
 
 			//Find which character the used clicked in.
@@ -5762,9 +5760,8 @@ void HexEditorWindow::status_bar_click(bool left)
  */
 void HexEditorWindow::CMD_adopt_colours()
 {
-	LangString app(IDS_APPNAME);
-	if (MessageBox(hwnd, "Really adopt the operating system colour scheme?",
-			app, MB_YESNO | MB_ICONWARNING) == IDYES)
+	LangString msg(IDS_ADOBT_OS_COLORS);
+	if (MessageBox(hwnd, msg, MB_YESNO | MB_ICONWARNING) == IDYES)
 	{
 		iTextColorValue = GetSysColor(COLOR_WINDOWTEXT);
 		iBkColorValue = GetSysColor(COLOR_WINDOW);
@@ -5945,7 +5942,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 			"{\\f0 ";
 				//Get the charactersitics of the display font
 				BYTE PitchAndFamily, CharSet;
-				char* FaceName = NULL;
+				TCHAR* FaceName = NULL;
 
 				HDC hdc = GetDC(hwnd);
 				HFONT hFontOld = (HFONT)SelectObject(hdc, hFont);
@@ -5959,7 +5956,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 				ReleaseDC(hwnd,hdc);
 
 				if(otm){
-					FaceName = (char*)otm+(UINT)otm->otmpFaceName;
+					FaceName = (TCHAR*)otm+(UINT)otm->otmpFaceName;
 					PitchAndFamily = otm->otmTextMetrics.tmPitchAndFamily;
 					CharSet = otm->otmTextMetrics.tmCharSet;
 				} else {
@@ -5969,7 +5966,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 					CharSet = lf.lfCharSet;
 					cbData = GetTextFace(hdc, 0, NULL);
 					if(cbData){
-						FaceName = (char*)malloc( cbData );
+						FaceName = (TCHAR*)malloc( cbData );
 						if(FaceName) GetTextFace(hdc, cbData, FaceName);
 					}
 				}
@@ -6016,9 +6013,12 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 					"}";
 				}
 				//and the name of the font
-				if(FaceName && FaceName[0]) s << escapefilter << FaceName;
-				if(otm) LocalFree(LocalHandle(otm));
-				else if(FaceName) free(FaceName);
+				if (FaceName && FaceName[0])
+					s << escapefilter << FaceName;
+				if (otm)
+					LocalFree(LocalHandle(otm));
+				else if(FaceName)
+					free(FaceName);
 				s <<
 
 				/*Possible future stuff

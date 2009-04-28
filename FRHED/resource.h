@@ -362,6 +362,8 @@
 #define IDS_ERR_EXT_EDITOR              10048
 #define IDS_ERR_CANNOT_INSERT           10049
 #define IDS_ERR_CHECK_FILESIZE          10050
+#define IDS_ERR_NO_DATA                 10051
+#define IDS_ERR_CANNOT_GET_TEXT         10052
 #define IDS_ABOUT_BROWSER_ERR           10160
 #define IDS_ABOUT_FILENOTFOUND          10161
 #define IDS_BMK_INVALID_POSITION        10177
@@ -455,6 +457,9 @@
 #define IDS_HEXF_CHAR_HEX_NO_MATCH      10485
 #define IDS_HEXF_ERR_INV_CHAR           10486
 #define IDS_HEXF_ERR_EOF                10487
+#define IDS_HEXF_OPEN_FORMAT1           10488
+#define IDS_HEXF_OPEN_FORMAT2           10489
+#define IDS_HEXF_OPEN_FORMAT3           10490
 #define IDS_REPL_NO_DATA                10496
 #define IDS_REPL_CANT_DELETE            10497
 #define IDS_REPL_FAILED                 10498
@@ -518,11 +523,13 @@
 #define IDS_RESET_COLORS                13033
 #define IDS_ASK_DELETE_FILE             13034
 #define IDS_ERR_CANNOT_DELETE           13035
+#define IDS_ADOBT_OS_COLORS             13036
 #define IDS_SAVE_MODIFIED               14000
 #define IDS_HDUMP_SAVED                 15008
 #define IDS_HDUMP_SAVE_FAIL             15009
 #define IDS_HDUMP_NO_MEM_CL             15010
 #define IDS_HDUMP_CL_FAIL               15011
+#define IDS_HDUMP_FILE_PATTERN          15012
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

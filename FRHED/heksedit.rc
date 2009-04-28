@@ -1439,6 +1439,8 @@ BEGIN
     IDS_ERR_EXT_EDITOR      "An error occured when calling the text editor."
     IDS_ERR_CANNOT_INSERT   "Could not insert data"
     IDS_ERR_CHECK_FILESIZE  "Error checking file size"
+    IDS_ERR_NO_DATA         "No data present. Cannot continue!"
+    IDS_ERR_CANNOT_GET_TEXT "Could not get text from the file.\nCannot continue!"
 END
 
 // About-dialog
@@ -1627,6 +1629,9 @@ BEGIN
     IDS_HEXF_CHAR_HEX_NO_MATCH "Character data does not agree with hex data.\nIgnore further mismatched data?\nNB: Hex data will be used when ignoring."
     IDS_HEXF_ERR_INV_CHAR  "Illegal character in hex data.\nCannot continue!\nDo you want to keep what has been found so far?"
     IDS_HEXF_ERR_EOF       "Unexpected end of data found\nCannot continue!\nDo you want to keep what has been found so far?"
+    IDS_HEXF_OPEN_FORMAT1  "Does this data have the same format as the Frhed display?\nThis data contains "
+    IDS_HEXF_OPEN_FORMAT2  "characters other than whitespace and hexdigits. (like Frhed display)"
+    IDS_HEXF_OPEN_FORMAT3  "only whitespace and hexdigits. (unlike Frhed display)"
 END
 
 // Replace-dialog
@@ -1725,6 +1730,7 @@ BEGIN
    IDS_RESET_COLORS        "Really reset colors to default values?"
    IDS_ASK_DELETE_FILE     "Are you sure you want to delete this file?"
    IDS_ERR_CANNOT_DELETE   "Could not delete file."
+   IDS_ADOBT_OS_COLORS     "Really adopt the operating system colour scheme?"
 END
 
 // Saving file
@@ -1740,6 +1746,7 @@ BEGIN
    IDS_HDUMP_SAVE_FAIL     "Could not save Hexdump."
    IDS_HDUMP_NO_MEM_CL     "Not enough memory for copying hexdump to clipboard."
    IDS_HDUMP_CL_FAIL       "Could not copy hexdump to clipboard."
+   IDS_HDUMP_FILE_PATTERN  "Hex Dump files(*.txt,*.hex)\0*.txt;*.hex\0All Files (*.*)\0*.*\0"
 END
 
 #endif    // Englisch (USA) resources
