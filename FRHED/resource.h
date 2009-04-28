@@ -489,6 +489,12 @@
 #define IDS_TPL_ERR_NOSPC_DOUBLE        12014
 #define IDS_TPL_ERR_UNK_TYPE            12015
 #define IDS_TPL_LENGTH                  12016
+#define IDS_DD_SELECT_MOVE_ITEM         13008
+#define IDS_DD_MENU_MOVE                13009
+#define IDS_DD_MENU_COPY                13010
+#define IDS_DD_MENU_CANCEL              13011
+#define IDS_DD_NO_DATA                  13012
+#define IDS_DD_TYMED_NOTSUP             13013
 #define IDM_OLE_DRAG_DROP               40142
 
 // Next default values for new objects

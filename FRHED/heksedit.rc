@@ -1688,6 +1688,17 @@ BEGIN
    IDS_TPL_LENGTH           "-> Length of template = %d bytes."
 END
 
+// Drag & Drop
+STRINGTABLE 
+BEGIN
+   IDS_DD_SELECT_MOVE_ITEM "Select an item to move."
+   IDS_DD_MENU_MOVE        "Move"
+   IDS_DD_MENU_COPY        "Copy"
+   IDS_DD_MENU_CANCEL      "Cancel"
+   IDS_DD_NO_DATA          "No data to insert"
+   IDS_DD_TYMED_NOTSUP     "TYMED_ISTORAGE is not supported for drag-drop."
+END
+
 #endif    // Englisch (USA) resources
 /////////////////////////////////////////////////////////////////////////////
 

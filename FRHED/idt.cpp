@@ -53,7 +53,7 @@ INT_PTR DragDropDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 						//Get the name of the standard clipboard format.
 						switch (temp)
 						{
-							#define CASE(a) case a: lvi.pszText = #a; break;
+							#define CASE(a) case a: lvi.pszText = _T(#a); break;
 								CASE(+CF_TEXT)
 								CASE(CF_BITMAP) CASE(CF_METAFILEPICT) CASE(CF_SYLK)
 								CASE(CF_DIF) CASE(CF_TIFF) CASE(CF_OEMTEXT)
@@ -148,7 +148,9 @@ INT_PTR DragDropDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 					item[0].iItem = ListView_GetNextItem(list, (UINT)-1, LVNI_FOCUSED);
 				if (item[0].iItem==-1)
 				{
-					MessageBox(h, "Select an item to move.", "Drag-drop", MB_OK);
+					LangString app(IDS_APPNAME);
+					LangString moveItem(IDS_DD_SELECT_MOVE_ITEM);
+					MessageBox(h, moveItem, app, MB_OK);
 					SetFocus(list);
 					return TRUE;
 				}
@@ -394,10 +396,10 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 		if (NeedToChooseMoveorCopy)
 		{
 			HMENU hm = CreatePopupMenu();
-			InsertMenu( hm, 0, MF_BYPOSITION|MF_STRING, 1, "Move" );
-			InsertMenu( hm, 1, MF_BYPOSITION|MF_STRING, 2, "Copy" );
-			InsertMenu( hm, 2, MF_BYPOSITION|MF_SEPARATOR, 0, 0 );
-			InsertMenu( hm, 3, MF_BYPOSITION|MF_STRING, 0, "Cancel" );
+			InsertMenu(hm, 0, MF_BYPOSITION | MF_STRING, 1, GetLangString(IDS_DD_MENU_MOVE));
+			InsertMenu(hm, 1, MF_BYPOSITION | MF_STRING, 2, GetLangString(IDS_DD_MENU_COPY));
+			InsertMenu(hm, 2, MF_BYPOSITION | MF_SEPARATOR, 0, 0);
+			InsertMenu(hm, 3, MF_BYPOSITION | MF_STRING, 0, GetLangString(IDS_DD_MENU_CANCEL));
 			BOOL mi = TrackPopupMenuEx( hm, TPM_NONOTIFY|TPM_RIGHTBUTTON|TPM_RETURNCMD, pt.x, pt.y, hexwnd.hwnd, NULL );
 			DestroyMenu(hm);
 			if (mi == 0)
@@ -502,7 +504,9 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 		/*Check which format should be inserted according to user preferences*/
 		if (numfe == 0)
 		{
-			MessageBox( hexwnd.hwnd, "No data to insert", "Drag-drop", MB_OK );
+			LangString app(IDS_APPNAME);
+			LangString msg(IDS_DD_NO_DATA);
+			MessageBox(hexwnd.hwnd, msg, app, MB_OK );
 			err = S_OK;
 			*pdwEffect = DROPEFFECT_NONE;
 			goto ERR_ENUM;
@@ -576,10 +580,10 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 		else if (NeedToChooseMoveorCopy)
 		{
 			HMENU hm = CreatePopupMenu();
-			InsertMenu( hm, 0, MF_BYPOSITION|MF_STRING, 1, "Move" );
-			InsertMenu( hm, 1, MF_BYPOSITION|MF_STRING, 2, "Copy" );
-			InsertMenu( hm, 2, MF_BYPOSITION|MF_SEPARATOR, 0, 0 );
-			InsertMenu( hm, 3, MF_BYPOSITION|MF_STRING, 0, "Cancel" );
+			InsertMenu(hm, 0, MF_BYPOSITION | MF_STRING, 1, GetLangString(IDS_DD_MENU_MOVE));
+			InsertMenu(hm, 1, MF_BYPOSITION | MF_STRING, 2, GetLangString(IDS_DD_MENU_COPY));
+			InsertMenu(hm, 2, MF_BYPOSITION | MF_SEPARATOR, 0, 0);
+			InsertMenu(hm, 3, MF_BYPOSITION | MF_STRING, 0, GetLangString(IDS_DD_MENU_CANCEL));
 			BOOL mi = TrackPopupMenuEx( hm, TPM_NONOTIFY|TPM_RIGHTBUTTON|TPM_RETURNCMD, pt.x, pt.y, hexwnd.hwnd, NULL );
 			DestroyMenu( hm );
 			if (mi == 0)
@@ -631,7 +635,13 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 					} break;
 					//This case is going to be a bitch to implement so it can wait for a while
 					//It will need to be a recursive method that stores the STATSTG structures (+ the name), contents/the bytes of data in streams/property sets
-					case TYMED_ISTORAGE:{ MessageBox( hexwnd.hwnd, "TYMED_ISTORAGE is not yet supported for drag-drop.\nPlease don't hesitate to write a patch & send in a diff.", "Drag-drop", MB_OK ); } break;//IStorage*
+					case TYMED_ISTORAGE:
+						{
+							LangString app(IDS_APPNAME);
+							LangString msg(IDS_DD_TYMED_NOTSUP);
+							MessageBox(hexwnd.hwnd, msg, app, MB_OK);
+						} 
+						break; //IStorage*
 					case TYMED_GDI:{
 						len = GetObject( stm.hBitmap, 0, NULL );
 						if( len ){
@@ -643,31 +653,36 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 					case TYMED_MFPICT:{
 						len = GlobalSize( stm.hMetaFilePict );
 						METAFILEPICT*pMFP=(METAFILEPICT*)GlobalLock( stm.hMetaFilePict );
-						if( pMFP ){
-							len += GetMetaFileBitsEx( pMFP->hMF, 0, NULL );
-							GlobalUnlock( stm.hMetaFilePict );
+						if (pMFP)
+						{
+							len += GetMetaFileBitsEx(pMFP->hMF, 0, NULL);
+							GlobalUnlock(stm.hMetaFilePict);
 						}
 					} break;//HMETAFILE
 #ifndef __CYGWIN__
 					case TYMED_ENHMF:{
 						len = GetEnhMetaFileHeader( stm.hEnhMetaFile, 0, NULL );
 						DWORD n = GetEnhMetaFileDescriptionW( stm.hEnhMetaFile, 0, NULL );
-						if( n && n != GDI_ERROR ) len += sizeof(WCHAR)*n;
+						if (n && n != GDI_ERROR)
+							len += sizeof(WCHAR) * n;
 						len += GetEnhMetaFileBits( stm.hEnhMetaFile, 0, NULL );
 						n = GetEnhMetaFilePaletteEntries( stm.hEnhMetaFile, 0, NULL );
-						if( n && n != GDI_ERROR ) len += sizeof(LOGPALETTE)+(n-1)*sizeof(PALETTEENTRY);
+						if (n && n != GDI_ERROR)
+							len += sizeof(LOGPALETTE) + (n - 1) * sizeof(PALETTEENTRY);
 					} break;//HENHMETAFILE
 #endif //__CYGWIN__
 					//case TYMED_NULL:break;
 				}
-				if( !len ) continue;
+				if (!len)
+					continue;
 
 				/*Malloc
 				We do this so that if the data access fails we only need free(data)
 				and don't need to mess around with the DataArray.
 				Perhaps in the future the DataArray can support undoable actions.*/
 				BYTE* t = (BYTE*)realloc(data, len);
-				if( !t ) continue;
+				if (!t)
+					continue;
 				data = t;
 				memset( data, 0, len );
 
@@ -701,7 +716,14 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 					} break;
 					//This case is going to be a bitch to implement so it can wait for a while
 					//It will need to be a recursive method that stores the STATSTG structures (+ the name), contents/the bytes of data in streams/property sets
-					case TYMED_ISTORAGE:{ MessageBox( hexwnd.hwnd, "TYMED_ISTORAGE is not yet supported for drag-drop.\nPlease don't hesitate to write a patch & send in a diff.", "Drag-drop", MB_OK ); goto ERR_ENUM; } break;//IStorage*
+					case TYMED_ISTORAGE:
+						{
+							LangString app(IDS_APPNAME);
+							LangString msg(IDS_DD_TYMED_NOTSUP);
+							MessageBox(hexwnd.hwnd, msg, app, MB_OK );
+							goto ERR_ENUM;
+						}
+						break;//IStorage*
 					case TYMED_GDI:{
 						int l = GetObject( stm.hBitmap, len, data );
 						if( l ){
