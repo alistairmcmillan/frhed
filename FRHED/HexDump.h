@@ -35,23 +35,23 @@ public:
 	~HexDump();
 
 	void Settings(int bytesPerLine, int charsPerLine,
-			bool partialStats, __int64 partialOffset,
+			bool partialStats, INT64 partialOffset,
 			int byteSpace, int charSpace, int charset);
 	void SetOffsets(int minLen, int maxLen);
-	void SetArray(const SimpleArray<unsigned char> *dataArray);
+	void SetArray(const SimpleArray<BYTE> *dataArray);
 	void CreateBuffer(unsigned size);
-	char * GetBuffer() const;
+	TCHAR * GetBuffer() const;
 	void Write(unsigned startInd, unsigned endInd);
 
 private:
 	SimpleArray<BYTE> *m_pData;
-	char *m_pBuffer;
+	TCHAR *m_pBuffer;
 	int m_bytesPerLine;
 	int m_charsPerLine;
 	int m_offsetMaxLen;
 	int m_offsetMinLen;
 	bool m_partialStats;
-	__int64 m_partialOffset;
+	INT64 m_partialOffset;
 	int m_byteSpace;
 	int m_charSpace;
 	int m_charset;

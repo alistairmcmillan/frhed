@@ -2126,7 +2126,10 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 			iMinOffsetLen, iMinOffsetLen, bPartialStats ?
 			startpos + iPartialOffset : startpos);
 	if (i != -1)
-		memset(linbuf + i, ' ', m - i);
+	{
+		for (int ii = i; ii < m - i; ii++)
+			linbuf[ii] = ' ';
+	}
 
 	SetTextColor(hdc, iTextColor);
 	SetBkColor(hdc, iBkColor);
@@ -2139,7 +2142,8 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 
 	// Write offset to chars.
 	m = iCharSpace + 1;
-	memset(linbuf, ' ', sizeof linbuf);
+	for (int i = 0; i < RTL_NUMBER_OF(linbuf); i++)
+		linbuf[i] = ' ';
 	SetTextColor (hdc, iTextColor);
 	SetBkColor (hdc, iBkColor);
 	print_text(hdc, z - m, y, linbuf, m);

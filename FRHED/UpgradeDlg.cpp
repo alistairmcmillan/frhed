@@ -408,7 +408,8 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 		_stprintf(linebuf, _T("%*.*x"), tol, tol, 0); // The fix caused a crash
 		p = _tcslen(linebuf);
 		mol += 2;
-		memset(linebuf + p, ' ', mol - p);
+		for (int i = p; i < mol - p; i++)
+			linebuf[i] = ' ';
 		linebuf[mol] = 0;
 		p = _tcslen(linebuf);
 		//numchars
@@ -445,7 +446,8 @@ BOOL UpgradeDlg::OnDrawitem(HWND, WPARAM, LPARAM l)
 		//Create the text
 		_stprintf(linebuf, _T("%*.*x"), tol, tol, tmp); // The fix caused a crash
 		p = _tcslen(linebuf);
-		memset(linebuf + p,' ', mol - p);
+		for (int i = p; i < mol -p; i++)
+			linebuf[i] = ' ';
 		linebuf[mol] = 0;
 		mol -= 2;
 		p = _tcslen(linebuf);

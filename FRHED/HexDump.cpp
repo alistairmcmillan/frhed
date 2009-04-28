@@ -47,7 +47,7 @@ HexDump::~HexDump()
 }
 
 void HexDump::Settings(int bytesPerLine, int charsPerLine,
-		bool partialStats, __int64 partialOffset,
+		bool partialStats, INT64 partialOffset,
 		int byteSpace, int charSpace, int charset)
 {
 	m_bytesPerLine = bytesPerLine;
@@ -72,18 +72,19 @@ void HexDump::SetArray(const SimpleArray<BYTE> *dataArray)
 
 void HexDump::CreateBuffer(unsigned size)
 {
-	m_pBuffer = new char[size];
-	memset(m_pBuffer, ' ', size);
+	m_pBuffer = new TCHAR[size];
+	for (int i = 0; i < size; i++)
+		m_pBuffer[i] = ' ';
 }
 
-char * HexDump::GetBuffer() const
+TCHAR * HexDump::GetBuffer() const
 {
 	return m_pBuffer;
 }
 
 void HexDump::Write(unsigned startInd, unsigned endInd)
 {
-	char buf2[128];
+	TCHAR buf2[128];
 
 	// Write hexdump.
 	// a = first byte of first line of hexdump.
@@ -95,10 +96,11 @@ void HexDump::Write(unsigned startInd, unsigned endInd)
 			a += m_bytesPerLine, k += m_charsPerLine + 2)
 	{
 		// Write offset.
-		int m = sprintf(buf2, "%*.*x", m_offsetMinLen, m_offsetMinLen,
+		int m = _stprintf(buf2, _T("%*.*x"), m_offsetMinLen, m_offsetMinLen,
 				m_partialStats ? a + m_partialOffset : a);
 
-		memset(buf2 + m, ' ', m_offsetMaxLen + m_byteSpace - m);
+		for (int i = m; i < m_offsetMaxLen + m_byteSpace - m; i++)
+			buf2[i] = ' ';
 		buf2[m_offsetMaxLen + m_byteSpace] = '\0';
 
 		int l = 0; // l = Offset in line, relative to k.
@@ -120,7 +122,7 @@ void HexDump::Write(unsigned startInd, unsigned endInd)
 			else
 			{
 				// Write byte.
-				sprintf(buf2, "%2.2x ", (*m_pData)[a + j]);
+				_stprintf(buf2, _T("%2.2x "), (*m_pData)[a + j]);
 				m_pBuffer[k + l + j*3    ] = buf2[0];
 				m_pBuffer[k + l + j*3 + 1] = buf2[1];
 				m_pBuffer[k + l + j*3 + 2] = buf2[2];
@@ -140,5 +142,4 @@ void HexDump::Write(unsigned startInd, unsigned endInd)
 		m_pBuffer[k + m_charsPerLine] = '\r';
 		m_pBuffer[k + m_charsPerLine + 1] = '\n';
 	}
-
 }
