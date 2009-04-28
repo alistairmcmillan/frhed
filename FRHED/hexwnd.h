@@ -166,7 +166,7 @@ public:
 	BOOL STDMETHODCALLTYPE select_prev_diff(BOOL bFromEnd);
 	void CMD_colors_to_default();
 	void CMD_goto();
-	void apply_template(char *pcTemplate);
+	void apply_template(TCHAR *pcTemplate);
 	void CMD_apply_template();
 	void dropfiles(HDROP);
 	void CMD_open_partially();

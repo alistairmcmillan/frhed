@@ -1435,6 +1435,10 @@ BEGIN
     IDS_ERR_HELP_NOT_FOUND  "Help file\n%s\nnot found!"
     IDS_ERR_FILE_OPEN_CODE  "Error code 0x%x occured while opening file %s."
     IDS_ERR_WRITING_OPTIONS "Could not save preferences to registry."
+    IDS_ERR_EMPTY_FILE      "File is empty."
+    IDS_ERR_EXT_EDITOR      "An error occured when calling the text editor."
+    IDS_ERR_CANNOT_INSERT   "Could not insert data"
+    IDS_ERR_CHECK_FILESIZE  "Error checking file size"
 END
 
 // About-dialog
@@ -1594,6 +1598,8 @@ BEGIN
     IDS_FIND_SEL_TOO_LARGE "Selection too large."
     IDS_FIND_CANNOT_FIND   "Could not find data."
     IDS_FIND_EMPTY_STRING  "Findstring is zero bytes long."
+    IDS_FIND_NO_MORE       "Could not find any more occurances."
+    IDS_FIND_NO_STRING     "String to find not specified."
 END
 
 // Drives-dialog
@@ -1607,6 +1613,7 @@ BEGIN
     IDS_DRIVES_SECTPERTRACK "Sectors per track"
     IDS_DRIVES_BYTESPERSECT "Bytes per sector"
     IDS_DRIVES_TOTALBYTES  "Total size in bytes"
+    IDS_DRIVES_SECTOR      "%s:Sector %I64d"
 END
 
 // Hex file import
@@ -1686,6 +1693,10 @@ END
 STRINGTABLE 
 BEGIN
    IDS_TPL_LENGTH           "-> Length of template = %d bytes."
+   IDS_TPL_FILE_PATTERN     "Template files (*.tpl)\0*.tpl\0\0"
+   IDS_TPL_CHOOSE_FILE      "Choose template file"
+   IDS_TPL_CANNOT_OPEN      "Could not open template file %s."
+   IDS_TPL_CANNOT_OPEN_FROM "Could not load template from file %s."
 END
 
 // Drag & Drop
@@ -1711,6 +1722,9 @@ BEGIN
    IDS_FPROP_FSIZE         "\nFile size: %d bytes = %d kilobytes.\n"
    IDS_FPROP_HDUMP_LINES   "\nNumber of hexdump lines: %d.\n"
    IDS_MRU_REMOVING        "This file could not be accessed and will be removed from the MRU list."
+   IDS_RESET_COLORS        "Really reset colors to default values?"
+   IDS_ASK_DELETE_FILE     "Are you sure you want to delete this file?"
+   IDS_ERR_CANNOT_DELETE   "Could not delete file."
 END
 
 // Saving file

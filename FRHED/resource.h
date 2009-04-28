@@ -358,6 +358,10 @@
 #define IDS_ERR_HELP_NOT_FOUND          10044
 #define IDS_ERR_FILE_OPEN_CODE          10045
 #define IDS_ERR_WRITING_OPTIONS         10046
+#define IDS_ERR_EMPTY_FILE              10047
+#define IDS_ERR_EXT_EDITOR              10048
+#define IDS_ERR_CANNOT_INSERT           10049
+#define IDS_ERR_CHECK_FILESIZE          10050
 #define IDS_ABOUT_BROWSER_ERR           10160
 #define IDS_ABOUT_FILENOTFOUND          10161
 #define IDS_BMK_INVALID_POSITION        10177
@@ -432,6 +436,8 @@
 #define IDS_FIND_SEL_TOO_LARGE          10448
 #define IDS_FIND_CANNOT_FIND            10449
 #define IDS_FIND_EMPTY_STRING           10450
+#define IDS_FIND_NO_MORE                10451
+#define IDS_FIND_NO_STRING              10452
 #define IDS_DRIVES_NEED_ADMIN           10464
 #define IDS_DRIVES_ERR_OPEN             10465
 #define IDS_DRIVES_CYLINDERS            10466
@@ -440,6 +446,7 @@
 #define IDS_DRIVES_SECTPERTRACK         10469
 #define IDS_DRIVES_BYTESPERSECT         10470
 #define IDS_DRIVES_TOTALBYTES           10471
+#define IDS_DRIVES_SECTOR               10472
 #define IDS_HEXF_NO_MEM                 10480
 #define IDS_HEXF_ILLEGAL_CHAR           10481
 #define IDS_HEXF_ILLEGAL_OFFS           10482
@@ -489,6 +496,10 @@
 #define IDS_TPL_ERR_NOSPC_DOUBLE        12014
 #define IDS_TPL_ERR_UNK_TYPE            12015
 #define IDS_TPL_LENGTH                  12016
+#define IDS_TPL_FILE_PATTERN            12017
+#define IDS_TPL_CHOOSE_FILE             12018
+#define IDS_TPL_CANNOT_OPEN             12019
+#define IDS_TPL_CANNOT_OPEN_FROM        12020
 #define IDS_DD_SELECT_MOVE_ITEM         13008
 #define IDS_DD_MENU_MOVE                13009
 #define IDS_DD_MENU_COPY                13010
@@ -504,6 +515,9 @@
 #define IDS_FPROP_FSIZE                 13030
 #define IDS_FPROP_HDUMP_LINES           13031
 #define IDS_MRU_REMOVING                13032
+#define IDS_RESET_COLORS                13033
+#define IDS_ASK_DELETE_FILE             13034
+#define IDS_ERR_CANNOT_DELETE           13035
 #define IDS_SAVE_MODIFIED               14000
 #define IDS_HDUMP_SAVED                 15008
 #define IDS_HDUMP_SAVE_FAIL             15009

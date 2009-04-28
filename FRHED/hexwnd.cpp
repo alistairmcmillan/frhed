@@ -4162,15 +4162,14 @@ void HexEditorWindow::CMD_remove_bkm()
  */
 void HexEditorWindow::CMD_clear_all_bmk()
 {
-	LangString app(IDS_APPNAME);
 	LangString verifyRemoveAll(IDS_BMK_REMOVE_ALL);
 	int response = MessageBox(hwnd, verifyRemoveAll,
-		app, MB_YESNO | MB_ICONWARNING);
+		MB_YESNO | MB_ICONWARNING);
 	if (response != IDYES)
 		return;
 	while (iBmkCount)
 	{
-		if (char *name = pbmkList[--iBmkCount].name)
+		if (TCHAR *name = pbmkList[--iBmkCount].name)
 		{
 			free(name);
 			name = NULL;
@@ -4240,7 +4239,7 @@ INT_PTR CALLBACK MultiDropDlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 			HWND hwndList = GetDlgItem(h, IDC_DROPPED_FILES);
 			SetWindowLongPtr(hwndList, GWL_STYLE, GetWindowLongPtr(hwndList,GWL_STYLE) & ~LBS_SORT | WS_HSCROLL);
 
-			char file[_MAX_PATH + 1];
+			TCHAR file[_MAX_PATH + 1];
 			UINT n = DragQueryFile((HDROP)l, 0xFFFFFFFF, NULL, 0 );
 			SendMessage (hwndList, LB_INITSTORAGE, n, _MAX_PATH+1);
 			for (UINT i = 0 ; i < n ; i++)
@@ -4272,7 +4271,7 @@ INT_PTR CALLBACK MultiDropDlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
  */
 void HexEditorWindow::dropfiles(HDROP hDrop)
 {
-	char lpszFile[_MAX_PATH];
+	TCHAR lpszFile[_MAX_PATH];
 	UINT numfiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0 );
 	UINT i = 0;
 	if (numfiles > 1)
@@ -4292,20 +4291,15 @@ void HexEditorWindow::dropfiles(HDROP hDrop)
 	if (!close())
 		return;
 
-	char lpszTarget[_MAX_PATH];
+	TCHAR lpszTarget[_MAX_PATH];
 	// Is this a link file?
 	HRESULT hres = ResolveIt(lpszFile, lpszTarget);
-	char *lpszFileToOpen = lpszFile;
+	TCHAR *lpszFileToOpen = lpszFile;
 	if (SUCCEEDED(hres))
 	{
 		// Trying to open a link file: decision by user required.
-		LangString app(IDS_APPNAME);
-		int ret = MessageBox( hwnd,
-			"You are trying to open a link file.\n"
-			"Click on Yes if you want to open the file linked to,\n"
-			"or click on No if you want to open the link file itself.\n"
-			"Choose Cancel if you want to abort opening.",
-			app, MB_YESNOCANCEL | MB_ICONWARNING);
+		LangString msg(IDS_OPEN_SHORTCUT);
+		int ret = MessageBox(hwnd, msg, MB_YESNOCANCEL | MB_ICONWARNING);
 		switch( ret )
 		{
 		case IDYES:
@@ -4323,21 +4317,21 @@ void HexEditorWindow::CMD_apply_template()
 {
 	if (DataArray.GetLength() == 0)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "File is empty.", app, MB_ICONERROR);
+		LangString msg(IDS_ERR_EMPTY_FILE);
+		MessageBox(hwnd, msg, MB_ICONERROR);
 		return;
 	}
 	// Get name of template file.
-	char szTemplateName[_MAX_PATH];
+	TCHAR szTemplateName[_MAX_PATH];
 	szTemplateName[0] = '\0';
 	OPENFILENAME ofn;
 	ZeroMemory(&ofn, sizeof ofn);
 	ofn.lStructSize = sizeof ofn;
 	ofn.hwndOwner = hwnd;
-	ofn.lpstrFilter = "Template files (*.tpl)\0*.tpl\0\0";
+	ofn.lpstrFilter = GetLangString(IDS_TPL_FILE_PATTERN);
 	ofn.lpstrFile = szTemplateName;
 	ofn.nMaxFile = _MAX_PATH;
-	ofn.lpstrTitle = "Choose template file";
+	ofn.lpstrTitle = GetLangString(IDS_TPL_CHOOSE_FILE);
 	ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
 	if (GetOpenFileName(&ofn))
 	{
@@ -4347,7 +4341,7 @@ void HexEditorWindow::CMD_apply_template()
 }
 
 //-------------------------------------------------------------------
-void HexEditorWindow::apply_template(char *pcTemplate)
+void HexEditorWindow::apply_template(TCHAR *pcTemplate)
 {
 	Template tmpl;
 	tmpl.SetOriginalFilename(filename);
@@ -4355,8 +4349,8 @@ void HexEditorWindow::apply_template(char *pcTemplate)
 	if (!success)
 	{
 		LangString app(IDS_APPNAME);
-		char buf[500];
-		sprintf(buf, "Could not open template file %s.", pcTemplate);
+		TCHAR buf[500];
+		_stprintf(buf, GetLangString(IDS_TPL_CANNOT_OPEN), pcTemplate);
 		MessageBox(hwnd, buf, app, MB_ICONERROR);
 		return;
 	}
@@ -4365,8 +4359,8 @@ void HexEditorWindow::apply_template(char *pcTemplate)
 	if (!success)
 	{
 		LangString app(IDS_APPNAME);
-		char buf[500];
-		sprintf(buf, "Could not load template from file %s.", pcTemplate);
+		TCHAR buf[500];
+		_stprintf(buf, GetLangString(IDS_TPL_CANNOT_OPEN_FROM), pcTemplate);
 		MessageBox(hwnd, buf, app, MB_ICONERROR);
 		return;
 	}
@@ -4431,9 +4425,8 @@ HRESULT HexEditorWindow::ResolveIt(LPCTSTR lpszLinkFile, LPTSTR lpszPath)
  */
 void HexEditorWindow::CMD_colors_to_default()
 {
-	LangString app(IDS_APPNAME);
-	if (MessageBox(hwnd, "Really reset colors to default values?",
-			app, MB_YESNO | MB_ICONWARNING) == IDYES)
+	LangString msg(IDS_RESET_COLORS);
+	if (MessageBox(hwnd, msg, MB_YESNO | MB_ICONWARNING) == IDYES)
 	{
 		iBmkColor = RGB( 255, 0, 0 );
 		iSelBkColorValue = RGB( 255, 255, 0 );
@@ -4449,7 +4442,7 @@ void HexEditorWindow::CMD_colors_to_default()
 void HexEditorWindow::CMD_GotoDllExports()
 {
 	ULONG ulOffset, ulSize;
-	if( GetDllExportNames( filename, &ulOffset, &ulSize ) )
+	if (GetDllExportNames(filename, &ulOffset, &ulSize))
 	{
 		bSelected = TRUE;
 		iStartOfSelection = (int)ulOffset;
@@ -4462,7 +4455,7 @@ void HexEditorWindow::CMD_GotoDllExports()
 void HexEditorWindow::CMD_GotoDllImports()
 {
 	ULONG ulOffset, ulSize;
-	if( GetDllImportNames( filename, &ulOffset, &ulSize ) )
+	if (GetDllImportNames(filename, &ulOffset, &ulSize))
 	{
 		bSelected = TRUE;
 		iStartOfSelection = (int)ulOffset;
@@ -4553,7 +4546,8 @@ void HexEditorWindow::CMD_DriveGotoLastTrack()
 
 void HexEditorWindow::RefreshCurrentTrack()
 {
-	if (Drive->ReadAbsolute(Track.GetObjectMemory(), Track.GetObjectSize(), CurrentSectorNumber + SelectedPartitionInfo->m_StartingSector))
+	if (Drive->ReadAbsolute(Track.GetObjectMemory(), Track.GetObjectSize(),
+			CurrentSectorNumber + SelectedPartitionInfo->m_StartingSector))
 	{
 		ULONG BytesPerSector = Track.GetObjectSize();
 		DataArray.ClearAll();
@@ -4562,7 +4556,8 @@ void HexEditorWindow::RefreshCurrentTrack()
 			DataArray.SetUpperBound(BytesPerSector-1);
 			CopyMemory(DataArray, Track.GetObjectMemory(), BytesPerSector);
 			bReadOnly = TRUE;
-			sprintf(filename, "%s:Sector %I64d", (LPCSTR) SelectedPartitionInfo->GetNameAsString(), CurrentSectorNumber);
+			_stprintf(filename, GetLangString(IDS_DRIVES_SECTOR),
+					(LPCSTR) SelectedPartitionInfo->GetNameAsString(), CurrentSectorNumber);
 			bFileNeverSaved = false;
 			iVscrollMax = 0;
 			iVscrollPos = 0;
@@ -4581,7 +4576,7 @@ void HexEditorWindow::RefreshCurrentTrack()
 
 void HexEditorWindow::CMD_OpenDrive()
 {
-	if (!close("Open Drive"))
+	if (!close())
 		return;
 	static_cast<dialog<OpenDriveDialog>*>(this)->DoModal(hwnd);
 }
@@ -4623,13 +4618,13 @@ void HexEditorWindow::CMD_findnext()
 	if (FindDlg::pcFindDlgBuffer)
 	{
 		// There is a findstring. Create its translation.
-		char *pcFindstring;
-		int srclen = strlen(FindDlg::pcFindDlgBuffer);
+		TCHAR *pcFindstring;
+		int srclen = _tcslen(FindDlg::pcFindDlgBuffer);
 		if (int destlen = create_bc_translation(&pcFindstring,
 			 FindDlg::pcFindDlgBuffer, srclen, iCharacterSet, iBinaryMode))
 		{
 			SetCursor(LoadCursor(NULL, IDC_WAIT));
-			int i = findutils_FindBytes((char *)&DataArray[iCurByte + 1],
+			int i = findutils_FindBytes((TCHAR *)&DataArray[iCurByte + 1],
 				DataArray.GetLength() - iCurByte - 1,
 				pcFindstring, destlen, 1,
 				FindDlg::bFindDlgMatchCase);
@@ -4645,9 +4640,8 @@ void HexEditorWindow::CMD_findnext()
 			}
 			else
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hwnd, "Could not find any more occurances.", app,
-						MB_ICONINFORMATION);
+				LangString msg(IDS_FIND_NO_MORE);
+				MessageBox(hwnd, msg, MB_ICONINFORMATION);
 			}
 			delete [] pcFindstring;
 		}
@@ -4661,8 +4655,8 @@ void HexEditorWindow::CMD_findnext()
 	{
 		//Can't call CMD_find cause it won't alloc a new buffer
 		// There is no findstring.
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "String to find not specified.", app, MB_ICONERROR);
+		LangString msg(IDS_FIND_NO_STRING);
+		MessageBox(hwnd, msg, MB_ICONERROR);
 	}
 }
 
@@ -4706,8 +4700,8 @@ void HexEditorWindow::CMD_findprev()
 	if (FindDlg::pcFindDlgBuffer)
 	{
 		// There is a findstring. Create its translation.
-		char *pcFindstring;
-		int srclen = strlen(FindDlg::pcFindDlgBuffer);
+		TCHAR *pcFindstring;
+		int srclen = _tcslen(FindDlg::pcFindDlgBuffer);
 		if (int destlen = create_bc_translation(&pcFindstring,
 			FindDlg::pcFindDlgBuffer, srclen, iCharacterSet, iBinaryMode))
 		{
@@ -4717,7 +4711,7 @@ void HexEditorWindow::CMD_findprev()
 			// you are somewhere in the middle of the findstring with the caret
 			// and you choose "find previous" you usually want to find the beginning
 			// of the findstring in the file.
-			int i = findutils_FindBytes((char *)&DataArray[0],
+			int i = findutils_FindBytes((TCHAR *)&DataArray[0],
 				min(iCurByte + (destlen - 1), DataArray.GetLength()),
 				pcFindstring, destlen, -1, FindDlg::bFindDlgMatchCase);
 			SetCursor(LoadCursor(NULL, IDC_ARROW));
@@ -4732,9 +4726,8 @@ void HexEditorWindow::CMD_findprev()
 			}
 			else
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hwnd, "Could not find any more occurances.", app,
-						MB_ICONINFORMATION);
+				LangString msg(IDS_FIND_NO_MORE);
+				MessageBox(hwnd, msg, MB_ICONINFORMATION);
 			}
 			delete [] pcFindstring;
 		}
@@ -4749,8 +4742,8 @@ void HexEditorWindow::CMD_findprev()
 	else
 	{
 		// There is no findstring.
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "String to find not specified.", app, MB_ICONERROR);
+		LangString msg(IDS_FIND_NO_STRING);
+		MessageBox(hwnd, msg, MB_ICONERROR);
 	}
 }
 
@@ -4758,14 +4751,13 @@ void HexEditorWindow::CMD_findprev()
 // Handler for the "Open in text editor" command.
 void HexEditorWindow::CMD_summon_text_edit()
 {
-	if (!close("Open in text editor"))
+	if (!close())
 		return;
-	HINSTANCE hi = ShellExecute( hwnd, "open", TexteditorName, filename, NULL, SW_SHOWNORMAL );
+	HINSTANCE hi = ShellExecute(hwnd, _T("open"), TexteditorName, filename, NULL, SW_SHOWNORMAL);
 	if ((int) hi <= HINSTANCE_ERROR)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "An error occured when calling the text editor.",
-			app, MB_ICONERROR);
+		LangString msg(IDS_ERR_EXT_EDITOR);
+		MessageBox(hwnd, msg, MB_ICONERROR);
 	}
 }
 
@@ -4996,7 +4988,7 @@ void HexEditorWindow::CMD_revert()
 	}
 	if (bPartialOpen)
 	{
-		int filehandle = _open(filename, _O_RDONLY|_O_BINARY);
+		int filehandle = _topen(filename, _O_RDONLY|_O_BINARY);
 		if (filehandle != -1)
 		{
 			_lseeki64(filehandle, iPartialOffset, 0);
@@ -5004,7 +4996,7 @@ void HexEditorWindow::CMD_revert()
 			{
 				if (_read(filehandle, &DataArray[0], iPartialOpenLen) != -1)
 				{
-					bReadOnly = bOpenReadOnly || -1 == _access(filename, 02);
+					bReadOnly = bOpenReadOnly || -1 == _taccess(filename, 02);
 					iVscrollMax = iVscrollPos = iHscrollMax = iHscrollPos =
 					iVscrollPos = iCurByte = iCurNibble = 0;
 					iFileChanged = FALSE;
@@ -5032,22 +5024,22 @@ void HexEditorWindow::CMD_fw()
 
 void HexEditorWindow::CMD_deletefile()
 {
-	LangString app(IDS_APPNAME);
-	if (IDYES != MessageBox(hwnd, "Are you sure you want to delete this file?",
-			app, MB_ICONWARNING | MB_YESNO))
+	LangString msg(IDS_ASK_DELETE_FILE);
+	if (IDYES != MessageBox(hwnd, msg, MB_ICONWARNING | MB_YESNO))
 		return;
-	if (remove(filename) != 0)
+	if (_tremove(filename) != 0)
 	{
-		MessageBox(hwnd, "Could not delete file.", app, MB_ICONERROR);
+		LangString err(IDS_ERR_CANNOT_DELETE);
+		MessageBox(hwnd, err, MB_ICONERROR);
 		return;
 	}
 	//Remove from MRU
 	int i = 0;
-	while (i < iMRU_count && strcmp(strMRU[i], filename) != 0)
+	while (i < iMRU_count && _tcscmp(strMRU[i], filename) != 0)
 		++i;
 	--iMRU_count;
 	for ( ; i < iMRU_count ; i++)
-		strcpy(strMRU[i], strMRU[i + 1]);
+		_tcscpy(strMRU[i], strMRU[i + 1]);
 	save_ini_data();
 	iFileChanged = FALSE;
 	CMD_new("Delete file");//tricky-tricky
@@ -5055,7 +5047,7 @@ void HexEditorWindow::CMD_deletefile()
 
 void HexEditorWindow::CMD_insertfile()
 {
-	char szFileName[_MAX_PATH];
+	TCHAR szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
 	LangString openAllFiles(IDS_OPEN_ALL_FILES);
 
@@ -5071,11 +5063,11 @@ void HexEditorWindow::CMD_insertfile()
 		return;
 	// RK: don't allow inserting same file we're editing right now.
 	//Pabs removed - the bug appears to have disappeared as a result of my improvements
-	int fhandle = _open(szFileName, _O_RDONLY|_O_BINARY);
+	int fhandle = _topen(szFileName, _O_RDONLY | _O_BINARY);
 	if (fhandle == -1)
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "Error opening file", app, MB_ICONERROR);
+		LangString msg(IDS_ERR_OPENING_FILE);
+		MessageBox(hwnd, msg, MB_ICONERROR);
 		return;
 	}
 	int inslen = _filelength(fhandle);
@@ -5146,22 +5138,22 @@ void HexEditorWindow::CMD_insertfile()
 			}
 			else
 			{
-				LangString app(IDS_APPNAME);
-				MessageBox(hwnd, "Could not insert data", app, MB_ICONERROR);
+				LangString msg(IDS_ERR_CANNOT_INSERT);
+				MessageBox(hwnd, msg, MB_ICONERROR);
 			}
 		}
 	}
 	else
 	{
-		LangString app(IDS_APPNAME);
-		MessageBox(hwnd, "Error checking file size", app, MB_ICONERROR);
+		LangString msg(IDS_ERR_CHECK_FILESIZE);
+		MessageBox(hwnd, msg, MB_ICONERROR);
 	}
 	_close(fhandle);
 }
 
 void HexEditorWindow::CMD_saveselas()
 {
-	char szFileName[_MAX_PATH];
+	TCHAR szFileName[_MAX_PATH];
 	szFileName[0] = '\0';
 	LangString allFiles(IDS_OPEN_ALL_FILES);
 	OPENFILENAME ofn;
@@ -5174,8 +5166,9 @@ void HexEditorWindow::CMD_saveselas()
 	ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
 	if (GetSaveFileName(&ofn))
 	{
-		const char *complain = "Could not save file.";
-		int filehandle = _open(szFileName, _O_RDWR|_O_CREAT|_O_TRUNC|_O_BINARY, _S_IREAD|_S_IWRITE);
+		LPCTSTR complain = GetLangString(IDS_FILE_SAVE_ERROR);
+		int filehandle = _topen(szFileName, _O_RDWR | _O_CREAT |
+				_O_TRUNC | _O_BINARY, _S_IREAD | _S_IWRITE);
 		if (filehandle != -1)
 		{
 			WaitCursor wc;
