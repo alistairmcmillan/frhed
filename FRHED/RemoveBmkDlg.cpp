@@ -38,9 +38,12 @@ BOOL RemoveBmkDlg::OnInitDialog(HWND hDlg)
 	HWND hwndList = GetDlgItem(hDlg, IDC_REMOVEBMK_LIST);
 	for (int i = 0 ; i < iBmkCount ; i++)
 	{
-		_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, pbmkList[i].name ?
-			_T("%d) 0x%x:%s") : _T("%d) 0x%x"),
-			i + 1, pbmkList[i].offset, pbmkList[i].name);
+		if (pbmkList[i].name)
+			_stprintf(buf, _T("%d %s (0x%x)"), i + 1, pbmkList[i].name,
+					pbmkList[i].offset);
+		else
+			_stprintf(buf, _T("%d 0x%x"), i + 1, pbmkList[i].offset,
+					pbmkList[i].name);
 		SendMessage(hwndList, LB_ADDSTRING, 0, (LPARAM)buf);
 	}
 	SendMessage(hwndList, LB_SETCURSEL, 0, 0);
