@@ -54,6 +54,8 @@
 #include "ido.h"
 
 const TCHAR DefaultHexdumpFile[] = _T("hexdump.txt");
+const int DefaultOffsetLength = 6;
+const int DefaultBPL = 16;
 
 static void EnableToolbarButton(HWND toolbar, int ID, BOOL bEnable);
 
@@ -157,10 +159,10 @@ HexEditorWindow::HexEditorWindow()
 	hwndToolBar = 0;
 	hwndStatusBar = 0;
 	hAccel = 0;
-	iMinOffsetLen = iMaxOffsetLen = 6;//max is same as min because there is no data
+	iMinOffsetLen = iMaxOffsetLen = DefaultOffsetLength; // Max is same as min because there is no data
 	bAutoOffsetLen = TRUE;
 	iByteSpace = 2;
-	iBytesPerLine = 16;
+	iBytesPerLine = DefaultBPL;
 	iCharSpace = 1;
 	iEnteringMode = BYTES;
 	iFileChanged = FALSE;
@@ -1996,20 +1998,18 @@ void HexEditorWindow::repaint(int line)
 	repaint(line, line);
 }
 
-//--------------------------------------------------------------------------------------------
-// Clear everything up.
+/**
+ * @brief Reset hex window properties.
+ * This function resets hex window properties (e.g. offset length) to
+ * default values.
+ */
 void HexEditorWindow::clear_all()
 {
-//Pabs changed "iOffsetLen" replaced with "iMinOffsetLen = iMaxOffsetLen" and '8' with '6'
-	iMaxOffsetLen = iMinOffsetLen = 6;
-//end
+	iMaxOffsetLen = iMinOffsetLen = DefaultOffsetLength;
 	iByteSpace = 2;
-	iBytesPerLine = 16;
+	iBytesPerLine = DefaultBpl;
 	iCharSpace = 1;
-//Pabs replaced "iOffsetLen" with "iMaxOffsetLen"
-//	iCharsPerLine = iMaxOffsetLen + iByteSpace + iBytesPerLine*3 + iCharSpace + iBytesPerLine;
-//end
-	DataArray.ClearAll ();
+	DataArray.ClearAll();
 	filename[0] = '\0';
 	iVscrollMax = 0;
 	iVscrollPos = 0;
