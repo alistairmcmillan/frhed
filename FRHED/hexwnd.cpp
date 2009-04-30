@@ -2269,8 +2269,10 @@ void HexEditorWindow::PrintBookmarkIndicators(HDC hdc, HBRUSH hbr, UINT64 startp
 			RECT r;
 			r.left = chpos * cxChar;
 			r.top = (offset / iBytesPerLine - iVscrollPos) * cyChar;
-			r.right = r.left + 2*cxChar;
+			r.right = r.left + 2 * cxChar;
 			r.bottom = (offset / iBytesPerLine - iVscrollPos + 1) * cyChar;
+			r.left -= 2;
+			r.right += 2;
 			FrameRect(hdc, &r, hbr);
 
 			// Mark character.
