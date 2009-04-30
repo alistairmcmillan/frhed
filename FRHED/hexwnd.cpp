@@ -2007,7 +2007,7 @@ void HexEditorWindow::clear_all()
 {
 	iMaxOffsetLen = iMinOffsetLen = DefaultOffsetLength;
 	iByteSpace = 2;
-	iBytesPerLine = DefaultBpl;
+	iBytesPerLine = DefaultBPL;
 	iCharSpace = 1;
 	DataArray.ClearAll();
 	filename[0] = '\0';
