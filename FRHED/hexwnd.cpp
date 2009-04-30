@@ -2081,18 +2081,29 @@ void HexEditorWindow::mark_char(HDC hdc)
 		InvalidateRect(hwnd, &r, FALSE);
 }
 
+/**
+ * @brief Print text to screen.
+ * @param [in] hdc Handle to draw context (DC).
+ * @param [in] x X-pos in chars where to draw.
+ * @param [in] y Y-pos in chars where to draw.
+ * @param [in] pch String to draw.
+ * @param [in] cch Number of characters to print.
+ */
 void HexEditorWindow::print_text(HDC hdc, int x, int y, TCHAR *pch, int cch)
 {
-	RECT rc = { x * cxChar, y * cyChar, rc.left + cch * cxChar, rc.top + cyChar };
+	const RECT rc = { x * cxChar, y * cyChar, rc.left + cch * cxChar, rc.top + cyChar };
 	ExtTextOut(hdc, rc.left, rc.top, ETO_OPAQUE, &rc, pch, cch, 0);
 }
 
-//--------------------------------------------------------------------------------------------
-// Repaint one line in the window.
+/**
+ * @brief Print one line in the editor.
+ * @param [in] hdc Handle to device context (DC).
+ * @param [in] line Absolute line number to print.
+ * @param [in] hbr Paint brush.
+ */
 void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 {
-	// line = absolute line number.
-	int startpos = line * iBytesPerLine;
+	const int startpos = line * iBytesPerLine;
 
 	// Return if this line does not even contain the end-of-file double
 	// underscore (at index upperbound+1).
@@ -2128,7 +2139,8 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 			startpos + iPartialOffset : startpos);
 	if (i != -1)
 	{
-		for (int ii = i; ii < m - i; ii++)
+		// Fill rest of offset area with blanks
+		for (int ii = i; ii < m; ii++)
 			linbuf[ii] = ' ';
 	}
 
@@ -2143,14 +2155,15 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 
 	// Write offset to chars.
 	m = iCharSpace + 1;
-	for (int i = 0; i < RTL_NUMBER_OF(linbuf); i++)
-		linbuf[i] = ' ';
-	SetTextColor (hdc, iTextColor);
-	SetBkColor (hdc, iBkColor);
+	for (int ii = 0; ii < RTL_NUMBER_OF(linbuf); ii++)
+		linbuf[ii] = ' ';
+	SetTextColor(hdc, iTextColor);
+	SetBkColor(hdc, iBkColor);
 	print_text(hdc, z - m, y, linbuf, m);
 	// Last line reached? Then only write rest of bytes.
 	// startpos+iBytesPerLine-1 = Last byte in current line.
 	int endpos = startpos + iBytesPerLine - 1;
+
 	// Write bytes.
 	for (i = startpos ; i <= endpos ; i++)
 	{
