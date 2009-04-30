@@ -222,6 +222,7 @@ public:
 	virtual int STDMETHODCALLTYPE initmenupopup(WPARAM w, LPARAM l);
 	void adjust_view_for_caret();
 	void print_line(HDC hdc, int line, HBRUSH hbr);
+	void PrintBookmarkIndicators(HDC hdc, HBRUSH hbr, UINT64 startpos);
 	void mark_char(HDC hdc);
 	void STDMETHODCALLTYPE adjust_hscrollbar();
 	void STDMETHODCALLTYPE adjust_vscrollbar();

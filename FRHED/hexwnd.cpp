@@ -2240,32 +2240,41 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	OffsetRect(&r, 2, 0);
 	Polyline(hdc, (LPPOINT)&r, 2);
 
+	PrintBookmarkIndicators(hdc, hbr, startpos);
+}
+
+/**
+ * @brief Print bookmark indicators to line.
+ * @param [in] hdc Handle to device context.
+ * @param [in] hbr Paint brush.
+ * @param [in] startpos Start position of the line.
+ */
+void HexEditorWindow::PrintBookmarkIndicators(HDC hdc, HBRUSH hbr, UINT64 startpos)
+{
 	// Print bookmark indicators.
 	// Are there bookmarks in this line?
+	int length = get_length();
 	int el = startpos + iBytesPerLine - 1;
 	int chpos;
 	// Brush for bookmark borders.
-	for (i = 0; i < iBmkCount; i++)
+	for (int i = 0; i < iBmkCount; i++)
 	{
 		int offset = pbmkList[i].offset;
 		// Print the bookmark if it is within the file.
 		if (offset >= startpos && offset <= el && offset < length)
 		{
 			// Found a bookmark in this line.
-			// Mark hex.
-//Pabs replaced "iOffsetLen" with "iMaxOffsetLen"
+			// Mark hex num.
 			chpos = iMaxOffsetLen + iByteSpace + (offset % iBytesPerLine) * 3 - iHscrollPos;
-//end
+			RECT r;
 			r.left = chpos * cxChar;
 			r.top = (offset / iBytesPerLine - iVscrollPos) * cyChar;
 			r.right = r.left + 2*cxChar;
 			r.bottom = (offset / iBytesPerLine - iVscrollPos + 1) * cyChar;
 			FrameRect(hdc, &r, hbr);
 
-			// Mark char.
-//Pabs replaced "iOffsetLen" with "iMaxOffsetLen"
+			// Mark character.
 			chpos = iMaxOffsetLen + iByteSpace + iBytesPerLine * 3 + iCharSpace
-//end
 				+ (offset % iBytesPerLine) - iHscrollPos;
 			r.left = chpos * cxChar;
 			r.top = (offset / iBytesPerLine - iVscrollPos) * cyChar;
