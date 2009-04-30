@@ -58,6 +58,7 @@ const int DefaultOffsetLength = 6;
 const int DefaultBPL = 16;
 
 static void EnableToolbarButton(HWND toolbar, int ID, BOOL bEnable);
+static int DetermineMaxOffsetLen(INT64 size);
 
 //CF_RTF defined in Richedit.h, but we don't include it cause that would be overkill
 #ifndef CF_RTF
@@ -503,6 +504,19 @@ void HexEditorWindow::set_control_bar(HWND hwndBar)
 }
 
 /**
+ * @brief Determine maximum length of the offset in the buffer.
+ * @param [in] size Size of the buffer.
+ * @return Max length (in chars) of the offset.
+ */
+static int DetermineMaxOffsetLen(INT64 size)
+{
+	int maxLen = 1;
+	while (size & ~(INT64)0 << 4 * maxLen)
+		++maxLen;
+	return maxLen;
+}
+
+/**
  * @brief Re-calculate draw settings after window has been resized.
  * This function re-calculates offset length, bytes per line etc after the
  * window has been resized.
@@ -523,15 +537,13 @@ void HexEditorWindow::resize_window()
 	SelectObject (hdc, of);
 	ReleaseDC (hwnd, hdc);
 
-	//--------------------------------------------
 	int length = get_length();
-
-	int x = length;//value of the last offset
+	INT64 x = length; // Value of the last offset
 	if (bPartialStats)
 		x += iPartialOffset;
 	iMaxOffsetLen = 0;
 	//length of last offset
-	UINT val = length;
+	INT64 val = length;
 	while (val > 0)
 	{
 		++iMaxOffsetLen;
@@ -546,10 +558,7 @@ void HexEditorWindow::resize_window()
 	cxBuffer = max(1, cxClient / cxChar);
 	cyBuffer = max(1, cyClient / cyChar);
 
-	iMaxOffsetLen = 1;
-	//length of last offset
-	while (x & ~0 << 4 * iMaxOffsetLen)
-		++iMaxOffsetLen;
+	iMaxOffsetLen = DetermineMaxOffsetLen(x);
 	if (bAutoOffsetLen)
 		iMinOffsetLen = iMaxOffsetLen;
 	else if (iMaxOffsetLen < iMinOffsetLen)
@@ -2103,7 +2112,7 @@ void HexEditorWindow::print_text(HDC hdc, int x, int y, TCHAR *pch, int cch)
  */
 void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 {
-	const int startpos = line * iBytesPerLine;
+	const UINT64 startpos = line * iBytesPerLine;
 
 	// Return if this line does not even contain the end-of-file double
 	// underscore (at index upperbound+1).
@@ -2134,7 +2143,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	int m = iMaxOffsetLen + iByteSpace;
 
 	// Write offset.
-	int i = _sntprintf(linbuf, RTL_NUMBER_OF(linbuf) -1, _T("%*.*x"),
+	int i = _sntprintf(linbuf, RTL_NUMBER_OF(linbuf) -1, _T("%*.*I64x"),
 			iMinOffsetLen, iMinOffsetLen, bPartialStats ?
 			startpos + iPartialOffset : startpos);
 	if (i != -1)
