@@ -32,8 +32,6 @@
 /** Size of offset edit and buffer. */
 static const UINT EditLen = 16;
 
-TCHAR GoToDlg::buffer[EditLen + 1];
-
 /**
  * Initialize the dialog.
  * This function initializes the dialog by setting the initial value for the
@@ -43,8 +41,14 @@ TCHAR GoToDlg::buffer[EditLen + 1];
  */
 BOOL GoToDlg::OnInitDialog(HWND hDlg)
 {
+	// Get current offset
+	TCHAR buffer[EditLen + 1];
+	_itot(iCurByte, buffer, 10);
+
 	HWND edit = GetDlgItem(hDlg, IDC_GOTO_OFFSET);
 	SetDlgItemText(hDlg, IDC_GOTO_OFFSET, buffer);
+
+	// Limit edit field char amount
 	SendMessage(edit, EM_SETLIMITTEXT, EditLen, 0);
 	return TRUE;
 }
@@ -56,6 +60,7 @@ BOOL GoToDlg::OnInitDialog(HWND hDlg)
  */
 BOOL GoToDlg::Apply(HWND hDlg)
 {
+	TCHAR buffer[EditLen + 1];
 	int offset, i = 0, r = 0;
 	GetDlgItemText(hDlg, IDC_GOTO_OFFSET, buffer, RTL_NUMBER_OF(buffer));
 	// For a relative jump, read offset from 2nd character on.
@@ -88,6 +93,14 @@ BOOL GoToDlg::Apply(HWND hDlg)
 	return TRUE;
 }
 
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
 INT_PTR GoToDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)

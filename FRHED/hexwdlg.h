@@ -337,7 +337,6 @@ class GoToDlg : public HexEditorWindow
 public:
 	enum { IDD = IDD_GOTODIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-	static TCHAR buffer[];  /**< Buffer for offset value. */
 private:
 	BOOL OnInitDialog(HWND);
 	BOOL Apply(HWND);

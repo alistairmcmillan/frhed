@@ -8,6 +8,7 @@ Frhed 1.5.3
   Make bookmark indicator frame a bit wider in hex view (r596)
   Format bookmark in remove dialog similarly than in menu (r597)
   Improve Goto-dialog layout (r599)
+  Use current offset as default offset in Goto-dialog (r600)
   Bugfix: Could not handle offsets for positions larger than 2GB (r594)
 
 Frhed 1.5.2 - 2009-04-15 (r525)
