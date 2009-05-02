@@ -15,7 +15,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Englisch (USA) resources
+// English (U.S.) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
@@ -346,20 +346,19 @@ END
 // Dialog
 //
 
-IDD_GOTODIALOG DIALOGEX 0, 0, 244, 66
+IDD_GOTODIALOG DIALOGEX 0, 0, 187, 70
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP |
     WS_CAPTION | WS_SYSMENU
-CAPTION "Go to"
+CAPTION "Go to Offset"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "Start with ""+"" or ""-"" (minus) for relative jump.",
-                    IDC_STATIC,7,10,139,8
+                    IDC_STATIC,7,7,173,8
     LTEXT           "Prefix offset with ""x"" to indicate hex notation.",
-                    IDC_STATIC,7,19,142,8
-    LTEXT           "Go to offset:",IDC_STATIC,7,34,40,8
-    EDITTEXT        IDC_GOTO_OFFSET,7,44,149,13,ES_AUTOHSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,187,20,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,187,38,50,14
+                    IDC_STATIC,7,17,173,8
+    EDITTEXT        IDC_GOTO_OFFSET,7,30,173,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,76,49,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,130,49,50,14
 END
 
 IDD_FINDDIALOG DIALOGEX 0, 0, 279, 138
@@ -1122,9 +1121,9 @@ BEGIN
     IDD_GOTODIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 237
-        TOPMARGIN, 10
-        BOTTOMMARGIN, 59
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 63
     END
 
     IDD_FINDDIALOG, DIALOG
@@ -1749,7 +1748,7 @@ BEGIN
    IDS_HDUMP_FILE_PATTERN  "Hex Dump files(*.txt,*.hex)\0*.txt;*.hex\0All Files (*.*)\0*.*\0"
 END
 
-#endif    // Englisch (USA) resources
+#endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
