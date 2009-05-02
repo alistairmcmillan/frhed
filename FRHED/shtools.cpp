@@ -154,6 +154,16 @@ STDAPI PathPointsToMe(LPCTSTR path)
 	return PathsEqual(exepath, path);
 }
 
+STDAPI CreateShellCommand(LPCTSTR subkey)
+{
+	TCHAR cmd[MAX_PATH + 20];
+	GetModuleFileName(0, cmd, MAX_PATH);
+	PathQuoteSpaces(cmd);
+	lstrcat(cmd, _T(" \"%1\""));
+	LONG err = RegSetValue(HKEY_CLASSES_ROOT, subkey, REG_SZ, cmd, lstrlen(cmd) * sizeof(TCHAR));
+	return HRESULT_FROM_WIN32(err);
+}
+
 //This gets a fully qualified long absolute filename from any other type of file name ON ANY Win32 PLATFORM damn stupid Micro$uck$ & bloody GetLongPathName
 //It was copied and enhanced from an article by Jeffrey Richter available in the MSDN under "Periodicals\Periodicals 1997\Microsoft Systems Journal\May\Win32 Q & A" (search for GetLongPathName & choose the last entry)
 STDAPI GetLongPathNameWin32(LPCTSTR lpszShortPath, LPTSTR lpszLongPath)

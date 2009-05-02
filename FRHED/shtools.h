@@ -31,6 +31,7 @@ STDAPI CreateLinkToMe(LPCTSTR lpszPathLink);
 STDAPI ResolveIt(HWND hwnd, LPCTSTR lpszLinkFile, LPTSTR lpszPath);
 STDAPI PathsEqual(LPCTSTR, LPCTSTR);
 STDAPI PathPointsToMe(LPCTSTR);
+STDAPI CreateShellCommand(LPCTSTR);
 STDAPI GetLongPathNameWin32(LPCTSTR lpszShortPath, LPTSTR lpszLongPath);
 
 #endif // _SHTOOLS_H_
