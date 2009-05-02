@@ -10,6 +10,8 @@ Frhed 1.5.3
   Improve Goto-dialog layout (r599)
   Use current offset as default offset in Goto-dialog (r600)
   Bugfix: Could not handle offsets for positions larger than 2GB (r594)
+  Bugfix: Fix Explorer context menu items when executable path contains
+    spaces (r603)
 
 Frhed 1.5.2 - 2009-04-15 (r525)
   Remove warning message about trying to edit in read-only mode (r420)
