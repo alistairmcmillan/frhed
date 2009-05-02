@@ -1172,6 +1172,7 @@ void HexEditorWindow::command(int cmd)
 {
 	if (!queryCommandEnabled(cmd))
 		return;
+	HRESULT hr = S_OK;
 	HMENU hMenu = GetMenu(hwndMain);
 	switch (cmd)
 	{
@@ -1232,62 +1233,55 @@ void HexEditorWindow::command(int cmd)
 	case IDM_CONTEXT:
 		if (MF_CHECKED == GetMenuState(hMenu, IDM_CONTEXT, 0))
 		{
-			RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed\\command")); //WinNT requires the key to have no subkeys
-			RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed"));
+			if (LONG err = RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed\\command"))) //WinNT requires the key to have no subkeys
+				hr = HRESULT_FROM_WIN32(err);
+			if (LONG err = RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed")))
+				hr = HRESULT_FROM_WIN32(err);
 		}
 		else
 		{
-			HKEY key1;
-			LONG res = RegCreateKey(HKEY_CLASSES_ROOT,
-				_T("*\\shell\\Open in Frhed\\command"),
-				&key1);
-			if (res == ERROR_SUCCESS)
-			{
-				TCHAR cmd[MAX_PATH];
-				int len = _stprintf(cmd, _T("%s %%1"), _pgmptr);
-				RegSetValue(key1, NULL, REG_SZ, cmd, len);
-			}
+			hr = CreateShellCommand(_T("*\\shell\\Open in Frhed\\command"));
 		}
 		break;
 	case IDM_UNKNOWN:
 		if (MF_CHECKED == GetMenuState(hMenu, IDM_UNKNOWN, 0))
 		{
 			HKEY hk;
-			RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed\\command")); //WinNT requires the key to have no subkeys
-			RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed"));
-			if (ERROR_SUCCESS == RegOpenKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), &hk))
+			if (LONG err = RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed\\command"))) //WinNT requires the key to have no subkeys
+				hr = HRESULT_FROM_WIN32(err);
+			if (LONG err = RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed")))
+				hr = HRESULT_FROM_WIN32(err);
+			if (LONG err = RegOpenKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), &hk))
+				hr = HRESULT_FROM_WIN32(err);
+			else
 			{
-				RegDeleteValue(hk, NULL);
+				if (LONG err = RegDeleteValue(hk, NULL))
+					hr = HRESULT_FROM_WIN32(err);
 				RegCloseKey(hk);
 			}
 		}
 		else
 		{
-			HKEY key1;
-			LONG res = RegCreateKey(HKEY_CLASSES_ROOT,
-				_T("Unknown\\shell\\Open in Frhed\\command"),
-				&key1);
-			if (res == ERROR_SUCCESS)
-			{
-				TCHAR cmd[MAX_PATH];
-				int len = _stprintf(cmd, _T("%s %%1"), _pgmptr);
-				RegSetValue(key1, NULL, REG_SZ, cmd, len);
-			}
+			hr = CreateShellCommand(_T("Unknown\\shell\\Open in Frhed\\command"));
 		}
 		break;
 	case IDM_DEFAULT:
 		if (MF_CHECKED == GetMenuState(hMenu, IDM_DEFAULT, 0))
 		{
 			HKEY hk;
-			if (ERROR_SUCCESS == RegOpenKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), &hk))
+			if (LONG err = RegOpenKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), &hk))
+				hr = HRESULT_FROM_WIN32(err);
+			else
 			{
-				RegDeleteValue(hk, NULL);
+				if (LONG err = RegDeleteValue(hk, NULL))
+					hr = HRESULT_FROM_WIN32(err);
 				RegCloseKey(hk);
 			}
 		}
 		else
 		{
-			RegSetValue(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), REG_SZ, _T("Open in Frhed"), 13);
+			if (LONG err = RegSetValue(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), REG_SZ, _T("Open in Frhed"), 13))
+				hr = HRESULT_FROM_WIN32(err);
 		}
 		break;
 //end
@@ -1619,6 +1613,7 @@ void HexEditorWindow::command(int cmd)
 		_RPTF1(_CRT_ERROR, "Unknown COMMAND-ID %d.", cmd);
 		break;
 	}
+	CheckHResult(hwnd, hr);
 }
 
 //--------------------------------------------------------------------------------------------
