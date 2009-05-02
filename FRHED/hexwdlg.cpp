@@ -36,6 +36,18 @@ int MessageBox(HWND hwnd, LPCTSTR text, UINT type)
 	return MessageBox(hwnd, text, app, type);
 }
 
+int CheckHResult(HWND hwnd, HRESULT hr, UINT type)
+{
+	int response = 0;
+	if (FAILED(hr))
+	{
+		TCHAR text[1024];
+		::FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, hr, 0, text, 1024, 0);
+		response = MessageBox(hwnd, text, type);
+	}
+	return response;
+}
+
 C_ASSERT(sizeof(DragDropOptionsDlg) == sizeof(HexEditorWindow)); // disallow instance members
 
 INT_PTR DragDropOptionsDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)

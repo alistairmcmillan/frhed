@@ -34,6 +34,7 @@ void GetDlgItemText(HWND, int, SimpleString &);
 BOOL EnableDlgItem(HWND, int, BOOL);
 BOOL IsDlgItemEnabled(HWND, int);
 int MessageBox(HWND, LPCTSTR, UINT);
+int CheckHResult(HWND, HRESULT, UINT = MB_ICONSTOP);
 
 /**
  * @brief About-dialog for Frhed application.
