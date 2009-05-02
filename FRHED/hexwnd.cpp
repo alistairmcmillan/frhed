@@ -56,6 +56,9 @@
 const TCHAR DefaultHexdumpFile[] = _T("hexdump.txt");
 const int DefaultOffsetLength = 6;
 const int DefaultBPL = 16;
+const int LineSpaceAbove = 1;
+const int LineSpaceBelow = 1;
+const int LineAdditionalSpace = LineSpaceAbove + LineSpaceBelow;
 
 static void EnableToolbarButton(HWND toolbar, int ID, BOOL bEnable);
 static int DetermineMaxOffsetLen(INT64 size);
@@ -533,7 +536,8 @@ void HexEditorWindow::resize_window()
 	GetTextMetrics (hdc, &tm);
 	cxChar = tm.tmAveCharWidth;
 	cxCaps = (tm.tmPitchAndFamily & 1 ? 3 : 2) * cxChar / 2;
-	cyChar = tm.tmHeight + tm.tmExternalLeading;
+	// Reserve 2 pixels for things like bookmark indicators
+	cyChar = tm.tmHeight + tm.tmExternalLeading + LineAdditionalSpace;
 	SelectObject (hdc, of);
 	ReleaseDC (hwnd, hdc);
 
@@ -639,11 +643,13 @@ void HexEditorWindow::resize_window()
 	}
 }
 
-//--------------------------------------------------------------------------------------------
-// When focus is gained.
+/**
+ * @brief Set window focus.
+ * This function shows caret when window gets focus.
+ */
 void HexEditorWindow::set_focus()
 {
-	CreateCaret(hwnd, NULL, cxChar, cyChar);
+	CreateCaret(hwnd, NULL, cxChar, cyChar - LineAdditionalSpace);
 	set_caret_pos();
 	ShowCaret(hwnd);
 	mark_char(0);
@@ -1932,8 +1938,9 @@ void HexEditorWindow::set_wnd_title()
 	}
 }
 
-//--------------------------------------------------------------------------------------------
-// Set Caret position.
+/**
+ * @brief Set caret position.
+ */
 void HexEditorWindow::set_caret_pos()
 {
 	set_wnd_title();
@@ -1957,7 +1964,7 @@ void HexEditorWindow::set_caret_pos()
 	{
 		x = y = -1;
 	}
-	SetCaretPos(x * cxChar, y * cyChar);
+	SetCaretPos(x * cxChar, y * cyChar + LineSpaceAbove);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2053,8 +2060,12 @@ void HexEditorWindow::adjust_hscrollbar()
 	SetScrollInfo(hwnd, SB_HORZ, &SI, TRUE);
 }
 
-//--------------------------------------------------------------------------------------------
-// Highlight (invert) the character/byte at the current offset.
+/**
+ * @brief Highlight current character / byte.
+ * This function highlights character / byte at the current offset. The
+ * highlighting is done by inverting the character's block area.
+ * @param [in] hdc If non-NULL invert the char rect else invalidate it.
+ */
 void HexEditorWindow::mark_char(HDC hdc)
 {
 	RECT r;
@@ -2079,8 +2090,14 @@ void HexEditorWindow::mark_char(HDC hdc)
 	r.right *= cxChar;
 	r.top *= cyChar;
 	r.bottom *= cyChar;
+
 	if (hdc)
+	{
+		// Ignore extra area (for bookmarks etc) when inverting
+		r.top += LineSpaceAbove;
+		r.bottom -= LineSpaceBelow;
 		InvertRect(hdc, &r);
+	}
 	else
 		InvalidateRect(hwnd, &r, FALSE);
 }
@@ -2095,7 +2112,8 @@ void HexEditorWindow::mark_char(HDC hdc)
  */
 void HexEditorWindow::print_text(HDC hdc, int x, int y, TCHAR *pch, int cch)
 {
-	const RECT rc = { x * cxChar, y * cyChar, rc.left + cch * cxChar, rc.top + cyChar };
+	const RECT rc = { x * cxChar, y * cyChar + LineSpaceAbove,
+			rc.left + cch * cxChar, rc.top + cyChar + LineSpaceBelow };
 	ExtTextOut(hdc, rc.left, rc.top, ETO_OPAQUE, &rc, pch, cch, 0);
 }
 
