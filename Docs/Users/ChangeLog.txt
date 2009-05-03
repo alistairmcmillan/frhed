@@ -10,7 +10,8 @@ Frhed 1.5.3
   Format bookmark in remove dialog similarly than in menu (r597)
   Improve Goto-dialog layout (r599)
   Use current offset as default offset in Goto-dialog (r600)
-  Add vertical space between lines for indicators (r605)
+  Add vertical space between editor lines for indicators (r605)
+  Improve Add Bookmark-dialog layout (r608)
   Bugfix: Could not handle offsets for positions larger than 2GB (r594)
   Bugfix: Fix Explorer context menu items when executable path contains
     spaces (r603)
