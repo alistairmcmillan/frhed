@@ -73,7 +73,7 @@ void HexDump::SetArray(const SimpleArray<BYTE> *dataArray)
 void HexDump::CreateBuffer(unsigned size)
 {
 	m_pBuffer = new TCHAR[size];
-	for (int i = 0; i < size; i++)
+	for (unsigned i = 0; i < size; i++)
 		m_pBuffer[i] = ' ';
 }
 
@@ -92,7 +92,7 @@ void HexDump::Write(unsigned startInd, unsigned endInd)
 	//b = iCopyHexdumpDlgEnd;
 	// a = Offset of current line.
 	// k = Offset in text array.
-	for (int k = 0, a = startInd; a <= endInd;
+	for (unsigned k = 0, a = startInd; a <= endInd;
 			a += m_bytesPerLine, k += m_charsPerLine + 2)
 	{
 		// Write offset.
