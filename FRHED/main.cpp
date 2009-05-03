@@ -64,7 +64,7 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *, int)
 
 	LPWSTR szExePath = GetCommandLineW();
 	LPWSTR szCmdLine = PathGetArgsW(szExePath);
-	
+
 	// Load the heksedit component.
 	static const TCHAR pe_heksedit[] = _T("heksedit.dll");
 	hMainInstance = LoadLibrary(pe_heksedit);
@@ -176,10 +176,13 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *, int)
 			DispatchMessage(&msg);
 		}
 	}
-
-	FreeLibrary(hMainInstance);
-	OleUninitialize();
+#ifdef _DEBUG
+	// The System32 build cannot safely FreeLibrary(hMainInstance) because
+	// frhed.exe and heksedit.dll share the same atexit list.
+	::FreeLibrary(hMainInstance);
 	_CrtDumpMemoryLeaks();
+#endif
+	OleUninitialize();
 	return msg.wParam;
 }
 
