@@ -796,9 +796,11 @@ STDMETHODIMP CDropTarget::Drop( IDataObject* pDataObject, DWORD grfKeyState, POI
 							gotdata = true;
 							totallen += len;
 						}
-					} else /*Insert*/ if( 0 != hexwnd.DataArray.InsertAtGrow( hexwnd.new_pos+totallen, DataToInsert, 0, len ) ){
-							gotdata = true;
-							totallen += len;
+					}
+					else /*Insert*/ if (hexwnd.DataArray.InsertAtGrow(hexwnd.new_pos + totallen, DataToInsert, 0, len))
+					{
+						gotdata = true;
+						totallen += len;
 					}
 				}
 

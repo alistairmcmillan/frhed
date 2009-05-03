@@ -35,14 +35,14 @@ public:
 		return m_pT;
 	}
 
-	int InsertAt(int nIndex, T argT, int nCount = 1);
+	bool InsertAt(int nIndex, T argT, int nCount = 1);
 	void InsertAtRef(int nIndex, const T& argT, int nCount = 1);
-	int InsertAtGrow(int nIndex, T argT, int nCount = 1);
+	bool InsertAtGrow(int nIndex, T argT, int nCount = 1);
+	bool InsertAtGrow (int nIndex, const T* pT, int nSrcIndex, int nCount);
 	void InsertAtGrowRef(int nIndex, const T& argT, int nCount = 1);
-	int InsertAtGrow (int nIndex, const T* pT, int nSrcIndex, int nCount);
-	int RemoveAt(int nIndex, int nCount = 1);
+	bool RemoveAt(int nIndex, int nCount = 1);
 	void SetAtGrow(int nIndex, T argT);
-	int SetAtGrowRef(int nIndex, const T& argT);
+	bool SetAtGrowRef(int nIndex, const T& argT);
 	void SetAt(int nIndex, T argT);
 	void SetAtRef(int nIndex, const T& argT);
 	T GetAt(int nIndex) const;
@@ -51,30 +51,30 @@ public:
 	int GetUpperBound() const;
 	int GetLength() const;
 	int GetGrowBy() const;
-	int SetSize(int nNewSize, int nGrowBy = 0);
+	bool SetSize(int nNewSize, int nGrowBy = 0);
 	void SetGrowBy(int nGrowBy);
 	T& operator[](int nIndex) {return m_pT[nIndex];}
 	SimpleArray<T>& operator=(SimpleArray<T>& spa);
 	void ClearAll();
-	int blContainsRef(const T& argT);
-	int blContains(T argT);
+	bool blContainsRef(const T& argT);
+	bool blContains(T argT);
 	int nContainsAt(T argT);
-	int blIsEmpty() const;
+	bool blIsEmpty() const;
 	void AppendRef(const T& argT);
 	void Append(T argT);
 	void Exchange(int nIndex1, int nIndex2);
-	int blCompare(SimpleArray<T>& spa) const;
+	bool blCompare(SimpleArray<T>& spa) const;
 	int operator==(SimpleArray<T>& spa);
 	int operator!=(SimpleArray<T>& spa);
-	int Adopt(T* ptArray, int upbound, int size);
+	bool Adopt(T* ptArray, int upbound, int size);
 	void SetUpperBound(int upbnd);
-	int AppendArray( T* pSrc, int srclen );
-	int ExpandToSize();
-	int CopyFrom(int index, const T* pSrc, int srclen);
-	int Replace(int ToReplaceIndex, int ToReplaceLength, const T* pReplaceWith, int ReplaceWithLength);
+	bool AppendArray( T* pSrc, int srclen );
+	void ExpandToSize();
+	bool CopyFrom(int index, const T* pSrc, int srclen);
+	bool Replace(int ToReplaceIndex, int ToReplaceLength, const T* pReplaceWith, int ReplaceWithLength);
 
 protected:
-	int AddSpace(int nExtend);
+	bool AddSpace(int nExtend);
 	T* m_pT;
 	int m_nSize;
 	int m_nUpperBound;

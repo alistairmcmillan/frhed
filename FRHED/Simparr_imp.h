@@ -60,23 +60,23 @@ template<class T> SimpleArray<T>::~SimpleArray()
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::InsertAtGrow(int nIndex, T argT, int nCount)
+template<class T> bool SimpleArray<T>::InsertAtGrow(int nIndex, T argT, int nCount)
 {
 	if (nIndex<0 || nCount<1)
-		return FALSE;
+		return false;
 	int i = 0;
 	if (nIndex > m_nUpperBound)
 	{
 		for (i = 0; i < nCount; i++)
 			SetAtGrow(nIndex + i, argT);
-		return TRUE;
+		return true;
 	}
 	else
 	{
 		if (m_nSize < m_nUpperBound + 1 + nCount)
 		{
-			if (AddSpace(nCount) == FALSE)
-				return FALSE;
+			if (!AddSpace(nCount))
+				return false;
 		}
 		for(i = m_nUpperBound + nCount; i > nIndex; i--)
 		{
@@ -85,31 +85,31 @@ template<class T> int SimpleArray<T>::InsertAtGrow(int nIndex, T argT, int nCoun
 		for (i = 0; i < nCount; i++)
 			m_pT[nIndex + i] = argT;
 		m_nUpperBound += nCount;
-		return TRUE;
+		return true;
 	}
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::InsertAtGrow(int nIndex, const T* pT, int nSrcIndex, int nCount)
+template<class T> bool SimpleArray<T>::InsertAtGrow(int nIndex, const T* pT, int nSrcIndex, int nCount)
 {
 	if (nIndex<0 || nCount<1)
-		return FALSE;
+		return false;
 	int i = 0;
 	if (nIndex > m_nUpperBound)
 	{
 		for (i = 0; i < nCount; i++)
 		{
-			if (SetAtGrowRef(nIndex + i, pT[nSrcIndex + i]) == FALSE)
-				return FALSE;
+			if (!SetAtGrowRef(nIndex + i, pT[nSrcIndex + i]))
+				return false;
 		}
-		return TRUE;
+		return true;
 	}
 	else
 	{
 		if (m_nSize < m_nUpperBound + 1 + nCount)
 		{
-			if (AddSpace(nCount) == FALSE)
-				return FALSE;
+			if (!AddSpace(nCount))
+				return false;
 		}
 		for (i = m_nUpperBound + nCount; i > nIndex; i--)
 		{
@@ -118,7 +118,7 @@ template<class T> int SimpleArray<T>::InsertAtGrow(int nIndex, const T* pT, int 
 		for (i = 0; i < nCount; i++)
 			m_pT[nIndex + i] = pT[nSrcIndex + i];
 		m_nUpperBound += nCount;
-		return TRUE;
+		return true;
 	}
 }
 
@@ -149,11 +149,11 @@ template<class T> void SimpleArray<T>::InsertAtGrowRef(int nIndex, const T& argT
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::InsertAt(int nIndex, T argT, int nCount)
+template<class T> bool SimpleArray<T>::InsertAt(int nIndex, T argT, int nCount)
 {
 	// Valid index?
 	if (nIndex < 0 || nIndex > m_nUpperBound)
-		return FALSE;
+		return false;
 
 	int i;
 	// Is there enough space after m_nUpperBound for inserting?
@@ -180,7 +180,7 @@ template<class T> int SimpleArray<T>::InsertAt(int nIndex, T argT, int nCount)
 			m_pT[nIndex + i] = argT;
 		m_nUpperBound = m_nSize - 1;
 	}
-	return TRUE;
+	return true;
 }
 
 //-------------------------------------------------------------------
@@ -210,21 +210,21 @@ template<class T> void SimpleArray<T>::InsertAtRef(int nIndex, const T& argT, in
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::RemoveAt(int nIndex, int nCount)
+template<class T> bool SimpleArray<T>::RemoveAt(int nIndex, int nCount)
 {
 	if (nIndex < 0 || nIndex > m_nUpperBound || nCount < 1)
-		return FALSE;
+		return false;
 	if (nCount > m_nUpperBound - nIndex)
 	{
 		m_nUpperBound = nIndex - 1;
-		return TRUE;
+		return true;
 	}
 	for(int i = nIndex; i <= m_nUpperBound - nCount; i++)
 	{
 		m_pT[i] = m_pT[i + nCount];
 	}
 	m_nUpperBound -= nCount;
-	return TRUE;
+	return true;
 }
 
 //-------------------------------------------------------------------
@@ -240,19 +240,19 @@ template<class T> void SimpleArray<T>::SetAtGrow(int nIndex, T argT)
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::SetAtGrowRef(int nIndex, const T& argT)
+template<class T> bool SimpleArray<T>::SetAtGrowRef(int nIndex, const T& argT)
 {
 	if (nIndex < 0)
-		return FALSE;
+		return false;
 	if (nIndex > m_nSize - 1)
 	{
-		if (AddSpace(nIndex - m_nSize + 1) == FALSE)
-			return FALSE;
+		if (!AddSpace(nIndex - m_nSize + 1))
+			return false;
 	}
 	m_pT[nIndex] = argT;
 	if (nIndex > m_nUpperBound)
 		m_nUpperBound = nIndex;
-	return TRUE;
+	return true;
 }
 
 //-------------------------------------------------------------------
@@ -288,7 +288,7 @@ template<class T> T SimpleArray<T>::GetAt(int nIndex) const
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::AddSpace(int nExtend)
+template<class T> bool SimpleArray<T>::AddSpace(int nExtend)
 {
 	int newsize = m_nSize + (((nExtend - 1) / m_nGrowBy) + 1) * m_nGrowBy;
 	T* pT = new T[newsize];
@@ -300,10 +300,10 @@ template<class T> int SimpleArray<T>::AddSpace(int nExtend)
 			delete [] m_pT;
 		m_pT = pT;
 		m_nSize = newsize;
-		return TRUE;
+		return true;
 	}
 	else
-		return FALSE;
+		return false;
 }
 
 //-------------------------------------------------------------------
@@ -331,21 +331,21 @@ template<class T> int SimpleArray<T>::GetLength() const
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::SetSize(int nNewSize, int nGrowBy )
+template<class T> bool SimpleArray<T>::SetSize(int nNewSize, int nGrowBy)
 {
 	if (nNewSize < 0)
-		return FALSE;
+		return false;
 	if (nNewSize == m_nSize)
-		return TRUE;
+		return true;
 	if (nNewSize == 0)
 	{
 		ClearAll();
-		return TRUE;
+		return true;
 	}
 
 	T* pT = new T[nNewSize];
 	if (pT == NULL)
-		return FALSE;
+		return false;
 	int i = 0;
 	if (m_nUpperBound < nNewSize)
 	{
@@ -365,7 +365,7 @@ template<class T> int SimpleArray<T>::SetSize(int nNewSize, int nGrowBy )
 	m_nSize = nNewSize;
 	if (nGrowBy > 0)
 		m_nGrowBy = nGrowBy;
-	return TRUE;
+	return true;
 }
 
 //-------------------------------------------------------------------
@@ -386,25 +386,25 @@ template<class T> void SimpleArray<T>::ClearAll()
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::blContainsRef(const T& argT)
+template<class T> bool SimpleArray<T>::blContainsRef(const T& argT)
 {
 	for (int i = 0; i <= m_nUpperBound; i++)
 	{
 		if (argT == m_pT[i])
-			return TRUE;
+			return true;
 	}
-	return FALSE;
+	return false;
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::blContains(T argT)
+template<class T> bool SimpleArray<T>::blContains(T argT)
 {
 	for (int i = 0; i <= m_nUpperBound; i++)
 	{
 		if (argT == m_pT[i])
-			return TRUE;
+			return true;
 	}
-	return FALSE;
+	return false;
 }
 
 //-------------------------------------------------------------------
@@ -466,17 +466,17 @@ template<class T> T& SimpleArray<T>::GetRefAt(int nIndex) const
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::blCompare(SimpleArray<T>& spa) const
+template<class T> bool SimpleArray<T>::blCompare(SimpleArray<T>& spa) const
 {
 	if (m_nUpperBound != spa.GetUpperBound())
-		return FALSE;
+		return false;
 
 	for (int k = 0; k <= m_nUpperBound; k++)
 	{
 		if (m_pT[k] != spa[k])
-			return FALSE;
+			return false;
 	}
-	return TRUE;
+	return true;
 }
 
 //-------------------------------------------------------------------
@@ -492,9 +492,9 @@ template<class T> int SimpleArray<T>::operator!=(SimpleArray<T>& spa)
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::blIsEmpty() const
+template<class T> bool SimpleArray<T>::blIsEmpty() const
 {
-	return (GetUpperBound() < 0) ? TRUE : FALSE;
+	return (GetUpperBound() < 0) ? true : false;
 }
 
 //-------------------------------------------------------------------
@@ -506,18 +506,18 @@ template<class T> void SimpleArray<T>::Exchange(int nIndex1, int nIndex2)
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::Adopt(T* ptArray, int upbound, int size)
+template<class T> bool SimpleArray<T>::Adopt(T* ptArray, int upbound, int size)
 {
 #ifdef _DEBUG
 	if (ptArray == NULL || upbound<0 || size<=0 || upbound >= size)
-		return FALSE;
+		return false;
 #endif
 	if (m_pT != NULL)
 		delete [] m_pT;
 	m_pT = ptArray;
 	m_nSize = size;
 	m_nUpperBound = upbound;
-	return TRUE;
+	return true;
 }
 
 //-------------------------------------------------------------------
@@ -528,16 +528,16 @@ template<class T> void SimpleArray<T>::SetUpperBound(int upbnd)
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::AppendArray(T* pSrc, int srclen)
+template<class T> bool SimpleArray<T>::AppendArray(T* pSrc, int srclen)
 {
 	if (srclen <= 0)
-		return FALSE;
+		return false;
 
 	if (m_nUpperBound + 1 + srclen > m_nSize)
 	{
 		// Not enough space, so get some.
 		if (!AddSpace(srclen))
-			return FALSE;
+			return false;
 	}
 	// Enough space to append without growing. Copy the data.
 	for (int i = 0; i < srclen; i++ )
@@ -545,18 +545,17 @@ template<class T> int SimpleArray<T>::AppendArray(T* pSrc, int srclen)
 		m_pT[m_nUpperBound + 1 + i] = pSrc[i];
 	}
 	m_nUpperBound += srclen;
-	return TRUE;
+	return true;
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::ExpandToSize()
+template<class T> void SimpleArray<T>::ExpandToSize()
 {
 	m_nUpperBound = m_nSize - 1;
-	return TRUE;
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::CopyFrom(int index, const T* pSrc, int srclen)
+template<class T> bool SimpleArray<T>::CopyFrom(int index, const T* pSrc, int srclen)
 {
 	if (m_nSize - index >= srclen)
 	{
@@ -565,14 +564,15 @@ template<class T> int SimpleArray<T>::CopyFrom(int index, const T* pSrc, int src
 			m_pT[index + i] = pSrc[i];
 		if (index + srclen - 1 > m_nUpperBound)
 			m_nUpperBound = index + srclen - 1;
-		return TRUE;
+		return true;
 	}
 	else
-		return FALSE;
+		return false;
 }
 
 //-------------------------------------------------------------------
-template<class T> int SimpleArray<T>::Replace(int ToReplaceIndex, int ToReplaceLength, const T* pReplaceWith, int ReplaceWithLength)
+template<class T> bool SimpleArray<T>::Replace(int ToReplaceIndex,
+		int ToReplaceLength, const T* pReplaceWith, int ReplaceWithLength)
 {
 	if (m_pT != NULL && ToReplaceLength > 0)
 	{
@@ -593,7 +593,7 @@ template<class T> int SimpleArray<T>::Replace(int ToReplaceIndex, int ToReplaceL
 				{
 					m_pT[ToReplaceIndex + i] = pReplaceWith[i];
 				}
-				return TRUE;
+				return true;
 			}
 			else if (ToReplaceLength == ReplaceWithLength)
 			{
@@ -601,7 +601,7 @@ template<class T> int SimpleArray<T>::Replace(int ToReplaceIndex, int ToReplaceL
 				{
 					m_pT[ToReplaceIndex + i] = pReplaceWith[i];
 				}
-				return TRUE;
+				return true;
 			}
 			else // if( ToReplaceLength > ReplaceWithLength )
 			{
@@ -611,16 +611,16 @@ template<class T> int SimpleArray<T>::Replace(int ToReplaceIndex, int ToReplaceL
 				}
 
 				RemoveAt(ToReplaceIndex + ReplaceWithLength, ToReplaceLength - ReplaceWithLength);
-				return TRUE;
+				return true;
 			}
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 }
