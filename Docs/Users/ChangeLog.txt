@@ -6,6 +6,7 @@ For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 
 Frhed 1.5.3
   Make bookmark indicator frame a bit wider in hex view (r596)
+  Make bookmark indicator couple of pixels taller (r606)
   Format bookmark in remove dialog similarly than in menu (r597)
   Improve Goto-dialog layout (r599)
   Use current offset as default offset in Goto-dialog (r600)

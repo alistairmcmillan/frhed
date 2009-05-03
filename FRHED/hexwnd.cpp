@@ -2284,6 +2284,7 @@ void HexEditorWindow::PrintBookmarkIndicators(HDC hdc, HBRUSH hbr, UINT64 startp
 			r.top = (offset / iBytesPerLine - iVscrollPos) * cyChar;
 			r.right = r.left + 2 * cxChar;
 			r.bottom = (offset / iBytesPerLine - iVscrollPos + 1) * cyChar;
+			r.top--;
 			r.left -= 2;
 			r.right += 2;
 			FrameRect(hdc, &r, hbr);
@@ -2295,6 +2296,7 @@ void HexEditorWindow::PrintBookmarkIndicators(HDC hdc, HBRUSH hbr, UINT64 startp
 			r.top = (offset / iBytesPerLine - iVscrollPos) * cyChar;
 			r.right = (chpos + 1) * cxChar;
 			r.bottom = (offset / iBytesPerLine - iVscrollPos + 1) * cyChar;
+			r.top--;
 			FrameRect(hdc, &r, hbr);
 		}
 	}
