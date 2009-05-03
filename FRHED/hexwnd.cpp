@@ -2112,9 +2112,9 @@ void HexEditorWindow::mark_char(HDC hdc)
  */
 void HexEditorWindow::print_text(HDC hdc, int x, int y, TCHAR *pch, int cch)
 {
-	const RECT rc = { x * cxChar, y * cyChar + LineSpaceAbove,
-			rc.left + cch * cxChar, rc.top + cyChar + LineSpaceBelow };
-	ExtTextOut(hdc, rc.left, rc.top, ETO_OPAQUE, &rc, pch, cch, 0);
+	const RECT rc = { x * cxChar, y * cyChar,
+			rc.left + cch * cxChar, rc.top + cyChar + LineAdditionalSpace };
+	ExtTextOut(hdc, rc.left, rc.top + LineSpaceAbove, ETO_OPAQUE, &rc, pch, cch, 0);
 }
 
 /**
@@ -2189,21 +2189,21 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	// Write bytes.
 	for (i = startpos ; i <= endpos ; i++)
 	{
-		BYTE u = ' ';
+		TBYTE u = ' ';
 		if (i < length)
 		{
 			u = buffer[i];
-			char c = (char)(u >> 4);
+			TCHAR c = (TCHAR)(u >> 4);
 			if (c < 10)
 				c += '0';
 			else
-				c = (char)(c - 10 + 'a');
+				c = (TCHAR)(c - 10 + 'a');
 			linbuf[0] = c;
-			c = (char)(u & 0x0f);
+			c = (TCHAR)(u & 0x0f);
 			if (c < 10)
 				c += '0';
 			else
-				c = (char)(c - 10 + 'a');
+				c = (TCHAR)(c - 10 + 'a');
 			linbuf[1] = c;
 			if (!(iCharacterSet == OEM_FIXED_FONT && u != 0 && u != '\r' && u != '\n' ||
 				u >= 32 && u <= 126 ||
