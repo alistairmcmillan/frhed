@@ -15,6 +15,7 @@ Frhed 1.5.3
   Improve Remove Bookmark-dialog layout (r609)
   Improve Select Block-dialog layout (r613)
   Limit edit field lengths in Select Block-dialog (r615)
+  Enable zooming with mouse wheel + CTRL-key (r616)
   Bugfix: Could not handle offsets for positions larger than 2GB (r594)
   Bugfix: Fix Explorer context menu items when executable path contains
     spaces (r603)

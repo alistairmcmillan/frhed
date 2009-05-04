@@ -2734,13 +2734,29 @@ int HexEditorWindow::lbuttondown(int nFlags, int xPos, int yPos)
 	return 0;
 }
 
-//--------------------------------------------------------------------------------------------
-// WM_MOUSEWHEEL handler.
+/**
+ * @brief Handle mousewheel messages.
+ * This function handles WM_MOUSEWHEEL messages and scrolls or zooms the view.
+ * @param [in] delta Mouse wheel movement.
+ */
 void HexEditorWindow::mousewheel(int delta)
 {
-	int pos = GetScrollPos(hwnd, SB_VERT) - delta / (WHEEL_DELTA / 3);
-	SetScrollPos(hwnd, SB_VERT, pos, TRUE);
-	vscroll(SB_THUMBTRACK);
+	const bool ctrlDown = (GetAsyncKeyState(VK_CONTROL) &0x8000) != 0;
+	if (!ctrlDown)
+	{
+		// If CTRL-key not pressed, scroll
+		int pos = GetScrollPos(hwnd, SB_VERT) - delta / (WHEEL_DELTA / 3);
+		SetScrollPos(hwnd, SB_VERT, pos, TRUE);
+		vscroll(SB_THUMBTRACK);
+	}
+	else
+	{
+		// If CTRL-key pressed, zoom
+		if (delta > 0)
+			CMD_zoom(+1);
+		else
+			CMD_zoom(-1);
+	}
 }
 
 //Pabs inserted
@@ -4813,9 +4829,15 @@ void HexEditorWindow::CMD_summon_text_edit()
 	}
 }
 
-//-------------------------------------------------------------------
-// Process and route all window messages.
-int HexEditorWindow::OnWndMsg( HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam )
+/**
+ * @brief Handle Window messages.
+ * This function handles and routes all Windows messages we want to handle.
+ * @param [in] hwnd Handle to the window receiving the message.
+ * @param [in] iMsg Message number.
+ * @param [in] wParam First message parameter.
+ * @param [in] lParam Second message parameter.
+ */
+int HexEditorWindow::OnWndMsg(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
 	{

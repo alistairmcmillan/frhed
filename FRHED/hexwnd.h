@@ -155,8 +155,7 @@ public:
 	SCROLL_TYPE prev_vert;
 	SCROLL_TYPE prev_horz;
 
-//Pabs removed CMD_explorersettings
-	int OnWndMsg( HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam );
+	int OnWndMsg(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam);
 	void CMD_summon_text_edit();
 	void STDMETHODCALLTYPE CMD_find();
 	void STDMETHODCALLTYPE CMD_findprev();
