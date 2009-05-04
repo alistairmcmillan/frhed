@@ -142,7 +142,7 @@ namespace
 	TEST_F(SimpleArrayTest, Insert1)
 	{
 		SimpleArray<int> arr(7, 4);
-		arr.InsertAt(0, 3);
+		EXPECT_TRUE(arr.InsertAt(0, 3));
 		
 		EXPECT_FALSE(arr.blIsEmpty());
 		EXPECT_EQ(7, arr.GetSize());
@@ -154,7 +154,7 @@ namespace
 	{
 		SimpleArray<int> arr(7, 4);
 		arr.Append(2);
-		arr.InsertAt(0, 3);
+		EXPECT_TRUE(arr.InsertAt(0, 3));
 		
 		EXPECT_FALSE(arr.blIsEmpty());
 		EXPECT_EQ(7, arr.GetSize());
@@ -168,7 +168,7 @@ namespace
 	{
 		SimpleArray<int> arr(7, 4);
 		arr.Append(2);
-		arr.InsertAt(1, 3);
+		EXPECT_TRUE(arr.InsertAt(1, 3));
 		
 		EXPECT_FALSE(arr.blIsEmpty());
 		EXPECT_EQ(7, arr.GetSize());
@@ -181,8 +181,8 @@ namespace
 	{
 		SimpleArray<int> arr(7, 4);
 		arr.Append(2);
-		arr.InsertAt(0, 3);
-		arr.InsertAt(0, 4);
+		EXPECT_TRUE(arr.InsertAt(0, 3));
+		EXPECT_TRUE(arr.InsertAt(0, 4));
 		
 		EXPECT_FALSE(arr.blIsEmpty());
 		EXPECT_EQ(7, arr.GetSize());
