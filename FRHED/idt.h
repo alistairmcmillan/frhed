@@ -16,18 +16,18 @@ private:
 public:
 	//Members
 	CDropTarget(HexEditorWindow &hexwnd);
-	~CDropTarget( void );
+	~CDropTarget();
 
 	//IUnknown members
-	STDMETHODIMP QueryInterface( REFIID iid, void** ppvObject );
-	STDMETHODIMP_(ULONG) AddRef( void );
-	STDMETHODIMP_(ULONG) Release( void );
+	STDMETHODIMP QueryInterface(REFIID iid, void** ppvObject);
+	STDMETHODIMP_(ULONG) AddRef();
+	STDMETHODIMP_(ULONG) Release();
 
 	//IDropTarget methods
-	STDMETHODIMP DragEnter( IDataObject* pDataObject, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect );
-	STDMETHODIMP DragOver( DWORD grfKeyState, POINTL pt, DWORD* pdwEffect );
-	STDMETHODIMP DragLeave( void );
-	STDMETHODIMP Drop( IDataObject* pDataObject, DWORD grfKeyState, POINTL pt, DWORD * pdwEffect );
+	STDMETHODIMP DragEnter(IDataObject* pDataObject, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect);
+	STDMETHODIMP DragOver(DWORD grfKeyState, POINTL pt, DWORD* pdwEffect);
+	STDMETHODIMP DragLeave();
+	STDMETHODIMP Drop(IDataObject* pDataObject, DWORD grfKeyState, POINTL pt, DWORD * pdwEffect);
 };
 
 #endif // idt_h
