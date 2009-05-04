@@ -13,6 +13,7 @@ Frhed 1.5.3
   Add vertical space between editor lines for indicators (r605)
   Improve Add Bookmark-dialog layout (r608)
   Improve Remove Bookmark-dialog layout (r609)
+  Improve Select Block-dialog layout (r613)
   Bugfix: Could not handle offsets for positions larger than 2GB (r594)
   Bugfix: Fix Explorer context menu items when executable path contains
     spaces (r603)

@@ -654,20 +654,20 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,126,29,50,14
 END
 
-IDD_SELECT_BLOCK_DIALOG DIALOGEX 0, 0, 207, 68
+IDD_SELECT_BLOCK_DIALOG DIALOGEX 0, 0, 156, 87
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION |
     WS_SYSMENU
-CAPTION "Select block"
+CAPTION "Select Block"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "Offset of start of selection: (prefix x for hex)",
-                    IDC_STATIC,7,7,134,8
-    EDITTEXT        IDC_BLOCKSEL_OFFSET,7,17,134,12,ES_AUTOHSCROLL
-    LTEXT           "Offset of end of selection: (prefix x for hex)",
-                    IDC_STATIC,7,36,133,8
-    EDITTEXT        IDC_BLOCKSEL_OFFSETEND,7,48,133,13,ES_AUTOHSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,150,18,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,150,35,50,14
+    LTEXT           "Start of selection: (prefix x for hex)",
+                    IDC_STATIC,7,7,142,8
+    EDITTEXT        IDC_BLOCKSEL_OFFSET,7,17,142,12,ES_AUTOHSCROLL
+    LTEXT           "End of selection: (prefix x for hex)",
+                    IDC_STATIC,7,34,142,8
+    EDITTEXT        IDC_BLOCKSEL_OFFSETEND,7,44,142,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,44,66,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,99,66,50,14
 END
 
 IDD_REVERSE_BYTES_DIALOG DIALOGEX 0, 0, 171, 89
