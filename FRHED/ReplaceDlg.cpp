@@ -133,7 +133,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 		bSelected = FALSE;
 		iCurByte = iStartOfSelection;
 	}
-	else if (iPasteAsText)
+	else if (bPasteAsText)
 	{
 		// Replace with non-zero-length data.
 		if (!DataArray.Replace(i, n, (BYTE*)(TCHAR *)strReplaceWithData, strReplaceWithData.StrLen()))
@@ -190,7 +190,7 @@ void ReplaceDlg::replace_directed(HWND hDlg, int finddir, bool showCount)
 	bool case_sensitive = IsDlgButtonChecked(hDlg, IDC_MATCHCASE_CHECK) == BST_CHECKED;
 	GetDlgItemText(hDlg, IDC_TO_REPLACE_EDIT, strToReplaceData);
 	GetDlgItemText(hDlg, IDC_REPLACEWITH_EDIT, strReplaceWithData);
-	iPasteAsText = !IsDlgButtonChecked(hDlg, IDC_USETRANSLATION_CHECK);
+	bPasteAsText = (IsDlgButtonChecked(hDlg, IDC_USETRANSLATION_CHECK) == BST_UNCHECKED);
 	//------------------
 	// Don't do anything if to-replace and replace-with data are same.
 	Text2BinTranslator tr_find(strToReplaceData), tr_replace(strReplaceWithData);
@@ -261,7 +261,10 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				return TRUE;
 			}
 		}
-		CheckDlgButton(hDlg, IDC_USETRANSLATION_CHECK, !iPasteAsText);
+		if (bPasteAsText)
+			CheckDlgButton(hDlg, IDC_USETRANSLATION_CHECK, BST_UNCHECKED);
+		else
+			CheckDlgButton(hDlg, IDC_USETRANSLATION_CHECK, BST_CHECKED);
 		if (TCHAR *pstr = strToReplaceData)
 			SetDlgItemText(hDlg, IDC_TO_REPLACE_EDIT, pstr);
 		if (TCHAR *pstr = strReplaceWithData)
@@ -272,7 +275,7 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case IDCANCEL:
-			iPasteAsText = !IsDlgButtonChecked(hDlg, IDC_USETRANSLATION_CHECK);
+			bPasteAsText = (IsDlgButtonChecked(hDlg, IDC_USETRANSLATION_CHECK) == BST_UNCHECKED);
 			EndDialog(hDlg, wParam);
 			return TRUE;
 

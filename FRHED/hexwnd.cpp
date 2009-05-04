@@ -79,7 +79,7 @@ int HexEditorWindow::MouseOpDelay = GetProfileInt(_T("Windows"), _T("DragDelay")
 int HexEditorWindow::ScrollDelay = GetProfileInt(_T("Windows"), _T("DragScrollDelay"), DD_DEFSCROLLDELAY);
 int HexEditorWindow::ScrollInterval = GetProfileInt(_T("Windows"), _T("DragScrollInterval"), DD_DEFSCROLLINTERVAL);
 
-int HexEditorWindow::iPasteAsText = 0;
+bool HexEditorWindow::bPasteAsText = false;
 int HexEditorWindow::iPasteTimes = 1;
 int HexEditorWindow::iPasteSkip = 0;
 

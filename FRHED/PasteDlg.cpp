@@ -53,7 +53,10 @@ BOOL PasteDlg::OnInitDialog(HWND hDlg)
 	SendDlgItemMessage(hDlg, IDC_PASTE_CLIPBOARD, WM_PASTE, 0, 0);
 	SetDlgItemInt(hDlg, IDC_PASTE_TIMES, iPasteTimes, TRUE);
 	SetDlgItemInt(hDlg, IDC_PASTE_SKIPBYTES, iPasteSkip, TRUE);
-	CheckDlgButton(hDlg, IDC_PASTE_BINARY, iPasteAsText);
+	if (bPasteAsText)
+		CheckDlgButton(hDlg, IDC_PASTE_BINARY, BST_CHECKED);
+	else
+		CheckDlgButton(hDlg, IDC_PASTE_BINARY, BST_UNCHECKED);
 
 	// Limit edit text lengths
 	HWND edit = GetDlgItem(hDlg, IDC_PASTE_TIMES);
@@ -71,7 +74,7 @@ BOOL PasteDlg::OnInitDialog(HWND hDlg)
  */
 BOOL PasteDlg::Apply(HWND hDlg)
 {
-	iPasteAsText = IsDlgButtonChecked(hDlg, IDC_PASTE_BINARY);
+	bPasteAsText = (IsDlgButtonChecked(hDlg, IDC_PASTE_BINARY) == BST_CHECKED);
 	iPasteTimes = GetDlgItemInt(hDlg, IDC_PASTE_TIMES, 0, TRUE);
 	if (iPasteTimes <= 0)
 	{
@@ -84,7 +87,7 @@ BOOL PasteDlg::Apply(HWND hDlg)
 	int destlen = GetWindowTextLength(hwndEdit1) + 1;
 	TCHAR *pcPastestring = new TCHAR[destlen];
 	destlen = GetWindowText(hwndEdit1, pcPastestring, destlen);
-	if (iPasteAsText == 0)
+	if (!bPasteAsText)
 	{
 		TCHAR *pc = 0;
 		destlen = create_bc_translation(&pc, pcPastestring,

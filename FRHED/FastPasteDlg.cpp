@@ -57,7 +57,10 @@ BOOL FastPasteDlg::OnInitDialog(HWND hDlg)
 	{
 		CheckDlgButton(hDlg, IDC_FPASTE_OWERWRITE, BST_CHECKED);
 	}
-	CheckDlgButton(hDlg, IDC_FPASTE_TXT, iPasteAsText);
+	if (bPasteAsText)
+		CheckDlgButton(hDlg, IDC_FPASTE_TXT, BST_CHECKED);
+	else
+		CheckDlgButton(hDlg, IDC_FPASTE_TXT, BST_UNCHECKED);
 
 	// Limit edit text lengths
 	HWND edit = GetDlgItem(hDlg, IDC_FPASTE_PASTETIMES);
@@ -75,7 +78,7 @@ BOOL FastPasteDlg::OnInitDialog(HWND hDlg)
  */
 BOOL FastPasteDlg::Apply(HWND hDlg)
 {
-	iPasteAsText = IsDlgButtonChecked(hDlg, IDC_FPASTE_TXT);
+	bPasteAsText = (IsDlgButtonChecked(hDlg, IDC_FPASTE_TXT) == BST_CHECKED);
 	iPasteTimes = GetDlgItemInt(hDlg, IDC_FPASTE_PASTETIMES, 0, TRUE);
 	if (iPasteTimes <= 0)
 	{
@@ -127,7 +130,7 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 	}
 	if (pcPastestring && !bPasteBinary)
 	{
-		if (iPasteAsText)
+		if (bPasteAsText)
 		{
 			destlen = bPasteUnicode ? 2 * wcslen((WCHAR *)pcPastestring) : _tcslen(pcPastestring);
 		}
