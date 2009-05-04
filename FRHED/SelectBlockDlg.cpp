@@ -29,6 +29,9 @@
 #include "hexwdlg.h"
 #include "LangString.h"
 
+/** @brief Max length of the offset number. */
+static const int OffsetLen = 16;
+
 /**
  * @brief Initialize the dialog.
  * @param [in] hDlg Handle to the dialog.
@@ -40,6 +43,12 @@ BOOL SelectBlockDlg::OnInitDialog(HWND hDlg)
 	SetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSET, buf);
 	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), bSelected ? iEndOfSelection : iCurByte);
 	SetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSETEND, buf);
+
+	// Limit edit text lengths
+	HWND edit = GetDlgItem(hDlg, IDC_BLOCKSEL_OFFSET);
+	SendMessage(edit, EM_SETLIMITTEXT, OffsetLen, 0);
+	edit = GetDlgItem(hDlg, IDC_BLOCKSEL_OFFSETEND);
+	SendMessage(edit, EM_SETLIMITTEXT, OffsetLen, 0);
 	return TRUE;
 }
 
