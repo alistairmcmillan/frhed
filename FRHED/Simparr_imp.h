@@ -89,14 +89,23 @@ template<class T> bool SimpleArray<T>::InsertAtGrow(int nIndex, T argT, int nCou
 	}
 }
 
-//-------------------------------------------------------------------
-template<class T> bool SimpleArray<T>::InsertAtGrow(int nIndex, const T* pT, int nSrcIndex, int nCount)
+/**
+ * @brief Insert bytes growing the array if needed.
+ * @param [in] nIndex Index in array where to insert bytes.
+ * @param [in] pT Pointer to inserted bytes.
+ * @param [in] nSrcIndex Index from which inserted bytes in @p pT are read.
+ * @param [in] nCount Count of bytes to insert.
+ */
+template<class T> bool SimpleArray<T>::InsertAtGrow(int nIndex, const T* pT,
+		int nSrcIndex, int nCount)
 {
 	if (nIndex<0 || nCount<1)
 		return false;
 	int i = 0;
+
 	if (nIndex > m_nUpperBound)
 	{
+		// If there is enough space, just insert the bytes.
 		for (i = 0; i < nCount; i++)
 		{
 			if (!SetAtGrowRef(nIndex + i, pT[nSrcIndex + i]))
@@ -106,17 +115,23 @@ template<class T> bool SimpleArray<T>::InsertAtGrow(int nIndex, const T* pT, int
 	}
 	else
 	{
+		// Not enough space, must expand the array first
 		if (m_nSize < m_nUpperBound + 1 + nCount)
 		{
 			if (!AddSpace(nCount))
 				return false;
 		}
-		for (i = m_nUpperBound + nCount; i > nIndex; i--)
+
+		// Copy bytes in table to make space for added bytes
+		for (i = m_nUpperBound + nCount; i > nIndex + nCount; i--)
 		{
 			m_pT[i] = m_pT[i - nCount];
 		}
+
+		// Copy bytes to insert
 		for (i = 0; i < nCount; i++)
 			m_pT[nIndex + i] = pT[nSrcIndex + i];
+
 		m_nUpperBound += nCount;
 		return true;
 	}
