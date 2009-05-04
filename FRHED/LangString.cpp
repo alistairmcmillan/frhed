@@ -56,10 +56,3 @@ LangString::LangString(WORD id)
 		}
 	}
 }
-
-/**
- * @brief Release resources (if any reserved).
- */
-LangString::~LangString()
-{
-}

@@ -41,7 +41,6 @@ private:
 public:
 	LangString(PCTSTR text);
 	LangString(WORD id);
-	~LangString();
 
 	operator PCTSTR() { return m_str; }
 };
