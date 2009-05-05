@@ -6009,11 +6009,11 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 	HGlobalStream s;//(1024);//That number is the chunk size to use when reallocating
 	s <<
 	//The whole of the RTF output code is formatted according to the structure of RTF
-	"{\\rtf1\n"
-		"\\ansi\n"
-		"\\deff0\n"
-		"{\\fonttbl\n"
-			"{\\f0 ";
+	_T("{\\rtf1\n")
+		_T("\\ansi\n")
+		_T("\\deff0\n")
+		_T("{\\fonttbl\n")
+			_T("{\\f0 ");
 				//Get the charactersitics of the display font
 				BYTE PitchAndFamily, CharSet;
 				TCHAR* FaceName = NULL;
@@ -6022,38 +6022,45 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 				HFONT hFontOld = (HFONT)SelectObject(hdc, hFont);
 				UINT cbData = GetOutlineTextMetrics (hdc, 0, NULL);
 				OUTLINETEXTMETRIC* otm = NULL;
-				if(cbData){
+				if (cbData)
+				{
 					otm = (OUTLINETEXTMETRIC*)LocalAlloc(LPTR, cbData);
 					if(otm) GetOutlineTextMetrics(hdc, cbData, otm);
 				}
 				SelectObject(hdc, hFontOld);
 				ReleaseDC(hwnd,hdc);
 
-				if(otm){
+				if (otm)
+				{
 					FaceName = (TCHAR*)otm+(UINT)otm->otmpFaceName;
 					PitchAndFamily = otm->otmTextMetrics.tmPitchAndFamily;
 					CharSet = otm->otmTextMetrics.tmCharSet;
-				} else {
+				}
+				else
+				{
 					LOGFONT lf;
-					GetObject(hFont,sizeof(lf), &lf);
+					GetObject(hFont, sizeof(lf), &lf);
 					PitchAndFamily = lf.lfPitchAndFamily;
 					CharSet = lf.lfCharSet;
 					cbData = GetTextFace(hdc, 0, NULL);
-					if(cbData){
-						FaceName = (TCHAR*)malloc( cbData );
-						if(FaceName) GetTextFace(hdc, cbData, FaceName);
+					if (cbData)
+					{
+						FaceName = (TCHAR*)malloc(cbData);
+						if (FaceName)
+							GetTextFace(hdc, cbData, FaceName);
 					}
 				}
 
 				//Output the font family,
-				switch( PitchAndFamily & /* bits 4-7<<4 */ 0xf0 ){
-					case FF_DECORATIVE: s << "\\fdecor "; break;
+				switch (PitchAndFamily & /* bits 4-7<<4 */ 0xf0)
+				{
+					case FF_DECORATIVE: s << _T("\\fdecor "); break;
 					case FF_DONTCARE:
-					case FF_MODERN: s << "\\fmodern "; break;
-					case FF_ROMAN: s << "\\froman "; break;
-					case FF_SCRIPT: s << "\\fscript "; break;
-					case FF_SWISS: s << "\\fswiss "; break;
-					default: s << "\\fnil "; break;
+					case FF_MODERN: s << _T("\\fmodern "); break;
+					case FF_ROMAN: s << _T("\\froman "); break;
+					case FF_SCRIPT: s << _T("\\fscript "); break;
+					case FF_SWISS: s << _T("\\fswiss "); break;
+					default: s << _T("\\fnil "); break;
 					/*These have no equivalents in Win32 (or maybe it is my ancient M$DN library)
 					case FF_TECH: s << "\\ftech "; break;
 					case FF_BIDI: s << "\\fbidi "; break;
@@ -6069,11 +6076,12 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 				*/
 				s <<
 				//the character set,
-				"\\fcharset" << (DWORD)CharSet << " " <<
+				_T("\\fcharset") << (DWORD)CharSet << _T(" ") <<
 				//the pitch type,
-				"\\fprq" << (DWORD)(PitchAndFamily&0x3) << " ";
-				if(otm){ s <<
-					"{\\*\\panose " <<
+				_T("\\fprq") << (DWORD)(PitchAndFamily&0x3) << _T(" ");
+				if (otm)
+				{
+					s << _T("{\\*\\panose ") <<
 						hex << (otm->otmPanoseNumber.bFamilyType) <<
 						hex << (otm->otmPanoseNumber.bSerifStyle) <<
 						hex << (otm->otmPanoseNumber.bWeight) <<
@@ -6084,7 +6092,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 						hex << (otm->otmPanoseNumber.bLetterform) <<
 						hex << (otm->otmPanoseNumber.bMidline) <<
 						hex << (otm->otmPanoseNumber.bXHeight) <<
-					"}";
+					_T("}");
 				}
 				//and the name of the font
 				if (FaceName && FaceName[0])
@@ -6100,66 +6108,71 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 				but why bother?
 				since RTF sux anyway*/
 
-			"}\n" // \f0
+			_T("}\n") // \f0
 
 			//Font for information paragraphs
-			"{\\f1 "
-				"\\froman \\fcharset0 \\fprq2 Times New Roman"
-			"}\n" // \f1
+			_T("{\\f1 ")
+				_T("\\froman \\fcharset0 \\fprq2 Times New Roman")
+			_T("}\n") // \f1
 
-		"}\n" // \fonttbl
+		_T("}\n") // \fonttbl
 
-		"{\\colortbl\n" //The colour table is referenced by the document to change colours for various things
-			/*Back colour*/"\\red" << (DWORD)GetRValue(iBkColorValue) << " \\green" << (DWORD)GetGValue(iBkColorValue) << " \\blue" << (DWORD)GetBValue(iBkColorValue) << ";\n"
-			/*Text colour*/"\\red" << (DWORD)GetRValue(iTextColorValue) << " \\green" << (DWORD)GetGValue(iTextColorValue) << " \\blue" << (DWORD)GetBValue(iTextColorValue) << ";\n";
-			if( bSelected ){ s << //Regular selection colours
-				/*Sel bck col*/"\\red" << (DWORD)GetRValue(iSelBkColorValue) << " \\green" << (DWORD)GetGValue(iSelBkColorValue) << " \\blue" << (DWORD)GetBValue(iSelBkColorValue) << ";\n"
-				/*Sel txt col*/"\\red" << (DWORD)GetRValue(iSelTextColorValue) << " \\green" << (DWORD)GetGValue(iSelTextColorValue) << " \\blue" << (DWORD)GetBValue(iSelTextColorValue) << ";\n";
-			} else { //Caret is the text colour inverted
+		_T("{\\colortbl\n") //The colour table is referenced by the document to change colours for various things
+			/*Back colour*/ _T("\\red") << (DWORD)GetRValue(iBkColorValue) << _T(" \\green") << (DWORD)GetGValue(iBkColorValue) << _T(" \\blue") << (DWORD)GetBValue(iBkColorValue) << _T(";\n")
+			/*Text colour*/ _T("\\red") << (DWORD)GetRValue(iTextColorValue) << _T(" \\green") << (DWORD)GetGValue(iTextColorValue) << _T(" \\blue") << (DWORD)GetBValue(iTextColorValue) << _T(";\n");
+			if (bSelected)
+			{
+				s << //Regular selection colours
+				/*Sel bck col*/ _T("\\red") << (DWORD)GetRValue(iSelBkColorValue) << _T(" \\green") << (DWORD)GetGValue(iSelBkColorValue) << _T(" \\blue") << (DWORD)GetBValue(iSelBkColorValue) << _T(";\n")
+				/*Sel txt col*/ _T("\\red") << (DWORD)GetRValue(iSelTextColorValue) << _T(" \\green") << (DWORD)GetGValue(iSelTextColorValue) << _T(" \\blue") << (DWORD)GetBValue(iSelTextColorValue) << _T(";\n");
+			}
+			else
+			{ //Caret is the text colour inverted
 				//Wish I could do iBkColorValueTmp = InvertColour(iBkColorValue)
 				iBkColorValue=~iBkColorValue;iTextColorValue=~iTextColorValue; s <<
-				/*Car bck col*/"\\red" << (DWORD)GetRValue(iBkColorValue) << " \\green" << (DWORD)GetGValue(iBkColorValue) << " \\blue" << (DWORD)GetBValue(iBkColorValue) << ";\n"
-				/*Car txt col*/"\\red" << (DWORD)GetRValue(iTextColorValue) << " \\green" << (DWORD)GetGValue(iTextColorValue) << " \\blue" << (DWORD)GetBValue(iTextColorValue) << ";\n";
+				/*Car bck col*/ _T("\\red") << (DWORD)GetRValue(iBkColorValue) << _T(" \\green") << (DWORD)GetGValue(iBkColorValue) << _T(" \\blue") << (DWORD)GetBValue(iBkColorValue) << _T(";\n")
+				/*Car txt col*/ _T("\\red") << (DWORD)GetRValue(iTextColorValue) << _T(" \\green") << (DWORD)GetGValue(iTextColorValue) << _T(" \\blue") << (DWORD)GetBValue(iTextColorValue) << _T(";\n");
 				iBkColorValue=~iBkColorValue;iTextColorValue=~iTextColorValue;
-			} s <<
-			/*Bookmarks  */"\\red" << (DWORD)GetRValue(iBmkColor) << " \\green" << (DWORD)GetGValue(iBmkColor) << " \\blue" << (DWORD)GetBValue(iBmkColor) << ";\n"
+			}
+			s <<
+			/*Bookmarks  */ _T("\\red") << (DWORD)GetRValue(iBmkColor) << _T(" \\green") << (DWORD)GetGValue(iBmkColor) << _T(" \\blue") << (DWORD)GetBValue(iBmkColor) << _T(";\n")
 			//Separators */iSepColorValue is not needed because drawing objects specify their own colours (stupid eh?)
-		"}\n" // \colortbl
+		_T("}\n") // \colortbl
 
 		//This is new for RTF 1.7, but it should be ignored by older readers so who cares (older than M$ Word XP = Word 2002??)
-		"{\\*\\generator Frhed v"SHARPEN(FRHED_VERSION_4)";}\n"
+		_T("{\\*\\generator Frhed v") SHARPEN(FRHED_VERSION_4) _T(";}\n")
 
 		//Metadata here too?
-		"{\\info\n"
+		_T("{\\info\n")
 			//Put the filename in the title
-			"{\\title " << escapefilter << filename << "}\n"
+			_T("{\\title ") << escapefilter << filename << _T("}\n")
 			//...
-		"}\n"; // \info
+		_T("}\n"); // \info
 
 		//Document formatting properties
 			//Sot sure if this will have any effect
-			if( bMakeBackups ) s << "\\makebackup ";
+			if( bMakeBackups ) s << _T("\\makebackup ");
 			s <<
 			//Turn off spelling & grammar checking in our hexdump
-			"\\deflang1024 \\deflangfe1024 \\noproof "
+			_T("\\deflang1024 \\deflangfe1024 \\noproof ")
 			//Indicate that this document was created from text
-			"\\fromtext "
+			_T("\\fromtext ")
 			/*We use the 'Web/Online Layout View' at 100% cause it is good
 			for drawing our vertical lines & offers minimal visual fluff*/
-			"\\viewkind5 \\viewscale100"
+			_T("\\viewkind5 \\viewscale100")
 			//...
-		"\n" // DFPs
+		_T("\n") // DFPs
 
 		//Section formatting properties
 			//...
 		//"\n"  SFPs - none yet - uncomment "\n" when we get some
 
-		"{\n" //Paragraph specifying title
+		_T("{\n") //Paragraph specifying title
 			//Times New Roman 20 pt
-			"\\f1 \\fs40\n" <<
+			_T("\\f1 \\fs40\n") <<
 			//Print the file name
 			escapefilter << filename <<
-		"\\par\n}\n" // title para
+		_T("\\par\n}\n") // title para
 
 		/*Nothing to put here yet
 		"{\n" //Paragraph specifying other properties
@@ -6173,9 +6186,9 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 
 		//Character formatting properties
 			//Font 0 (hFont), font size, back colour 0 (iBkColorValue), iBkColorValue(Word2000 sux) text colour 1 (iTextColorValue)
-			"\\f0 \\fs" << (DWORD)iFontSize*2 << "\\cb0 \\chcbpat0 \\cf1"
+			_T("\\f0 \\fs") << (DWORD)iFontSize*2 << _T("\\cb0 \\chcbpat0 \\cf1")
 			//...
-		"\n"; // CFPs
+		_T("\n"); // CFPs
 
 
 		/*Warning M$ Word 2000 (& probably all of them (versions of M$ Word)) will:
@@ -6229,8 +6242,8 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 			
 			//Bytespace
 			bi += s.m_dwLen;
-			for(i=0;i<iMaxOffsetLen+iByteSpace-bi;i++)
-				s << "\\~";
+			for (i = 0; i < iMaxOffsetLen + iByteSpace - bi; i++)
+				s << _T("\\~");
 
 			highlights_in_this_line = false;
 
@@ -6259,105 +6272,139 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 			if (highlights_in_this_line)
 			{
 				int sosl = max(iStartOfSelSetting, l);
-				int eosl = min(iEndOfSelSetting, l+iBytesPerLine-1);
+				int eosl = min(iEndOfSelSetting, l + iBytesPerLine - 1);
 				//Bytes
-				for(i=l;i<l+iBytesPerLine;i++){
-					if(i==sosl) s <<
-					"{\\cb2 \\chcbpat2 \\cf3 "; // iSelBkColorValue, iSelBkColorValue (Word2000 sux), iSelTextColorValue
-						for( bi = 0; bi < iBmkCount; bi++ )
-							if(pbmkList[bi].offset==i) break;
-						if( bi < iBmkCount ){
-							if(iEnteringMode == BYTES){ s <<
-								"{\\*\\bkmkstart ";
-									if( pbmkList[bi].name ) s << escapefilter << pbmkList[bi].name;
-									else s << (DWORD)i;
+				for (i = l; i < l + iBytesPerLine; i++)
+				{
+					if (i == sosl)
+						s <<
+					_T("{\\cb2 \\chcbpat2 \\cf3 "); // iSelBkColorValue, iSelBkColorValue (Word2000 sux), iSelTextColorValue
+						for (bi = 0; bi < iBmkCount; bi++)
+							if (pbmkList[bi].offset == i)
+								break;
+						if (bi < iBmkCount)
+						{
+							if (iEnteringMode == BYTES)
+							{
+								s <<
+								_T("{\\*\\bkmkstart ");
+									if (pbmkList[bi].name)
+										s << escapefilter << pbmkList[bi].name;
+									else
+										s << (DWORD)i;
 									s <<
-								"}";
+								_T("}");
 							} s <<
-							"{\\chbrdr \\brdrs \\brdrcf4 "; // iBmkColor
+							_T("{\\chbrdr \\brdrs \\brdrcf4 "); // iBmkColor
 						}
-						if( i==endoffile ) s << "__\\~";
-						else if( i>endoffile ) s << "\\~\\~\\~";
-						else s << hex << DataArray[i];
-						if( bi < iBmkCount ){ s <<
-							"}";
-							if(iEnteringMode == BYTES){ s <<
-								"{\\*\\bkmkend ";
-									if(pbmkList[bi].name) s << escapefilter << pbmkList[bi].name;
-									else s << (DWORD)i;
+						if (i == endoffile)
+							s << _T("__\\~");
+						else if (i > endoffile)
+							s << _T("\\~\\~\\~");
+						else
+							s << hex << DataArray[i];
+						if (bi < iBmkCount)
+						{
+							s <<
+							_T("}");
+							if (iEnteringMode == BYTES)
+							{
+								s <<
+								_T("{\\*\\bkmkend ");
+									if (pbmkList[bi].name)
+										s << escapefilter << pbmkList[bi].name;
+									else
+										s << (DWORD)i;
 									s <<
-								"}";
+								_T("}");
 							}
 						}
 						if(i==eosl) s <<
-					"}"; s << //Selected colours
-					"\\~";
+					_T("}"); s << //Selected colours
+					_T("\\~");
 				} //Bytes
 				//Charspace
-				for(i=0;i<iCharSpace;i++)
-					s << "\\~";
+				for (i = 0; i < iCharSpace; i++)
+					s << _T("\\~");
 				//Chars
-				for(i=l;i<l+iBytesPerLine;i++){
-					if(i==sosl) s <<
-					"{\\cb2 \\chcbpat2 \\cf3 "; // iSelBkColorValue, iSelBkColorValue (Word2000 sux), iSelTextColorValue
-						for( bi = 0; bi < iBmkCount; bi++ )
-							if(pbmkList[bi].offset==i) break;
-						if( bi < iBmkCount ){
-							if(iEnteringMode == CHARS){ s <<
-								"{\\*\\bkmkstart ";
+				for (i = l; i < l + iBytesPerLine; i++)
+				{
+					if (i == sosl) s <<
+					_T("{\\cb2 \\chcbpat2 \\cf3 "); // iSelBkColorValue, iSelBkColorValue (Word2000 sux), iSelTextColorValue
+						for (bi = 0; bi < iBmkCount; bi++)
+							if (pbmkList[bi].offset == i)
+								break;
+						if (bi < iBmkCount)
+						{
+							if (iEnteringMode == CHARS)
+							{ s <<
+								_T("{\\*\\bkmkstart ");
 									if( pbmkList[bi].name ) s << escapefilter << pbmkList[bi].name;
 									else s << (DWORD)i;
 									s <<
-								"}";
+								_T("}");
 							} s <<
-							"{\\chbrdr \\brdrs \\brdrcf4 "; // iBmkColor
+							_T("{\\chbrdr \\brdrs \\brdrcf4 "); // iBmkColor
 						}
-						if( i>=endoffile ) s << "\\~";
+						if( i>=endoffile ) s << _T("\\~");
 						else {
 							c = DataArray[i];
 							if(!( ( iCharacterSet == OEM_FIXED_FONT && c != 0 ) || ( iCharacterSet == ANSI_FIXED_FONT && ( ( c >= 32 && c <= 126) || (c>=160 && c<=255) || (c>=145 && c<=146) ) ) ))
 								c = '.';
 							s << nbsp << escapefilter << c;
 						}
-						if( bi < iBmkCount ){ s <<
-							"}";
-							if(iEnteringMode == CHARS){ s <<
-								"{\\*\\bkmkend ";
-									if(pbmkList[bi].name) s << escapefilter << pbmkList[bi].name;
-									else s << (DWORD)i;
+						if (bi < iBmkCount)
+						{
+							s <<
+							_T("}");
+							if (iEnteringMode == CHARS)
+							{
+								s <<
+								_T("{\\*\\bkmkend ");
+									if (pbmkList[bi].name)
+										s << escapefilter << pbmkList[bi].name;
+									else
+										s << (DWORD)i;
 									s <<
-								"}";
+								_T("}");
 							}
 						}
 						if(i==eosl) s <<
-					"}"; //Selected colours
+					_T("}"); //Selected colours
 				} //Chars
 				s <<
 				//End of line
-				"\\line\n";
+				_T("\\line\n");
 			} else /*No highlights - how boring*/ {
 				//Bytes
-				for(i=l;i<l+iBytesPerLine;i++){
-					if( i==endoffile ) s << "__\\~";
-					else if( i>endoffile ) s << "\\~\\~\\~";
-					else s << hex << DataArray[i] << "\\~";
+				for (i = l; i < l + iBytesPerLine; i++)
+				{
+					if (i == endoffile)
+						s << _T("__\\~");
+					else if (i > endoffile)
+						s << _T("\\~\\~\\~");
+					else
+						s << hex << DataArray[i] << _T("\\~");
 				}
 				//Charspace
-				for(i=0;i<iCharSpace;i++)
-					s << "\\~";
+				for (i = 0; i < iCharSpace; i++)
+					s << _T("\\~");
 				//Chars
-				for(i=l;i<l+iBytesPerLine;i++){
-					if( i>=endoffile ) s << "\\~";
-						else {
-							c = DataArray[i];
-							if(!( ( iCharacterSet == OEM_FIXED_FONT && c != 0 ) || ( iCharacterSet == ANSI_FIXED_FONT && ( ( c >= 32 && c <= 126) || (c>=160 && c<=255) || (c>=145 && c<=146) ) ) ))
-								c = '.';
-							s << nbsp << escapefilter << c;
-						}
+				for (i = l; i < l + iBytesPerLine; i++)
+				{
+					if (i >= endoffile)
+						s << _T("\\~");
+					else
+					{
+						c = DataArray[i];
+						if(!( ( iCharacterSet == OEM_FIXED_FONT && c != 0 ) || ( iCharacterSet == ANSI_FIXED_FONT && ( ( c >= 32 && c <= 126) || (c>=160 && c<=255) || (c>=145 && c<=146) ) ) ))
+							c = '.';
+						s << nbsp << escapefilter << c;
+					}
 				}
 				//End of line
 				s <<
-				"\\line\n";
+				_T("\\line\n");
 			} // No highlights
 		} //for each line
 
@@ -6365,7 +6412,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 		//The vertical lines
 		//8192 is a majick number used to bring the lines in front of the text
 		//Count is +4 because +2 for the 2 extra lines at charstart +1 for the extra one at the bytes end +1 cause \dpcount needs to be 1 more than the no of lines
-		"{\\*\\do \\dobxcolumn \\dobypara \\dodhgt8192 \\dpgroup \\dpcount" << (DWORD)(iBytesPerLine/4+4) << "\n";
+		_T("{\\*\\do \\dobxcolumn \\dobypara \\dodhgt8192 \\dpgroup \\dpcount") << (DWORD)(iBytesPerLine/4+4) << _T("\n");
 			register int x;
 			register int y = ((end-start)/iBytesPerLine+1)*cyChar*15;
 			//They should have just used the colour table
@@ -6378,45 +6425,45 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 				x = (i*9+iMaxOffsetLen+iByteSpace-2)*cxChar*20+cxChar*10-20;
 				s << //There are 20 twips per point
 				//A line
-				"\\dpline"
+				_T("\\dpline")
 				//Positions of the ends
-				" \\dpptx" << x << " \\dppty0 \\dpptx" << x << " \\dppty" << y <<
+				_T(" \\dpptx") << x << _T(" \\dppty0 \\dpptx") << x << _T(" \\dppty") << y <<
 				//Repeat for the benefit of Word - fuck M$ sux
-				" \\dpx" << x << " \\dpy0 \\dpxsize0 \\dpysize" << y <<
+				_T(" \\dpx") << x << _T(" \\dpy0 \\dpxsize0 \\dpysize") << y <<
 				//Solid lines
-				" \\dplinesolid"
+				_T(" \\dplinesolid")
 				//Colour of the lines - fuck M$ sux
-				" \\dplinecor" << r << " \\dplinecog" << g << " \\dplinecob" << b << "\n";
+				_T(" \\dplinecor") << r << _T(" \\dplinecog") << g << _T(" \\dplinecob") << b << _T("\n");
 			}
 			x = (iMaxOffsetLen+iByteSpace+iBytesPerLine*9/4+iCharSpace-1)*cxChar*20-10*cxChar;//There are 20 twips per point
 			//The two lines at the start of the charspace
 			s << 
 			//A line
-			"\\dpline"
+			_T("\\dpline")
 			//Positions of the ends
-			" \\dpptx" << x-30 << " \\dppty0 \\dpptx" << x-30 << " \\dppty" << y <<
+			_T(" \\dpptx") << x-30 << _T(" \\dppty0 \\dpptx") << x-30 << _T(" \\dppty") << y <<
 			//Repeat for the benefit of Word - fuck M$ sux
-			" \\dpx" << x-30 << " \\dpy0 \\dpxsize0 \\dpysize" << y <<
+			_T(" \\dpx") << x-30 << _T(" \\dpy0 \\dpxsize0 \\dpysize") << y <<
 			//Solid lines
-			" \\dplinesolid"
+			_T(" \\dplinesolid")
 			//Colour of the lines - fuck M$ sux
-			" \\dplinecor" << r << " \\dplinecog" << g << " \\dplinecob" << b << "\n"
+			_T(" \\dplinecor") << r << _T(" \\dplinecog") << g << _T(" \\dplinecob") << b << _T("\n")
 
 			//A line
-			"\\dpline"
+			_T("\\dpline")
 			//Positions of the ends
-			" \\dpptx" << x << " \\dppty0 \\dpptx" << x << " \\dppty" << y <<
+			_T(" \\dpptx") << x << _T(" \\dppty0 \\dpptx") << x << _T(" \\dppty") << y <<
 			//Repeat for the benefit of Word - fuck M$ sux
-			" \\dpx" << x << " \\dpy0 \\dpxsize0 \\dpysize" << y <<
+			_T(" \\dpx") << x << _T(" \\dpy0 \\dpxsize0 \\dpysize") << y <<
 			//Solid lines
-			" \\dplinesolid"
+			_T(" \\dplinesolid")
 			//Colour of the lines - fuck M$ sux
-			" \\dplinecor" << r << " \\dplinecog" << g << " \\dplinecob" << b << "\n"
+			_T(" \\dplinecor") << r << _T(" \\dplinecog") << g << _T(" \\dplinecob") << b << _T("\n")
 
 			//End of group
-			"\\dpendgroup\n"
-		"}\n" // \do
-	"}" << (BYTE)'\0'; // \rtf1
+			_T("\\dpendgroup\n")
+		_T("}\n") // \do
+	_T("}") << (BYTE)'\0'; // \rtf1
 	if( plen ) *plen = s.m_dwLen;
 	return s.Relinquish();
 }

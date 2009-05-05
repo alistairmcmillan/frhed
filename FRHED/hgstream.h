@@ -37,12 +37,12 @@ public:
 
 	HGlobalStream(DWORD blcksz = 1024); //This block size was picked at random
 	~HGlobalStream();
-	HGlobalStream& operator << (const char *);
+	HGlobalStream& operator << (LPCTSTR);
 	HGlobalStream& operator << (BYTE);
 	HGlobalStream& operator << (DWORD);
 	HGlobalStream& operator << (int);
 	void Realloc(DWORD len, void* src);
-	void filter( const char* src );
+	void filter(LPCTSTR src);
 	HGLOBAL Relinquish();
 	void Reset();
 	inline HGlobalStream& HGlobalStream::operator<<(HGlobalStream&(*_f)(HGlobalStream&))
@@ -51,17 +51,17 @@ public:
 		return *this;
 	}
 	//Manipulators
-	inline friend HGlobalStream& hex( HGlobalStream& s )
+	inline friend HGlobalStream& hex(HGlobalStream& s)
 	{
 		s._hex = 1;
 		return s;
 	}
-	inline friend HGlobalStream& nbsp( HGlobalStream& s )
+	inline friend HGlobalStream& nbsp(HGlobalStream& s)
 	{
 		s._nbsp = 1;
 		return s;
 	}
-	inline friend HGlobalStream& escapefilter( HGlobalStream& s )
+	inline friend HGlobalStream& escapefilter(HGlobalStream& s)
 	{
 		s._escfilt = 1;
 		return s;
@@ -71,8 +71,9 @@ public:
 	DWORD m_dwSize;
 	DWORD m_dwBlockSize;
 	HGLOBAL m_hGlobal;
+
 private:
-	char *Extend(DWORD len);
+	TCHAR *Extend(DWORD len);
 	unsigned _hex:1;
 	unsigned _nbsp:1;
 	unsigned _escfilt:1;
