@@ -29,6 +29,7 @@
 #include "hexwdlg.h"
 #include "BinTrans.h"
 #include "LangString.h"
+#include "offset.h"
 
 /** @brief Maximum text length in dialog edit boxes. */
 static const int MaxTextLen = 16;
@@ -72,8 +73,7 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	int iOffset;
 	int iNumberOfBytes;
 	if (GetDlgItemText(hDlg, IDC_COPY_STARTOFFSET, buf, bufSize) &&
-		_stscanf(buf, _T("x%x"), &iOffset) == 0 &&
-		_stscanf(buf, _T("%d"), &iOffset) == 0)
+		!offset_parse(buf, iOffset))
 	{
 		LangString app(IDS_APPNAME);
 		LangString startOffsetErr(IDS_OFFSET_START_ERROR);
@@ -83,8 +83,7 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	if (IsDlgButtonChecked(hDlg, IDC_COPY_OFFSET))
 	{
 		if (GetDlgItemText(hDlg, IDC_COPY_OFFSETEDIT, buf, bufSize) &&
-			_stscanf(buf, _T("x%x"), &iNumberOfBytes) == 0 &&
-			_stscanf(buf, _T("%d"), &iNumberOfBytes) == 0)
+			!offset_parse(buf, iNumberOfBytes))
 		{
 			LangString app(IDS_APPNAME);
 			LangString endOffsetErr(IDS_OFFSET_END_ERROR);

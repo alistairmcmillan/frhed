@@ -28,6 +28,7 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "LangString.h"
+#include "offset.h"
 
 /** @brief Max length of the offset number. */
 static const int OffsetLen = 16;
@@ -67,8 +68,7 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	{
 	case IDOK:
 		if (GetDlgItemText(hDlg, IDC_BMKADD_OFFSET, buf, OffsetLen) &&
-			_stscanf(buf, _T("x%x"), &offset) == 0 &&
-			_stscanf(buf, _T("%d"), &offset) == 0)
+			!offset_parse(buf, offset))
 		{
 			LangString app(IDS_APPNAME);
 			LangString startOffsetErr(IDS_OFFSET_START_ERROR);

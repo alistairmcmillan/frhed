@@ -29,6 +29,7 @@
 #include "hexwdlg.h"
 #include "BinTrans.h"
 #include "LangString.h"
+#include "offset.h"
 
 /** Length of the offset buffer. */
 static const int OffsetLen = 16;
@@ -68,8 +69,7 @@ BOOL DeleteDlg::Apply(HWND hDlg)
 	int iNumberOfBytes;
 
 	if (GetDlgItemText(hDlg, IDC_DELETE_STARTOFFSET, buf, OffsetLen) &&
-		_stscanf(buf, _T("x%x"), &iOffset) == 0 &&
-		_stscanf(buf, _T("%d"), &iOffset) == 0)
+		!offset_parse(buf, iOffset))
 	{
 		LangString startOffsetErr(IDS_OFFSET_START_ERROR);
 		MessageBox(hDlg, startOffsetErr, MB_ICONERROR);
@@ -79,8 +79,7 @@ BOOL DeleteDlg::Apply(HWND hDlg)
 	if (IsDlgButtonChecked(hDlg, IDC_DELETE_INCLUDEOFFSET))
 	{
 		if (GetDlgItemText(hDlg, IDC_DELETE_ENDOFFSET, buf, OffsetLen) &&
-			_stscanf(buf, _T("x%x"), &iNumberOfBytes) == 0 &&
-			_stscanf(buf, _T("%d"), &iNumberOfBytes) == 0)
+			!offset_parse(buf, iNumberOfBytes))
 		{
 			LangString endOffsetErr(IDS_OFFSET_END_ERROR);
 			MessageBox(hDlg, endOffsetErr, MB_ICONERROR);
