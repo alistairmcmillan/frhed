@@ -28,6 +28,7 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "LangString.h"
+#include "offset.h"
 
 /**
  * @brief Handle dialog messages.
@@ -57,16 +58,14 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 		{
 		case IDOK:
 			if (GetDlgItemText(h, IDC_REVERSE_OFFSET, buf, RTL_NUMBER_OF(buf)) &&
-				_stscanf(buf, _T("x%x"), &iStartOfSelSetting) == 0 &&
-				_stscanf(buf, _T("%d"), &iStartOfSelSetting) == 0)
+				!offset_parse(buf, iStartOfSelSetting))
 			{
 				LangString startOffsetErr(IDS_OFFSET_START_ERROR);
 				MessageBox(h, startOffsetErr, MB_ICONERROR);
 				return TRUE;
 			}
 			if (GetDlgItemText(h, IDC_REVERSE_OFFSETEND, buf, RTL_NUMBER_OF(buf)) &&
-				_stscanf(buf, _T("x%x"), &iEndOfSelSetting) == 0 &&
-				_stscanf(buf, _T("%d"), &iEndOfSelSetting) == 0)
+				!offset_parse(buf, iEndOfSelSetting))
 			{
 				LangString endOffsetErr(IDS_OFFSET_END_ERROR);
 				MessageBox(h, endOffsetErr, MB_ICONERROR);

@@ -28,6 +28,7 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "LangString.h"
+#include "offset.h"
 
 /** @brief Max length of the offset number. */
 static const int OffsetLen = 16;
@@ -69,8 +70,7 @@ BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	{
 	case IDOK:
 		if (GetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSET, buf, 128) &&
-			_stscanf(buf, _T("x%x"), &iStartOfSelSetting) == 0 &&
-			_stscanf(buf, _T("%d"), &iStartOfSelSetting) == 0)
+			!offset_parse(buf, iStartOfSelSetting))
 		{
 			LangString app(IDS_APPNAME);
 			LangString startOffsetErr(IDS_OFFSET_START_ERROR);
@@ -78,8 +78,7 @@ BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		if (GetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSETEND, buf, 128) &&
-			_stscanf(buf, _T("x%x"), &iEndOfSelSetting) == 0 &&
-			_stscanf(buf, _T("%d"), &iEndOfSelSetting) == 0)
+			!offset_parse(buf, iEndOfSelSetting))
 		{
 			LangString app(IDS_APPNAME);
 			LangString endOffsetErr(IDS_OFFSET_END_ERROR);
