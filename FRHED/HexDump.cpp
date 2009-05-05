@@ -122,18 +122,18 @@ void HexDump::Write(unsigned startInd, unsigned endInd)
 			else
 			{
 				// Write byte.
-				_stprintf(buf2, _T("%2.2x "), (*m_pData)[a + j]);
+				_stprintf(buf2, _T("%2.2x "), (*m_pData)[(int)a + j]);
 				m_pBuffer[k + l + j*3    ] = buf2[0];
 				m_pBuffer[k + l + j*3 + 1] = buf2[1];
 				m_pBuffer[k + l + j*3 + 2] = buf2[2];
 				// Write char.
-				if (m_charset == OEM_FIXED_FONT && (*m_pData)[a + j] != 0)
-					m_pBuffer[k + l + m_bytesPerLine*3 + m_charSpace + j] = (*m_pData)[a + j];
-				else if (((*m_pData)[a + j] >= 32 && (*m_pData)[a + j] <= 126) ||
-						((*m_pData)[a + j]>=160 && (*m_pData)[a + j] <= 255) ||
-						((*m_pData)[a + j] >= 145 && (*m_pData)[a + j] <= 146))
+				if (m_charset == OEM_FIXED_FONT && (*m_pData)[(int)a + j] != 0)
+					m_pBuffer[k + l + m_bytesPerLine*3 + m_charSpace + j] = (*m_pData)[(int)a + j];
+				else if (((*m_pData)[(int)a + j] >= 32 && (*m_pData)[(int)a + j] <= 126) ||
+						((*m_pData)[(int)a + j]>=160 && (*m_pData)[(int)a + j] <= 255) ||
+						((*m_pData)[(int)a + j] >= 145 && (*m_pData)[(int)a + j] <= 146))
 				{
-					m_pBuffer[k + l + m_bytesPerLine*3 + m_charSpace + j] = (*m_pData)[a + j];
+					m_pBuffer[k + l + m_bytesPerLine*3 + m_charSpace + j] = (*m_pData)[(int)a + j];
 				}
 				else
 					m_pBuffer[k + l + m_bytesPerLine*3 + m_charSpace + j] = '.';
