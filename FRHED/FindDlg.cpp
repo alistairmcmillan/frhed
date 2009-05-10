@@ -34,8 +34,7 @@
 bool FindDlg::bFindDlgMatchCase = false;
 int FindDlg::iFindDlgDirection = 0;
 
-//GK16AUG2K: additional options for the find dialog
-int FindDlg::iFindDlgUnicode = 0;
+bool FindDlg::bFindDlgUnicode = false;
 int FindDlg::iFindDlgBufLen = 64 * 1024 - 1;
 
 TCHAR *FindDlg::pcFindDlgBuffer = (TCHAR *)LocalAlloc(LPTR, iFindDlgBufLen);
@@ -71,7 +70,7 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			CheckDlgButton(hDlg, iFindDlgDirection == -1 ? IDC_FIND_UP : IDC_FIND_DOWN, BST_CHECKED);
 			const UINT matchCase = bFindDlgMatchCase ? BST_CHECKED : BST_UNCHECKED;
 			CheckDlgButton(hDlg, IDC_FIND_MATCHCASE, matchCase);
-			const UINT findUnicode = iFindDlgUnicode ? BST_CHECKED : BST_UNCHECKED;
+			const UINT findUnicode = bFindDlgUnicode ? BST_CHECKED : BST_UNCHECKED;
 			CheckDlgButton(hDlg, IDC_FIND_UNICODE, findUnicode);
 		}
 		return TRUE;
@@ -85,15 +84,14 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			{
 				UINT matchCase = IsDlgButtonChecked(hDlg, IDC_FIND_MATCHCASE);
 				bFindDlgMatchCase = matchCase == BST_CHECKED ? true : false;
-				//GK16AUG2K: UNICODE search
-				iFindDlgUnicode = IsDlgButtonChecked(hDlg, IDC_FIND_UNICODE);
+				UINT findUnicode = IsDlgButtonChecked(hDlg, IDC_FIND_UNICODE);
+				bFindDlgUnicode = findUnicode == BST_CHECKED ? true : false;
 				iFindDlgDirection = IsDlgButtonChecked(hDlg, IDC_FIND_UP) ? -1 : 1;
 				// Copy text in Edit-Control. Return the number of characters
 				// in the Edit-control minus the zero byte at the end.
 				TCHAR *pcFindstring = 0;
-				//GK16AUG2K
 				int destlen;
-				if (iFindDlgUnicode)
+				if (bFindDlgUnicode)
 				{
 					pcFindstring = new TCHAR[srclen * 2];
 					destlen = MultiByteToWideChar(CP_ACP, 0, pcFindDlgBuffer,
