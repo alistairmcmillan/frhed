@@ -36,12 +36,17 @@ class DragDropDlg
 public:
 	enum { IDD = IDD_DRAGDROP };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
+
 	DWORD allowable_effects;
 	bool effect;
 	UINT numformatetcs;
 	FORMATETC *formatetcs;
 	UINT numformats;
 	UINT *formats;
+
+protected:
+	BOOL OnInitDialog(HWND);
+	BOOL OnCommand(HWND, WPARAM, LPARAM);
 };
 
 #endif // _DRAG_DROP_DLG_H_
