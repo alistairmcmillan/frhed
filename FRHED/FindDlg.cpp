@@ -71,7 +71,8 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			CheckDlgButton(hDlg, iFindDlgDirection == -1 ? IDC_FIND_UP : IDC_FIND_DOWN, BST_CHECKED);
 			const UINT matchCase = bFindDlgMatchCase ? BST_CHECKED : BST_UNCHECKED;
 			CheckDlgButton(hDlg, IDC_FIND_MATCHCASE, matchCase);
-			CheckDlgButton(hDlg, IDC_FIND_UNICODE, iFindDlgUnicode);
+			const UINT findUnicode = iFindDlgUnicode ? BST_CHECKED : BST_UNCHECKED;
+			CheckDlgButton(hDlg, IDC_FIND_UNICODE, findUnicode);
 		}
 		return TRUE;
 

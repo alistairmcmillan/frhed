@@ -52,22 +52,35 @@ C_ASSERT(sizeof(DragDropOptionsDlg) == sizeof(HexEditorWindow)); // disallow ins
 
 INT_PTR DragDropOptionsDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 {
+	UINT checked = 0;
 	switch (m)
 	{
 	case WM_INITDIALOG:
-		CheckDlgButton(h, IDC_ENABLE_DRAG, enable_drag);
-		CheckDlgButton(h, IDC_ENABLE_DROP, enable_drop);
-		CheckDlgButton(h, IDC_EN_SD_DD, enable_scroll_delay_dd);
-		CheckDlgButton(h, IDC_EN_SD_SEL, enable_scroll_delay_sel);
-		CheckDlgButton(h, IDC_ALWAYS_CHOOSE, always_pick_move_copy);
-		CheckDlgButton(h, IDC_DROP_CF_HDROP, prefer_CF_HDROP);
-		CheckDlgButton(h, IDC_DROP_BIN_DATA, prefer_CF_BINARYDATA);
-		CheckDlgButton(h, IDC_DROP_CF_TEXT, prefer_CF_TEXT);
-		CheckDlgButton(h, IDC_DRAG_BIN_DATA, output_CF_BINARYDATA);
-		CheckDlgButton(h, IDC_DRAG_CF_TEXT, output_CF_TEXT);
-		CheckDlgButton(h, output_text_special ? IDC_TEXT_SPECIAL : IDC_TEXT_HEXDUMP, TRUE);
-		CheckDlgButton(h, IDC_TEXT_DISPLAY, output_text_hexdump_display);
-		CheckDlgButton(h, IDC_DRAG_RTF, output_CF_RTF);
+		checked = enable_drag ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_ENABLE_DRAG, checked);
+		checked = enable_drop ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_ENABLE_DROP, checked);
+		checked = enable_scroll_delay_dd ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_EN_SD_DD, checked);
+		checked = enable_scroll_delay_sel ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_EN_SD_SEL, checked);
+		checked = always_pick_move_copy ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_ALWAYS_CHOOSE, checked);
+		checked = prefer_CF_HDROP ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_DROP_CF_HDROP, checked);
+		checked = prefer_CF_BINARYDATA ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_DROP_BIN_DATA, checked);
+		checked = prefer_CF_TEXT ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_DROP_CF_TEXT, checked);
+		checked = output_CF_BINARYDATA ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_DRAG_BIN_DATA, checked);
+		checked = output_CF_TEXT ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_DRAG_CF_TEXT, checked);
+		CheckDlgButton(h, output_text_special ? IDC_TEXT_SPECIAL : IDC_TEXT_HEXDUMP, BST_CHECKED);
+		checked = output_text_hexdump_display ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_TEXT_DISPLAY, checked);
+		checked = output_CF_RTF ? BST_CHECKED : BST_UNCHECKED;
+		CheckDlgButton(h, IDC_DRAG_RTF, checked);
 		return TRUE;
 	case WM_COMMAND:
 		switch (w)

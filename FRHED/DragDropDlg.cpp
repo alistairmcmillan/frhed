@@ -35,7 +35,7 @@
  */
 BOOL DragDropDlg::OnInitDialog(HWND hDlg)
 {
-	CheckDlgButton(hDlg, effect ? IDC_COPY : IDC_MOVE, TRUE);
+	CheckDlgButton(hDlg, effect ? IDC_COPY : IDC_MOVE, BST_CHECKED);
 	if (!(allowable_effects & DROPEFFECT_MOVE))
 		EnableWindow(GetDlgItem(hDlg, IDC_MOVE), FALSE);
 	if (!(allowable_effects & DROPEFFECT_COPY))

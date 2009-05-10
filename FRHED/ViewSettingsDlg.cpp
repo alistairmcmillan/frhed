@@ -217,7 +217,8 @@ BOOL ViewSettingsDlg::OnInitDialog(HWND hDlg)
 	CheckDlgButton(hDlg, IDC_SETTINGS_ADJUST_BYTELINE, checked);
 	CheckDlgButton(hDlg, bUnsignedView ? IDC_SETTINGS_CARETUNSIGN :
 			IDC_SETTINGS_CARETSIGN, BST_CHECKED);
-	CheckDlgButton(hDlg, IDC_SETTINGS_OPENRO, bOpenReadOnly);
+	checked = bOpenReadOnly == 0 ? BST_UNCHECKED : BST_CHECKED;
+	CheckDlgButton(hDlg, IDC_SETTINGS_OPENRO, checked);
 	checked = bAutoOffsetLen == 0 ? BST_UNCHECKED : BST_CHECKED;
 	CheckDlgButton(hDlg, IDC_SETTINGS_ADJOFFSET, checked);
 	SetDlgItemText(hDlg, IDC_SETTINGS_EDITOR, TexteditorName);
