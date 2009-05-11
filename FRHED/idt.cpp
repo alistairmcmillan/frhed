@@ -271,7 +271,7 @@ STDMETHODIMP CDropTarget::Drop(IDataObject* pDataObject, DWORD grfKeyState, POIN
 			hexwnd.iStartOfSelection = iMovePos;
 			hexwnd.iEndOfSelection = iMovePos+len-1;
 			hexwnd.iFileChanged = hexwnd.bFilestatusChanged = true;
-			hexwnd.bSelected = TRUE;
+			hexwnd.bSelected = true;
 			hexwnd.resize_window();
 		}
 		else // Insert
@@ -693,7 +693,7 @@ STDMETHODIMP CDropTarget::Drop(IDataObject* pDataObject, DWORD grfKeyState, POIN
 			hexwnd.iStartOfSelection = hexwnd.new_pos;
 			hexwnd.iEndOfSelection = hexwnd.new_pos + totallen - 1;
 			hexwnd.iFileChanged = hexwnd.bFilestatusChanged = true;
-			hexwnd.bSelected = TRUE;
+			hexwnd.bSelected = true;
 			hexwnd.resize_window();
 			hexwnd.synch_sibling();
 		}

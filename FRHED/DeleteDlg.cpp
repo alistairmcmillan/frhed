@@ -121,7 +121,7 @@ BOOL DeleteDlg::Apply(HWND hDlg)
 		iCurByte = 0;
 	iFileChanged = TRUE;
 	bFilestatusChanged = true;
-	bSelected = FALSE;
+	bSelected = false;
 	resize_window();
 	return TRUE;
 }

@@ -107,7 +107,7 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 				}
 				else
 				{
-					bSelected = FALSE;
+					bSelected = false;
 				}//If the above is not true deselect - this may change when multiple selections are allowed
 			}
 			//Or if the current byte was in the reversed bytes reverse it too

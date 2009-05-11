@@ -97,7 +97,7 @@ BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			iEndOfSelSetting = maxb;
 		iStartOfSelection = iStartOfSelSetting;
 		iEndOfSelection = iEndOfSelSetting;
-		bSelected = TRUE;
+		bSelected = true;
 		adjust_view_for_selection();
 		repaint();
 		// fall through

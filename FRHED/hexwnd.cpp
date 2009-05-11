@@ -153,8 +153,8 @@ HexEditorWindow::HexEditorWindow()
 	iSelDiffTextColorValue = RGB(0,0,0);
 	sibling = this;
 	iAutomaticBPL = 1;
-	bSelected = FALSE;
-	bSelecting = FALSE;
+	bSelected = false;
+	bSelecting = false;
 	dragging = false;
 	iStartOfSelection = 0;
 	iEndOfSelection = 0;
@@ -174,7 +174,7 @@ HexEditorWindow::HexEditorWindow()
 
 	iCharacterSet = ANSI_FIXED_FONT;
 
-	bSelected = FALSE;
+	bSelected = false;
 	iVscrollMax = 0;
 	iVscrollPos = 0;
 	iHscrollMax = 0;
@@ -415,7 +415,7 @@ int HexEditorWindow::load_file(LPCTSTR fname)
 		iHscrollPos = 0;
 		iCurByte = 0;
 		iCurNibble = 0;
-		bSelected = FALSE;
+		bSelected = false;
 		iFileChanged = FALSE;
 	}
 	resize_window();
@@ -728,7 +728,7 @@ void HexEditorWindow::keydown(int key)
 	int *a = NULL;//Data to update
 	int b = 0;//How much to update it by
 	int c =  0;//The original value
-	int sel = bSelected;
+	const bool sel = bSelected;
 
 	if (shiftDown)
 	{
@@ -736,7 +736,7 @@ void HexEditorWindow::keydown(int key)
 		if (!bSelected)
 		{
 			iStartOfSelection = iEndOfSelection = c = iCurByte;
-			bSelected = TRUE;
+			bSelected = true;
 		}
 		else
 		{
@@ -786,11 +786,11 @@ void HexEditorWindow::keydown(int key)
 			{
 				a = &iEndOfSelection;
 				c = iEndOfSelection;
-				bSelected = TRUE;
+				bSelected = true;
 			}
 			else
 			{
-				bSelected = FALSE;
+				bSelected = false;
 				a = &iCurByte;
 			}
 		}
@@ -856,7 +856,8 @@ void HexEditorWindow::keydown(int key)
 	{
 		if (lastbyte < 0)
 		{
-			bSelected = iCurNibble = iCurByte = 0;
+			bSelected = false;
+			iCurNibble = iCurByte = 0;
 		}
 		else
 		{
@@ -895,7 +896,7 @@ void HexEditorWindow::keydown(int key)
 			iCurNibble = 0;
 		}
 	}
-	//repaint from line c to line a
+	// Repaint from line c to line a
 	if (c != *a || icn != iCurNibble || sel != bSelected)
 	{
 		if (bSelected)
@@ -954,7 +955,7 @@ void HexEditorWindow::character(char ch)
 			swap(iCurByte, iEndByte);
 		DataArray.RemoveAt(iCurByte + 1, iEndByte - iCurByte);//Remove extraneous data
 		DataArray[iCurByte] = 0;//Will overwrite below
-		bSelected = FALSE;//Deselect
+		bSelected = false; // Deselect
 		resize_window();//Redraw stuff
 	}
 	else if (bInsertMode && iCurNibble == 0 || iCurByte == DataArray.GetLength())
@@ -2540,12 +2541,12 @@ int HexEditorWindow::lbuttonup (int xPos, int yPos)
 {
 	// Kill timer.
 	kill_scroll_timers();
-	KillTimer (hwnd, MOUSE_OP_DELAY_TIMER_ID);
+	KillTimer(hwnd, MOUSE_OP_DELAY_TIMER_ID);
 	bMouseOpDelayTimerSet = FALSE;
 	// Release mouse.
 	if (GetCapture() != hwnd)
 		return 0;
-	ReleaseCapture ();
+	ReleaseCapture();
 
 	if (bSelecting)
 	{
@@ -2578,29 +2579,29 @@ int HexEditorWindow::lbuttonup (int xPos, int yPos)
 			break;
 		}
 
-		SetCursor( LoadCursor( NULL, IDC_IBEAM ) );
-		if(!bSelected){
-			int a = iCurByte/iBytesPerLine;
-			int b = new_pos/iBytesPerLine;
+		SetCursor(LoadCursor(NULL, IDC_IBEAM));
+		if (!bSelected)
+		{
+			int a = iCurByte / iBytesPerLine;
+			int b = new_pos / iBytesPerLine;
 			iCurByte = new_pos;
-			//if(a!=b)repaint(b);
-			repaint(a,b);
+			repaint(a, b);
 		}
-		else{
-			int a = iStartOfSelection/iBytesPerLine;
-			int b = iEndOfSelection/iBytesPerLine;
-			if(a>b)swap(a,b);
-			bSelected = FALSE;
+		else
+		{
+			int a = iStartOfSelection / iBytesPerLine;
+			int b = iEndOfSelection / iBytesPerLine;
+			if (a > b)
+				swap(a, b);
+			bSelected = false;
 			iCurByte = new_pos;
-			int c = iCurByte/iBytesPerLine;
-			if(c<a||c>b)repaint(c);
-			repaint(a,b);
+			int c = iCurByte / iBytesPerLine;
+			if (c < a || c > b)
+				repaint(c);
+			repaint(a, b);
 		}
 	}
-
-	//dragging = false;
-
-	bSelecting = FALSE;
+	bSelecting = false;
 	set_caret_pos();
 
 	return 0;
@@ -2630,7 +2631,7 @@ int HexEditorWindow::mousemove(int xPos, int yPos)
 				new_pos = lastbyte;
 			if (iEndOfSelection != new_pos)
 			{
-				bSelected = TRUE;
+				bSelected = true;
 				int oeos = iEndOfSelection;
 				iEndOfSelection = new_pos;
 				repaint(oeos / iBytesPerLine, new_pos / iBytesPerLine);
@@ -2708,14 +2709,14 @@ int HexEditorWindow::lbuttondown(int nFlags, int xPos, int yPos)
 				new_pos--;
 			if (new_pos < length)
 			{
-				bSelecting = TRUE;
+				bSelecting = true;
 				if (iEndOfSelection != new_pos)
 				{
 					const int oeos = iEndOfSelection;
 					iEndOfSelection = new_pos;
 					if (!bSelected)
 					{
-						bSelected = TRUE;
+						bSelected = true;
 						iStartOfSelection = iCurByte;
 					}
 					repaint(oeos / iBytesPerLine, new_pos / iBytesPerLine);
@@ -3233,12 +3234,8 @@ int HexEditorWindow::CMD_new(const char *title)
 	Drive = 0;
 
 	bFileNeverSaved = true;
-	bSelected = FALSE;
-//Pabs replaced bLButtonIsDown with bSelecting & inserted
-	//bMoving = FALSE;
-	bSelecting = FALSE;
-	//bDroppedHere = FALSE;
-//end
+	bSelected = false;
+	bSelecting = false;
 	iFileChanged = FALSE;
 	bFilestatusChanged = true;
 	iVscrollMax = 0;
@@ -3791,7 +3788,7 @@ void HexEditorWindow::CMD_select_all()
 {
 	if (DataArray.GetLength() <= 0)
 		return;
-	bSelected = TRUE;
+	bSelected = true;
 	iStartOfSelection = 0;
 	iEndOfSelection = DataArray.GetUpperBound();
 	adjust_view_for_selection();
@@ -4038,7 +4035,7 @@ void HexEditorWindow::start_mouse_operation()
 		if (r == DRAGDROP_S_DROP && (dwEffect & DROPEFFECT_MOVE) && dragging)
 		{
 			DataArray.RemoveAt(iStartOfSelSetting, iEndOfSelSetting - iStartOfSelSetting + 1);
-			bSelected = FALSE;
+			bSelected = false;
 			iFileChanged = TRUE;
 			bFilestatusChanged = true;
 			iCurByte = iStartOfSelSetting;
@@ -4062,7 +4059,7 @@ void HexEditorWindow::start_mouse_operation()
 			lbd_pos = 0;
 		iStartOfSelection = lbd_pos;
 		iEndOfSelection = old_pos;
-		bSelected = bSelecting = TRUE;
+		bSelected = bSelecting = true;
 		repaint();
 	}
 	/*else
@@ -4200,7 +4197,7 @@ void HexEditorWindow::CMD_goto_bookmark(int i)
 	{
 		iCurByte = pbmkList[i].offset;
 		iCurNibble = 0;
-		bSelected = FALSE;
+		bSelected = false;
 		resize_window();
 		adjust_vscrollbar();
 	}
@@ -4512,7 +4509,7 @@ void HexEditorWindow::CMD_GotoDllExports()
 	ULONG ulOffset, ulSize;
 	if (GetDllExportNames(filename, &ulOffset, &ulSize))
 	{
-		bSelected = TRUE;
+		bSelected = true;
 		iStartOfSelection = (int)ulOffset;
 		iEndOfSelection = (int)(ulOffset + ulSize - 1);
 		adjust_view_for_selection();
@@ -4525,7 +4522,7 @@ void HexEditorWindow::CMD_GotoDllImports()
 	ULONG ulOffset, ulSize;
 	if (GetDllImportNames(filename, &ulOffset, &ulSize))
 	{
-		bSelected = TRUE;
+		bSelected = true;
 		iStartOfSelection = (int)ulOffset;
 		iEndOfSelection = (int)(ulOffset + ulSize - 1);
 		adjust_view_for_selection();
@@ -4700,7 +4697,7 @@ void HexEditorWindow::CMD_findnext()
 			if (i != -1)
 			{
 				iCurByte += i + 1;
-				bSelected = TRUE;
+				bSelected = true;
 				iStartOfSelection = iCurByte;
 				iEndOfSelection = iCurByte + destlen - 1;
 				adjust_view_for_selection();
@@ -4786,7 +4783,7 @@ void HexEditorWindow::CMD_findprev()
 			if (i != -1)
 			{
 				iCurByte = i;
-				bSelected = TRUE;
+				bSelected = true;
 				iStartOfSelection = iCurByte;
 				iEndOfSelection = iCurByte + destlen - 1;
 				adjust_view_for_selection();
@@ -4964,7 +4961,7 @@ BOOL HexEditorWindow::select_next_diff(BOOL bFromStart)
 		iCurByte = i;
 		iStartOfSelection = i;
 		iEndOfSelection = j - 1;
-		bSelected = TRUE;
+		bSelected = true;
 		adjust_view_for_selection();
 		repaint();
 		synch_sibling(TRUE);
@@ -4994,7 +4991,7 @@ BOOL HexEditorWindow::select_prev_diff(BOOL bFromEnd)
 	{
 		iStartOfSelection = iCurByte = j + 1;
 		iEndOfSelection = i;
-		bSelected = TRUE;
+		bSelected = true;
 		adjust_view_for_selection();
 		repaint();
 		synch_sibling(TRUE);
@@ -5076,7 +5073,7 @@ void HexEditorWindow::CMD_revert()
 					iFileChanged = FALSE;
 					bFilestatusChanged = true;
 					bFileNeverSaved = false;
-					bSelected = FALSE;
+					bSelected = false;
 					resize_window();
 				}
 			}
@@ -5423,7 +5420,7 @@ void HexEditorWindow::CMD_open_hexdump()
 		iFileChanged =
 			iVscrollMax = iVscrollPos = iHscrollMax = iHscrollPos =
 			iCurByte = iCurNibble = 0;
-		bSelected = FALSE;
+		bSelected = false;
 		bFileNeverSaved = true;
 		bFilestatusChanged = true;
 		// If read-only mode on opening is enabled:
@@ -5512,7 +5509,7 @@ void HexEditorWindow::status_bar_click(bool left)
 						iCurNibble = 1;
 						iCurByte = iGetEndOfSelection();
 					}
-					bSelected = FALSE;
+					bSelected = false;
 					repaint();
 				}
 				else
@@ -5958,7 +5955,7 @@ void HexEditorWindow::CMD_move_copy(int iMove1stEnd, int iMove2ndEndorLen, bool 
 		}
 		else
 		{
-			bSelected = FALSE;
+			bSelected = false;
 			iCurByte = iStartOfSelection + dist;
 		}//If the above is not true deselect - this may change when multiple selections are allowed
 	}
@@ -5990,7 +5987,7 @@ int HexEditorWindow::CMD_setselection(int iSelStart, int iSelEnd) // Mike Funduc
 	{
 		iStartOfSelection = iSelStart;
 		iEndOfSelection = iSelEnd;
-		bSelected = TRUE;
+		bSelected = true;
 		adjust_view_for_selection();
 		repaint();
 		return 1;

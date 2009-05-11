@@ -100,7 +100,7 @@ int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 	if (j != -1)
 	{
 		// NEW: Select found interval.
-		bSelected = TRUE;
+		bSelected = true;
 		iStartOfSelection = iCurByte = i;
 		iEndOfSelection = iStartOfSelection + destlen - 1;
 		done = 1;
@@ -130,7 +130,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 			MessageBox(hDlg, couldNotDelete, MB_ICONERROR);
 			return FALSE;
 		}
-		bSelected = FALSE;
+		bSelected = false;
 		iCurByte = iStartOfSelection;
 	}
 	else if (bPasteAsText)

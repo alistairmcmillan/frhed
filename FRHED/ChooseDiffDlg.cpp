@@ -229,7 +229,7 @@ BOOL ChooseDiffDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM)
 				iStartOfSelection += iCurByte;
 				iEndOfSelection += iCurByte;
 				iCurByte = iStartOfSelection;
-				bSelected = TRUE;
+				bSelected = true;
 				adjust_view_for_selection();
 				repaint();
 			}

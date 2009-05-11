@@ -131,7 +131,7 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 					if (i != -1)
 					{
 						// Select found interval.
-						bSelected = TRUE;
+						bSelected = true;
 						iStartOfSelection = iCurByte;
 						iEndOfSelection = iCurByte + destlen - 1;
 						adjust_view_for_selection();

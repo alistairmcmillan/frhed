@@ -314,7 +314,8 @@ protected:
 	bool bInsertMode; /**< Editing mode is in insert-mode? */
 	bool bFileNeverSaved;
 	SimpleArray<BYTE> DataArray;
-	int bLButtonDown, bSelecting, iLBDownX, iLBDownY;
+	int bSelecting; /**< Is user selecting bytes/text? */
+	int iLBDownX, iLBDownY;
 	int cxChar, cxCaps, cyChar, cxClient, cyClient, cxBuffer, cyBuffer, iNumlines;
 	int iByteSpace, iCharSpace;
 	TCHAR filename[_MAX_PATH];

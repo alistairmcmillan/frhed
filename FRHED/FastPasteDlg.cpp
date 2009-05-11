@@ -159,7 +159,7 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 			iCurByte = iGetStartOfSelection();
 			int iEndByte = iGetEndOfSelection();
 			DataArray.RemoveAt(iCurByte, iEndByte - iCurByte + 1);//Remove extraneous data
-			bSelected = FALSE;//Deselect
+			bSelected = false; // Deselect
 		}
 		int i = iCurByte;
 		for (int k = 0 ; k < iPasteTimes ; k++)

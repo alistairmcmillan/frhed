@@ -81,7 +81,7 @@ public:
 		int iVscrollPos;
 		int iHscrollMax;
 		int iHscrollPos;
-		int bSelected;
+		bool bSelected;
 		int iStartOfSelection;
 		int iEndOfSelection;
 	};
