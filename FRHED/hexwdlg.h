@@ -315,12 +315,16 @@ private:
 	BOOL Apply(HWND);
 };
 
+/**
+ * @brief A dialog for editing data as decimal numbers.
+ */
 class EnterDecimalValueDlg : public HexEditorWindow
 {
 public:
 	enum { IDD = IDD_DECIMALDIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-	static int iDecValDlgSize;
+	static int iDecValDlgSize; /**< Value length (Byte/Word/DWord). */
+	static bool bSigned; /**< Edit value as signed value? */
 private:
 	BOOL OnInitDialog(HWND);
 	BOOL Apply(HWND);

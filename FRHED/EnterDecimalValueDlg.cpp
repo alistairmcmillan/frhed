@@ -28,8 +28,10 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "LangString.h"
+#include "offset.h"
 
 int EnterDecimalValueDlg::iDecValDlgSize = 1;
+bool EnterDecimalValueDlg::bSigned = false;
 
 /**
  * @brief Initialize the dialog.
@@ -38,7 +40,9 @@ int EnterDecimalValueDlg::iDecValDlgSize = 1;
  */
 BOOL EnterDecimalValueDlg::OnInitDialog(HWND hDlg)
 {
-	int iDecValDlgValue = 0;
+	// Handle value as unsigned, convert to signed (if needed) when sending
+	// the value to GUI.
+	UINT iDecValDlgValue = 0;
 	if (iCurByte >= 0 && iCurByte < DataArray.GetLength())
 	{
 		int t = DataArray.GetLength() - iCurByte;
@@ -54,7 +58,7 @@ BOOL EnterDecimalValueDlg::OnInitDialog(HWND hDlg)
 			iDecValDlgValue = (int)DataArray[iCurByte];
 	}
 	TCHAR buf[16] = {0};
-	SetDlgItemInt(hDlg, IDC_DECIMAL_VALUE, iDecValDlgValue, TRUE);
+	SetDlgItemInt(hDlg, IDC_DECIMAL_VALUE, iDecValDlgValue, bSigned ? TRUE : FALSE);
 	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iCurByte);
 	SetDlgItemText(hDlg, IDC_DECIMAL_OFFSET, buf);
 	SetDlgItemInt(hDlg, IDC_DECIMAL_TIMES, 1, TRUE);
@@ -79,8 +83,8 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 		1;
 	TCHAR buf[16] = {0};
 	BOOL translated;
-	int iDecValDlgValue = GetDlgItemInt(hDlg, IDC_DECIMAL_VALUE, &translated,
-			TRUE);
+	UINT iDecValDlgValue = GetDlgItemInt(hDlg, IDC_DECIMAL_VALUE, &translated,
+			bSigned ? TRUE : FALSE);
 	if (!translated)
 	{
 		LangString notRecognized(IDS_DECI_UNKNOWN);
@@ -89,8 +93,7 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 	}
 	int iDecValDlgOffset;
 	if (GetDlgItemText(hDlg, IDC_DECIMAL_OFFSET, buf, 16) &&
-		_stscanf(buf, _T("%d"), &iDecValDlgOffset) == 0 && 
-		_stscanf(buf, _T("x%x"), &iDecValDlgOffset) == 0)
+		!offset_parse(buf, iDecValDlgOffset))
 	{
 		LangString app(IDS_APPNAME);
 		LangString offsetErr(IDS_OFFSET_ERROR);

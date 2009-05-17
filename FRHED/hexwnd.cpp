@@ -3200,6 +3200,7 @@ void HexEditorWindow::CMD_edit_paste()
 // On "enter decimal value" command.
 void HexEditorWindow::CMD_edit_enterdecimalvalue()
 {
+	EnterDecimalValueDlg::bSigned = !bUnsignedView;
 	static_cast<dialog<EnterDecimalValueDlg>*>(this)->DoModal(hwnd);
 }
 
