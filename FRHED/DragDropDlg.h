@@ -30,15 +30,17 @@
 
 /**
  * @brief A dialog for Drag & Drop.
+ * This dialog is shown when user d&d data (not file) from another application
+ * to Frhed view. User needs to select the format of the d&d'ed data.
  */
 class DragDropDlg
 {
 public:
-	enum { IDD = IDD_DRAGDROP };
+	enum { IDD = IDD_DRAG_DROP };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 
-	DWORD allowable_effects;
-	bool effect;
+	DWORD allowable_effects; /**< Allowed operations bitmask. */
+	bool effect; /**< Copy (true) or move (false) the data from other app? */
 	UINT numformatetcs;
 	FORMATETC *formatetcs;
 	UINT numformats;
