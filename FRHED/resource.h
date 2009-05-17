@@ -408,7 +408,7 @@
 #define IDS_FILL_ZERO_SIZE_STR          10337
 #define IDS_FILL_TOO_MANY_BYTES         10338
 #define IDS_CM_NEGATIVE_OFFSET          10352
-#define IDS_CM_INVALID_DATA             10353
+#define IDS_CM_INVALID_TARGET           10353
 #define IDS_CM_ZERO_LEN                 10354
 #define IDS_CM_INVALID_BLOCK            10355
 #define IDS_CM_NOT_MOVED                10356

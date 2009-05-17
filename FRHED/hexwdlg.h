@@ -302,7 +302,8 @@ private:
 };
 
 /**
- * @brief A dialog for Moving bytes.
+ * @brief A dialog for Moving and copying bytes.
+ * This dialog allows user to move and copy bytes inside the file.
  */
 class MoveCopyDlg : public HexEditorWindow
 {
@@ -311,6 +312,9 @@ public:
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 private:
 	BOOL OnInitDialog(HWND);
+	bool ReadStartOffset(HWND hDlg, int & value);
+	bool ReadEndOffset(HWND hDlg, int & value);
+	bool ReadTargetOffset(HWND hDlg, int & value);
 	BOOL OnCommand(HWND, WPARAM, LPARAM);
 	BOOL Apply(HWND);
 };

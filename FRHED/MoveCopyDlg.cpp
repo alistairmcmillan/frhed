@@ -29,6 +29,7 @@
 #include "hexwdlg.h"
 #include "LangArray.h"
 #include "LangString.h"
+#include "offset.h"
 
 /**
  * @brief Initialize the dialog.
@@ -54,40 +55,121 @@ BOOL MoveCopyDlg::OnInitDialog(HWND hw)
 	return TRUE;
 }
 
-BOOL MoveCopyDlg::Apply(HWND hw)
+/**
+ * @brief Read start offset value from the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [out] value Value read from the dialog.
+ * @return true if the value was read, false if value could not be read.
+ */
+bool MoveCopyDlg::ReadStartOffset(HWND hDlg, int & value)
 {
 	TCHAR buf[30] = {0};
-	const int dlgitems[3] = { IDC_1STOFFSET, IDC_2NDDELIM, IDC_MOVEMENT };
-	const int check[3] = { 0, IDC_LEN, IDC_FORWARD };
-	int vals[3];
-	for (int n = 0 ; n < 3; n++)
+	HWND cntrl = GetDlgItem(hDlg, IDC_1STOFFSET);
+	GetWindowText(cntrl, buf, RTL_NUMBER_OF(buf));
+
+	if (buf[0] == '-')
 	{
-		HWND cntrl = GetDlgItem(hw, dlgitems[n]);
-		GetWindowText(cntrl, buf, RTL_NUMBER_OF(buf));
-		int i = 0;
-		if (n && buf[i] == '-')
-		{
-			if (!IsDlgButtonChecked(hw, check[n]))
-			{
-				LangString negativeOffset(IDS_CM_NEGATIVE_OFFSET);
-				MessageBox(hw, negativeOffset, MB_ICONERROR);
-				return FALSE;
-			}
-			// Relative jump. Read offset from next character on.
-			i++;
-		}
-		if (_stscanf(&buf[i], _T("x%x"), &vals[n]) == 0 &&
-			_stscanf(&buf[i], _T("%d"), &vals[n]) == 0)
-		{
-			// No fields assigned: badly formed number.
-			TCHAR msg[80] = {0};
-			_sntprintf(msg, RTL_NUMBER_OF(msg) - 1, GetLangString(IDS_CM_INVALID_DATA), n + 1);
-			MessageBox(hw, msg, MB_ICONERROR);
-			return FALSE;
-		}
-		if (buf[0] == '-')
-			vals[n] = -vals[n]; //Negate
+		LangString negativeOffset(IDS_CM_NEGATIVE_OFFSET);
+		MessageBox(hDlg, negativeOffset, MB_ICONERROR);
+		return false;
 	}
+
+	if (!offset_parse(&buf[0], value))
+	{
+		LangString startOffsetErr(IDS_OFFSET_START_ERROR);
+		MessageBox(hDlg, startOffsetErr, MB_ICONERROR);
+		return false;
+	}
+	return true;
+}
+
+/**
+ * @brief Read end offset value from the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [out] value Value read from the dialog.
+ * @return true if the value was read, false if value could not be read.
+ */
+bool MoveCopyDlg::ReadEndOffset(HWND hDlg, int & value)
+{
+	TCHAR buf[30] = {0};
+	HWND cntrl = GetDlgItem(hDlg, IDC_2NDDELIM);
+	GetWindowText(cntrl, buf, RTL_NUMBER_OF(buf));
+	int i = 0;
+	if (buf[i] == '-')
+	{
+		if (!IsDlgButtonChecked(hDlg, IDC_LEN))
+		{
+			LangString negativeOffset(IDS_CM_NEGATIVE_OFFSET);
+			MessageBox(hDlg, negativeOffset, MB_ICONERROR);
+			return false;
+		}
+		// Relative jump. Read offset from next character on.
+		i++;
+	}
+	
+	// Skip the '-' if present
+	if (!offset_parse(&buf[i], value))
+	{
+		LangString endOffsetErr(IDS_OFFSET_END_ERROR);
+		MessageBox(hDlg, endOffsetErr, MB_ICONERROR);
+		return false;
+	}
+	if (buf[0] == '-')
+		value = -value; // Negate
+	return true;
+}
+
+/**
+ * @brief Read target offset value from the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [out] value Value read from the dialog.
+ * @return true if the value was read, false if value could not be read.
+ */
+bool MoveCopyDlg::ReadTargetOffset(HWND hDlg, int & value)
+{
+	TCHAR buf[30] = {0};
+	HWND cntrl = GetDlgItem(hDlg, IDC_MOVEMENT);
+	GetWindowText(cntrl, buf, RTL_NUMBER_OF(buf));
+	int i = 0;
+	if (buf[i] == '-')
+	{
+		if (!IsDlgButtonChecked(hDlg, IDC_FORWARD))
+		{
+			LangString negativeOffset(IDS_CM_NEGATIVE_OFFSET);
+			MessageBox(hDlg, negativeOffset, MB_ICONERROR);
+			return false;
+		}
+		// Relative jump. Read offset from next character on.
+		i++;
+	}
+	
+	// Skip the '-' if present
+	if (!offset_parse(&buf[i], value))
+	{
+		LangString endOffsetErr(IDS_CM_INVALID_TARGET);
+		MessageBox(hDlg, endOffsetErr, MB_ICONERROR);
+		return false;
+	}
+	if (buf[0] == '-')
+		value = -value; // Negate
+	return true;
+}
+
+/**
+ * @brief Apply the copy/move of the data.
+ * @param [in] hDlg Handle to the dialog.
+ * @return TRUE if operation succeeded, FALSE otherwise.
+ */
+BOOL MoveCopyDlg::Apply(HWND hw)
+{
+	int vals[3];
+	if (!ReadStartOffset(hw, vals[0]))
+		return FALSE;
+	if (!ReadEndOffset(hw, vals[1]))
+		return FALSE;
+	if (!ReadTargetOffset(hw, vals[2]))
+		return FALSE;
+	
 	int clen = DataArray.GetLength();
 	int iMove1stEnd = vals[0];
 	int iMove2ndEndorLen = vals[1];
@@ -97,7 +179,7 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 		{
 			LangString zeroLen(IDS_CM_ZERO_LEN);
 			MessageBox(hw, zeroLen, MB_OK | MB_ICONERROR);
-			return 0;
+			return FALSE;
 		}
 		if (iMove2ndEndorLen > 0)
 			iMove2ndEndorLen--;
