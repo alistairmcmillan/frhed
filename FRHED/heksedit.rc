@@ -896,10 +896,10 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP |
 CAPTION "Go to Track"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "Drive Information:",-1,4,4,168,12
+    LTEXT           "Drive Information:",IDC_STATIC,4,4,168,12
     EDITTEXT        IDC_DRIVE_INFO,4,20,172,80,ES_MULTILINE | ES_AUTOHSCROLL | 
                     ES_READONLY
-    LTEXT           "&Go to track:",-1,4,104,38,8
+    LTEXT           "&Go to track:",IDC_STATIC,4,104,38,8
     EDITTEXT        IDC_DRIVE_TRACK,4,114,100,13,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,184,8,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,184,26,50,14
