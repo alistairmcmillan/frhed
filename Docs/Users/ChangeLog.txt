@@ -4,6 +4,9 @@ to Subversion revision numbers (rXXXXX).
 
 For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 
+Frhed 1.5.4
+  Improve Drag&Drop-dialog layout (r638)
+
 Frhed 1.5.3 -2009-05-05 (r629)
   Make bookmark indicator frame a bit wider in hex view (r596)
   Make bookmark indicator couple of pixels taller (r606)
