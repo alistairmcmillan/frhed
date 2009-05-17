@@ -269,7 +269,7 @@ public:
 	void set_caret_pos();
 	void print_text(HDC hdc, int x, int y, TCHAR *pch, int cch);
 	virtual HRESULT STDMETHODCALLTYPE ResolveIt(LPCTSTR lpszLinkFile, LPTSTR lpszPath);
-	void OnHelp(HWND hwnd);
+	static void OnHelp(HWND hwnd);
 
 	static void LoadStringTable();
 	static void FreeStringTable();

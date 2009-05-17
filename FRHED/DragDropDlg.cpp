@@ -226,6 +226,10 @@ INT_PTR DragDropDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 	case WM_COMMAND:
 		return OnCommand(hDlg, wParam, lParam);
+
+	case WM_HELP:
+		HexEditorWindow::OnHelp(hDlg);
+		break;
 	}
 	return FALSE;
 }
