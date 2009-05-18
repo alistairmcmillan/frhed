@@ -175,6 +175,9 @@ class FindDlg : public HexEditorWindow
 public:
 	enum { IDD = IDD_FINDDIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
+private:
+	BOOL OnInitDialog(HWND);
+	BOOL OnCommand(HWND, WPARAM, LPARAM);
 };
 
 /**
