@@ -1072,6 +1072,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="FindCtxt.cpp">
+			</File>
+			<File
 				RelativePath="FindDlg.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -2701,6 +2704,9 @@
 			</File>
 			<File
 				RelativePath="DllProxies.h">
+			</File>
+			<File
+				RelativePath="FindCtxt.h">
 			</File>
 			<File
 				RelativePath="FindUtil.h">

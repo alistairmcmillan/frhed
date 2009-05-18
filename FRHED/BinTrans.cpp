@@ -33,7 +33,7 @@
 // Return: Length of resulting string.
 // ppd = pointer to pointer to result, must be delete[]-ed later.
 // If the input string was empty, no translated array is created and zero is returned.
-int create_bc_translation(TCHAR **ppd, TCHAR *src, int srclen, int charset, int binarymode)
+int create_bc_translation(TCHAR **ppd, LPCTSTR src, int srclen, int charset, int binarymode)
 {
 	int destlen = Text2BinTranslator::iLengthOfTransToBin(src, srclen);
 	if (destlen > 0)
@@ -126,7 +126,7 @@ int Text2BinTranslator::iBytes2BytecodeDestLen(TCHAR* src, int srclen)
  * @param [in] len Lengt of the string.
  * @return 0 if no  bytecode, lenght of the bytecode (1/2/4/8) else.
  */
-int Text2BinTranslator::iIsBytecode(TCHAR* src, int len)
+int Text2BinTranslator::iIsBytecode(LPCTSTR src, int len)
 {
 	if (len < 5)
 		return 0; // Too short to be a bytecode
@@ -200,7 +200,7 @@ int Text2BinTranslator::iIsBytecode(TCHAR* src, int len)
 // Get value of *one* bytecode token.
 // Return: value of code.
 // bytecode must be checked before!!
-int Text2BinTranslator::iTranslateOneBytecode(TCHAR* dest, TCHAR* src, int srclen, int binmode)
+int Text2BinTranslator::iTranslateOneBytecode(TCHAR* dest, LPCTSTR src, int srclen, int binmode)
 {
 	int i, k = 0;
 	TCHAR buf[50] = {0};
@@ -313,7 +313,7 @@ int Text2BinTranslator::iTranslateOneBytecode(TCHAR* dest, TCHAR* src, int srcle
 
 //-------------------------------------------------------------------
 // Get length of translated array of bytes from text.
-int Text2BinTranslator::iLengthOfTransToBin(TCHAR* src, int srclen )
+int Text2BinTranslator::iLengthOfTransToBin(LPCTSTR src, int srclen )
 {
 	int i, destlen = 0, l, k;
 	for (i = 0; i < srclen; i++)
@@ -367,7 +367,7 @@ int Text2BinTranslator::iLengthOfTransToBin(TCHAR* src, int srclen )
 
 //-------------------------------------------------------------------
 // dest must be set to right length before calling.
-int Text2BinTranslator::iCreateBcTranslation(TCHAR* dest, TCHAR* src, int srclen, int charmode, int binmode)
+int Text2BinTranslator::iCreateBcTranslation(TCHAR* dest, LPCTSTR src, int srclen, int charmode, int binmode)
 {
 	int i, di = 0, bclen;
 	for (i = 0; i < srclen; i++)

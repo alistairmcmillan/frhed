@@ -175,11 +175,6 @@ class FindDlg : public HexEditorWindow
 public:
 	enum { IDD = IDD_FINDDIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-	static bool bFindDlgMatchCase; /**< Is the search case-sensitive? */
-	static int iFindDlgDirection;
-	static bool bFindDlgUnicode;
-	static int iFindDlgBufLen;
-	static TCHAR *pcFindDlgBuffer;
 };
 
 /**

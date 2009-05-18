@@ -28,7 +28,7 @@
 
 #include "Simparr.h"
 
-int create_bc_translation(TCHAR** ppd, TCHAR* src, int srclen, int charset, int binarymode);
+int create_bc_translation(TCHAR** ppd, LPCTSTR src, int srclen, int charset, int binarymode);
 
 /**
  * @brief A class translating between text export and binary data.
@@ -38,11 +38,11 @@ class Text2BinTranslator : public SimpleString
 public:
 	int bCompareBin(Text2BinTranslator& tr2, int charmode, int binmode);
 	Text2BinTranslator(TCHAR* ps);
-	static int iIsBytecode(TCHAR* src, int len);
+	static int iIsBytecode(LPCTSTR src, int len);
 	static int iBytes2BytecodeDestLen(TCHAR* src, int srclen);
-	static int iLengthOfTransToBin(TCHAR* src, int srclen);
-	static int iCreateBcTranslation(TCHAR* dest, TCHAR* src, int srclen, int charmode, int binmode);
-	static int iTranslateOneBytecode(TCHAR* dest, TCHAR* src, int srclen, int binmode);
+	static int iLengthOfTransToBin(LPCTSTR src, int srclen);
+	static int iCreateBcTranslation(TCHAR* dest, LPCTSTR src, int srclen, int charmode, int binmode);
+	static int iTranslateOneBytecode(TCHAR* dest, LPCTSTR src, int srclen, int binmode);
 	static int iFindBytePos(LPCTSTR src, TCHAR c);
 	static int iTranslateBytesToBC (TCHAR* pd, BYTE* src, int srclen);
 

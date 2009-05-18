@@ -73,6 +73,7 @@ enum EnteringMode { BYTES, CHARS };
 
 class hexfile_stream;
 class HexFile;
+class FindCtxt;
 
 interface CDropTarget;
 
@@ -296,7 +297,7 @@ protected:
 	static int iPasteTimes;
 	static int iPasteSkip;
 
-	int bOpenReadOnly;//Pabs inserted ", iPartialOpenLen, iPartialFileLen, bPartialStats"
+	int bOpenReadOnly; /**< Open files read-only. */
 	INT64 iPartialOffset, iPartialFileLen;
 	bool bPartialOpen; /**< Was file opened partially? */
 	int iPartialOpenLen; /**< Length of the partially opened block from file. */
@@ -332,6 +333,8 @@ protected:
 	void set_and_format_title();
 	void format_bit_string(TCHAR* buf, BYTE by);
 	void statusbar_chset_and_editmode();
+
+	FindCtxt *m_pFindCtxt;
 };
 
 void reverse_bytes(BYTE *, BYTE *);

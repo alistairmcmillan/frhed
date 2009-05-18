@@ -30,14 +30,7 @@
 #include "BinTrans.h"
 #include "FindUtil.h"
 #include "LangString.h"
-
-bool FindDlg::bFindDlgMatchCase = false;
-int FindDlg::iFindDlgDirection = 0;
-
-bool FindDlg::bFindDlgUnicode = false;
-int FindDlg::iFindDlgBufLen = 64 * 1024 - 1;
-
-TCHAR *FindDlg::pcFindDlgBuffer = (TCHAR *)LocalAlloc(LPTR, iFindDlgBufLen);
+#include "FindCtxt.h"
 
 INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 {
@@ -52,25 +45,30 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			int select_len = iGetEndOfSelection() - sel_start + 1;
 			// Get the length of the bytecode representation of the selection (including zero-byte at end).
 			int findlen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR *)&DataArray[sel_start], select_len);
-			if (findlen > iFindDlgBufLen)
+			if (findlen > FindCtxt::MAX_TEXT_LEN)
 			{
 				LangString largeSel(IDS_FIND_SEL_TOO_LARGE);
 				MessageBox(hDlg, largeSel, MB_ICONERROR);
 				EndDialog(hDlg, IDCANCEL);
 				return TRUE;
 			}
-			// Translate the selection into bytecode and write it into the edit box buffer.
-			Text2BinTranslator::iTranslateBytesToBC(pcFindDlgBuffer, &DataArray[sel_start], select_len);
+			// Translate the selection into bytecode and write it into the find text buffer.
+			int destLen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR *)&DataArray[sel_start], select_len);
+			TCHAR * tmpBuf = new TCHAR[destLen + 1];
+			ZeroMemory(tmpBuf, (destLen + 1) * sizeof(TCHAR));
+			Text2BinTranslator::iTranslateBytesToBC(tmpBuf, &DataArray[sel_start], select_len);
+			m_pFindCtxt->SetText(tmpBuf);
+			delete [] tmpBuf;
 		}
 		// Put inside block to allow using local variables to handle dialog data
 		{
-			SendDlgItemMessage(hDlg, IDC_FIND_TEXT, EM_SETLIMITTEXT, iFindDlgBufLen, 0);
-			SetDlgItemText(hDlg, IDC_FIND_TEXT, pcFindDlgBuffer);
+			SendDlgItemMessage(hDlg, IDC_FIND_TEXT, EM_SETLIMITTEXT, FindCtxt::MAX_TEXT_LEN, 0);
+			SetDlgItemText(hDlg, IDC_FIND_TEXT, m_pFindCtxt->GetText());
 			//GK16AUG2K
-			CheckDlgButton(hDlg, iFindDlgDirection == -1 ? IDC_FIND_UP : IDC_FIND_DOWN, BST_CHECKED);
-			const UINT matchCase = bFindDlgMatchCase ? BST_CHECKED : BST_UNCHECKED;
+			CheckDlgButton(hDlg, m_pFindCtxt->m_iDirection == -1 ? IDC_FIND_UP : IDC_FIND_DOWN, BST_CHECKED);
+			const UINT matchCase = m_pFindCtxt->m_bMatchCase ? BST_CHECKED : BST_UNCHECKED;
 			CheckDlgButton(hDlg, IDC_FIND_MATCHCASE, matchCase);
-			const UINT findUnicode = bFindDlgUnicode ? BST_CHECKED : BST_UNCHECKED;
+			const UINT findUnicode = m_pFindCtxt->m_bUnicode ? BST_CHECKED : BST_UNCHECKED;
 			CheckDlgButton(hDlg, IDC_FIND_UNICODE, findUnicode);
 		}
 		return TRUE;
@@ -80,28 +78,34 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 		switch (wParam)
 		{
 		case IDOK:
-			if (int srclen = GetDlgItemText(hDlg, IDC_FIND_TEXT, pcFindDlgBuffer, iFindDlgBufLen))
+		{
+			TCHAR * tmpBuf = new TCHAR[FindCtxt::MAX_TEXT_LEN + 1];
+			ZeroMemory(tmpBuf, (FindCtxt::MAX_TEXT_LEN + 1) * sizeof(TCHAR));
+			int srclen = GetDlgItemText(hDlg, IDC_FIND_TEXT, tmpBuf, FindCtxt::MAX_TEXT_LEN);
+			m_pFindCtxt->SetText(tmpBuf);
+			delete [] tmpBuf;
+			if (srclen)
 			{
 				UINT matchCase = IsDlgButtonChecked(hDlg, IDC_FIND_MATCHCASE);
-				bFindDlgMatchCase = matchCase == BST_CHECKED ? true : false;
+				m_pFindCtxt->m_bMatchCase = matchCase == BST_CHECKED ? true : false;
 				UINT findUnicode = IsDlgButtonChecked(hDlg, IDC_FIND_UNICODE);
-				bFindDlgUnicode = findUnicode == BST_CHECKED ? true : false;
-				iFindDlgDirection = IsDlgButtonChecked(hDlg, IDC_FIND_UP) ? -1 : 1;
+				m_pFindCtxt->m_bUnicode = findUnicode == BST_CHECKED ? true : false;
+				m_pFindCtxt->m_iDirection = IsDlgButtonChecked(hDlg, IDC_FIND_UP) ? -1 : 1;
 				// Copy text in Edit-Control. Return the number of characters
 				// in the Edit-control minus the zero byte at the end.
 				TCHAR *pcFindstring = 0;
 				int destlen;
-				if (bFindDlgUnicode)
+				if (m_pFindCtxt->m_bUnicode)
 				{
 					pcFindstring = new TCHAR[srclen * 2];
-					destlen = MultiByteToWideChar(CP_ACP, 0, pcFindDlgBuffer,
+					destlen = MultiByteToWideChar(CP_ACP, 0, m_pFindCtxt->GetText(),
 							srclen, (WCHAR *)pcFindstring, srclen) * 2;
 				}
 				else
 				{
 					// Create findstring.
 					destlen = create_bc_translation(&pcFindstring,
-							pcFindDlgBuffer, srclen, iCharacterSet,
+							m_pFindCtxt->GetText(), srclen, iCharacterSet,
 							iBinaryMode);
 				}
 				if (destlen)
@@ -109,11 +113,11 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 					int i;
 					SetCursor(LoadCursor(NULL, IDC_WAIT));
 					// Find forward.
-					if (iFindDlgDirection == 1)
+					if (m_pFindCtxt->m_iDirection == 1)
 					{
 						i = findutils_FindBytes((TCHAR *)&DataArray[iCurByte + 1],
 								DataArray.GetLength() - iCurByte - 1,
-								pcFindstring, destlen, 1, bFindDlgMatchCase);
+								pcFindstring, destlen, 1, m_pFindCtxt->m_bMatchCase);
 						if (i != -1)
 							iCurByte += i + 1;
 					}
@@ -122,7 +126,7 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 					{
 						i = findutils_FindBytes((TCHAR *)&DataArray[0],
 							min(iCurByte + (destlen - 1), DataArray.GetLength()),
-							pcFindstring, destlen, -1, bFindDlgMatchCase);
+							pcFindstring, destlen, -1, m_pFindCtxt->m_bMatchCase);
 						if (i != -1)
 							iCurByte = i;
 					}
@@ -156,6 +160,7 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 				LangString msg(IDS_FIND_EMPTY_STRING);
 				MessageBox(hDlg, msg, MB_ICONERROR);
 			}
+		}
 			// fall through
 		case IDCANCEL:
 			EndDialog(hDlg, wParam);

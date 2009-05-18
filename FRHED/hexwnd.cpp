@@ -48,6 +48,7 @@
 #include "HexFile.h"
 #include "FindUtil.h"
 #include "LangString.h"
+#include "FindCtxt.h"
 
 #include "idt.h"
 #include "ids.h"
@@ -186,6 +187,8 @@ HexEditorWindow::HexEditorWindow()
 	LangString untitled(IDS_UNTITLED);
 	_tcscpy(filename, untitled);
 	area = AREA_NONE;
+
+	m_pFindCtxt = new FindCtxt();
 }
 
 /**
@@ -200,6 +203,8 @@ HexEditorWindow::~HexEditorWindow()
 
 	for (int i = 0; i < iBmkCount; ++i)
 		free(pbmkList[i].name);
+
+	delete m_pFindCtxt;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2428,7 +2433,7 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 		// "Find next" and "Find previous" are allowed if the file is not empty,
 		// and there is a findstring OR there is a selection
 		// (which will be searched for).
-		return DataArray.GetLength() && (FindDlg::pcFindDlgBuffer || bSelected);
+		return DataArray.GetLength() && (m_pFindCtxt->HasText() || bSelected);
 	case IDM_EDIT_ENTERDECIMALVALUE:
 		// "Enter decimal value" is allowed if read-only is disabled, the file is not empty,
 		// the caret is on a byte and there is no selection going on.
@@ -4677,23 +4682,31 @@ void HexEditorWindow::CMD_findnext()
 		// if( pcFindDlgBuffer != NULL ) // Delete old buffer, if necessary.
 		//	delete [] pcFindDlgBuffer;
 		// pcFindDlgBuffer = new char[iFindDlgBufLen]; // Allocate new buffer.
-		Text2BinTranslator::iTranslateBytesToBC(FindDlg::pcFindDlgBuffer, &DataArray[sel_start], select_len ); // Translate the selection into bytecode and write it into the edit box buffer.
+		
+		// Translate the selection into bytecode and write it into the edit box buffer.
+		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR *)&DataArray[sel_start], select_len);
+		TCHAR * tmpBuf = new TCHAR[destLen + 1];
+		ZeroMemory(tmpBuf, (destLen + 1) * sizeof(TCHAR));
+		Text2BinTranslator::iTranslateBytesToBC(tmpBuf,
+				&DataArray[sel_start], select_len);
+		m_pFindCtxt->SetText(tmpBuf);
+		delete [] tmpBuf;
 	}
 
 	// Is there a findstring? (Initmenupopup actually filters this already).
-	if (FindDlg::pcFindDlgBuffer)
+	if (m_pFindCtxt->HasText())
 	{
 		// There is a findstring. Create its translation.
 		TCHAR *pcFindstring;
-		int srclen = _tcslen(FindDlg::pcFindDlgBuffer);
+		int srclen = _tcslen(m_pFindCtxt->GetText());
 		if (int destlen = create_bc_translation(&pcFindstring,
-			 FindDlg::pcFindDlgBuffer, srclen, iCharacterSet, iBinaryMode))
+				m_pFindCtxt->GetText(), srclen, iCharacterSet, iBinaryMode))
 		{
 			SetCursor(LoadCursor(NULL, IDC_WAIT));
 			int i = findutils_FindBytes((TCHAR *)&DataArray[iCurByte + 1],
 				DataArray.GetLength() - iCurByte - 1,
 				pcFindstring, destlen, 1,
-				FindDlg::bFindDlgMatchCase);
+				m_pFindCtxt->m_bMatchCase);
 			SetCursor(LoadCursor(NULL, IDC_ARROW));
 			if (i != -1)
 			{
@@ -4713,7 +4726,7 @@ void HexEditorWindow::CMD_findnext()
 		}
 		else
 		{
-			FindDlg::iFindDlgDirection = 1;
+			m_pFindCtxt->m_iDirection = 1;
 			CMD_find();
 		}
 	}
@@ -4760,16 +4773,21 @@ void HexEditorWindow::CMD_findprev()
 		// pcFindDlgBuffer = new char[iFindDlgBufLen];
 
 		// Translate the selection into bytecode and write it into the edit box buffer.
-		Text2BinTranslator::iTranslateBytesToBC(FindDlg::pcFindDlgBuffer, &DataArray[sel_start], select_len);
+		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR *)&DataArray[sel_start], select_len);
+		TCHAR *tmpBuf = new TCHAR[destLen + 1];
+		ZeroMemory(tmpBuf, (destLen + 1) * sizeof(TCHAR));
+		Text2BinTranslator::iTranslateBytesToBC(tmpBuf, &DataArray[sel_start], select_len);
+		m_pFindCtxt->SetText(tmpBuf);
+		delete [] tmpBuf;
 	}
 	// Is there a findstring? (Initmenupopup actually filters this already).
-	if (FindDlg::pcFindDlgBuffer)
+	if (m_pFindCtxt->HasText())
 	{
 		// There is a findstring. Create its translation.
 		TCHAR *pcFindstring;
-		int srclen = _tcslen(FindDlg::pcFindDlgBuffer);
+		int srclen = _tcslen(m_pFindCtxt->GetText());
 		if (int destlen = create_bc_translation(&pcFindstring,
-			FindDlg::pcFindDlgBuffer, srclen, iCharacterSet, iBinaryMode))
+			m_pFindCtxt->GetText(), srclen, iCharacterSet, iBinaryMode))
 		{
 			SetCursor(LoadCursor(NULL, IDC_WAIT));
 			// Search the array starting at index 0 to the current byte,
@@ -4779,7 +4797,7 @@ void HexEditorWindow::CMD_findprev()
 			// of the findstring in the file.
 			int i = findutils_FindBytes((TCHAR *)&DataArray[0],
 				min(iCurByte + (destlen - 1), DataArray.GetLength()),
-				pcFindstring, destlen, -1, FindDlg::bFindDlgMatchCase);
+				pcFindstring, destlen, -1, m_pFindCtxt->m_bMatchCase);
 			SetCursor(LoadCursor(NULL, IDC_ARROW));
 			if (i != -1)
 			{
@@ -4798,12 +4816,10 @@ void HexEditorWindow::CMD_findprev()
 			delete [] pcFindstring;
 		}
 		else
-//Pabs replaced message with CMD_find
 		{
-			FindDlg::iFindDlgDirection = -1;
+			m_pFindCtxt->m_iDirection = -1;
 			CMD_find();
 		}
-//end
 	}
 	else
 	{
@@ -5758,13 +5774,13 @@ void HexEditorWindow::status_bar_click(bool left)
 					{
 						if (bReadOnly)
 						{
-							bReadOnly = 0;
+							bReadOnly = FALSE;
 							bInsertMode = true;
 						}
 						else if (bInsertMode)
 							bInsertMode = false;
 						else
-							bReadOnly = 1;
+							bReadOnly = TRUE;
 					}
 				}
 				else //READ <- INS <- OVR <- READ...
@@ -5774,11 +5790,11 @@ void HexEditorWindow::status_bar_click(bool left)
 					{
 						if (bReadOnly)
 						{
-							bReadOnly = 0;
+							bReadOnly = FALSE;
 							bInsertMode= false;
 						}
 						else if (bInsertMode)
-							bReadOnly = 1;
+							bReadOnly = TRUE;
 						else
 							bInsertMode = true;
 					}
