@@ -673,12 +673,12 @@ END
 IDD_REVERSE_BYTES_DIALOG DIALOGEX 0, 0, 171, 89
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION |
     WS_SYSMENU
-CAPTION "Reverse bytes"
+CAPTION "Reverse Bytes"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "Offset of first byte involved: (prefix x for hex)",IDC_STATIC,7,7,150,8
+    LTEXT           "Offset of first byte: (prefix x for hex)",IDC_STATIC,7,7,150,8
     EDITTEXT        IDC_REVERSE_OFFSET,7,17,134,12,ES_AUTOHSCROLL
-    LTEXT           "Offset of last byte involved: (prefix x for hex)",IDC_STATIC,7,36,150,8
+    LTEXT           "Offset of last byte (prefix x for hex)",IDC_STATIC,7,36,150,8
     EDITTEXT        IDC_REVERSE_OFFSETEND,7,48,133,13,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,59,68,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,114,68,50,14
