@@ -189,7 +189,7 @@ public:
 	enum { IDD = IDD_REPLACEDIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 	int transl_text_to_binary(SimpleArray<TCHAR> &out);
-	static int transl_binary_to_text(TCHAR *, int);
+	static int transl_binary_to_text(const BYTE*, int);
 	int find_and_select_data(int finddir, bool case_sensitive);
 	int replace_selected_data(HWND);
 	void find_directed(HWND, int finddir);

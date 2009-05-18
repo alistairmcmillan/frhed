@@ -39,12 +39,12 @@ public:
 	int bCompareBin(Text2BinTranslator& tr2, int charmode, int binmode);
 	Text2BinTranslator(TCHAR* ps);
 	static int iIsBytecode(LPCTSTR src, int len);
-	static int iBytes2BytecodeDestLen(TCHAR* src, int srclen);
+	static int iBytes2BytecodeDestLen(const BYTE* src, int srclen);
 	static int iLengthOfTransToBin(LPCTSTR src, int srclen);
 	static int iCreateBcTranslation(TCHAR* dest, LPCTSTR src, int srclen, int charmode, int binmode);
 	static int iTranslateOneBytecode(TCHAR* dest, LPCTSTR src, int srclen, int binmode);
 	static int iFindBytePos(LPCTSTR src, TCHAR c);
-	static int iTranslateBytesToBC (TCHAR* pd, BYTE* src, int srclen);
+	static int iTranslateBytesToBC(TCHAR* pd, const BYTE* src, int srclen);
 
 private:
 	int GetTrans2Bin(SimpleArray<TCHAR>& sa, int charmode, int binmode);

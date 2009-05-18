@@ -3963,7 +3963,7 @@ void HexEditorWindow::start_mouse_operation()
 			{
 				//The special syntax
 				destlen = Text2BinTranslator::iBytes2BytecodeDestLen(
-						(TCHAR*) &DataArray[iStartOfSelSetting],
+						&DataArray[iStartOfSelSetting],
 						iEndOfSelSetting-iStartOfSelSetting + 1);
 				sm.hGlobal = GlobalAlloc(GHND | GMEM_DDESHARE, destlen);
 				if (sm.hGlobal)
@@ -4677,14 +4677,8 @@ void HexEditorWindow::CMD_findnext()
 			select_len = iEndOfSelection - iStartOfSelection + 1;
 		}
 
-		// iFindDlgLastLen = iFindDlgBufLen; // Remember old buffer length.
-		// iFindDlgBufLen = Text2BinTranslator::iBytes2BytecodeDestLen( (char*) &DataArray[sel_start], select_len ); // Get the length of the bytecode representation of the selection.
-		// if( pcFindDlgBuffer != NULL ) // Delete old buffer, if necessary.
-		//	delete [] pcFindDlgBuffer;
-		// pcFindDlgBuffer = new char[iFindDlgBufLen]; // Allocate new buffer.
-		
 		// Translate the selection into bytecode and write it into the edit box buffer.
-		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR *)&DataArray[sel_start], select_len);
+		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen(&DataArray[sel_start], select_len);
 		TCHAR * tmpBuf = new TCHAR[destLen + 1];
 		ZeroMemory(tmpBuf, (destLen + 1) * sizeof(TCHAR));
 		Text2BinTranslator::iTranslateBytesToBC(tmpBuf,
@@ -4759,21 +4753,8 @@ void HexEditorWindow::CMD_findprev()
 			select_len = iEndOfSelection - iStartOfSelection + 1;
 		}
 
-		// Remember old buffer length.
-		// iFindDlgLastLen = iFindDlgBufLen;
-
-		// Get the length of the bytecode representation of the selection.
-		// iFindDlgBufLen = Text2BinTranslator::iBytes2BytecodeDestLen( (char*) &DataArray[sel_start], select_len );
-
-		// Delete old buffer, if necessary.
-		// if( pcFindDlgBuffer != NULL )
-		//	delete [] pcFindDlgBuffer;
-
-		// Allocate new buffer.
-		// pcFindDlgBuffer = new char[iFindDlgBufLen];
-
 		// Translate the selection into bytecode and write it into the edit box buffer.
-		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR *)&DataArray[sel_start], select_len);
+		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen(&DataArray[sel_start], select_len);
 		TCHAR *tmpBuf = new TCHAR[destLen + 1];
 		ZeroMemory(tmpBuf, (destLen + 1) * sizeof(TCHAR));
 		Text2BinTranslator::iTranslateBytesToBC(tmpBuf, &DataArray[sel_start], select_len);

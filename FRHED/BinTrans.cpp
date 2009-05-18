@@ -101,7 +101,7 @@ int Text2BinTranslator::GetTrans2Bin(SimpleArray<TCHAR>& sa, int charmode, int b
  * @param [in] srclen How many chars to calculate.
  * @return Length of bytecode-string including zero-byte.
  */
-int Text2BinTranslator::iBytes2BytecodeDestLen(TCHAR* src, int srclen)
+int Text2BinTranslator::iBytes2BytecodeDestLen(const BYTE* src, int srclen)
 {
 	int destlen = 1;
 	for (int i = 0; i < srclen; i++)
@@ -436,10 +436,14 @@ int Text2BinTranslator::bCompareBin(Text2BinTranslator& tr2, int charmode, int b
 	return (sa1 == sa2);
 }
 
-//-------------------------------------------------------------------
-// Translate an array of bytes to a text string using special syntax.
-// Return: Length of string including zero-byte.
-int Text2BinTranslator::iTranslateBytesToBC (TCHAR* pd, BYTE* src, int srclen)
+/**
+ * @brief Translate an array of bytes to a text string using special syntax.
+ * @param [out] pd Buffer where string is written to.
+ * @param [in] src Source byte array.
+ * @param [in] srclen Length of the source byte array.
+ * @return Length of string including zero-byte.
+ */
+int Text2BinTranslator::iTranslateBytesToBC(TCHAR* pd, const BYTE* src, int srclen)
 {
 	int i, k = 0;
 	TCHAR buf[16] = {0};

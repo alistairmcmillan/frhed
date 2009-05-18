@@ -44,7 +44,7 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 			int sel_start = iGetStartOfSelection();
 			int select_len = iGetEndOfSelection() - sel_start + 1;
 			// Get the length of the bytecode representation of the selection (including zero-byte at end).
-			int findlen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR *)&DataArray[sel_start], select_len);
+			int findlen = Text2BinTranslator::iBytes2BytecodeDestLen(&DataArray[sel_start], select_len);
 			if (findlen > FindCtxt::MAX_TEXT_LEN)
 			{
 				LangString largeSel(IDS_FIND_SEL_TOO_LARGE);
@@ -53,7 +53,7 @@ INT_PTR FindDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 				return TRUE;
 			}
 			// Translate the selection into bytecode and write it into the find text buffer.
-			int destLen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR *)&DataArray[sel_start], select_len);
+			int destLen = Text2BinTranslator::iBytes2BytecodeDestLen(&DataArray[sel_start], select_len);
 			TCHAR * tmpBuf = new TCHAR[destLen + 1];
 			ZeroMemory(tmpBuf, (destLen + 1) * sizeof(TCHAR));
 			Text2BinTranslator::iTranslateBytesToBC(tmpBuf, &DataArray[sel_start], select_len);

@@ -53,7 +53,7 @@ int ReplaceDlg::transl_text_to_binary(SimpleArray<TCHAR> &out)
 //-------------------------------------------------------------------
 // Create a text representation of an array of bytes and save it in
 // a SimpleString object.
-int	ReplaceDlg::transl_binary_to_text(TCHAR *src, int len)
+int	ReplaceDlg::transl_binary_to_text(const BYTE *src, int len)
 {
 	// How long will the text representation of array of bytes be?
 	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen(src, len);
@@ -61,7 +61,7 @@ int	ReplaceDlg::transl_binary_to_text(TCHAR *src, int len)
 	strToReplaceData.ExpandToSize();
 	if (TCHAR *pd = strToReplaceData)
 	{
-		Text2BinTranslator::iTranslateBytesToBC(pd, (BYTE*) src, len);
+		Text2BinTranslator::iTranslateBytesToBC(pd, src, len);
 		return TRUE;
 	}
 	return FALSE;
@@ -253,7 +253,7 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		{
 			int sel_start = iGetStartOfSelection();
 			int select_len = iGetEndOfSelection() - sel_start + 1;
-			if (!transl_binary_to_text((TCHAR *)&DataArray[sel_start], select_len))
+			if (!transl_binary_to_text(&DataArray[sel_start], select_len))
 			{
 				LangString badSelect(IDS_REPL_BAD_SELECT);
 				MessageBox(hDlg, badSelect, MB_OK);

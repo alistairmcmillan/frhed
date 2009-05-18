@@ -108,7 +108,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 	}
 
 	// Transfer to cipboard.
-	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen((TCHAR*) &DataArray[iOffset], iNumberOfBytes);
+	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen(&DataArray[iOffset], iNumberOfBytes);
 	HGLOBAL hGlobal = GlobalAlloc(GHND, destlen);
 	if (hGlobal == 0)
 	{
