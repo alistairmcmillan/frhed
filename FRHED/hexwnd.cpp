@@ -6015,12 +6015,16 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 
 				HDC hdc = GetDC(hwnd);
 				HFONT hFontOld = (HFONT)SelectObject(hdc, hFont);
-				UINT cbData = GetOutlineTextMetrics (hdc, 0, NULL);
+				UINT cbData = GetOutlineTextMetrics(hdc, 0, NULL);
 				OUTLINETEXTMETRIC* otm = NULL;
 				if (cbData)
 				{
-					otm = (OUTLINETEXTMETRIC*)LocalAlloc(LPTR, cbData);
-					if(otm) GetOutlineTextMetrics(hdc, cbData, otm);
+					otm = (OUTLINETEXTMETRIC*) malloc(cbData);
+					if (otm)
+					{
+						ZeroMemory(otm, cbData);
+						GetOutlineTextMetrics(hdc, cbData, otm);
+					}
 				}
 				SelectObject(hdc, hFontOld);
 				ReleaseDC(hwnd,hdc);
@@ -6093,7 +6097,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 				if (FaceName && FaceName[0])
 					s << escapefilter << FaceName;
 				if (otm)
-					LocalFree(LocalHandle(otm));
+					free(otm);
 				else if(FaceName)
 					free(FaceName);
 				s <<
