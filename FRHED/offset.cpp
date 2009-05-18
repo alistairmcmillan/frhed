@@ -47,3 +47,25 @@ bool offset_parse(LPCTSTR str, int &offset)
 	offset = value;
 	return true;
 }
+
+/**
+ * @brief Parse 64-bit offset number from string.
+ * @param [in] str String to parse.
+ * @param [out] offset Number to return (parsed offset)
+ * @return true if parsing succeeded, false if failed.
+ */
+bool offset_parse64(LPCTSTR str, INT64 &offset)
+{
+	if (str == NULL || _tcslen(str) == 0)
+		return false;
+
+	INT64 value = 0;
+	if ((_stscanf(str, _T("x%llx"), &value) == 0) &&
+		(_stscanf(str, _T("%lld"), &value) == 0))
+	{
+		offset = value;
+		return false;
+	}
+	offset = value;
+	return true;
+}

@@ -29,6 +29,7 @@
 #include "hexwdlg.h"
 #include "LangArray.h"
 #include "LangString.h"
+#include "offset.h"
 
 int OpenPartiallyDlg::filehandle = 0;
 bool OpenPartiallyDlg::bShowFileStatsPL = false;
@@ -96,8 +97,7 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 		}
 	}
 	else if (GetDlgItemText(hDlg, IDC_OPENPARTIAL_OFFSET, buf, bufLen) &&
-		_stscanf(buf, _T("x%llx"), &iStartPL) == 0 &&
-		_stscanf(buf, _T("%lld"), &iStartPL) == 0)
+		!offset_parse64(buf, iStartPL))
 	{
 		LangString app(IDS_APPNAME);
 		LangString startOffsetErr(IDS_OFFSET_START_ERROR);

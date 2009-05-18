@@ -28,6 +28,7 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "LangString.h"
+#include "offset.h"
 
 /** Size of offset edit and buffer. */
 static const UINT EditLen = 16;
@@ -66,8 +67,7 @@ BOOL GoToDlg::Apply(HWND hDlg)
 	// For a relative jump, read offset from 2nd character on.
 	if (buffer[0] == '+' || buffer[0] == '-')
 		r = 1;
-	if (_stscanf(buffer + r, _T("x%x"), &offset) == 0 &&
-		_stscanf(buffer + r, _T("%d"), &offset) == 0)
+	if (!offset_parse(buffer + r, offset))
 	{
 		LangString offsetErr(IDS_OFFSET_ERROR);
 		MessageBox(hDlg, offsetErr, MB_ICONERROR);

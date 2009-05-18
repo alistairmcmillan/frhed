@@ -27,5 +27,6 @@
 #define _OFFSET_H_
 
 bool offset_parse(LPCTSTR str, int &offset);
+bool offset_parse64(LPCTSTR str, INT64 &offset);
 
 #endif _OFFSET_H_
