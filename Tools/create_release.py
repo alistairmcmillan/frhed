@@ -1,6 +1,6 @@
 #
 # The MIT License
-# Copyright (c) 2007-2008 Kimmo Varis
+# Copyright (c) 2007-2009 Kimmo Varis
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files
 # (the "Software"), to deal in the Software without restriction, including
@@ -135,9 +135,16 @@ def setup_translations():
     # Scripts must be run from the directory where they reside
     curdir = os.getcwd()
     os.chdir('Translations/Frhed')
-    call(['cscript', '/nologo', 'CreateMasterPotFile.vbs'])
-    call(['cscript', '/nologo', 'UpdatePoFilesFromPotFile.vbs'])
+    retval = call(['cscript', '/nologo', 'CreateMasterPotFile.vbs'])
+    if retval == 0:
+        retval = call(['cscript', '/nologo', 'UpdatePoFilesFromPotFile.vbs'])
     os.chdir(curdir)
+
+    if retval == 0:
+        return True
+    else:
+        print 'ERROR: Updating translations failed!'
+        return False
 
 def get_and_create_dist_folder(folder):
     """Formats a folder name for version-specific distribution folder
@@ -165,10 +172,16 @@ def svn_export(dist_src_folder):
 
     print 'Exporting sources to ' + dist_src_folder
     print 'Exporting from: ' + source_location
+    retval = 0
     if source_location == 'workspace':
-        call([svn_binary, 'export', '--non-interactive', '.', dist_src_folder])
+        retval = call([svn_binary, 'export', '--non-interactive', '.', dist_src_folder])
     else:
-        call([svn_binary, 'export', '--non-interactive', source_location, dist_src_folder]) 
+        retval = call([svn_binary, 'export', '--non-interactive', source_location, dist_src_folder])
+    if retval == 0:
+        return True
+    else:
+        print 'Error exporting sources! SVN return value: ' + retval
+        return False
 
 def build_libraries():
     """Builds library targets: rawio32 and heksedit."""
@@ -192,7 +205,8 @@ def build_targets():
     build_libraries()
 
     vs_cmd = get_vs_ide_bin()
-    build_frhed(vs_cmd)
+    ret = build_frhed(vs_cmd)
+    return ret
 
 def build_frhed(vs_cmd):
     """Builds Frhed executable target."""
@@ -202,7 +216,12 @@ def build_frhed(vs_cmd):
     #print sol_path
 
     print 'Build Frhed executable...'
-    call([vs_cmd, solution_path, '/rebuild', 'Release'], shell=True)
+    ret = call([vs_cmd, solution_path, '/rebuild', 'Release'], shell=True)
+    if ret == 0:
+        return True
+    else:
+        print 'ERROR: Failed to build release target of Frhed!'
+        return False
 
 def build_manual():
     """Builds manual's HTML Help (CHM) version for user install and
@@ -392,11 +411,14 @@ def main(argv):
     if dist_folder == '':
         sys.exit(1)
     dist_src_folder = get_src_dist_folder(dist_folder, version_folder)
-    svn_export(dist_src_folder)
+    if svn_export(dist_src_folder) == False:
+        sys.exit(1)
 
-    #setup_translations()
-    
-    build_targets()
+    if setup_translations() == False:
+        sys.exit(1)
+
+    if build_targets() == False:
+        sys.exit(1)
     build_manual()
     build_nsis_installer()
 
