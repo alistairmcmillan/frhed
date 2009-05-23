@@ -123,7 +123,7 @@ template<class T> bool SimpleArray<T>::InsertAtGrow(int nIndex, const T* pT,
 		}
 
 		// Copy bytes in table to make space for added bytes
-		for (i = m_nUpperBound + nCount; i > nIndex + nCount; i--)
+		for (i = m_nUpperBound + nCount; i >= nIndex + nCount; i--)
 		{
 			m_pT[i] = m_pT[i - nCount];
 		}
