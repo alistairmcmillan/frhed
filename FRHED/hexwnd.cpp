@@ -550,17 +550,6 @@ void HexEditorWindow::resize_window()
 	INT64 x = length; // Value of the last offset
 	if (bPartialStats)
 		x += iPartialOffset;
-	iMaxOffsetLen = 0;
-	//length of last offset
-	INT64 val = length;
-	while (val > 0)
-	{
-		++iMaxOffsetLen;
-		val <<= 4;
-	}
-
-	if (iMaxOffsetLen < iMinOffsetLen)
-		iMaxOffsetLen = iMinOffsetLen;
 
 	cxClient = rcClient.right;
 	cyClient = rcClient.bottom;
@@ -582,10 +571,6 @@ void HexEditorWindow::resize_window()
 		if (iBytesPerLine < 1)
 			iBytesPerLine = 1;
 	}
-
-	x = length / iBytesPerLine * iBytesPerLine;//value of the last offset
-	if (bPartialStats)
-		x += iPartialOffset;
 
 	// Caret or end of selection will be vertically centered if line not visible.
 	if (bCenterCaret)
@@ -2142,8 +2127,6 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	int sibling_length = sibling->get_length();
 	BYTE *sibling_buffer = sibling->get_buffer(sibling_length);
 
-	TCHAR linbuf[16] = {0};
-
 	int iBkColor = PALETTERGB (GetRValue(iBkColorValue),GetGValue(iBkColorValue),GetBValue(iBkColorValue));
 	int iTextColor = PALETTERGB (GetRValue(iTextColorValue),GetGValue(iTextColorValue),GetBValue(iTextColorValue));
 	int iSelBkColor = PALETTERGB (GetRValue(iSelBkColorValue),GetGValue(iSelBkColorValue),GetBValue(iSelBkColorValue));
@@ -2161,16 +2144,12 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 
 	int m = iMaxOffsetLen + iByteSpace;
 
-	// Write offset.
-	int i = _sntprintf(linbuf, RTL_NUMBER_OF(linbuf) -1, _T("%*.*I64x"),
-			iMinOffsetLen, iMinOffsetLen, bPartialStats ?
-			startpos + iPartialOffset : startpos);
-	if (i != -1)
-	{
-		// Fill rest of offset area with blanks
-		for (int ii = i; ii < m; ii++)
-			linbuf[ii] = ' ';
-	}
+	TCHAR linbuf[19]; // up to 16 hex digits, plus 2 spaces, plus null termination
+
+	// Write offset, filling rest of linbuf with spaces.
+	linbuf[RTL_NUMBER_OF(linbuf) - 1] = _T('\0');
+	_sntprintf(linbuf, RTL_NUMBER_OF(linbuf) - 1, _T("%-18.*I64x"), iMinOffsetLen,
+		bPartialStats ? startpos + iPartialOffset : startpos);
 
 	SetTextColor(hdc, iTextColor);
 	SetBkColor(hdc, iBkColor);
@@ -2181,10 +2160,11 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	x += m;
 	int z = x + (iByteSpace + 1) * iBytesPerLine + iCharSpace;
 
+	// Fill linebuf with spaces.
+	_tcsset(linbuf, _T(' '));
+
 	// Write offset to chars.
 	m = iCharSpace + 1;
-	for (int ii = 0; ii < RTL_NUMBER_OF(linbuf); ii++)
-		linbuf[ii] = ' ';
 	SetTextColor(hdc, iTextColor);
 	SetBkColor(hdc, iBkColor);
 	print_text(hdc, z - m, y, linbuf, m);
@@ -2192,6 +2172,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	// startpos+iBytesPerLine-1 = Last byte in current line.
 	int endpos = startpos + iBytesPerLine - 1;
 
+	int i;
 	// Write bytes.
 	for (i = startpos ; i <= endpos ; i++)
 	{
