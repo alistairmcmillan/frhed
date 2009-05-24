@@ -56,9 +56,9 @@ LPTSTR PartitionInfo::GetNameAsString(PFormat *pFormat)
 LPTSTR PartitionInfo::GetSizeAsString(PFormat *pFormat)
 {
 	double SizeInMB = (double) m_PartitionLength;
-	SizeInMB /= (1000*1000);
+	SizeInMB /= (1024 * 1024);
 	double SizeInGB = SizeInMB;
-	SizeInGB /= (1000);
+	SizeInGB /= 1024;
 	if (SizeInGB >= 1.0)
 		pFormat->Format(_T("%.2f GB"), SizeInGB);
 	else

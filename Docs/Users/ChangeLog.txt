@@ -8,6 +8,8 @@ Frhed 1.5.4
   Improve Drag&Drop-dialog layout (r638)
   Improve Move/Copy bytes-dialog layout (r640)
   Bugfix: Edit decimal number-dialog always had numbers as signed (r641)
+  Bugfix: Use 1024 (instead of 1000) as multiplier when calculating disk and
+    partition sizes (r653)
 
 Frhed 1.5.3 -2009-05-05 (r629)
   Make bookmark indicator frame a bit wider in hex view (r596)
