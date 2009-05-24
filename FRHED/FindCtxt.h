@@ -29,7 +29,7 @@
 class FindCtxt
 {
 public:
-	enum { MAX_TEXT_LEN = 1024 };
+	enum { MAX_TEXT_LEN = 32 * 1024 };
 
 	FindCtxt();
 	~FindCtxt();
