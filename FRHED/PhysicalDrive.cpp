@@ -55,14 +55,17 @@ LPTSTR PartitionInfo::GetNameAsString(PFormat *pFormat)
 
 LPTSTR PartitionInfo::GetSizeAsString(PFormat *pFormat)
 {
-	double SizeInMB = (double) m_PartitionLength;
-	SizeInMB /= (1024 * 1024);
-	double SizeInGB = SizeInMB;
-	SizeInGB /= 1024;
-	if (SizeInGB >= 1.0)
-		pFormat->Format(_T("%.2f GB"), SizeInGB);
+	const double sizeInMB = (double) m_PartitionLength / (1024 * 1024);
+	if (sizeInMB < 1024.0)
+		pFormat->Format(_T("%.2f MB"), sizeInMB);
 	else
-		pFormat->Format(_T("%.2f MB"), SizeInMB);
+	{
+		const double sizeInGB = sizeInMB / 1024;
+		if (sizeInGB < 1024.0)
+			pFormat->Format(_T("%.2f GB"), sizeInGB);
+		else
+			pFormat->Format(_T("%.2f TB"), sizeInGB / 1024);
+	}
 	return pFormat->buffer;
 }
 
