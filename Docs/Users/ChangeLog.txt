@@ -11,6 +11,7 @@ Frhed 1.5.4
   Increase max find text size to 32K (r655)
   Add vertical scrollbar to Find-dialog for find text (r656)
   Improve Find-dialog layout (r657)
+  Improve Ented Decimal Value-dialog layout (r659)
   Bugfix: Edit decimal number-dialog always had numbers as signed (r641)
   Bugfix: Use 1024 (instead of 1000) as multiplier when calculating disk and
     partition sizes (r653)
