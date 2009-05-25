@@ -367,21 +367,16 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP |
 CAPTION "Find"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "Find what: (please refer to the online help's Using the Special Syntax section for searching for binary values)",
-                    IDC_STATIC,7,7,265,16
-    EDITTEXT        IDC_FIND_TEXT,7,26,265,57,ES_MULTILINE | ES_AUTOVSCROLL |
-                    WS_VSCROLL
-    CONTROL         "Match &case",IDC_FIND_MATCHCASE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,7,87,53,10
-    CONTROL         "Unicode",IDC_FIND_UNICODE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,7,100,49,8
-    GROUPBOX        "Direction",IDC_STATIC,62,87,61,36
-    CONTROL         "&Up",IDC_FIND_UP,"Button",BS_AUTORADIOBUTTON | WS_GROUP | 
-                    WS_TABSTOP,71,98,25,10
-    CONTROL         "&Down",IDC_FIND_DOWN,"Button",BS_AUTORADIOBUTTON,71,111,35,
-                    10
-    DEFPUSHBUTTON   "OK",IDOK,222,100,50,14,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,222,117,50,14
+    LTEXT           "&Find what:",IDC_STATIC,7,7,94,8
+    EDITTEXT        IDC_FIND_TEXT,7,17,265,57,ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL
+    LTEXT           "Please refer to the online help's Using the Special Syntax section for searching for binary values.",IDC_STATIC,7,77,265,16
+    GROUPBOX        "Direction",IDC_STATIC,7,96,61,36
+    CONTROL         "&Up",IDC_FIND_UP,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,14,106,49,10
+    CONTROL         "&Down",IDC_FIND_DOWN,"Button",BS_AUTORADIOBUTTON,14,117,49,10
+    CONTROL         "Match &case",IDC_FIND_MATCHCASE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,100,79,10
+    CONTROL         "U&nicode",IDC_FIND_UNICODE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,74,112,79,8
+    DEFPUSHBUTTON   "Find",IDOK,169,118,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,222,118,50,14
 END
 
 IDD_ABOUTDIALOG DIALOGEX 0, 0, 212, 170
