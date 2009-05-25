@@ -9,6 +9,7 @@ Frhed 1.5.4
   Improve Move/Copy bytes-dialog layout (r640)
   Show disk/partition sizes of over terabyte in terabytes (r654)
   Increase max find text size to 32K (r655)
+  Add vertical scrollbar to Find-dialog for find text (r656)
   Bugfix: Edit decimal number-dialog always had numbers as signed (r641)
   Bugfix: Use 1024 (instead of 1000) as multiplier when calculating disk and
     partition sizes (r653)
