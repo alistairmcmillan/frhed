@@ -13,6 +13,7 @@ Frhed 1.5.4
   Improve Find-dialog layout (r657)
   Improve Ented Decimal Value-dialog layout (r659)
   Improve Manipulate Bits-dialog layout (r661)
+  Improve Reverse Bytes-dialog layout (r662)
   Bugfix: Edit decimal number-dialog always had numbers as signed (r641)
   Bugfix: Use 1024 (instead of 1000) as multiplier when calculating disk and
     partition sizes (r653)
