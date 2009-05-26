@@ -1422,6 +1422,15 @@ BEGIN
     IDS_ERR_CANNOT_GET_TEXT "Could not get text from the file.\nCannot continue!"
 END
 
+// General - strings
+STRINGTABLE 
+BEGIN
+    IDS_ISO_KB              "KB"
+    IDS_ISO_MB              "MB"
+    IDS_ISO_GB              "GB"
+    IDS_ISO_TB              "TB"
+END
+
 // About-dialog
 STRINGTABLE 
 BEGIN
@@ -1595,6 +1604,8 @@ BEGIN
     IDS_DRIVES_BYTESPERSECT "Bytes per sector"
     IDS_DRIVES_TOTALBYTES  "Total size in bytes"
     IDS_DRIVES_SECTOR      "%s:Sector %I64d"
+    IDS_DRIVES_DRIVE_PART  "Drive %d, Partition %d (%s)"
+    IDS_DRIVES_DRIVE_ONLY  "Drive %d (%s)"
 END
 
 // Hex file import

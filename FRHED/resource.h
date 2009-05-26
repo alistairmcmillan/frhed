@@ -364,6 +364,10 @@
 #define IDS_ERR_CHECK_FILESIZE          10050
 #define IDS_ERR_NO_DATA                 10051
 #define IDS_ERR_CANNOT_GET_TEXT         10052
+#define IDS_ISO_KB                      10112
+#define IDS_ISO_MB                      10113
+#define IDS_ISO_GB                      10114
+#define IDS_ISO_TB                      10115
 #define IDS_ABOUT_BROWSER_ERR           10160
 #define IDS_ABOUT_FILENOTFOUND          10161
 #define IDS_BMK_INVALID_POSITION        10177
@@ -449,6 +453,8 @@
 #define IDS_DRIVES_BYTESPERSECT         10470
 #define IDS_DRIVES_TOTALBYTES           10471
 #define IDS_DRIVES_SECTOR               10472
+#define IDS_DRIVES_DRIVE_PART           10473
+#define IDS_DRIVES_DRIVE_ONLY           10474
 #define IDS_HEXF_NO_MEM                 10480
 #define IDS_HEXF_ILLEGAL_CHAR           10481
 #define IDS_HEXF_ILLEGAL_OFFS           10482

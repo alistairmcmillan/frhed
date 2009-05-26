@@ -23,9 +23,13 @@
 // $Id$
 
 #include "precomp.h"
+#include "resource.h"
+#include "UnicodeString.h"
 #include "physicaldrive.h"
 #include "pdrive95.h"
 #include "pdrivent.h"
+#include "LangArray.h"
+#include "LangString.h"
 
 IPhysicalDrive *CreatePhysicalDriveInstance()
 {
@@ -47,24 +51,40 @@ IPhysicalDrive *CreatePhysicalDriveInstance()
 LPTSTR PartitionInfo::GetNameAsString(PFormat *pFormat)
 {
 	if (m_bIsPartition)
-		pFormat->Format(_T("Drive %d, Partition %d (%s)"), m_dwDrive + 1, m_dwPartition + 1, GetSizeAsString());
+	{
+		LangString msg(IDS_DRIVES_DRIVE_PART);
+		pFormat->Format(msg, m_dwDrive + 1, m_dwPartition + 1, GetSizeAsString());
+	}
 	else
-		pFormat->Format(_T("Drive %d (%s)"), m_dwDrive + 1, GetSizeAsString());
+	{
+		LangString msg(IDS_DRIVES_DRIVE_ONLY);
+		pFormat->Format(msg, m_dwDrive + 1, GetSizeAsString());
+	}
 	return pFormat->buffer;
 }
 
 LPTSTR PartitionInfo::GetSizeAsString(PFormat *pFormat)
 {
 	const double sizeInMB = (double) m_PartitionLength / (1024 * 1024);
+	String fmt(_T("%.2f "));
 	if (sizeInMB < 1024.0)
-		pFormat->Format(_T("%.2f MB"), sizeInMB);
+	{
+		fmt += GetLangString(IDS_ISO_MB);
+		pFormat->Format(fmt.c_str(), sizeInMB);
+	}
 	else
 	{
 		const double sizeInGB = sizeInMB / 1024;
 		if (sizeInGB < 1024.0)
-			pFormat->Format(_T("%.2f GB"), sizeInGB);
+		{
+			fmt += GetLangString(IDS_ISO_GB);
+			pFormat->Format(fmt.c_str(), sizeInGB);
+		}
 		else
-			pFormat->Format(_T("%.2f TB"), sizeInGB / 1024);
+		{
+			fmt += GetLangString(IDS_ISO_TB);
+			pFormat->Format(fmt.c_str(), sizeInGB / 1024);
+		}
 	}
 	return pFormat->buffer;
 }
