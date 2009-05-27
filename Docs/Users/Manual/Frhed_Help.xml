@@ -26,10 +26,9 @@
     <releaseinfo><emphasis>Revision 0.1.0</emphasis></releaseinfo>
 
     <legalnotice>
-      <para>Frhed is Copyright © <ulink url="mailto:raihan@kibria.de">Raihan Kibria</ulink> 2002.
-      Additional features by <ulink url="mailto:pabs3@zip.to">Pabs</ulink>,
-      <ulink url="mailto:not@p-nand-q.com">Gerson Kurz</ulink>, Mike Funduc and nas.
-      All Rights Reserved.</para>
+      <para>Frhed is Copyright © <ulink url="mailto:raihan@kibria.de">Raihan
+      Kibria</ulink> 2002-2009. See <xref linkend="Acknowledgements" /> for
+      complete list of contributors. </para>
     </legalnotice>
 
     <legalnotice>
@@ -41,18 +40,32 @@
   </bookinfo>
 
   &Introduction;
+
   &Installation;
+
   &BinaryFiles;
+
   &FileOperations;
+
   &MainWindow;
+
   &MovingInTheFile;
+
   &EditingTheFile;
+
   &DiskMenu;
+
   &OptionsMenu;
+
   &BookmarksMenu;
+
   &MiscMenu;
+
   &RegistryMenu;
+
   &Faq;
+
   &CharacterTables;
+
   &SpecialSyntax;
 </book>

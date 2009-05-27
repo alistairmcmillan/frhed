@@ -17,8 +17,8 @@
 
       <listitem>
         <simpara>Cut, copy &amp; paste binary values. Syntax for describing
-        byte, word, longword, float and double binary values in text form to
-        use with find and paste functions.</simpara>
+        byte, word, double word, float and double binary values in text form
+        to use with find and paste functions.</simpara>
       </listitem>
 
       <listitem>
@@ -59,7 +59,7 @@
 
       <listitem>
         <simpara>Can be used as "Send to"-Target and in the context menu for
-        all files and for files with non-registered extensions. </simpara>
+        all files and for files with non-registered extensions.</simpara>
       </listitem>
 
       <listitem>
@@ -112,7 +112,7 @@
     Frhed you must publish the modified sources.</para>
   </section>
 
-  <section>
+  <section id="Acknowledgements">
     <title>Acknowledgements</title>
 
     <para>Frhed is originally developed by Raihan Kibria.</para>
@@ -160,8 +160,8 @@
       </listitem>
 
       <listitem>
-        <simpara>Mike Funduc - selection command line parameters and a toolbar
-        </simpara>
+        <simpara>Mike Funduc - selection command line parameters and a
+        toolbar</simpara>
       </listitem>
 
       <listitem>
