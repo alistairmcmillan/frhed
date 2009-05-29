@@ -13,6 +13,7 @@
 <!ENTITY BookmarksMenu SYSTEM "Bookmarks_Menu.xml">
 <!ENTITY MiscMenu SYSTEM "Misc_Menu.xml">
 <!ENTITY RegistryMenu SYSTEM "Registry_Menu.xml">
+<!ENTITY CommandLine SYSTEM "Command_Line.xml">
 <!ENTITY Faq SYSTEM "FAQ.xml">
 <!ENTITY CharacterTables SYSTEM "Character_Tables.xml">
 <!ENTITY SpecialSyntax SYSTEM "Special_Syntax.xml">
@@ -62,6 +63,8 @@
   &MiscMenu;
 
   &RegistryMenu;
+
+  &CommandLine;
 
   &Faq;
 

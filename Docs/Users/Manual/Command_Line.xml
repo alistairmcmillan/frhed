@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article id="CommandLine">
+  <title>Command Line</title>
+
+  <para>Frhed command line usage is simple: the whole following string
+  following program name is considered to be the name of the file to
+  open.</para>
+
+  <example>
+    <itemizedlist>
+      <listitem>
+        <simpara><code>frhed filename.dat</code> opens the file called
+        "filename.dat"</simpara>
+      </listitem>
+
+      <listitem>
+        <simpara><code>frhed a file-name.dat</code> opens the file called "a
+        file-name.dat"</simpara>
+      </listitem>
+    </itemizedlist>
+  </example>
+
+  <simpara>Frhed resolves link files. If the file to open is a link file Frhed
+  asks if the link file itself or the link target should be opened.</simpara>
+</article>
