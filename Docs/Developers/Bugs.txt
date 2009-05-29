@@ -1,8 +1,5 @@
 Known bugs
 
-August 5th, 2001
-- Files that are zero bytes in length are mistakenly identified as .lnk files
-
 June 9th, 2001
 - Copying & pasting large amounts of data is unbelievably slow
   when compared with other hex editors.

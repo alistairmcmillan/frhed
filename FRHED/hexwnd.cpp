@@ -435,9 +435,9 @@ int HexEditorWindow::open_file(LPCWSTR wszCmdLine)
 {
 	W2T szCmdLine = wszCmdLine;
 	int bLoaded = FALSE;
-	TCHAR lpszPath[MAX_PATH];
+	TCHAR lpszPath[MAX_PATH] = {0};
 	HRESULT hres = ResolveIt(szCmdLine, lpszPath);
-	if (SUCCEEDED(hres))
+	if (SUCCEEDED(hres) && _tcslen(lpszPath) && _tcscmp(szCmdLine, lpszPath) != 0)
 	{
 		// Trying to open a link file: decision by user required.
 		int ret = MessageBox(hwnd, GetLangString(IDS_OPEN_SHORTCUT),
@@ -4343,11 +4343,11 @@ void HexEditorWindow::dropfiles(HDROP hDrop)
 	if (!close())
 		return;
 
-	TCHAR lpszTarget[_MAX_PATH];
+	TCHAR lpszTarget[_MAX_PATH] = {0};
 	// Is this a link file?
 	HRESULT hres = ResolveIt(lpszFile, lpszTarget);
 	TCHAR *lpszFileToOpen = lpszFile;
-	if (SUCCEEDED(hres))
+	if (SUCCEEDED(hres) && _tcslen(lpszTarget) && _tcscmp(lpszFile, lpszTarget) != 0)
 	{
 		// Trying to open a link file: decision by user required.
 		LangString msg(IDS_OPEN_SHORTCUT);
