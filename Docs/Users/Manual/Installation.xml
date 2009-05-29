@@ -1,10 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <article id="installation">
-  <title>Installation</title>
+  <title id="Installation">Installation</title>
 
-  <para>Frhed uses the <ulink url="http://www.nullsoft.com/free/nsis/">Nullsoft
-  Scriptable Install System</ulink>. To install Frhed, just run the installer
-  executable.</para>
-  <para>Frhed supports normal Windows uninstall behaviour as found in the
-  Control Panel.</para>
+  <section>
+    <title>Installer</title>
+
+    <para>The easiest way to install Frhed is to download the installer
+    executable from Frhed <ulink url="http://frhed.sourceforge.net/">home
+    page</ulink>. After downloading the installer file just run it.</para>
+
+    <para>The installer asks few questions about the installation:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Accept GPL license</para>
+      </listitem>
+
+      <listitem>
+        <para>Select components to install</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>Program Files - installs program files needed to run Frhed
+            and it cannot be deselected.</para>
+          </listitem>
+
+          <listitem>
+            <para>Documentation - installs user manual</para>
+          </listitem>
+
+          <listitem>
+            <para>Translation files - installs Frhed translations</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+
+      <listitem>
+        <para>Select installation destination folder</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>After these questions installation starts by selecting the
+    <guibutton>Install</guibutton> -button.</para>
+  </section>
+
+  <section>
+    <title>Uninstalling</title>
+
+    <para>Frhed has an uninstaller. Uninstaller can be started from Windows
+    Control Panel or from Frhed program group in Start-menu.</para>
+  </section>
+
+  <section>
+    <title>Installing from Archive</title>
+
+    <para>Frhed project releases in addition to installer executable also
+    archive files containing executable files. Frhed can be installed by
+    unzipping files to some proper folder retaining the folder structure.
+    After unzipping the Frhed can be run just starting the executable.</para>
+  </section>
 </article>
