@@ -63,7 +63,8 @@ Function .onInit
    Abort
 FunctionEnd
 
-Section "ProgramFiles" SEC01
+Section "!Program Files" SEC01
+  SectionIn 1 RO
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
   File "..\..\Build\Release\frhed.exe"

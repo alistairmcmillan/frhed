@@ -6,6 +6,7 @@ For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 
 Frhed 1.5.10
   Bugfix: Zero-size files were opened as link files (r671)
+  Bugfix: Don't allow de-selecting program files in installer (r675)
 
 Frhed 1.5.4 - 2009-05-26 (r667)
   Improve Drag&Drop-dialog layout (r638)
