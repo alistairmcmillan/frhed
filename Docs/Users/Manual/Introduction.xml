@@ -7,8 +7,8 @@
 
     <itemizedlist>
       <listitem>
-        <simpara>Native 32 bit Windows application: long filenames supported,
-        editable file size limited only by available system memory.</simpara>
+        <simpara>Editable file size limited only by available system
+        memory.</simpara>
       </listitem>
 
       <listitem>
@@ -54,7 +54,8 @@
       </listitem>
 
       <listitem>
-        <simpara>Intel or Motorola binary format.</simpara>
+        <simpara>Intel (little-endian) or Motorola (big-endian) binary
+        format.</simpara>
       </listitem>
 
       <listitem>
@@ -71,7 +72,8 @@
       </listitem>
 
       <listitem>
-        <simpara>Load files by dragging them into the window.</simpara>
+        <simpara>Load files by drag- and dropping them into the
+        window.</simpara>
       </listitem>
 
       <listitem>
@@ -186,8 +188,8 @@
     <para>If you have comments or suggestions please submit them to <ulink
     url="http://apps.sourceforge.net/phpbb/frhed/">Frhed forum</ulink></para>
 
-    <para>Please check for the newest updates of Frhed (including the newest
-    beta version) on Frhed's homepage: <ulink
+    <para>Please check for the newest updates of Frhed (including the latest
+    alpha- and beta-versions) on Frhed's homepage: <ulink
     url="http://frhed.sourceforge.net/">
     http://frhed.sourceforge.net/</ulink></para>
 
@@ -200,8 +202,8 @@
       </listitem>
 
       <listitem>
-        <simpara><ulink url="http://bonedaddy.net/pabs3/prog.html#frhed">
-        Pabs' Frhed patch</ulink>.</simpara>
+        <simpara><ulink url="http://bonedaddy.net/pabs3/prog.html#frhed">Pabs'
+        Frhed patch</ulink>.</simpara>
       </listitem>
 
       <listitem>
