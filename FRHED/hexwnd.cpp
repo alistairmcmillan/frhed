@@ -1253,7 +1253,8 @@ void HexEditorWindow::command(int cmd)
 			else
 			{
 				if (LONG err = RegDeleteValue(hk, NULL))
-					hr = HRESULT_FROM_WIN32(err);
+					if (err != ERROR_FILE_NOT_FOUND) // No complaint for not having been the default command.
+						hr = HRESULT_FROM_WIN32(err);
 				RegCloseKey(hk);
 			}
 		}
