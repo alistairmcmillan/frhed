@@ -1,30 +1,10 @@
 #ifndef gktools_h
 #define gktools_h
 
+#include "EncoderLib.h"
+
 BOOL WINAPI GetDllExportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize);
 BOOL WINAPI GetDllImportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize);
-
-struct s_MEMORY_ENCODING;
-
-typedef void (WINAPI* LPFNEncodeMemoryFunction)( s_MEMORY_ENCODING* p );
-
-typedef struct s_MEMORY_ENCODING
-{
-	LPBYTE lpbMemory;
-	DWORD dwSize;
-	LPCTSTR lpszArguments;
-	BOOL bEncode;
-	LPFNEncodeMemoryFunction fpEncodeFunc;
-} MEMORY_CODING, *LPMEMORY_CODING;
-
-typedef struct _MEMORY_CODING_DESCRIPTION
-{
-	LPCTSTR lpszDescription;
-	LPFNEncodeMemoryFunction fpEncodeFunc;
-} MEMORY_CODING_DESCRIPTION, *LPMEMORY_CODING_DESCRIPTION;
-
-EXTERN_C LPMEMORY_CODING_DESCRIPTION WINAPI GetMemoryCodings();
-typedef LPMEMORY_CODING_DESCRIPTION (WINAPI* LPFNGetMemoryCodings)();
 
 extern PartitionInfo* SelectedPartitionInfo;
 

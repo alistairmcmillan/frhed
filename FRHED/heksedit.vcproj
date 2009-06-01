@@ -2706,6 +2706,9 @@
 				RelativePath="DllProxies.h">
 			</File>
 			<File
+				RelativePath="EncoderLib.h">
+			</File>
+			<File
 				RelativePath="FindCtxt.h">
 			</File>
 			<File
