@@ -28,19 +28,26 @@ BOOL WINAPI GetDllExportNames(LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpul
 	{
 		PIMAGE_EXPORT_DIRECTORY pExpDir = (PIMAGE_EXPORT_DIRECTORY)
 			IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, dw, 0);
-		DWORD firstName = pExpDir->Name;
-		DWORD lastName = pExpDir->Name;
-		if (pExpDir->NumberOfNames)
+		if (pExpDir)
 		{
-			DWORD *pExpNames = (DWORD *)
-				IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, pExpDir->AddressOfNames, 0);
-			pExpNames += pExpDir->NumberOfNames - 1;
-			lastName = *pExpNames;
+			DWORD firstName = pExpDir->Name;
+			DWORD lastName = pExpDir->Name;
+			if (pExpDir->NumberOfNames)
+			{
+				DWORD *pExpNames = (DWORD *)
+					IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, pExpDir->AddressOfNames, 0);
+				if (pExpNames)
+				{
+					pExpNames += pExpDir->NumberOfNames - 1;
+					lastName = *pExpNames;
+				}
+			}
+			*lpulOffset = firstName;
+			TCHAR *name = (TCHAR *)
+				IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, lastName, 0);
+			if (name)
+				*lpulSize = lastName + _tcslen(name) + 1 - firstName;
 		}
-		*lpulOffset = firstName;
-		TCHAR *name = (TCHAR *)
-			IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, lastName, 0);
-		*lpulSize = lastName + _tcslen(name) + 1 - firstName;
 		bDone = TRUE;
 	}
 	IMAGEHLP->UnMapAndLoad(&li);
@@ -70,24 +77,38 @@ BOOL WINAPI GetDllImportNames(LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpul
 				lower = pDescriptor->Name; //OriginalFirstThunk;
 			TCHAR *name = (TCHAR *)
 				IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, pDescriptor->Name, 0);
-			DWORD end = pDescriptor->Name + _tcslen(name) + 1;
-			if (upper < end)
-				upper = end;
+			DWORD end = 0;
+			if (name)
+			{
+				end = pDescriptor->Name + _tcslen(name) + 1;
+				if (upper < end)
+					upper = end;
+			}
 			DWORD *pEntry = (DWORD *)
 				IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, pDescriptor->FirstThunk, 0);
 			IMAGE_THUNK_DATA *pThunk = (IMAGE_THUNK_DATA *)
 				IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, pDescriptor->OriginalFirstThunk, 0);
+
+			if (!name || !pEntry || !pThunk)
+			{
+				++pDescriptor;
+				continue;
+			}
+
 			while (pThunk->u1.Function)
 			{
 				if ((*pEntry & 0x80000000) == 0)
 				{
 					IMAGE_IMPORT_BY_NAME *pImport = (IMAGE_IMPORT_BY_NAME *)
 						IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, *pEntry, 0);
-					DWORD end = *pEntry + sizeof(IMAGE_IMPORT_BY_NAME) + _tcslen((char *)pImport->Name);
-					if (lower > *pEntry)
-						lower = *pEntry;
-					if (upper < end)
-						upper = end;
+					if (pImport)
+					{
+						DWORD end = *pEntry + sizeof(IMAGE_IMPORT_BY_NAME) + _tcslen((TCHAR *)pImport->Name);
+						if (lower > *pEntry)
+							lower = *pEntry;
+						if (upper < end)
+							upper = end;
+					}
 				}
 				++pThunk;
 				++pEntry;
