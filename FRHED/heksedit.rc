@@ -401,33 +401,25 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,80,148,50,14
 END
 
-IDD_HEXDUMPDIALOG DIALOGEX 0, 0, 163, 161
+IDD_HEXDUMPDIALOG DIALOGEX 0, 0, 148, 169
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION |
     WS_SYSMENU
-CAPTION "Export hexdump"
+CAPTION "Export Hexdump"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "Use hexadecimal notation without prefix.",IDC_STATIC,7,
-                    7,148,8
-    LTEXT           "Start at line with offset:",IDC_STATIC,7,17,72,8
-    EDITTEXT        IDC_HEXDUMP_OFFSET,6,25,149,12,ES_AUTOHSCROLL
-    LTEXT           "Up to and including line with offset:",IDC_STATIC,7,40,
-                    111,8
-    EDITTEXT        IDC_HEXDUMP_OFFSET2,7,49,149,13,ES_AUTOHSCROLL
-    GROUPBOX        "Export hexdump to:",IDC_STATIC,7,69,88,40,WS_GROUP
-    CONTROL         "Export to file",IDC_HEXDUMP_EXPORTFILE,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP | WS_TABSTOP,14,80,55,10
-    CONTROL         "Export to clipboard",IDC_HEXDUMP_EXPORTCLIPB,"Button",
-                    BS_AUTORADIOBUTTON | WS_TABSTOP,14,92,75,10
-    GROUPBOX        "Type:",IDC_STATIC,7,110,103,45,WS_GROUP
-    CONTROL         "Frhed display as text",IDC_EXPORTDISPLAY,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,15,120,78,10
-    CONTROL         "Just hex digits on a line",IDC_EXPORTDIGITS,"Button",
-                    BS_AUTORADIOBUTTON,15,130,89,10
-    CONTROL         "Frhed display as RTF",IDC_EXPORTRTF,"Button",
-                    BS_AUTORADIOBUTTON,15,140,81,10
-    DEFPUSHBUTTON   "OK",IDOK,105,70,50,14,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,105,90,50,14
+    LTEXT           "Start at offset:",IDC_STATIC,7,7,106,8
+    EDITTEXT        IDC_HEXDUMP_OFFSET,7,16,134,12,ES_AUTOHSCROLL
+    LTEXT           "End at offset:",IDC_STATIC,7,31,99,8
+    EDITTEXT        IDC_HEXDUMP_OFFSET2,7,40,134,13,ES_AUTOHSCROLL
+    GROUPBOX        "Export to",IDC_STATIC,7,57,83,35,WS_GROUP
+    CONTROL         "File",IDC_HEXDUMP_EXPORTFILE,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,14,68,63,10
+    CONTROL         "Clipboard",IDC_HEXDUMP_EXPORTCLIPB,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,14,78,67,10
+    GROUPBOX        "Type",IDC_STATIC,7,96,134,45,WS_GROUP
+    CONTROL         "Frhed display as text",IDC_EXPORTDISPLAY,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,107,111,10
+    CONTROL         "Just hex digits on a line",IDC_EXPORTDIGITS,"Button",BS_AUTORADIOBUTTON,15,117,113,10
+    CONTROL         "Frhed display as RTF",IDC_EXPORTRTF,"Button",BS_AUTORADIOBUTTON,15,127,114,10
+    DEFPUSHBUTTON   "OK",IDOK,37,148,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,91,148,50,14
 END
 
 IDD_DECIMALDIALOG DIALOGEX 0, 0, 233, 100
