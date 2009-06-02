@@ -11,6 +11,10 @@
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
+!define RUNTIMES_PATH "..\Runtimes"
+!define RUNTIME_FILES_C "msvcr71.dll"
+!define RUNTIME_FILES_CPP "msvcp71.dll"
+
 SetCompressor lzma
 
 ; MUI 1.67 compatible ------
@@ -75,8 +79,8 @@ Section "!Program Files" SEC01
   File "..\..\Build\Release\RAWIO32.dll"
 
   ; MS C/C++ runtime files
-  File "..\Runtimes\msvcr71.dll"
-  File "..\Runtimes\msvcp71.dll"
+  File "${RUNTIMES_PATH}\${RUNTIME_FILES_C}"
+  File "${RUNTIMES_PATH}\${RUNTIME_FILES_CPP}"
 
   ; Example template file
   File "..\..\Docs\Users\Sample.tpl"
@@ -163,8 +167,8 @@ Section Uninstall
   Delete "$INSTDIR\heksedit.dll"
   
   ; MS runtimes
-  Delete "$INSTDIR\msvcr71.dll"
-  Delete "$INSTDIR\msvcp71.dll"
+  Delete "$INSTDIR\${RUNTIME_FILES_C}"
+  Delete "$INSTDIR\${RUNTIME_FILES_C}"
 
   ; Basic documents
   Delete "$INSTDIR\Docs\GPL.txt"
