@@ -38,9 +38,9 @@ BOOL WINAPI GetDllExportNames(LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpul
 			lastName = *pExpNames;
 		}
 		*lpulOffset = firstName;
-		char *name = (char *)
+		TCHAR *name = (TCHAR *)
 			IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, lastName, 0);
-		*lpulSize = lastName + strlen(name) + 1 - firstName;
+		*lpulSize = lastName + _tcslen(name) + 1 - firstName;
 		bDone = TRUE;
 	}
 	IMAGEHLP->UnMapAndLoad(&li);
@@ -68,9 +68,9 @@ BOOL WINAPI GetDllImportNames(LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpul
 		{
 			if (lower > pDescriptor->Name) //OriginalFirstThunk)
 				lower = pDescriptor->Name; //OriginalFirstThunk;
-			char *name = (char *)
+			TCHAR *name = (TCHAR *)
 				IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, pDescriptor->Name, 0);
-			DWORD end = pDescriptor->Name + strlen(name) + 1;
+			DWORD end = pDescriptor->Name + _tcslen(name) + 1;
 			if (upper < end)
 				upper = end;
 			DWORD *pEntry = (DWORD *)
@@ -83,7 +83,7 @@ BOOL WINAPI GetDllImportNames(LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpul
 				{
 					IMAGE_IMPORT_BY_NAME *pImport = (IMAGE_IMPORT_BY_NAME *)
 						IMAGEHLP->ImageRvaToVa(li.FileHeader, li.MappedAddress, *pEntry, 0);
-					DWORD end = *pEntry + sizeof(IMAGE_IMPORT_BY_NAME) + strlen((char *)pImport->Name);
+					DWORD end = *pEntry + sizeof(IMAGE_IMPORT_BY_NAME) + _tcslen((char *)pImport->Name);
 					if (lower > *pEntry)
 						lower = *pEntry;
 					if (upper < end)
@@ -105,20 +105,20 @@ BOOL WINAPI GetDllImportNames(LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpul
 	return bDone;
 }
 
-void WINAPI XorEncoder( MEMORY_CODING* p )
+void WINAPI XorEncoder(MEMORY_CODING* p)
 {
 	LPBYTE q = p->lpbMemory;
-	LPBYTE qMax = q+p->dwSize;
-	while(q<qMax)
-		*(q++)^=-1;
+	LPBYTE qMax = q + p->dwSize;
+	while (q < qMax)
+		*(q++) ^= -1;
 }
 
-void WINAPI Rot13Encoder( LPMEMORY_CODING p )
+void WINAPI Rot13Encoder(LPMEMORY_CODING p)
 {
 	LPBYTE q = p->lpbMemory;
-	LPBYTE qMax = q+p->dwSize;
-	while(q<qMax)
-		*(q++)=isalpha(*q)?(BYTE)(tolower(*q)<'n'?*q+13:*q-13):*q;
+	LPBYTE qMax = q + p->dwSize;
+	while (q < qMax)
+		*(q++) = _istalpha(*q) ? (BYTE)(tolower(*q) < 'n' ? * q + 13 : *q - 13) : *q;
 }
 
 MEMORY_CODING_DESCRIPTION BuiltinEncoders[] =
@@ -160,7 +160,7 @@ INT_PTR EncodeDecodeDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 				if (hLibrary)
 				{
 					if (LPFNGetMemoryCodings callback = (LPFNGetMemoryCodings)
-						GetProcAddress(hLibrary, "GetMemoryCodings"))
+						GetProcAddress(hLibrary, _T("GetMemoryCodings")))
 					{
 						AddEncoders(hListbox, callback());
 					}
