@@ -27,6 +27,7 @@
 #include "resource.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
+#include "offset.h"
 
 int CopyHexdumpDlg::iCopyHexdumpMode = 0;
 int CopyHexdumpDlg::iCopyHexdumpType = IDC_EXPORTDISPLAY;
@@ -52,9 +53,9 @@ BOOL CopyHexdumpDlg::OnInitDialog(HWND hDlg)
 		iCopyHexdumpDlgEnd = iGetEndOfSelection();
 	}
 	TCHAR buf[16] = {0};
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("%x"), iCopyHexdumpDlgStart);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iCopyHexdumpDlgStart);
 	SetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET, buf);
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("%x"), iCopyHexdumpDlgEnd);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iCopyHexdumpDlgEnd);
 	SetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET2, buf);
 	CheckDlgButton(hDlg, iCopyHexdumpMode ? IDC_HEXDUMP_EXPORTCLIPB :
 			IDC_HEXDUMP_EXPORTFILE, BST_CHECKED);
@@ -78,9 +79,9 @@ BOOL CopyHexdumpDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 	{
 	case IDOK:
 		if (GetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET, buf, bufSize) &&
-			_stscanf(buf, _T("%x"), &iCopyHexdumpDlgStart) &&
+			offset_parse(buf, iCopyHexdumpDlgStart) &&
 			GetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET2, buf, bufSize) &&
-			_stscanf(buf, _T("%x"), &iCopyHexdumpDlgEnd))
+			offset_parse(buf, iCopyHexdumpDlgEnd))
 		{
 			iCopyHexdumpMode = IsDlgButtonChecked(hDlg, IDC_HEXDUMP_EXPORTCLIPB);
 			if (IsDlgButtonChecked(hDlg, IDC_EXPORTDISPLAY))
