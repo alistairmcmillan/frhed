@@ -714,15 +714,15 @@ CAPTION "Paste"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Paste mode",IDC_STATIC,7,7,64,36
-    CONTROL         "Overwrite",IDC_FPASTE_OWERWRITE,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,14,18,46,10
-    CONTROL         "Insert",IDC_FPASTE_INSERT,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,14,29,33,10
+    CONTROL         "Overwrite",IDC_FPASTE_OWERWRITE,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,14,18,54,10
+    CONTROL         "Insert",IDC_FPASTE_INSERT,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,14,29,54,10
     LTEXT           "Paste data how many times:",IDC_STATIC,80,9,109,8
     EDITTEXT        IDC_FPASTE_PASTETIMES,193,7,67,12,ES_AUTOHSCROLL
-    LTEXT           "Bytes to skip between inserts/overwrites:",IDC_STATIC,80,19,156,12,SS_CENTERIMAGE
+    LTEXT           "Bytes to skip between inserts/overwrites:",IDC_STATIC,80,19,173,12,SS_CENTERIMAGE
     EDITTEXT        IDC_FPASTE_SKIPS,80,31,67,12,ES_AUTOHSCROLL
     CONTROL         "Paste coded binary values as text",IDC_FPASTE_TXT,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,47,144,10
-    LTEXT           "Clipboard format to use:",IDC_STATIC,7,63,113,8
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,47,182,10
+    LTEXT           "Clipboard format to use:",IDC_STATIC,7,63,156,8
     LISTBOX         IDC_FPASTE_CFORMAT,5,74,255,35,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
     PUSHBUTTON      "Refresh",IDC_FPASTE_REFRESH,210,57,50,15
     LTEXT           " - CF_TEXT was used by previous versions of Frhed\n - Those starting w CF_ are standard formats && others are registered/private ones\n - Some formats may have been synthesized from the original.",IDC_STATIC,7,112,253,25
