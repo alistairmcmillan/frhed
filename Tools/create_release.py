@@ -1,6 +1,8 @@
 #
 # The MIT License
 # Copyright (c) 2007-2009 Kimmo Varis
+# Copyright (c) 2008 Matthias Mayer
+#
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files
 # (the "Software"), to deal in the Software without restriction, including
@@ -45,19 +47,12 @@
 # CONFIGURATION:
 # Set these variables to match your environment and folders you want to use
 
-# Subversion binary - set this to absolute path to svn.exe
-svn_binary = r'C:\Program Files\Subversion\bin\svn.exe'
-# Visual Studio path
-vs_path = r'C:\Program Files\Microsoft Visual Studio .NET 2003'
 # NSIS installation folder
 nsis_path = 'C:\\Program Files\\NSIS'
 # Relative path where to create a release folder
 dist_root_folder = 'distrib'
-# Source location
-# Give URL to SVN repository to export source from SVN or 'workspace' to export
-# from workspace
-source_location ='workspace'
-#source_location = 'https://frhed.svn.sourceforge.net/svnroot/frhed/trunk'
+root_path = ''
+prog_ver = ''
 
 # END CONFIGURATION - you don't need to edit anything below...
 
@@ -68,6 +63,10 @@ import sys
 import getopt
 import shutil
 import SetVersions
+import ToolSettings
+
+# global settings class instance
+prog = ToolSettings.ToolSettings()
 
 def get_vs_ide_bin():
     """Gets a full path to the Visual Studio IDE executable to run."""
@@ -76,7 +75,7 @@ def get_vs_ide_bin():
     rel_path = 'Common7/IDE'
     vs_bin = 'devenv.com'
 
-    vs_ide_path = os.path.join(vs_path, rel_path)
+    vs_ide_path = os.path.join(prog.vs_path, rel_path)
     vs_cmd_path = os.path.join(vs_ide_path, vs_bin)
     return vs_cmd_path
 
@@ -171,12 +170,12 @@ def svn_export(dist_src_folder):
     """Exports sources to distribution folder."""
 
     print 'Exporting sources to ' + dist_src_folder
-    print 'Exporting from: ' + source_location
+    print 'Exporting from: ' + prog.source
     retval = 0
-    if source_location == 'workspace':
-        retval = call([svn_binary, 'export', '--non-interactive', '.', dist_src_folder])
+    if prog.source == 'workspace':
+        retval = call([prog.svn_binary, 'export', '--non-interactive', '.', dist_src_folder])
     else:
-        retval = call([svn_binary, 'export', '--non-interactive', source_location, dist_src_folder])
+        retval = call([prog.svn_binary, 'export', '--non-interactive', source_location, dist_src_folder])
     if retval == 0:
         return True
     else:
@@ -241,7 +240,7 @@ def build_manual():
 def build_nsis_installer():
     """Builds the NSIS installer for the Frhed."""
 
-    nsis_exe = os.path.join(nsis_path, 'makensis')
+    nsis_exe = os.path.join(prog.nsis_path, 'makensis')
     cur_path = os.getcwd()
     frhed_nsi = os.path.join(cur_path, 'Installer/NSIS/frhed.nsi')
 
@@ -317,9 +316,10 @@ def find_frhed_root():
 def check_tools():
     """Check that needed external tools can be found."""
 
-    if not os.path.exists(svn_binary):
+    global prog
+    if not os.path.exists(prog.svn_binary):
         print 'Subversion binary could not be found from:'
-        print svn_binary
+        print prog.svn_binary
         print 'Please check script configuration and/or make sure Subversion is installed.'
         return False
 
@@ -347,7 +347,7 @@ def usage():
     print '    used as version number.'
 
 def main(argv):
-    version = ''
+    global prog
     ver_file = ''
     if len(argv) > 0:
         opts, args = getopt.getopt(argv, "hclv:f:", [ "help", "cleanup", "libraries",
@@ -358,8 +358,8 @@ def main(argv):
                 usage()
                 sys.exit()
             if opt in ("-v", "--version"):
-                version = arg
-                print "Start building Frhed release version " + version
+                prog_version = arg
+                print "Start building Frhed release version " + prog_version
             if opt in ("-c", "--cleanup"):
                 if cleanup_build() == True:
                     print 'Cleanup done.'
@@ -370,10 +370,10 @@ def main(argv):
             if opt in ("-f", "--file"):
                 ver_file = arg
 
-    if ver_file == '' and version == '':
+    if ver_file == '' and prog_version == '':
         print 'WARNING: No version number or INI file given, using default'
         print '    version number of 0.0.0.0 where applicable in this script.'
-        version = '0.0.0.0'
+        prog_version = '0.0.0.0'
 
     # Check all required tools are found (script configuration)
     if check_tools() == False:
@@ -403,10 +403,10 @@ def main(argv):
     if len(ver_file) > 0:
         version_read = get_product_version(ver_file)
         if len(version_read) > 0:
-          version = version_read
+            prog_version = version_read
         set_resource_version(ver_file)
 
-    version_folder = 'Frhed-' + version
+    version_folder = 'Frhed-' + prog_version
     dist_folder = get_and_create_dist_folder(version_folder)
     if dist_folder == '':
         sys.exit(1)
@@ -424,9 +424,6 @@ def main(argv):
 
     dist_bin_folder = get_and_create_bin_folder(dist_folder, version_folder)
     create_bin_folders(dist_bin_folder, dist_src_folder)
-
-    # runtimes_folder = get_and_create_runtimes_folder(dist_folder, version)
-    # create_runtime_folder(runtimes_folder)
 
     print 'Frhed release script ready!'
 
