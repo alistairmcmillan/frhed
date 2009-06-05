@@ -11,9 +11,10 @@
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
-!define RUNTIMES_PATH "..\Runtimes"
-!define RUNTIME_FILES_C "msvcr71.dll"
-!define RUNTIME_FILES_CPP "msvcp71.dll"
+!define RUNTIMES_PATH "..\..\..\Runtimes"
+!define RUNTIME_FILES_C "msvcr80.dll"
+!define RUNTIME_FILES_CPP "msvcp80.dll"
+!define RUNTIME_FILES_MANIFEST "Microsoft.VC80.CRT.manifest"
 
 SetCompressor lzma
 
@@ -81,6 +82,7 @@ Section "!Program Files" SEC01
   ; MS C/C++ runtime files
   File "${RUNTIMES_PATH}\${RUNTIME_FILES_C}"
   File "${RUNTIMES_PATH}\${RUNTIME_FILES_CPP}"
+  File "${RUNTIMES_PATH}\${RUNTIME_FILES_MANIFEST}"
 
   ; Example template file
   File "..\..\Docs\Users\Sample.tpl"
@@ -168,7 +170,8 @@ Section Uninstall
   
   ; MS runtimes
   Delete "$INSTDIR\${RUNTIME_FILES_C}"
-  Delete "$INSTDIR\${RUNTIME_FILES_C}"
+  Delete "$INSTDIR\${RUNTIME_FILES_CPP}"
+  Delete "$INSTDIR\${RUNTIME_FILES_MANIFEST}"
 
   ; Basic documents
   Delete "$INSTDIR\Docs\GPL.txt"
