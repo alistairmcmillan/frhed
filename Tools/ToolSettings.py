@@ -40,6 +40,7 @@ class ToolSettings:
         self.vs_path8 = r'C:\Program Files\Microsoft Visual Studio 8'
         self.vs_path9 = r'C:\Program Files\Microsoft Visual Studio 9.0'
         self.innosetup_path = r'C:\Program Files\Inno Setup 5'
+        self.nsis_path = r'C:\Program Files\NSIS'
         # Checkout sources from local workspace or from SVN server (give URL)
         self.source = 'workspace'
         self.vs_version = 2005
@@ -67,6 +68,8 @@ class ToolSettings:
             config.set(sect, 'vs_path9', self.vs_path9)
         if not config.has_option(sect, 'innosetup_path'):
             config.set(sect, 'innosetup_path', self.innosetup_path)
+        if not config.has_option(sect, 'nsis_path'):
+            config.set(sect, 'nsis_path', self.nsis_path)
 
         # Writing our configuration file to 'Tools.ini'
         with open(filename, 'w') as configfile:
@@ -89,6 +92,7 @@ class ToolSettings:
         self.vs_path8 = config.get('RUNTIME', 'vs_path8')
         self.vs_path9 = config.get('RUNTIME', 'vs_path9')
         self.innosetup_path = config.get('RUNTIME', 'innosetup_path')
+        self.nsis_path = config.get('RUNTIME', 'nsis_path')
         self.source = config.get('RUNTIME', 'Source') 
         self.vs_version = config.getint('RUNTIME', 'VSStudio')
 
