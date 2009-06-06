@@ -375,6 +375,11 @@ def main(argv):
         print '    version number of 0.0.0.0 where applicable in this script.'
         prog_version = '0.0.0.0'
 
+    # Now read settings from Tools.ini
+    prog.read_ini('Tools.ini')
+    print 'Compiler: ' + prog.vs_path
+    print 'Path: ' + os.getcwd()
+
     # Check all required tools are found (script configuration)
     if check_tools() == False:
         sys.exit()
