@@ -22,6 +22,7 @@
 # A script for upgrading VS solution- and project-files from VS2003 to newer
 # VS versions. This script calls VS binary to upgrade every file listed. If the
 # file is solution file, then all projects in the solution are also upgraded.
+# After project update the manifest fix is applied to needed project files.
 #
 # For more info about using VS command line, see:
 # http://www.devsource.com/c/a/Using-VS/Working-at-the-Visual-Studio-Command-Line/1/
@@ -47,7 +48,8 @@ solutions = [r'FRHED.sln']
 projects = []
     
 # These projects need the manifest file fix
-manifest_projects = [r'FRHED\frhed.vcproj']
+manifest_projects = [r'FRHED\frhed.vcproj',
+    r'FRHED\heksedit.vcproj']
 
 def upgrade_projects(root_path):
     vs_binary = os.path.join(tools.vs_path, 'Common7/IDE')
