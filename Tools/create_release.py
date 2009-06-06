@@ -47,8 +47,6 @@
 # CONFIGURATION:
 # Set these variables to match your environment and folders you want to use
 
-# NSIS installation folder
-nsis_path = 'C:\\Program Files\\NSIS'
 # Relative path where to create a release folder
 dist_root_folder = 'distrib'
 root_path = ''
