@@ -12,6 +12,8 @@ Frhed 1.5.10
   Bugfix: Don't allow de-selecting program files in installer (r675)
   Bugfix: Crash when going to DLL import names (#2800045)
 
+Frhed 1.6.x (R1_6) branch created (r698)
+
 Frhed 1.5.4 - 2009-05-26 (r667)
   Improve Drag&Drop-dialog layout (r638)
   Improve Move/Copy bytes-dialog layout (r640)
