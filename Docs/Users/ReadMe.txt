@@ -4,7 +4,7 @@ Frhed is an Open Source binary file editor for Windows. It is small but have
 advanced features like partially opening large files. Frhed is also in active
 development and new versions are released frequently.
 
-Frhed bomepage is at: http://frhed.sourceforge.net/
+Frhed homepage is at: http://frhed.sourceforge.net/
 
 Frhed support
 =============
@@ -21,7 +21,7 @@ to the bug tracker at http://sourceforge.net/tracker/?atid=1100163&group_id=2364
 Developers will look at the issue as soon as possible. Sometimes reacting to
 new issue may take some time since people may be busy with other things.
 
-New features and ideas can be discussed in forums aswell. Discussing first at
+New features and ideas can be discussed in forums as well. Discussing first at
 the forum allows developing the idea with developers before submitting it as a
 new feature request. Feature request can be also submitted directly to the
 Feature Requests -tracker at:
