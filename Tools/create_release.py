@@ -327,6 +327,21 @@ def check_tools():
         print vs_cmd
         print 'Please check script configuration.'
         return False
+
+    pathhhc = os.path.join(root_path, 'Docs/Users/Manual/build/hhc/hhc.exe')
+    folderdtd = os.path.join(root_path, 'Docs/Users/Manual/build/dtd')
+    foldersaxon = os.path.join(root_path, 'Docs/Users/Manual/build/saxon')
+    folderxerc = os.path.join(root_path, 'Docs/Users/Manual/build/xerces')
+    folderxsl = os.path.join(root_path, 'Docs/Users/Manual/build/xsl')
+
+    if not os.path.exists(pathhhc) or not os.path.exists(folderdtd) or \
+            not os.path.exists(foldersaxon) or not os.path.exists(folderxerc) or \
+            not os.path.exists(folderxsl):
+        print 'Cannot find manual build tools'
+        print 'Please download and install manual build tools from:'
+        print 'https://sourceforge.net/project/showfiles.php?group_id=236485&package_id=287297'
+        print 'See also Docs/Developers/Manual.html'
+        return False
     return True
 
 def usage():
