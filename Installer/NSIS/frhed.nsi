@@ -116,6 +116,10 @@ Section "-Gen files" SEC03
   SetOutPath "$INSTDIR\Languages"
   File "..\..\Build\Release\Languages\heksedit.lng"
 SectionEnd
+Section "Dutch" SEC_TR_DUTCH
+  SetOutPath "$INSTDIR\Languages"
+  File "..\..\Translations\Frhed\nl.po"
+SectionEnd
 Section "French" SEC04
   SetOutPath "$INSTDIR\Languages"
   File "..\..\Translations\Frhed\fr.po"
@@ -186,6 +190,7 @@ Section Uninstall
   RMDir "$INSTDIR\Docs"
 
   Delete "$INSTDIR\Languages\heksedit.lng"
+  Delete "$INSTDIR\Languages\nl.po"
   Delete "$INSTDIR\Languages\fr.po"
   Delete "$INSTDIR\Languages\de.po"
   RMDir "$INSTDIR\Languages"
