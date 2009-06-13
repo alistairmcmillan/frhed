@@ -38,6 +38,7 @@ SetCompressor lzma
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
 !define MUI_FINISHPAGE_RUN "$INSTDIR\frhed.exe"
+!define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Docs\ReadMe.txt
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -93,6 +94,9 @@ Section "!Program Files" SEC01
   File "GPL.txt"
   File "..\..\Docs\Users\ChangeLog.txt"
   File "..\..\Docs\Users\Contributors.txt"
+  File "..\..\Docs\Users\ReadMe.txt"
+  CreateShortCut "$SMPROGRAMS\Frhed\ReadMe.lnk" "$INSTDIR\Docs\ReadMe.txt"
+
   ; ChangeLog.txt refers to this file
   File "..\..\Docs\Users\History.txt"
 SectionEnd
@@ -178,6 +182,7 @@ Section Uninstall
   Delete "$INSTDIR\Docs\ChangeLog.txt"
   Delete "$INSTDIR\Docs\Contributors.txt"
   Delete "$INSTDIR\Docs\History.txt"
+  Delete "$INSTDIR\Docs\ReadMe.txt"
   RMDir "$INSTDIR\Docs"
 
   Delete "$INSTDIR\Languages\heksedit.lng"
@@ -190,6 +195,7 @@ Section Uninstall
   Delete "$SMPROGRAMS\Frhed\Help.lnk"
   Delete "$DESKTOP\Frhed.lnk"
   Delete "$SMPROGRAMS\Frhed\Frhed.lnk"
+  Delete "$SMPROGRAMS\Frhed\ReadMe.lnk"
 
   RMDir "$SMPROGRAMS\Frhed"
   RMDir "$INSTDIR"

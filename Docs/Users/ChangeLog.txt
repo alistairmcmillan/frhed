@@ -4,6 +4,11 @@ to Subversion revision numbers (rXXXXX).
 
 For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 
+Frhed 1.6.0
+  Add ReadMe.txt (r710)
+  Install ReadMe.txt and show it after installing (r710)
+  Add link to ReadMe.txt to start-menu (r710)
+
 Frhed 1.5.10 2006-06-10 (r702)
   Improve Export HexDump -dialog layout (r677)
   Improve Binary Mode -dialog layout (r684)
