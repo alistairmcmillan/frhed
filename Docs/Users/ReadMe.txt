@@ -9,7 +9,7 @@ Frhed homepage is at: http://frhed.sourceforge.net/
 Frhed support
 =============
 Main support channel is the discussion forum at
-http://apps.sourceforge.net/phpbb/frhed/ There is Open Discussion forum for
+https://sourceforge.net/apps/phpbb/frhed/ There is Open Discussion forum for
 general discussion about Frhed, usage and problems. The Development forum is
 mostly for development related discussions. The forums are open for everybody.
 But you must be registered (free) to Sourceforge.net to write messages.
