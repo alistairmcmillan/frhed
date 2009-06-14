@@ -8,6 +8,8 @@ Frhed 1.6.0
   Add ReadMe.txt (r710)
   Install ReadMe.txt and show it after installing (r710)
   Add link to ReadMe.txt to start-menu (r710)
+  New translation:
+  - Dutch (2805592)
 
 Frhed 1.5.10 2006-06-10 (r702)
   Improve Export HexDump -dialog layout (r677)

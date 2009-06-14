@@ -13,6 +13,9 @@ Jochen Tucht <jtuc@users.sourceforge.net>
 
 Localization:
 
+* Dutch:
+  Thomas De Rocker <thomasderocker@yahoo.com>
+
 * French:
   Frédéric Dectot
 
