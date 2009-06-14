@@ -7,3 +7,39 @@
 #footer {
 	display: none;
 }
+
+/* Inline list */
+ul.inline {
+	margin: 1em;
+	padding: 0;
+}
+
+ul.inline li {
+	margin: 0;
+	margin-right: 1em;
+	padding: 0;
+	display: inline;
+	list-style: none;
+}
+
+/* Translations Status */
+.status {
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+
+.status th {
+	padding: 3px;
+	background: white;
+	border: 1px solid black;
+}
+
+.status td {
+	padding: 3px;
+	background: white;
+	border: 1px solid black;
+}
+
+.translated { color: black; }
+.fuzzy { color: black; }
+.untranslated { color: black; }

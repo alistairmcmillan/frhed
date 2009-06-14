@@ -20,6 +20,7 @@ html {min-height: 100%;}
 
 a {color: #FF3;}
 a:hover {color: #AA3;}
+a[name] {color: #DDD;}
 
 body {
 	background: #111 url(../images/bg.jpg) repeat-x;
@@ -126,3 +127,39 @@ h1,h2 {padding-top: 6px;}
 #footer .left, .footer .right {padding: 10px 0;}
 #footer .right, .footer .right a {color: #555;}
 #footer .right a:hover {color: #999;}
+
+/* Inline list */
+ul.inline {
+	margin: 1em;
+	padding: 0;
+}
+
+ul.inline li {
+	margin: 0;
+	margin-right: 1em;
+	padding: 0;
+	display: inline;
+	list-style: none;
+}
+
+/* Translations Status */
+.status {
+	border-collapse: collapse;
+	border: 1px solid #222;
+}
+
+.status th {
+	padding: 3px;
+	background: #444;
+	border: 1px solid #222;
+}
+
+.status td {
+	padding: 3px;
+	background: #333;
+	border: 1px solid #222;
+}
+
+.translated { color: #2D802B; }
+.fuzzy { color: #05359B; }
+.untranslated { color: #D42323; }

@@ -169,6 +169,11 @@
       $sidenaventry->addSubEntry('http://sourceforge.net/projects/frhed', 'Project Page');
       $sidenaventry->addSubEntry('/frhed_pad.xml', 'PAD File');
       $sidenaventries[] = $sidenaventry;
+      $sidenaventry = new SideNavEntry('', 'Translations');
+      $sidenaventry->addSubEntry('/translations/', 'Index');
+      $sidenaventry->addSubEntry('/translations/status_branch.php', 'Status (Stable Branch)');
+      $sidenaventry->addSubEntry('/translations/status_trunk.php', 'Status (Unstable Trunk)');
+      $sidenaventries[] = $sidenaventry;
       $sidenaventry = new SideNavEntry('', 'Support');
       $sidenaventry->addSubEntry('http://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485', 'Bugs');
       $sidenaventry->addSubEntry('http://sourceforge.net/tracker/?atid=1100166&amp;group_id=236485', 'Feature Requests');
