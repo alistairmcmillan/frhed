@@ -15,7 +15,8 @@ Frhed 1.7.1
   Bugfix: Don't allow de-selecting program files in installer (r675)
   Bugfix: Crash when going to DLL import names (#2800045)
   New translation:
-  - Dutch (2805592)
+  - Dutch (#2805592)
+  - French (#2806325)
 
 Frhed 1.6.x (R1_6) branch created (r698)
 
