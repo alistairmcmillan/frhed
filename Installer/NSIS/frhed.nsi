@@ -112,7 +112,7 @@ Section "Documentation" SEC02
 SectionEnd
 
 SectionGroup "Translations files"
-Section "-Gen files" SEC03
+Section "-Gen files" SEC_TR_GENERAL
   SetOutPath "$INSTDIR\Languages"
   File "..\..\Build\Release\Languages\heksedit.lng"
 SectionEnd
@@ -120,11 +120,11 @@ Section "Dutch" SEC_TR_DUTCH
   SetOutPath "$INSTDIR\Languages"
   File "..\..\Translations\Frhed\nl.po"
 SectionEnd
-Section "French" SEC04
+Section "French" SEC_TR_FRENCH
   SetOutPath "$INSTDIR\Languages"
   File "..\..\Translations\Frhed\fr.po"
 SectionEnd
-Section "German" SEC05
+Section "German" SEC_TR_GERMAN
   SetOutPath "$INSTDIR\Languages"
   File "..\..\Translations\Frhed\de.po"
 SectionEnd
@@ -151,8 +151,9 @@ SectionEnd
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} "Main executable and required dlls."
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} "Frhed documentation."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC04} "French translation."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC05} "German translation."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_TR_DUTCH} "Dutch translation."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_TR_FRENCH} "French translation."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_TR_GERMAN} "German translation."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 
