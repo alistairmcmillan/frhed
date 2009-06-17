@@ -2,206 +2,249 @@
 <article id="main_window">
   <title>Main Window</title>
 
-  <para>The window's title shows the name of the currently loaded file in square brackets,
-  with an asterisk on it's right side if the file has been changed. If a file is loaded,
-  you will find something like this in the window's client area:</para>
+  <screenshot>
+    <screeninfo>Frhed main window</screeninfo>
 
-<screen>000000  23 42 34 53 56 45 76 45  #B4SVEvE
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="screenshots/MainWindow.png" format="PNG" />
+      </imageobject>
+    </mediaobject>
+  </screenshot>
+
+  <para>The window's title shows the name of the currently loaded file in square
+  brackets, with an asterisk on it's right side if the file has been changed. If
+  a file is loaded the main area has data laid out like this:</para>
+
+  <screen>000000  23 42 34 53 56 45 76 45  #B4SVEvE
 000008  64 56 0a bc 0a 35 c0 08  dV...5..
 000010  06 be 09 07 bb 07 00 00  ........
 000018  00 00 00 00 00 00 07 __  .......</screen>
 
-  <para>On the far left are the offsets of the first byte in the line in hexadecimal notation.
-  You can choose the offset length or make it automatically adjusted to the length of the
-  largest offset with the <menuchoice><guimenu>Options</guimenu><guimenuitem>View Settings</guimenuitem></menuchoice> command or right-click the offsets to
-  increment their lengths or left-click them to decrement their lengths (when auto-adjust is off).
-  Then come the actual byte values, with vertical separating lines after every fourth byte in the line.
-  You can choose the number of bytes to display per line with <menuchoice><guimenu>Options</guimenu><guimenuitem>View Settings</guimenuitem></menuchoice>,
-  and also, if it should be automatically adjusted to the window width. To the far right
-  are the character representations of these values, with dotted lines on the left and
-  right of this section. You can choose the character set for these representations as
-  well as the font size with the <menuchoice><guimenu>Options</guimenu><guimenuitem>Character set</guimenuitem></menuchoice> command. As you can see, the
-  first byte of the second line of the sample hexdump has the hexadecimal value 64
-  and the corresponding character is a lower case "d". The position after the last
-  byte of the file is marked with a double underscore "__" in the byte section.</para>
+  <para>On the left are the offsets of the first byte in the line in hexadecimal
+  notation. You can choose the offset length or make it automatically adjusted
+  to the length of the largest offset from the <guilabel>View
+  Settings</guilabel> -dialog (<menuchoice>
+      <guimenu>Options</guimenu>
 
-  <para>Blinking in the window somewhere is a rectangular caret, if the window is enabled.
-  If it is in the byte section, then it stands on either of the two nibbles (half-bytes).
-  If it is in the character section, then it stands on one character corresponding with
-  one byte. In either case the corresponding other representation is shown inverted in 
-  the other section.</para>
+      <guimenuitem>View Settings)</guimenuitem>
+    </menuchoice> or right-click the offsets to increment their lengths or
+  left-click them to decrement their lengths (when auto-adjust is off). In
+  middle are the actual byte values, with vertical separating lines after every
+  fourth byte in the line. You can choose the number of bytes to display per
+  line from <guilabel>View Settings</guilabel>-dialog and also, if it should be
+  automatically adjusted to the window width. In the riight are the character
+  representations of these values. Values that do not have a printable character
+  presentation are shown with a dot. You can choose the character set for these
+  representations as well as the font size with the <guilabel>Character
+  Set</guilabel> -dialog (<menuchoice>
+      <guimenu>Options</guimenu>
 
-  <para>On the bottom of the window is the status bar, which displays additional information.
-  In the first section of the status bar you can find the current offset of the byte
-  which the caret is marking in hexadecimal and decimal notation. After that come the
-  bits of the current byte. Also in this section, on the right side, is something like this:</para>
+      <guimenuitem>Character set)</guimenuitem>
+    </menuchoice>. As you can see, the first byte of the second line of the
+  sample hexdump has the hexadecimal value 64 and the corresponding character is
+  a lower case "d". The position after the last byte of the file is marked with
+  a double underscore "__" in the byte section.</para>
 
-<screen>Unsigned: B:35,W:16931,L:1395933731</screen>
+  <para>Blinking in the window somewhere is a rectangular caret, if the window
+  is enabled. If the caret is in the byte section, then it stands on either of
+  the two nibbles (half-bytes). If the caret is in the character section, then
+  it stands on one character corresponding with one byte. In either case the
+  corresponding other representation is shown inverted in the other
+  section.</para>
 
-  <para>These are the values of the byte (B:), the word (W:) and the longword (L:) value starting
-  at this offset in decimal notation. These are computed depending on the setting for signed or
-  unsigned values (Choose with the <menuchoice><guimenu>Options</guimenu><guimenuitem>View Settings</guimenuitem></menuchoice> command) and on the binary mode setting,
-  either Little-endian (Intel format) or Big-endian (Motorola format).
-  Choose with the <menuchoice><guimenu>Options</guimenu><guimenuitem>Binary mode</guimenuitem></menuchoice> command.</para>
+  <para>On the bottom of the window is the status bar, which displays additional
+  information. In the first section of the status bar you can find the current
+  offset of the byte which the caret is marking in hexadecimal and decimal
+  notation. Next are the bits of the current byte. Also in this section, on the
+  right side, is something like this:</para>
 
-  <para>In the second section of the status bar are indicators for:</para>
+  <screen>Unsigned: B:35,W:16931,L:1395933731</screen>
+
+  <para>These are the values of the byte (<guilabel>B:</guilabel>), the word
+  (<guilabel>W:</guilabel>) and the double word (longword)
+  (<guilabel>L:</guilabel>) value starting at this offset in decimal notation.
+  These numbers are computed depending on the two settings: </para>
 
   <itemizedlist>
     <listitem>
-      <simpara>character set: &quot;ANSI&quot; or &quot;OEM&quot;.</simpara>
+      <simpara>Binary Mode can be Little-endian (Intel format) or Big-endian
+      (Motorola format). Can be selected in the <guilabel>Binary
+      Mode</guilabel>-dialog (<menuchoice>
+          <guimenu>Options</guimenu>
+
+          <guimenuitem>Binary mode</guimenuitem>
+        </menuchoice>).</simpara>
     </listitem>
+
     <listitem>
-      <simpara>entering mode: &quot;OVR&quot; for overwriting or &quot;INS&quot; for inserting on keyboard input. If Frhed is in read-only mode, then there will be a &quot;READ&quot; here.</simpara>
-    </listitem>
-    <listitem>
-      <simpara>binary mode: &quot;L&quot; for Little-endian or &quot;B&quot; for Big-endian.</simpara>
+      <simpara>Signed or unsigned values. Can be selected in <guilabel>View
+      Settings</guilabel>-dialog.</simpara>
     </listitem>
   </itemizedlist>
 
-  <para>In the third section the file size in bytes is displayed.</para>
+  <para>The second section of the status bar has indicators for:</para>
 
-  <para>The status bar can also be used to toggle various parameters
-  and act as a shortcut to certain commands.</para>
+  <itemizedlist>
+    <listitem>
+      <simpara>character set: <guilabel>ANSI</guilabel> or
+      <guilabel>OEM</guilabel>.</simpara>
+    </listitem>
 
-  <para>The status bar takes into account the same factors when considering
-  if the selected command should be carried out as the menus do when
-  disabling commands. If there are 2 alternatives in one place and
-  one is disabled then the other one will be used.</para>
+    <listitem>
+      <simpara>entering mode: <guilabel>OVR</guilabel> for overwriting or
+      <guilabel>INS</guilabel> for inserting on keyboard input. If Frhed is in
+      read-only mode, then there will be a <guilabel>READ</guilabel>
+      here.</simpara>
+    </listitem>
 
-  <para>A single left click in the third section is a shortcut to <menuchoice><guimenu>Edit</guimenu><guimenuitem>Append</guimenuitem></menuchoice>
-  (right is <menuchoice><guimenu>Edit</guimenu><guimenuitem>File properties</guimenuitem></menuchoice>) - Note that this may change in the future.</para>
+    <listitem>
+      <simpara>binary mode: <guilabel>L</guilabel> for Little-endian or
+      <guilabel>B</guilabel> for Big-endian.</simpara>
+    </listitem>
+  </itemizedlist>
 
-  <para>Clicking in the middle section will toggle the parameter clicked on
-  - ANSI &harr; OEM, READ &rarr; INS &rarr; OVR &rarr; READ&hellip; (right-click
-   goes back other way) , L &harr; B.</para>
+  <para>The third section is the file size in bytes.</para>
+
+  <para>The status bar can also be used to toggle various parameters and act as
+  a shortcut to certain commands.</para>
+
+  <para>The status bar takes into account the same factors when considering if
+  the selected command should be carried out as the menus do when disabling
+  commands. If there are 2 alternatives in one place and one is disabled then
+  the other one will be used.</para>
+
+  <para>A single left click in the third section is a shortcut to <menuchoice>
+      <guimenu>Edit</guimenu>
+
+      <guimenuitem>Append</guimenuitem>
+    </menuchoice> (right is <menuchoice>
+      <guimenu>Edit</guimenu>
+
+      <guimenuitem>File properties</guimenuitem>
+    </menuchoice>) - Note that this may change in the future.</para>
+
+  <para>Clicking in the middle section will toggle the parameter clicked on -
+  <guilabel>ANSI</guilabel> ↔ <guilabel>OEM</guilabel>,
+  <guilabel>READ</guilabel> → <guilabel>INS</guilabel> →
+  <guilabel>OVR</guilabel> → <guilabel>READ</guilabel>… (right-click goes back
+  other way) , <guilabel>L</guilabel> ↔ <guilabel>B</guilabel>.</para>
 
   <para>Left or right clicking in the first section can result in many different
-  things depending on where you click and state of the file opened.</para>
+  things depending on where you click and the state of the file opened.</para>
 
   <para>When part of the file is selected you may deselect (cursor goes to the
-  first nibble of the first byte of the selection or last of last for a
-  right click) by clicking in the space on the right or the word "Selected:"
-  or alter the selection using <menuchoice><guimenu>Edit</guimenu><guimenuitem>Select block</guimenuitem></menuchoice> by clicking in the offsets region.</para>
+  first nibble of the first byte of the selection or last of last for a right
+  click) by clicking in the space on the right or the word
+  <guilabel>Selected:</guilabel> or alter the selection using <menuchoice>
+      <guimenu>Edit</guimenu>
 
-  <para>If the file is empty clicking the first part will bring up <menuchoice><guimenu>Edit</guimenu><guimenuitem>Append</guimenuitem></menuchoice>.</para>
+      <guimenuitem>Select block</guimenuitem>
+    </menuchoice> by clicking in the offsets region.</para>
 
-  <para>If the file is not empty and the cursor is on the end byte then <menuchoice><guimenu>Edit</guimenu><guimenuitem>Goto</guimenuitem></menuchoice>
-  will be activated on a left click or the cursor goes to the previous byte
-  on a right click.</para>
+  <para>If the file is empty clicking the first part will bring up <menuchoice>
+      <guimenu>Edit</guimenu>
 
-  <para>Otherwise (when not on the end byte, selected or empty) the click behaviour
-  is complex and summarised in the table below. The right action is
+      <guimenuitem>Append</guimenuitem>
+    </menuchoice>.</para>
+
+  <para>If the file is not empty and the cursor is on the end byte then
+  <menuchoice>
+      <guimenu>Edit</guimenu>
+
+      <guimenuitem>Goto</guimenuitem>
+    </menuchoice> will be activated on a left click or the cursor goes to the
+  previous byte on a right click.</para>
+
+  <para>Otherwise (when not on the end byte, selected or empty) the click
+  behaviour is complex and summarised in the table below. The right action is
   omitted where it is the same as the left one.</para>
 
   <informaltable frame="none">
     <tgroup cols="7">
-      <colspec colname="c1" colwidth="14*"/>
-      <colspec colname="c2" colwidth="14*"/>
-      <colspec colname="c3" colwidth="14*"/>
-      <colspec colname="c4" colwidth="14*"/>
-      <colspec colname="c5" colwidth="14*"/>
-      <colspec colname="c6" colwidth="14*"/>
-      <colspec colname="c7" colwidth="14*"/>
+      <colspec colname="c1" colwidth="14*" />
+
+      <colspec colname="c2" colwidth="14*" />
+
+      <colspec colname="c3" colwidth="14*" />
+
+      <colspec colname="c4" colwidth="14*" />
+
+      <colspec colname="c5" colwidth="14*" />
+
+      <colspec colname="c6" colwidth="14*" />
+
+      <colspec colname="c7" colwidth="14*" />
+
       <tbody>
         <row>
-          <entry>
-            <para>Text</para>
-          </entry>
-          <entry>
-            <para>Offset 0=0x0</para>
-          </entry>
-          <entry>
-            <para>  Bits=</para>
-          </entry>
-          <entry>
-            <para>00100011</para>
-          </entry>
-          <entry>
-            <para>                   </para>
-          </entry>
-          <entry>
-            <para>Unsigned:</para>
-          </entry>
-          <entry>
-            <para>B:35,W:8227,L:1766662179</para>
-          </entry>
+          <entry><para>Text</para></entry>
+
+          <entry><para>Offset 0=0x0</para></entry>
+
+          <entry><para>  Bits=</para></entry>
+
+          <entry><para>00100011</para></entry>
+
+          <entry><para>                   </para></entry>
+
+          <entry><para>Unsigned:</para></entry>
+
+          <entry><para>B:35,W:8227,L:1766662179</para></entry>
         </row>
+
         <row>
-          <entry>
-            <para>Area</para>
-          </entry>
-          <entry>
-            <para>Offset</para>
-          </entry>
-          <entry>
-            <para>Bits</para>
-          </entry>
-          <entry>
-            <para>Actual bits</para>
-          </entry>
-          <entry>
-            <para>Space</para>
-          </entry>
-          <entry>
-            <para>Un/signed</para>
-          </entry>
-          <entry>
-            <para>B, W &amp; L values</para>
-          </entry>
+          <entry><para>Area</para></entry>
+
+          <entry><para>Offset</para></entry>
+
+          <entry><para>Bits</para></entry>
+
+          <entry><para>Actual bits</para></entry>
+
+          <entry><para>Space</para></entry>
+
+          <entry><para>Un/signed</para></entry>
+
+          <entry><para>B, W &amp; L values</para></entry>
         </row>
+
         <row>
-          <entry>
-            <para>Left</para>
-          </entry>
-          <entry>
-            <para>Goto</para>
-          </entry>
-          <entry>
-            <para>Bit manip dlg</para>
-          </entry>
-          <entry>
-            <para>Direct bit manip</para>
-          </entry>
-          <entry>
-            <para>Select block</para>
-          </entry>
-          <entry>
-            <para>Toggle un/signed</para>
-          </entry>
-          <entry>
-            <para>Enter decimal value with the size set to the one clicked in</para>
-          </entry>
+          <entry><para>Left</para></entry>
+
+          <entry><para>Goto</para></entry>
+
+          <entry><para>Bit manip dlg</para></entry>
+
+          <entry><para>Direct bit manip</para></entry>
+
+          <entry><para>Select block</para></entry>
+
+          <entry><para>Toggle un/signed</para></entry>
+
+          <entry><para>Enter decimal value with the size set to the one clicked
+          in</para></entry>
         </row>
+
         <row>
-          <entry>
-            <para>Right</para>
-          </entry>
-          <entry>
-            <para>View settings</para>
-          </entry>
-          <entry>
-            <para/>
-          </entry>
-          <entry>
-            <para/>
-          </entry>
-          <entry>
-            <para>Goto</para>
-          </entry>
-          <entry>
-            <para/>
-          </entry>
-          <entry>
-            <para/>
-          </entry>
+          <entry><para>Right</para></entry>
+
+          <entry><para>View settings</para></entry>
+
+          <entry><para></para></entry>
+
+          <entry><para></para></entry>
+
+          <entry><para>Goto</para></entry>
+
+          <entry><para></para></entry>
+
+          <entry><para></para></entry>
         </row>
       </tbody>
     </tgroup>
   </informaltable>
 
-  <para>If you have suggestions as to what else the status bar could/should (not) do just
-  drop me (<ulink url="mailto:pabs3@zip.to">Pabs</ulink>) a line.</para>
-
-  <para>The window also has a vertical and a horizontal scrollbar, which can be used to
-  scroll the view. They don't change the caret position.</para>
+  <para>The window also has a vertical and a horizontal scrollbar, which can be
+  used to scroll the view. They don't change the caret position.</para>
 </article>
