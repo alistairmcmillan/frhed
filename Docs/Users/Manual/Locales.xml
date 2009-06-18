@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article id="Locales">
+  <title id="LocaleSupport">Locale support</title>
+
+  <simpara>Frhed user interface is in English by default. But the language can
+  be changed to other languages for which translations have been contributed.
+  Localization affects all visible texts in the user interface.</simpara>
+
+  <section>
+    <title>Installing localizations</title>
+
+    <para>Localizations are installed by selecting them in the installer. If
+    some localization is missing you can run the installer again and select
+    it.</para>
+
+    <para>Localizations can be also installed and updated by copying translation
+    files to the <filename class="directory">Languages</filename>-subfolder in
+    Frhed installation folder. All translation files have filename of
+    <filename>[langcode].po</filename>. For example <filename>de.po</filename>
+    for German translation file.</para>
+  </section>
+
+  <section>
+    <title>Selecting the Frhed interface language</title>
+
+    <para>Interface language can be selected from the <guilabel>View
+    settings</guilabel> -dialog which is found from
+    <guimenu>Options</guimenu>-menu. In bottom of the dialog there is a dropdown
+    control which contains all installed translations. The language can be
+    changed by opening the dropdown and selecting the language from the
+    list.</para>
+
+    <para>After the language selection the interface language is changed. There
+    is no need to re-start Frhed.</para>
+
+    <para>If the wanted language is not shown in the list it is not installed or
+    simply not yet contributed. Check the latest installer if there are more
+    languages available.</para>
+  </section>
+
+  <section>
+    <title>Available localizations</title>
+
+    <para>Frhed localizations currently contributed and available are:</para>
+
+    <itemizedlist>
+      <listitem>
+        <simpara>Dutch</simpara>
+      </listitem>
+
+      <listitem>
+        <simpara>French</simpara>
+      </listitem>
+
+      <listitem>
+        <simpara>German</simpara>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>Reporting errors in translation</title>
+
+    <para>If you see an error in translation, please submit a bug report to our
+    <ulink
+    url="https://sourceforge.net/tracker/?group_id=236485&amp;atid=1100163">bug
+    tracker</ulink>. It would be great if you can provide or suggest a fix. It
+    is also possible to discuss about translations in our <ulink
+    url="???">discussion forums</ulink>.</para>
+  </section>
+
+  <section>
+    <title>Submitting a new translation</title>
+
+    <para>If you want to help us and translate Frhed to new language (not yet in
+    above list) you should first read our translation documentation. The
+    documentation is available:<itemizedlist>
+        <listitem>
+          <simpara>via <ulink
+          url="http://frhed.svn.sourceforge.net/viewvc/frhed/trunk/Docs/Developers/Translations.html">ViewVC
+          from version control</ulink></simpara>
+        </listitem>
+
+        <listitem>
+          <simpara>downloading the latest source package and opening the document
+          <filename>Docs/Developers/Translations.html</filename></simpara>
+        </listitem>
+      </itemizedlist></para>
+
+    <para>PO files used to translate Frhed do not require any special tools. But
+    it is recommended to use tools described in the above mentioned
+    document.</para>
+  </section>
+</article>
