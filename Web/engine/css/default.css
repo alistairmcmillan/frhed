@@ -160,6 +160,6 @@ ul.inline li {
 	border: 1px solid #222;
 }
 
-.translated { color: #2D802B; }
-.fuzzy { color: #05359B; }
-.untranslated { color: #D42323; }
+.translated { color: #3C3; }
+.fuzzy { color: #69F; }
+.untranslated { color: #F00; }
