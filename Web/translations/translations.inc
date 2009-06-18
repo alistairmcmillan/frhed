@@ -138,7 +138,9 @@
         //TODO: Sort languages!?
         foreach ($translations as $translation) { //for all translations...
           $language_name = (string)$translation->language;
-          if ($language_name != 'en-US') { //If NOT English...
+          
+          $template = (bool)$translation->attributes()->template;
+          if ($template == false) { //If NO template...
             $file_name = (string)$translation->file;
             $translation_update = (string)$translation->update;
             $strings = $translation->strings;
@@ -156,17 +158,18 @@
             $temp .= "    <td class=\"center\">" . $translation_update . "</td>\n";
             $temp .= "  </tr>\n";
           }
-          else { //If English...
-            $english_file_name = (string)$translation->file;
-            $english_translation_update = (string)$translation->update;
-            $english_strings_count = (int)$translation->strings->translated;
+          else { //If template...
+            $template_language_name = (string)$translation->language;
+            $template_file_name = (string)$translation->file;
+            $template_translation_update = (string)$translation->update;
+            $template_strings_count = (int)$translation->strings->translated;
           }
         }
         $temp .= "  <tr>\n";
-        $temp .= "    <td class=\"left\"><a href=\"" . $this->svnUrl . $project . '/' . $english_file_name . "\" rel=\"nofollow\">English (Template)</a></td>\n";
+        $temp .= "    <td class=\"left\"><a href=\"" . $this->svnUrl . $project . '/' . $template_file_name . "\" rel=\"nofollow\">" . $template_language_name . " (Template)</a></td>\n";
         $temp .= "    <td class=\"center\"></td>\n";
-        $temp .= "    <td colspan=\"3\" class=\"center\">Total: " . $english_strings_count . "</td>\n";
-        $temp .= "    <td class=\"center\">" . $english_translation_update . "</td>\n";
+        $temp .= "    <td colspan=\"3\" class=\"center\">Total: " . $template_strings_count . "</td>\n";
+        $temp .= "    <td class=\"center\">" . $template_translation_update . "</td>\n";
         $temp .= "  </tr>\n";
         $temp .= "</table>\n";
         $temp .= $this->getStatusGraphLegend();
@@ -197,7 +200,9 @@
         //TODO: Sort languages!?
         foreach ($translations as $translation) { //for all translations...
           $language_name = (string)$translation->language;
-          if ($language_name != 'en-US') { //If NOT English...
+          
+          $template = (bool)$translation->attributes()->template;
+          if ($template == false) { //If NO template...
             $file_name = (string)$translation->file;
             $translation_update = (string)$translation->update;
             $strings_untranslated = (int)$translation->strings->untranslated;
@@ -235,7 +240,8 @@
         foreach ($translations as $translation) { //for all translations...
           $language_name = (string)$translation->language;
           
-          if ($language_name != 'en-US') { //If NOT English...
+          $template = (bool)$translation->attributes()->template;
+          if ($template == false) { //If NO template...
             $temp = '';
             foreach ($translation->translators as $translators) { //for all translators...
               foreach ($translators as $translator) { //for each translator...
