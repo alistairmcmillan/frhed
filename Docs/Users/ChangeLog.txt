@@ -14,6 +14,7 @@ Frhed 1.7.1
   Bugfix: Zero-size files were opened as link files (r671)
   Bugfix: Don't allow de-selecting program files in installer (r675)
   Bugfix: Crash when going to DLL import names (#2800045)
+  Bugfix: Could not change language when installed from zip (#2808491)
   New translation:
   - Dutch (#2805592)
   - French (#2806325)

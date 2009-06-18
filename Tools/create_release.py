@@ -269,6 +269,7 @@ def create_bin_folders(bin_folder, dist_src_folder):
 
     shutil.copy('build/release/heksedit.dll', bin_folder)
     shutil.copy('build/release/RAWIO32.dll', bin_folder)
+    shutil.copy('build/release/languages/heksedit.lng', lang_folder)
 
     copy_po_files(lang_folder)
 
