@@ -10,6 +10,7 @@ Frhed 1.6.0
   Add link to ReadMe.txt to start-menu (r710)
   New translation:
   - Dutch (#2805592)
+  Translation updates:
   - French (#2806325)
 
 Frhed 1.5.10 2006-06-10 (r702)
