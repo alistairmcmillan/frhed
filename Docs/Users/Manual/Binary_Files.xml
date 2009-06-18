@@ -17,57 +17,60 @@
 
     <para>The numbering starts at zero. At each list index there is a number,
     for example the number 9 is at index "2". The index is usually called
-    "offset". Frhed displays the current offset in the lower left corner of it's
-    window. Large files contain many numbers, small files not so many. The
-    numbers in the list can have a value between 0 and 255, for a special
-    reason: Each number is a "byte".</para>
+    <emphasis>offset</emphasis>. Frhed displays the current offset in the
+    lower left corner of it's window. The numbers in the list can have a value
+    between 0 and 255, for a special reason: Each number is a
+    <emphasis>byte</emphasis>.</para>
   </section>
 
   <section>
     <title>What are bits and bytes?</title>
 
-    <para>"Bit" is an abbreviation for "BInary digiT". It can have a value of
-    either 0 or 1. One bit alone is not very useful, because already the number
-    2 can not be described with it. So you take many bits to describe large
-    numbers. This is how it works:</para>
+    <para><emphasis>Bit</emphasis> is an abbreviation for "BInary digiT". It
+    can have a value of either 0 or 1. One bit alone is not very useful,
+    because already the number 2 can not be described with it. So you need
+    many bits to describe large numbers. This is how it works:</para>
 
-    <para>The normal decimal system you know, with digits from 0 to 9, describes
-    numbers larger than 9 by arranging several digits in such a way that each
-    position in the number means something different.</para>
+    <para>The normal decimal system you know, with digits from 0 to 9,
+    describes numbers larger than 9 by arranging several digits in such a way
+    that each position in the number means something different.</para>
 
-    <para>For example the number "245" means really "2 times 100 + 4 times 10 +
-    5 times 1". The further left a digit's position in the number, the higher a
-    value it contributes to the number. Every time you go one step left in the
-    number, you multiply the digit there with 1, 10, 100, 1000 and so on and add
-    that value to what you already have. The values you have to multiply the
-    digit <emphasis role="bold">with</emphasis> can be obtained if you start out
-    with 1 on the far right, then multiply with 10 every time you go left. So
-    you get to multiply with 1, then with 1×10=10, then with 10×10=100, then
-    10×100=1000 and so on. This is our "base 10" number system.</para>
+    <para>For example the number "245" means really "2 times 100 + 4 times 10
+    + 5 times 1". The further left a digit's position in the number, the
+    higher a value it contributes to the number. Every time you go one step
+    left in the number, you multiply the digit there with 1, 10, 100, 1000 and
+    so on and add that value to what you already have. The values you have to
+    multiply the digit <emphasis role="bold">with</emphasis> can be obtained
+    if you start out with 1 on the far right, then multiply with 10 every time
+    you go left. So you get to multiply with 1, then with 1×10=10, then with
+    10×10=100, then 10×100=1000 and so on. This is our <emphasis>base
+    10</emphasis> number system.</para>
 
-    <para>Now the <emphasis role="bold">binary system</emphasis> is a "base
-    2"-system. A binary number might looks like this: 1011</para>
+    <para>Now the <emphasis role="bold">binary system</emphasis> is a
+    <emphasis>base 2</emphasis>-system. A binary number might looks like this:
+    1011</para>
 
     <para>This is not "one thousand and eleven", as it would be in the decimal
     system. In the decimal system we multiplied the digits at the various
-    positions with a 1, 10, 10×10=100, 10×100=1000 and so on, but this time, in
-    the binary system (also known as "dual system"), we multiply with 1, 2,
-    2×2=4, 2×4=8, 2×8=16 and so on, starting at the right and doing with a "2"
-    what we did with a "10" before. So the value of the binary number above is
-    "1 times 1 + 1 times 2 + 0 times 4 + 1 times 8", giving us the number "11"
-    in our decimal system.</para>
+    positions with a 1, 10, 10×10=100, 10×100=1000 and so on, but this time,
+    in the binary system, we multiply with 1, 2, 2×2=4, 2×4=8, 2×8=16 and so
+    on, starting at the right and doing with a "2" what we did with a "10"
+    before. So the value of the binary number above is "1 times 1 + 1 times 2
+    + 0 times 4 + 1 times 8", giving us the number "11" in our decimal
+    system.</para>
 
     <para>Computers use bits to calculate everything, because they can be
     modeled as "current on" or "current off" easily. With a packet of 4 bits
-    (called a "nibble") you can describe the numbers from 0 to 15. A packet of 8
-    bits is called a "byte", and <emphasis role="bold">these</emphasis> are what
-    the file contains. Each byte can describe a number from 0 to 255. So, a file
-    is a list (or "array") of "bytes", with each byte at a certain index or
-    "offset". These bytes are what Frhed displays in the middle of the screen,
-    but in yet another different number system: the "hexadecimal" system, which
-    is a system with the base 16. So there are 16 digits, the normal ones from 0
-    to 9, and additionally the letters "a" through "f" with following
-    values:</para>
+    (called a <emphasis>nibble</emphasis>) you can describe the numbers from 0
+    to 15. A packet of 8 bits is called a <emphasis>byte</emphasis>, and
+    <emphasis role="bold">these</emphasis> are what the file contains. Each
+    byte can describe a number from 0 to 255. So, a file is a list (or
+    "array") of bytes, with each byte at a certain index or
+    <emphasis>offset</emphasis>. These bytes are what Frhed displays in the
+    middle of the screen, but in yet another different number system: the
+    <emphasis>hexadecimal</emphasis> system, which is a system with the base
+    16. So there are 16 digits, the normal ones from 0 to 9, and additionally
+    the letters "a" through "f" with following values:</para>
 
     <screen>a = 10
 b = 11
@@ -76,47 +79,52 @@ d = 13
 e = 14
 f = 15</screen>
 
-    <para>So the "hex" (short for "hexadecimal") number "f14a" means: "10 times
-    1 + 4 times 16 + 1 time 16×16(=256) + 15 times 16×256(=4096)", giving a
-    value of 61770 in decimal. The point of using hex numbers is that values of
-    up to 255 (maximum value of a byte) can be described by employing up to 2
+    <para>So the <emphasis>hex</emphasis> (short for
+    <emphasis>hexadecimal</emphasis>) number "f14a" means: "10 times 1 + 4
+    times 16 + 1 time 16×16(=256) + 15 times 16×256(=4096)", giving a value of
+    61770 in decimal. The point of using hex numbers is that values of up to
+    255 (maximum value of a byte) can be described by employing up to 2
     hexadecimal digits, which gives a neat and ordered output on hex editors
     such as Frhed. On the right side of the Frhed window there are "normal"
     letters, punctuation symbols and so on. This is because each byte can be
-    seen as an index to a symbol in a "character set". This means that the
-    computer stores for example the letter "a" as a number with the value 97
-    ("61" in hex notation), the comma "," as a number 44 and so on. So if you
-    write a text on the computer and save it to disk, then the file will contain
-    a number of bytes, each byte signifying a letter, other symbol, or a special
-    code number for "End of line" or "Tabulator" and such. But there are several
-    character sets in use (for example Windows uses either the ANSI or the OEM
-    character set): In one character set the number 97 might mean the letter
-    "a", but in another it could be used for the apostrophe.</para>
+    seen as an index to a symbol in a <emphasis>character set</emphasis>. This
+    means that the computer stores for example the letter "a" as a number with
+    the value 97 ("61" in hex notation), the comma "," as a number 44 and so
+    on. So if you write a text on the computer and save it to disk, then the
+    file will contain a number of bytes, each byte signifying a letter, other
+    symbol, or a special code number for "End of line" or "Tabulator" and
+    such. But there are several character sets in use (for example Windows
+    uses either the ANSI or the OEM character set): In one character set the
+    number 97 might mean the letter "a", but in another it could be used for
+    the apostrophe.</para>
   </section>
 
   <section>
     <title>More info</title>
 
-    <para><ulink url="http://en.wikipedia.org/wiki/Wikipedia">Wikipedia</ulink>
-    is good source for more information. Especially articles about:</para>
+    <para><ulink
+    url="http://en.wikipedia.org/wiki/Wikipedia">Wikipedia</ulink> is a good
+    source for more information. Especially articles about:</para>
 
     <itemizedlist>
       <listitem>
-        <para><ulink url="http://en.wikipedia.org/wiki/Bit">Bit</ulink></para>
+        <simpara><ulink
+        url="http://en.wikipedia.org/wiki/Bit">Bit</ulink></simpara>
       </listitem>
 
       <listitem>
-        <para><ulink url="http://en.wikipedia.org/wiki/Byte">Byte</ulink></para>
+        <simpara><ulink
+        url="http://en.wikipedia.org/wiki/Byte">Byte</ulink></simpara>
       </listitem>
 
       <listitem>
-        <para><ulink
-        url="http://en.wikipedia.org/wiki/Binary_numeral_system">Binary</ulink></para>
+        <simpara><ulink
+        url="http://en.wikipedia.org/wiki/Binary_numeral_system">Binary</ulink></simpara>
       </listitem>
 
       <listitem>
-        <para><ulink
-        url="http://en.wikipedia.org/wiki/Hexadecimal">Hexadecimal</ulink></para>
+        <simpara><ulink
+        url="http://en.wikipedia.org/wiki/Hexadecimal">Hexadecimal</ulink></simpara>
       </listitem>
     </itemizedlist>
   </section>
