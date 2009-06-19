@@ -62,8 +62,8 @@ https://frhed.svn.sourceforge.net/svnroot/frhed/trunk</a>.
 <h3><a name="Environment">Environment</a></h3>
 <h4>Supported Compilers</h4>
 <ul>
-  <li>Visual Studio 2003.Net + Service Pack 1 (Used for releases)</li>
-  <li>Visual Studio 2005 (Service Pack 1 recommended)</li>
+  <li>Visual Studio 2003.Net + Service Pack 1</li>
+  <li>Visual Studio 2005 (Service Pack 1 recommended)- Used for releases</li>
   <li>Visual Studio 2008 (Service Pack 1 recommended)</li>
   <li>Visual Studio C++ 2008 Express Edition</li>
 </ul>
@@ -75,34 +75,20 @@ Express Edition does not countain resource editor but you can use any of the
 freely available resource editors. One good free resource editor is 
 <a href="http://www.resedit.net/">ResEdit</a>.</p>
 
-<p>Visual Studio 6 is not supported anymore. VC6 solution- and project-files
-are in SVN but they are not updated regularly by developers. Patches for VC6
-support are still accepted and committed though.</p>
-
 <h4>Needed libraries</h4>
-<p>Platform SDK (PSDK) or Windows SDK is needed for compiling.
-<ol>
-  <li>For VS 6 the Platform SDK February 2003 is recommended, later ones might
-   not work properly. <a href="http://www.microsoft.com/msdownload/platformsdk/sdkupdate/psdk-full.htm">
-   Download and install</a>.</li>
-  <li>For VS2003.Net and later: Platform SDK Windows 2003 SP1 or later
-    is recommended. <a href="http://www.microsoft.com/downloads/details.aspx?familyid=0BAF2B35-C656-4969-ACE8-E4C0C0716ADB">
-    Download and install</a>.</li>
-</ol>
+<p>Platform SDK (PSDK) or Windows SDK is needed for compiling. Platform SDK
+Windows 2003 SP1 or later is recommended.
+<a href="http://www.microsoft.com/downloads/details.aspx?familyid=0BAF2B35-C656-4969-ACE8-E4C0C0716ADB">
+Download and install</a>.</li>
+</p>
 
 <p>Frhed uses <code>htmlhelp</code> library to show HTML help files in help viewer.
 The HtmlHelp library is available as a part of <i>HTML Help Workshop</i> and as
 part of <i>Platform SDK</i> (PSDK).</p>
 
-<p>For VS 6 it is recommended to install HTML Help Workshop. It can be downloaded
-from Microsoft: <a href="http://www.microsoft.com/downloads/details.aspx?familyid=00535334-c8a6-452f-9aa0-d597d16580cc&amp;displaylang=en">
-HTML Help Workshop</a>. After installing HTML Help Workshop you must add its
-<code>include</code> and <code>lib</code> -folders to Visual Studio settings as
-additional include- and library-file folders.</p>
-
 <h3><a name="ProjectFiles">Project Files</a></h3>
-<p>The sources contain solution and project files for Visual Studio 6. But later
-Visual Studio versions convert those files to new format.</p>
+<p>The sources contain solution and project files for Visual Studio 2003. But
+later Visual Studio versions convert those files to new format.</p>
 
 <p>Frhed consist of three projects:
 <ul>
@@ -120,18 +106,18 @@ The dependencies are such that:
 <h3><a name="Compiling">Compile</a></h3>
 <p>To compile Frhed:
 <ul>
-  <li>Open <code>FRHED.dsw</code> solution file to Visual Studio</li>
+  <li>Open <code>FRHED.sln</code> solution file to Visual Studio</li>
   <li>Select the <code>frhed</code> project as a startup project</li>
   <li>Select <code>Rebuild all</code> to compile
 </ul>
 
 <h3><a name="VS2005">Visual Studio 2005 &amp; 2008 Manifest Files</a></h3>
-<p>When the VC6 project file (.dsp) or VS2003 project file (.vcproj) is
-converted to a Visual Studio 2005 or 2008 project, the visual styles do not get
-enabled. The problem is Visual Studio 2005 and 2008 automatically generate and
-embed a manifest file for the executable, but that generated manifest file does
-not include all needed properties to enable visual styles. The solution is to
-add WinMerge's manifest file as an additional manifest.</p>
+<p>When VS2003 project file (.vcproj) is converted to a Visual Studio 2005 or
+2008 project, the visual styles do not get enabled. The problem is Visual
+Studio 2005 and 2008 automatically generate and embed a manifest file for the
+executable, but that generated manifest file does not include all needed
+properties to enable visual styles. The solution is to add extended manifest
+file as an additional manifest.</p>
 
 <p>From project properties, set<br>
   <code>Manifest Tool / Input and Output / Additional Manifest Files</code>
