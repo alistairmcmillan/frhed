@@ -285,5 +285,26 @@
       $temp .= "</table>\n";
       print($temp);
     }
+    
+    /**
+     * ...
+     */
+    public function getLanguagesArray() {
+      $languages = array();
+      
+      $status = $this->_status;
+      foreach ($status->translations as $translations) { //for all projects...
+        foreach ($translations as $translation) { //for all translations...
+          $language_name = (string)$translation->language;
+          
+          if (!in_array($language_name, $languages)) { //if language NOT exists...
+            $languages[] = $language_name;
+          }
+        }
+      }
+      
+      sort($languages, SORT_STRING);
+      return $languages;
+    }
   }
 ?>
