@@ -8,6 +8,7 @@ Frhed 1.6.0
   Add ReadMe.txt (r710)
   Install ReadMe.txt and show it after installing (r710)
   Add link to ReadMe.txt to start-menu (r710)
+  Manual updates
   Bugfix: Could not change language when installed from zip (#2808491)
   New translation:
   - Dutch (#2805592)
