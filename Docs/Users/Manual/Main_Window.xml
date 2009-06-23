@@ -90,12 +90,14 @@
       <simpara>character set: <guilabel>ANSI</guilabel> or
       <guilabel>OEM</guilabel>.</simpara>
     </listitem>
+
     <listitem>
       <simpara>entering mode: <guilabel>OVR</guilabel> for overwriting or
       <guilabel>INS</guilabel> for inserting on keyboard input. If Frhed is in
       read-only mode, then there will be a <guilabel>READ</guilabel>
       here.</simpara>
     </listitem>
+
     <listitem>
       <simpara>binary mode: <guilabel>L</guilabel> for Little-endian or
       <guilabel>B</guilabel> for Big-endian.</simpara>
@@ -190,6 +192,7 @@
 
           <entry><para>B:35,W:8227,L:1766662179</para></entry>
         </row>
+
         <row>
           <entry><para>Area</para></entry>
 
@@ -205,6 +208,7 @@
 
           <entry><para>B, W &amp; L values</para></entry>
         </row>
+
         <row>
           <entry><para>Left</para></entry>
 
@@ -221,6 +225,7 @@
           <entry><para>Enter decimal value with the size set to the one clicked
           in</para></entry>
         </row>
+
         <row>
           <entry><para>Right</para></entry>
 
