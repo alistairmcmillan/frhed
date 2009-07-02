@@ -38,6 +38,7 @@ static const char szHexClass[] = "heksedit";
 HINSTANCE hMainInstance;
 
 LRESULT CALLBACK MainWndProc(HWND, UINT, WPARAM, LPARAM);
+static unsigned long ProcessSwitch(LPWSTR szFirstArgument, LPWSTR szNextArgument, bool* bSkipNextArg);
 
 static BOOL CALLBACK WndEnumProcCountInstances(HWND hwnd, LPARAM lParam)
 {
@@ -62,8 +63,7 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *, int)
 	OleInitialize(NULL);
 	InitCommonControls();
 
-	LPWSTR szExePath = GetCommandLineW();
-	LPWSTR szCmdLine = PathGetArgsW(szExePath);
+	LPWSTR szCmdLine = GetCommandLineW();
 
 	// Load the heksedit component.
 	static const TCHAR pe_heksedit[] = _T("heksedit.dll");
@@ -127,45 +127,70 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *, int)
 	ShowWindow(hwndMain, pHexWnd->iWindowShowCmd);
 	UpdateWindow(hwndMain);
 
-	if (*szCmdLine != '\0')
+	//Parse the command line
+	// (frhed.exe) [/s[offset]] [/l[offset]] [/e[another]] [filename]
+	int iNumberOfArgs;
+	LPWSTR* szArguments = CommandLineToArgvW(szCmdLine, &iNumberOfArgs);
+
+	if(iNumberOfArgs > 1)
 	{
-		// Command line not empty: open a file on startup.
-		LPWSTR p = szCmdLine;
-		LPWSTR q = szCmdLine;
-		DWORD dwStart = 0, dwLength = 0, dwEnd = 0; // MF cmd line parms
-		while ((*p = *q) != '\0')
+		//There are command line parameters.
+		DWORD dwStart = 0, dwLength = 0, dwEnd = 0;
+		LPWSTR szFileToLoad = NULL;
+		LPWSTR szNextArgument = NULL;
+		bool bSkipNextArg = false;
+
+		for (int i = 1; i < iNumberOfArgs; i++)
 		{
-			switch (*q++)
+			LPWSTR szArgUnderTest = szArguments[i];
+
+			if (i + 1 < iNumberOfArgs)
+				szNextArgument = szArguments[i+1];
+			else
+				szNextArgument = NULL;
+
+			if (szArgUnderTest[0] == '/')
 			{
-			case '/': // switch coming up
-				switch (*q)
+				switch (szArgUnderTest[1])
 				{
 				case 'S': // Start offset
 				case 's':
-					dwStart = wcstoul(++q, &q, 0);
+
+					dwStart = ProcessSwitch(szArgUnderTest, szNextArgument, &bSkipNextArg);
 					break;
 				case 'L': // Length of selection
 				case 'l':
-					dwLength = wcstoul(++q, &q, 0);
+					dwLength = ProcessSwitch(szArgUnderTest, szNextArgument, &bSkipNextArg);
 					break;
 				case 'E': // End of selection
 				case 'e':
-					dwEnd = wcstoul(++q, &q, 0);
+					dwEnd = ProcessSwitch(szArgUnderTest, szNextArgument, &bSkipNextArg);
 					break;
 				}
-				// fall through
-			case '"':
-				break;
-			default:
-				++p;
-				break;
+
+				if (bSkipNextArg)
+				{
+					//The ProcessSwitch function pulled the number out of the next command line
+					//parameter. Don't attempt to use it for anything else!
+					i++;
+				}
+			}
+			else
+			{
+				szFileToLoad = szArgUnderTest;
 			}
 		}
-		if (dwLength)
-			dwEnd = dwStart + dwLength - 1;
-		pHexWnd->open_file(szCmdLine);
-		if (dwEnd)
-			pHexWnd->CMD_setselection(dwStart, dwEnd);
+
+		// If a user only selects switches, there's no file to load.
+		if (szFileToLoad != NULL)
+		{
+			pHexWnd->open_file(szFileToLoad);
+			
+			if (dwLength)
+				dwEnd = dwStart + dwLength - 1;
+			if (dwEnd)
+				pHexWnd->CMD_setselection(dwStart, dwEnd);
+		}
 	}
 
 	while (GetMessage(&msg, NULL, 0, 0))
@@ -176,6 +201,9 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *, int)
 			DispatchMessage(&msg);
 		}
 	}
+
+	LocalFree(szArguments);
+
 #ifdef _DEBUG
 	// The System32 build cannot safely FreeLibrary(hMainInstance) because
 	// frhed.exe and heksedit.dll share the same atexit list.
@@ -275,4 +303,42 @@ LRESULT CALLBACK MainWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		break;
 	}
 	return DefWindowProc(hwnd, iMsg, wParam, lParam );
+}
+
+// Deals with command line switches. (/s, /e, /l) If the number is immediately
+// after the switch, with no space, it is returned from szFirstArgument.
+// Otherwise it is looked for in the next argument.
+static unsigned long ProcessSwitch(LPWSTR szFirstArgument, LPWSTR szNextArgument, bool* bSkipNextArg)
+{
+	*bSkipNextArg = false;
+
+	if (wcslen(szFirstArgument) < 3)
+	{
+		//The number associated with this switch could be in the next
+		//item
+		if (szNextArgument == NULL)
+		{
+			//Nope, it can't
+			return 0;
+		}
+		else
+		{
+			// This flag indicates to the calling code that we used
+			// the next command line argument to find the number
+			// we wanted. Don't try to use it for, for example, a
+			// filename!
+			*bSkipNextArg = true;
+			
+			//We're reasonably well covered by the wcstoul function - if the input is unrecognised,
+			//we'll get zero, and the switch is ignored.
+			return wcstoul(szNextArgument, NULL, 0);
+		}
+	}
+	else
+	{
+		return wcstoul(szFirstArgument + 2, NULL, 0);
+	}
+
+	//Make some compilers happy.
+	return 0;
 }
