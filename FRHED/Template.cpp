@@ -153,12 +153,12 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 	while (index < m_filelen)
 	{
 		// Read in the var type.
-		if (ignore_non_code(m_tmplBuf, m_filelen, index) == TRUE)
+		if (FindNextCode(m_tmplBuf, m_filelen, index))
 		{
 			// index now points to first code character.
 			// Get var type.
 			TCHAR cmd[TPL_TYPE_MAXLEN]; // This holds the variable type, like byte or word.
-			if (read_tpl_token(m_tmplBuf, m_filelen, index, cmd) == TRUE)
+			if (ReadToken(m_tmplBuf, m_filelen, index, cmd))
 			{
 				// cmd holds 0-terminated var type, index set to position of first space-
 				// character after the type. Now test if valid type was given.
@@ -166,7 +166,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 				if (_tcscmp(cmd, _T("BYTE")) == 0 || _tcscmp(cmd, _T("char")) == 0)
 				{
 					// This is a byte/char.
-					if (ignore_non_code(m_tmplBuf, m_filelen, index) == TRUE)
+					if (FindNextCode(m_tmplBuf, m_filelen, index))
 					{
 						// Enough space for a byte?
 						if (m_pDataArray->GetLength() - fpos >= 1)
@@ -175,7 +175,7 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 							TCHAR name[TPL_NAME_MAXLEN];
 							// index is set to a non-space character by last call to ignore_non_code.
 							// Therefore the variable name can be read into buffer name.
-							read_tpl_token(m_tmplBuf, m_filelen, index, name);
+							ReadToken(m_tmplBuf, m_filelen, index, name);
 							// Write variable type and name to output.
 							m_resultString += cmd;
 							m_resultString += _T(" ");
@@ -219,14 +219,14 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 				else if (_tcscmp(cmd, _T("WORD")) == 0 || _tcscmp(cmd, _T("short")) == 0)
 				{
 					// This is a word.
-					if (ignore_non_code(m_tmplBuf, m_filelen, index) == TRUE)
+					if (FindNextCode(m_tmplBuf, m_filelen, index))
 					{
 						// Enough space for a word?
 						if (m_pDataArray->GetLength() - fpos >= 2)
 						{
 							// Read var name.
 							TCHAR name[TPL_NAME_MAXLEN];
-							read_tpl_token(m_tmplBuf, m_filelen, index, name);
+							ReadToken(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
 							m_resultString += cmd;
 							m_resultString += _T(" ");
@@ -271,14 +271,14 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 					_tcscmp(cmd, _T("long")) == 0 || _tcscmp(cmd, _T("LONG")) == 0 )
 				{
 					// This is a longword.
-					if (ignore_non_code(m_tmplBuf, m_filelen, index) == TRUE)
+					if (FindNextCode(m_tmplBuf, m_filelen, index))
 					{
 						// Enough space for a longword?
 						if (m_pDataArray->GetLength() - fpos >= 4)
 						{
 							// Read var name.
 							TCHAR name[TPL_NAME_MAXLEN];
-							read_tpl_token(m_tmplBuf, m_filelen, index, name);
+							ReadToken(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
 							m_resultString += cmd;
 							m_resultString += _T(" ");
@@ -319,14 +319,14 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 				else if (_tcscmp(cmd, _T("float")) == 0)
 				{
 					// This is a float.
-					if (ignore_non_code(m_tmplBuf, m_filelen, index) == TRUE)
+					if (FindNextCode(m_tmplBuf, m_filelen, index))
 					{
 						// Enough space for a float?
 						if (m_pDataArray->GetLength() - fpos >= 4)
 						{
 							// Read var name.
 							TCHAR name[TPL_NAME_MAXLEN];
-							read_tpl_token(m_tmplBuf, m_filelen, index, name);
+							ReadToken(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
 							m_resultString += cmd;
 							m_resultString += _T(" ");
@@ -367,14 +367,14 @@ void Template::ApplyTemplate(HexEditorWindow::BYTE_ENDIAN binaryMode, int curByt
 				else if (_tcscmp(cmd, _T("double")) == 0)
 				{
 					// This is a double.
-					if (ignore_non_code(m_tmplBuf, m_filelen, index) == TRUE)
+					if (FindNextCode(m_tmplBuf, m_filelen, index))
 					{
 						// Enough space for a double?
 						if (m_pDataArray->GetLength() - fpos >= 8)
 						{
 							// Read var name.
 							TCHAR name[TPL_NAME_MAXLEN];
-							read_tpl_token(m_tmplBuf, m_filelen, index, name);
+							ReadToken(m_tmplBuf, m_filelen, index, name);
 							// Write variable type to output.
 							m_resultString += cmd;
 							m_resultString += _T(" ");
@@ -449,56 +449,48 @@ LPCTSTR Template::GetResult()
 	return m_resultString.c_str();
 }
 
-//-------------------------------------------------------------------
-// This will set index to the position of the next non-space-character.
-// Return is FALSE if there are no non-spaces left up to the end of the array.
-int Template::ignore_non_code(TCHAR* pcTpl, int tpl_len, int& index)
+/**
+ * @brief Find next non-space code.
+ * This will set index to the position of the next non-space-character.
+ * @return true if found, false if there are no non-spaces left up to the end
+ * of the array.
+ */
+bool Template::FindNextCode(TCHAR* pcTpl, int tpl_len, int& index)
 {
 	while (index < tpl_len)
 	{
 		// If code found, return.
-		switch(pcTpl[index])
-		{
-		case ' ':
-		case '\t':
-		case '\r':
-		case '\n':
-			break;
-
-		default:
-			return TRUE;
-		}
+		if (!_istspace(pcTpl[index]))
+			return true;
 		index++;
 	}
-	return FALSE;
+	return false;
 }
 
-//-------------------------------------------------------------------
-// Writes all non-space characters from index to dest and closes dest
-// with a zero-byte. index is set to position of the first space-
-// character. Return is false if there is only the array end after the
-// keyword. In that case index is set to tpl_len.
-int Template::read_tpl_token(TCHAR* pcTpl, int tpl_len, int& index, TCHAR* dest)
+/**
+ * @brief Write valid codes to @p dest.
+ * Write all non-space characters from @p index to @p dest and close @p dest
+ * with a zero-byte. @p index is set to position of the first space-
+ * character.
+ * @return false if there is only the array end after the
+ * keyword. In that case @p index is set to tpl_len.
+ */
+bool Template::ReadToken(TCHAR* pcTpl, int tpl_len, int& index, TCHAR* dest)
 {
 	int i = 0;
 	while (index + i < tpl_len)
 	{
-		switch (pcTpl[index + i])
+		if (_istspace(pcTpl[index + i]))
 		{
-		case ' ':
-		case '\t':
-		case '\r':
-		case '\n':
 			dest[i] = '\0';
 			index += i;
-			return TRUE;
-
-		default:
-			dest[i] = pcTpl[index + i];
+			return true;
 		}
+		else
+			dest[i] = pcTpl[index + i];
 		i++;
 	}
 	dest[i] = '\0';
 	index += i;
-	return FALSE;
+	return false;
 }

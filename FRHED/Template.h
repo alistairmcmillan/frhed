@@ -39,8 +39,8 @@ public:
 	void apply_template_on_memory(TCHAR* pcTpl, int tpl_len, SimpleArray<TCHAR>& ResultArray);
 
 protected:
-	int ignore_non_code(TCHAR* pcTpl, int tpl_len, int& index);
-	int read_tpl_token(TCHAR* pcTpl, int tpl_len, int& index, TCHAR* name);
+	bool FindNextCode(TCHAR* pcTpl, int tpl_len, int& index);
+	bool ReadToken(TCHAR* pcTpl, int tpl_len, int& index, TCHAR* name);
 
 private:
 	int m_filehandle; /**< File handle to template file. */
