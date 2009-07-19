@@ -158,13 +158,13 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 		{
 			iCurByte = iGetStartOfSelection();
 			int iEndByte = iGetEndOfSelection();
-			DataArray.RemoveAt(iCurByte, iEndByte - iCurByte + 1);//Remove extraneous data
+			m_dataArray.RemoveAt(iCurByte, iEndByte - iCurByte + 1);//Remove extraneous data
 			bSelected = false; // Deselect
 		}
 		int i = iCurByte;
 		for (int k = 0 ; k < iPasteTimes ; k++)
 		{
-			if (!DataArray.InsertAtGrow(i, (BYTE*)pcPastestring, 0, destlen))
+			if (!m_dataArray.InsertAtGrow(i, (BYTE*)pcPastestring, 0, destlen))
 			{
 				LangString noMem(IDS_PASTE_NO_MEM);
 				MessageBox(hDlg, noMem, MB_ICONERROR);
@@ -180,7 +180,7 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 	{
 		// Overwrite.
 		// Enough space for writing?
-		if (DataArray.GetLength() - iCurByte < (iPasteSkip + destlen) * iPasteTimes)
+		if (m_dataArray.GetLength() - iCurByte < (iPasteSkip + destlen) * iPasteTimes)
 		{
 			LangString noSpace(IDS_PASTE_NO_SPACE);
 			MessageBox(hDlg, noSpace, MB_ICONERROR);
@@ -192,7 +192,7 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 		{
 			for (int i = 0 ; i < destlen ; i++)
 			{
-				DataArray[iCurByte + k * (iPasteSkip + destlen) + i] = pcPastestring[i];
+				m_dataArray[iCurByte + k * (iPasteSkip + destlen) + i] = pcPastestring[i];
 			}
 		}
 		iFileChanged = TRUE;

@@ -81,8 +81,8 @@ int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 	{
 		i += finddir * n;
 		// Find forward.
-		j = findutils_FindBytes((TCHAR *)&DataArray[i],
-			DataArray.GetLength() - i - 1,
+		j = findutils_FindBytes((TCHAR *)&m_dataArray[i],
+			m_dataArray.GetLength() - i - 1,
 			tofind,	destlen, 1, case_sensitive);
 		if (j != -1)
 			i += j;
@@ -90,8 +90,8 @@ int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 	else
 	{
 		// Find backward.
-		j = findutils_FindBytes((TCHAR *)&DataArray[0],
-			min(iCurByte + (destlen - 1), DataArray.GetLength()),
+		j = findutils_FindBytes((TCHAR *)&m_dataArray[0],
+			min(iCurByte + (destlen - 1), m_dataArray.GetLength()),
 			tofind, destlen, -1, case_sensitive);
 		if (j != -1)
 			i = j;
@@ -124,7 +124,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 	if (strReplaceWithData.IsEmpty())
 	{
 		// Selected data is to be deleted, since replace-with data is empty string.
-		if (!DataArray.Replace(i, n, 0, 0))
+		if (!m_dataArray.Replace(i, n, 0, 0))
 		{
 			LangString couldNotDelete(IDS_REPL_CANT_DELETE);
 			MessageBox(hDlg, couldNotDelete, MB_ICONERROR);
@@ -136,7 +136,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 	else if (bPasteAsText)
 	{
 		// Replace with non-zero-length data.
-		if (!DataArray.Replace(i, n, (BYTE*)(TCHAR *)strReplaceWithData, strReplaceWithData.StrLen()))
+		if (!m_dataArray.Replace(i, n, (BYTE*)(TCHAR *)strReplaceWithData, strReplaceWithData.StrLen()))
 		{
 			LangString failed(IDS_REPL_FAILED);
 			MessageBox(hDlg, failed, MB_ICONERROR);
@@ -154,7 +154,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 			MessageBox(hDlg, cannotConvert, MB_ICONERROR);
 			return FALSE;
 		}
-		if (!DataArray.Replace(i, n, (BYTE*)(TCHAR*)out, out.GetLength()))
+		if (!m_dataArray.Replace(i, n, (BYTE*)(TCHAR*)out, out.GetLength()))
 		{
 			LangString failed(IDS_REPL_FAILED);
 			MessageBox(hDlg, failed, MB_ICONERROR);
@@ -253,7 +253,7 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		{
 			int sel_start = iGetStartOfSelection();
 			int select_len = iGetEndOfSelection() - sel_start + 1;
-			if (!transl_binary_to_text(&DataArray[sel_start], select_len))
+			if (!transl_binary_to_text(&m_dataArray[sel_start], select_len))
 			{
 				LangString badSelect(IDS_REPL_BAD_SELECT);
 				MessageBox(hDlg, badSelect, MB_OK);

@@ -43,7 +43,7 @@ BOOL CopyHexdumpDlg::OnInitDialog(HWND hDlg)
 	{
 		// Assume whole file is to be hexdumped. (except the last line (if incomplete))
 		iCopyHexdumpDlgStart = 0;
-		iCopyHexdumpDlgEnd = DataArray.GetUpperBound() / iBytesPerLine * iBytesPerLine;
+		iCopyHexdumpDlgEnd = m_dataArray.GetUpperBound() / iBytesPerLine * iBytesPerLine;
 	}
 	else
 	{

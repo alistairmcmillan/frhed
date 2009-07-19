@@ -112,23 +112,23 @@ BOOL OpenPartiallyDlg::Apply(HWND hDlg)
 	}
 
 	BOOL done = FALSE;
-	if (DataArray.SetSize(numBytesPl))
+	if (m_dataArray.SetSize(numBytesPl))
 	{
-		DataArray.ExpandToSize();
+		m_dataArray.ExpandToSize();
 		_lseeki64(filehandle, iStartPL, 0);
 		iPartialOffset = iStartPL;
 		iPartialOpenLen = (int) numBytesPl;
 		iPartialFileLen = iPLFileLen;
 		bPartialStats = bShowFileStatsPL;
 
-		// DataArray restricts max size to 2 GB.
-		if (_read(filehandle, DataArray, numBytesPl) != -1)
+		// m_dataArray restricts max size to 2 GB.
+		if (_read(filehandle, m_dataArray, numBytesPl) != -1)
 		{
 			done = TRUE;
 		}
 		else
 		{
-			DataArray.ClearAll();
+			m_dataArray.ClearAll();
 			LangString readErr(IDS_ERR_READING_FILE);
 			MessageBox(hDlg, readErr, MB_ICONERROR);
 		}

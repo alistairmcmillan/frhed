@@ -39,7 +39,7 @@ BOOL BitManipDlg::OnInitDialog(HWND hDlg)
 	LangString manip(IDS_BITMANIP_AT_OFFSET);
 	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, manip, iCurByte, iCurByte);
 	SetDlgItemText(hDlg, IDC_MANIPBITS, buf);
-	BYTE cBitValue = DataArray[iCurByte];
+	BYTE cBitValue = m_dataArray[iCurByte];
 	if (cBitValue & 1)
 		CheckDlgButton(hDlg, IDC_MANIPBITS_BIT1, BST_CHECKED);
 	if (cBitValue & 2)
@@ -87,7 +87,7 @@ BOOL BitManipDlg::Apply(HWND hDlg, WPARAM wParam)
 		cBitValue |= 1;
 	if (wParam == IDOK)
 	{
-		DataArray[iCurByte] = cBitValue;
+		m_dataArray[iCurByte] = cBitValue;
 		iFileChanged = TRUE;
 		bFilestatusChanged = true;
 		repaint();

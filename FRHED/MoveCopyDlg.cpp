@@ -170,7 +170,7 @@ BOOL MoveCopyDlg::Apply(HWND hw)
 	if (!ReadTargetOffset(hw, vals[2]))
 		return FALSE;
 	
-	int clen = DataArray.GetLength();
+	int clen = m_dataArray.GetLength();
 	int iMove1stEnd = vals[0];
 	int iMove2ndEndorLen = vals[1];
 	if (!IsDlgButtonChecked(hw, IDC_OTHEREND))

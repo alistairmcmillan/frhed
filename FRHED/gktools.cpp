@@ -211,13 +211,13 @@ INT_PTR EncodeDecodeDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
 					return TRUE;
 				mc.fpEncodeFunc = (LPFNEncodeMemoryFunction) SendMessage(hListbox, LB_GETITEMDATA, nCurSel, 0);
 				int lower = 0;
-				int upper = DataArray.GetUpperBound();
+				int upper = m_dataArray.GetUpperBound();
 				if (bSelected)
 				{
 					lower = iGetStartOfSelection();
 					upper = iGetEndOfSelection();
 				}
-				mc.lpbMemory = &DataArray[lower];
+				mc.lpbMemory = &m_dataArray[lower];
 				mc.dwSize = upper - lower + 1;
 				mc.fpEncodeFunc(&mc);
 				iFileChanged = TRUE;

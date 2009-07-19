@@ -242,17 +242,17 @@ STDMETHODIMP CDropTarget::Drop(IDataObject* pDataObject, DWORD grfKeyState, POIN
 			if (copying)
 			{
 				//Just [realloc &] memmove
-				if (iMovePos + len > hexwnd.DataArray.GetLength()) // Need more space
+				if (iMovePos + len > hexwnd.m_dataArray.GetLength()) // Need more space
 				{
-					if (hexwnd.DataArray.SetSize(iMovePos + len))
+					if (hexwnd.m_dataArray.SetSize(iMovePos + len))
 					{
-						hexwnd.DataArray.ExpandToSize();
-						memmove(&hexwnd.DataArray[iMovePos], &hexwnd.DataArray[iMove1stEnd], len);
+						hexwnd.m_dataArray.ExpandToSize();
+						memmove(&hexwnd.m_dataArray[iMovePos], &hexwnd.m_dataArray[iMove1stEnd], len);
 					}
 				}
 				else // Enough space
 				{
-					memmove(&hexwnd.DataArray[iMovePos], &hexwnd.DataArray[iMove1stEnd], len);
+					memmove(&hexwnd.m_dataArray[iMovePos], &hexwnd.m_dataArray[iMove1stEnd], len);
 				}
 			}
 			else //Moving
@@ -260,12 +260,12 @@ STDMETHODIMP CDropTarget::Drop(IDataObject* pDataObject, DWORD grfKeyState, POIN
 				if (iMovePos > iMove1stEnd) //Forward
 				{
 					hexwnd.CMD_move_copy(iMove1stEnd, iMove2ndEndorLen, 0);
-					hexwnd.DataArray.RemoveAt(iMovePos+len,len);
+					hexwnd.m_dataArray.RemoveAt(iMovePos+len,len);
 				}
 				else //Backward
 				{
-					memmove(&hexwnd.DataArray[iMovePos],&hexwnd.DataArray[iMove1stEnd],len);
-					hexwnd.DataArray.RemoveAt((iMovePos-iMove1stEnd>=len?iMove1stEnd:iMovePos+len),len);
+					memmove(&hexwnd.m_dataArray[iMovePos],&hexwnd.m_dataArray[iMove1stEnd],len);
+					hexwnd.m_dataArray.RemoveAt((iMovePos-iMove1stEnd>=len?iMove1stEnd:iMovePos+len),len);
 				}
 			}
 			hexwnd.iStartOfSelection = iMovePos;
@@ -510,8 +510,8 @@ STDMETHODIMP CDropTarget::Drop(IDataObject* pDataObject, DWORD grfKeyState, POIN
 
 				/*Malloc
 				We do this so that if the data access fails we only need free(data)
-				and don't need to mess around with the DataArray.
-				Perhaps in the future the DataArray can support undoable actions.*/
+				and don't need to mess around with the m_dataArray.
+				Perhaps in the future the m_dataArray can support undoable actions.*/
 				BYTE* t = (BYTE*)realloc(data, len);
 				if (!t)
 					continue;
@@ -642,18 +642,18 @@ STDMETHODIMP CDropTarget::Drop(IDataObject* pDataObject, DWORD grfKeyState, POIN
 						len = sizeof(wchar_t)*wcslen((wchar_t*)data);
 					}
 
-					// Insert/overwrite data into DataArray
+					// Insert/overwrite data into m_dataArray
 					if (grfKeyState&MK_SHIFT)
 					{
 						/* Overwite */
-						DWORD upper = 1 + hexwnd.DataArray.GetUpperBound();
+						DWORD upper = 1 + hexwnd.m_dataArray.GetUpperBound();
 						if (hexwnd.new_pos+len > upper)
 						{
 							/* Need more space */
-							if (hexwnd.DataArray.SetSize(hexwnd.new_pos + totallen + len))
+							if (hexwnd.m_dataArray.SetSize(hexwnd.new_pos + totallen + len))
 							{
-								hexwnd.DataArray.ExpandToSize();
-								memcpy(&hexwnd.DataArray[hexwnd.new_pos +
+								hexwnd.m_dataArray.ExpandToSize();
+								memcpy(&hexwnd.m_dataArray[hexwnd.new_pos +
 										(int)totallen], DataToInsert, len);
 								gotdata = true;
 								totallen += len;
@@ -662,13 +662,13 @@ STDMETHODIMP CDropTarget::Drop(IDataObject* pDataObject, DWORD grfKeyState, POIN
 						else
 						{
 							/* Enough space */
-							memcpy(&hexwnd.DataArray[hexwnd.new_pos +
+							memcpy(&hexwnd.m_dataArray[hexwnd.new_pos +
 									(int)totallen], DataToInsert, len);
 							gotdata = true;
 							totallen += len;
 						}
 					}
-					else if (hexwnd.DataArray.InsertAtGrow(hexwnd.new_pos + totallen, DataToInsert, 0, len))
+					else if (hexwnd.m_dataArray.InsertAtGrow(hexwnd.new_pos + totallen, DataToInsert, 0, len))
 					{
 						/* Insert */
 						gotdata = true;

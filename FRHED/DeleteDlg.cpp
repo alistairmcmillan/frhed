@@ -100,7 +100,7 @@ BOOL DeleteDlg::Apply(HWND hDlg)
 
 	// Can requested number be cut?
 	// DataArray.GetLength ()-iCutOffset = number of bytes from current pos. to end.
-	if (DataArray.GetLength() - iOffset < iNumberOfBytes)
+	if (m_dataArray.GetLength() - iOffset < iNumberOfBytes)
 	{
 		LangString tooMany(IDS_DELETE_TOO_MANY);
 		MessageBox(hDlg, tooMany, MB_ICONERROR);
@@ -108,15 +108,15 @@ BOOL DeleteDlg::Apply(HWND hDlg)
 	}
 
 	// Delete data.
-	if (!DataArray.RemoveAt(iOffset, iNumberOfBytes))
+	if (!m_dataArray.RemoveAt(iOffset, iNumberOfBytes))
 	{
 		LangString deleteFailed(IDS_DELETE_FAILED);
 		MessageBox(hDlg, deleteFailed, MB_ICONERROR);
 		return FALSE;
 	}
 	iCurByte = iOffset;
-	if (iCurByte > DataArray.GetUpperBound())
-		iCurByte = DataArray.GetUpperBound();
+	if (iCurByte > m_dataArray.GetUpperBound())
+		iCurByte = m_dataArray.GetUpperBound();
 	if (iCurByte < 0)
 		iCurByte = 0;
 	iFileChanged = TRUE;

@@ -100,7 +100,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 
 	// Can requested number be cut?
 	// DataArray.GetLength ()-iCutOffset = number of bytes from current pos. to end.
-	if (DataArray.GetLength() - iOffset < iNumberOfBytes)
+	if (m_dataArray.GetLength() - iOffset < iNumberOfBytes)
 	{
 		LangString tooMany(IDS_CUT_TOO_MANY);
 		MessageBox(hDlg, tooMany, MB_ICONERROR);
@@ -108,7 +108,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 	}
 
 	// Transfer to cipboard.
-	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen(&DataArray[iOffset], iNumberOfBytes);
+	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen(&m_dataArray[iOffset], iNumberOfBytes);
 	HGLOBAL hGlobal = GlobalAlloc(GHND, destlen);
 	if (hGlobal == 0)
 	{
@@ -119,7 +119,7 @@ BOOL CutDlg::Apply(HWND hDlg)
 	}
 	WaitCursor wc;
 	TCHAR *pd = (TCHAR *)GlobalLock(hGlobal);
-	Text2BinTranslator::iTranslateBytesToBC(pd, &DataArray[iOffset], iNumberOfBytes);
+	Text2BinTranslator::iTranslateBytesToBC(pd, &m_dataArray[iOffset], iNumberOfBytes);
 	GlobalUnlock(hGlobal);
 	OpenClipboard(hwnd);
 	EmptyClipboard();
@@ -127,15 +127,15 @@ BOOL CutDlg::Apply(HWND hDlg)
 	CloseClipboard();
 
 	// Delete data.
-	if (!DataArray.RemoveAt(iOffset, iNumberOfBytes))
+	if (!m_dataArray.RemoveAt(iOffset, iNumberOfBytes))
 	{
 		LangString cutFailed(IDS_CUT_FAILED);
 		MessageBox(hDlg, cutFailed, MB_ICONERROR);
 		return FALSE;
 	}
 	iCurByte = iOffset;
-	if (iCurByte > DataArray.GetUpperBound())
-		iCurByte = DataArray.GetUpperBound();
+	if (iCurByte > m_dataArray.GetUpperBound())
+		iCurByte = m_dataArray.GetUpperBound();
 	if (iCurByte < 0)
 		iCurByte = 0;
 	iFileChanged = TRUE;

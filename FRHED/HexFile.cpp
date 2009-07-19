@@ -314,7 +314,7 @@ bool HexFile::ParseFormatted()
 		if (m_pFile->lheatwhite() == EOF)
 			goto UnexpectedEndOfData;
 
-		ls = ii;//remember the start of the line in the DataArray
+		ls = ii;//remember the start of the line in the m_dataArray
 
 		//get data bytes
 		for (bpl = 0 ;; bpl++)
@@ -334,7 +334,7 @@ bool HexFile::ParseFormatted()
 			if (!m_data.SetSize(ii + 1))
 				goto OutOfMemory;
 			m_data.ExpandToSize();
-			//do this so that we don't overwrite memory outside the DataArray
+			//do this so that we don't overwrite memory outside the m_dataArray
 			// - because sscanf requires an int for storage
 			int tmp = 0;
 			_stscanf((TCHAR*)c, _T("%x"), &tmp);//save it to tmp

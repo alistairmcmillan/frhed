@@ -182,8 +182,8 @@ HexEditorWindow::HexEditorWindow()
 	iHscrollPos = 0;
 
 	iCurByte = 0;
-	DataArray.ClearAll();
-	DataArray.SetGrowBy(100);
+	m_dataArray.ClearAll();
+	m_dataArray.SetGrowBy(100);
 	LangString untitled(IDS_UNTITLED);
 	_tcscpy(filename, untitled);
 	area = AREA_NONE;
@@ -216,16 +216,16 @@ unsigned HexEditorWindow::get_interface_version()
 //--------------------------------------------------------------------------------------------
 BYTE *HexEditorWindow::get_buffer(int len)
 {
-	if (!DataArray.SetSize(len))
+	if (!m_dataArray.SetSize(len))
 		return 0;
-	DataArray.ExpandToSize();
-	return DataArray;
+	m_dataArray.ExpandToSize();
+	return m_dataArray;
 }
 
 //--------------------------------------------------------------------------------------------
 int HexEditorWindow::get_length()
 {
-	return DataArray.GetLength();
+	return m_dataArray.GetLength();
 }
 
 void HexEditorWindow::set_sibling(IHexEditorWindow *p)
@@ -373,15 +373,15 @@ int HexEditorWindow::load_file(LPCTSTR fname)
 	if (filehandle != -1)
 	{
 		int filelen = _filelength(filehandle);
-		DataArray.ClearAll();
+		m_dataArray.ClearAll();
 		// Try to allocate memory for the file.
-		if (DataArray.SetSize(filelen))
+		if (m_dataArray.SetSize(filelen))
 		{
-			DataArray.ExpandToSize();
+			m_dataArray.ExpandToSize();
 			// If read-only mode on opening is enabled or the file is read only:
 			bReadOnly = bOpenReadOnly || -1 == _taccess(fname, 02); //Pabs added call to _access
 			// Load the file.
-			if (filelen == 0 || _read(filehandle, DataArray, filelen) != -1)
+			if (filelen == 0 || _read(filehandle, m_dataArray, filelen) != -1)
 			{
 				// This is an empty file. Don't need to read anything.
 				GetLongPathNameWin32(fname, filename);
@@ -797,7 +797,7 @@ void HexEditorWindow::keydown(int key)
 
 	int icn = iCurNibble;
 
-	int lastbyte = DataArray.GetUpperBound();
+	int lastbyte = m_dataArray.GetUpperBound();
 	if (!bSelected)
 		lastbyte++;
 
@@ -943,15 +943,15 @@ void HexEditorWindow::character(char ch)
 		int iEndByte = iEndOfSelection;
 		if (iCurByte > iEndByte)
 			swap(iCurByte, iEndByte);
-		DataArray.RemoveAt(iCurByte + 1, iEndByte - iCurByte);//Remove extraneous data
-		DataArray[iCurByte] = 0;//Will overwrite below
+		m_dataArray.RemoveAt(iCurByte + 1, iEndByte - iCurByte);//Remove extraneous data
+		m_dataArray[iCurByte] = 0;//Will overwrite below
 		bSelected = false; // Deselect
 		resize_window();//Redraw stuff
 	}
-	else if (bInsertMode && iCurNibble == 0 || iCurByte == DataArray.GetLength())
+	else if (bInsertMode && iCurNibble == 0 || iCurByte == m_dataArray.GetLength())
 	{
 		// caret at EOF
-		if (!DataArray.InsertAtGrow(iCurByte, 0, 1))
+		if (!m_dataArray.InsertAtGrow(iCurByte, 0, 1))
 		{
 			MessageBox(hwnd, _T("Not enough memory for inserting character."), MB_ICONERROR);
 			return;
@@ -964,12 +964,12 @@ void HexEditorWindow::character(char ch)
 	{
 		if (iCurNibble == 0)
 		{
-			DataArray[iCurByte] = (BYTE)((DataArray[iCurByte] & 0x0f) | (c << 4));
+			m_dataArray[iCurByte] = (BYTE)((m_dataArray[iCurByte] & 0x0f) | (c << 4));
 			iCurNibble = 1;
 		}
 		else
 		{
-			DataArray[iCurByte] = (BYTE)((DataArray[iCurByte] & 0xf0) | c);
+			m_dataArray[iCurByte] = (BYTE)((m_dataArray[iCurByte] & 0xf0) | c);
 			++iCurByte;
 			iCurNibble = 0;
 		}
@@ -979,10 +979,10 @@ void HexEditorWindow::character(char ch)
 		switch (iCharacterSet)
 		{
 		case ANSI_FIXED_FONT:
-			DataArray[iCurByte] = ch;
+			m_dataArray[iCurByte] = ch;
 			break;
 		case OEM_FIXED_FONT:
-			CharToOemBuff(&ch, (char *)&DataArray[iCurByte], 1);
+			CharToOemBuff(&ch, (char *)&m_dataArray[iCurByte], 1);
 			break;
 		}
 		++iCurByte;
@@ -1368,11 +1368,11 @@ void HexEditorWindow::command(int cmd)
 				double dval;
 				BYTE bytes[1];
 			} u;
-			int iBytesAhead = DataArray.GetLength() - iCurByte;
+			int iBytesAhead = m_dataArray.GetLength() - iCurByte;
 			if (iBytesAhead >= sizeof u.fval)
 			{
 				// Space enough for float.
-				memcpy(&u, &DataArray[iCurByte], sizeof u.fval);
+				memcpy(&u, &m_dataArray[iCurByte], sizeof u.fval);
 				if (iBinaryMode == ENDIAN_BIG)
 					reverse_bytes(u.bytes, u.bytes + sizeof u.fval - 1);
 				buf2 += _stprintf(buf2, GetLangString(IDS_FLOAT_SIZE), u.fval);
@@ -1384,7 +1384,7 @@ void HexEditorWindow::command(int cmd)
 			if (iBytesAhead >= sizeof u.dval)
 			{
 				// Space enough for double.
-				memcpy(&u, &DataArray[iCurByte], sizeof u.dval);
+				memcpy(&u, &m_dataArray[iCurByte], sizeof u.dval);
 				if (iBinaryMode == ENDIAN_BIG)
 					reverse_bytes(u.bytes, u.bytes + sizeof u.dval - 1);
 				buf2 += _stprintf(buf2, GetLangString(IDS_DOUBLE_SIZE), u.dval);
@@ -1470,9 +1470,9 @@ void HexEditorWindow::command(int cmd)
 		{
 			PString<4000> buf;
 			size_t n = 0;
-			n += buf[n].Format(_T("Data length: %d\n"), DataArray.GetLength());
-			n += buf[n].Format(_T("Upper Bound: %d\n"), DataArray.GetUpperBound());
-			n += buf[n].Format(_T("Data size: %d\n"), DataArray.GetSize());
+			n += buf[n].Format(_T("Data length: %d\n"), m_dataArray.GetLength());
+			n += buf[n].Format(_T("Upper Bound: %d\n"), m_dataArray.GetUpperBound());
+			n += buf[n].Format(_T("Data size: %d\n"), m_dataArray.GetSize());
 			n += buf[n].Format(_T("cxChar: %d\n"), cxChar);
 			n += buf[n].Format(_T("cyChar: %d\n"), cyChar);
 			n += buf[n].Format(_T("iNumlines: %d\n"), iNumlines);
@@ -1772,12 +1772,12 @@ void HexEditorWindow::set_wnd_title()
 			int wordval = 0;
 			int longval = 0;
 			TCHAR buf2[80];
-			if (DataArray.GetLength() - iCurByte > 0)
+			if (m_dataArray.GetLength() - iCurByte > 0)
 			{//if we are not looking at the End byte
 				_tcscat(buf, _T("   "));
 				_tcscat(buf, GetLangString(IDS_SBAR_BITS));
 				_tcscat(buf, _T("="));//append stuff to status text
-				BYTE by = DataArray[iCurByte];
+				BYTE by = m_dataArray[iCurByte];
 				format_bit_string(buf2, by);
 				_tcscat(buf, buf2);//append to status text
 			}
@@ -1789,29 +1789,29 @@ void HexEditorWindow::set_wnd_title()
 				{
 					// UNSIGNED LITTLEENDIAN_MODE
 					// Decimal value of byte.
-					if (DataArray.GetLength() - iCurByte >= 1)
+					if (m_dataArray.GetLength() - iCurByte >= 1)
 					{
 						_stprintf(buf2, _T("\t%s: %s:%u"), GetLangString(IDS_SBAR_UNSIGNED),
-							GetLangString(IDS_SBAR_BYTE_SHORT), (unsigned int) DataArray[iCurByte]);
+							GetLangString(IDS_SBAR_BYTE_SHORT), (unsigned int) m_dataArray[iCurByte]);
 					}
 					else
 						_stprintf(buf2, _T("\t%s"), GetLangString(IDS_SBAR_END));
 					_tcscat(buf, buf2);
 
 					// Space enough for a word?
-					if (DataArray.GetLength() - iCurByte >= 2)
+					if (m_dataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a word.
-						wordval = (DataArray[iCurByte + 1] << 8) | DataArray[iCurByte];
+						wordval = (m_dataArray[iCurByte + 1] << 8) | m_dataArray[iCurByte];
 						_stprintf(buf2, _T(",%s:%u"), GetLangString(IDS_SBAR_WORD_SHORT),
 								(unsigned int) wordval);
 						_tcscat(buf, buf2);
 					}
-					if (DataArray.GetLength() - iCurByte >= 4)
+					if (m_dataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
-						longval = wordval | (((DataArray[iCurByte + 3] << 8) |
-								DataArray[iCurByte + 2]) << 16);
+						longval = wordval | (((m_dataArray[iCurByte + 3] << 8) |
+								m_dataArray[iCurByte + 2]) << 16);
 						_stprintf(buf2, _T(",%s:%u"), GetLangString(IDS_SBAR_LONG_SHORT),
 								(unsigned int) longval);
 						_tcscat(buf, buf2);
@@ -1821,27 +1821,27 @@ void HexEditorWindow::set_wnd_title()
 				{
 					// UNSIGNED BIGENDIAN_MODE
 					// Decimal value of byte.
-					if (DataArray.GetLength() - iCurByte >= 1)
+					if (m_dataArray.GetLength() - iCurByte >= 1)
 						_stprintf(buf2, _T("\t%s: %s:%u"), GetLangString(IDS_SBAR_UNSIGNED),
-								GetLangString(IDS_SBAR_BYTE_SHORT), (unsigned int) DataArray[iCurByte]);
+								GetLangString(IDS_SBAR_BYTE_SHORT), (unsigned int) m_dataArray[iCurByte]);
 					else
 						_stprintf(buf2, _T("\t%s"), GetLangString(IDS_SBAR_END));
 					_tcscat(buf, buf2);
 
 					// Space enough for a word?
-					if (DataArray.GetLength() - iCurByte >= 2)
+					if (m_dataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a word.
-						wordval = (DataArray[iCurByte] << 8) | DataArray[iCurByte + 1];
+						wordval = (m_dataArray[iCurByte] << 8) | m_dataArray[iCurByte + 1];
 						_stprintf(buf2, _T(",%s:%u"), GetLangString(IDS_SBAR_WORD_SHORT),
 								(unsigned int) wordval);
 						_tcscat(buf, buf2);
 					}
-					if (DataArray.GetLength() - iCurByte >= 4)
+					if (m_dataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
-						longval = (wordval << 16) | (DataArray[iCurByte + 2] <<	8) |
-								(DataArray[iCurByte + 3]);
+						longval = (wordval << 16) | (m_dataArray[iCurByte + 2] <<	8) |
+								(m_dataArray[iCurByte + 3]);
 						_stprintf(buf2, _T(",%s:%u"), GetLangString(IDS_SBAR_LONG_SHORT),
 								(unsigned int) longval);
 						_tcscat(buf, buf2);
@@ -1854,28 +1854,28 @@ void HexEditorWindow::set_wnd_title()
 				{
 					// SIGNED LITTLEENDIAN_MODE
 					// Decimal value of byte.
-					if (DataArray.GetLength() - iCurByte >= 1)
+					if (m_dataArray.GetLength() - iCurByte >= 1)
 						_stprintf(buf2, _T("\t%s: %s:%d"), GetLangString(IDS_SBAR_SIGNED),
 								GetLangString(IDS_SBAR_BYTE_SHORT),
-								(int) (signed char) DataArray[iCurByte]);
+								(int) (signed char) m_dataArray[iCurByte]);
 					else
 						_stprintf(buf2, _T("\t%s"), GetLangString(IDS_SBAR_END));
 					_tcscat(buf, buf2);
 
 					// Space enough for a word?
-					if (DataArray.GetLength() - iCurByte >= 2)
+					if (m_dataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a word.
-						wordval = (DataArray[iCurByte + 1] << 8) | DataArray[iCurByte];
+						wordval = (m_dataArray[iCurByte + 1] << 8) | m_dataArray[iCurByte];
 						_stprintf(buf2, _T(",%s:%d"), GetLangString(IDS_SBAR_WORD_SHORT),
 								(int) (signed short) wordval);
 						_tcscat(buf, buf2);
 					}
-					if (DataArray.GetLength() - iCurByte >= 4)
+					if (m_dataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
-						longval = wordval | (((DataArray[iCurByte + 3] << 8) |
-								DataArray[iCurByte + 2]) << 16);
+						longval = wordval | (((m_dataArray[iCurByte + 3] << 8) |
+								m_dataArray[iCurByte + 2]) << 16);
 						_stprintf(buf2, _T(",%s:%d"), GetLangString(IDS_SBAR_LONG_SHORT),
 								(signed int) longval);
 						_tcscat(buf, buf2);
@@ -1885,28 +1885,28 @@ void HexEditorWindow::set_wnd_title()
 				{
 					// SIGNED BIGENDIAN_MODE
 					// Decimal value of byte.
-					if (DataArray.GetLength() - iCurByte >= 1)
+					if (m_dataArray.GetLength() - iCurByte >= 1)
 						_stprintf(buf2, _T("\t%s: %s:%d"), GetLangString(IDS_SBAR_SIGNED),
 								GetLangString(IDS_SBAR_BYTE_SHORT),
-								(signed char) DataArray[iCurByte]);
+								(signed char) m_dataArray[iCurByte]);
 					else
 						_stprintf(buf2, _T("\t%s"), GetLangString(IDS_SBAR_END));
 					_tcscat (buf, buf2);
 
 					// Space enough for a word.
-					if (DataArray.GetLength() - iCurByte >= 2)
+					if (m_dataArray.GetLength() - iCurByte >= 2)
 					{
 						// Space enough for a longword.
-						wordval = (DataArray[iCurByte] << 8) | DataArray[iCurByte + 1];
+						wordval = (m_dataArray[iCurByte] << 8) | m_dataArray[iCurByte + 1];
 						_stprintf(buf2, _T(",%s:%d"), GetLangString(IDS_SBAR_WORD_SHORT),
 								(int) (signed short) wordval);
 						_tcscat(buf, buf2);
 					}
-					if (DataArray.GetLength() - iCurByte >= 4)
+					if (m_dataArray.GetLength() - iCurByte >= 4)
 					{
 						// Space enough for a longword.
-						longval = (wordval << 16) | (DataArray[iCurByte + 2] << 8) |
-								(DataArray[iCurByte + 3]);
+						longval = (wordval << 16) | (m_dataArray[iCurByte + 2] << 8) |
+								(m_dataArray[iCurByte + 3]);
 						_stprintf(buf2, _T(",%s:%d"), GetLangString(IDS_SBAR_LONG_SHORT),
 								(signed int) longval);
 						_tcscat(buf, buf2);
@@ -1919,7 +1919,7 @@ void HexEditorWindow::set_wnd_title()
 		statusbar_chset_and_editmode();
 
 		// File size.
-		_stprintf(buf, _T("\t%s: %u"), GetLangString(IDS_SBAR_SIZE), DataArray.GetLength());
+		_stprintf(buf, _T("\t%s: %u"), GetLangString(IDS_SBAR_SIZE), m_dataArray.GetLength());
 		SendMessage(hwndStatusBar, SB_SETTEXT, 2, (LPARAM) buf);
 	}
 	else
@@ -2012,7 +2012,7 @@ void HexEditorWindow::clear_all()
 	iByteSpace = 2;
 	iBytesPerLine = DefaultBPL;
 	iCharSpace = 1;
-	DataArray.ClearAll();
+	m_dataArray.ClearAll();
 	filename[0] = '\0';
 	iVscrollMax = 0;
 	iVscrollPos = 0;
@@ -2121,7 +2121,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 
 	// Return if this line does not even contain the end-of-file double
 	// underscore (at index upperbound+1).
-	assert(startpos <= DataArray.GetLength());
+	assert(startpos <= m_dataArray.GetLength());
 
 	int length = get_length();
 	BYTE *buffer = get_buffer(length);
@@ -2356,7 +2356,7 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 		// "Find" is allowed if the file is not empty.
 	case IDM_GO_TO:
 		// "Go to" is allowed if the file is not empty.
-		return DataArray.GetLength() != 0;
+		return m_dataArray.GetLength() != 0;
 	case ID_DISK_CLOSEDRIVE:
 	case ID_DISK_READMFT:
 	case ID_DISK_GOTOFIRSTTRACK:
@@ -2377,10 +2377,10 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 			return FALSE;
 		// "Delete" is allowed if there is a selection or the caret is on a byte.
 		// It is not allowed in read-only mode.
-		return (bSelected || iCurByte < DataArray.GetLength()) && !bReadOnly;
+		return (bSelected || iCurByte < m_dataArray.GetLength()) && !bReadOnly;
 	case IDM_EDIT_COPY:
 		// "Copy" is allowed if there is a selection or the caret is on a byte.
-		return bSelected || iCurByte < DataArray.GetLength();
+		return bSelected || iCurByte < m_dataArray.GetLength();
 	case IDM_EDIT_PASTE:
 		// No editing of drives
 		if (Drive != 0)
@@ -2409,13 +2409,13 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 		if (Drive != 0)
 			return FALSE;
 		// "Replace" is allowed if the file is not empty and read-only is disabled.
-		return DataArray.GetLength() && !bReadOnly;
+		return m_dataArray.GetLength() && !bReadOnly;
 	case IDM_FINDNEXT:
 	case IDM_FINDPREV:
 		// "Find next" and "Find previous" are allowed if the file is not empty,
 		// and there is a findstring OR there is a selection
 		// (which will be searched for).
-		return DataArray.GetLength() && (m_pFindCtxt->HasText() || bSelected);
+		return m_dataArray.GetLength() && (m_pFindCtxt->HasText() || bSelected);
 	case IDM_EDIT_ENTERDECIMALVALUE:
 		// "Enter decimal value" is allowed if read-only is disabled, the file is not empty,
 		// the caret is on a byte and there is no selection going on.
@@ -2425,7 +2425,7 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 			return FALSE;
 		// "Manipulate bits" is allowed if the caret is on a byte, read-only is disabled
 		// and there is no selection going on.
-		return !bReadOnly && iCurByte < DataArray.GetLength() && !bSelected;
+		return !bReadOnly && iCurByte < m_dataArray.GetLength() && !bSelected;
 	case IDM_COMPARE:
 		// "Compare from current offset" is allowed if the caret is on a byte
 		// and there is no selection going on.
@@ -2435,7 +2435,7 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 	case IDM_APPLYTEMPLATE:
 		// "Apply template" is allowed if the caret is on a byte
 		// and there is no selection going on.
-		return iCurByte < DataArray.GetLength() && !bSelected;
+		return iCurByte < m_dataArray.GetLength() && !bSelected;
 	case IDM_DEFAULT:
 		return unknownpresent();
 	case IDM_UPGRADE:
@@ -2443,7 +2443,7 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 	case IDM_ADDBOOKMARK:
 		// "Add bookmark" is allowed if the file is not
 		// empty and there is no selection going on.
-		return DataArray.GetLength() && !bSelected;
+		return m_dataArray.GetLength() && !bSelected;
 	case IDM_REMOVE_BKM:
 	case IDM_CLEARALL_BMK:
 		// "Remove bookmark" and "Clear all bookmarks" are allowed if there are bookmarks set.
@@ -2613,7 +2613,7 @@ int HexEditorWindow::mousemove(int xPos, int yPos)
 		{
 			fix_scroll_timers(xPos, yPos);
 
-			int lastbyte = DataArray.GetUpperBound();
+			int lastbyte = m_dataArray.GetUpperBound();
 			if (new_pos > lastbyte)
 				new_pos = lastbyte;
 			if (iEndOfSelection != new_pos)
@@ -2691,7 +2691,7 @@ int HexEditorWindow::lbuttondown(int nFlags, int xPos, int yPos)
 	{
 		if (nibblenum != 2)
 		{
-			const int length = DataArray.GetLength();
+			const int length = m_dataArray.GetLength();
 			if (new_pos == length)
 				new_pos--;
 			if (new_pos < length)
@@ -2813,7 +2813,7 @@ void HexEditorWindow::get_pos(long x, long y)
 		new_pos = line * iBytesPerLine + bytenum;
 	}
 
-	int lastbyte = DataArray.GetUpperBound();
+	int lastbyte = m_dataArray.GetUpperBound();
 	if( new_pos > lastbyte+1 )
 	{
 		nibblenum = 1;
@@ -2840,7 +2840,7 @@ void HexEditorWindow::set_drag_caret(long x, long y, bool Copying, bool Overwrit
 	}
 
 	int update = 0;
-	int lastbyte = DataArray.GetUpperBound();
+	int lastbyte = m_dataArray.GetUpperBound();
 	if (bSelected /*&& !bAllowDropInSel*/ )
 	{
 		int iStartOfSelSetting = iStartOfSelection;
@@ -3029,7 +3029,7 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		}
 
 		HexDump dump;
-		dump.SetArray(&DataArray);
+		dump.SetArray(&m_dataArray);
 		dump.SetOffsets(iMinOffsetLen, iMaxOffsetLen);
 		dump.Settings(iBytesPerLine, iCharsPerLine, bPartialStats, iPartialOffset,
 			iByteSpace, iCharSpace, iCharacterSet);
@@ -3055,7 +3055,7 @@ int HexEditorWindow::CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType
 		}
 		for (int i = 0 ; i < numchar ; ++i)
 		{
-			sprintf(pMem + i * 2, "%2.2x", DataArray[iCopyHexdumpDlgStart + i]);
+			sprintf(pMem + i * 2, "%2.2x", m_dataArray[iCopyHexdumpDlgStart + i]);
 		}
 		pMem[buflen - 1] = '\0';
 	}
@@ -3235,7 +3235,7 @@ int HexEditorWindow::CMD_new(const char *title)
 	bPartialStats = false;
 	bPartialOpen = false;
 	// Delete old data.
-	DataArray.ClearAll();
+	m_dataArray.ClearAll();
 	LangString untitled(IDS_UNTITLED);
 	_tcscpy(filename, untitled);
 	resize_window();
@@ -3271,7 +3271,7 @@ int HexEditorWindow::CMD_save_as()
 		return 0;
 	}
 	int done = 0;
-	if (_write(filehandle, DataArray, DataArray.GetLength()) != -1)
+	if (_write(filehandle, m_dataArray, m_dataArray.GetLength()) != -1)
 	{
 		// File was saved.
 		GetLongPathNameWin32(szFileName, filename);
@@ -3327,7 +3327,7 @@ int HexEditorWindow::CMD_save()
 			MessageBox(hwnd, GetLangString(IDS_ERR_SAVE_PARTIAL), MB_ICONERROR);
 			return 0;
 		}
-		int nbl = DataArray.GetLength(); // Length of the DataArray
+		int nbl = m_dataArray.GetLength(); // Length of the m_dataArray
 		if (nbl != iPartialOpenLen)
 		{
 			INT64 i = iPartialOffset + iPartialOpenLen; // loop var & start of loop
@@ -3371,7 +3371,7 @@ int HexEditorWindow::CMD_save()
 		{
 			MessageBox(hwnd, GetLangString(IDS_ERR_SEEK_FILE), MB_ICONERROR);
 		}
-		else if (_write( filehandle, DataArray, nbl) == -1)
+		else if (_write( filehandle, m_dataArray, nbl) == -1)
 		{
 			LangString app(IDS_APPNAME);
 			MessageBox(hwnd, GetLangString(IDS_ERR_WRITE_FILE), MB_ICONERROR);
@@ -3393,7 +3393,7 @@ int HexEditorWindow::CMD_save()
 		MessageBox(hwnd, GetLangString(IDS_FILE_SAVE_ERROR), MB_ICONERROR);
 		return 0;
 	}
-	if (_write(filehandle, DataArray, DataArray.GetLength()) == -1)
+	if (_write(filehandle, m_dataArray, m_dataArray.GetLength()) == -1)
 	{
 		MessageBox(hwnd, GetLangString(IDS_ERR_WRITE_FILE), MB_ICONERROR);
 	}
@@ -3756,7 +3756,7 @@ void HexEditorWindow::CMD_on_backspace()
 	if (bInsertMode)
 	{
 		// INSERT-mode: If one exists delete previous byte.
-		DataArray.RemoveAt(--iCurByte, 1);
+		m_dataArray.RemoveAt(--iCurByte, 1);
 		iFileChanged = TRUE;
 		bFilestatusChanged = true;
 		set_wnd_title();
@@ -3774,11 +3774,11 @@ void HexEditorWindow::CMD_on_backspace()
 //-------------------------------------------------------------------
 void HexEditorWindow::CMD_select_all()
 {
-	if (DataArray.GetLength() <= 0)
+	if (m_dataArray.GetLength() <= 0)
 		return;
 	bSelected = true;
 	iStartOfSelection = 0;
-	iEndOfSelection = DataArray.GetUpperBound();
+	iEndOfSelection = m_dataArray.GetUpperBound();
 	adjust_view_for_selection();
 	repaint();
 }
@@ -3807,12 +3807,12 @@ void HexEditorWindow::CMD_properties()
 	if (bPartialOpen)
 	{
 		_stprintf(buf + _tcslen(buf), GetLangString(IDS_FPROP_PARTIAL_OPEN),
-			iPartialOffset, iPartialOffset, DataArray.GetLength(), DataArray.GetLength()/1024);
+			iPartialOffset, iPartialOffset, m_dataArray.GetLength(), m_dataArray.GetLength()/1024);
 	}
 	else
 	{
 		_stprintf(buf + _tcslen(buf), GetLangString(IDS_FPROP_FSIZE),
-				DataArray.GetLength(), DataArray.GetLength()/1024);
+				m_dataArray.GetLength(), m_dataArray.GetLength()/1024);
 	}
 	_stprintf(buf + _tcslen(buf), GetLangString(IDS_FPROP_HDUMP_LINES),
 			iNumlines);
@@ -3924,7 +3924,7 @@ void HexEditorWindow::start_mouse_operation()
 				if (BYTE *p = (BYTE *)GlobalLock(sm.hGlobal))
 				{
 					*(UINT*)p = iEndOfSelSetting - iStartOfSelSetting + 1;
-					memcpy(p + sizeof(UINT), &DataArray[iStartOfSelSetting], iEndOfSelSetting - iStartOfSelSetting + 1);
+					memcpy(p + sizeof(UINT), &m_dataArray[iStartOfSelSetting], iEndOfSelSetting - iStartOfSelSetting + 1);
 					GlobalUnlock(sm.hGlobal);
 					sm.tymed = TYMED_HGLOBAL;
 					sm.pUnkForRelease = NULL;
@@ -3945,14 +3945,14 @@ void HexEditorWindow::start_mouse_operation()
 			{
 				//The special syntax
 				destlen = Text2BinTranslator::iBytes2BytecodeDestLen(
-						&DataArray[iStartOfSelSetting],
+						&m_dataArray[iStartOfSelSetting],
 						iEndOfSelSetting-iStartOfSelSetting + 1);
 				sm.hGlobal = GlobalAlloc(GHND | GMEM_DDESHARE, destlen);
 				if (sm.hGlobal)
 				{
 					if (TCHAR *p = (TCHAR *)GlobalLock(sm.hGlobal))
 					{
-						Text2BinTranslator::iTranslateBytesToBC(p, &DataArray[iStartOfSelSetting], iEndOfSelSetting-iStartOfSelSetting+1);
+						Text2BinTranslator::iTranslateBytesToBC(p, &m_dataArray[iStartOfSelSetting], iEndOfSelSetting-iStartOfSelSetting+1);
 						madedata = true;
 					}
 					GlobalUnlock(sm.hGlobal);
@@ -4022,7 +4022,7 @@ void HexEditorWindow::start_mouse_operation()
 		HRESULT r = DoDragDrop(&dataobj, &source, bReadOnly ? DROPEFFECT_COPY : DROPEFFECT_COPY | DROPEFFECT_MOVE, &dwEffect);
 		if (r == DRAGDROP_S_DROP && (dwEffect & DROPEFFECT_MOVE) && dragging)
 		{
-			DataArray.RemoveAt(iStartOfSelSetting, iEndOfSelSetting - iStartOfSelSetting + 1);
+			m_dataArray.RemoveAt(iStartOfSelSetting, iEndOfSelSetting - iStartOfSelSetting + 1);
 			bSelected = false;
 			iFileChanged = TRUE;
 			bFilestatusChanged = true;
@@ -4033,7 +4033,7 @@ void HexEditorWindow::start_mouse_operation()
 	}
 	else
 	{
-		int lastbyte = DataArray.GetUpperBound();
+		int lastbyte = m_dataArray.GetUpperBound();
 		if (lastbyte == -1)
 			return;
 		SetCursor(LoadCursor(NULL, IDC_IBEAM));
@@ -4135,7 +4135,7 @@ void HexEditorWindow::CMD_MRU_selected(int i)
 //-------------------------------------------------------------------
 void HexEditorWindow::CMD_add_bookmark()
 {
-	if (DataArray.GetLength() <= 0)
+	if (m_dataArray.GetLength() <= 0)
 	{
 		LangString emptyFileErr(IDS_BMK_EMPTY_FILE);
 		MessageBox(hwnd, emptyFileErr, MB_ICONERROR);
@@ -4172,7 +4172,7 @@ void HexEditorWindow::make_bookmark_list(HMENU menu)
 			else
 				_stprintf(buf, _T("&%d 0x%x"), i + 1, pbmkList[i].offset,
 						pbmkList[i].name);
-			AppendMenu(menu, pbmkList[i].offset <= DataArray.GetLength() ?
+			AppendMenu(menu, pbmkList[i].offset <= m_dataArray.GetLength() ?
 				MF_ENABLED : MF_GRAYED, IDM_BOOKMARK1 + i, buf);
 		}
 	}
@@ -4181,7 +4181,7 @@ void HexEditorWindow::make_bookmark_list(HMENU menu)
 //-------------------------------------------------------------------
 void HexEditorWindow::CMD_goto_bookmark(int i)
 {
-	if (pbmkList[i].offset >= 0 && pbmkList[i].offset <= DataArray.GetLength())
+	if (pbmkList[i].offset >= 0 && pbmkList[i].offset <= m_dataArray.GetLength())
 	{
 		iCurByte = pbmkList[i].offset;
 		iCurNibble = 0;
@@ -4368,7 +4368,7 @@ void HexEditorWindow::dropfiles(HDROP hDrop)
 //-------------------------------------------------------------------
 void HexEditorWindow::CMD_apply_template()
 {
-	if (DataArray.GetLength() == 0)
+	if (m_dataArray.GetLength() == 0)
 	{
 		LangString msg(IDS_ERR_EMPTY_FILE);
 		MessageBox(hwnd, msg, MB_ICONERROR);
@@ -4418,7 +4418,7 @@ void HexEditorWindow::apply_template(TCHAR *pcTemplate)
 		return;
 	}
 
-	tmpl.SetDataArray(&DataArray);
+	tmpl.SetDataArray(&m_dataArray);
 	tmpl.CreateTemplateArray(iCurByte);
 	tmpl.ApplyTemplate(iBinaryMode, iCurByte);
 
@@ -4603,11 +4603,11 @@ void HexEditorWindow::RefreshCurrentTrack()
 			CurrentSectorNumber + SelectedPartitionInfo->m_StartingSector))
 	{
 		ULONG BytesPerSector = Track.GetObjectSize();
-		DataArray.ClearAll();
-		if (DataArray.SetSize(BytesPerSector))
+		m_dataArray.ClearAll();
+		if (m_dataArray.SetSize(BytesPerSector))
 		{
-			DataArray.SetUpperBound(BytesPerSector-1);
-			CopyMemory(DataArray, Track.GetObjectMemory(), BytesPerSector);
+			m_dataArray.SetUpperBound(BytesPerSector-1);
+			CopyMemory(m_dataArray, Track.GetObjectMemory(), BytesPerSector);
 			bReadOnly = TRUE;
 			_stprintf(filename, GetLangString(IDS_DRIVES_SECTOR),
 					(LPCSTR) SelectedPartitionInfo->GetNameAsString(), CurrentSectorNumber);
@@ -4660,11 +4660,11 @@ void HexEditorWindow::CMD_findnext()
 		}
 
 		// Translate the selection into bytecode and write it into the edit box buffer.
-		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen(&DataArray[sel_start], select_len);
+		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen(&m_dataArray[sel_start], select_len);
 		TCHAR * tmpBuf = new TCHAR[destLen + 1];
 		ZeroMemory(tmpBuf, (destLen + 1) * sizeof(TCHAR));
 		Text2BinTranslator::iTranslateBytesToBC(tmpBuf,
-				&DataArray[sel_start], select_len);
+				&m_dataArray[sel_start], select_len);
 		m_pFindCtxt->SetText(tmpBuf);
 		delete [] tmpBuf;
 	}
@@ -4679,8 +4679,8 @@ void HexEditorWindow::CMD_findnext()
 				m_pFindCtxt->GetText(), srclen, iCharacterSet, iBinaryMode))
 		{
 			SetCursor(LoadCursor(NULL, IDC_WAIT));
-			int i = findutils_FindBytes((TCHAR *)&DataArray[iCurByte + 1],
-				DataArray.GetLength() - iCurByte - 1,
+			int i = findutils_FindBytes((TCHAR *)&m_dataArray[iCurByte + 1],
+				m_dataArray.GetLength() - iCurByte - 1,
 				pcFindstring, destlen, 1,
 				m_pFindCtxt->m_bMatchCase);
 			SetCursor(LoadCursor(NULL, IDC_ARROW));
@@ -4736,10 +4736,10 @@ void HexEditorWindow::CMD_findprev()
 		}
 
 		// Translate the selection into bytecode and write it into the edit box buffer.
-		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen(&DataArray[sel_start], select_len);
+		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen(&m_dataArray[sel_start], select_len);
 		TCHAR *tmpBuf = new TCHAR[destLen + 1];
 		ZeroMemory(tmpBuf, (destLen + 1) * sizeof(TCHAR));
-		Text2BinTranslator::iTranslateBytesToBC(tmpBuf, &DataArray[sel_start], select_len);
+		Text2BinTranslator::iTranslateBytesToBC(tmpBuf, &m_dataArray[sel_start], select_len);
 		m_pFindCtxt->SetText(tmpBuf);
 		delete [] tmpBuf;
 	}
@@ -4758,8 +4758,8 @@ void HexEditorWindow::CMD_findprev()
 			// you are somewhere in the middle of the findstring with the caret
 			// and you choose "find previous" you usually want to find the beginning
 			// of the findstring in the file.
-			int i = findutils_FindBytes((TCHAR *)&DataArray[0],
-				min(iCurByte + (destlen - 1), DataArray.GetLength()),
+			int i = findutils_FindBytes((TCHAR *)&m_dataArray[0],
+				min(iCurByte + (destlen - 1), m_dataArray.GetLength()),
 				pcFindstring, destlen, -1, m_pFindCtxt->m_bMatchCase);
 			SetCursor(LoadCursor(NULL, IDC_ARROW));
 			if (i != -1)
@@ -5043,9 +5043,9 @@ void HexEditorWindow::CMD_revert()
 		if (filehandle != -1)
 		{
 			_lseeki64(filehandle, iPartialOffset, 0);
-			if (DataArray.SetSize(iPartialOpenLen))
+			if (m_dataArray.SetSize(iPartialOpenLen))
 			{
-				if (_read(filehandle, &DataArray[0], iPartialOpenLen) != -1)
+				if (_read(filehandle, &m_dataArray[0], iPartialOpenLen) != -1)
 				{
 					bReadOnly = bOpenReadOnly || -1 == _taccess(filename, 02);
 					iVscrollMax = iVscrollPos = iHscrollMax = iHscrollPos =
@@ -5137,20 +5137,20 @@ void HexEditorWindow::CMD_insertfile()
 			rl = 0;
 		}
 		//New & old lens
-		int ol = DataArray.GetSize();
+		int ol = m_dataArray.GetSize();
 		int nl = ol + inslen - rl;
 		bool rssuc = inslen <= rl || get_buffer(nl); // resize succesful
 		if (rssuc)
 		{
-			BYTE *src = &DataArray[rs + rl];
-			BYTE *dst = &DataArray[rs + inslen];
+			BYTE *src = &m_dataArray[rs + rl];
+			BYTE *dst = &m_dataArray[rs + inslen];
 			int count = ol - (rs + rl);
 			if (inslen > rl) // bigger
 				memmove(dst, src, count);
-			bool rdsuc = _read(fhandle, &DataArray[rs], inslen) != -1; //read successful
+			bool rdsuc = _read(fhandle, &m_dataArray[rs], inslen) != -1; //read successful
 
-			//In the following two if blocks DataArray.SetUpperBound(somelen-1);
-			//is used instead of DataArray.SetSize(somelen);
+			//In the following two if blocks m_dataArray.SetUpperBound(somelen-1);
+			//is used instead of m_dataArray.SetSize(somelen);
 			//to prevent the possiblity that shortening the
 			//buffer might fail (way too hard to handle) because SimpleArray currently
 			//uses new & delete instead of malloc & free, which,
@@ -5224,13 +5224,13 @@ void HexEditorWindow::CMD_saveselas()
 		{
 			WaitCursor wc;
 			int lower = 0;
-			int upper = DataArray.GetUpperBound();
+			int upper = m_dataArray.GetUpperBound();
 			if (bSelected)
 			{
 				lower = iGetStartOfSelection();
 				upper = iGetEndOfSelection();
 			}
-			if (_write(filehandle, &DataArray[lower], upper - lower + 1) != -1)
+			if (_write(filehandle, &m_dataArray[lower], upper - lower + 1) != -1)
 				complain = 0;
 			_close(filehandle);
 		}
@@ -5289,11 +5289,11 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 		//return load_hexfile_1::StreamIn(*this, hexin); //Display output
 		ret = hexin.ParseFormatted();
 		ptrArray = hexin.GetArray();
-		DataArray = *ptrArray;
+		m_dataArray = *ptrArray;
 	case IDNO:
 		ret = hexin.ParseSimple();
 		ptrArray = hexin.GetArray();
-		DataArray = *ptrArray;
+		m_dataArray = *ptrArray;
 		bAutoOffsetLen = hexin.WasAutoOffsetLen();
 		iMinOffsetLen = hexin.GetMinOffset();
 		bPartialStats = hexin.GetPartialStats();
@@ -5301,7 +5301,7 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 		iBytesPerLine = hexin.GetBytesPerLine();
 		iAutomaticBPL = hexin.GetAutomaticBPL();
 		iCharacterSet = hexin.GetCharset();
-		//DataArray.Adopt(ptrArray, ptrArray->GetUpperBound(), ptrArray->GetSize());
+		//m_dataArray.Adopt(ptrArray, ptrArray->GetUpperBound(), ptrArray->GetSize());
 		//return load_hexfile_0::StreamIn(*this, hexin); //just hex & space
 	}
 	return ret;
@@ -5500,7 +5500,7 @@ void HexEditorWindow::status_bar_click(bool left)
 			}
 
 			//If the caret is on the END byte
-			int flen = DataArray.GetLength();
+			int flen = m_dataArray.GetLength();
 			if (iCurByte >= flen)
 			{
 				//The caret is on the END (__ ) byte
@@ -5680,7 +5680,7 @@ void HexEditorWindow::status_bar_click(bool left)
 								if (st[i] == '1')
 									c |= 0x01;
 							}
-							DataArray[iCurByte] = c;
+							m_dataArray[iCurByte] = c;
 							//Redraw the data & status bar etc
 							bFilestatusChanged = true;
 							iFileChanged = TRUE;
@@ -5851,7 +5851,7 @@ void HexEditorWindow::CMD_move_copy(int iMove1stEnd, int iMove2ndEndorLen, bool 
 	iMove2ndEndorLen = position of end of block to move;
 	CMD_move(1);
 	*/
-	int clen = DataArray.GetLength();
+	int clen = m_dataArray.GetLength();
 	//Make sure all the parameters are correct
 	if (iMove1stEnd < 0 || iMove1stEnd >= clen ||
 		iMove2ndEndorLen < 0 || iMove2ndEndorLen >= clen ||
@@ -5880,7 +5880,7 @@ void HexEditorWindow::CMD_move_copy(int iMove1stEnd, int iMove2ndEndorLen, bool 
 	if (iMoveOpTyp == OPTYP_COPY)
 	{
 		int len = iMove2ndEndorLen - iMove1stEnd + 1;
-		if (!DataArray.SetSize(clen + len))
+		if (!m_dataArray.SetSize(clen + len))
 		{
 			LangString noMem(IDS_NO_MEMORY);
 			MessageBox(hwnd, noMem, MB_ICONERROR);
@@ -5888,17 +5888,17 @@ void HexEditorWindow::CMD_move_copy(int iMove1stEnd, int iMove2ndEndorLen, bool 
 		}
 		else
 		{
-			DataArray.ExpandToSize();
-			memmove(&DataArray[iMovePos + len], &DataArray[iMovePos], clen - iMovePos);
+			m_dataArray.ExpandToSize();
+			memmove(&m_dataArray[iMovePos + len], &m_dataArray[iMovePos], clen - iMovePos);
 			if (iMovePos > iMove1stEnd && iMovePos <= iMove2ndEndorLen)
 			{
-				memcpy(&DataArray[iMovePos], &DataArray[iMove1stEnd], iMovePos - iMove1stEnd);
-				memcpy(&DataArray[iMovePos + iMovePos - iMove1stEnd], &DataArray[iMovePos + len], iMove1stEnd + len - iMovePos);
+				memcpy(&m_dataArray[iMovePos], &m_dataArray[iMove1stEnd], iMovePos - iMove1stEnd);
+				memcpy(&m_dataArray[iMovePos + iMovePos - iMove1stEnd], &m_dataArray[iMovePos + len], iMove1stEnd + len - iMovePos);
 			}
 			else
 			{
 				int tmp = iMovePos <= iMove1stEnd ? len : 0;
-				memcpy(&DataArray[iMovePos], &DataArray[iMove1stEnd + tmp], len);
+				memcpy(&m_dataArray[iMovePos], &m_dataArray[iMove1stEnd + tmp], len);
 			}
 		}
 	}
@@ -5919,9 +5919,9 @@ void HexEditorWindow::CMD_move_copy(int iMove1stEnd, int iMove2ndEndorLen, bool 
 		//Start and end of the total block
 		int ts = min(ms, os);
 		int te = max(me, oe);
-		reverse_bytes(&DataArray[ms], &DataArray[me]);
-		reverse_bytes(&DataArray[os], &DataArray[oe]);
-		reverse_bytes(&DataArray[ts], &DataArray[te]);
+		reverse_bytes(&m_dataArray[ms], &m_dataArray[me]);
+		reverse_bytes(&m_dataArray[os], &m_dataArray[oe]);
+		reverse_bytes(&m_dataArray[ts], &m_dataArray[te]);
 	}
 
 	if (bSelected)
@@ -6202,7 +6202,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 		{
 			iStartOfSelSetting = iEndOfSelSetting = iCurByte;
 		}
-		int endoffile = DataArray.GetUpperBound() + 1;
+		int endoffile = m_dataArray.GetUpperBound() + 1;
 		if(start>endoffile)start=endoffile;
 		if(end>endoffile)end=endoffile;
 		start = start / iBytesPerLine * iBytesPerLine;//cut back to the line start
@@ -6283,7 +6283,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 						else if (i > endoffile)
 							s << _T("\\~\\~\\~");
 						else
-							s << hex << DataArray[i];
+							s << hex << m_dataArray[i];
 						if (bi < iBmkCount)
 						{
 							s <<
@@ -6329,7 +6329,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 						}
 						if( i>=endoffile ) s << _T("\\~");
 						else {
-							c = DataArray[i];
+							c = m_dataArray[i];
 							if(!( ( iCharacterSet == OEM_FIXED_FONT && c != 0 ) || ( iCharacterSet == ANSI_FIXED_FONT && ( ( c >= 32 && c <= 126) || (c>=160 && c<=255) || (c>=145 && c<=146) ) ) ))
 								c = '.';
 							s << nbsp << escapefilter << c;
@@ -6365,7 +6365,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 					else if (i > endoffile)
 						s << _T("\\~\\~\\~");
 					else
-						s << hex << DataArray[i] << _T("\\~");
+						s << hex << m_dataArray[i] << _T("\\~");
 				}
 				//Charspace
 				for (i = 0; i < iCharSpace; i++)
@@ -6377,7 +6377,7 @@ HGLOBAL HexEditorWindow::RTF_hexdump(int start, int end, DWORD* plen){
 						s << _T("\\~");
 					else
 					{
-						c = DataArray[i];
+						c = m_dataArray[i];
 						if(!( ( iCharacterSet == OEM_FIXED_FONT && c != 0 ) || ( iCharacterSet == ANSI_FIXED_FONT && ( ( c >= 32 && c <= 126) || (c>=160 && c<=255) || (c>=145 && c<=146) ) ) ))
 							c = '.';
 						s << nbsp << escapefilter << c;

@@ -114,14 +114,14 @@ BOOL ChooseDiffDlg::OnInitDialog(HWND hDlg)
 	if (int filelen = _filelength(filehandle))
 	{
 		int iDestFileLen = filelen;
-		int iSrcFileLen = DataArray.GetLength() - iCurByte;
+		int iSrcFileLen = m_dataArray.GetLength() - iCurByte;
 		if (TCHAR *cmpdata = new TCHAR[filelen])
 		{
 			// Read data.
 			if (_read(filehandle, cmpdata, filelen) != -1)
 			{
 				HWND hwndList = GetDlgItem(hDlg, IDC_CHOOSEDIFF_DIFFLIST);
-				if (int diff = get_diffs(hwndList, (TCHAR *)&DataArray[iCurByte], DataArray.GetLength() - iCurByte, cmpdata, filelen))
+				if (int diff = get_diffs(hwndList, (TCHAR *)&m_dataArray[iCurByte], m_dataArray.GetLength() - iCurByte, cmpdata, filelen))
 				{
 					TCHAR buf[100];
 					LangString diffsFound(IDS_DIFF_AREAS_FOUND);

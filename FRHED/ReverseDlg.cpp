@@ -82,7 +82,7 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 			if (iEndOfSelSetting < iStartOfSelSetting)
 				swap(iEndOfSelSetting, iStartOfSelSetting);
 
-			maxb = DataArray.GetUpperBound();
+			maxb = m_dataArray.GetUpperBound();
 			if (iStartOfSelSetting < 0 || iEndOfSelSetting > maxb)
 			{
 				LangString extendBlock(IDS_REVERSE_BLOCK_EXTEND);
@@ -93,7 +93,7 @@ INT_PTR ReverseDlg::DlgProc(HWND h, UINT m, WPARAM w, LPARAM l)
 				iStartOfSelSetting = 0;
 			if (iEndOfSelSetting > maxb)
 				iEndOfSelSetting = maxb;
-			reverse_bytes(&DataArray[iStartOfSelSetting], &DataArray[iEndOfSelSetting]);
+			reverse_bytes(&m_dataArray[iStartOfSelSetting], &m_dataArray[iEndOfSelSetting]);
 			if (bSelected)
 			{
 				//If the selection was inside the bit that was reversed, then reverse it too

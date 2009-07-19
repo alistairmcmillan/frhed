@@ -57,7 +57,7 @@ void FillWithDialog::inittxt(HWND hDlg)
 	else
 	{
 		iStartOfSelSetting = 0;
-		iEndOfSelSetting = DataArray.GetUpperBound();
+		iEndOfSelSetting = m_dataArray.GetUpperBound();
 	}
 	//init all the readonly boxes down below
 	TCHAR bufff[250] = {0};
@@ -319,7 +319,7 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 				else
 				{
 					iStartOfSelSetting = 0;
-					iEndOfSelSetting = DataArray.GetUpperBound();
+					iEndOfSelSetting = m_dataArray.GetUpperBound();
 				}
 
 				int i = iStartOfSelSetting;
@@ -329,28 +329,28 @@ INT_PTR FillWithDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lPar
 				case 0:
 					while (i <= iEndOfSelSetting)
 					{
-						DataArray[i++] = fnc(ii++);
+						m_dataArray[i++] = fnc(ii++);
 						ii %= iimax;
 					}
 					break;
 				case 1:
 					while (i <= iEndOfSelSetting)
 					{
-						DataArray[i++] |= fnc(ii++);
+						m_dataArray[i++] |= fnc(ii++);
 						ii %= iimax;
 					}
 					break;
 				case 2:
 					while (i <= iEndOfSelSetting)
 					{
-						DataArray[i++] &= fnc(ii++);
+						m_dataArray[i++] &= fnc(ii++);
 						ii %= iimax;
 					}
 					break;
 				case 3:
 					while (i <= iEndOfSelSetting)
 					{
-						DataArray[i++] ^= fnc(ii++);
+						m_dataArray[i++] ^= fnc(ii++);
 						ii %= iimax;
 					}
 					break;

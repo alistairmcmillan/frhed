@@ -314,7 +314,7 @@ protected:
 	HFONT hFont;
 	bool bInsertMode; /**< Editing mode is in insert-mode? */
 	bool bFileNeverSaved;
-	SimpleArray<BYTE> DataArray;
+	SimpleArray<BYTE> m_dataArray; /**< Array of the file data. */
 	int bSelecting; /**< Is user selecting bytes/text? */
 	int iLBDownX, iLBDownY;
 	int cxChar, cxCaps, cyChar, cxClient, cyClient, cxBuffer, cyBuffer, iNumlines;

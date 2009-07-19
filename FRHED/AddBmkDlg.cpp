@@ -75,7 +75,7 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			MessageBox(hDlg, startOffsetErr, app, MB_ICONERROR);
 			return TRUE;
 		}
-		if (offset < 0 || offset > DataArray.GetLength())
+		if (offset < 0 || offset > m_dataArray.GetLength())
 		{
 			LangString app(IDS_APPNAME);
 			LangString cannotSetPos(IDS_BMK_INVALID_POSITION);

@@ -86,7 +86,7 @@ BOOL SelectBlockDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		//make the selection valid if it is not
-		maxb = DataArray.GetUpperBound();
+		maxb = m_dataArray.GetUpperBound();
 		if (iStartOfSelSetting < 0)
 			iStartOfSelSetting = 0;
 		if (iStartOfSelSetting > maxb)

@@ -104,14 +104,14 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	}
 	// Can requested number be cut?
 	// DataArray.GetLength ()-iCutOffset = number of bytes from current pos. to end.
-	if (DataArray.GetLength() - iOffset < iNumberOfBytes)
+	if (m_dataArray.GetLength() - iOffset < iNumberOfBytes)
 	{
 		LangString copyTooMany(IDS_COPY_TOO_MANY);
 		MessageBox(hDlg, copyTooMany, MB_ICONERROR);
 		return FALSE;
 	}
 	// Transfer to clipboard.
-	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen(&DataArray[iOffset], iNumberOfBytes);
+	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen(&m_dataArray[iOffset], iNumberOfBytes);
 	HGLOBAL hGlobal = GlobalAlloc(GHND, destlen);
 	if (hGlobal == 0)
 	{
@@ -122,7 +122,7 @@ BOOL CopyDlg::Apply(HWND hDlg)
 	}
 	WaitCursor wc;
 	TCHAR *pd = (TCHAR *)GlobalLock(hGlobal);
-	Text2BinTranslator::iTranslateBytesToBC(pd, &DataArray[iOffset], iNumberOfBytes);
+	Text2BinTranslator::iTranslateBytesToBC(pd, &m_dataArray[iOffset], iNumberOfBytes);
 	GlobalUnlock(hGlobal);
 	OpenClipboard(hwnd);
 	EmptyClipboard();

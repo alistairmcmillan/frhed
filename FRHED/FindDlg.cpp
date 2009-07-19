@@ -45,7 +45,7 @@ BOOL FindDlg::OnInitDialog(HWND hDlg)
 		int sel_start = iGetStartOfSelection();
 		int select_len = iGetEndOfSelection() - sel_start + 1;
 		// Get the length of the bytecode representation of the selection (including zero-byte at end).
-		int findlen = Text2BinTranslator::iBytes2BytecodeDestLen(&DataArray[sel_start], select_len);
+		int findlen = Text2BinTranslator::iBytes2BytecodeDestLen(&m_dataArray[sel_start], select_len);
 		if (findlen > FindCtxt::MAX_TEXT_LEN)
 		{
 			LangString largeSel(IDS_FIND_SEL_TOO_LARGE);
@@ -54,10 +54,10 @@ BOOL FindDlg::OnInitDialog(HWND hDlg)
 			return TRUE;
 		}
 		// Translate the selection into bytecode and write it into the find text buffer.
-		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen(&DataArray[sel_start], select_len);
+		int destLen = Text2BinTranslator::iBytes2BytecodeDestLen(&m_dataArray[sel_start], select_len);
 		TCHAR * tmpBuf = new TCHAR[destLen + 1];
 		ZeroMemory(tmpBuf, (destLen + 1) * sizeof(TCHAR));
-		Text2BinTranslator::iTranslateBytesToBC(tmpBuf, &DataArray[sel_start], select_len);
+		Text2BinTranslator::iTranslateBytesToBC(tmpBuf, &m_dataArray[sel_start], select_len);
 		m_pFindCtxt->SetText(tmpBuf);
 		delete [] tmpBuf;
 	}
@@ -122,8 +122,8 @@ BOOL FindDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 				// Find forward.
 				if (m_pFindCtxt->m_iDirection == 1)
 				{
-					i = findutils_FindBytes((TCHAR *)&DataArray[iCurByte + 1],
-							DataArray.GetLength() - iCurByte - 1,
+					i = findutils_FindBytes((TCHAR *)&m_dataArray[iCurByte + 1],
+							m_dataArray.GetLength() - iCurByte - 1,
 							pcFindstring, destlen, 1, m_pFindCtxt->m_bMatchCase);
 					if (i != -1)
 						iCurByte += i + 1;
@@ -131,8 +131,8 @@ BOOL FindDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 				// Find backward.
 				else
 				{
-					i = findutils_FindBytes((TCHAR *)&DataArray[0],
-						min(iCurByte + (destlen - 1), DataArray.GetLength()),
+					i = findutils_FindBytes((TCHAR *)&m_dataArray[0],
+						min(iCurByte + (destlen - 1), m_dataArray.GetLength()),
 						pcFindstring, destlen, -1, m_pFindCtxt->m_bMatchCase);
 					if (i != -1)
 						iCurByte = i;

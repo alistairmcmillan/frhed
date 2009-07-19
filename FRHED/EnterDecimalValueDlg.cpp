@@ -43,19 +43,19 @@ BOOL EnterDecimalValueDlg::OnInitDialog(HWND hDlg)
 	// Handle value as unsigned, convert to signed (if needed) when sending
 	// the value to GUI.
 	UINT iDecValDlgValue = 0;
-	if (iCurByte >= 0 && iCurByte < DataArray.GetLength())
+	if (iCurByte >= 0 && iCurByte < m_dataArray.GetLength())
 	{
-		int t = DataArray.GetLength() - iCurByte;
+		int t = m_dataArray.GetLength() - iCurByte;
 		//Set the size down a bit if someone called this func with a size thats too large
 		while (iDecValDlgSize > t)
 			iDecValDlgSize /= 2;
 		//Get the right value
 		if (iDecValDlgSize == 2)
-			iDecValDlgValue = *(WORD *)&DataArray[iCurByte];
+			iDecValDlgValue = *(WORD *)&m_dataArray[iCurByte];
 		else if (iDecValDlgSize == 4)
-			iDecValDlgValue = *(DWORD *)&DataArray[iCurByte];
+			iDecValDlgValue = *(DWORD *)&m_dataArray[iCurByte];
 		else
-			iDecValDlgValue = (int)DataArray[iCurByte];
+			iDecValDlgValue = (int)m_dataArray[iCurByte];
 	}
 	TCHAR buf[16] = {0};
 	SetDlgItemInt(hDlg, IDC_DECIMAL_VALUE, iDecValDlgValue, bSigned ? TRUE : FALSE);
@@ -108,13 +108,13 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 		MessageBox(hDlg, unknownTimes, MB_ICONERROR);
 		return FALSE;
 	}
-	if (iDecValDlgOffset < 0 || iDecValDlgOffset > DataArray.GetUpperBound())
+	if (iDecValDlgOffset < 0 || iDecValDlgOffset > m_dataArray.GetUpperBound())
 	{
 		LangString invalidStart(IDS_DECI_INVALID_START);
 		MessageBox(hDlg, invalidStart, MB_ICONERROR);
 		return FALSE;
 	}
-	if (iDecValDlgOffset + iDecValDlgSize * iDecValDlgTimes > DataArray.GetLength())
+	if (iDecValDlgOffset + iDecValDlgSize * iDecValDlgTimes > m_dataArray.GetLength())
 	{
 		LangString noSpace(IDS_DECI_NO_SPACE);
 		MessageBox(hDlg, noSpace, MB_ICONERROR);
@@ -128,19 +128,19 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 			switch (iDecValDlgSize)
 			{
 			case 1:
-				DataArray[iDecValDlgOffset++] = (BYTE)iDecValDlgValue;
+				m_dataArray[iDecValDlgOffset++] = (BYTE)iDecValDlgValue;
 				break;
 
 			case 2:
-				DataArray[iDecValDlgOffset++] = (BYTE) (iDecValDlgValue & 0xff);
-				DataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff00) >> 8);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) (iDecValDlgValue & 0xff);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff00) >> 8);
 				break;
 
 			case 4:
-				DataArray[iDecValDlgOffset++] = (BYTE) (iDecValDlgValue & 0xff);
-				DataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff00) >> 8);
-				DataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff0000) >> 16);
-				DataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff000000) >> 24);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) (iDecValDlgValue & 0xff);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff00) >> 8);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff0000) >> 16);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff000000) >> 24);
 				break;
 			}
 		}
@@ -149,19 +149,19 @@ BOOL EnterDecimalValueDlg::Apply(HWND hDlg)
 			switch (iDecValDlgSize)
 			{
 			case 1:
-				DataArray[iDecValDlgOffset++] = (BYTE)iDecValDlgValue;
+				m_dataArray[iDecValDlgOffset++] = (BYTE)iDecValDlgValue;
 				break;
 
 			case 2:
-				DataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff00) >> 8);
-				DataArray[iDecValDlgOffset++] = (BYTE) (iDecValDlgValue & 0xff);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff00) >> 8);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) (iDecValDlgValue & 0xff);
 				break;
 
 			case 4:
-				DataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff000000) >> 24);
-				DataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff0000) >> 16);
-				DataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff00) >> 8);
-				DataArray[iDecValDlgOffset++] = (BYTE) (iDecValDlgValue & 0xff);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff000000) >> 24);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff0000) >> 16);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) ((iDecValDlgValue & 0xff00) >> 8);
+				m_dataArray[iDecValDlgOffset++] = (BYTE) (iDecValDlgValue & 0xff);
 				break;
 			}
 		}
