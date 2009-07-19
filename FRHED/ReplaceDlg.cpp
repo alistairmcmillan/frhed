@@ -54,17 +54,16 @@ int ReplaceDlg::transl_text_to_binary(SimpleArray<TCHAR> &out)
 //-------------------------------------------------------------------
 // Create a text representation of an array of bytes and save it in
 // a SimpleString object.
-int	ReplaceDlg::transl_binary_to_text(const BYTE *src, int len)
+void ReplaceDlg::transl_binary_to_text(const BYTE *src, int len)
 {
 	// How long will the text representation of array of bytes be?
 	const int destlen = Text2BinTranslator::iBytes2BytecodeDestLen(src, len);
 	strToReplaceData.resize(destlen);
 	Text2BinTranslator::iTranslateBytesToBC(&(*strToReplaceData.begin()), src, len);
-	return TRUE;
 }
 
 //-------------------------------------------------------------------
-int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
+bool ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 {
 	TCHAR *tofind;
 	// Create a translation from bytecode to char array of finddata.
@@ -92,14 +91,14 @@ int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 		if (j != -1)
 			i = j;
 	}
-	int done = 0;
+	bool done = false;
 	if (j != -1)
 	{
 		// NEW: Select found interval.
 		bSelected = true;
 		iStartOfSelection = iCurByte = i;
 		iEndOfSelection = iStartOfSelection + destlen - 1;
-		done = 1;
+		done = true;
 	}
 	delete [] tofind;
 	return done;
@@ -107,13 +106,13 @@ int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 
 //-------------------------------------------------------------------
 // SimpleString replacedata contains data to replace with.
-int ReplaceDlg::replace_selected_data(HWND hDlg)
+bool ReplaceDlg::replace_selected_data(HWND hDlg)
 {
 	if (!bSelected)
 	{
 		LangString noData(IDS_REPL_NO_DATA);
 		MessageBox(hDlg, noData, MB_ICONERROR);
-		return FALSE;
+		return false;
 	}
 	int i = iGetStartOfSelection();
 	int n = iGetEndOfSelection() - i + 1;
@@ -124,7 +123,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 		{
 			LangString couldNotDelete(IDS_REPL_CANT_DELETE);
 			MessageBox(hDlg, couldNotDelete, MB_ICONERROR);
-			return FALSE;
+			return false;
 		}
 		bSelected = false;
 		iCurByte = iStartOfSelection;
@@ -136,7 +135,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 		{
 			LangString failed(IDS_REPL_FAILED);
 			MessageBox(hDlg, failed, MB_ICONERROR);
-			return FALSE;
+			return false;
 		}
 		iEndOfSelection = iStartOfSelection + strReplaceWithData.length() - 1;
 	}
@@ -148,19 +147,19 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 		{
 			LangString cannotConvert(IDS_REPL_CANNOT_CONVERT);
 			MessageBox(hDlg, cannotConvert, MB_ICONERROR);
-			return FALSE;
+			return false;
 		}
 		if (!m_dataArray.Replace(i, n, (BYTE*)(TCHAR*)out, out.GetLength()))
 		{
 			LangString failed(IDS_REPL_FAILED);
 			MessageBox(hDlg, failed, MB_ICONERROR);
-			return FALSE;
+			return false;
 		}
 		iEndOfSelection = iStartOfSelection + out.GetLength() - 1;
 	}
 	bFilestatusChanged = true;
 	iFileChanged = TRUE;
-	return TRUE;
+	return true;
 }
 
 void ReplaceDlg::find_directed(HWND hDlg, int finddir)
@@ -247,15 +246,9 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		// If there is selected data then make it the data to find.
 		if (bSelected)
 		{
-			int sel_start = iGetStartOfSelection();
-			int select_len = iGetEndOfSelection() - sel_start + 1;
-			if (!transl_binary_to_text(&m_dataArray[sel_start], select_len))
-			{
-				LangString badSelect(IDS_REPL_BAD_SELECT);
-				MessageBox(hDlg, badSelect, MB_OK);
-				EndDialog(hDlg, IDCANCEL);
-				return TRUE;
-			}
+			const int sel_start = iGetStartOfSelection();
+			const int select_len = iGetEndOfSelection() - sel_start + 1;
+			transl_binary_to_text(&m_dataArray[sel_start], select_len);
 		}
 		if (bPasteAsText)
 			CheckDlgButton(hDlg, IDC_USETRANSLATION_CHECK, BST_UNCHECKED);
