@@ -188,7 +188,7 @@ void ReplaceDlg::replace_directed(HWND hDlg, int finddir, bool showCount)
 	bPasteAsText = (IsDlgButtonChecked(hDlg, IDC_USETRANSLATION_CHECK) == BST_UNCHECKED);
 	//------------------
 	// Don't do anything if to-replace and replace-with data are same.
-	Text2BinTranslator tr_find(&(*strToReplaceData.begin())), tr_replace(&(*strReplaceWithData.begin()));
+	Text2BinTranslator tr_find(strToReplaceData.c_str()), tr_replace(strReplaceWithData.c_str());
 	if (tr_find.bCompareBin(tr_replace, iCharacterSet, iBinaryMode))
 	{
 		LangString sameStrings(IDS_REPL_SAME_STRS);

@@ -26,6 +26,7 @@
 #ifndef BinTrans_h
 #define BinTrans_h
 
+#include "UnicodeString.h"
 #include "Simparr.h"
 
 int create_bc_translation(TCHAR** ppd, LPCTSTR src, int srclen, int charset, int binarymode);
@@ -33,11 +34,12 @@ int create_bc_translation(TCHAR** ppd, LPCTSTR src, int srclen, int charset, int
 /**
  * @brief A class translating between text export and binary data.
  */
-class Text2BinTranslator : public SimpleString
+class Text2BinTranslator
 {
 public:
 	int bCompareBin(Text2BinTranslator& tr2, int charmode, int binmode);
 	Text2BinTranslator(TCHAR* ps);
+	Text2BinTranslator(LPCTSTR ps);
 	static int iIsBytecode(LPCTSTR src, int len);
 	static int iBytes2BytecodeDestLen(const BYTE* src, int srclen);
 	static int iLengthOfTransToBin(LPCTSTR src, int srclen);
@@ -48,6 +50,7 @@ public:
 
 private:
 	int GetTrans2Bin(SimpleArray<TCHAR>& sa, int charmode, int binmode);
+	String m_str; /**< String for conversion. */
 };
 
 #endif // BinTrans_h

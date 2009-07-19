@@ -51,6 +51,17 @@ int create_bc_translation(TCHAR **ppd, LPCTSTR src, int srclen, int charset, int
 	}
 }
 
+//-------------------------------------------------------------------
+Text2BinTranslator::Text2BinTranslator(TCHAR* ps)
+: m_str(ps)
+{
+}
+
+Text2BinTranslator::Text2BinTranslator(LPCTSTR ps)
+: m_str(ps)
+{
+}
+
 /**
  * @brief Find character from string.
  * @param [in] src String from which the character is searched.
@@ -78,12 +89,12 @@ int Text2BinTranslator::GetTrans2Bin(SimpleArray<TCHAR>& sa, int charmode, int b
 {
 	sa.ClearAll();
 
-	int destlen = iLengthOfTransToBin(m_pT, m_nUpperBound);
+	int destlen = iLengthOfTransToBin(m_str.c_str(), m_str.length());
 	if (destlen > 0)
 	{
 		sa.SetSize(destlen);
 		sa.ExpandToSize();
-		iCreateBcTranslation((TCHAR*) sa, m_pT, m_nUpperBound, charmode, binmode);
+		iCreateBcTranslation((TCHAR*) sa, m_str.c_str(), m_str.length(), charmode, binmode);
 		return TRUE;
 	}
 	else
@@ -417,14 +428,6 @@ int Text2BinTranslator::iCreateBcTranslation(TCHAR* dest, LPCTSTR src, int srcle
 		}
 	}
 	return di;
-}
-
-//-------------------------------------------------------------------
-Text2BinTranslator::Text2BinTranslator(TCHAR* ps)
-{
-	// Create a Text2BinTranslator from a normal char array-string.
-	m_nGrowBy = 64;
-	SetToString(ps);
 }
 
 //-------------------------------------------------------------------
