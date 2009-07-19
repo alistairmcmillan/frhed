@@ -27,10 +27,11 @@
 #define _HEXW_DLG_H_
 
 #include "Simparr.h"
+#include "UnicodeString.h"
 #include "Resource.h"
 
-void GetWindowText(HWND, SimpleString &);
-void GetDlgItemText(HWND, int, SimpleString &);
+void GetWindowText(HWND, String &);
+void GetDlgItemText(HWND, int, String &);
 BOOL EnableDlgItem(HWND, int, BOOL);
 BOOL IsDlgItemEnabled(HWND, int);
 int MessageBox(HWND, LPCTSTR, UINT);
@@ -197,8 +198,8 @@ public:
 	int replace_selected_data(HWND);
 	void find_directed(HWND, int finddir);
 	void replace_directed(HWND, int finddir, bool showCount);
-	static SimpleString strToReplaceData;
-	static SimpleString strReplaceWithData;
+	static String strToReplaceData;
+	static String strReplaceWithData;
 };
 
 /**

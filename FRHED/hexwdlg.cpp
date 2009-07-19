@@ -1,18 +1,34 @@
 #include "precomp.h"
 #include "resource.h"
 #include "Constants.h"
+#include "UnicodeString.h"
 #include "hexwnd.h"
 #include "hexwdlg.h"
 #include "LangString.h"
 
-void GetWindowText(HWND hwnd, SimpleString &str)
+/**
+ * @brief Get window text.
+ * @param [in] hwnd Handle to window.
+ * @param [out] str Window's text.
+ */
+void GetWindowText(HWND hwnd, String &str)
 {
-	int len = GetWindowTextLength(hwnd) + 1;
-	str.SetSize(len);
-	GetWindowText(hwnd, str, len);
+	const int len = GetWindowTextLength(hwnd) + 1;
+	str.resize(len);
+	TCHAR *temp = new TCHAR[len + 1];
+	ZeroMemory(temp, len + 1);
+	GetWindowText(hwnd, temp, len);
+	str = temp;
+	delete [] temp;
 }
 
-void GetDlgItemText(HWND hwnd, int id, SimpleString &str)
+/**
+ * @brief Get control's text.
+ * @param [in] hwnd Handle to window.
+ * @param [in] id Control's id.
+ * @param [out] str Control's text.
+ */
+void GetDlgItemText(HWND hwnd, int id, String &str)
 {
 	hwnd = GetDlgItem(hwnd, id);
 	GetWindowText(hwnd, str);

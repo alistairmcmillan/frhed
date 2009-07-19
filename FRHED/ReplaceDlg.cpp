@@ -24,6 +24,7 @@
 // $Id$
 
 #include "precomp.h"
+#include "UnicodeString.h"
 #include "Simparr.h"
 #include "resource.h"
 #include "hexwnd.h"
@@ -32,10 +33,10 @@
 #include "FindUtil.h"
 #include "LangString.h"
 
-// String containing data to replace.
-SimpleString ReplaceDlg::strToReplaceData;
-// String containing data to replace with.
-SimpleString ReplaceDlg::strReplaceWithData;
+/** String containing data to replace. */
+String ReplaceDlg::strToReplaceData;
+/** String containing data to replace with. */
+String ReplaceDlg::strReplaceWithData;
 
 //-------------------------------------------------------------------
 // Translate the text in the string to binary data and store in the array.
@@ -43,7 +44,7 @@ int ReplaceDlg::transl_text_to_binary(SimpleArray<TCHAR> &out)
 {
 	TCHAR *pcOut;
 	int destlen = create_bc_translation(&pcOut,
-		(TCHAR *)strReplaceWithData, strReplaceWithData.StrLen(),
+		strReplaceWithData.c_str(), strReplaceWithData.length(),
 		iCharacterSet, iBinaryMode);
 	if (destlen)
 		out.Adopt(pcOut, destlen - 1, destlen);
@@ -56,15 +57,10 @@ int ReplaceDlg::transl_text_to_binary(SimpleArray<TCHAR> &out)
 int	ReplaceDlg::transl_binary_to_text(const BYTE *src, int len)
 {
 	// How long will the text representation of array of bytes be?
-	int destlen = Text2BinTranslator::iBytes2BytecodeDestLen(src, len);
-	strToReplaceData.SetSize(destlen);
-	strToReplaceData.ExpandToSize();
-	if (TCHAR *pd = strToReplaceData)
-	{
-		Text2BinTranslator::iTranslateBytesToBC(pd, src, len);
-		return TRUE;
-	}
-	return FALSE;
+	const int destlen = Text2BinTranslator::iBytes2BytecodeDestLen(src, len);
+	strToReplaceData.resize(destlen);
+	Text2BinTranslator::iTranslateBytesToBC(&(*strToReplaceData.begin()), src, len);
+	return TRUE;
 }
 
 //-------------------------------------------------------------------
@@ -72,8 +68,8 @@ int ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 {
 	TCHAR *tofind;
 	// Create a translation from bytecode to char array of finddata.
-	int destlen = create_bc_translation(&tofind, strToReplaceData,
-		strToReplaceData.StrLen(), iCharacterSet, iBinaryMode);
+	const int destlen = create_bc_translation(&tofind, strToReplaceData.c_str(),
+		strToReplaceData.length(), iCharacterSet, iBinaryMode);
 	int i = iGetStartOfSelection();
 	int n = iGetEndOfSelection() - i + 1;
 	int j;
@@ -121,7 +117,7 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 	}
 	int i = iGetStartOfSelection();
 	int n = iGetEndOfSelection() - i + 1;
-	if (strReplaceWithData.IsEmpty())
+	if (strReplaceWithData.empty())
 	{
 		// Selected data is to be deleted, since replace-with data is empty string.
 		if (!m_dataArray.Replace(i, n, 0, 0))
@@ -136,13 +132,13 @@ int ReplaceDlg::replace_selected_data(HWND hDlg)
 	else if (bPasteAsText)
 	{
 		// Replace with non-zero-length data.
-		if (!m_dataArray.Replace(i, n, (BYTE*)(TCHAR *)strReplaceWithData, strReplaceWithData.StrLen()))
+		if (!m_dataArray.Replace(i, n, (BYTE*)strReplaceWithData.c_str(), strReplaceWithData.length()))
 		{
 			LangString failed(IDS_REPL_FAILED);
 			MessageBox(hDlg, failed, MB_ICONERROR);
 			return FALSE;
 		}
-		iEndOfSelection = iStartOfSelection + strReplaceWithData.StrLen() - 1;
+		iEndOfSelection = iStartOfSelection + strReplaceWithData.length() - 1;
 	}
 	else
 	{
@@ -193,7 +189,7 @@ void ReplaceDlg::replace_directed(HWND hDlg, int finddir, bool showCount)
 	bPasteAsText = (IsDlgButtonChecked(hDlg, IDC_USETRANSLATION_CHECK) == BST_UNCHECKED);
 	//------------------
 	// Don't do anything if to-replace and replace-with data are same.
-	Text2BinTranslator tr_find(strToReplaceData), tr_replace(strReplaceWithData);
+	Text2BinTranslator tr_find(&(*strToReplaceData.begin())), tr_replace(&(*strReplaceWithData.begin()));
 	if (tr_find.bCompareBin(tr_replace, iCharacterSet, iBinaryMode))
 	{
 		LangString sameStrings(IDS_REPL_SAME_STRS);
@@ -265,10 +261,8 @@ INT_PTR ReplaceDlg::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			CheckDlgButton(hDlg, IDC_USETRANSLATION_CHECK, BST_UNCHECKED);
 		else
 			CheckDlgButton(hDlg, IDC_USETRANSLATION_CHECK, BST_CHECKED);
-		if (TCHAR *pstr = strToReplaceData)
-			SetDlgItemText(hDlg, IDC_TO_REPLACE_EDIT, pstr);
-		if (TCHAR *pstr = strReplaceWithData)
-			SetDlgItemText(hDlg, IDC_REPLACEWITH_EDIT, pstr);
+		SetDlgItemText(hDlg, IDC_TO_REPLACE_EDIT, strToReplaceData.c_str());
+		SetDlgItemText(hDlg, IDC_REPLACEWITH_EDIT, strReplaceWithData.c_str());
 		return TRUE;
 
 	case WM_COMMAND:
