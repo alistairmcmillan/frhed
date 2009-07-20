@@ -100,22 +100,36 @@ public:
 	enum { IDD = IDD_FILL_WITH };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 private:
-	enum { FW_MAX = 1024 }; //max bytes to fill with
+	enum FillType
+	{
+		FILL_INPUT,
+		FILL_FILE,
+	};
+
+	static const int FW_MAX = 1024; /**< Max bytes to fill with. */
+
 	static TCHAR pcFWText[FW_MAX];//hex representation of bytes to fill with
 	static TCHAR buf[FW_MAX];//bytes to fill with
 	static int buflen;//number of bytes to fill with
 	static TCHAR szFWFileName[_MAX_PATH];//fill with file name
-	static int FWFile,FWFilelen;//fill with file and len
+	static int FWFile, FWFilelen;//fill with file and len
 	static LONG_PTR oldproc;//old hex box proc
 	static HFONT hfon;//needed so possible to display infinity char in fill with dlg box
-	static TCHAR curtyp;//filling with input-0 or file-1
-	static TCHAR asstyp;
-	void inittxt(HWND);
+	static FillType fillFrom; /**< Fill from input (0) or from file (1). */ 
+	static int selOper; /**< Assignment operator selected. */
+
 	static BYTE input(int);
 	static BYTE file(int);
+	void InitText(HWND);
 	static void hexstring2charstring();
 	static void deletenonhex(HWND);
 	static LRESULT CALLBACK HexProc(HWND, UINT, WPARAM, LPARAM);
+
+	BOOL OnInitDialog(HWND);
+	BOOL OnCommand(HWND, WPARAM, LPARAM);
+	BOOL OnOK(HWND, WPARAM, LPARAM);
+	BOOL OnOperationChange(HWND, WPARAM, LPARAM);
+	BOOL OnBrowseFile(HWND, WPARAM, LPARAM);
 };
 
 /**
