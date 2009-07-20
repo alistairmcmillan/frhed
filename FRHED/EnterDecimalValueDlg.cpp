@@ -59,7 +59,7 @@ BOOL EnterDecimalValueDlg::OnInitDialog(HWND hDlg)
 	}
 	TCHAR buf[16] = {0};
 	SetDlgItemInt(hDlg, IDC_DECIMAL_VALUE, iDecValDlgValue, bSigned ? TRUE : FALSE);
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iCurByte);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), iCurByte);
 	SetDlgItemText(hDlg, IDC_DECIMAL_OFFSET, buf);
 	SetDlgItemInt(hDlg, IDC_DECIMAL_TIMES, 1, TRUE);
 	CheckDlgButton(hDlg,

@@ -41,7 +41,7 @@ static const int OffsetLen = 16;
 BOOL AddBmkDlg::OnInitDialog(HWND hDlg)
 {
 	TCHAR buf[OffsetLen + 1] = {0};
-	_sntprintf(buf, RTL_NUMBER_OF(buf), _T("x%x"), iCurByte);
+	_sntprintf(buf, RTL_NUMBER_OF(buf), _T("0x%x"), iCurByte);
 	SetDlgItemText(hDlg, IDC_BMKADD_OFFSET, buf);
 	
 	// Limit edit text lengths

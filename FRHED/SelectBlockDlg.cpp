@@ -40,9 +40,9 @@ static const int OffsetLen = 16;
 BOOL SelectBlockDlg::OnInitDialog(HWND hDlg)
 {
 	TCHAR buf[128] = {0};
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), bSelected ? iStartOfSelection : iCurByte);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), bSelected ? iStartOfSelection : iCurByte);
 	SetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSET, buf);
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), bSelected ? iEndOfSelection : iCurByte);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), bSelected ? iEndOfSelection : iCurByte);
 	SetDlgItemText(hDlg, IDC_BLOCKSEL_OFFSETEND, buf);
 
 	// Limit edit text lengths

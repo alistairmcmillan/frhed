@@ -37,9 +37,9 @@
 BOOL ReverseDlg::OnInitDialog(HWND hDlg)
 {
 	TCHAR buf[32];
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iGetStartOfSelection());
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), iGetStartOfSelection());
 	SetDlgItemText (hDlg, IDC_REVERSE_OFFSET, buf);
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iGetEndOfSelection());
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), iGetEndOfSelection());
 	SetDlgItemText(hDlg, IDC_REVERSE_OFFSETEND, buf);
 	return TRUE;
 }

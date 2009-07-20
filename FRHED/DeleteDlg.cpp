@@ -45,9 +45,9 @@ BOOL DeleteDlg::OnInitDialog(HWND hDlg)
 	int iEnd = iGetEndOfSelection();
 	TCHAR buf[OffsetLen + 1] = {0};
 
-	_stprintf(buf, _T("x%x"), iStart);
+	_stprintf(buf, _T("0x%x"), iStart);
 	SetDlgItemText(hDlg, IDC_DELETE_STARTOFFSET, buf);
-	_stprintf(buf, _T("x%x"), iEnd);
+	_stprintf(buf, _T("0x%x"), iEnd);
 
 	CheckDlgButton(hDlg, IDC_DELETE_INCLUDEOFFSET, BST_CHECKED);
 	SetDlgItemText(hDlg, IDC_DELETE_ENDOFFSET, buf);

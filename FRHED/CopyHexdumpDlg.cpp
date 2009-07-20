@@ -53,9 +53,9 @@ BOOL CopyHexdumpDlg::OnInitDialog(HWND hDlg)
 		iCopyHexdumpDlgEnd = iGetEndOfSelection();
 	}
 	TCHAR buf[16] = {0};
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iCopyHexdumpDlgStart);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), iCopyHexdumpDlgStart);
 	SetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET, buf);
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iCopyHexdumpDlgEnd);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), iCopyHexdumpDlgEnd);
 	SetDlgItemText(hDlg, IDC_HEXDUMP_OFFSET2, buf);
 	CheckDlgButton(hDlg, iCopyHexdumpMode ? IDC_HEXDUMP_EXPORTCLIPB :
 			IDC_HEXDUMP_EXPORTFILE, BST_CHECKED);

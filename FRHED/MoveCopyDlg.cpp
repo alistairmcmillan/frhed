@@ -40,12 +40,12 @@ BOOL MoveCopyDlg::OnInitDialog(HWND hw)
 	TCHAR buf[30] = {0};
 	int iMove1stEnd = iGetStartOfSelection();
 	int iMove2ndEndorLen = iGetEndOfSelection();
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iMove1stEnd);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), iMove1stEnd);
 	SetDlgItemText (hw, IDC_1STOFFSET, buf);
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iMove2ndEndorLen);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), iMove2ndEndorLen);
 	SetDlgItemText (hw, IDC_2NDDELIM, buf);
 	CheckDlgButton (hw, IDC_OTHEREND, BST_CHECKED);
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iMovePos);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), iMovePos);
 	SetDlgItemText(hw, IDC_MOVEMENT, buf);
 	CheckDlgButton(hw, IDC_FPOS, BST_CHECKED);
 	if (iMoveOpTyp == OPTYP_MOVE)

@@ -44,9 +44,9 @@ BOOL CopyDlg::OnInitDialog(HWND hDlg)
 	int iStart = iGetStartOfSelection();
 	int iEnd = iGetEndOfSelection();
 	TCHAR buf[32] = {0};
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iStart);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), iStart);
 	SetDlgItemText(hDlg, IDC_COPY_STARTOFFSET, buf);
-	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("x%x"), iEnd);
+	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, _T("0x%x"), iEnd);
 	SetDlgItemText(hDlg, IDC_COPY_OFFSETEDIT, buf);
 	SetDlgItemInt(hDlg, IDC_COPY_BYTECOUNT, iEnd - iStart + 1, TRUE);
 	CheckDlgButton(hDlg, IDC_COPY_OFFSET, BST_CHECKED);
