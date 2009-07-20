@@ -31,6 +31,7 @@
  * @param [in] str String to parse.
  * @param [out] offset Number to return (parsed offset)
  * @return true if parsing succeeded, false if failed.
+ * @todo Find a faster way to parse all possibilities.
  */
 bool offset_parse(LPCTSTR str, int &offset)
 {
@@ -39,7 +40,9 @@ bool offset_parse(LPCTSTR str, int &offset)
 
 	int value = 0;
 	if ((_stscanf(str, _T("x%x"), &value) == 0) &&
+		(_stscanf(str, _T("X%x"), &value) == 0) &&
 		(_stscanf(str, _T("0x%x"), &value) == 0) &&
+		(_stscanf(str, _T("0X%x"), &value) == 0) &&
 		(_stscanf(str, _T("%d"), &value) == 0))
 	{
 		offset = value;
@@ -54,6 +57,7 @@ bool offset_parse(LPCTSTR str, int &offset)
  * @param [in] str String to parse.
  * @param [out] offset Number to return (parsed offset)
  * @return true if parsing succeeded, false if failed.
+ * @todo Find a faster way to parse all possibilities.
  */
 bool offset_parse64(LPCTSTR str, INT64 &offset)
 {
@@ -62,7 +66,9 @@ bool offset_parse64(LPCTSTR str, INT64 &offset)
 
 	INT64 value = 0;
 	if ((_stscanf(str, _T("x%llx"), &value) == 0) &&
+		(_stscanf(str, _T("X%llx"), &value) == 0) &&
 		(_stscanf(str, _T("0x%llx"), &value) == 0) &&
+		(_stscanf(str, _T("0X%llx"), &value) == 0) &&
 		(_stscanf(str, _T("%lld"), &value) == 0))
 	{
 		offset = value;

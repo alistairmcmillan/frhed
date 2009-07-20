@@ -13,6 +13,7 @@ Frhed 1.7.1
   Add link to ReadMe.txt to start-menu (r705)
   Drop VC6 compiler support (r735, r736)
   Recognize 0x as hex offset prefix (r757)
+  Recognize X and 0X (capital X) as hex offset prefix (r760)
   Bugfix: Zero-size files were opened as link files (r671)
   Bugfix: Don't allow de-selecting program files in installer (r675)
   Bugfix: Crash when going to DLL import names (#2800045)
