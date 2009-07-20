@@ -10,7 +10,7 @@
 #ifndef simplearr_h
 #define simplearr_h
 
-#define ARR_EMPTY -1
+const int ARR_EMPTY = -1;
 
 /**
  * A simple array class template.
