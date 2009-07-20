@@ -19,6 +19,7 @@ Frhed 1.7.1
   Bugfix: Could not change language when installed from zip (#2808491)
   Bugfix: Command line and shell context menu failed if command line
     contained many space characters (#2814846)
+  Bugfix: Replace-dialog didn't wrap long selection properly (r758)
   New translation:
   - Dutch (#2805592)
   - French (#2806325)
