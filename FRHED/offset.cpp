@@ -39,6 +39,7 @@ bool offset_parse(LPCTSTR str, int &offset)
 
 	int value = 0;
 	if ((_stscanf(str, _T("x%x"), &value) == 0) &&
+		(_stscanf(str, _T("0x%x"), &value) == 0) &&
 		(_stscanf(str, _T("%d"), &value) == 0))
 	{
 		offset = value;
@@ -61,6 +62,7 @@ bool offset_parse64(LPCTSTR str, INT64 &offset)
 
 	INT64 value = 0;
 	if ((_stscanf(str, _T("x%llx"), &value) == 0) &&
+		(_stscanf(str, _T("0x%llx"), &value) == 0) &&
 		(_stscanf(str, _T("%lld"), &value) == 0))
 	{
 		offset = value;
