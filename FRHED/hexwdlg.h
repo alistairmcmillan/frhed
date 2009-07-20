@@ -140,6 +140,10 @@ class ReverseDlg : public HexEditorWindow
 public:
 	enum { IDD = IDD_REVERSE_BYTES_DIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
+private:
+	BOOL OnInitDialog(HWND);
+	BOOL OnCommand(HWND, WPARAM, LPARAM);
+	BOOL OnOK(HWND, WPARAM, LPARAM);
 };
 
 class ShortcutsDlg : public HexEditorWindow
