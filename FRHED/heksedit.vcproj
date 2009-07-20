@@ -343,6 +343,12 @@
 				RelativePath="DragDropDlg.cpp">
 			</File>
 			<File
+				RelativePath="EncodeDlg.cpp">
+			</File>
+			<File
+				RelativePath="EncoderLib.cpp">
+			</File>
+			<File
 				RelativePath="EnterDecimalValueDlg.cpp">
 			</File>
 			<File
@@ -504,6 +510,9 @@
 			</File>
 			<File
 				RelativePath="DllProxies.h">
+			</File>
+			<File
+				RelativePath="EncodeDlg.h">
 			</File>
 			<File
 				RelativePath="EncoderLib.h">

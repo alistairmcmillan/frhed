@@ -49,6 +49,7 @@
 #include "FindUtil.h"
 #include "LangString.h"
 #include "FindCtxt.h"
+#include "EncodeDlg.h"
 
 #include "idt.h"
 #include "ids.h"

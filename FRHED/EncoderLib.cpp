@@ -15,41 +15,29 @@
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 /////////////////////////////////////////////////////////////////////////////
 /** 
- * @file gktools.h
+ * @file EncoderLib.cpp
  *
- * @brief Dialogs and functions for working with disks and dlls.
+ * @brief Build-in encoder functions implementations.
  *
  */
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef gktools_h
-#define gktools_h
+#include "precomp.h"
+#include "EncoderLib.h"
 
-BOOL WINAPI GetDllExportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize);
-BOOL WINAPI GetDllImportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize);
-
-extern PartitionInfo* SelectedPartitionInfo;
-
-/**
- * @brief A dialog for opening disk drives.
- */
-class OpenDriveDialog : public HexEditorWindow
+void WINAPI XorEncoder(MEMORY_CODING* p)
 {
-public:
-	enum { IDD = IDD_OPEN_DRIVE_DIALOG };
-	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-};
+	LPBYTE q = p->lpbMemory;
+	LPBYTE qMax = q + p->dwSize;
+	while (q < qMax)
+		*(q++) ^= -1;
+}
 
-/**
- * @brief A dialog for moving in disk.
- */
-class GotoTrackDialog : public HexEditorWindow
+void WINAPI Rot13Encoder(LPMEMORY_CODING p)
 {
-public:
-	enum { IDD = IDD_GOTO_TRACK_DIALOG };
-	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-};
-
-
-#endif // gktools_h
+	LPBYTE q = p->lpbMemory;
+	LPBYTE qMax = q + p->dwSize;
+	while (q < qMax)
+		*(q++) = _istalpha(*q) ? (BYTE)(tolower(*q) < 'n' ? * q + 13 : *q - 13) : *q;
+}

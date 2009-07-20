@@ -15,41 +15,31 @@
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 /////////////////////////////////////////////////////////////////////////////
 /** 
- * @file gktools.h
+ * @file EncodeDlg.h
  *
- * @brief Dialogs and functions for working with disks and dlls.
+ * @brief Encode/decode dialog declaration.
  *
  */
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef gktools_h
-#define gktools_h
+#ifndef ENCODE_DECODE_DLG_H
+#define ENCODE_DECODE_DLG_H
 
-BOOL WINAPI GetDllExportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize);
-BOOL WINAPI GetDllImportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize);
+#include "hexwnd.h"
+#include "EncoderLib.h"
+#include "resource.h"
 
-extern PartitionInfo* SelectedPartitionInfo;
+BOOL WINAPI GetMemoryCoding(HINSTANCE hInstance, HWND hParent, LPMEMORY_CODING p, LPCTSTR lpszDlls);
 
 /**
- * @brief A dialog for opening disk drives.
+ * @brief A dialog for selecting encoder DLL.
  */
-class OpenDriveDialog : public HexEditorWindow
+class EncodeDecodeDialog : public HexEditorWindow
 {
 public:
-	enum { IDD = IDD_OPEN_DRIVE_DIALOG };
+	enum { IDD = IDD_ENCODE_DECODE_DIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
 };
 
-/**
- * @brief A dialog for moving in disk.
- */
-class GotoTrackDialog : public HexEditorWindow
-{
-public:
-	enum { IDD = IDD_GOTO_TRACK_DIALOG };
-	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-};
-
-
-#endif // gktools_h
+#endif // ENCODE_DECODE_DLG_H
