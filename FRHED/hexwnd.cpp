@@ -1739,7 +1739,7 @@ void HexEditorWindow::statusbar_chset_and_editmode()
  */
 void HexEditorWindow::set_wnd_title()
 {
-	TCHAR buf[512];
+	TCHAR buf[512] = {0};
 
 	if (filename[0] != '\0')
 	{
@@ -1771,7 +1771,7 @@ void HexEditorWindow::set_wnd_title()
 			_stprintf(buf, GetLangString(IDS_SBAR_NSEL_OFFSET), iCurByte, iCurByte);
 			int wordval = 0;
 			int longval = 0;
-			TCHAR buf2[80];
+			TCHAR buf2[80] = {0};
 			if (DataArray.GetLength() - iCurByte > 0)
 			{//if we are not looking at the End byte
 				_tcscat(buf, _T("   "));
@@ -5274,7 +5274,7 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 		return false;
 	}
 
-	TCHAR msg[150];
+	TCHAR msg[150] = {0};
 	_tcscat(msg, GetLangString(IDS_HEXF_OPEN_FORMAT1));
 	_tcscat(msg, type ? GetLangString(IDS_HEXF_OPEN_FORMAT2) :
 		GetLangString(IDS_HEXF_OPEN_FORMAT3));
