@@ -5290,6 +5290,8 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 		ret = hexin.ParseFormatted();
 		ptrArray = hexin.GetArray();
 		m_dataArray = *ptrArray;
+		break;
+
 	case IDNO:
 		ret = hexin.ParseSimple();
 		ptrArray = hexin.GetArray();
@@ -5301,6 +5303,7 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 		iBytesPerLine = hexin.GetBytesPerLine();
 		iAutomaticBPL = hexin.GetAutomaticBPL();
 		iCharacterSet = hexin.GetCharset();
+		break;
 	}
 	return ret;
 }
