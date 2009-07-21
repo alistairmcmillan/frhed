@@ -87,7 +87,7 @@ HexFile::~HexFile()
  */
 void HexFile::Open(TCHAR * buffer, int size)
 {
-	m_pFile = new chexfile_stream(buffer);
+	m_pFile = new HexBufferStream(buffer);
 	m_size = size;
 }
 
@@ -98,7 +98,7 @@ void HexFile::Open(TCHAR * buffer, int size)
  */
 void HexFile::Open(FILE * file)
 {
-	m_pFile = new fhexfile_stream(file);
+	m_pFile = new HexFileStream(file);
 	int cur = ftell(file);
 	fseek(file, 0, SEEK_END);
 	int pos = ftell(file);

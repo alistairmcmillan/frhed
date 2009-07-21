@@ -26,7 +26,10 @@
 #ifndef _HEXFILE_STREAM_H_
 #define _HEXFILE_STREAM_H_
 
-class hexfile_stream
+/**
+ * @brief Hex streaming interface.
+ */
+class HexStream
 {
 public:
 	// Methods
@@ -39,9 +42,10 @@ public:
 };
 
 /**
- * @brief Hex file streaming class.
+ * @brief Hex streaming class reading from file.
+ * This class allows reading a hex stream from a file.
  */
-class fhexfile_stream : public hexfile_stream
+class HexFileStream : public HexStream
 {
 private:
 	FILE *m_hexfile; /**< File pointer to the hex file. */
@@ -51,7 +55,7 @@ public:
 	 * Constructor.
 	 * @param [in] hexfile file pointer to open file.
 	 */
-	fhexfile_stream(FILE *hexfile): m_hexfile(hexfile) { }
+	HexFileStream(FILE *hexfile) : m_hexfile(hexfile) { }
 
 	/**
 	 * Get next character from the file.
@@ -102,9 +106,10 @@ public:
 };
 
 /**
- * @brief Hex buffer streaming class.
+ * @brief Hex streaming class reading from memory buffer.
+ * This class allows reading a hex stream from a memory buffer.
  */
-class chexfile_stream : public hexfile_stream
+class HexBufferStream : public HexStream
 {
 private:
 	TCHAR *m_pBuf; /**< Start address of the hex data buffer. */
@@ -115,7 +120,7 @@ public:
 	 * Constructor.
 	 * @param [in] pBuffer Pointer to begin of read buffer.
 	 */
-	chexfile_stream(TCHAR *pBuffer): m_pBuf(pBuffer), m_offset(0) { }
+	HexBufferStream(TCHAR *pBuffer): m_pBuf(pBuffer), m_offset(0) { }
 
 	virtual int lhgetc();
 

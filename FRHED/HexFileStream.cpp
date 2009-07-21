@@ -26,7 +26,7 @@
 #include "precomp.h"
 #include "HexFileStream.h"
 
-int hexfile_stream::lheatwhite()
+int HexStream::lheatwhite()
 {
 	int c;
 	do
@@ -41,7 +41,7 @@ int hexfile_stream::lheatwhite()
 /**
  * Get next character from the buffer.
  */
-int chexfile_stream::lhgetc()
+int HexBufferStream::lhgetc()
 {
 	int c = (int)(BYTE)m_pBuf[m_offset];
 	if (c)

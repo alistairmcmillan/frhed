@@ -58,7 +58,7 @@ public:
 
 private:
 	SimpleArray<BYTE> m_data; /**< Array where data is loaded. */
-	hexfile_stream * m_pFile; /**< Pointer to file stream from which data is read. */
+	HexStream * m_pFile; /**< Pointer to file stream from which data is read. */
 	int m_type; /**< Dump file type, simple or Frhed display-formatted. */
 	int m_size; /**< Size of the data to read. */
 	HWND m_hwnd; /**< Handle to the window getting dialogs. */
