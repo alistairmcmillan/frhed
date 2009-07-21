@@ -38,7 +38,7 @@ MEMORY_CODING_DESCRIPTION BuiltinEncoders[] =
 	{ 0, 0 }
 };
 
-void AddEncoders(HWND hListbox, LPMEMORY_CODING_DESCRIPTION lpEncoders)
+static void AddEncoders(HWND hListbox, LPMEMORY_CODING_DESCRIPTION lpEncoders)
 {
 	for ( ; lpEncoders->lpszDescription ; ++lpEncoders)
 	{
@@ -47,78 +47,114 @@ void AddEncoders(HWND hListbox, LPMEMORY_CODING_DESCRIPTION lpEncoders)
 	}
 }
 
-INT_PTR EncodeDecodeDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM)
+/**
+ * @brief Initialize the dialog.
+ * @param [in] hDlg Handle to the dialog.
+ */
+BOOL EncodeDecodeDialog::OnInitDialog(HWND hDlg)
+{
+	HWND hListbox = GetDlgItem(hDlg, IDC_ENCODE_LIST);
+	AddEncoders(hListbox, BuiltinEncoders);
+
+	String buffer(EncodeDlls);
+	size_t prev_ind = 0;
+	size_t ind = buffer.find_first_of(';');
+	while (prev_ind != buffer.npos && ind != buffer.npos)
+	{
+		String dll = buffer.substr(prev_ind, ind - prev_ind);
+		HMODULE hLibrary = GetModuleHandle(dll.c_str());
+		if (hLibrary == 0)
+			hLibrary = LoadLibrary(dll.c_str());
+		if (hLibrary)
+		{
+			if (LPFNGetMemoryCodings callback = (LPFNGetMemoryCodings)
+				GetProcAddress(hLibrary, _T("GetMemoryCodings")))
+			{
+				AddEncoders(hListbox, callback());
+			}
+		}
+		prev_ind = ind;
+		ind = buffer.find_first_of(';', prev_ind + 1);
+	}
+	SendMessage(hListbox, LB_SETCURSEL, 0, 0);
+	CheckDlgButton(hDlg, IDC_ENCODE_ENC, BST_CHECKED);
+	return TRUE;
+}
+
+/**
+ * @brief Handle dialog closing with OK button (and applying the changes).
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] wParam The command to handle.
+ * @param [in] lParam Optional parameter for the command.
+ * @return TRUE if the command was handled, FALSE otherwise.
+ */
+BOOL EncodeDecodeDialog::OnOK(HWND hDlg, WPARAM wParam, LPARAM lParam)
+{
+	MEMORY_CODING mc;
+	TCHAR szBuffer[1024];
+	GetDlgItemText(hDlg, IDC_ENCODE_ARGS, szBuffer, sizeof(szBuffer));
+	mc.bEncode = IsDlgButtonChecked(hDlg, IDC_ENCODE_ENC);
+	mc.lpszArguments = szBuffer;
+	HWND hListbox = GetDlgItem(hDlg, IDC_ENCODE_LIST);
+	int nCurSel = SendMessage(hListbox, LB_GETCURSEL, 0, 0);
+	if (nCurSel < 0)
+		return TRUE;
+	mc.fpEncodeFunc = (LPFNEncodeMemoryFunction) SendMessage(hListbox, LB_GETITEMDATA, nCurSel, 0);
+	int lower = 0;
+	int upper = m_dataArray.GetUpperBound();
+	if (bSelected)
+	{
+		lower = iGetStartOfSelection();
+		upper = iGetEndOfSelection();
+	}
+	mc.lpbMemory = &m_dataArray[lower];
+	mc.dwSize = upper - lower + 1;
+	mc.fpEncodeFunc(&mc);
+	iFileChanged = TRUE;
+	bFilestatusChanged = true;
+	repaint();
+	EndDialog(hDlg, wParam);
+	return TRUE;
+}
+
+/**
+ * @brief Handle dialog commands.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] wParam The command to handle.
+ * @param [in] lParam Optional parameter for the command.
+ * @return TRUE if the command was handled, FALSE otherwise.
+ */
+BOOL EncodeDecodeDialog::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
+{
+	switch (wParam)
+	{
+	case IDOK:
+		return OnOK(hDlg, wParam, lParam);
+
+	case IDCANCEL:
+		EndDialog(hDlg, wParam);
+		return TRUE;
+	}
+	return FALSE;
+}
+
+/**
+ * @brief Handle dialog messages.
+ * @param [in] hDlg Handle to the dialog.
+ * @param [in] iMsg The message.
+ * @param [in] wParam The command in the message.
+ * @param [in] lParam The optional parameter for the command.
+ * @return TRUE if the message was handled, FALSE otherwise.
+ */
+INT_PTR EncodeDecodeDialog::DlgProc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMsg)
 	{
 	case WM_INITDIALOG:
-		{
-			//SimpleString buffer((LPTSTR)(LPCTSTR)EncodeDlls);
-			//LPCSTR lpszToken = strtok(buffer, ";");
-			HWND hListbox = GetDlgItem(hDlg, IDC_ENCODE_LIST);
-			AddEncoders(hListbox, BuiltinEncoders);
-
-			String buffer(EncodeDlls);
-			size_t prev_ind = 0;
-			size_t ind = buffer.find_first_of(';');
-			while (prev_ind != buffer.npos && ind != buffer.npos)
-			{
-				String dll = buffer.substr(prev_ind, ind - prev_ind);
-				HMODULE hLibrary = GetModuleHandle(dll.c_str());
-				if (hLibrary == 0)
-					hLibrary = LoadLibrary(dll.c_str());
-				if (hLibrary)
-				{
-					if (LPFNGetMemoryCodings callback = (LPFNGetMemoryCodings)
-						GetProcAddress(hLibrary, _T("GetMemoryCodings")))
-					{
-						AddEncoders(hListbox, callback());
-					}
-				}
-				//lpszToken = strtok(0, ";");
-				prev_ind = ind;
-				ind = buffer.find_first_of(';', prev_ind + 1);
-			}
-			SendMessage(hListbox, LB_SETCURSEL, 0, 0);
-			CheckDlgButton(hDlg, IDC_ENCODE_ENC, BST_CHECKED);
-		}
-		return TRUE;
+		return OnInitDialog(hDlg);
 
 	case WM_COMMAND:
-		switch (wParam)
-		{
-		case IDOK:
-			{
-				MEMORY_CODING mc;
-				TCHAR szBuffer[1024];
-				GetDlgItemText(hDlg, IDC_ENCODE_ARGS, szBuffer, sizeof(szBuffer));
-				mc.bEncode = IsDlgButtonChecked(hDlg, IDC_ENCODE_ENC);
-				mc.lpszArguments = szBuffer;
-				HWND hListbox = GetDlgItem(hDlg, IDC_ENCODE_LIST);
-				int nCurSel = SendMessage(hListbox, LB_GETCURSEL, 0, 0);
-				if (nCurSel < 0)
-					return TRUE;
-				mc.fpEncodeFunc = (LPFNEncodeMemoryFunction) SendMessage(hListbox, LB_GETITEMDATA, nCurSel, 0);
-				int lower = 0;
-				int upper = m_dataArray.GetUpperBound();
-				if (bSelected)
-				{
-					lower = iGetStartOfSelection();
-					upper = iGetEndOfSelection();
-				}
-				mc.lpbMemory = &m_dataArray[lower];
-				mc.dwSize = upper - lower + 1;
-				mc.fpEncodeFunc(&mc);
-				iFileChanged = TRUE;
-				bFilestatusChanged = true;
-				repaint();
-			}
-			// fall through
-		case IDCANCEL:
-			EndDialog(hDlg, wParam);
-			return TRUE;
-		}
-		break;
+		return OnCommand(hDlg, wParam, lParam);
 	}
 	return FALSE;
 }

@@ -40,6 +40,10 @@ class EncodeDecodeDialog : public HexEditorWindow
 public:
 	enum { IDD = IDD_ENCODE_DECODE_DIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
+private:
+	BOOL OnInitDialog(HWND);
+	BOOL OnCommand(HWND, WPARAM, LPARAM);
+	BOOL OnOK(HWND, WPARAM, LPARAM);
 };
 
 #endif // ENCODE_DECODE_DLG_H
