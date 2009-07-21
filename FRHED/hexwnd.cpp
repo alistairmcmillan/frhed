@@ -5286,10 +5286,11 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 	switch (MessageBox(hwnd, msg, app, MB_YESNOCANCEL))
 	{
 	case IDYES:
-		//return load_hexfile_1::StreamIn(*this, hexin); //Display output
 		ret = hexin.ParseFormatted();
 		ptrArray = hexin.GetArray();
 		DataArray = *ptrArray;
+		break;
+
 	case IDNO:
 		ret = hexin.ParseSimple();
 		ptrArray = hexin.GetArray();
@@ -5301,8 +5302,7 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 		iBytesPerLine = hexin.GetBytesPerLine();
 		iAutomaticBPL = hexin.GetAutomaticBPL();
 		iCharacterSet = hexin.GetCharset();
-		//DataArray.Adopt(ptrArray, ptrArray->GetUpperBound(), ptrArray->GetSize());
-		//return load_hexfile_0::StreamIn(*this, hexin); //just hex & space
+		break;
 	}
 	return ret;
 }
