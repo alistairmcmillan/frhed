@@ -99,7 +99,9 @@ void HexDump::Write(unsigned startInd, unsigned endInd)
 		int m = _stprintf(buf2, _T("%*.*x"), m_offsetMinLen, m_offsetMinLen,
 				m_partialStats ? a + m_partialOffset : a);
 
-		for (int i = m; i < m_offsetMaxLen + m_byteSpace - m; i++)
+		// Add at least one space after offset and fill more spaces if needed
+		buf2[m++] = ' ';
+		for (int i = m; i < m_offsetMaxLen + m_byteSpace; i++)
 			buf2[i] = ' ';
 		buf2[m_offsetMaxLen + m_byteSpace] = '\0';
 

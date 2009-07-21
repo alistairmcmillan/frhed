@@ -25,6 +25,7 @@ Frhed 1.7.1
    instead of '0x' (r761)
   Bugfix: tried to import hex dump file twice (r766)
   Bugfix: Garbage was shown in hex dump loading message box (r767)
+  Bugfix: Didn't add space after offset in display type hex dump (r770)
   New translation:
   - Dutch (#2805592)
   - French (#2806325)
