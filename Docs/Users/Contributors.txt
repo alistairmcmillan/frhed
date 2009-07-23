@@ -22,8 +22,10 @@ Localization:
 * German
   Tim Gerundt <gerundt@users.sourceforge.net>
 
+Other contributors (new versions):
+Martin Hughes <martinhughes@users.sourceforge.net>
 
-Other contributors:
+Other contributors (old versions):
 Dario Bagnoli - bug reports and beta testing
 Tom Foth - suggestions
 Bo Wannerberg - Win2000 opening bugfix
