@@ -34,7 +34,7 @@
 <body>
 <h2>Byte format syntax</h2>
 
-<p>Types <i>byte</i>, <i>word</i>, <i>longword</i> and <i>floating point</i>
+<p>Types <i>byte</i>, <i>word</i>, <i>doubleword</i> and <i>floating point</i>
 data can be encoded as follows:</p>
 
 <h4>Size</h4>
@@ -42,7 +42,7 @@ data can be encoded as follows:</p>
 <ul>
   <li><b>b</b> for byte-size (8 bit) value.</li>
   <li><b>w</b> for word-size (16 bit) value.</li> 
-  <li><b>l</b> for longword-size (32 bit) value.</li> 
+  <li><b>l</b> for doubleword-size (32 bit) value.</li> 
 </ul>
 
 <h4>Numeral System</h4>
@@ -53,7 +53,7 @@ data can be encoded as follows:</p>
 </ul>
 
 <h4>Value</h4>
-<p>Enter the value of the datum after the colon.</p>
+<p>Enter the value of the data after the colon.</p>
 
 <p><b>Note:</b>
 For floating point values set Size and Numeral system to:
@@ -65,14 +65,14 @@ For floating point values set Size and Numeral system to:
 
 <h3>Examples</h3>
 <ul>
-  <li><code>&lt;bd:-15&gt;</code> means byte-size datum with decimal value
+  <li><code>&lt;bd:-15&gt;</code> means byte-size data with decimal value
     -15.</li>
-  <li><code>&lt;wh:23f0&gt;</code> means word-size datum with hexadecimal value
+  <li><code>&lt;wh:23f0&gt;</code> means word-size data with hexadecimal value
     23f0.</li>  
-  <li><code>&lt;ld:1234567890&gt;</code> means longword-size datum with decimal value
+  <li><code>&lt;ld:1234567890&gt;</code> means ldoubleword-size data with decimal value
     1234567890.</li>
-  <li><code>&lt;fl:2.5&gt;</code> means float-size datum with value 2.5.</li>
-  <li><code>&lt;do:1.8e7&gt;</code> means double-size datum with value
+  <li><code>&lt;fl:2.5&gt;</code> means float-size data with value 2.5.</li>
+  <li><code>&lt;do:1.8e7&gt;</code> means double-size data with value
     1.8×10^7</li> 
 </ul>
 
@@ -92,7 +92,7 @@ Backslashes ("\") in the file are copied and encoded as double backslashes
      </li>
   <li><code>Word</code> (2 bytes)<br> signed from -32,768 to 32,767 <br>
     unsigned from 0 to 65,535</li>
-  <li><code>Longword</code> (4 bytes)<br> signed from -2,147,483,648 to
+  <li><code>Doubleword</code> (4 bytes)<br> signed from -2,147,483,648 to
     2,147,483,647 <br> unsigned from 0 to 4,294,967,295</li>
 </ul>
 
