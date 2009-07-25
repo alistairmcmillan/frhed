@@ -24,7 +24,40 @@
 // $Id$
 
 #include "precomp.h"
+#include "UnicodeString.h"
 #include "EncoderLib.h"
+#include "paths.h"
+
+static const TCHAR EncoderSubFolder[] = _T("Encoders");
+
+/**
+ * @brief Find encoder dlls from the subfolder.
+ * @return List of encoder dlls as a string.
+ */
+String enc_GetDllNames()
+{
+	TCHAR encodersFolder[MAX_PATH] = { 0 };
+	paths_GetModulePath(GetModuleHandle(NULL), encodersFolder, MAX_PATH);
+	_tcscat(encodersFolder, EncoderSubFolder);
+	_tcscat(encodersFolder, _T("\\*.dll"));
+
+	String encoders;
+	WIN32_FIND_DATA ff;
+	HANDLE h = FindFirstFile(encodersFolder, &ff);
+	if (h != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			// Add encoder dll name with subfolder name
+			encoders += EncoderSubFolder;
+			encoders += _T("\\");
+			encoders += ff.cFileName;
+			encoders += _T(";");
+		} while (FindNextFile(h, &ff));
+		FindClose(h);
+	}
+	return encoders;
+}
 
 /**
  * @brief Build-in XOR -1 encoder.

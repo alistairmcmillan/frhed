@@ -26,6 +26,10 @@
 #ifndef _ENCODER_LIB_H_
 #define _ENCODER_LIB_H_
 
+#include "UnicodeString.h"
+
+String enc_GetDllNames();
+
 struct s_MEMORY_ENCODING;
 
 typedef void (WINAPI* LPFNEncodeMemoryFunction)( s_MEMORY_ENCODING* p );

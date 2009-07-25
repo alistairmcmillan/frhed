@@ -64,7 +64,7 @@ BOOL EncodeDecodeDialog::OnInitDialog(HWND hDlg)
 	HWND hListbox = GetDlgItem(hDlg, IDC_ENCODE_LIST);
 	AddEncoders(hListbox, BuiltinEncoders);
 
-	String buffer(EncodeDlls);
+	String buffer(enc_GetDllNames());
 	size_t prev_ind = 0;
 	size_t ind = buffer.find_first_of(';');
 	while (prev_ind != buffer.npos && ind != buffer.npos)

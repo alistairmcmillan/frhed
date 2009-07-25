@@ -14,6 +14,7 @@ Frhed 1.7.1
   Drop VC6 compiler support (r735, r736)
   Recognize 0x as hex offset prefix (r757)
   Recognize X and 0X (capital X) as hex offset prefix (r760)
+  Load custom encoder dlls from Encoders-subfolder (r776)
   Bugfix: Zero-size files were opened as link files (r671)
   Bugfix: Don't allow de-selecting program files in installer (r675)
   Bugfix: Crash when going to DLL import names (#2800045)
