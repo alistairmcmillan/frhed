@@ -292,7 +292,6 @@ protected:
 	static int MouseOpDist;
 	static int MouseOpDelay;
 	static TCHAR TexteditorName[MAX_PATH];
-	static TCHAR EncodeDlls[MAX_PATH];
 	static bool bPasteAsText; /**< Paste binary data as text? */
 	static int iPasteTimes;
 	static int iPasteSkip;
