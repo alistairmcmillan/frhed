@@ -27,10 +27,7 @@
 #define ENCODE_DECODE_DLG_H
 
 #include "hexwnd.h"
-#include "EncoderLib.h"
 #include "resource.h"
-
-BOOL WINAPI GetMemoryCoding(HINSTANCE hInstance, HWND hParent, LPMEMORY_CODING p, LPCTSTR lpszDlls);
 
 /**
  * @brief A dialog for selecting encoder DLL.
