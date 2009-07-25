@@ -42,10 +42,13 @@ typedef struct s_MEMORY_ENCODING
 	LPFNEncodeMemoryFunction fpEncodeFunc; /**< Name of the selected function. */
 } MEMORY_CODING, *LPMEMORY_CODING;
 
-typedef struct _MEMORY_CODING_DESCRIPTION
+/**
+ * @brief Encoder description.
+ */
+typedef struct s_MEMORY_CODING_DESCRIPTION
 {
-	LPCTSTR lpszDescription;
-	LPFNEncodeMemoryFunction fpEncodeFunc;
+	LPCTSTR lpszDescription; /**< Name of the encoder. */
+	LPFNEncodeMemoryFunction fpEncodeFunc; /**< Pointer to the encoder function. */
 } MEMORY_CODING_DESCRIPTION, *LPMEMORY_CODING_DESCRIPTION;
 
 EXTERN_C LPMEMORY_CODING_DESCRIPTION WINAPI GetMemoryCodings();

@@ -31,6 +31,9 @@
 #include "hexwnd.h"
 #include "hexwdlg.h"
 
+/**
+ * @brief descriptions of build-in encoders.
+ */
 MEMORY_CODING_DESCRIPTION BuiltinEncoders[] =
 {
 	{ _T("ROT-13"), Rot13Encoder },
@@ -38,6 +41,11 @@ MEMORY_CODING_DESCRIPTION BuiltinEncoders[] =
 	{ 0, 0 }
 };
 
+/**
+ * @brief Add list of encoders to the Encoders-dialog.
+ * @param [in] hListbox List control where to add encoders.
+ * @param [in] lpEncoders Array of encoder descriptions.
+ */
 static void AddEncoders(HWND hListbox, LPMEMORY_CODING_DESCRIPTION lpEncoders)
 {
 	for ( ; lpEncoders->lpszDescription ; ++lpEncoders)
