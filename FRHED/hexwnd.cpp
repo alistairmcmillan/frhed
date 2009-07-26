@@ -5262,7 +5262,7 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 	WaitCursor wc;
 
 	hexin.SetHwnd(hwndMain);
-	int type = hexin.CheckType();
+	HexFile::FileType type = hexin.CheckType();
 	if (hexin.GetSize() == 0)
 	{
 		LangString msg(IDS_ERR_NO_DATA);
@@ -5272,8 +5272,10 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 
 	TCHAR msg[150] = {0};
 	_tcscat(msg, GetLangString(IDS_HEXF_OPEN_FORMAT1));
-	_tcscat(msg, type ? GetLangString(IDS_HEXF_OPEN_FORMAT2) :
-		GetLangString(IDS_HEXF_OPEN_FORMAT3));
+	if (type == HexFile::Digits)
+		_tcscat(msg, GetLangString(IDS_HEXF_OPEN_FORMAT3));
+	else if (type == HexFile::Display)
+		_tcscat(msg, GetLangString(IDS_HEXF_OPEN_FORMAT2));
 
 	SimpleArray<BYTE> *ptrArray = NULL;
 	bool ret = true;

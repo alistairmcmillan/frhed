@@ -59,7 +59,7 @@ static BYTE Hex2Nibble(BYTE by)
  */
 HexFile::HexFile()
 : m_pFile(NULL)
-, m_type(-1)
+, m_type(None)
 , m_size(0)
 , m_bAutoOffsetLen(false)
 , m_minOffsetLen(-1)
@@ -110,18 +110,20 @@ void HexFile::Open(FILE * file)
  * @brief Detemine the hex dump type (simple/formatted).
  * @return Type of the dump.
  */
-int HexFile::CheckType()
+HexFile::FileType HexFile::CheckType()
 {
-	int typ = 0;//type of file (0=just hex digits)
-	//Check the type of file - if only whitespace & hex then just hex else can be used to set line len etc
-	//There is probably a better way to do this
+	FileType typ = Digits;
+
+	// Check the type of file - if only whitespace & hex then just hex else can
+	// be used to set line len etc.
+	// There is probably a better way to do this
 	int temp;
 	while ((temp = m_pFile->lhgetc()) != EOF)
 	{
 		BYTE ct = (BYTE)temp;
 		if (!(_istspace(ct) || _istxdigit(ct)))
 		{
-			typ = 1;
+			typ = Display;
 			break;
 		}
 	}

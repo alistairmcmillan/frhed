@@ -37,12 +37,22 @@
 class HexFile
 {
 public:
+	/**
+	 * @brief Hex dump file type.
+	 */
+	enum FileType
+	{
+		None, /**< No type defined. */
+		Digits, /**< Stream of digits. */
+		Display, /**< Frhed display kind of layout. */
+	};
+
 	HexFile();
 	~HexFile();
 
 	void Open(TCHAR * buffer, int size = -1);
 	void Open(FILE * file);
-	int CheckType();
+	FileType CheckType();
 	int GetSize() const;
 	bool ParseSimple();
 	bool ParseFormatted();
@@ -59,7 +69,7 @@ public:
 private:
 	SimpleArray<BYTE> m_data; /**< Array where data is loaded. */
 	HexStream * m_pFile; /**< Pointer to file stream from which data is read. */
-	int m_type; /**< Dump file type, simple or Frhed display-formatted. */
+	FileType m_type; /**< Dump file type, simple or Frhed display-formatted. */
 	int m_size; /**< Size of the data to read. */
 	HWND m_hwnd; /**< Handle to the window getting dialogs. */
 	bool m_bAutoOffsetLen;
