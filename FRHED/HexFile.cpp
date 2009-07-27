@@ -168,17 +168,17 @@ SimpleArray<BYTE> *HexFile::GetArray()
  */
 bool HexFile::ParseSimple()
 {
-	int temp[4] = {0};
-	bool flnd = false; // High nibble?
-	int ii = 0;
-	int diio = 1; // ignore invalid chars
-	for (int i = 0 ; (temp[0] = m_pFile->lhgetc()) != EOF ; i++)
+	int readVal = 0;
+	bool hiNibble = false;
+	int byteind = 0;
+	bool ignoreInvalid = false;
+	for (int i = 0 ; (readVal = m_pFile->lhgetc()) != EOF ; i++)
 	{
-		if (_istxdigit(temp[0]))
+		if (_istxdigit(readVal))
 		{
-			if (!flnd)
+			if (!hiNibble)
 			{
-				if (!m_data.SetSize(ii + 1))
+				if (!m_data.SetSize(byteind + 1))
 				{
 					LangString app(IDS_APPNAME);
 					LangString msg(IDS_HEXF_NO_MEM);
@@ -187,16 +187,16 @@ bool HexFile::ParseSimple()
 					return IDYES == ret;
 				}
 				m_data.ExpandToSize();
-				m_data[ii] = 0;
+				m_data[byteind] = 0;
 			}
-			m_data[ii] |= Hex2Nibble((BYTE)temp[0]) ;
-			if (flnd)
-				ii++;
+			m_data[byteind] |= Hex2Nibble((BYTE)readVal) ;
+			if (hiNibble)
+				byteind++;
 			else
-				m_data[ii] <<= 4;
-			flnd = !flnd;
+				m_data[byteind] <<= 4;
+			hiNibble = !hiNibble;
 		}
-		else if (!_istspace(temp[0]) && diio)
+		else if (!_istspace(readVal) && !ignoreInvalid)
 		{
 			LangString app(IDS_APPNAME);
 			LangString msg(IDS_HEXF_ILLEGAL_CHAR);
@@ -205,7 +205,7 @@ bool HexFile::ParseSimple()
 			switch (ret)
 			{
 			case IDYES:
-				diio = 0;
+				ignoreInvalid = true;
 				break;
 			case IDCANCEL:
 				return false;
