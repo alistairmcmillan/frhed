@@ -5257,7 +5257,79 @@ int HexEditorWindow::iGetEndOfSelection()
 	return bSelected ? max(iStartOfSelection, iEndOfSelection) : iCurByte;
 }
 
-bool HexEditorWindow::load_hexfile(HexFile &hexin)
+/**
+ * @brief Load hex dump file in simple format.
+ * @param [in] hexin Hex dump loader class.
+ * @return true if loading succeeds, false otherwise.
+ */
+bool HexEditorWindow::LoadSimpleHexfile(HexFile &hexin)
+{
+	bool ret = true;
+	UINT index = 0;
+	bool stop = false;
+	bool ignoreInvalid = false;
+	bool keepData = true;
+	while (stop == false)
+	{
+		HexFile::Status st = hexin.ParseSimple(index, ignoreInvalid);
+		switch (st)
+		{
+		case HexFile::Ok:
+			stop = true;
+			break;
+
+		case HexFile::EOutOfMemory:
+			{
+				LangString app(IDS_APPNAME);
+				LangString msg(IDS_HEXF_NO_MEM);
+				UINT rv = MessageBox(hwnd, msg,
+						app, MB_YESNO | MB_ICONERROR);
+				ret = rv == IDYES;
+				keepData = rv == IDYES;
+				stop = true;
+			}
+			break;
+
+		case HexFile::EInvalidChar:
+			{
+				LangString app(IDS_APPNAME);
+				LangString msg(IDS_HEXF_ILLEGAL_CHAR);
+				UINT ret = MessageBox(hwnd, msg,
+						app, MB_YESNOCANCEL | MB_ICONERROR);
+				switch (ret)
+				{
+				case IDYES:
+					ignoreInvalid = true;
+					break;
+				case IDCANCEL:
+					stop = true;
+					ret = false;
+				}
+			}
+			break;
+		}
+	}
+	
+	if (keepData)
+	{
+		m_dataArray = *hexin.GetArray();
+		bAutoOffsetLen = hexin.WasAutoOffsetLen();
+		iMinOffsetLen = hexin.GetMinOffset();
+		bPartialStats = hexin.GetPartialStats();
+		iPartialOffset = hexin.GetPartialOffset();
+		iBytesPerLine = hexin.GetBytesPerLine();
+		iAutomaticBPL = hexin.GetAutomaticBPL();
+		iCharacterSet = hexin.GetCharset();
+	}
+	return ret;
+}
+
+/**
+ * @brief Load hex dump file.
+ * @param [in] hexin Hex dump loader.
+ * @return true if the loading succeeds, false otherwise.
+ */
+bool HexEditorWindow::LoadHexfile(HexFile &hexin)
 {
 	WaitCursor wc;
 
@@ -5270,6 +5342,7 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 		return false;
 	}
 
+	// Select the format
 	TCHAR msg[150] = {0};
 	_tcscat(msg, GetLangString(IDS_HEXF_OPEN_FORMAT1));
 	if (type == HexFile::Digits)
@@ -5290,16 +5363,7 @@ bool HexEditorWindow::load_hexfile(HexFile &hexin)
 		break;
 
 	case IDNO:
-		ret = hexin.ParseSimple();
-		ptrArray = hexin.GetArray();
-		m_dataArray = *ptrArray;
-		bAutoOffsetLen = hexin.WasAutoOffsetLen();
-		iMinOffsetLen = hexin.GetMinOffset();
-		bPartialStats = hexin.GetPartialStats();
-		iPartialOffset = hexin.GetPartialOffset();
-		iBytesPerLine = hexin.GetBytesPerLine();
-		iAutomaticBPL = hexin.GetAutomaticBPL();
-		iCharacterSet = hexin.GetCharset();
+		ret = LoadSimpleHexfile(hexin);
 		break;
 	}
 	return ret;
@@ -5347,7 +5411,7 @@ void HexEditorWindow::CMD_open_hexdump()
 		{
 			HexFile hexfile;
 			hexfile.Open(hexin, -1);
-			done = load_hexfile(hexfile);
+			done = LoadHexfile(hexfile);
 			GlobalUnlock(hClipMemory);
 		}
 		else
@@ -5383,7 +5447,7 @@ void HexEditorWindow::CMD_open_hexdump()
 		}
 		HexFile hexfile;
 		hexfile.Open(f);
-		done = load_hexfile(hexfile);
+		done = LoadHexfile(hexfile);
 		fclose(f);
 		if (done)
 			bReadOnly = -1 == _taccess(szFileName, 02);

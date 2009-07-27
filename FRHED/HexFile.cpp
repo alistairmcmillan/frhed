@@ -164,28 +164,24 @@ SimpleArray<BYTE> *HexFile::GetArray()
 /**
  * @brief Parse simple hex dump file.
  * This method parses simple hex dump file having just list of bytes.
- * @return true if the parsing succeeded, false if there was an error.
+ * @param [in, out] index Index where to start/continue the parsing.
+ * @param [in] ignoreInvalid Ignore invalid bytes?
+ * @return one of HexFile::Status values.
  */
-bool HexFile::ParseSimple()
+HexFile::Status HexFile::ParseSimple(UINT & index, bool ignoreInvalid)
 {
 	int readVal = 0;
 	bool hiNibble = false;
-	int byteind = 0;
-	bool ignoreInvalid = false;
-	for (int i = 0 ; (readVal = m_pFile->lhgetc()) != EOF ; i++)
+	int byteind = index;
+	for (int i = 0; (readVal = m_pFile->lhgetc()) != EOF; i++)
 	{
 		if (_istxdigit(readVal))
 		{
 			if (!hiNibble)
 			{
 				if (!m_data.SetSize(byteind + 1))
-				{
-					LangString app(IDS_APPNAME);
-					LangString msg(IDS_HEXF_NO_MEM);
-					UINT ret = MessageBox(m_hwnd, msg,
-							app, MB_YESNO | MB_ICONERROR);
-					return IDYES == ret;
-				}
+					return EOutOfMemory;
+
 				m_data.ExpandToSize();
 				m_data[byteind] = 0;
 			}
@@ -198,21 +194,12 @@ bool HexFile::ParseSimple()
 		}
 		else if (!_istspace(readVal) && !ignoreInvalid)
 		{
-			LangString app(IDS_APPNAME);
-			LangString msg(IDS_HEXF_ILLEGAL_CHAR);
-			UINT ret = MessageBox(m_hwnd, msg,
-					app, MB_YESNOCANCEL | MB_ICONERROR);
-			switch (ret)
-			{
-			case IDYES:
-				ignoreInvalid = true;
-				break;
-			case IDCANCEL:
-				return false;
-			}
+			index = byteind;
+			return EInvalidChar;
 		}
 	}
-	return true;
+	index = byteind;
+	return Ok;
 }
 
 /**

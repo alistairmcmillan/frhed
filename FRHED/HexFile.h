@@ -47,6 +47,13 @@ public:
 		Display, /**< Frhed display kind of layout. */
 	};
 
+	enum Status
+	{
+		Ok,
+		EOutOfMemory,
+		EInvalidChar,
+	};
+
 	HexFile();
 	~HexFile();
 
@@ -54,7 +61,7 @@ public:
 	void Open(FILE * file);
 	FileType CheckType();
 	int GetSize() const;
-	bool ParseSimple();
+	Status ParseSimple(UINT & index, bool ignoreInvalid);
 	bool ParseFormatted();
 	void SetHwnd(HWND hwnd);
 	SimpleArray<BYTE> *GetArray();

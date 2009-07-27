@@ -120,7 +120,8 @@ public:
 	void CMD_move_copy(bool redraw = true);
 	void CMD_move_copy(int iMove1stEnd, int iMove2ndEndorLen, bool redraw);
 	void CMD_reverse();
-	bool load_hexfile(HexFile &file);
+	bool LoadSimpleHexfile(HexFile &hexin);
+	bool LoadHexfile(HexFile &file);
 	void CMD_open_hexdump();
 	void status_bar_click(bool left);
 	void CMD_adopt_colours();
