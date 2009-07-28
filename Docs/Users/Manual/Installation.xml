@@ -58,5 +58,24 @@
     archive files containing executable files. Frhed can be installed by
     unzipping files to some proper folder retaining the folder structure.
     After unzipping the Frhed can be run just starting the executable.</para>
+
+    <section>
+      <title>Runtime files</title>
+
+      <para>Frhed needs Microsoft Visual C++ 2005 SP1 runtime
+      (redistributable) files to run. If you get error message like</para>
+
+      <blockquote>
+        <para>This application has failed to start because the application
+        configuration is incorrect. Reinstalling the application may fix this
+        problem.</para>
+      </blockquote>
+
+      <para>then you probably need to install the runtime files. Runtimes (or
+      often called redistributables) can be downloaded from various places
+      either in one package or as individual DLL files. Microsoft.com download
+      is <ulink
+      url="http://www.microsoft.com/downloads/details.aspx?FamilyID=200b2fd9-ae1a-4a14-984d-389c36f85647&amp;displaylang=en">here</ulink>.</para>
+    </section>
   </section>
 </article>
