@@ -8,6 +8,8 @@ Frhed 1.6.2
   Bugfix: Replace-dialog didn't wrap long selection properly (r759)
   Bugfix: tried to import hex dump file twice (r768)
   Bugfix: Garbage was shown in hex dump loading message box (r769)
+  Bugfix: Command line and shell context menu failed if command line
+    contained many space characters (#2814846)
 
 Frhed 1.6.0 2009-06-23 (r745)
   Add ReadMe.txt (r710)
