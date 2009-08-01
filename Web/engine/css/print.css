@@ -40,6 +40,10 @@ ul.inline li {
 	border: 1px solid black;
 }
 
-.translated { color: black; }
-.fuzzy { color: black; }
-.untranslated { color: black; }
+.status .translated { color: black; }
+.status .fuzzy { color: black; }
+.status .untranslated { color: black; }
+
+.status .left { text-align: left; }
+.status .center { text-align: center; }
+.status .right { text-align: right; }

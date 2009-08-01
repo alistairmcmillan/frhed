@@ -57,8 +57,6 @@ h1,h2 {padding-top: 6px;}
 	clear: both;
 	font-size: 0;
 }
-.left {float: left;}
-.right {float: right;}
 
 /* structure */
 #wrapper {
@@ -124,6 +122,8 @@ h1,h2 {padding-top: 6px;}
 	color: #AA3;
 	text-decoration: underline;
 }
+#footer .left {float: left;}
+#footer .right {float: right;}
 #footer .left, .footer .right {padding: 10px 0;}
 #footer .right, .footer .right a {color: #555;}
 #footer .right a:hover {color: #999;}
@@ -160,6 +160,10 @@ ul.inline li {
 	border: 1px solid #222;
 }
 
-.translated { color: #3C3; }
-.fuzzy { color: #69F; }
-.untranslated { color: #F00; }
+.status .translated { color: #3C3; }
+.status .fuzzy { color: #69F; }
+.status .untranslated { color: #F00; }
+
+.status .left { text-align: left; }
+.status .center { text-align: center; }
+.status .right { text-align: right; }
