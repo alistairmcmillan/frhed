@@ -3,11 +3,11 @@
   include('engine/simplepie/simplepie.inc');
   
   $page = new Page;
-  $page->setDescription('Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially.');
-  $page->setKeywords('Frhed, free, hex editor, binary file, load partially, hexdump, compare');
-  $page->addRssFeed('http://sourceforge.net/export/rss2_projnews.php?group_id=236485', 'Frhed News');
-  $page->addRssFeed('http://sourceforge.net/export/rss2_projfiles.php?group_id=236485', 'Frhed File Releases');
-  $page->printHead('Frhed - Free hex editor');
+  $page->setDescription(__('Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially.'));
+  $page->setKeywords(__('Frhed, free, hex editor, binary file, load partially, hexdump, compare'));
+  $page->addRssFeed('http://sourceforge.net/export/rss2_projnews.php?group_id=236485', __('Frhed News'));
+  $page->addRssFeed('http://sourceforge.net/export/rss2_projfiles.php?group_id=236485', __('Frhed File Releases'));
+  $page->printHead(__('Frhed - Free hex editor'));
 ?>
 				<p>Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially.</p>
 
@@ -21,7 +21,7 @@
 				</ul>
 
 <?php
-  $page->printRssHeading('News', 'http://sourceforge.net/export/rss2_projnews.php?group_id=236485');
+  $page->printRssHeading(__('News'), 'http://sourceforge.net/export/rss2_projnews.php?group_id=236485');
   $feed = new SimplePie();
   $feed->set_feed_url('http://sourceforge.net/export/rss2_projnews.php?group_id=236485');
   $feed->set_cache_location('./engine/simplepie/cache');
@@ -35,7 +35,7 @@
 ?>
 
 <?php
-  $page->printRssHeading('Download', 'http://sourceforge.net/export/rss2_projfiles.php?group_id=236485');
+  $page->printRssHeading(__('Download'), 'http://sourceforge.net/export/rss2_projfiles.php?group_id=236485');
 ?>
 				<h3>Stable releases</h3>
 				<ul>

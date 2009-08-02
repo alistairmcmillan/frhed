@@ -10,4 +10,28 @@
 // GNU General Public License for more details.
 
   include('page.inc');
+
+  function __($text) {
+    $numargs = func_num_args();
+    if ($numargs > 1 ) { //if more the one argument...
+      $args = func_get_args();
+      array_shift($args);
+      return vsprintf($text, $args);
+    }
+    else { //if one argument...
+      return $text;
+    }
+  }
+
+  function __e($text) {
+    $numargs = func_num_args();
+    if ($numargs > 1 ) { //if more the one argument...
+      $args = func_get_args();
+      array_shift($args);
+      vprintf($text, $args);
+    }
+    else { //if one argument...
+      echo $text;
+    }
+  }
 ?>
