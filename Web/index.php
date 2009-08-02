@@ -53,14 +53,8 @@
 				</ul>
 				<h3>Alpha releases</h3>
 				<ul>
-					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=295443&amp;release_id=685297">
-						Frhed 1.5.4</a> (2009-05-26)</li>
-					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=295443&amp;release_id=680596">
-						Frhed 1.5.3</a> (2009-05-05)</li>
-					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=295443&amp;release_id=676105">
-						Frhed 1.5.2</a> (2009-04-15)</li>
-					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=295443&amp;release_id=669211">
-						Frhed 1.5.1</a> (2009-03-18)</li>
+					<li><a href="https://sourceforge.net/projects/frhed/files/3.%20Alpha%20Releases/1.7.1/">
+						Frhed 1.7.1</a> (2009-07-30)</li>
 				</ul>
 
 				<h2>Support</h2>
