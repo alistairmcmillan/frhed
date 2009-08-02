@@ -1,5 +1,5 @@
 <?php
-  include('engine/page.inc');
+  include('engine/engine.inc');
   include('engine/simplepie/simplepie.inc');
   
   $page = new Page;
