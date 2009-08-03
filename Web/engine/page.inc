@@ -163,26 +163,26 @@
      * get the side navigation from the page
      */
     function getSideNavigation() {
-      $sidenaventry = new SideNavEntry('', 'Frhed');
-      $sidenaventry->addSubEntry('/', 'Home');
-      $sidenaventry->addSubEntry('/screenshots/', 'Screenshots');
-      $sidenaventry->addSubEntry('http://sourceforge.net/projects/frhed', 'Project Page');
-      $sidenaventry->addSubEntry('/frhed_pad.xml', 'PAD File');
+      $sidenaventry = new SideNavEntry('', __('Frhed'));
+      $sidenaventry->addSubEntry('/', __('Home'));
+      $sidenaventry->addSubEntry('/screenshots/', __('Screenshots'));
+      $sidenaventry->addSubEntry('http://sourceforge.net/projects/frhed', __('Project Page'));
+      $sidenaventry->addSubEntry('/frhed_pad.xml', __('PAD File'));
       $sidenaventries[] = $sidenaventry;
-      $sidenaventry = new SideNavEntry('', 'Translations');
-      $sidenaventry->addSubEntry('/translations/', 'Index');
-      $sidenaventry->addSubEntry('/translations/status_branch.php', 'Status (Stable Branch)');
-      $sidenaventry->addSubEntry('/translations/status_trunk.php', 'Status (Unstable Trunk)');
+      $sidenaventry = new SideNavEntry('', __('Translations'));
+      $sidenaventry->addSubEntry('/translations/', __('Index'));
+      $sidenaventry->addSubEntry('/translations/status_branch.php', __('Status (Stable Branch)'));
+      $sidenaventry->addSubEntry('/translations/status_trunk.php', __('Status (Unstable Trunk)'));
       $sidenaventries[] = $sidenaventry;
-      $sidenaventry = new SideNavEntry('', 'Support');
-      $sidenaventry->addSubEntry('http://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485', 'Bugs');
-      $sidenaventry->addSubEntry('http://sourceforge.net/tracker/?atid=1100166&amp;group_id=236485', 'Feature Requests');
-      $sidenaventry->addSubEntry('http://apps.sourceforge.net/phpbb/frhed/', 'Forums');
-      $sidenaventry->addSubEntry('http://sourceforge.net/mail/?group_id=236485', 'Mailing Lists');
+      $sidenaventry = new SideNavEntry('', __('Support'));
+      $sidenaventry->addSubEntry('http://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485', __('Bugs'));
+      $sidenaventry->addSubEntry('http://sourceforge.net/tracker/?atid=1100166&amp;group_id=236485', __('Feature Requests'));
+      $sidenaventry->addSubEntry('http://apps.sourceforge.net/phpbb/frhed/', __('Forums'));
+      $sidenaventry->addSubEntry('http://sourceforge.net/mail/?group_id=236485', __('Mailing Lists'));
       $sidenaventries[] = $sidenaventry;
-      $sidenaventry = new SideNavEntry('', 'Links');
-      $sidenaventry->addSubEntry('http://www.kibria.de/frhed.html', 'Original Version', 'Original version from Raihan Kibria');
-      $sidenaventry->addSubEntry('http://winmerge.org/', 'WinMerge');
+      $sidenaventry = new SideNavEntry('', __('Links'));
+      $sidenaventry->addSubEntry('http://www.kibria.de/frhed.html', __('Original Version'), __('Original version from Raihan Kibria'));
+      $sidenaventry->addSubEntry('http://winmerge.org/', __('WinMerge'));
       $sidenaventries[] = $sidenaventry;
       
       $temp = "<div id=\"sidenav\">\n";
