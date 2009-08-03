@@ -126,7 +126,14 @@
       $temp .= "</html>\n";
       print($temp);
     }
-    
+
+    /**
+     * print a <h2> heading
+     */
+    function printHeading($title) {
+      print("<h2>" . $title . "</h2>\n");
+    }
+
     /**
      * print a <h2> heading with a RSS feed link
      */
@@ -135,10 +142,24 @@
     }
 
     /**
+     * print a <h3> heading
+     */
+    function printSubHeading($title) {
+      print("<h3>" . $title . "</h3>\n");
+    }
+
+    /**
      * print a <h3> heading with a RSS feed link
      */
     function printRssSubHeading($title, $rssfeedurl) {
       print("<h3>" . $title . " " . $this->getRssFeedLink($rssfeedurl) . "</h3>\n");
+    }
+
+    /**
+     * print a paragraph
+     */
+    function printPara($text) {
+      print("<p>" . $text . "</p>\n");
     }
 
     /**

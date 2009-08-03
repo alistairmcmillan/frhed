@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?atid=1100163&group_id=236485\n"
-"POT-Creation-Date: 2009-08-03 16:11+0000\n"
+"POT-Creation-Date: 2009-08-03 16:25+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: English <frhed-support@lists.sourceforge.net>\n"
@@ -19,17 +19,17 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ../../\n"
 
-#: engine\page.inc:172
+#: engine\page.inc:193
 #, c-format
 msgid "Translations"
 msgstr ""
 
-#: engine\page.inc:185
+#: engine\page.inc:206
 #, c-format
 msgid "WinMerge"
 msgstr ""
 
-#: engine\page.inc:170
+#: engine\page.inc:191
 #, c-format
 msgid "PAD File"
 msgstr ""
@@ -44,17 +44,17 @@ msgstr ""
 msgid "Frhed - Free hex editor"
 msgstr ""
 
-#: engine\page.inc:184
+#: engine\page.inc:205
 #, c-format
 msgid "Original version from Raihan Kibria"
 msgstr ""
 
-#: engine\page.inc:174
+#: engine\page.inc:195
 #, c-format
 msgid "Status (Stable Branch)"
 msgstr ""
 
-#: engine\page.inc:175
+#: engine\page.inc:196
 #, c-format
 msgid "Status (Unstable Trunk)"
 msgstr ""
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Frhed File Releases"
 msgstr ""
 
-#: engine\page.inc:184
+#: engine\page.inc:205
 #, c-format
 msgid "Original Version"
 msgstr ""
@@ -74,27 +74,33 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: engine\page.inc:179
+#: engine\page.inc:200
 #, c-format
 msgid "Feature Requests"
 msgstr ""
 
-#: engine\page.inc:181
+#: screenshots\index.php:5
+#, c-format
+msgid "Screenshots - Frhed"
+msgstr ""
+
+#: engine\page.inc:202
 #, c-format
 msgid "Mailing Lists"
 msgstr ""
 
-#: engine\page.inc:177
+#: engine\page.inc:198
 #, c-format
 msgid "Support"
 msgstr ""
 
-#: engine\page.inc:169
+#: engine\page.inc:190
 #, c-format
 msgid "Project Page"
 msgstr ""
 
-#: engine\page.inc:168
+#: engine\page.inc:189
+#: screenshots\index.php:7
 #, c-format
 msgid "Screenshots"
 msgstr ""
@@ -109,22 +115,22 @@ msgstr ""
 msgid "Frhed, free, hex editor, binary file, load partially, hexdump, compare"
 msgstr ""
 
-#: engine\page.inc:180
+#: engine\page.inc:201
 #, c-format
 msgid "Forums"
 msgstr ""
 
-#: engine\page.inc:183
+#: engine\page.inc:204
 #, c-format
 msgid "Links"
 msgstr ""
 
-#: engine\page.inc:178
+#: engine\page.inc:199
 #, c-format
 msgid "Bugs"
 msgstr ""
 
-#: engine\page.inc:167
+#: engine\page.inc:188
 #, c-format
 msgid "Home"
 msgstr ""
@@ -134,13 +140,18 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: engine\page.inc:173
+#: engine\page.inc:194
 #, c-format
 msgid "Index"
 msgstr ""
 
-#: engine\page.inc:166
+#: engine\page.inc:187
 #, c-format
 msgid "Frhed"
+msgstr ""
+
+#: screenshots\index.php:8
+#, c-format
+msgid "Main Window"
 msgstr ""
 
