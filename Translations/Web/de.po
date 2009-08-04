@@ -1,0 +1,157 @@
+# This file is part from Frhed <http://frhed.sf.net/>
+# Released under the "GNU General Public License"
+#
+# ID line follows -- this is updated by SVN
+# $Id$
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Frhed\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?atid=1100163&group_id=236485\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Tim Gerundt <tim at gerundt.de>\n"
+"Language-Team: German <frhed-support@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: ../../\n"
+
+#: engine\page.inc:193
+#, c-format
+msgid "Translations"
+msgstr "Übersetzungen"
+
+#: engine\page.inc:206
+#, c-format
+msgid "WinMerge"
+msgstr "WinMerge"
+
+#: engine\page.inc:191
+#, c-format
+msgid "PAD File"
+msgstr "PAD-Datei"
+
+#: index.php:6
+#, c-format
+msgid "Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially."
+msgstr ""
+
+#: index.php:10
+#, c-format
+msgid "Frhed - Free hex editor"
+msgstr "Frhed - Freier Hexeditor"
+
+#: engine\page.inc:205
+#, c-format
+msgid "Original version from Raihan Kibria"
+msgstr "Original Version von Raihan Kibria"
+
+#: engine\page.inc:195
+#, c-format
+msgid "Status (Stable Branch)"
+msgstr ""
+
+#: engine\page.inc:196
+#, c-format
+msgid "Status (Unstable Trunk)"
+msgstr ""
+
+#: index.php:9
+#, c-format
+msgid "Frhed File Releases"
+msgstr ""
+
+#: engine\page.inc:205
+#, c-format
+msgid "Original Version"
+msgstr "Original Version"
+
+#: index.php:24
+#, c-format
+msgid "News"
+msgstr "Neuigkeiten"
+
+#: engine\page.inc:200
+#, c-format
+msgid "Feature Requests"
+msgstr "Funktionsanfragen"
+
+#: screenshots\index.php:5
+#, c-format
+msgid "Screenshots - Frhed"
+msgstr "Screenshots - Frhed"
+
+#: engine\page.inc:202
+#, c-format
+msgid "Mailing Lists"
+msgstr "Verteilerlisten"
+
+#: engine\page.inc:198
+#, c-format
+msgid "Support"
+msgstr "Support"
+
+#: engine\page.inc:190
+#, c-format
+msgid "Project Page"
+msgstr "Projektseite"
+
+#: engine\page.inc:189
+#: screenshots\index.php:7
+#, c-format
+msgid "Screenshots"
+msgstr "Screenshots"
+
+#: index.php:8
+#, c-format
+msgid "Frhed News"
+msgstr "Frhed Neuigkeiten"
+
+#: index.php:7
+#, c-format
+msgid "Frhed, free, hex editor, binary file, load partially, hexdump, compare"
+msgstr ""
+
+#: engine\page.inc:201
+#, c-format
+msgid "Forums"
+msgstr "Foren"
+
+#: engine\page.inc:204
+#, c-format
+msgid "Links"
+msgstr "Links"
+
+#: engine\page.inc:199
+#, c-format
+msgid "Bugs"
+msgstr "Fehler"
+
+#: engine\page.inc:188
+#, c-format
+msgid "Home"
+msgstr "Home"
+
+#: index.php:38
+#, c-format
+msgid "Download"
+msgstr "Download"
+
+#: engine\page.inc:194
+#, c-format
+msgid "Index"
+msgstr "Index"
+
+#: engine\page.inc:187
+#, c-format
+msgid "Frhed"
+msgstr "Frhed"
+
+#: screenshots\index.php:8
+#, c-format
+msgid "Main Window"
+msgstr "Hauptfenster"
+
