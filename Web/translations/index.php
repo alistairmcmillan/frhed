@@ -3,9 +3,9 @@
   include('translations.inc');
 
   $page = new Page;
-  $page->addRssFeed('status_branch_rss.php', 'Frhed Translations Status (Stable Branch)');
-  $page->addRssFeed('status_trunk_rss.php', 'Frhed Translations Status (Unstable Trunk)');
-  $page->printHead('Translations - Frhed');
+  $page->addRssFeed('status_branch_rss.php', __('Frhed Translations Status (Stable Branch)'));
+  $page->addRssFeed('status_trunk_rss.php', __('Frhed Translations Status (Unstable Trunk)'));
+  $page->printHead(__('Translations'));
   
 ?>
 <h2>Translations</h2>
@@ -17,11 +17,11 @@
     
     $languages = $status->getLanguagesArray();
     foreach ($languages as $language) { //for all languages...
-      print("  <li>" . $language . "</li>\n");
+      print("  <li>" . __($language) . "</li>\n");
     }
   }
   catch (Exception $ex) { //If problems with translations status...
-    print("  <li>English</li>\n");
+    print("  <li>" . __('English') . "</li>\n");
   }
 ?>
 </ul>

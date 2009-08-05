@@ -4,9 +4,9 @@
 
   $page = new Page;
   $page->addRssFeed('status_trunk_rss.php');
-  $page->printHead('Translations Status (Unstable Trunk) - Frhed');
+  $page->printHead(__('Translations Status (Unstable Trunk)'));
   
-  $page->printRssHeading('Translations Status (Unstable Trunk)', 'status_trunk_rss.php');
+  $page->printRssHeading(__('Translations Status (Unstable Trunk)'), 'status_trunk_rss.php');
   try {
     $status = New TranslationsStatus('status_trunk.xml');
     $status->svnUrl = 'http://frhed.svn.sourceforge.net/viewvc/frhed/trunk/Translations/';
@@ -15,7 +15,7 @@
     $status->printTranslators();
   }
   catch (Exception $ex) { //If problems with translations status...
-    print("<p>The translations status is currently not available...</p>\n");
+    print("<p>" . __('The translations status is currently not available...') . "</p>\n");
   }
   $page->printFoot();
 ?>

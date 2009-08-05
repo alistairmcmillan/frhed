@@ -2,7 +2,7 @@
   include('../engine/engine.inc');
   
   $page = new Page;
-  $page->printHead(__('Screenshots - Frhed'));
+  $page->printHead(__('Screenshots'));
   
   $page->printHeading(__('Screenshots'));
   $page->printSubHeading(__('Main Window'));

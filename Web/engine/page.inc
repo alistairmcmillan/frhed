@@ -23,7 +23,7 @@
      */
     function Page() {
       $this->_lang = 'en';
-      $this->_title = 'Frhed';
+      $this->_title = '';
       $this->_charset = 'UTF-8';
       $this->_description = '';
       $this->_keywords = '';
@@ -76,13 +76,16 @@
      * print the head from the page
      */
     function printHead($title = '') {
-      if ($title != '') {
-        $this->_title = $title;
-      }
+      $this->_title = $title;
       $temp = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n";
       $temp .= "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"" . $this->_lang . "\">\n";
       $temp .= "<head>\n";
-      $temp .= "  <title>" . $this->_title . "</title>\n";
+      if ($this->_title != '') {
+        $temp .= "  <title>" . $this->_title . " - " . __('Frhed') . "</title>\n";
+      }
+      else {
+        $temp .= "  <title>" . __('Frhed - Free hex editor') . "</title>\n";
+      }
       $temp .= "  <meta http-equiv=\"content-type\" content=\"text/html; charset=" . $this->_charset . "\"/>\n";
       if ($this->_description != '') {
         $temp .= "  <meta name=\"description\" content=\"" . $this->_description . "\"/>\n";

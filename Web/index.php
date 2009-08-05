@@ -7,7 +7,7 @@
   $page->setKeywords(__('Frhed, free, hex editor, binary file, load partially, hexdump, compare'));
   $page->addRssFeed('http://sourceforge.net/export/rss2_projnews.php?group_id=236485', __('Frhed News'));
   $page->addRssFeed('http://sourceforge.net/export/rss2_projfiles.php?group_id=236485', __('Frhed File Releases'));
-  $page->printHead(__('Frhed - Free hex editor'));
+  $page->printHead();
 ?>
 				<p>Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially.</p>
 
