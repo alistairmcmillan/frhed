@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?atid=1100163&group_id=236485\n"
-"POT-Creation-Date: 2009-08-03 16:25+0000\n"
+"POT-Creation-Date: 2009-08-05 14:07+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: English <frhed-support@lists.sourceforge.net>\n"
@@ -19,19 +19,49 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ../../\n"
 
-#: engine\page.inc:193
+#: engine\page.inc:196
+#: translations\index.php:8
 #, c-format
 msgid "Translations"
 msgstr ""
 
-#: engine\page.inc:206
+#: translations\translations.inc:81
+#: translations\translations.inc:95
+#: translations\translations.inc:133
+#, c-format
+msgid "Translated"
+msgstr ""
+
+#: engine\page.inc:209
 #, c-format
 msgid "WinMerge"
 msgstr ""
 
-#: engine\page.inc:191
+#: translations\translations.inc:83
+#, c-format
+msgid "Fuzzy: %d%%"
+msgstr ""
+
+#: engine\engine.inc:20
+#, c-format
+msgid "German"
+msgstr ""
+
+#: engine\page.inc:194
 #, c-format
 msgid "PAD File"
+msgstr ""
+
+#: translations\translations.inc:171
+#, c-format
+msgid "Total: %d"
+msgstr ""
+
+#: translations\translations.inc:83
+#: translations\translations.inc:96
+#: translations\translations.inc:134
+#, c-format
+msgid "Fuzzy"
 msgstr ""
 
 #: index.php:6
@@ -39,22 +69,33 @@ msgstr ""
 msgid "Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially."
 msgstr ""
 
-#: index.php:10
+#: engine\page.inc:87
 #, c-format
 msgid "Frhed - Free hex editor"
 msgstr ""
 
-#: engine\page.inc:205
+#: engine\page.inc:208
 #, c-format
 msgid "Original version from Raihan Kibria"
 msgstr ""
 
-#: engine\page.inc:195
+#: engine\page.inc:198
 #, c-format
 msgid "Status (Stable Branch)"
 msgstr ""
 
-#: engine\page.inc:196
+#: translations\translations.inc:169
+#, c-format
+msgid "Template"
+msgstr ""
+
+#: translations\status_branch.php:7
+#: translations\status_branch.php:9
+#, c-format
+msgid "Translations Status (Stable Branch)"
+msgstr ""
+
+#: engine\page.inc:199
 #, c-format
 msgid "Status (Unstable Trunk)"
 msgstr ""
@@ -64,9 +105,15 @@ msgstr ""
 msgid "Frhed File Releases"
 msgstr ""
 
-#: engine\page.inc:205
+#: engine\page.inc:208
 #, c-format
 msgid "Original Version"
+msgstr ""
+
+#: engine\engine.inc:19
+#: translations\index.php:24
+#, c-format
+msgid "English"
 msgstr ""
 
 #: index.php:24
@@ -74,32 +121,55 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: engine\page.inc:200
+#: engine\page.inc:203
 #, c-format
 msgid "Feature Requests"
 msgstr ""
 
-#: screenshots\index.php:5
+#: translations\translations.inc:136
 #, c-format
-msgid "Screenshots - Frhed"
+msgid "Last Update"
 msgstr ""
 
-#: engine\page.inc:202
+#: translations\translations.inc:269
+#, c-format
+msgid "Translators"
+msgstr ""
+
+#: engine\page.inc:205
 #, c-format
 msgid "Mailing Lists"
 msgstr ""
 
-#: engine\page.inc:198
+#: translations\status_trunk.php:7
+#: translations\status_trunk.php:9
+#, c-format
+msgid "Translations Status (Unstable Trunk)"
+msgstr ""
+
+#: translations\translations.inc:85
+#, c-format
+msgid "Untranslated: %d%%"
+msgstr ""
+
+#: engine\page.inc:201
 #, c-format
 msgid "Support"
 msgstr ""
 
-#: engine\page.inc:190
+#: translations\translations.inc:131
+#: translations\translations.inc:272
+#, c-format
+msgid "Language"
+msgstr ""
+
+#: engine\page.inc:193
 #, c-format
 msgid "Project Page"
 msgstr ""
 
-#: engine\page.inc:189
+#: engine\page.inc:192
+#: screenshots\index.php:5
 #: screenshots\index.php:7
 #, c-format
 msgid "Screenshots"
@@ -110,27 +180,53 @@ msgstr ""
 msgid "Frhed News"
 msgstr ""
 
+#: translations\status_branch.php:18
+#: translations\status_trunk.php:18
+#, c-format
+msgid "The translations status is currently not available..."
+msgstr ""
+
 #: index.php:7
 #, c-format
 msgid "Frhed, free, hex editor, binary file, load partially, hexdump, compare"
 msgstr ""
 
-#: engine\page.inc:201
+#: engine\page.inc:204
 #, c-format
 msgid "Forums"
 msgstr ""
 
-#: engine\page.inc:204
+#: engine\page.inc:207
 #, c-format
 msgid "Links"
 msgstr ""
 
-#: engine\page.inc:199
+#: engine\page.inc:202
 #, c-format
 msgid "Bugs"
 msgstr ""
 
-#: engine\page.inc:188
+#: translations\translations.inc:41
+#, c-format
+msgid "File not found."
+msgstr ""
+
+#: translations\translations.inc:81
+#, c-format
+msgid "Translated: %d%%"
+msgstr ""
+
+#: translations\index.php:7
+#, c-format
+msgid "Frhed Translations Status (Unstable Trunk)"
+msgstr ""
+
+#: translations\translations.inc:132
+#, c-format
+msgid "Graph"
+msgstr ""
+
+#: engine\page.inc:191
 #, c-format
 msgid "Home"
 msgstr ""
@@ -140,12 +236,25 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: engine\page.inc:194
+#: engine\page.inc:197
 #, c-format
 msgid "Index"
 msgstr ""
 
-#: engine\page.inc:187
+#: translations\translations.inc:85
+#: translations\translations.inc:97
+#: translations\translations.inc:135
+#, c-format
+msgid "Untranslated"
+msgstr ""
+
+#: translations\index.php:6
+#, c-format
+msgid "Frhed Translations Status (Stable Branch)"
+msgstr ""
+
+#: engine\page.inc:84
+#: engine\page.inc:190
 #, c-format
 msgid "Frhed"
 msgstr ""
@@ -153,5 +262,10 @@ msgstr ""
 #: screenshots\index.php:8
 #, c-format
 msgid "Main Window"
+msgstr ""
+
+#: translations\translations.inc:38
+#, c-format
+msgid "File not valid."
 msgstr ""
 
