@@ -161,8 +161,17 @@
     /**
      * print a paragraph
      */
-    function printPara($text) {
-      print("<p>" . $text . "</p>\n");
+    function printPara() {
+      print("<p>");
+      $numargs = func_num_args();
+      $args = func_get_args();
+      for ($i = 0; $i < $numargs; $i++) { //for all arguments...
+        if ($i > 0) //if NOT first argument...
+          print(' ' . $args[$i]);
+        else //if first argument...
+          print($args[$i]);
+      }
+      print("</p>\n");
     }
 
     /**
