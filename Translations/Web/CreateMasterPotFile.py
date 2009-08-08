@@ -76,7 +76,7 @@ potfile.write('"Content-Type: text/plain; charset=utf-8\\n"\n')
 potfile.write('"Content-Transfer-Encoding: 8bit\\n"\n')
 potfile.write('"X-Poedit-Language: English\\n"\n')
 potfile.write('"X-Poedit-SourceCharset: utf-8\\n"\n')
-potfile.write('"X-Poedit-Basepath: ../../\\n"\n')
+potfile.write('"X-Poedit-Basepath: ../../Web/\\n"\n')
 potfile.write('\n')
 for translation in translations: #For all translations...
     references = translations[translation]

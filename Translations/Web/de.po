@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: ../../\n"
+"X-Poedit-Basepath: ../../Web/\n"
 
 #: engine\page.inc:208
 #, c-format
