@@ -8,17 +8,17 @@
   $page->addRssFeed('http://sourceforge.net/export/rss2_projnews.php?group_id=236485', __('Frhed News'));
   $page->addRssFeed('http://sourceforge.net/export/rss2_projfiles.php?group_id=236485', __('Frhed File Releases'));
   $page->printHead();
+  $page->printPara(__('Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially.'));
+  
+  $page->printHeading(__('Features'));
 ?>
-				<p>Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially.</p>
-
-				<h2>Features</h2>
-				<ul>
-					<li>Editable file size limited only by available system memory</li>
-					<li>Load files partially</li>
-					<li>Export as hexdump to file or clipboard</li>
-					<li>Search for any combination of text and binary values</li>
-					<li>Compare files</li>
-				</ul>
+<ul>
+  <li><?php __e('Editable file size limited only by available system memory')?></li>
+  <li><?php __e('Load files partially')?></li>
+  <li><?php __e('Export as hexdump to file or clipboard')?></li>
+  <li><?php __e('Search for any combination of text and binary values')?></li>
+  <li><?php __e('Compare files')?></li>
+</ul>
 
 <?php
   $page->printRssHeading(__('News'), 'http://sourceforge.net/export/rss2_projnews.php?group_id=236485');
@@ -28,16 +28,16 @@
   $feed->init();
   print("<ul class=\"rssfeeditems\">\n");
   foreach ($feed->get_items(0, 3) as $item) { //for the last 3 news items...
-    print("  <li><a href=\"".$item->get_link()."\">".$item->get_title()."</a> <em>".$item->get_date('Y-m-d')."</em></li>\n");
+    print("  <li><a href=\"".$item->get_link()."\">".$item->get_title()."</a> <em>".$item->get_date(__('Y-m-d'))."</em></li>\n");
   }
-  print("  <li><a href=\"http://sourceforge.net/news/?group_id=236485\">View all news &hellip;</a></li>\n");
+  print("  <li><a href=\"http://sourceforge.net/news/?group_id=236485\">" . __('View all news &hellip;') . "</a></li>\n");
   print("</ul>\n");
 ?>
 
 <?php
   $page->printRssHeading(__('Download'), 'http://sourceforge.net/export/rss2_projfiles.php?group_id=236485');
+  $page->printSubHeading(__('Stable releases'));
 ?>
-				<h3>Stable releases</h3>
 				<ul>
 					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=308801&amp;release_id=688790">
 						Frhed 1.6.0</a> (2009-06-23)</li>
@@ -46,27 +46,35 @@
 					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=308801&amp;release_id=658634">
 						Frhed 1.4.0</a> (2009-02-04)</li>
 				</ul>
-				<h3>Beta releases</h3>
+<?php
+  $page->printSubHeading(__('Beta releases'));
+?>
 				<ul>
 					<li><a href="https://sourceforge.net/project/showfiles.php?group_id=236485&amp;package_id=307097&amp;release_id=688792">
 						Frhed 1.5.10</a> (2009-06-10)</li>
 				</ul>
-				<h3>Alpha releases</h3>
+<?php
+  $page->printSubHeading(__('Alpha releases'));
+?>
 				<ul>
 					<li><a href="https://sourceforge.net/projects/frhed/files/3.%20Alpha%20Releases/1.7.1/">
 						Frhed 1.7.1</a> (2009-07-30)</li>
 				</ul>
 
-				<h2>Support</h2>
+<?php
+  $page->printHeading(__('Support'));
+?>
 				<p>For support you can try the <a href="http://apps.sourceforge.net/phpbb/frhed/">forums</a> or the <a href="https://sourceforge.net/mail/?group_id=236485">mailing lists</a>.
 				If you found bugs, please submit them to our <a href="https://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485">bug tracker</a>
 				or leave wishes at the <a href="https://sourceforge.net/tracker/?atid=1100166&amp;group_id=236485">feature requests</a> list.</p>
-
-				<h2>Open Source</h2>
+<?php
+  $page->printHeading(__('Open Source'));
+?>
 				<p>Frhed is <a href="http://www.opensource.org/">open source</a> software and is licenced under the <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License</a>.
 				This means everybody can download the source code and improve and modify them.</p>
-
-				<h2>History</h2>
+<?php
+  $page->printHeading(__('History'));
+?>
 				<p>Frhed is originally developed by <a href="http://www.kibria.de/frhed.html">Raihan Kibria</a>.
 				Version 1.1 included many improvements and new features from versions that several other programmers had been working on.
 				Unfortunately version 1.1 never matured to "stable" release. Latest 1.1 release is labeled as "beta" release.
