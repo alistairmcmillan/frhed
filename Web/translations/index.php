@@ -6,12 +6,10 @@
   $page->addRssFeed('status_branch_rss.php', __('Frhed Translations Status (Stable Branch)'));
   $page->addRssFeed('status_trunk_rss.php', __('Frhed Translations Status (Unstable Trunk)'));
   $page->printHead(__('Translations'));
-  
-?>
-<h2>Translations</h2>
-<p>We currently have Frhed translated into the languages listed below:</p>
-<ul>
-<?php
+
+  $page->printHeading(__('Translations'));
+  $page->printPara(__('We currently have Frhed translated into the languages listed below:'));
+  print("<ul>\n");
   try {
     $status = New TranslationsStatus('status_trunk.xml');
     
@@ -23,13 +21,14 @@
   catch (Exception $ex) { //If problems with translations status...
     print("  <li>" . __('English') . "</li>\n");
   }
+  print("</ul>\n");
+
+  $page->printSubHeading(__('Status'));
+  $page->printPara(__('The following two pages inform you about the translations status of the stable and developer version of Frhed:'));
 ?>
-</ul>
-<h3><a name="status">Status</a></h3>
-<p>The following two pages inform you about the translations status of the stable and developer version of Frhed:</p>
 <ul>
-  <li><a href="status_branch.php">Stable Version (Branch)</a> <?php $page->printRssFeedLink('status_branch_rss.php'); ?></li>
-  <li><a href="status_trunk.php">Unstable Version (Trunk)</a> <?php $page->printRssFeedLink('status_trunk_rss.php'); ?></li>
+  <li><a href="status_branch.php"><?php __e('Stable Version (Branch)');?></a> <?php $page->printRssFeedLink('status_branch_rss.php'); ?></li>
+  <li><a href="status_trunk.php"><?php __e('Unstable Version (Trunk)');?></a> <?php $page->printRssFeedLink('status_trunk_rss.php'); ?></li>
 </ul>
 <?php
   $page->printFoot();
