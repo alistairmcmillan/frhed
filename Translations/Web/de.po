@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?atid=1100163&group_id=236485\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-08-08 16:36+0000\n"
+"PO-Revision-Date: 2009-08-08 17:26+0100\n"
 "Last-Translator: Tim Gerundt <tim at gerundt.de>\n"
 "Language-Team: German <frhed-support@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -27,10 +27,15 @@ msgstr ""
 msgid "Index"
 msgstr "Index"
 
-#: engine\page.inc:25
+#: index.php:17
 #, c-format
-msgid "en"
-msgstr "de"
+msgid "Load files partially"
+msgstr "Dateien teilweise laden"
+
+#: translations\translations.inc:169
+#, c-format
+msgid "Template"
+msgstr "Vorlage"
 
 #: translations\translations.inc:269
 #, c-format
@@ -42,6 +47,7 @@ msgstr "Übersetzer"
 msgid "Graph"
 msgstr "Diagramm"
 
+#: index.php:65
 #: engine\page.inc:212
 #, c-format
 msgid "Support"
@@ -54,15 +60,32 @@ msgstr "Support"
 msgid "Untranslated"
 msgstr "Unübersetzt"
 
+#: index.php:19
+#, c-format
+msgid "Search for any combination of text and binary values"
+msgstr "Suche nach einer beliebigen Kombination von Text und Binärwerten"
+
 #: engine\page.inc:109
 #, c-format
 msgid "<b>Fr</b>ee <b>h</b>ex <b>ed</b>itor"
 msgstr "<b>Fr</b>eier <b>H</b>ex<b>ed</b>itor"
 
+#: translations\translations.inc:81
+#: translations\translations.inc:95
+#: translations\translations.inc:133
+#, c-format
+msgid "Translated"
+msgstr "Übersetzt"
+
 #: translations\index.php:11
 #, c-format
 msgid "We currently have Frhed translated into the languages listed below:"
 msgstr "Wir haben derzeit Frhed in folgende Sprachen übersetzt:"
+
+#: engine\page.inc:25
+#, c-format
+msgid "en"
+msgstr "de"
 
 #: translations\index.php:6
 #, c-format
@@ -74,10 +97,10 @@ msgstr "Frhed Übersetzungs-Status (Stabiler „Branch“)"
 msgid "Original Version"
 msgstr "Original Version"
 
-#: translations\translations.inc:169
+#: index.php:39
 #, c-format
-msgid "Template"
-msgstr "Vorlage"
+msgid "Stable releases"
+msgstr "Stabile Freigaben"
 
 #: translations\translations.inc:83
 #, c-format
@@ -137,6 +160,12 @@ msgstr "Stabile Version (Branch)"
 msgid "Main Window"
 msgstr "Hauptfenster"
 
+#: translations\status_trunk.php:7
+#: translations\status_trunk.php:9
+#, c-format
+msgid "Translations Status (Unstable Trunk)"
+msgstr "Übersetzungs-Status (Unstabiler „Trunk“)"
+
 #: engine\page.inc:207
 #: translations\index.php:8
 #: translations\index.php:10
@@ -149,11 +178,10 @@ msgstr "Übersetzungen"
 msgid "Project Page"
 msgstr "Projektseite"
 
-#: translations\status_trunk.php:7
-#: translations\status_trunk.php:9
+#: index.php:31
 #, c-format
-msgid "Translations Status (Unstable Trunk)"
-msgstr "Übersetzungs-Status (Unstabiler „Trunk“)"
+msgid "Y-m-d"
+msgstr "d.m.Y"
 
 #: translations\translations.inc:85
 #, c-format
@@ -180,21 +208,36 @@ msgstr "Neuigkeiten"
 msgid "Last Update"
 msgstr "Letztes Update"
 
-#: translations\status_branch.php:18
-#: translations\status_trunk.php:18
+#: index.php:16
 #, c-format
-msgid "The translations status is currently not available..."
-msgstr "Der Übersetzungs-Status ist derzeit nicht verfügbar..."
+msgid "Editable file size limited only by available system memory"
+msgstr "Editierbare Dateigröße nur durch den verfügbaren Arbeitsspeicher begrenzt"
 
 #: engine\page.inc:210
 #, c-format
 msgid "Status (Unstable Trunk)"
 msgstr "Status (Unstabiler „Trunk“)"
 
+#: translations\status_branch.php:18
+#: translations\status_trunk.php:18
+#, c-format
+msgid "The translations status is currently not available..."
+msgstr "Der Übersetzungs-Status ist derzeit nicht verfügbar..."
+
 #: translations\translations.inc:41
 #, c-format
 msgid "File not found."
 msgstr "Datei nicht gefunden."
+
+#: index.php:18
+#, c-format
+msgid "Export as hexdump to file or clipboard"
+msgstr "Export als „Hexdump“ in Datei oder Zwischenablage"
+
+#: index.php:57
+#, c-format
+msgid "Alpha releases"
+msgstr "Alpha-Freigaben"
 
 #: engine\page.inc:213
 #, c-format
@@ -212,10 +255,10 @@ msgstr "Übersetzungs-Status (Stabiler „Branch“)"
 msgid "Frhed File Releases"
 msgstr "Frhed Dateifreigaben"
 
-#: engine\page.inc:216
+#: index.php:20
 #, c-format
-msgid "Mailing Lists"
-msgstr "Verteilerlisten"
+msgid "Compare files"
+msgstr "Dateien vergleichen"
 
 #: engine\page.inc:84
 #: engine\page.inc:108
@@ -230,17 +273,26 @@ msgstr "Frhed"
 msgid "English"
 msgstr "Englisch"
 
-#: translations\translations.inc:81
-#: translations\translations.inc:95
-#: translations\translations.inc:133
+#: index.php:33
 #, c-format
-msgid "Translated"
-msgstr "Übersetzt"
+msgid "View all news &hellip;"
+msgstr "Alle Neuigkeiten anzeigen&hellip;"
 
 #: index.php:6
+#: index.php:11
 #, c-format
 msgid "Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially."
-msgstr "Frhed ist ein Binärdatei-Editor für Windows. Er ist klein aber hat viele fortgeschrittene Funktionen, wie die z. B. Fähigkeit große Dateien nur teilweise zuladen."
+msgstr "Frhed ist ein Binärdatei-Editor für Windows. Er ist klein aber hat viele fortgeschrittene Funktionen, wie z. B. die Fähigkeit große Dateien nur teilweise zuladen."
+
+#: index.php:76
+#, c-format
+msgid "History"
+msgstr "Historie"
+
+#: translations\translations.inc:38
+#, c-format
+msgid "File not valid."
+msgstr "Datei nicht gültig."
 
 #: index.php:8
 #, c-format
@@ -251,6 +303,16 @@ msgstr "Frhed Neuigkeiten"
 #, c-format
 msgid "PAD File"
 msgstr "PAD-Datei"
+
+#: index.php:71
+#, c-format
+msgid "Open Source"
+msgstr "Open Source"
+
+#: index.php:13
+#, c-format
+msgid "Features"
+msgstr "Funktionen"
 
 #: engine\page.inc:218
 #, c-format
@@ -277,10 +339,10 @@ msgstr "Original Version von Raihan Kibria"
 msgid "Unstable Version (Trunk)"
 msgstr "Unstabile Version (Trunk)"
 
-#: translations\translations.inc:38
+#: index.php:50
 #, c-format
-msgid "File not valid."
-msgstr "Datei nicht gültig."
+msgid "Beta releases"
+msgstr "Beta-Freigaben"
 
 #: engine\page.inc:220
 #, c-format
@@ -313,4 +375,9 @@ msgstr "Screenshots"
 #, c-format
 msgid "Frhed - Free hex editor"
 msgstr "Frhed - Freier Hexeditor"
+
+#: engine\page.inc:216
+#, c-format
+msgid "Mailing Lists"
+msgstr "Verteilerlisten"
 
