@@ -47,7 +47,7 @@
     /**
      * append URL parameter to link...
      */
-    function appendUrlParameter($link, $urlparameter, $id) {
+    function appendUrlParameter($link, $urlparameter, $id = '') {
       $urlparts = parse_url($link);
       
       $url = '';
@@ -70,14 +70,16 @@
         $queries = explode('&', $urlparts['query']);
         foreach ($queries as $query) { //for all queries...
           @list($key, $value) = explode('=', $query);
-          if (strtolower($key) == strtolower($urlparameter)) {
-            if ($temp == '')
-              $temp .= '?' . $urlparameter . '=' . $id;
-            else
-              $temp .= '&' . $urlparameter . '=' . $id;
+          if (strtolower($key) == strtolower($urlparameter)) { //if language URL parameter...
+            if ($id != '') { //if a language id exists...
+              if ($temp == '')
+                $temp .= '?' . $urlparameter . '=' . $id;
+              else
+                $temp .= '&' . $urlparameter . '=' . $id;
+            }
             $found = true;
           }
-          else {
+          else { //if NOT language URL parameter...
             if ($temp == '')
               $temp .= '?' . $key . '=' . $value;
             else
@@ -87,11 +89,15 @@
         $url .= $temp;
         
         if ($found == false) {
-          $url .= '&' . $urlparameter . '=' . $id;
+          if ($id != '') { //if a language id exists...
+            $url .= '&' . $urlparameter . '=' . $id;
+          }
         }
       }
       else { //if NO "query" exists...
-        $url .= '?' . $urlparameter . '=' . $id;
+        if ($id != '') { //if a language id exists...
+          $url .= '?' . $urlparameter . '=' . $id;
+        }
       }
       if (isset($urlparts['fragment']) && $urlparts['fragment'] != '') { //if "fragment" exists...
         $url .= '#' . $urlparts['fragment'];
@@ -137,6 +143,16 @@
      */
     function getBaseLanguage() {
       return $this->_languages[$this->_baselanguageid];
+    }
+
+    /**
+     * check if the language is the base language...
+     */
+    function isBaseLanguage($language) {
+      if ($language == $this->getBaseLanguage()) { //if base language...
+        return true;
+      }
+      return false;
     }
 
     /**
@@ -208,7 +224,13 @@
      * prepare link...
      */
     function prepareLink($link) {
-      return $this->appendUrlParameter($link, $this->_urlparameter, $this->getActiveLanguage()->getId());
+      $activelanguage = $this->getActiveLanguage();
+      if (strtolower(get_class($activelanguage)) == 'simpletranslatelanguage') { //if normal language...
+        return $this->appendUrlParameter($link, $this->_urlparameter, $activelanguage->getId());
+      }
+      else { //if base language...
+        return $this->appendUrlParameter($link, $this->_urlparameter);
+      }
     }
 
     /**

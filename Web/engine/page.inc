@@ -199,15 +199,15 @@
       global $translations;
       
       $sidenaventry = new SideNavEntry('', __('Frhed'));
-      $sidenaventry->addSubEntry('/', __('Home'));
-      $sidenaventry->addSubEntry('/screenshots/', __('Screenshots'));
+      $sidenaventry->addSubEntry($translations->prepareLink('/'), __('Home'));
+      $sidenaventry->addSubEntry($translations->prepareLink('/screenshots/'), __('Screenshots'));
       $sidenaventry->addSubEntry('http://sourceforge.net/projects/frhed', __('Project Page'));
       $sidenaventry->addSubEntry('/frhed_pad.xml', __('PAD File'));
       $sidenaventries[] = $sidenaventry;
       $sidenaventry = new SideNavEntry('', __('Translations'));
-      $sidenaventry->addSubEntry('/translations/', __('Index'));
-      $sidenaventry->addSubEntry('/translations/status_branch.php', __('Status (Stable Branch)'));
-      $sidenaventry->addSubEntry('/translations/status_trunk.php', __('Status (Unstable Trunk)'));
+      $sidenaventry->addSubEntry($translations->prepareLink('/translations/'), __('Index'));
+      $sidenaventry->addSubEntry($translations->prepareLink('/translations/status_branch.php'), __('Status (Stable Branch)'));
+      $sidenaventry->addSubEntry($translations->prepareLink('/translations/status_trunk.php'), __('Status (Unstable Trunk)'));
       $sidenaventries[] = $sidenaventry;
       $sidenaventry = new SideNavEntry('', __('Support'));
       $sidenaventry->addSubEntry('http://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485', __('Bugs'));
