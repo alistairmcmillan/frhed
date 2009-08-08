@@ -22,7 +22,7 @@
      * Constructor
      */
     function Page() {
-      $this->_lang = 'en';
+      $this->_lang = __('en');
       $this->_title = '';
       $this->_charset = 'UTF-8';
       $this->_description = '';
@@ -105,8 +105,8 @@
       $temp .= "  <div id=\"container\">\n";
       $temp .= "    <div id=\"main\">\n";
       $temp .= "      <div id=\"content\">\n";
-      $temp .= "<h1 class=\"title\">Frhed</h1>\n";
-      $temp .= "<p class=\"olive\"><b>Fr</b>ee <b>h</b>ex <b>ed</b>itor</p>\n";
+      $temp .= "<h1 class=\"title\">" . __('Frhed') . "</h1>\n";
+      $temp .= "<p class=\"olive\">" . __('<b>Fr</b>ee <b>h</b>ex <b>ed</b>itor') . "</p>\n";
       print($temp);
     }
 
@@ -196,6 +196,8 @@
      * get the side navigation from the page
      */
     function getSideNavigation() {
+      global $translations;
+      
       $sidenaventry = new SideNavEntry('', __('Frhed'));
       $sidenaventry->addSubEntry('/', __('Home'));
       $sidenaventry->addSubEntry('/screenshots/', __('Screenshots'));
@@ -242,6 +244,20 @@
       $temp .= "  <h2>Donate</h2>\n";
       $temp .= "  <p>Support this project by donating money.</p>\n";
       $temp .= "  <a href=\"http://sourceforge.net/donate/index.php?group_id=236485\"><img src=\"http://images.sourceforge.net/images/project-support.jpg\" width=\"88\" height=\"32\" style=\"border:none;\" alt=\"Support this project\" /></a>\n";
+      
+      $temp .= "<h2>" . __('Website Language') . "</h2>\n";
+      $temp .= "<ul>\n";
+      $languages = $translations->getLanguages();
+      foreach ($languages as $language) { //for all languages...
+        if ($translations->isActiveLanguage($language)) { //if current language...
+          $temp .= "  <li><strong><a href=\"" . $translations->getLink($language) . "\">" . __($language->getName()) . "</a></strong></li>\n";
+        }
+        else { //if NOT current language...
+          $temp .= "  <li><a href=\"" . $translations->getLink($language) . "\">" . __($language->getName()) . "</a></li>\n";
+        }
+      }
+      $temp .= "</ul>\n";
+      
       $temp .= "</div> <!-- #sidenav -->\n";
       return $temp;
     }

@@ -164,6 +164,16 @@
     }
 
     /**
+     * check if the language is the active language...
+     */
+    function isActiveLanguage($language) {
+      if ($language == $this->getActiveLanguage()) { //if active language...
+        return true;
+      }
+      return false;
+    }
+
+    /**
      * detect the language from the url...
      */
     function detectLanguageFromUrl() {
@@ -199,6 +209,19 @@
      */
     function prepareLink($link) {
       return $this->appendUrlParameter($link, $this->_urlparameter, $this->getActiveLanguage()->getId());
+    }
+
+    /**
+     * get the language link...
+     */
+    function getLink($language) {
+      $phpself = str_replace('index.php', '', $_SERVER['PHP_SELF']);
+      if (strtolower(get_class($language)) == 'simpletranslatelanguage') { //if normal language...
+        return $phpself . '?' . $this->_urlparameter . '=' . $language->getId();
+      }
+      else { //if base language...
+        return $phpself;
+      }
     }
 
     /**
@@ -307,14 +330,6 @@
       }
       return $translations;
     }
-
-    /**
-     * get the language link...
-     */
-    function getLink($parameter = 'lang') {
-      $phpself = str_replace('index.php', '', $_SERVER['PHP_SELF']);
-      return $phpself . '?' . $parameter . '=' . $this->_id;
-    }
   }
 
   /**
@@ -336,13 +351,6 @@
      */
     function getTranslations() {
       return array();
-    }
-
-    /**
-     * get the language link...
-     */
-    function getLink($parameter = 'lang') {
-      return str_replace('index.php', '', $_SERVER['PHP_SELF']);
     }
   }
 ?>
