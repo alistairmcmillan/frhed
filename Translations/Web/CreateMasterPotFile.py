@@ -34,11 +34,34 @@ def walkPhpFiles(phpfiles, dirpath, itemnames):
 
 def getTranslationsFromPhpFile(filepath, translations):
     ''' Get the translations from a php file '''
-    rGettext = re.compile('_e?\([\'"](.*?)[\'"]', re.IGNORECASE)
-
-    i = 0
+    rGettext = re.compile('_e?\([\'"](.+?)[\'"]', re.DOTALL)
+    rGettextTestMultiLine = re.compile('_e?\([\'"]([^\'"\n]+)\n')
+    
     phpfile = open(filepath, 'r')
-    for line in phpfile: #For all lines...
+    lines = phpfile.readlines()
+    phpfile.close()
+    
+    i = 0
+    for line in lines: #For all lines...
+        #--------------------------------------------------------------------------------
+        # Multi-line translations...
+        #--------------------------------------------------------------------------------
+        tmps = rGettextTestMultiLine.findall(line)
+        if tmps: #If found a multi-line gettext function...
+            tmps = rGettext.findall("".join(lines[i:]))
+            for tmp in tmps: #For all translations...
+                if string.find(tmp, '\n') > 0: #If a multi-line translation...
+                    translation = string.replace(tmp, '\n', '\\n')
+                    if translation in translations: #If the translation is already exists...
+                        translations[translation] += [(filepath, i)]
+                    else: #If the translation is NOT already exists...
+                        translations[translation] = [(filepath, i)]
+                    break #Use only the FIRST multi-line translation!
+        #--------------------------------------------------------------------------------
+        
+        #--------------------------------------------------------------------------------
+        # Normal translations...
+        #--------------------------------------------------------------------------------
         i += 1
         tmps = rGettext.findall(line)
         if tmps: #If found a gettext function...
@@ -48,7 +71,7 @@ def getTranslationsFromPhpFile(filepath, translations):
                     translations[translation] += [(filepath, i)]
                 else: #If the translation is NOT already exists...
                     translations[translation] = [(filepath, i)]
-    phpfile.close()
+        #--------------------------------------------------------------------------------
 
 def main():
     translations = {}
