@@ -270,6 +270,7 @@ class PoTranslator(object):
 def main():
     status = TranslationsStatus()
     status.addProject('Frhed', 'Frhed/en-US.pot', 'Frhed')
+    status.addProject('Web', 'Web/en-US.pot', 'Web')
     status.writeToXmlFile('TranslationsStatus.xml')
 
 # MAIN #

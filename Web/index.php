@@ -63,19 +63,19 @@
 
 <?php
   $page->printHeading(__('Support'));
-  $page->printPara(__('For support you can try the <a href="%1$s">forums</a> or the <a href="%2$s">mailing lists</a>.', 'http://apps.sourceforge.net/phpbb/frhed/', 'https://sourceforge.net/mail/?group_id=236485'), 
+  $page->printPara(__('For support you can try the <a href="%1$s">forums</a> or the <a href="%2$s">mailing lists</a>.', 'http://apps.sourceforge.net/phpbb/frhed/', 'https://sourceforge.net/mail/?group_id=236485'),
                    __('If you found bugs, please submit them to our <a href="%1$s">bug tracker</a> or leave wishes at the <a href="%2$s">feature requests</a> list.', 'https://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485', 'https://sourceforge.net/tracker/?atid=1100166&amp;group_id=236485'));
   
   $page->printHeading(__('Open Source'));
-  $page->printPara(__('Frhed is <a href="%1$s">open source</a> software and is licenced under the <a href="%2$s">GNU General Public License</a>. 
+  $page->printPara(__('Frhed is <a href="%1$s">open source</a> software and is licenced under the <a href="%2$s">GNU General Public License</a>.
 This means everybody can download the source code and improve and modify them.', 'http://www.opensource.org/', 'http://www.gnu.org/licenses/gpl-2.0.html'));
   
   $page->printHeading(__('History'));
   $page->printPara(__('Frhed is originally developed by <a href="%s">Raihan Kibria</a>.', 'http://www.kibria.de/frhed.html'));
-  $page->printPara(__('Version 1.1 included many improvements and new features from versions that several other programmers had been working on. 
+  $page->printPara(__('Version 1.1 included many improvements and new features from versions that several other programmers had been working on.
 Unfortunately version 1.1 never matured to "stable" release. Latest 1.1 release is labeled as "beta" release.'));
-  $page->printPara(__('At autumn 2008 the <a href="%1$s">WinMerge Team</a> decided to use Frhed as binary file editor component 
-for WinMerge. For developing Frhed further new <a href="%2$s">SourceForge project</a> 
+  $page->printPara(__('At autumn 2008 the <a href="%1$s">WinMerge Team</a> decided to use Frhed as binary file editor component
+for WinMerge. For developing Frhed further new <a href="%2$s">SourceForge project</a>
 was created. This new project will develop Frhed as stand alone product.', 'http://winmerge.org/' , 'https://sourceforge.net/projects/frhed'));
   
   $page->printFoot();

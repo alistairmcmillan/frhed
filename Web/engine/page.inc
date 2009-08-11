@@ -241,9 +241,9 @@
           $temp .= "  </ul>\n";
         }
       }
-      $temp .= "  <h2>Donate</h2>\n";
-      $temp .= "  <p>Support this project by donating money.</p>\n";
-      $temp .= "  <a href=\"http://sourceforge.net/donate/index.php?group_id=236485\"><img src=\"http://images.sourceforge.net/images/project-support.jpg\" width=\"88\" height=\"32\" style=\"border:none;\" alt=\"Support this project\" /></a>\n";
+      $temp .= "  <h2>" . __('Donate') . "</h2>\n";
+      $temp .= "  <p>" . __('Support this project by donating money.') . "</p>\n";
+      $temp .= "  <a href=\"http://sourceforge.net/donate/index.php?group_id=236485\"><img src=\"http://images.sourceforge.net/images/project-support.jpg\" width=\"88\" height=\"32\" style=\"border:none;\" alt=\"" . __('Support this project') . "\" /></a>\n";
       
       $temp .= "<h2>" . __('Website Language') . "</h2>\n";
       $temp .= "<ul>\n";

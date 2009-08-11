@@ -34,8 +34,8 @@ def walkPhpFiles(phpfiles, dirpath, itemnames):
 
 def getTranslationsFromPhpFile(filepath, translations):
     ''' Get the translations from a php file '''
-    rGettext = re.compile('_e?\([\'"](.+?)[\'"]', re.DOTALL)
-    rGettextTestMultiLine = re.compile('_e?\([\'"]([^\'"\n]+)\n')
+    rGettext = re.compile('_e?\([\'](.+?)[\']', re.DOTALL)
+    rGettextTestMultiLine = re.compile('_e?\([\']([^\'\n]+)\n')
     
     phpfile = open(filepath, 'r')
     lines = phpfile.readlines()
