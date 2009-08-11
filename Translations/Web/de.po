@@ -234,7 +234,7 @@ msgstr "Funktionsanfragen"
 #: engine\page.inc:244
 #, c-format
 msgid "Donate"
-msgstr ""
+msgstr "Spenden"
 
 #: translations\index.php:30
 #, c-format
@@ -347,7 +347,7 @@ msgstr "Vorlage"
 #: index.php:74
 #, c-format
 msgid "Version 1.1 included many improvements and new features from versions that several other programmers had been working on.\nUnfortunately version 1.1 never matured to \"stable\" release. Latest 1.1 release is labeled as \"beta\" release."
-msgstr ""
+msgstr "Version 1.1 enthielt viele Verbesserungen und neue Funktionen aus verschiedenen andere Versionen, an denen Programmierer gearbeitet hatten.\nLeider hat es Version 1.1 nie zu einer \"stabilen\" Freigabe geschafft. Die Version 1.1 ist nur als \"Beta\" freigeben."
 
 #: translations\status_branch.php:7
 #: translations\status_branch.php:9
@@ -409,7 +409,7 @@ msgstr "Index"
 #: index.php:67
 #, c-format
 msgid "If you found bugs, please submit them to our <a href=\"%1$s\">bug tracker</a> or leave wishes at the <a href=\"%2$s\">feature requests</a> list."
-msgstr "Melden Sie bitte Fehler in unserer <a href=\"%1$s\">Fehlerverwaltung</a> oder hinterlassen einen Wunsch auf unserer <a href=\"%2$s\">Funktionsanfragen-Liste</a>."
+msgstr "Melden Sie bitte Fehler in unserer <a href=\"%1$s\">Fehlerverwaltung</a> oder hinterlassen einen Wunsch auf unserer <a href=\"%2$s\">Funktionsanfragen</a>-Liste."
 
 #: screenshots\index.php:8
 #, c-format

@@ -250,13 +250,15 @@
      * translate a text...
      */
     function translate($text) {
+      $text = str_replace("\r", '', $text);
+      $text = str_replace("\n", '\n', $text);
       if (array_key_exists($text, $this->_translations)) { //if the translation exists...
         $translation = $this->_translations[$text];
         if ($translation != '') { //if the translation is NOT empty...
-          return $translation;
+          return str_replace('\n', "\n", $translation);
         }
       }
-      return $text;
+      return str_replace('\n', "\n", $text);
     }
   }
 
