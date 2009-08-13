@@ -81,8 +81,8 @@ BOOL EncodeDecodeDialog::OnInitDialog(HWND hDlg)
 				AddEncoders(hListbox, callback());
 			}
 		}
-		prev_ind = ind;
-		ind = buffer.find_first_of(';', prev_ind + 1);
+		prev_ind = ind + 1;
+		ind = buffer.find_first_of(';', prev_ind);
 	}
 	SendMessage(hListbox, LB_SETCURSEL, 0, 0);
 	CheckDlgButton(hDlg, IDC_ENCODE_ENC, BST_CHECKED);
