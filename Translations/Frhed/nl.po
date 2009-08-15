@@ -1857,7 +1857,7 @@ msgstr "%d) 0x%x=%u naar 0x%x=%u (%d bytes)"
 #: heksedit.rc:1365
 #, c-format
 msgid "All Files (*.*)\0*.*\0\0"
-msgstr ""
+msgstr "Alle bestanden (*.*)\0*.*\0\0"
 
 #: heksedit.rc:1366
 #, c-format
@@ -2787,7 +2787,7 @@ msgstr "-> Lengte van sjabloon = %d bytes."
 #: heksedit.rc:1677
 #, c-format
 msgid "Template files (*.tpl)\0*.tpl\0\0"
-msgstr ""
+msgstr "Sjabloonbestanden (*.tpl)\0*.tpl\0\0"
 
 #: heksedit.rc:1678
 #, c-format
@@ -2940,5 +2940,5 @@ msgstr "Kon hexdump niet naar klembord kopiëren."
 #: heksedit.rc:1725
 #, c-format
 msgid "Hex Dump files(*.txt,*.hex)\0*.txt;*.hex\0All Files (*.*)\0*.*\0"
-msgstr ""
+msgstr "Hex Dump bestanden (*.txt,*.hex)\0*.txt;*.hex\0Alle bestanden (*.*)\0*.*\0"
 
