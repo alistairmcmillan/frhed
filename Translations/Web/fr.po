@@ -445,13 +445,3 @@ msgstr "Frhed - Editeur hex libre"
 #, c-format
 msgid "Mailing Lists"
 msgstr "Listes de diffusion"
-
-
-
-
-__________ Information provenant d'ESET Smart Security, version de la base des signatures de virus 4330 (20090812) __________
-
-Le message a été vérifié par ESET Smart Security.
-
-http://www.eset.com
-
