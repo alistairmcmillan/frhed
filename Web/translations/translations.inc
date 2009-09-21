@@ -150,7 +150,7 @@
             $strings_untranslated = (int)$strings->untranslated;
             
             $temp .= "  <tr>\n";
-            $temp .= "    <td class=\"left\"><a href=\"" . $this->svnUrl . $project . '/' . $file_name . "\" rel=\"nofollow\">" . $language_name . "</a></td>\n";
+            $temp .= "    <td class=\"left\"><a href=\"" . $this->svnUrl . $project . '/' . $file_name . "\" rel=\"nofollow\">" . __($language_name) . "</a></td>\n";
             $temp .= "    <td class=\"center\">" . $this->getStatusGraph($strings_count, $strings_translated, $strings_fuzzy, $strings_untranslated) . "</td>\n";
             $temp .= "    <td class=\"right translated\">" . $strings_translated . "</td>\n";
             $temp .= "    <td class=\"right fuzzy\">" . $strings_fuzzy . "</td>\n";
@@ -166,7 +166,7 @@
           }
         }
         $temp .= "  <tr>\n";
-        $temp .= "    <td class=\"left\"><a href=\"" . $this->svnUrl . $project . '/' . $template_file_name . "\" rel=\"nofollow\">" . $template_language_name . " (" . __('Template') . ")</a></td>\n";
+        $temp .= "    <td class=\"left\"><a href=\"" . $this->svnUrl . $project . '/' . $template_file_name . "\" rel=\"nofollow\">" . __($template_language_name) . " (" . __('Template') . ")</a></td>\n";
         $temp .= "    <td class=\"center\"></td>\n";
         $temp .= "    <td colspan=\"3\" class=\"center\">" . __('Total: %d' , $template_strings_count) . "</td>\n";
         $temp .= "    <td class=\"center\">" . $template_translation_update . "</td>\n";
@@ -252,7 +252,7 @@
                 if ($maintainer)
                   $temp .= "<strong title=\"Maintainer\">";
                 if ($translator_mail != '')
-                  $temp .= "<a href=\"mailto:" . $translator_mail . "\" title=\"" . htmlentities($translator_name) . " &lt;" . $translator_mail . "&gt;\">" . htmlentities($translator_name) . "</a>";
+                  $temp .= "<a href=\"mailto:" . $translator_mail . "\" title=\"" . htmlentities($translator_name, ENT_COMPAT, 'UTF-8') . " &lt;" . $translator_mail . "&gt;\">" . htmlentities($translator_name, ENT_COMPAT, 'UTF-8') . "</a>";
                 else
                   $temp .= $translator_name;
                 if ($maintainer)
@@ -276,7 +276,7 @@
       $temp .= "  </tr>\n";
       foreach ($languages as $language_name => $language_translators) { //For all languages...
         $temp .= "  <tr>\n";
-        $temp .= "    <td class=\"left\">" . $language_name . "</td>\n";
+        $temp .= "    <td class=\"left\">" . __($language_name) . "</td>\n";
         foreach ($projects as $project_key => $project_name) { //For all projects...
           $temp .= "    <td class=\"left\">" . @$language_translators[$project_key] . "</td>\n";
         }
