@@ -20,7 +20,7 @@
   $translations->addLanguage('de', __('German'), $languagesdir . 'de.po');
   $translations->addLanguage('fr', __('French'), $languagesdir . 'fr.po');
   $translations->addLanguage('nl', __('Dutch'), $languagesdir . 'nl.po');
-  if (!$translations->detectLanguageFromUrl()) {
+  if (!$translations->detectLanguageFromUrl()) { //if NOT detect language from URL...
     $translations->detectLanguageFromBrowser();
   }
 

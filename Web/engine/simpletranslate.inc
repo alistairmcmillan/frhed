@@ -14,6 +14,7 @@
    */
   class SimpleTranslate {
     var $_urlparameter;
+    var $_forceurlparameter;
     var $_languages;
     var $_baselanguageid;
     var $_activelanguageid;
@@ -24,6 +25,7 @@
      */
     function SimpleTranslate() {
       $this->_urlparameter = 'lang';
+      $this->_forceurlparameter = false;
       $this->_languages = array();
       $this->_baselanguageid = '';
       $this->_activelanguageid = '';
@@ -107,6 +109,20 @@
     }
 
     /**
+     * get forcing of the URL parameter...
+     */
+    function getForceUrlParameter() {
+      return $this->_forceurlparameter;
+    }
+
+    /**
+     * set forcing of the URL parameter...
+     */
+    function setForceUrlParameter($force) {
+      $this->_forceurlparameter = $force;
+    }
+
+    /**
      * add a language...
      */
     function addLanguage($id, $name, $pofile = '') {
@@ -116,7 +132,9 @@
         $this->_baselanguageid = $id;
       }
       else { //if normal language...
-        $this->_languages[$id] = new SimpleTranslateLanguage($id, $name, $pofile);
+        if (file_exists($pofile) == true) { //if the PO file exists...
+          $this->_languages[$id] = new SimpleTranslateLanguage($id, $name, $pofile);
+        }
       }
     }
 
@@ -139,6 +157,20 @@
     }
 
     /**
+     * get the languages count...
+     */
+    function getLanguagesCount() {
+      return count($this->_languages);
+    }
+
+    /**
+     * get the base language ID...
+     */
+    function getBaseLanguageId() {
+      return $this->_baselanguageid;
+    }
+
+    /**
      * get the base language...
      */
     function getBaseLanguage() {
@@ -148,11 +180,28 @@
     /**
      * check if the language is the base language...
      */
-    function isBaseLanguage($language) {
-      if ($language == $this->getBaseLanguage()) { //if base language...
-        return true;
+    function isBaseLanguage($language = null) {
+      if (isset($language)) { //if language committed...
+        if ($language == $this->getBaseLanguage()) { //if base language...
+          return true;
+        }
+      }
+      else { //if language NOT committed...
+        if ($this->_baselanguageid == $this->_activelanguageid) { //if base language is active...
+          return true;
+        }
       }
       return false;
+    }
+
+    /**
+     * get the active language ID...
+     */
+    function getActiveLanguageId() {
+      if ($this->_activelanguageid != '') {
+        return $this->_activelanguageid;
+      }
+      return $this->_baselanguageid;
     }
 
     /**
@@ -225,7 +274,7 @@
      */
     function prepareLink($link) {
       $activelanguage = $this->getActiveLanguage();
-      if (strtolower(get_class($activelanguage)) == 'simpletranslatelanguage') { //if normal language...
+      if ((strtolower(get_class($activelanguage)) == 'simpletranslatelanguage') || ($this->_forceurlparameter == true)) { //if normal language OR forcing URL parameter...
         return $this->appendUrlParameter($link, $this->_urlparameter, $activelanguage->getId());
       }
       else { //if base language...
@@ -236,14 +285,18 @@
     /**
      * get the language link...
      */
-    function getLink($language) {
+    function getLink($language = null, $forceurlparameter = null) {
       $phpself = str_replace('index.php', '', $_SERVER['PHP_SELF']);
-      if (strtolower(get_class($language)) == 'simpletranslatelanguage') { //if normal language...
-        return $phpself . '?' . $this->_urlparameter . '=' . $language->getId();
+      if (isset($language)) { //if language committed...
+        $forceing = $this->_forceurlparameter;
+        if (isset($forceurlparameter)) { //if force URL parameter committed...
+          $forceing = $forceurlparameter;
+        }
+        if ((strtolower(get_class($language)) == 'simpletranslatelanguage') || ($forceing == true)) { //if normal language OR forcing URL parameter...
+          return $phpself . '?' . $this->_urlparameter . '=' . $language->getId();
+        }
       }
-      else { //if base language...
-        return $phpself;
-      }
+      return $phpself;
     }
 
     /**

@@ -15,26 +15,18 @@
    * ...
    */
   class Page {
-    var $_lang, $_title, $_charset;
+    var $_title, $_charset;
     var $_description, $_keywords, $_rssfeeds;
 
     /**
      * Constructor
      */
     function Page() {
-      $this->_lang = __('en');
       $this->_title = '';
       $this->_charset = 'UTF-8';
       $this->_description = '';
       $this->_keywords = '';
       $this->_rssfeeds = array();
-    }
-
-    /**
-     * set the language from the page
-     */
-    function setLang($lang) {
-      $this->_lang = $lang;
     }
 
     /**
@@ -76,9 +68,11 @@
      * print the head from the page
      */
     function printHead($title = '') {
+      global $translations;
+      
       $this->_title = $title;
       $temp = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n";
-      $temp .= "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"" . $this->_lang . "\">\n";
+      $temp .= "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"" . $translations->getActiveLanguageId() . "\">\n";
       $temp .= "<head>\n";
       if ($this->_title != '') {
         $temp .= "  <title>" . $this->_title . " - " . __('Frhed') . "</title>\n";
@@ -98,6 +92,9 @@
       $temp .= "  <link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"/favicon.ico\"/>\n";
       foreach ($this->_rssfeeds as $rssurl => $rsstitle) { //for all RSS feeds...
         $temp .= "  <link rel=\"alternate\" type=\"application/rss+xml\" title=\"" . $rsstitle . "\" href=\"" . $rssurl . "\" />\n";
+      }
+      if ($translations->isBaseLanguage()) { //if base language...
+        $temp .= "  <link rel=\"canonical\" href=\"" . $translations->getLink() . "\"/>\n";
       }
       $temp .= "</head>\n";
       $temp .= "<body>\n";
@@ -250,10 +247,10 @@
       $languages = $translations->getLanguages();
       foreach ($languages as $language) { //for all languages...
         if ($translations->isActiveLanguage($language)) { //if current language...
-          $temp .= "  <li><strong><a href=\"" . $translations->getLink($language) . "\">" . __($language->getName()) . "</a></strong></li>\n";
+          $temp .= "  <li><strong><a href=\"" . $translations->getLink($language, true) . "\">" . __($language->getName()) . "</a></strong></li>\n";
         }
         else { //if NOT current language...
-          $temp .= "  <li><a href=\"" . $translations->getLink($language) . "\">" . __($language->getName()) . "</a></li>\n";
+          $temp .= "  <li><a href=\"" . $translations->getLink($language, true) . "\">" . __($language->getName()) . "</a></li>\n";
         }
       }
       $temp .= "</ul>\n";
