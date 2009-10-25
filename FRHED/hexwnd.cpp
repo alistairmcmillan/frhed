@@ -1198,6 +1198,12 @@ void HexEditorWindow::command(int cmd)
 	case IDM_FILL_WITH:
 		CMD_fw();
 		break;
+	case IDM_SHIFT_LEFT:
+		CMD_shl();
+		break;
+	case IDM_SHIFT_RIGHT:
+		CMD_shr();
+		break;
 	case IDM_EDIT_MOVE_COPY:
 		CMD_move_copy();
 		break;
@@ -2404,6 +2410,8 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 	case IDM_FILL_WITH:
 		//"Fill with" is allowed if the file is not empty and read-only is disabled.
 		//If there is no selection the whole file is filled
+	case IDM_SHIFT_LEFT:
+	case IDM_SHIFT_RIGHT:
 	case IDM_REPLACE:
 		// No editing of drives
 		if (Drive != 0)
@@ -5067,6 +5075,66 @@ void HexEditorWindow::CMD_fw()
 {
 	//dlgproc opens file or fills buffer from user input
 	static_cast<dialog<FillWithDialog>*>(this)->DoModal(hwnd);
+}
+
+//shift left command
+void HexEditorWindow::CMD_shl()
+{
+	int iStartOfSelSetting, iEndOfSelSetting;
+
+	if (bSelected)
+	{
+		iStartOfSelSetting = iGetStartOfSelection();
+		iEndOfSelSetting = iGetEndOfSelection();
+	}
+	else
+	{
+		iStartOfSelSetting = 0;
+		iEndOfSelSetting = m_dataArray.GetUpperBound();
+	}
+
+	int i = iStartOfSelSetting;
+	while (i <= iEndOfSelSetting)
+	{
+		BYTE a = m_dataArray[i]; 
+		BYTE b = ((i + 1) <= iEndOfSelSetting) ? m_dataArray[i + 1] : 0;
+		UINT16 w = (a << 8) | b;
+		w <<= 1;
+		m_dataArray[i++] = ((w >> 8) & 0x00FF);
+	}
+	iFileChanged = TRUE;
+	bFilestatusChanged = true;
+	repaint();//you tell me
+}
+
+//shift right command
+void HexEditorWindow::CMD_shr()
+{
+	int iStartOfSelSetting, iEndOfSelSetting;
+
+	if (bSelected)
+	{
+		iStartOfSelSetting = iGetStartOfSelection();
+		iEndOfSelSetting = iGetEndOfSelection();
+	}
+	else
+	{
+		iStartOfSelSetting = 0;
+		iEndOfSelSetting = m_dataArray.GetUpperBound();
+	}
+
+	int i = iEndOfSelSetting;
+	while (i >= iStartOfSelSetting)
+	{
+		BYTE a = m_dataArray[i]; 
+		BYTE b = ((i - 1) >= iStartOfSelSetting) ? m_dataArray[i - 1] : 0;
+		UINT16 w = (b << 8) | a;
+		w >>= 1;
+		m_dataArray[i--] = w & 0x00FF;
+	}
+	iFileChanged = TRUE;
+	bFilestatusChanged = true;
+	repaint();//you tell me
 }
 
 void HexEditorWindow::CMD_deletefile()

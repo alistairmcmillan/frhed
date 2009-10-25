@@ -113,6 +113,8 @@ public:
 //Pabs changed - line insert
 	bool dragging;
 	void CMD_fw();//fill selection with command
+	void CMD_shl();
+	void CMD_shr();
 	void CMD_revert();
 	void CMD_saveselas();
 	void CMD_deletefile();
