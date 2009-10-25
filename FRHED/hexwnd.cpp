@@ -5098,7 +5098,7 @@ void HexEditorWindow::CMD_shl()
 	{
 		BYTE a = m_dataArray[i]; 
 		BYTE b = ((i + 1) <= iEndOfSelSetting) ? m_dataArray[i + 1] : 0;
-		UINT16 w = (a << 8) | b;
+		UINT16 w = (b << 8) | a;
 		w <<= 1;
 		m_dataArray[i++] = ((w >> 8) & 0x00FF);
 	}
@@ -5128,7 +5128,7 @@ void HexEditorWindow::CMD_shr()
 	{
 		BYTE a = m_dataArray[i]; 
 		BYTE b = ((i - 1) >= iStartOfSelSetting) ? m_dataArray[i - 1] : 0;
-		UINT16 w = (b << 8) | a;
+		UINT16 w = (a << 8) | b;
 		w >>= 1;
 		m_dataArray[i--] = w & 0x00FF;
 	}
