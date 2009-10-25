@@ -1224,9 +1224,6 @@ void HexEditorWindow::command(int cmd)
 	case IDM_SHORTCUTS:
 		static_cast<dialog<ShortcutsDlg>*>(this)->DoModal(hwnd);
 		break;
-	case IDM_UPGRADE:
-		static_cast<dialog<UpgradeDlg>*>(this)->DoModal(hwnd);
-		break;
 	case IDM_SAVEINI:
 		bSaveIni = !bSaveIni;//!(MF_CHECKED==GetMenuState(hMenu,IDM_SAVEINI,0));
 		break;
@@ -2446,8 +2443,6 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 		return iCurByte < m_dataArray.GetLength() && !bSelected;
 	case IDM_DEFAULT:
 		return unknownpresent();
-	case IDM_UPGRADE:
-		return oldpresent();
 	case IDM_ADDBOOKMARK:
 		// "Add bookmark" is allowed if the file is not
 		// empty and there is no selection going on.

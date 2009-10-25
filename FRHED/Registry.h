@@ -30,7 +30,6 @@ BOOL contextpresent();
 BOOL linkspresent();
 BOOL defaultpresent();
 BOOL unknownpresent();
-BOOL oldpresent();
 BOOL frhedpresent();
 
 #endif // _REGISTRY_H_

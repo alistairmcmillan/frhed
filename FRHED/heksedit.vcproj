@@ -484,9 +484,6 @@
 				RelativePath=".\UnicodeString.cpp">
 			</File>
 			<File
-				RelativePath="UpgradeDlg.cpp">
-			</File>
-			<File
 				RelativePath="ViewSettingsDlg.cpp">
 			</File>
 		</Filter>
@@ -624,9 +621,6 @@
 			</File>
 			<File
 				RelativePath=".\UnicodeString.h">
-			</File>
-			<File
-				RelativePath="UpgradeDlg.h">
 			</File>
 			<File
 				RelativePath="version.h">

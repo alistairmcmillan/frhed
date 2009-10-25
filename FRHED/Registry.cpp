@@ -74,29 +74,6 @@ BOOL unknownpresent()
 	return 0;
 }
 
-BOOL oldpresent()
-{
-	HKEY hk;
-	LONG res = RegOpenKeyEx(HKEY_CURRENT_USER, OptionsRegistryPath, 0, KEY_READ, &hk);
-	if (res == ERROR_SUCCESS)
-	{
-		TCHAR subkeynam[MAX_PATH] = {0};
-		for (DWORD i = 0; ; i++)
-		{
-			res = RegEnumKey(hk ,i, subkeynam, MAX_PATH);
-			if (res == ERROR_NO_MORE_ITEMS)
-				break;
-			else if (0 != _tcscmp(subkeynam, OptionsRegistrySettingsPath))
-			{
-				RegCloseKey(hk);
-				return TRUE;
-			}
-		}
-		RegCloseKey(hk);
-	}
-	return FALSE;
-}
-
 /**
  * @brief Check if Frhed settings key already exist.
  */

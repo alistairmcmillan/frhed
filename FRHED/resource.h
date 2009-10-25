@@ -79,11 +79,7 @@
 #define IDC_STS                         181
 #define IDC_TO_REPLACE_EDIT             182
 #define IDC_USETRANSLATION_CHECK        183
-#define IDC_INSTS                       184
 #define IDCOPY                          185
-#define IDC_LINKS                       186
-#define IDC_INSTDATA                    187
-#define IDC_MRU                         188
 #define IDC_OTHEREND                    189
 #define IDC_FPOS                        190
 #define IDC_HEX                         191
@@ -105,9 +101,6 @@
 #define IDC_START                       207
 #define IDC_RELOAD                      208
 #define IDC_PROGRAMS                    209
-#define IDC_DISPLAY                     211
-#define IDC_VERS                        212
-#define IDC_READ                        213
 #define IDC_COPY                        214
 #define IDC_1STOFFSET                   215
 #define IDC_2NDDELIM                    216
@@ -212,7 +205,6 @@
 #define IDM_UNKNOWN                     315
 #define IDM_DEFAULT                     316
 #define IDM_SAVEINI                     317
-#define IDM_UPGRADE                     319
 #define IDM_SHORTCUTS                   320
 #define ID_DISK_CLOSEDRIVE              321
 #define IDC_MANIPBITS                   322

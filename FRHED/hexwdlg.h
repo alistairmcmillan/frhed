@@ -167,23 +167,6 @@ public:
 };
 
 /**
- * @brief A dialog that upgrades settings from previous version.
- */
-class UpgradeDlg : public HexEditorWindow
-{
-public:
-	enum { IDD = IDD_UPGRADE };
-	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-private:
-	BOOL OnInitDialog(HWND);
-	BOOL OnCommand(HWND, WPARAM, LPARAM);
-	BOOL OnNotify(HWND, WPARAM, LPARAM);
-	BOOL OnDrawitem(HWND, WPARAM, LPARAM);
-	void ChangeSelVer(HWND hw, TCHAR* text);
-	void ChangeSelInst(HWND hw, TCHAR* text);
-};
-
-/**
  * @brief A find dialog.
  * This dialog allows user to give a string (as readable text) or byte
  * sequence to find from the open file. The byte sequence has special
