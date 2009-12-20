@@ -1,667 +1,1022 @@
-<?xml version="1.0" encoding="Windows-1252"?>
-<VisualStudioProject
-	ProjectType="Visual C++"
-	Version="7.10"
-	Name="heksedit"
-	SccProjectName=""
-	SccLocalPath="">
+<?xml version="1.0" ?>
+<VisualStudioProject Name="heksedit" ProjectType="Visual C++" Version="8.00">
+	
+	
 	<Platforms>
-		<Platform
-			Name="Win32"/>
+		
+		
+		<Platform Name="Win32"/>
+		
+	
 	</Platforms>
+	
+	
+	<ToolFiles>
+		
+	
+	</ToolFiles>
+	
+	
 	<Configurations>
-		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory=".\..\Build\Debug"
-			IntermediateDirectory=".\..\BuildTmp\heksedit\Debug"
-			ConfigurationType="2"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(ProgramFiles)\Microsoft SDK\include"
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
-				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="precomp.h"
-				PrecompiledHeaderFile=".\..\BuildTmp\heksedit\Debug/heksedit.pch"
-				AssemblerListingLocation=".\..\BuildTmp\heksedit\Debug/"
-				ObjectFile=".\..\BuildTmp\heksedit\Debug/"
-				ProgramDataBaseFileName=".\..\BuildTmp\heksedit\Debug/"
-				BrowseInformation="1"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="1"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib htmlhelp.lib"
-				OutputFile=".\..\Build\Debug/heksedit.dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib"
-				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\..\Build\Debug/heksedit.pdb"
-				SubSystem="2"
-				ImportLibrary=".\..\Build\Debug/heksedit.lib"
-				TargetMachine="1"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\Build\Debug/heksedit.tlb"
-				HeaderFileName=""/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"
-				CommandLine="PreLink.bat &quot;$(IntDir)&quot; &quot;$(TargetPath)&quot;"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		
+		
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops" IntermediateDirectory=".\..\BuildTmp\heksedit\Debug" Name="Debug|Win32" OutputDirectory=".\..\Build\Debug" UseOfMFC="0">
+			
+			
+			<Tool Name="VCPreBuildEventTool"/>
+			
+			
+			<Tool Name="VCCustomBuildTool"/>
+			
+			
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			
+			
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			
+			
+			<Tool HeaderFileName="" MkTypLibCompatible="true" Name="VCMIDLTool" PreprocessorDefinitions="_DEBUG" SuppressStartupBanner="true" TargetEnvironment="1" TypeLibraryName=".\..\Build\Debug/heksedit.tlb"/>
+			
+			
+			<Tool AdditionalIncludeDirectories="$(ProgramFiles)\Microsoft SDK\include" AssemblerListingLocation=".\..\BuildTmp\heksedit\Debug/" BrowseInformation="1" CompileAs="0" DebugInformationFormat="1" Name="VCCLCompilerTool" ObjectFile=".\..\BuildTmp\heksedit\Debug/" Optimization="0" PrecompiledHeaderFile=".\..\BuildTmp\heksedit\Debug/heksedit.pch" PrecompiledHeaderThrough="precomp.h" PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE" ProgramDataBaseFileName=".\..\BuildTmp\heksedit\Debug/" RuntimeLibrary="3" SuppressStartupBanner="true" UsePrecompiledHeader="0" WarningLevel="3"/>
+			
+			
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			
+			
+			<Tool Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG"/>
+			
+			
+			<Tool CommandLine="PreLink.bat &quot;$(IntDir)&quot; &quot;$(TargetPath)&quot;" Name="VCPreLinkEventTool"/>
+			
+			
+			<Tool AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib htmlhelp.lib" AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib" GenerateDebugInformation="true" IgnoreImportLibrary="true" ImportLibrary=".\..\Build\Debug/heksedit.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile=".\..\Build\Debug/heksedit.dll" ProgramDatabaseFile=".\..\Build\Debug/heksedit.pdb" SubSystem="2" SuppressStartupBanner="true" TargetMachine="1"/>
+			
+			
+			<Tool Name="VCALinkTool"/>
+			
+			
+			<Tool AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest" EmbedManifest="true" Name="VCManifestTool"/>
+			
+			
+			<Tool Name="VCXDCMakeTool"/>
+			
+			
+			<Tool Name="VCBscMakeTool"/>
+			
+			
+			<Tool Name="VCFxCopTool"/>
+			
+			
+			<Tool Name="VCAppVerifierTool"/>
+			
+			
+			<Tool Name="VCWebDeploymentTool"/>
+			
+			
+			<Tool Name="VCPostBuildEventTool"/>
+			
+		
 		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory=".\..\Build\Release"
-			IntermediateDirectory=".\..\BuildTmp\heksedit\Release"
-			ConfigurationType="2"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(ProgramFiles)\Microsoft SDK\include"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
-				RuntimeLibrary="2"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="precomp.h"
-				PrecompiledHeaderFile=".\..\BuildTmp\heksedit\Release/heksedit.pch"
-				AssemblerListingLocation=".\..\BuildTmp\heksedit\Release/"
-				ObjectFile=".\..\BuildTmp\heksedit\Release/"
-				ProgramDataBaseFileName=".\..\BuildTmp\heksedit\Release/"
-				BrowseInformation="1"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib htmlhelp.lib"
-				OutputFile=".\..\Build\Release/heksedit.dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib"
-				ProgramDatabaseFile=".\..\Build\Release/heksedit.pdb"
-				SubSystem="2"
-				ImportLibrary=".\..\Build\Release/heksedit.lib"
-				TargetMachine="1"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\Build\Release/heksedit.tlb"
-				HeaderFileName=""/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"
-				CommandLine="PreLink.bat &quot;$(IntDir)&quot; &quot;$(TargetPath)&quot;"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		
+		
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops" IntermediateDirectory=".\..\BuildTmp\heksedit\Release" Name="Release|Win32" OutputDirectory=".\..\Build\Release" UseOfMFC="0">
+			
+			
+			<Tool Name="VCPreBuildEventTool"/>
+			
+			
+			<Tool Name="VCCustomBuildTool"/>
+			
+			
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			
+			
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			
+			
+			<Tool HeaderFileName="" MkTypLibCompatible="true" Name="VCMIDLTool" PreprocessorDefinitions="NDEBUG" SuppressStartupBanner="true" TargetEnvironment="1" TypeLibraryName=".\..\Build\Release/heksedit.tlb"/>
+			
+			
+			<Tool AdditionalIncludeDirectories="$(ProgramFiles)\Microsoft SDK\include" AssemblerListingLocation=".\..\BuildTmp\heksedit\Release/" BrowseInformation="1" CompileAs="0" Name="VCCLCompilerTool" ObjectFile=".\..\BuildTmp\heksedit\Release/" Optimization="0" PrecompiledHeaderFile=".\..\BuildTmp\heksedit\Release/heksedit.pch" PrecompiledHeaderThrough="precomp.h" PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE" ProgramDataBaseFileName=".\..\BuildTmp\heksedit\Release/" RuntimeLibrary="2" SuppressStartupBanner="true" UsePrecompiledHeader="0" WarningLevel="3"/>
+			
+			
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			
+			
+			<Tool Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG"/>
+			
+			
+			<Tool CommandLine="PreLink.bat &quot;$(IntDir)&quot; &quot;$(TargetPath)&quot;" Name="VCPreLinkEventTool"/>
+			
+			
+			<Tool AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib htmlhelp.lib" AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib" IgnoreImportLibrary="true" ImportLibrary=".\..\Build\Release/heksedit.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile=".\..\Build\Release/heksedit.dll" ProgramDatabaseFile=".\..\Build\Release/heksedit.pdb" SubSystem="2" SuppressStartupBanner="true" TargetMachine="1"/>
+			
+			
+			<Tool Name="VCALinkTool"/>
+			
+			
+			<Tool AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest" EmbedManifest="true" Name="VCManifestTool"/>
+			
+			
+			<Tool Name="VCXDCMakeTool"/>
+			
+			
+			<Tool Name="VCBscMakeTool"/>
+			
+			
+			<Tool Name="VCFxCopTool"/>
+			
+			
+			<Tool Name="VCAppVerifierTool"/>
+			
+			
+			<Tool Name="VCWebDeploymentTool"/>
+			
+			
+			<Tool Name="VCPostBuildEventTool"/>
+			
+		
 		</Configuration>
-		<Configuration
-			Name="UnicodeDebug|Win32"
-			OutputDirectory="$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="1">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(ProgramFiles)\Microsoft SDK\include"
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;UNICODE;_UNICODE;_CRT_SECURE_NO_DEPRECATE"
-				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="precomp.h"
-				PrecompiledHeaderFile=".\..\BuildTmp\heksedit\UnicodeDebug/heksedit.pch"
-				AssemblerListingLocation=".\..\BuildTmp\heksedit\UnicodeDebug/"
-				ObjectFile=".\..\BuildTmp\heksedit\UnicodeDebug/"
-				ProgramDataBaseFileName=".\..\BuildTmp\heksedit\UnicodeDebug/"
-				BrowseInformation="1"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="1"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib htmlhelp.lib"
-				OutputFile=".\..\Build\UnicodeDebug/hekseditU.dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib"
-				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\..\Build\UnicodeDebug/heksedit.pdb"
-				SubSystem="2"
-				ImportLibrary=".\..\Build\UnicodeDebug/hekseditU.lib"
-				TargetMachine="1"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\Build\Debug/heksedit.tlb"
-				HeaderFileName=""/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"
-				CommandLine="PreLink.bat &quot;$(IntDir)&quot; &quot;$(TargetPath)&quot;"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		
+		
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" CharacterSet="1" ConfigurationType="2" InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops" IntermediateDirectory="$(ConfigurationName)" Name="UnicodeDebug|Win32" OutputDirectory="$(ConfigurationName)" UseOfMFC="0">
+			
+			
+			<Tool Name="VCPreBuildEventTool"/>
+			
+			
+			<Tool Name="VCCustomBuildTool"/>
+			
+			
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			
+			
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			
+			
+			<Tool HeaderFileName="" MkTypLibCompatible="true" Name="VCMIDLTool" PreprocessorDefinitions="_DEBUG" SuppressStartupBanner="true" TargetEnvironment="1" TypeLibraryName=".\..\Build\Debug/heksedit.tlb"/>
+			
+			
+			<Tool AdditionalIncludeDirectories="$(ProgramFiles)\Microsoft SDK\include" AssemblerListingLocation=".\..\BuildTmp\heksedit\UnicodeDebug/" BrowseInformation="1" CompileAs="0" DebugInformationFormat="1" Name="VCCLCompilerTool" ObjectFile=".\..\BuildTmp\heksedit\UnicodeDebug/" Optimization="0" PrecompiledHeaderFile=".\..\BuildTmp\heksedit\UnicodeDebug/heksedit.pch" PrecompiledHeaderThrough="precomp.h" PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;UNICODE;_UNICODE;_CRT_SECURE_NO_DEPRECATE" ProgramDataBaseFileName=".\..\BuildTmp\heksedit\UnicodeDebug/" RuntimeLibrary="3" SuppressStartupBanner="true" UsePrecompiledHeader="0" WarningLevel="3"/>
+			
+			
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			
+			
+			<Tool Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG"/>
+			
+			
+			<Tool CommandLine="PreLink.bat &quot;$(IntDir)&quot; &quot;$(TargetPath)&quot;" Name="VCPreLinkEventTool"/>
+			
+			
+			<Tool AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib htmlhelp.lib" AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib" GenerateDebugInformation="true" IgnoreImportLibrary="true" ImportLibrary=".\..\Build\UnicodeDebug/hekseditU.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile=".\..\Build\UnicodeDebug/hekseditU.dll" ProgramDatabaseFile=".\..\Build\UnicodeDebug/heksedit.pdb" SubSystem="2" SuppressStartupBanner="true" TargetMachine="1"/>
+			
+			
+			<Tool Name="VCALinkTool"/>
+			
+			
+			<Tool AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest" EmbedManifest="true" Name="VCManifestTool"/>
+			
+			
+			<Tool Name="VCXDCMakeTool"/>
+			
+			
+			<Tool Name="VCBscMakeTool"/>
+			
+			
+			<Tool Name="VCFxCopTool"/>
+			
+			
+			<Tool Name="VCAppVerifierTool"/>
+			
+			
+			<Tool Name="VCWebDeploymentTool"/>
+			
+			
+			<Tool Name="VCPostBuildEventTool"/>
+			
+		
 		</Configuration>
-		<Configuration
-			Name="UnicodeRelease|Win32"
-			OutputDirectory="$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="1">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(ProgramFiles)\Microsoft SDK\include"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;UNICODE;_UNICODE;_CRT_SECURE_NO_DEPRECATE"
-				RuntimeLibrary="2"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="precomp.h"
-				PrecompiledHeaderFile=".\..\BuildTmp\heksedit\UnicodeRelease/heksedit.pch"
-				AssemblerListingLocation=".\..\BuildTmp\heksedit\UnicodeRelease/"
-				ObjectFile=".\..\BuildTmp\heksedit\UnicodeRelease/"
-				ProgramDataBaseFileName=".\..\BuildTmp\heksedit\UnicodeRelease/"
-				BrowseInformation="1"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				CompileAs="0"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib htmlhelp.lib"
-				OutputFile=".\..\Build\UnicodeRelease/hekseditU.dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib"
-				ProgramDatabaseFile=".\..\Build\UnicodeRelease/heksedit.pdb"
-				SubSystem="2"
-				ImportLibrary=".\..\Build\UnicodeRelease/hekseditU.lib"
-				TargetMachine="1"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\Build\Release/heksedit.tlb"
-				HeaderFileName=""/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"
-				CommandLine="PreLink.bat &quot;$(IntDir)&quot; &quot;$(TargetPath)&quot;"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		
+		
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" CharacterSet="1" ConfigurationType="2" InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops" IntermediateDirectory="$(ConfigurationName)" Name="UnicodeRelease|Win32" OutputDirectory="$(ConfigurationName)" UseOfMFC="0">
+			
+			
+			<Tool Name="VCPreBuildEventTool"/>
+			
+			
+			<Tool Name="VCCustomBuildTool"/>
+			
+			
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			
+			
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			
+			
+			<Tool HeaderFileName="" MkTypLibCompatible="true" Name="VCMIDLTool" PreprocessorDefinitions="NDEBUG" SuppressStartupBanner="true" TargetEnvironment="1" TypeLibraryName=".\..\Build\Release/heksedit.tlb"/>
+			
+			
+			<Tool AdditionalIncludeDirectories="$(ProgramFiles)\Microsoft SDK\include" AssemblerListingLocation=".\..\BuildTmp\heksedit\UnicodeRelease/" BrowseInformation="1" CompileAs="0" Name="VCCLCompilerTool" ObjectFile=".\..\BuildTmp\heksedit\UnicodeRelease/" Optimization="0" PrecompiledHeaderFile=".\..\BuildTmp\heksedit\UnicodeRelease/heksedit.pch" PrecompiledHeaderThrough="precomp.h" PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;UNICODE;_UNICODE;_CRT_SECURE_NO_DEPRECATE" ProgramDataBaseFileName=".\..\BuildTmp\heksedit\UnicodeRelease/" RuntimeLibrary="2" SuppressStartupBanner="true" UsePrecompiledHeader="0" WarningLevel="3"/>
+			
+			
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			
+			
+			<Tool Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG"/>
+			
+			
+			<Tool CommandLine="PreLink.bat &quot;$(IntDir)&quot; &quot;$(TargetPath)&quot;" Name="VCPreLinkEventTool"/>
+			
+			
+			<Tool AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib htmlhelp.lib" AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib" IgnoreImportLibrary="true" ImportLibrary=".\..\Build\UnicodeRelease/hekseditU.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile=".\..\Build\UnicodeRelease/hekseditU.dll" ProgramDatabaseFile=".\..\Build\UnicodeRelease/heksedit.pdb" SubSystem="2" SuppressStartupBanner="true" TargetMachine="1"/>
+			
+			
+			<Tool Name="VCALinkTool"/>
+			
+			
+			<Tool AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest" EmbedManifest="true" Name="VCManifestTool"/>
+			
+			
+			<Tool Name="VCXDCMakeTool"/>
+			
+			
+			<Tool Name="VCBscMakeTool"/>
+			
+			
+			<Tool Name="VCFxCopTool"/>
+			
+			
+			<Tool Name="VCAppVerifierTool"/>
+			
+			
+			<Tool Name="VCWebDeploymentTool"/>
+			
+			
+			<Tool Name="VCPostBuildEventTool"/>
+			
+		
 		</Configuration>
+		
+	
 	</Configurations>
+	
+	
 	<References>
+		
+	
 	</References>
+	
+	
 	<Files>
-		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
-			<File
-				RelativePath="AboutDlg.cpp">
-			</File>
-			<File
-				RelativePath="AddBmkDlg.cpp">
-			</File>
-			<File
-				RelativePath="AnsiConvert.cpp">
-			</File>
-			<File
-				RelativePath="AppendDlg.cpp">
-			</File>
-			<File
-				RelativePath="BinaryModeDlg.cpp">
-			</File>
-			<File
-				RelativePath="BinTrans.cpp">
-			</File>
-			<File
-				RelativePath="BitManipDlg.cpp">
-			</File>
-			<File
-				RelativePath="CharacterSetDlg.cpp">
-			</File>
-			<File
-				RelativePath="ChooseDiffDlg.cpp">
-			</File>
-			<File
-				RelativePath="clipboard.cpp">
-			</File>
-			<File
-				RelativePath="CopyDlg.cpp">
-			</File>
-			<File
-				RelativePath="CopyHexdumpDlg.cpp">
-			</File>
-			<File
-				RelativePath="CutDlg.cpp">
-			</File>
-			<File
-				RelativePath="DeleteDlg.cpp">
-			</File>
-			<File
-				RelativePath="dllmain.cpp">
-			</File>
-			<File
-				RelativePath="DllProxies.cpp">
-			</File>
-			<File
-				RelativePath="DragDropDlg.cpp">
-			</File>
-			<File
-				RelativePath="EncodeDlg.cpp">
-			</File>
-			<File
-				RelativePath="EncoderLib.cpp">
-			</File>
-			<File
-				RelativePath="EnterDecimalValueDlg.cpp">
-			</File>
-			<File
-				RelativePath="FastPasteDlg.cpp">
-			</File>
-			<File
-				RelativePath="FillWithDlg.cpp">
-			</File>
-			<File
-				RelativePath="FindCtxt.cpp">
-			</File>
-			<File
-				RelativePath="FindDlg.cpp">
-			</File>
-			<File
-				RelativePath="FindUtil.cpp">
-			</File>
-			<File
-				RelativePath="gktools.cpp">
-			</File>
-			<File
-				RelativePath="GoToDlg.cpp">
-			</File>
-			<File
-				RelativePath="gtools.cpp">
-			</File>
-			<File
-				RelativePath="HexDump.cpp">
-			</File>
-			<File
-				RelativePath="HexFile.cpp">
-			</File>
-			<File
-				RelativePath="HexFileStream.cpp">
-			</File>
-			<File
-				RelativePath="hexwdlg.cpp">
-			</File>
-			<File
-				RelativePath="hexwnd.cpp">
-			</File>
-			<File
-				RelativePath="hgstream.cpp">
-			</File>
-			<File
-				RelativePath="ido.cpp">
-			</File>
-			<File
-				RelativePath="ids.cpp">
-			</File>
-			<File
-				RelativePath="idt.cpp">
-			</File>
-			<File
-				RelativePath="InvokeHtmlHelp.cpp">
-			</File>
-			<File
-				RelativePath="LangArray.cpp">
-			</File>
-			<File
-				RelativePath="LangString.cpp">
-			</File>
-			<File
-				RelativePath="LangTools.cpp">
-			</File>
-			<File
-				RelativePath="MoveCopyDlg.cpp">
-			</File>
-			<File
-				RelativePath="offset.cpp">
-			</File>
-			<File
-				RelativePath="OpenPartiallyDlg.cpp">
-			</File>
-			<File
-				RelativePath="OSTools.cpp">
-			</File>
-			<File
-				RelativePath="PasteDlg.cpp">
-			</File>
-			<File
-				RelativePath="paths.cpp">
-			</File>
-			<File
-				RelativePath="PDrive95.cpp">
-			</File>
-			<File
-				RelativePath="PDriveNT.cpp">
-			</File>
-			<File
-				RelativePath="PhysicalDrive.cpp">
-			</File>
-			<File
-				RelativePath="PMemoryBlock.cpp">
-			</File>
-			<File
-				RelativePath="precomp.cpp">
-			</File>
-			<File
-				RelativePath="Registry.cpp">
-			</File>
-			<File
-				RelativePath="regtools.cpp">
-			</File>
-			<File
-				RelativePath="RemoveBmkDlg.cpp">
-			</File>
-			<File
-				RelativePath="ReplaceDlg.cpp">
-			</File>
-			<File
-				RelativePath="ReverseDlg.cpp">
-			</File>
-			<File
-				RelativePath="SelectBlockDlg.cpp">
-			</File>
-			<File
-				RelativePath="ShortcutsDlg.cpp">
-			</File>
-			<File
-				RelativePath="shtools.cpp">
-			</File>
-			<File
-				RelativePath="Simparr.cpp">
-			</File>
-			<File
-				RelativePath="StringTable.cpp">
-			</File>
-			<File
-				RelativePath="Template.cpp">
-			</File>
-			<File
-				RelativePath=".\UnicodeString.cpp">
-			</File>
-			<File
-				RelativePath="ViewSettingsDlg.cpp">
-			</File>
+		
+		
+		<Filter Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat" Name="Source Files">
+			
+			
+			<File RelativePath="AboutDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="AddBmkDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="AnsiConvert.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="AppendDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="BinaryModeDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="BinTrans.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="BitManipDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="CharacterSetDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="ChooseDiffDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="clipboard.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="CopyDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="CopyHexdumpDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="CutDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="DeleteDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="dllmain.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="DllProxies.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="DragDropDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="EncodeDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="EncoderLib.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="EnterDecimalValueDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="FastPasteDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="FillWithDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="FindCtxt.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="FindDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="FindUtil.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="gktools.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="GoToDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="gtools.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="HexDump.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="HexFile.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="HexFileStream.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="hexwdlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="hexwnd.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="hgstream.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="ido.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="ids.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="idt.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="InvokeHtmlHelp.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="LangArray.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="LangString.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="LangTools.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="MoveCopyDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="offset.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="OpenPartiallyDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="OSTools.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="PasteDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="paths.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="PDrive95.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="PDriveNT.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="PhysicalDrive.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="PMemoryBlock.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="precomp.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="Registry.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="regtools.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="RemoveBmkDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="ReplaceDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="ReverseDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="SelectBlockDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="ShortcutsDlg.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="shtools.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="Simparr.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="StringTable.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="Template.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath=".\UnicodeString.cpp">
+				
+			
+			</File>
+			
+			
+			<File RelativePath="ViewSettingsDlg.cpp">
+				
+			
+			</File>
+			
+		
 		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl">
-			<File
-				RelativePath="AnsiConvert.h">
+		
+		
+		<Filter Filter="h;hpp;hxx;hm;inl" Name="Header Files">
+			
+			
+			<File RelativePath="AnsiConvert.h">
+				
+			
 			</File>
-			<File
-				RelativePath="BinTrans.h">
+			
+			
+			<File RelativePath="BinTrans.h">
+				
+			
 			</File>
-			<File
-				RelativePath="clipboard.h">
+			
+			
+			<File RelativePath="clipboard.h">
+				
+			
 			</File>
-			<File
-				RelativePath="Constants.h">
+			
+			
+			<File RelativePath="Constants.h">
+				
+			
 			</File>
-			<File
-				RelativePath="DragDropDlg.h">
+			
+			
+			<File RelativePath="DllProxies.h">
+				
+			
 			</File>
-			<File
-				RelativePath="DllProxies.h">
+			
+			
+			<File RelativePath="DragDropDlg.h">
+				
+			
 			</File>
-			<File
-				RelativePath="EncodeDlg.h">
+			
+			
+			<File RelativePath="EncodeDlg.h">
+				
+			
 			</File>
-			<File
-				RelativePath="EncoderLib.h">
+			
+			
+			<File RelativePath="EncoderLib.h">
+				
+			
 			</File>
-			<File
-				RelativePath="FindCtxt.h">
+			
+			
+			<File RelativePath="FindCtxt.h">
+				
+			
 			</File>
-			<File
-				RelativePath="FindUtil.h">
+			
+			
+			<File RelativePath="FindUtil.h">
+				
+			
 			</File>
-			<File
-				RelativePath="gktools.h">
+			
+			
+			<File RelativePath="gktools.h">
+				
+			
 			</File>
-			<File
-				RelativePath="gtools.h">
+			
+			
+			<File RelativePath="gtools.h">
+				
+			
 			</File>
-			<File
-				RelativePath="heksedit.h">
+			
+			
+			<File RelativePath="heksedit.h">
+				
+			
 			</File>
-			<File
-				RelativePath="HexDump.h">
+			
+			
+			<File RelativePath="HexDump.h">
+				
+			
 			</File>
-			<File
-				RelativePath="HexFile.h">
+			
+			
+			<File RelativePath="HexFile.h">
+				
+			
 			</File>
-			<File
-				RelativePath="HexFileStream.h">
+			
+			
+			<File RelativePath="HexFileStream.h">
+				
+			
 			</File>
-			<File
-				RelativePath="hexwdlg.h">
+			
+			
+			<File RelativePath="hexwdlg.h">
+				
+			
 			</File>
-			<File
-				RelativePath="hexwnd.h">
+			
+			
+			<File RelativePath="hexwnd.h">
+				
+			
 			</File>
-			<File
-				RelativePath="hgstream.h">
+			
+			
+			<File RelativePath="hgstream.h">
+				
+			
 			</File>
-			<File
-				RelativePath="ido.h">
+			
+			
+			<File RelativePath="ido.h">
+				
+			
 			</File>
-			<File
-				RelativePath="ids.h">
+			
+			
+			<File RelativePath="ids.h">
+				
+			
 			</File>
-			<File
-				RelativePath="idt.h">
+			
+			
+			<File RelativePath="idt.h">
+				
+			
 			</File>
-			<File
-				RelativePath="InvokeHtmlHelp.h">
+			
+			
+			<File RelativePath="InvokeHtmlHelp.h">
+				
+			
 			</File>
-			<File
-				RelativePath="LangArray.h">
+			
+			
+			<File RelativePath="LangArray.h">
+				
+			
 			</File>
-			<File
-				RelativePath="LangString.h">
+			
+			
+			<File RelativePath="LangString.h">
+				
+			
 			</File>
-			<File
-				RelativePath="LangTools.h">
+			
+			
+			<File RelativePath="LangTools.h">
+				
+			
 			</File>
-			<File
-				RelativePath="offset.h">
+			
+			
+			<File RelativePath="offset.h">
+				
+			
 			</File>
-			<File
-				RelativePath="OSTools.h">
+			
+			
+			<File RelativePath="OSTools.h">
+				
+			
 			</File>
-			<File
-				RelativePath="paths.h">
+			
+			
+			<File RelativePath="paths.h">
+				
+			
 			</File>
-			<File
-				RelativePath="PDrive95.h">
+			
+			
+			<File RelativePath="PDrive95.h">
+				
+			
 			</File>
-			<File
-				RelativePath="PDriveNT.h">
+			
+			
+			<File RelativePath="PDriveNT.h">
+				
+			
 			</File>
-			<File
-				RelativePath="PhysicalDrive.h">
+			
+			
+			<File RelativePath="PhysicalDrive.h">
+				
+			
 			</File>
-			<File
-				RelativePath="PMemoryBlock.h">
+			
+			
+			<File RelativePath="PMemoryBlock.h">
+				
+			
 			</File>
-			<File
-				RelativePath="precomp.h">
+			
+			
+			<File RelativePath="precomp.h">
+				
+			
 			</File>
-			<File
-				RelativePath="..\RAWIO32\RAWIO32.h">
+			
+			
+			<File RelativePath="..\RAWIO32\RAWIO32.h">
+				
+			
 			</File>
-			<File
-				RelativePath="Registry.h">
+			
+			
+			<File RelativePath="Registry.h">
+				
+			
 			</File>
-			<File
-				RelativePath="regtools.h">
+			
+			
+			<File RelativePath="regtools.h">
+				
+			
 			</File>
-			<File
-				RelativePath="shtools.h">
+			
+			
+			<File RelativePath="shtools.h">
+				
+			
 			</File>
-			<File
-				RelativePath="Simparr.h">
+			
+			
+			<File RelativePath="Simparr.h">
+				
+			
 			</File>
-			<File
-				RelativePath="Simparr_imp.h">
+			
+			
+			<File RelativePath="Simparr_imp.h">
+				
+			
 			</File>
-			<File
-				RelativePath="StringTable.h">
+			
+			
+			<File RelativePath="StringTable.h">
+				
+			
 			</File>
-			<File
-				RelativePath="Template.h">
+			
+			
+			<File RelativePath="Template.h">
+				
+			
 			</File>
-			<File
-				RelativePath="toolbar.h">
+			
+			
+			<File RelativePath="toolbar.h">
+				
+			
 			</File>
-			<File
-				RelativePath=".\UnicodeString.h">
+			
+			
+			<File RelativePath=".\UnicodeString.h">
+				
+			
 			</File>
-			<File
-				RelativePath="version.h">
+			
+			
+			<File RelativePath="version.h">
+				
+			
 			</File>
-			<File
-				RelativePath="VersionData.h">
+			
+			
+			<File RelativePath="VersionData.h">
+				
+			
 			</File>
+			
+		
 		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
-			<File
-				RelativePath="res\Frhed.ico">
+		
+		
+		<Filter Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe" Name="Resource Files">
+			
+			
+			<File RelativePath="res\Frhed.ico">
+				
+			
 			</File>
-			<File
-				RelativePath="heksedit.rc">
+			
+			
+			<File RelativePath="heksedit.rc">
+				
+			
 			</File>
-			<File
-				RelativePath="resource.h">
+			
+			
+			<File RelativePath="resource.h">
+				
+			
 			</File>
-			<File
-				RelativePath="Toolbar.bmp">
+			
+			
+			<File RelativePath="Toolbar.bmp">
+				
+			
 			</File>
+			
+		
 		</Filter>
-		<Filter
-			Name="Documents"
-			Filter="txt">
-			<File
-				RelativePath="..\Docs\Users\ChangeLog.txt">
+		
+		
+		<Filter Filter="txt" Name="Documents">
+			
+			
+			<File RelativePath="..\Docs\Users\ChangeLog.txt">
+				
+			
 			</File>
-			<File
-				RelativePath="..\Docs\Users\Contributors.txt">
+			
+			
+			<File RelativePath="..\Docs\Users\Contributors.txt">
+				
+			
 			</File>
-			<File
-				RelativePath="..\Docs\Users\History.txt">
+			
+			
+			<File RelativePath="..\Docs\Users\History.txt">
+				
+			
 			</File>
-			<File
-				RelativePath="..\Docs\Developers\SVN_Organisation.txt">
+			
+			
+			<File RelativePath="..\Docs\Developers\SVN_Organisation.txt">
+				
+			
 			</File>
+			
+		
 		</Filter>
+		
+	
 	</Files>
+	
+	
 	<Globals>
+		
+	
 	</Globals>
+	
+
 </VisualStudioProject>

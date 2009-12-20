@@ -7,6 +7,7 @@ For changes in version 1.1 beta 1 and earlier, see the History.txt file.
 Frhed 1.7.2
   Bit shifting selection (#2841014)
   Remove Upgrade-dialog (r832)
+  Upgrade project files to VS2005 format (r837)
   Bugfix: Could only load one custom encoder dll (#2834337)
   New translation:
   - Dutch (r822)
