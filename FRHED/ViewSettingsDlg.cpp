@@ -217,7 +217,7 @@ BOOL ViewSettingsDlg::OnInitDialog(HWND hDlg)
 	CheckDlgButton(hDlg, IDC_SETTINGS_ADJUST_BYTELINE, checked);
 	CheckDlgButton(hDlg, bUnsignedView ? IDC_SETTINGS_CARETUNSIGN :
 			IDC_SETTINGS_CARETSIGN, BST_CHECKED);
-	checked = bOpenReadOnly == 0 ? BST_UNCHECKED : BST_CHECKED;
+	checked = bOpenReadOnly ? BST_UNCHECKED : BST_CHECKED;
 	CheckDlgButton(hDlg, IDC_SETTINGS_OPENRO, checked);
 	checked = bAutoOffsetLen == 0 ? BST_UNCHECKED : BST_CHECKED;
 	CheckDlgButton(hDlg, IDC_SETTINGS_ADJOFFSET, checked);
@@ -272,7 +272,12 @@ BOOL ViewSettingsDlg::Apply(HWND hDlg)
 	else if (res == BST_UNCHECKED)
 		bUnsignedView = false;
 
-	bOpenReadOnly = IsDlgButtonChecked(hDlg, IDC_SETTINGS_OPENRO);
+	res = IsDlgButtonChecked(hDlg, IDC_SETTINGS_OPENRO);
+	if (res == BST_CHECKED)
+		bOpenReadOnly = true;
+	else
+		bOpenReadOnly = false;
+
 	int i = SendMessage(hCbLang, CB_GETCURSEL, 0, 0);
 	if (i != -1)
 	{

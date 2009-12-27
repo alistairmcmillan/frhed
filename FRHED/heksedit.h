@@ -60,7 +60,7 @@ public:
 		int iBytesPerLine; /**< How many bytes in one line in hex view. */
 		int iAutomaticBPL; /**< Add max amount of bytes that fit to view. */
 		BYTE_ENDIAN iBinaryMode; /**< Binary mode, little/big endian. */
-		int bReadOnly; /**< Is editor in read-only mode? */
+		bool bReadOnly; /**< Is editor in read-only mode? */
 		int bSaveIni; /**< Save INI file when required. */
 		int iFontSize;
 		int iCharacterSet; /**< Use OEM or ANSI character set? */

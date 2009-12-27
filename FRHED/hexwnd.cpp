@@ -129,7 +129,7 @@ HexEditorWindow::HexEditorWindow()
 	iSelBkColorValue = RGB(255, 255, 0);
 	iSelTextColorValue = RGB(0, 0, 0);
 
-	bOpenReadOnly = bReadOnly = FALSE;
+	bOpenReadOnly = bReadOnly = false;
 	iPartialOffset = 0;
 	bPartialStats = false;
 	bPartialOpen = false;
@@ -4607,7 +4607,7 @@ void HexEditorWindow::RefreshCurrentTrack()
 		{
 			m_dataArray.SetUpperBound(BytesPerSector-1);
 			CopyMemory(m_dataArray, Track.GetObjectMemory(), BytesPerSector);
-			bReadOnly = TRUE;
+			bReadOnly = true;
 			_stprintf(filename, GetLangString(IDS_DRIVES_SECTOR),
 					(LPCSTR) SelectedPartitionInfo->GetNameAsString(), CurrentSectorNumber);
 			bFileNeverSaved = false;
@@ -5530,7 +5530,7 @@ void HexEditorWindow::CMD_open_hexdump()
 		bFilestatusChanged = true;
 		// If read-only mode on opening is enabled:
 		if (bOpenReadOnly)
-			bReadOnly = TRUE;
+			bReadOnly = true;
 		save_ini_data();
 		resize_window();
 	}
@@ -5862,13 +5862,13 @@ void HexEditorWindow::status_bar_click(bool left)
 					{
 						if (bReadOnly)
 						{
-							bReadOnly = FALSE;
+							bReadOnly = false;
 							bInsertMode = true;
 						}
 						else if (bInsertMode)
 							bInsertMode = false;
 						else
-							bReadOnly = TRUE;
+							bReadOnly = true;
 					}
 				}
 				else //READ <- INS <- OVR <- READ...
@@ -5878,11 +5878,11 @@ void HexEditorWindow::status_bar_click(bool left)
 					{
 						if (bReadOnly)
 						{
-							bReadOnly = FALSE;
+							bReadOnly = false;
 							bInsertMode= false;
 						}
 						else if (bInsertMode)
-							bReadOnly = TRUE;
+							bReadOnly = true;
 						else
 							bInsertMode = true;
 					}

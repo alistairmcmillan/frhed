@@ -299,7 +299,7 @@ protected:
 	static int iPasteTimes;
 	static int iPasteSkip;
 
-	int bOpenReadOnly; /**< Open files read-only. */
+	bool bOpenReadOnly; /**< Open files read-only. */
 	INT64 iPartialOffset, iPartialFileLen;
 	bool bPartialOpen; /**< Was file opened partially? */
 	int iPartialOpenLen; /**< Length of the partially opened block from file. */
