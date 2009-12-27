@@ -288,7 +288,7 @@ public:
 
 protected:
 //Pabs inserted
-	int bMakeBackups; /**< Backup the file when saving. */
+	bool bMakeBackups; /**< Backup the file when saving. */
 //end
 	static int ScrollDelay;
 	static int ScrollInterval;

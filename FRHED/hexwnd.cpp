@@ -102,7 +102,7 @@ HexEditorWindow::HexEditorWindow()
 //Pabs inserted
 	bSaveIni = FALSE;
 	bCenterCaret = FALSE;
-	bMakeBackups = 0;
+	bMakeBackups = false;
 
 	enable_drop = TRUE;
 	enable_drag = TRUE;
