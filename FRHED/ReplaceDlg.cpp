@@ -53,7 +53,7 @@ int ReplaceDlg::transl_text_to_binary(SimpleArray<TCHAR> &out)
 
 //-------------------------------------------------------------------
 // Create a text representation of an array of bytes and save it in
-// a SimpleString object.
+// a String object.
 void ReplaceDlg::transl_binary_to_text(const BYTE *src, int len)
 {
 	// How long will the text representation of array of bytes be?
@@ -105,7 +105,7 @@ bool ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 }
 
 //-------------------------------------------------------------------
-// SimpleString replacedata contains data to replace with.
+// String replacedata contains data to replace with.
 bool ReplaceDlg::replace_selected_data(HWND hDlg)
 {
 	if (!bSelected)
