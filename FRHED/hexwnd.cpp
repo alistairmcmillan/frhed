@@ -2947,7 +2947,7 @@ void HexEditorWindow::fix_scroll_timers(long x, long y)
 			}
 			else
 			{
-				bScrollTimerSet = TRUE;
+				bScrollTimerSet = true;
 				SetTimer(hwnd, SCROLL_TIMER_ID, ScrollInterval, NULL);
 			}
 		}
@@ -2959,7 +2959,7 @@ void HexEditorWindow::fix_scroll_timers(long x, long y)
 			}
 			else
 			{
-				bScrollTimerSet = TRUE;
+				bScrollTimerSet = true;
 				SetTimer(hwnd, SCROLL_TIMER_ID, ScrollInterval, NULL);
 			}
 		}
@@ -2976,7 +2976,7 @@ void HexEditorWindow::kill_scroll_timers()
 {
 	KillTimer(hwnd, SCROLL_DELAY_TIMER_ID);
 	KillTimer(hwnd, SCROLL_TIMER_ID);
-	bScrollTimerSet = FALSE;
+	bScrollTimerSet = false;
 	prev_vert = prev_horz = SCROLL_NONE;
 }
 
@@ -3842,7 +3842,7 @@ void HexEditorWindow::timer(WPARAM w, LPARAM)
 	case SCROLL_DELAY_TIMER_ID:
 		KillTimer(hwnd, SCROLL_DELAY_TIMER_ID);
 		SetTimer(hwnd, SCROLL_TIMER_ID, ScrollInterval, NULL);
-		bScrollTimerSet = TRUE;
+		bScrollTimerSet = true;
 		break;
 	case SCROLL_TIMER_ID:
 		if (bScrollTimerSet)

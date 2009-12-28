@@ -309,7 +309,7 @@ protected:
 	int iMRU_count; /**< Count of MRU list items active. */
 	TCHAR strMRU[MRUMAX][_MAX_PATH]; /**< List of MRU items. */
 	bool bFilestatusChanged;
-	int bScrollTimerSet;
+	bool bScrollTimerSet;
 	int iMouseX; /**< Current mouse X position. */
 	int iMouseY; /**< Current mouse Y position. */
 	bool bUnsignedView; /**< View shows byte values as unsigned? */
@@ -317,7 +317,7 @@ protected:
 	bool bInsertMode; /**< Editing mode is in insert-mode? */
 	bool bFileNeverSaved;
 	SimpleArray<BYTE> m_dataArray; /**< Array of the file data. */
-	int bSelecting; /**< Is user selecting bytes/text? */
+	bool bSelecting; /**< Is user selecting bytes/text? */
 	int iLBDownX, iLBDownY;
 	int cxChar, cxCaps, cyChar, cxClient, cyClient, cxBuffer, cyBuffer, iNumlines;
 	int iByteSpace, iCharSpace;
