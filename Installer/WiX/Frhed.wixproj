@@ -1,0 +1,29 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DefineSolutionProperties>false</DefineSolutionProperties>
+    
+    <WixToolPath Condition="'$(WixToolPath)' == ''">$(PROGRAMFILES)\Windows Installer XML v3\bin\</WixToolPath>
+    <WixTargetsPath Condition="'$(WixTargetsPath)' == ''">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets</WixTargetsPath>
+    
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    
+    <OutputName Condition=" '$(ProductVersion)' != '' ">Frhed-$(ProductVersion)-$(Platform)-Setup</OutputName>
+    <OutputName Condition=" '$(ProductVersion)' == '' ">Frhed-$(Platform)-Setup</OutputName>
+    <OutputPath>..\..\Build\WiX\$(Configuration)\$(Platform)\</OutputPath>
+    <IntermediateOutputPath>..\..\BuildTmp\WiX\$(Configuration)\$(Platform)\</IntermediateOutputPath>
+    <OutputType>package</OutputType>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <WixExtension Include="$(WixToolPath)WixUIExtension.dll" />
+    <Compile Include="Frhed.wxs"/>
+    <Compile Include="Fragments\Core.wxs"/>
+    <Compile Include="Fragments\Docs.wxs"/>
+    <Compile Include="Fragments\Languages.wxs"/>
+    <Compile Include="Fragments\Features.wxs"/>
+    <Compile Include="Fragments\WixUI_Frhed.wxs"/>
+  </ItemGroup>
+  
+  <Import Project="$(WixTargetsPath)"/>
+</Project>

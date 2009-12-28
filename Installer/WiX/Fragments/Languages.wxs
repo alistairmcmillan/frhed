@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include ..\Config.wxi ?>
+  <Fragment>
+    <DirectoryRef Id="LANGDIR">
+      <Component Id="Dutch" Guid="*" Win64="$(var.Win64)">
+        <File Id="DutchPO" 
+          Name="nl.po" 
+          Source="..\..\Translations\Frhed\nl.po" 
+          Vital="no" />
+      </Component>
+      
+      <Component Id="French" Guid="*" Win64="$(var.Win64)">
+        <File Id="FrenchPO" 
+          Name="fr.po" 
+          Source="..\..\Translations\Frhed\fr.po" 
+          Vital="no" />
+      </Component>
+      
+      <Component Id="German" Guid="*" Win64="$(var.Win64)">
+        <File Id="GermanPO" 
+          Name="de.po" 
+          Source="..\..\Translations\Frhed\de.po" 
+          Vital="no" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

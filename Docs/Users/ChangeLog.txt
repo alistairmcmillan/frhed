@@ -8,6 +8,7 @@ Frhed 1.7.2
   Bit shifting selection (#2841014)
   Remove Upgrade-dialog (r832)
   Upgrade project files to VS2005 format (r837)
+  Added MSI installer (r843)
   Bugfix: Could only load one custom encoder dll (#2834337)
   New translation:
   - Dutch (r822)

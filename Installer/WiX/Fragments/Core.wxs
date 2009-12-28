@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include ..\Config.wxi ?>
+  <Fragment>
+    <DirectoryRef Id="INSTALLDIR">
+      <Component Id="Frhed" Guid="*" Win64="$(var.Win64)">
+        <File Id="FrhedEXE" 
+          Name="Frhed.exe" 
+          Source="$(var.FrhedBuildDir)\Frhed.exe" 
+          Vital="yes" />
+      </Component>
+      
+      <Component Id="heksedit" Guid="*" Win64="$(var.Win64)">
+        <File Id="hekseditDLL" 
+          Name="heksedit.dll" 
+          Source="$(var.FrhedBuildDir)\heksedit.dll" 
+          Vital="yes" />
+      </Component>
+      
+      <Component Id="rawio32" Guid="*" Win64="$(var.Win64)">
+        <File Id="rawio32DLL" 
+          Name="rawio32.dll" 
+          Source="$(var.FrhedBuildDir)\rawio32.dll" 
+          Vital="yes" />
+      </Component>
+
+      <Component Id="HexeditLang" Guid="*" Win64="$(var.Win64)">
+        <File Id="HexeditLangDLL" 
+          Name="heksedit.lng" 
+          Source="$(var.FrhedBuildDir)\Languages\heksedit.lng" 
+          Vital="yes" />
+      </Component>
+      
+      <Component Id="Contributors" Guid="*" Win64="$(var.Win64)">
+        <File Id="ContributorsTXT" 
+          Name="Contributors.txt" 
+          Source="..\..\Docs\Users\Contributors.txt" 
+          Vital="no" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- Startmenu shortcuts -->
+    <DirectoryRef Id="FrhedMenuFolder">
+      <Component Id="StartMenuShortcuts" Guid="$(var.StartMenuShortcutsGuid)" Win64="$(var.Win64)">
+        <Shortcut Id="FrhedStartMenuShortcut" 
+          Name="Frhed" 
+          Target="[INSTALLDIR]Frhed.exe"
+          WorkingDirectory="INSTALLDIR" />
+        <Shortcut Id="ReadMeStartMenuShortcut" 
+          Name="Read Me" 
+          Target="[INSTALLDIR]Docs\ReadMe.txt"
+          WorkingDirectory="INSTALLDIR" />
+        <Shortcut Id="HelpStartMenuShortcut" 
+          Name="Frhed Help" 
+          Target="[INSTALLDIR]Docs\Frhed.chm"
+          WorkingDirectory="INSTALLDIR" />
+        <RemoveFolder Id="FrhedMenuFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\Frhed" Name="Installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    
+    <!-- Desktop shortcut -->
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="DesktopShortcut" Guid="$(var.DesktopShortcutGuid)" Win64="$(var.Win64)">
+        <Shortcut Id="FrhedDesktopShortcut" 
+          Name="Frhed" 
+          Target="[INSTALLDIR]Frhed.exe"
+          WorkingDirectory="INSTALLDIR" />
+        <RegistryValue Root="HKCU" Key="Software\Frhed" Name="Installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

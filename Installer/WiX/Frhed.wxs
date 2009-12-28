@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    candleArgs: "Frhed.wxs" "Fragments\Core.wxs" "Fragments\Docs.wxs" "Fragments\Filters.wxs" "Fragments\Plugins.wxs" "Fragments\Languages.wxs" "Fragments\Features.wxs" "Fragments\WixUI_Frhed.wxs" <extensions>
+    lightArgs: "Frhed.wixobj" "Core.wixobj" "Docs.wixobj" "Filters.wixobj" "Plugins.wixobj" "Languages.wixobj" "Features.wixobj" "WixUI_Frhed.wixobj" -ext WixUIExtension -out "<projectname>.msi" <extensions>
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include Config.wxi ?>
+  <Product Id="*" 
+    Codepage="1252" 
+    Language="1033" 
+    Manufacturer="$(var.Manufacturer)" 
+    Name="$(var.ProductName)" 
+    UpgradeCode="$(var.UpgradeGuid)" 
+    Version="$(var.ProductVersion)">
+    
+    <Package Id="*" 
+      Comments="$(var.PackageComments)" 
+      Compressed="yes" 
+      Description="$(var.Manufacturer)" 
+      InstallerVersion="300" 
+      Keywords="$(var.PackageKeywords)" 
+      Languages="1033" 
+      Manufacturer="$(var.PackageDescription)" 
+      Platform="$(var.PackagePlatform)" 
+      SummaryCodepage="1252" />
+    
+    <Media Id="1"
+      Cabinet="Frhed.cab"
+      EmbedCab="yes" />
+    
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(var.ProgramFilesFolder)">
+        <Directory Id="INSTALLDIR" Name="Frhed">
+          <Directory Id="DOCSDIR" Name="Docs" />
+          <Directory Id="LANGDIR" Name="Languages" />
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="FrhedMenuFolder" Name="Frhed" />
+      </Directory>
+      <Directory Id="DesktopFolder" />
+      <Merge Id="CRT" Language="0" SourceFile="$(var.CrtMergeModule)" DiskId="1" />
+    </Directory>
+    
+    <FeatureRef Id="Frhed" />
+    
+    <!-- TODO: Works this really? -->
+    <Condition Message="Frhed requires Windows 2000/XP/2003/Vista/2008 or later to install.">
+      <![CDATA[( VersionNT <= 500 ) OR ( Version9x <> 0 )]]>
+    </Condition>
+    
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\Docs\Users\GPL.rtf" />
+    
+    <!-- TODO: Add graphics
+    <WixVariable Id="WixUIBannerBmp" Value="Bitmaps\banner.bmp" /> 
+    <WixVariable Id="WixUIDialogBmp" Value="Bitmaps\dialog.bmp" />
+    -->
+    
+    <UIRef Id="WixUI_Frhed" />
+    
+    <UI />
+    
+  </Product>
+</Wix>

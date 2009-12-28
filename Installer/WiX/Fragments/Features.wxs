@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include ..\Config.wxi ?>
+  <Fragment>
+    <!--
+      * Level <= 3 is "Typical"
+      * Level <= 1000 is "Complete"
+    -->
+    <Feature Id="Frhed" 
+      Absent="disallow" 
+      AllowAdvertise="no" 
+      ConfigurableDirectory="INSTALLDIR" 
+      Display="expand" 
+      Level="1" 
+      Title="Frhed">
+      <ComponentRef Id="Frhed" />
+      <ComponentRef Id="heksedit" />
+      <ComponentRef Id="rawio32" />
+      <ComponentRef Id="HexeditLang" />
+      <Feature Id="StartMenuShortcuts" 
+        AllowAdvertise="no" 
+        Level="1" 
+        Title="Startmenu shortcut">
+        <ComponentRef Id="StartMenuShortcuts" />
+      </Feature>
+      <Feature Id="DesktopShortcut" 
+        AllowAdvertise="no" 
+        Level="1" 
+        Title="Desktop shortcut">
+        <ComponentRef Id="DesktopShortcut" />
+      </Feature>
+      <Feature Id="Documentation" Absent="disallow" AllowAdvertise="no" Display="hidden" Level="1" Title="Documentation">
+        <ComponentRef Id="Contributors" />
+        <ComponentRef Id="ReadMe" />
+        <ComponentRef Id="ReleaseNotes" />
+        <ComponentRef Id="ChangeLog" />
+        <ComponentRef Id="FrhedHelp" />
+      </Feature>
+      <Feature Id="Languages" AllowAdvertise="no" Level="1" Title="Languages">
+        <ComponentRef Id="Dutch" />
+        <ComponentRef Id="French" />
+        <ComponentRef Id="German" />
+      </Feature>
+      <Feature Id="CRT" AllowAdvertise="no" Display="hidden" Level="1" Title="Microsoft Visual C++ 2005 Runtime Components ">
+        <MergeRef Id="CRT"/>
+      </Feature>
+    </Feature>
+  </Fragment>
+</Wix>
