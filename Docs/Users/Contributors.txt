@@ -24,6 +24,7 @@ Localization:
 
 Other contributors (new versions):
 Martin Hughes <martinhughes@users.sourceforge.net>
+Spencer Oliver <sjo@anglia.com>
 Peter Schaefer-Hutter <pschaefer@users.sourceforge.net>
 
 Other contributors (old versions):
