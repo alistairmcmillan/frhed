@@ -21,7 +21,7 @@
  *
  */
 // ID line follows -- this is updated by SVN
-// $Id: $
+// $Id$
 
 #ifndef _LANG_TOOLS_H_
 #define _LANG_TOOLS_H_

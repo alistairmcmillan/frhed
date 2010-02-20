@@ -21,7 +21,7 @@
  *
  */
 // ID line follows -- this is updated by SVN
-// $Id: LangTools.cpp 0 0000-00-00 00:00:00Z jtuc $
+// $Id$
 
 #include "precomp.h"
 #include "hexwnd.h"

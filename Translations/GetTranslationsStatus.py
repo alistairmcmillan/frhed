@@ -23,7 +23,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-# $Id: GetTranslationsStatus.py 6838 2009-06-11 13:04:16Z gerundt $
+# $Id$
 
 # Python script to get the status of the translations
 
