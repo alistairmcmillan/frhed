@@ -2128,7 +2128,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 
 	// Return if this line does not even contain the end-of-file double
 	// underscore (at index upperbound+1).
-	assert(startpos <= m_dataArray.GetLength());
+	assert(startpos <= (unsigned) m_dataArray.GetLength());
 
 	int length = get_length();
 	BYTE *buffer = get_buffer(length);

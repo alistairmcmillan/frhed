@@ -105,14 +105,14 @@ void HexDump::Write(unsigned startInd, unsigned endInd)
 			buf2[i] = ' ';
 		buf2[m_offsetMaxLen + m_byteSpace] = '\0';
 
-		int l = 0; // l = Offset in line, relative to k.
+		unsigned l = 0; // l = Offset in line, relative to k.
 		int n = 0;
 		while (buf2[n] != '\0')
 			m_pBuffer[k + (l++)] = buf2[n++]; // Copy Offset. l = next empty place after spaces.
 		// Write bytes and chars.
-		for (int j = 0 ; j < m_bytesPerLine ; j++)
+		for ( unsigned j = 0 ; j < (unsigned) m_bytesPerLine ; j++)
 		{
-			if (a + j > m_pData->GetUpperBound())
+			if (a + j > (unsigned) m_pData->GetUpperBound())
 			{
 				// Nonexistant byte.
 				m_pBuffer[k + l + j * 3    ] = ' ';
@@ -124,18 +124,18 @@ void HexDump::Write(unsigned startInd, unsigned endInd)
 			else
 			{
 				// Write byte.
-				_stprintf(buf2, _T("%2.2x "), (*m_pData)[(int)a + j]);
+				_stprintf(buf2, _T("%2.2x "), (*m_pData)[a + j]);
 				m_pBuffer[k + l + j*3    ] = buf2[0];
 				m_pBuffer[k + l + j*3 + 1] = buf2[1];
 				m_pBuffer[k + l + j*3 + 2] = buf2[2];
 				// Write char.
-				if (m_charset == OEM_FIXED_FONT && (*m_pData)[(int)a + j] != 0)
-					m_pBuffer[k + l + m_bytesPerLine*3 + m_charSpace + j] = (*m_pData)[(int)a + j];
-				else if (((*m_pData)[(int)a + j] >= 32 && (*m_pData)[(int)a + j] <= 126) ||
-						((*m_pData)[(int)a + j]>=160 && (*m_pData)[(int)a + j] <= 255) ||
-						((*m_pData)[(int)a + j] >= 145 && (*m_pData)[(int)a + j] <= 146))
+				if (m_charset == OEM_FIXED_FONT && (*m_pData)[a + j] != 0)
+					m_pBuffer[k + l + m_bytesPerLine*3 + m_charSpace + j] = (*m_pData)[a + j];
+				else if (((*m_pData)[a + j] >= 32 && (*m_pData)[a + j] <= 126) ||
+						((*m_pData)[a + j]>=160 && (*m_pData)[a + j] <= 255) ||
+						((*m_pData)[a + j] >= 145 && (*m_pData)[a + j] <= 146))
 				{
-					m_pBuffer[k + l + m_bytesPerLine*3 + m_charSpace + j] = (*m_pData)[(int)a + j];
+					m_pBuffer[k + l + m_bytesPerLine*3 + m_charSpace + j] = (*m_pData)[a + j];
 				}
 				else
 					m_pBuffer[k + l + m_bytesPerLine*3 + m_charSpace + j] = '.';
