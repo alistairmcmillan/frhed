@@ -76,7 +76,7 @@ BOOL EncodeDecodeDialog::OnInitDialog(HWND hDlg)
 		if (hLibrary)
 		{
 			if (LPFNGetMemoryCodings callback = (LPFNGetMemoryCodings)
-				GetProcAddress(hLibrary, _T("GetMemoryCodings")))
+				GetProcAddress(hLibrary, "GetMemoryCodings"))
 			{
 				AddEncoders(hListbox, callback());
 			}
