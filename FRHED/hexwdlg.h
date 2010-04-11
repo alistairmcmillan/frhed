@@ -69,7 +69,7 @@ public:
 private:
 	static HWND hCbLang;
 	static BOOL CALLBACK EnumLocalesProc(LPTSTR);
-	static int FormatLangId(LPWSTR, LANGID, int verbose = 0);
+	static int FormatLangId(LPTSTR, LANGID );
 	void OnDrawitemLangId(DRAWITEMSTRUCT *);
 	INT_PTR OnCompareitemLangId(COMPAREITEMSTRUCT *);
 	BOOL OnInitDialog(HWND);

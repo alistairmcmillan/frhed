@@ -103,46 +103,24 @@ BOOL ViewSettingsDlg::EnumLocalesProc(LPTSTR lpLocaleString)
 	return TRUE;
 }
 
-int ViewSettingsDlg::FormatLangId(LPWSTR bufW, LANGID langid, int verbose)
+int ViewSettingsDlg::FormatLangId(LPTSTR outbuf, LANGID langid )
 {
-	char bufA[200];
-	int i = LangArray::LangCodeMajor(langid, bufA);
+	TCHAR buf1[50], buf2[50], buf3[50], buf4[50], buf5[50], buf6[50];
+
+	int i = LangArray::LangCodeMajor(langid, buf1);
 	if (i)
 	{
-		bufA[i - 1] = '-';
-		i += LangArray::LangCodeMinor(langid, bufA + i);
-		switch (verbose)
-		{
-		case sizeof(WCHAR):
-			MultiByteToWideChar(CP_ACP, 0, bufA, i, bufW, i);
-			bufW[i - 1] = '\t';
-			i += GetLocaleInfoW(langid, LOCALE_SNATIVELANGNAME|LOCALE_USE_CP_ACP, bufW + i, 40);
-			bufW[i - 1] = '\t';
-			i += GetLocaleInfoW(langid, LOCALE_SNATIVECTRYNAME|LOCALE_USE_CP_ACP, bufW + i, 40);
-			bufW[i - 1] = '\t';
-			i += GetLocaleInfoW(langid, LOCALE_SENGLANGUAGE, bufW + i, 40);
-			bufW[i - 1] = '\t';
-			i += GetLocaleInfoW(langid, LOCALE_SENGCOUNTRY, bufW + i, 40);
-			break;
-		case sizeof(CHAR):
-			bufA[i - 1] = '\t';
-			i += GetLocaleInfoA(langid, LOCALE_SNATIVELANGNAME|LOCALE_USE_CP_ACP, bufA + i, 40);
-			bufA[i - 1] = '\t';
-			i += GetLocaleInfoA(langid, LOCALE_SNATIVECTRYNAME|LOCALE_USE_CP_ACP, bufA + i, 40);
-			bufA[i - 1] = '\t';
-			i += GetLocaleInfoA(langid, LOCALE_SENGLANGUAGE, bufA + i, 40);
-			bufA[i - 1] = '\t';
-			i += GetLocaleInfoA(langid, LOCALE_SENGCOUNTRY, bufA + i, 40);
-			// fall through
-		case 0:
-			MultiByteToWideChar(CP_ACP, 0, bufA, i, bufW, i);
-			break;
-		}
-		--i;
+		LangArray::LangCodeMinor(langid, buf2);
+		GetLocaleInfo(langid, LOCALE_SNATIVELANGNAME|LOCALE_USE_CP_ACP, buf3, 40);
+		GetLocaleInfo(langid, LOCALE_SNATIVECTRYNAME|LOCALE_USE_CP_ACP, buf4, 40);
+		GetLocaleInfo(langid, LOCALE_SENGLANGUAGE, buf5, 40);
+		GetLocaleInfo(langid, LOCALE_SENGCOUNTRY, buf6, 40);
+
+		i = _stprintf(outbuf, _T("%s-%s\t%s\t%s\t%s\t%s"), buf1, buf2, buf3, buf4, buf5, buf6 );
 	}
 	else
 	{
-		i = swprintf(bufW, L"%04x", langid);
+		i = _stprintf(outbuf,_T("%04x"), langid);
 	}
 	return i;
 }
@@ -167,18 +145,17 @@ void ViewSettingsDlg::OnDrawitemLangId(DRAWITEMSTRUCT *pdis)
 	static const int rgcx[] = { 50, 120, 180, 120, 220, 0 };
 	const int *pcx = rgcx;
 	UINT flags = ETO_OPAQUE;
-	WCHAR buffer[200];
-	int length = FormatLangId(buffer, LOWORD(pdis->itemData),
-		IsWindowUnicode(pdis->hwndItem) ? sizeof(WCHAR) : sizeof(CHAR));
-	LPWSTR p = buffer;
-	while (LPWSTR q = StrChrW(p, L'\t'))
+	TCHAR buffer[200];
+	int length = FormatLangId(buffer, LOWORD(pdis->itemData)); 
+	LPTSTR p = buffer;
+	while (LPTSTR q = StrChr(p, _T('\t')))
 	{
-		ExtTextOutW(pdis->hDC, x, y, flags, &pdis->rcItem, p, q - p, 0);
+		ExtTextOut(pdis->hDC, x, y, flags, &pdis->rcItem, p, q - p, 0);
 		x += *pcx ? *pcx++ : 100;
 		p = q + 1;
 		flags = 0;
 	}
-	ExtTextOutW(pdis->hDC, x, y, flags, &pdis->rcItem, p, length - (p - buffer), 0);
+	ExtTextOut(pdis->hDC, x, y, flags, &pdis->rcItem, p, length - (p - buffer), 0);
 	if (pdis->itemState & ODS_FOCUS)
 	{
 		DrawFocusRect(pdis->hDC, &pdis->rcItem);
@@ -187,11 +164,11 @@ void ViewSettingsDlg::OnDrawitemLangId(DRAWITEMSTRUCT *pdis)
 
 INT_PTR ViewSettingsDlg::OnCompareitemLangId(COMPAREITEMSTRUCT *pcis)
 {
-	WCHAR name1[20];
+	TCHAR name1[100];
 	FormatLangId(name1, LOWORD(pcis->itemData1));
-	WCHAR name2[20];
+	TCHAR name2[100];
 	FormatLangId(name2, LOWORD(pcis->itemData2));
-	int cmp = StrCmpIW(name1, name2);
+	int cmp = StrCmpI(name1, name2);
 	return cmp < 0 ? -1 : cmp > 0 ? +1 : 0;
 	//Code below would yield numeric sort order by first PRIMARYLANGID, then SUBLANGID
 	/*WORD w1 = LOWORD(pcis->itemData1);
