@@ -32,8 +32,8 @@
 #include "hexwnd.h"
 #include "toolbar.h"
 
-static const char szMainClass[] = "frhed wndclass";
-static const char szHexClass[] = "heksedit";
+static const TCHAR szMainClass[] = _T("frhed wndclass");
+static const TCHAR szHexClass[] = _T("heksedit");
 
 HINSTANCE hMainInstance;
 
