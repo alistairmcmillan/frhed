@@ -89,11 +89,11 @@ BOOL PasteDlg::Apply(HWND hDlg)
 	destlen = GetWindowText(hwndEdit1, pcPastestring, destlen);
 	if (!bPasteAsText)
 	{
-		TCHAR *pc = 0;
+		BYTE *pc = 0;
 		destlen = create_bc_translation(&pc, pcPastestring,
 			_tcslen(pcPastestring), iCharacterSet, iBinaryMode);
 		delete [] pcPastestring;
-		pcPastestring = pc;
+		pcPastestring = (TCHAR *) pc;
 	}
 	if (destlen == 0)
 	{
@@ -102,6 +102,33 @@ BOOL PasteDlg::Apply(HWND hDlg)
 		delete [] pcPastestring;
 		return FALSE;
 	}
+
+	// Choose to paste as Unicode text or ansi text regardless of build configuration,
+	// TODO: UI not yet implemented.
+	// ex) bool bPasteAsUnicode = IsDlgButtonChecked(hDlg, IDC_PASTE_AS_UNICODE))
+	bool bPasteAsUnicode = false;
+	BYTE *pasteData = (BYTE*) pcPastestring;
+	int pasteSize = destlen * sizeof TCHAR;
+
+#ifdef UNICODE
+	if (bPasteAsUnicode)
+	{
+		pasteData = new BYTE[destlen * sizeof WCHAR];
+		pasteSize = WideCharToMultiByte(CP_ACP, 0, pcPastestring, destlen,
+				(LPSTR) pasteData, destlen, NULL, NULL);
+#else
+	if (!bPasteAsUnicode)
+	{
+		pasteData = new BYTE[destlen * sizeof WCHAR];
+		pasteSize = MultiByteToWideChar(CP_ACP, 0, pcPastestring, destlen,
+				(LPWSTR) pasteData, destlen) * sizeof WCHAR;
+#endif
+		if ( pasteSize > 0 ) {
+			delete [] pcPastestring;
+			pcPastestring = (TCHAR *) pasteData; // delete me later.
+		}
+	}
+
 	WaitCursor wc1;
 	if (bSelected || IsDlgButtonChecked(hDlg, IDC_PASTE_INSERT))
 	{
@@ -116,7 +143,7 @@ BOOL PasteDlg::Apply(HWND hDlg)
 		int i = iCurByte;
 		for (int k = 0 ; k < iPasteTimes ; k++)
 		{
-			if (!m_dataArray.InsertAtGrow(i, (BYTE*)pcPastestring, 0, destlen))
+			if (!m_dataArray.InsertAtGrow(i, pasteData, 0, destlen))
 			{
 				LangString noMem(IDS_PASTE_NO_MEM);
 				MessageBox(hDlg, noMem, MB_ICONERROR);
@@ -145,7 +172,7 @@ BOOL PasteDlg::Apply(HWND hDlg)
 		{
 			for (int i = 0 ; i < destlen ; i++)
 			{
-				m_dataArray[iCurByte + k * (iPasteSkip + destlen) + i] = pcPastestring[i];
+				m_dataArray[iCurByte + k * (iPasteSkip + destlen) + i] = pasteData[i];
 			}
 		}
 		iFileChanged = TRUE;

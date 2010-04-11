@@ -96,7 +96,7 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 		return FALSE;
 	}
 	UINT uFormat = SendMessage(list, LB_GETITEMDATA, i, 0);
-	TCHAR *pcPastestring = 0;
+	BYTE *pcPastestring = NULL;
 	int destlen = 0;
 	BOOL bPasteBinary = FALSE;
 	BOOL bPasteUnicode = FALSE;
@@ -108,8 +108,8 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 			if (gsize)
 			{
 				TCHAR *pClipMemory = (TCHAR *)GlobalLock(hClipMemory);
-				pcPastestring = new TCHAR[gsize];
-				memcpy(pcPastestring, pClipMemory, gsize * sizeof(TCHAR));
+				pcPastestring = new BYTE[gsize];
+				memcpy(pcPastestring, pClipMemory, gsize * sizeof(BYTE));
 				GlobalUnlock(hClipMemory);
 			}
 			switch (uFormat)
@@ -132,13 +132,16 @@ BOOL FastPasteDlg::Apply(HWND hDlg)
 	{
 		if (bPasteAsText)
 		{
-			destlen = bPasteUnicode ? 2 * wcslen((WCHAR *)pcPastestring) : _tcslen(pcPastestring);
+			if (bPasteUnicode)
+				destlen = wcslen((LPCWSTR) pcPastestring) *sizeof (WCHAR);
+			else 
+				destlen = _tcslen((LPCTSTR) pcPastestring) *sizeof (TCHAR);
 		}
 		else
 		{
-			TCHAR *pc = 0;
-			destlen = create_bc_translation(&pc, pcPastestring,
-				_tcslen(pcPastestring), iCharacterSet, iBinaryMode);
+			BYTE *pc = NULL;
+			destlen = create_bc_translation(&pc, (LPCTSTR) pcPastestring,
+				_tcslen((LPCTSTR)pcPastestring), iCharacterSet, iBinaryMode);
 			delete [] pcPastestring;
 			pcPastestring = pc;
 		}

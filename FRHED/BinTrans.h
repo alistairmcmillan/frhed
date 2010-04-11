@@ -29,7 +29,7 @@
 #include "UnicodeString.h"
 #include "Simparr.h"
 
-int create_bc_translation(TCHAR** ppd, LPCTSTR src, int srclen, int charset, int binarymode);
+int create_bc_translation(BYTE** ppd, LPCTSTR src, int srclen, int charset, int binarymode);
 
 /**
  * @brief A class translating between text export and binary data.
@@ -38,18 +38,18 @@ class Text2BinTranslator
 {
 public:
 	int bCompareBin(Text2BinTranslator& tr2, int charmode, int binmode);
-	Text2BinTranslator(TCHAR* ps);
+	Text2BinTranslator(LPTSTR ps);
 	Text2BinTranslator(LPCTSTR ps);
 	static int iIsBytecode(LPCTSTR src, int len);
 	static int iBytes2BytecodeDestLen(const BYTE* src, int srclen);
 	static int iLengthOfTransToBin(LPCTSTR src, int srclen);
-	static int iCreateBcTranslation(TCHAR* dest, LPCTSTR src, int srclen, int charmode, int binmode);
-	static int iTranslateOneBytecode(TCHAR* dest, LPCTSTR src, int srclen, int binmode);
+	static int iCreateBcTranslation(BYTE * dest, LPCTSTR src, int srclen, int charmode, int binmode);
+	static int iTranslateOneBytecode(BYTE * dest, LPCTSTR src, int srclen, int binmode);
 	static int iFindBytePos(LPCTSTR src, TCHAR c);
-	static int iTranslateBytesToBC(TCHAR* pd, const BYTE* src, int srclen);
+	static int iTranslateBytesToBC(LPTSTR pd, const BYTE* src, int srclen);
 
 private:
-	int GetTrans2Bin(SimpleArray<TCHAR>& sa, int charmode, int binmode);
+	int GetTrans2Bin(SimpleArray<BYTE>& sa, int charmode, int binmode);
 	String m_str; /**< String for conversion. */
 };
 

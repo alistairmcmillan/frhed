@@ -4672,13 +4672,13 @@ void HexEditorWindow::CMD_findnext()
 	if (m_pFindCtxt->HasText())
 	{
 		// There is a findstring. Create its translation.
-		TCHAR *pcFindstring;
+		BYTE *pcFindstring;
 		int srclen = _tcslen(m_pFindCtxt->GetText());
 		if (int destlen = create_bc_translation(&pcFindstring,
 				m_pFindCtxt->GetText(), srclen, iCharacterSet, iBinaryMode))
 		{
 			SetCursor(LoadCursor(NULL, IDC_WAIT));
-			int i = findutils_FindBytes((TCHAR *)&m_dataArray[iCurByte + 1],
+			int i = findutils_FindBytes((BYTE *)&m_dataArray[iCurByte + 1],
 				m_dataArray.GetLength() - iCurByte - 1,
 				pcFindstring, destlen, 1,
 				m_pFindCtxt->m_bMatchCase);
@@ -4746,7 +4746,7 @@ void HexEditorWindow::CMD_findprev()
 	if (m_pFindCtxt->HasText())
 	{
 		// There is a findstring. Create its translation.
-		TCHAR *pcFindstring;
+		BYTE *pcFindstring;
 		int srclen = _tcslen(m_pFindCtxt->GetText());
 		if (int destlen = create_bc_translation(&pcFindstring,
 			m_pFindCtxt->GetText(), srclen, iCharacterSet, iBinaryMode))
@@ -4757,7 +4757,7 @@ void HexEditorWindow::CMD_findprev()
 			// you are somewhere in the middle of the findstring with the caret
 			// and you choose "find previous" you usually want to find the beginning
 			// of the findstring in the file.
-			int i = findutils_FindBytes((TCHAR *)&m_dataArray[0],
+			int i = findutils_FindBytes((BYTE *)&m_dataArray[0],
 				min(iCurByte + (destlen - 1), m_dataArray.GetLength()),
 				pcFindstring, destlen, -1, m_pFindCtxt->m_bMatchCase);
 			SetCursor(LoadCursor(NULL, IDC_ARROW));

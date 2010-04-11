@@ -42,6 +42,9 @@ BOOL AboutDlg::OnInitDialog(HWND hDlg)
 	buf[RTL_NUMBER_OF(buf) - 1] = _T('\0');
 	_sntprintf(buf, RTL_NUMBER_OF(buf) - 1, GetLangString(IDS_ABOUTFRHEDVER),
 		FRHED_MAJOR_VERSION, FRHED_MINOR_VERSION, FRHED_SUB_RELEASE_NO);
+#if defined(UNICODE) && defined(_DEBUG)
+	_tcscat(buf, _T(" (Unicode Debug)"));
+#endif
 	SetDlgItemText(hDlg, IDC_ABOUT_VER, buf);
 	// Set the homepage URL.
 	SetDlgItemText(hDlg, IDC_ABOUT_URL, FrhedHomepageURL);

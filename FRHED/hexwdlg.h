@@ -193,7 +193,7 @@ class ReplaceDlg : public HexEditorWindow
 public:
 	enum { IDD = IDD_REPLACEDIALOG };
 	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-	int transl_text_to_binary(SimpleArray<TCHAR> &out);
+	int transl_text_to_binary(SimpleArray<BYTE> &out);
 	static void transl_binary_to_text(const BYTE*, int);
 	bool find_and_select_data(int finddir, bool case_sensitive);
 	bool replace_selected_data(HWND);

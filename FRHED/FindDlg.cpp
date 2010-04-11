@@ -100,13 +100,18 @@ BOOL FindDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			m_pFindCtxt->m_iDirection = IsDlgButtonChecked(hDlg, IDC_FIND_UP) ? -1 : 1;
 			// Copy text in Edit-Control. Return the number of characters
 			// in the Edit-control minus the zero byte at the end.
-			TCHAR *pcFindstring = 0;
+			BYTE *pcFindstring = NULL;
 			int destlen;
 			if (m_pFindCtxt->m_bUnicode)
 			{
-				pcFindstring = new TCHAR[srclen * 2];
+				pcFindstring = (BYTE*) new WCHAR[srclen +1];
+#ifdef UNICODE
+				wcscpy((LPWSTR) pcFindstring, (LPWSTR) m_pFindCtxt->GetText());
+				destlen = srclen* sizeof (WCHAR);
+#else
 				destlen = MultiByteToWideChar(CP_ACP, 0, m_pFindCtxt->GetText(),
-						srclen, (WCHAR *)pcFindstring, srclen) * 2;
+					srclen + 1, (WCHAR *)pcFindstring, srclen + 1) * sizeof (WCHAR);
+#endif
 			}
 			else
 			{
@@ -122,7 +127,7 @@ BOOL FindDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 				// Find forward.
 				if (m_pFindCtxt->m_iDirection == 1)
 				{
-					i = findutils_FindBytes((TCHAR *)&m_dataArray[iCurByte + 1],
+					i = findutils_FindBytes((BYTE *)&m_dataArray[iCurByte + 1],
 							m_dataArray.GetLength() - iCurByte - 1,
 							pcFindstring, destlen, 1, m_pFindCtxt->m_bMatchCase);
 					if (i != -1)
@@ -131,7 +136,7 @@ BOOL FindDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 				// Find backward.
 				else
 				{
-					i = findutils_FindBytes((TCHAR *)&m_dataArray[0],
+					i = findutils_FindBytes((BYTE *)&m_dataArray[0],
 						min(iCurByte + (destlen - 1), m_dataArray.GetLength()),
 						pcFindstring, destlen, -1, m_pFindCtxt->m_bMatchCase);
 					if (i != -1)

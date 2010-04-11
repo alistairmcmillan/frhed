@@ -33,12 +33,12 @@
 // Return: Length of resulting string.
 // ppd = pointer to pointer to result, must be delete[]-ed later.
 // If the input string was empty, no translated array is created and zero is returned.
-int create_bc_translation(TCHAR **ppd, LPCTSTR src, int srclen, int charset, int binarymode)
+int create_bc_translation(BYTE **ppd, LPCTSTR src, int srclen, int charset, int binarymode)
 {
 	int destlen = Text2BinTranslator::iLengthOfTransToBin(src, srclen);
 	if (destlen > 0)
 	{
-		*ppd = new TCHAR[destlen];
+		*ppd = new BYTE[destlen];
 		Text2BinTranslator::iCreateBcTranslation(*ppd, src, srclen,
 				charset, binarymode);
 		return destlen;
@@ -52,7 +52,7 @@ int create_bc_translation(TCHAR **ppd, LPCTSTR src, int srclen, int charset, int
 }
 
 //-------------------------------------------------------------------
-Text2BinTranslator::Text2BinTranslator(TCHAR* ps)
+Text2BinTranslator::Text2BinTranslator(LPTSTR ps)
 : m_str(ps)
 {
 }
@@ -85,7 +85,7 @@ int Text2BinTranslator::iFindBytePos(LPCTSTR src, TCHAR c)
  * @param [in] binmode BIG/LITTLE endian.
  * @return TRUE if translation succeeded, FALSE otherwise.
  */
-int Text2BinTranslator::GetTrans2Bin(SimpleArray<TCHAR>& sa, int charmode, int binmode)
+int Text2BinTranslator::GetTrans2Bin(SimpleArray<BYTE>& sa, int charmode, int binmode)
 {
 	sa.ClearAll();
 
@@ -94,7 +94,7 @@ int Text2BinTranslator::GetTrans2Bin(SimpleArray<TCHAR>& sa, int charmode, int b
 	{
 		sa.SetSize(destlen);
 		sa.ExpandToSize();
-		iCreateBcTranslation((TCHAR*) sa, m_str.c_str(), m_str.length(), charmode, binmode);
+		iCreateBcTranslation((BYTE*) sa, m_str.c_str(), m_str.length(), charmode, binmode);
 		return TRUE;
 	}
 	else
@@ -211,7 +211,7 @@ int Text2BinTranslator::iIsBytecode(LPCTSTR src, int len)
 // Get value of *one* bytecode token.
 // Return: value of code.
 // bytecode must be checked before!!
-int Text2BinTranslator::iTranslateOneBytecode(TCHAR* dest, LPCTSTR src, int srclen, int binmode)
+int Text2BinTranslator::iTranslateOneBytecode(BYTE* dest, LPCTSTR src, int srclen, int binmode)
 {
 	int i, k = 0;
 	TCHAR buf[50] = {0};
@@ -252,19 +252,19 @@ int Text2BinTranslator::iTranslateOneBytecode(TCHAR* dest, LPCTSTR src, int srcl
 		switch (src[1])
 		{
 		case 'b':
-			dest[0] = (TCHAR) value;
+			dest[0] = (BYTE) value;
 			break;
 
 		case 'w':
-			dest[0] = (TCHAR)(value & 0xff);
-			dest[1] = (TCHAR)((value & 0xff00) >> 8);
+			dest[0] = (BYTE)(value & 0xff);
+			dest[1] = (BYTE)((value & 0xff00) >> 8);
 			break;
 
 		case 'l':
-			dest[0] = (TCHAR)(value & 0xff);
-			dest[1] = (TCHAR)((value & 0xff00) >> 8);
-			dest[2] = (TCHAR)((value & 0xff0000) >> 16);
-			dest[3] = (TCHAR)((value & 0xff000000) >> 24);
+			dest[0] = (BYTE)(value & 0xff);
+			dest[1] = (BYTE)((value & 0xff00) >> 8);
+			dest[2] = (BYTE)((value & 0xff0000) >> 16);
+			dest[3] = (BYTE)((value & 0xff000000) >> 24);
 			break;
 
 		case 'f':
@@ -281,7 +281,7 @@ int Text2BinTranslator::iTranslateOneBytecode(TCHAR* dest, LPCTSTR src, int srcl
 		switch (src[1])
 		{
 		case 'b':
-			dest[0] = (TCHAR) value;
+			dest[0] = (BYTE) value;
 			break;
 
 		case 'w':
@@ -298,7 +298,7 @@ int Text2BinTranslator::iTranslateOneBytecode(TCHAR* dest, LPCTSTR src, int srcl
 
 		case 'f':
 			{
-				TCHAR* p = (TCHAR*) &fvalue;
+				BYTE* p = (BYTE*) &fvalue;
 				int i;
 				for (i = 0; i < 4; i++)
 				{
@@ -309,7 +309,7 @@ int Text2BinTranslator::iTranslateOneBytecode(TCHAR* dest, LPCTSTR src, int srcl
 
 		case 'd':
 			{
-				TCHAR* p = (TCHAR*) &dvalue;
+				BYTE* p = (BYTE*) &dvalue;
 				int i;
 				for (i = 0; i < 8; i++)
 				{
@@ -378,7 +378,7 @@ int Text2BinTranslator::iLengthOfTransToBin(LPCTSTR src, int srclen )
 
 //-------------------------------------------------------------------
 // dest must be set to right length before calling.
-int Text2BinTranslator::iCreateBcTranslation(TCHAR* dest, LPCTSTR src, int srclen, int charmode, int binmode)
+int Text2BinTranslator::iCreateBcTranslation(BYTE* dest, LPCTSTR src, int srclen, int charmode, int binmode)
 {
 	int i, di = 0, bclen;
 	for (i = 0; i < srclen; i++)
@@ -407,23 +407,25 @@ int Text2BinTranslator::iCreateBcTranslation(TCHAR* dest, LPCTSTR src, int srcle
 						i++;
 					}
 					else
-						dest[di++] = src[i]; // Unknown special char.
+						// Unicode truncated to byte char 
+						dest[di++] = (BYTE) src[i]; // Unknown special char.
 				}
 				else
-					dest[di++] = src[i]; // Not enough space for special char.
+					// Unicode truncated to byte char 
+					dest[di++] = (BYTE) src[i]; // Not enough space for special char.
 			}
 			else
 			{
-				// No special char.
-				switch (charmode)
-				{
-				case ANSI_SET:
-					dest[di++] = src[i];
-					break;
-				case OEM_SET:
-					CharToOemBuff(&src[i], &dest[di++], 1);
-					break;
-				}
+#ifdef UNICODE
+				di += WideCharToMultiByte( ((charmode ==  OEM_SET) ? CP_OEMCP : CP_ACP), 
+					0, src +i, 1, (LPSTR) dest + di, 3, NULL, NULL );
+#else
+				if ( charmode == OEM_SET )
+					CharToOem(&src[i], (LPSTR)&dest[di]);
+				else
+					dest[di] = (BYTE) src[i];
+				di++;
+#endif
 			}
 		}
 	}
@@ -433,7 +435,7 @@ int Text2BinTranslator::iCreateBcTranslation(TCHAR* dest, LPCTSTR src, int srcle
 //-------------------------------------------------------------------
 int Text2BinTranslator::bCompareBin(Text2BinTranslator& tr2, int charmode, int binmode)
 {
-	SimpleArray<TCHAR> sa1, sa2;
+	SimpleArray<BYTE> sa1, sa2;
 	GetTrans2Bin(sa1, charmode, binmode);
 	tr2.GetTrans2Bin(sa2, charmode, binmode);
 	return (sa1 == sa2);
@@ -446,7 +448,7 @@ int Text2BinTranslator::bCompareBin(Text2BinTranslator& tr2, int charmode, int b
  * @param [in] srclen Length of the source byte array.
  * @return Length of string including zero-byte.
  */
-int Text2BinTranslator::iTranslateBytesToBC(TCHAR* pd, const BYTE* src, int srclen)
+int Text2BinTranslator::iTranslateBytesToBC(LPTSTR pd, const BYTE* src, int srclen)
 {
 	int i, k = 0;
 	TCHAR buf[16] = {0};

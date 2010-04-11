@@ -40,9 +40,9 @@ String ReplaceDlg::strReplaceWithData;
 
 //-------------------------------------------------------------------
 // Translate the text in the string to binary data and store in the array.
-int ReplaceDlg::transl_text_to_binary(SimpleArray<TCHAR> &out)
+int ReplaceDlg::transl_text_to_binary(SimpleArray<BYTE> &out)
 {
-	TCHAR *pcOut;
+	BYTE *pcOut;
 	int destlen = create_bc_translation(&pcOut,
 		strReplaceWithData.c_str(), strReplaceWithData.length(),
 		iCharacterSet, iBinaryMode);
@@ -53,7 +53,7 @@ int ReplaceDlg::transl_text_to_binary(SimpleArray<TCHAR> &out)
 
 //-------------------------------------------------------------------
 // Create a text representation of an array of bytes and save it in
-// a String object.
+// a byte array object.
 void ReplaceDlg::transl_binary_to_text(const BYTE *src, int len)
 {
 	// How long will the text representation of array of bytes be?
@@ -65,7 +65,7 @@ void ReplaceDlg::transl_binary_to_text(const BYTE *src, int len)
 //-------------------------------------------------------------------
 bool ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 {
-	TCHAR *tofind;
+	BYTE *tofind;
 	// Create a translation from bytecode to char array of finddata.
 	const int destlen = create_bc_translation(&tofind, strToReplaceData.c_str(),
 		strToReplaceData.length(), iCharacterSet, iBinaryMode);
@@ -76,7 +76,7 @@ bool ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 	{
 		i += finddir * n;
 		// Find forward.
-		j = findutils_FindBytes((TCHAR *)&m_dataArray[i],
+		j = findutils_FindBytes((BYTE *)&m_dataArray[i],
 			m_dataArray.GetLength() - i - 1,
 			tofind,	destlen, 1, case_sensitive);
 		if (j != -1)
@@ -85,7 +85,7 @@ bool ReplaceDlg::find_and_select_data(int finddir, bool case_sensitive)
 	else
 	{
 		// Find backward.
-		j = findutils_FindBytes((TCHAR *)&m_dataArray[0],
+		j = findutils_FindBytes((BYTE *)&m_dataArray[0],
 			min(iCurByte + (destlen - 1), m_dataArray.GetLength()),
 			tofind, destlen, -1, case_sensitive);
 		if (j != -1)
@@ -142,14 +142,14 @@ bool ReplaceDlg::replace_selected_data(HWND hDlg)
 	else
 	{
 		// Input string contains special-syntax-coded binary data.
-		SimpleArray<TCHAR> out;
+		SimpleArray<BYTE> out;
 		if (!transl_text_to_binary(out))
 		{
 			LangString cannotConvert(IDS_REPL_CANNOT_CONVERT);
 			MessageBox(hDlg, cannotConvert, MB_ICONERROR);
 			return false;
 		}
-		if (!m_dataArray.Replace(i, n, (BYTE*)(TCHAR*)out, out.GetLength()))
+		if (!m_dataArray.Replace(i, n, out, out.GetLength()))
 		{
 			LangString failed(IDS_REPL_FAILED);
 			MessageBox(hDlg, failed, MB_ICONERROR);
