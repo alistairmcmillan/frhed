@@ -1,12 +1,18 @@
+@echo OFF
+echo Starting %0 ...
+REM Remove enclosing double quotes and trailing dir backslash.
+set ID=%~1
+set ID=%ID:~0,-1%
+set TD=%~2
+set TD=%TD:~0,-1%
+echo Temp dir: $(IntDir) = %ID%
+echo Target dir: $(TargetPath) = %TD%
 cd
-echo %0
-echo $(IntDir) = %1
-echo $(TargetPath) = %2
 cd ..\Translations\Frhed
-cscript CreateMasterPotFile.vbs
-cscript UpdatePoFilesFromPotFile.vbs
+cscript /NOLOGO CreateMasterPotFile.vbs
+cscript /NOLOGO UpdatePoFilesFromPotFile.vbs
 cd ..\..\FRHED
-rc /fo%1\lang.res /i.. ..\Translations\Frhed\heksedit.rc
-mkdir %2\..\Languages
-link /DLL /NOENTRY /MACHINE:IX86 /OUT:%2\..\Languages\heksedit.lng %1\lang.res
-copy ..\Translations\Frhed\*.po %2\..\Languages
+rc /NOLOGO "/fo%ID%\lang.res" /i.. ..\Translations\Frhed\heksedit.rc
+mkdir "%TD%\..\Languages"
+link /NOLOGO /DLL /NOENTRY /MACHINE:IX86 "/OUT:%TD%\..\Languages\heksedit.lng" "%ID%\lang.res"
+copy ..\Translations\Frhed\*.po "%TD%\..\Languages"
