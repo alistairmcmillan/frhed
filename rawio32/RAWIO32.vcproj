@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="RAWIO32"
+	ProjectGUID="{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}"
 	>
 	<Platforms>
 		<Platform

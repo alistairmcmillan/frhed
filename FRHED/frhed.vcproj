@@ -1,368 +1,461 @@
-<?xml version="1.0" ?>
-<VisualStudioProject Name="Frhed" ProjectType="Visual C++" Version="8.00">
-	
-	
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="Frhed"
+	ProjectGUID="{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}"
+	>
 	<Platforms>
-		
-		
-		<Platform Name="Win32"/>
-		
-	
+		<Platform
+			Name="Win32"
+		/>
 	</Platforms>
-	
-	
 	<ToolFiles>
-		
-	
 	</ToolFiles>
-	
-	
 	<Configurations>
-		
-		
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="1" InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops" IntermediateDirectory=".\..\BuildTmp\Frhed\Release" Name="Release|Win32" OutputDirectory=".\..\Build\Release" UseOfMFC="0">
-			
-			
-			<Tool Name="VCPreBuildEventTool"/>
-			
-			
-			<Tool Name="VCCustomBuildTool"/>
-			
-			
-			<Tool Name="VCXMLDataGeneratorTool"/>
-			
-			
-			<Tool Name="VCWebServiceProxyGeneratorTool"/>
-			
-			
-			<Tool HeaderFileName="" MkTypLibCompatible="true" Name="VCMIDLTool" PreprocessorDefinitions="NDEBUG" SuppressStartupBanner="true" TargetEnvironment="1" TypeLibraryName=".\..\Build\Release/frhed.tlb"/>
-			
-			
-			<Tool AssemblerListingLocation=".\..\BuildTmp\Frhed\Release/" BrowseInformation="1" Name="VCCLCompilerTool" ObjectFile=".\..\BuildTmp\Frhed\Release/" Optimization="0" PrecompiledHeaderFile=".\..\BuildTmp\Frhed\Release/frhed.pch" PrecompiledHeaderThrough="precomp.h" PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE" ProgramDataBaseFileName=".\..\BuildTmp\Frhed\Release/" RuntimeLibrary="2" SuppressStartupBanner="true" UsePrecompiledHeader="0" WarningLevel="3"/>
-			
-			
-			<Tool Name="VCManagedResourceCompilerTool"/>
-			
-			
-			<Tool Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG"/>
-			
-			
-			<Tool Name="VCPreLinkEventTool"/>
-			
-			
-			<Tool AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile=".\..\Build\Release/frhed.exe" ProgramDatabaseFile=".\..\Build\Release/frhed.pdb" SubSystem="2" SuppressStartupBanner="true" TargetMachine="1"/>
-			
-			
-			<Tool Name="VCALinkTool"/>
-			
-			
-			<Tool AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest" EmbedManifest="true" Name="VCManifestTool"/>
-			
-			
-			<Tool Name="VCXDCMakeTool"/>
-			
-			
-			<Tool Name="VCBscMakeTool"/>
-			
-			
-			<Tool Name="VCFxCopTool"/>
-			
-			
-			<Tool Name="VCAppVerifierTool"/>
-			
-			
-			<Tool Name="VCWebDeploymentTool"/>
-			
-			
-			<Tool Name="VCPostBuildEventTool"/>
-			
-		
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory=".\..\Build\Release"
+			IntermediateDirectory=".\..\BuildTmp\Frhed\Release"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\Build\Release/frhed.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderThrough="precomp.h"
+				PrecompiledHeaderFile=".\..\BuildTmp\Frhed\Release/frhed.pch"
+				AssemblerListingLocation=".\..\BuildTmp\Frhed\Release/"
+				ObjectFile=".\..\BuildTmp\Frhed\Release/"
+				ProgramDataBaseFileName=".\..\BuildTmp\Frhed\Release/"
+				BrowseInformation="1"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib"
+				OutputFile=".\..\Build\Release/frhed.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				ProgramDatabaseFile=".\..\Build\Release/frhed.pdb"
+				SubSystem="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+				AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest"
+				EmbedManifest="true"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
-		
-		
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="1" InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops" IntermediateDirectory=".\..\BuildTmp\Frhed\Debug" Name="Debug|Win32" OutputDirectory=".\..\Build\Debug" UseOfMFC="0">
-			
-			
-			<Tool Name="VCPreBuildEventTool"/>
-			
-			
-			<Tool Name="VCCustomBuildTool"/>
-			
-			
-			<Tool Name="VCXMLDataGeneratorTool"/>
-			
-			
-			<Tool Name="VCWebServiceProxyGeneratorTool"/>
-			
-			
-			<Tool HeaderFileName="" MkTypLibCompatible="true" Name="VCMIDLTool" PreprocessorDefinitions="_DEBUG" SuppressStartupBanner="true" TargetEnvironment="1" TypeLibraryName=".\..\Build\Debug/frhed.tlb"/>
-			
-			
-			<Tool AssemblerListingLocation=".\..\BuildTmp\Frhed\Debug/" BrowseInformation="1" DebugInformationFormat="1" Name="VCCLCompilerTool" ObjectFile=".\..\BuildTmp\Frhed\Debug/" Optimization="0" PrecompiledHeaderFile=".\..\BuildTmp\Frhed\Debug/frhed.pch" PrecompiledHeaderThrough="precomp.h" PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE" ProgramDataBaseFileName=".\..\BuildTmp\Frhed\Debug/" RuntimeLibrary="3" SuppressStartupBanner="true" UsePrecompiledHeader="0" WarningLevel="3"/>
-			
-			
-			<Tool Name="VCManagedResourceCompilerTool"/>
-			
-			
-			<Tool Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG"/>
-			
-			
-			<Tool Name="VCPreLinkEventTool"/>
-			
-			
-			<Tool AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib" GenerateDebugInformation="true" LinkIncremental="1" Name="VCLinkerTool" OutputFile=".\..\Build\Debug/frhed.exe" ProgramDatabaseFile=".\..\Build\Debug/frhed.pdb" SubSystem="2" SuppressStartupBanner="true" TargetMachine="1"/>
-			
-			
-			<Tool Name="VCALinkTool"/>
-			
-			
-			<Tool AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest" EmbedManifest="true" Name="VCManifestTool"/>
-			
-			
-			<Tool Name="VCXDCMakeTool"/>
-			
-			
-			<Tool Name="VCBscMakeTool"/>
-			
-			
-			<Tool Name="VCFxCopTool"/>
-			
-			
-			<Tool Name="VCAppVerifierTool"/>
-			
-			
-			<Tool Name="VCWebDeploymentTool"/>
-			
-			
-			<Tool Name="VCPostBuildEventTool"/>
-			
-		
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory=".\..\Build\Debug"
+			IntermediateDirectory=".\..\BuildTmp\Frhed\Debug"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\Build\Debug/frhed.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderThrough="precomp.h"
+				PrecompiledHeaderFile=".\..\BuildTmp\Frhed\Debug/frhed.pch"
+				AssemblerListingLocation=".\..\BuildTmp\Frhed\Debug/"
+				ObjectFile=".\..\BuildTmp\Frhed\Debug/"
+				ProgramDataBaseFileName=".\..\BuildTmp\Frhed\Debug/"
+				BrowseInformation="1"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib"
+				OutputFile=".\..\Build\Debug/frhed.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile=".\..\Build\Debug/frhed.pdb"
+				SubSystem="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+				AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest"
+				EmbedManifest="true"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
-		
-		
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" CharacterSet="1" ConfigurationType="1" InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops" IntermediateDirectory="$(ConfigurationName)" Name="UnicodeDebug|Win32" OutputDirectory="$(ConfigurationName)" UseOfMFC="0">
-			
-			
-			<Tool Name="VCPreBuildEventTool"/>
-			
-			
-			<Tool Name="VCCustomBuildTool"/>
-			
-			
-			<Tool Name="VCXMLDataGeneratorTool"/>
-			
-			
-			<Tool Name="VCWebServiceProxyGeneratorTool"/>
-			
-			
-			<Tool HeaderFileName="" MkTypLibCompatible="true" Name="VCMIDLTool" PreprocessorDefinitions="_DEBUG" SuppressStartupBanner="true" TargetEnvironment="1" TypeLibraryName=".\..\Build\Debug/frhed.tlb"/>
-			
-			
-			<Tool AssemblerListingLocation=".\..\BuildTmp\Frhed\UnicodeDebug/" BrowseInformation="1" DebugInformationFormat="1" Name="VCCLCompilerTool" ObjectFile=".\..\BuildTmp\Frhed\UnicodeDebug/" Optimization="0" PrecompiledHeaderFile=".\..\BuildTmp\Frhed\UnicodeDebug/frhed.pch" PrecompiledHeaderThrough="precomp.h" PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;UNICODE;_UNICODE;_CRT_SECURE_NO_DEPRECATE" ProgramDataBaseFileName=".\..\BuildTmp\Frhed\UnicodeDebug/" RuntimeLibrary="3" SuppressStartupBanner="true" UsePrecompiledHeader="0" WarningLevel="3"/>
-			
-			
-			<Tool Name="VCManagedResourceCompilerTool"/>
-			
-			
-			<Tool Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG"/>
-			
-			
-			<Tool Name="VCPreLinkEventTool"/>
-			
-			
-			<Tool AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib" EntryPointSymbol="wWinMainCRTStartup" GenerateDebugInformation="true" LinkIncremental="1" Name="VCLinkerTool" OutputFile=".\..\Build\UnicodeDebug/FrhedU.exe" ProgramDatabaseFile=".\..\Build\UnicodeDebug/frhed.pdb" SubSystem="2" SuppressStartupBanner="true" TargetMachine="1"/>
-			
-			
-			<Tool Name="VCALinkTool"/>
-			
-			
-			<Tool AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest" EmbedManifest="true" Name="VCManifestTool"/>
-			
-			
-			<Tool Name="VCXDCMakeTool"/>
-			
-			
-			<Tool Name="VCBscMakeTool"/>
-			
-			
-			<Tool Name="VCFxCopTool"/>
-			
-			
-			<Tool Name="VCAppVerifierTool"/>
-			
-			
-			<Tool Name="VCWebDeploymentTool"/>
-			
-			
-			<Tool Name="VCPostBuildEventTool"/>
-			
-		
+		<Configuration
+			Name="UnicodeDebug|Win32"
+			OutputDirectory=".\..\Build\UnicodeDebug"
+			IntermediateDirectory=".\..\BuildTmp\frhed\UnicodeDebug"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\Build\Debug/frhed.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;UNICODE;_UNICODE;_CRT_SECURE_NO_DEPRECATE"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderThrough="precomp.h"
+				PrecompiledHeaderFile="$(IntDir)\frhed.pch"
+				AssemblerListingLocation="$(IntDir)"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="$(IntDir)"
+				BrowseInformation="1"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib"
+				OutputFile="$(OutDir)\FrhedU.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="$(IntDir)\frhed.pdb"
+				SubSystem="2"
+				EntryPointSymbol="wWinMainCRTStartup"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+				AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest"
+				EmbedManifest="true"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
-		
-		
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="1" InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops" IntermediateDirectory="$(ConfigurationName)" Name="UnicodeRelease|Win32" OutputDirectory="$(ConfigurationName)" UseOfMFC="0">
-			
-			
-			<Tool Name="VCPreBuildEventTool"/>
-			
-			
-			<Tool Name="VCCustomBuildTool"/>
-			
-			
-			<Tool Name="VCXMLDataGeneratorTool"/>
-			
-			
-			<Tool Name="VCWebServiceProxyGeneratorTool"/>
-			
-			
-			<Tool HeaderFileName="" MkTypLibCompatible="true" Name="VCMIDLTool" PreprocessorDefinitions="NDEBUG" SuppressStartupBanner="true" TargetEnvironment="1" TypeLibraryName=".\..\Build\Release/frhed.tlb"/>
-			
-			
-			<Tool AssemblerListingLocation=".\..\BuildTmp\Frhed\Release/" BrowseInformation="1" Name="VCCLCompilerTool" ObjectFile=".\..\BuildTmp\Frhed\Release/" Optimization="0" PrecompiledHeaderFile=".\..\BuildTmp\Frhed\Release/frhed.pch" PrecompiledHeaderThrough="precomp.h" PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE" ProgramDataBaseFileName=".\..\BuildTmp\Frhed\Release/" RuntimeLibrary="2" SuppressStartupBanner="true" UsePrecompiledHeader="0" WarningLevel="3"/>
-			
-			
-			<Tool Name="VCManagedResourceCompilerTool"/>
-			
-			
-			<Tool Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG"/>
-			
-			
-			<Tool Name="VCPreLinkEventTool"/>
-			
-			
-			<Tool AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib" EntryPointSymbol="wWinMainCRTStartup" LinkIncremental="1" Name="VCLinkerTool" OutputFile=".\..\Build\Release/frhed.exe" ProgramDatabaseFile=".\..\Build\Release/frhed.pdb" SubSystem="2" SuppressStartupBanner="true" TargetMachine="1"/>
-			
-			
-			<Tool Name="VCALinkTool"/>
-			
-			
-			<Tool AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest" EmbedManifest="true" Name="VCManifestTool"/>
-			
-			
-			<Tool Name="VCXDCMakeTool"/>
-			
-			
-			<Tool Name="VCBscMakeTool"/>
-			
-			
-			<Tool Name="VCFxCopTool"/>
-			
-			
-			<Tool Name="VCAppVerifierTool"/>
-			
-			
-			<Tool Name="VCWebDeploymentTool"/>
-			
-			
-			<Tool Name="VCPostBuildEventTool"/>
-			
-		
+		<Configuration
+			Name="UnicodeRelease|Win32"
+			OutputDirectory=".\..\Build\UnicodeRelease"
+			IntermediateDirectory=".\..\BuildTmp\frhed\UnicodeRelease"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\Build\Release/frhed.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderThrough="precomp.h"
+				PrecompiledHeaderFile="$(IntDir)\frhed.pch"
+				AssemblerListingLocation="$(IntDir)"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="$(IntDir)"
+				BrowseInformation="1"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib"
+				OutputFile="$(OutDir)\frhed.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				ProgramDatabaseFile="$(IntDir)\frhed.pdb"
+				SubSystem="2"
+				EntryPointSymbol="wWinMainCRTStartup"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+				AdditionalManifestFiles="$(InputDir)\res\$(TargetFileName).manifest"
+				EmbedManifest="true"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
-		
-	
 	</Configurations>
-	
-	
 	<References>
-		
-	
 	</References>
-	
-	
 	<Files>
-		
-		
-		<Filter Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat" Name="Source Files">
-			
-			
-			<File RelativePath="main.cpp">
-				
-			
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+			>
+			<File
+				RelativePath="main.cpp"
+				>
 			</File>
-			
-			
-			<File RelativePath="precomp.cpp">
-				
-			
+			<File
+				RelativePath="precomp.cpp"
+				>
 			</File>
-			
-			
-			<File RelativePath="toolbar.cpp">
-				
-			
+			<File
+				RelativePath="toolbar.cpp"
+				>
 			</File>
-			
-		
 		</Filter>
-		
-		
-		<Filter Filter="h;hpp;hxx;hm;inl" Name="Header Files">
-			
-			
-			<File RelativePath="heksedit.h">
-				
-			
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl"
+			>
+			<File
+				RelativePath="heksedit.h"
+				>
 			</File>
-			
-			
-			<File RelativePath="hexwnd.h">
-				
-			
+			<File
+				RelativePath="hexwnd.h"
+				>
 			</File>
-			
-			
-			<File RelativePath="precomp.h">
-				
-			
+			<File
+				RelativePath="precomp.h"
+				>
 			</File>
-			
-			
-			<File RelativePath="toolbar.h">
-				
-			
+			<File
+				RelativePath="toolbar.h"
+				>
 			</File>
-			
-			
-			<File RelativePath="version.h">
-				
-			
+			<File
+				RelativePath="version.h"
+				>
 			</File>
-			
-		
 		</Filter>
-		
-		
-		<Filter Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe" Name="Resource Files">
-			
-			
-			<File RelativePath="res\Frhed.ico">
-				
-			
+		<Filter
+			Name="Resource Files"
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+			>
+			<File
+				RelativePath="res\Frhed.ico"
+				>
 			</File>
-			
-			
-			<File RelativePath="frhed.rc">
-				
-			
+			<File
+				RelativePath="frhed.rc"
+				>
 			</File>
-			
-			
-			<File RelativePath="resource.h">
-				
-			
+			<File
+				RelativePath="resource.h"
+				>
 			</File>
-			
-		
 		</Filter>
-		
-	
 	</Files>
-	
-	
 	<Globals>
-		
-	
 	</Globals>
-	
-
 </VisualStudioProject>
