@@ -901,7 +901,7 @@ void HexEditorWindow::keydown(int key)
 
 //--------------------------------------------------------------------------------------------
 // Handler for character keys.
-void HexEditorWindow::character(char ch)
+void HexEditorWindow::character(WCHAR ch)
 {
 	if (bSelecting)
 		return;
@@ -910,7 +910,6 @@ void HexEditorWindow::character(char ch)
 	if (ch == VK_ESCAPE)
 		return;
 
-	char c = (char)tolower(ch);
 	// TAB switches between binary and text panes.
 	if (ch == '\t')
 	{
@@ -927,13 +926,16 @@ void HexEditorWindow::character(char ch)
 	if (bReadOnly)
 		return;
 
+	BYTE c;
 	// If in bytes and char is not a hex digit, return.
 	if (iEnteringMode == BYTES)
 	{
-		if (c >= 'a' && c <= 'f')
-			c -= 'a' - '\n';
-		else if (c >= '0' && c <= '9')
-			c -= '0';
+		if (ch >= L'0' && ch <= L'9')
+			c = ch - L'0';
+		else if (ch >= L'a' && ch <= L'f')
+			c = ch - L'a' + 10;
+		else if (ch >= L'A' && ch <= L'F')
+			c = ch - L'A' + 10;
 		else return;
 	}
 	// If there is selection replace.
@@ -976,15 +978,17 @@ void HexEditorWindow::character(char ch)
 	}
 	else // Char-mode.
 	{
-		switch (iCharacterSet)
+		char mbs[3];
+		if (WideCharToMultiByte(CP_ACP, 0, &ch, 1, mbs, 3, NULL, NULL) == 2) // is DBCS input?
 		{
-		case ANSI_FIXED_FONT:
-			m_dataArray[iCurByte] = ch;
-			break;
-		case OEM_FIXED_FONT:
-			CharToOemBuff(&ch, (char *)&m_dataArray[iCurByte], 1);
-			break;
+			m_dataArray[iCurByte] = mbs[0]; ++iCurByte;
+			m_dataArray[iCurByte] = mbs[1];
 		}
+		else if (iCharacterSet == OEM_FIXED_FONT) 
+			CharToOemW(&ch, (char *)&m_dataArray[iCurByte]);
+		else 
+			// widechar truncated to byte char.
+			m_dataArray[iCurByte] = LOBYTE(ch);
 		++iCurByte;
 	}
 	iFileChanged = TRUE;
@@ -4862,7 +4866,7 @@ int HexEditorWindow::OnWndMsg(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam
 		break;
 
 	case WM_CHAR:
-		character((char)wParam);
+		character(wParam);
 		break;
 
 	case WM_VSCROLL:

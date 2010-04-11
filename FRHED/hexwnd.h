@@ -261,7 +261,7 @@ public:
 	int lbuttondown(int nFlags, int xPos, int yPos);
 	void snap_caret();
 	void keydown(int key);
-	void character(char ch);
+	void character(WCHAR ch);
 	void scroll_window(int dx, int dy);
 	void vscroll(int cmd);
 	void hscroll(int cmd);

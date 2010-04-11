@@ -32,7 +32,7 @@
 C_ASSERT(sizeof(FillWithDialog) == sizeof(HexEditorWindow)); // disallow instance members
 
 TCHAR FillWithDialog::pcFWText[FW_MAX];//hex representation of bytes to fill with
-TCHAR FillWithDialog::buf[FW_MAX];//bytes to fill with
+BYTE FillWithDialog::buf[FW_MAX];//bytes to fill with
 int FillWithDialog::buflen;//number of bytes to fill with
 TCHAR FillWithDialog::szFWFileName[_MAX_PATH];//fill with file name
 int FillWithDialog::FWFile;//fill with file

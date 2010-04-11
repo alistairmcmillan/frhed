@@ -109,7 +109,7 @@ private:
 	static const int FW_MAX = 1024; /**< Max bytes to fill with. */
 
 	static TCHAR pcFWText[FW_MAX];//hex representation of bytes to fill with
-	static TCHAR buf[FW_MAX];//bytes to fill with
+	static BYTE buf[FW_MAX];//bytes to fill with
 	static int buflen;//number of bytes to fill with
 	static TCHAR szFWFileName[_MAX_PATH];//fill with file name
 	static int FWFile, FWFilelen;//fill with file and len
