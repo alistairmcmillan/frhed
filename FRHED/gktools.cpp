@@ -13,7 +13,7 @@
 
 static PList PartitionInfoList;
 
-BOOL WINAPI GetDllExportNames(LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize)
+BOOL WINAPI GetDllExportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize)
 {
 	struct IMAGEHLP *IMAGEHLP = ::IMAGEHLP;
 	if (IMAGEHLP == 0)
@@ -54,7 +54,7 @@ BOOL WINAPI GetDllExportNames(LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpul
 	return bDone;
 }
 
-BOOL WINAPI GetDllImportNames(LPCSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize)
+BOOL WINAPI GetDllImportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize)
 {
 	struct IMAGEHLP *IMAGEHLP = ::IMAGEHLP;
 	if (IMAGEHLP == 0)
