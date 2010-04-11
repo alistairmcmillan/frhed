@@ -2178,11 +2178,10 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	print_text(hdc, z - m, y, linbuf, m);
 	// Last line reached? Then only write rest of bytes.
 	// startpos+iBytesPerLine-1 = Last byte in current line.
-	int endpos = startpos + iBytesPerLine - 1;
+	UINT64 endpos = startpos + iBytesPerLine - 1;
 
-	int i;
 	// Write bytes.
-	for (i = startpos ; i <= endpos ; i++)
+	for (UINT64 i = startpos ; i <= endpos ; i++)
 	{
 		TBYTE u = ' ';
 		if (i < length)
@@ -2236,7 +2235,7 @@ void HexEditorWindow::print_line(HDC hdc, int line, HBRUSH hbr)
 	// Separators.
 	r.top = (line - iVscrollPos) * cyChar;
 	r.bottom = r.top + cyChar;
-	for (i = 0 ; i <= iBytesPerLine ; i += 4)
+	for (int i = 0 ; i <= iBytesPerLine ; i += 4)
 	{
 		r.left = r.right = (iMaxOffsetLen + iByteSpace - iHscrollPos + i * 3) * cxChar - cxChar / 2;
 		Polyline(hdc, (LPPOINT)&r, 2);
@@ -2262,7 +2261,7 @@ void HexEditorWindow::PrintBookmarkIndicators(HDC hdc, HBRUSH hbr, UINT64 startp
 	// Print bookmark indicators.
 	// Are there bookmarks in this line?
 	int length = get_length();
-	int el = startpos + iBytesPerLine - 1;
+	UINT64 el = startpos + iBytesPerLine - 1;
 	int chpos;
 	// Brush for bookmark borders.
 	for (int i = 0; i < iBmkCount; i++)
