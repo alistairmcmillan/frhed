@@ -54,6 +54,7 @@ public:
 	bool SetSize(int nNewSize, int nGrowBy = 0);
 	void SetGrowBy(int nGrowBy);
 	T& operator[](int nIndex) {return m_pT[nIndex];}
+	T& operator[](unsigned nIndex) {return m_pT[nIndex];}
 	SimpleArray<T>& operator=(SimpleArray<T>& spa);
 	void ClearAll();
 	bool blContainsRef(const T& argT);
