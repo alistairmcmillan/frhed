@@ -678,7 +678,7 @@ msgstr ""
 
 #: heksedit.rc:396
 #, c-format
-msgid "(c) Raihan Kibria 2000-2009"
+msgid "(c) Raihan Kibria 2000-2010"
 msgstr ""
 
 #: heksedit.rc:397

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?group_id=13216&atid=113216\n"
-"POT-Creation-Date: 2009-10-25 13:06+0000\n"
+"POT-Creation-Date: 2010-04-18 23:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: English <frhed-devel@lists.sourceforge.net>\n"
@@ -675,7 +675,7 @@ msgstr ""
 
 #: heksedit.rc:396
 #, c-format
-msgid "(c) Raihan Kibria 2000-2009"
+msgid "(c) Raihan Kibria 2000-2010"
 msgstr ""
 
 #: heksedit.rc:397

@@ -678,8 +678,8 @@ msgstr "Frhed - éditeur hex libre"
 
 #: heksedit.rc:396
 #, c-format
-msgid "(c) Raihan Kibria 2000-2009"
-msgstr "(c) Raihan Kibria 2000-2009"
+msgid "(c) Raihan Kibria 2000-2010"
+msgstr ""
 
 #: heksedit.rc:397
 #, c-format
