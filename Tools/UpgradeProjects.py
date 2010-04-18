@@ -56,6 +56,10 @@ def upgrade_projects(root_path):
     vs_binary = os.path.join(tools.vs_path, 'Common7/IDE')
     vs_binary = os.path.join(vs_binary, 'devenv.com')
     
+    if not os.path.exists(vs_binary):
+        print 'ERROR: Cannot find executable: ' + vs_binary
+        return
+    
     for solution in solutions:
         sol_file = os.path.join(root_path, solution)
         print 'Upgrading VS solution file: ' + sol_file
