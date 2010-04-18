@@ -31,6 +31,7 @@ import sys
 scriptversion = 0.1
 
 def cleanupfolder(folder):
+    print 'Removing backup files from ' + folder + ' ...'
     reportfolder = os.path.join(folder, r'_UpgradeReport_Files')
     if os.path.exists(reportfolder):
         shutil.rmtree(reportfolder)
@@ -83,7 +84,6 @@ def main(argv):
         print 'ERROR: Cannot find path: ' + rootfolder
         sys.exit()
 
-    print 'Removing backups from folder: ' + rootfolder
     cleanupfolder(rootfolder)
 
 # MAIN #
