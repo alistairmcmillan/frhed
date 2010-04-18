@@ -35,6 +35,12 @@
 static const TCHAR szMainClass[] = _T("frhed wndclass");
 static const TCHAR szHexClass[] = _T("heksedit");
 
+#ifdef UNICODE
+static const TCHAR szHexBinary[] = _T("hekseditU.dll");
+#else
+static const TCHAR szHexBinary[] = _T("heksedit.dll");
+#endif
+
 HINSTANCE hMainInstance;
 
 LRESULT CALLBACK MainWndProc(HWND, UINT, WPARAM, LPARAM);
@@ -66,12 +72,11 @@ int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *, int)
 	LPWSTR szCmdLine = GetCommandLineW();
 
 	// Load the heksedit component.
-	static const TCHAR pe_heksedit[] = _T("heksedit.dll");
-	hMainInstance = LoadLibrary(pe_heksedit);
+	hMainInstance = LoadLibrary(szHexBinary);
 	if (hMainInstance == NULL)
 	{
 		TCHAR complain[100];
-		wsprintf(complain, _T("Unable to load the %s"), pe_heksedit);
+		wsprintf(complain, _T("Unable to load the %s"), szHexBinary);
 		MessageBox(NULL, complain, NULL, MB_ICONSTOP);
 		return 3;
 	}
