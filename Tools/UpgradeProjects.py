@@ -39,7 +39,7 @@ import fix_manifest
 import ToolSettings
 
 # The version of the script
-script_version = 0.4
+script_version = 0.5
 
 # global settings class instance
 tools = ToolSettings.ToolSettings()
@@ -115,7 +115,8 @@ def main(argv):
 
     print 'Upgrading VS solution- and project-file in folder: ' + root_path
     upgrade_projects(root_path)
-    fix_proj_manifests(root_path)
+    if tools.vs_version == 2005 or tools.vs_version == 2008:
+        fix_proj_manifests(root_path)
 
 # MAIN #
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 #
 # The MIT License
-# Copyright (c) 2007-2009 Kimmo Varis
+# Copyright (c) 2007-2010 Kimmo Varis
 # Copyright (c) 2008 Matthias Mayer
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -39,6 +39,7 @@ class ToolSettings:
         self.vs_path7 = r'C:\Program Files\Microsoft Visual Studio .NET 2003'
         self.vs_path8 = r'C:\Program Files\Microsoft Visual Studio 8'
         self.vs_path9 = r'C:\Program Files\Microsoft Visual Studio 9.0'
+        self.vs_path10 = r'C:\Program Files\Microsoft Visual Studio 10.0'
         self.innosetup_path = r'C:\Program Files\Inno Setup 5'
         self.nsis_path = r'C:\Program Files\NSIS'
         # Checkout sources from local workspace or from SVN server (give URL)
@@ -66,6 +67,8 @@ class ToolSettings:
             config.set(sect, 'vs_path8', self.vs_path8)
         if not config.has_option(sect, 'vs_path9'):
             config.set(sect, 'vs_path9', self.vs_path9)
+        if not config.has_option(sect, 'vs_path10'):
+            config.set(sect, 'vs_path10', self.vs_path10)
         if not config.has_option(sect, 'innosetup_path'):
             config.set(sect, 'innosetup_path', self.innosetup_path)
         if not config.has_option(sect, 'nsis_path'):
@@ -91,6 +94,7 @@ class ToolSettings:
         self.vs_path7 = config.get('RUNTIME', 'vs_path7')
         self.vs_path8 = config.get('RUNTIME', 'vs_path8')
         self.vs_path9 = config.get('RUNTIME', 'vs_path9')
+        self.vs_path10 = config.get('RUNTIME', 'vs_path10')
         self.innosetup_path = config.get('RUNTIME', 'innosetup_path')
         self.nsis_path = config.get('RUNTIME', 'nsis_path')
         self.source = config.get('RUNTIME', 'Source') 
@@ -102,3 +106,5 @@ class ToolSettings:
             self.vs_path = self.vs_path8
         elif self.vs_version == 2008:
             self.vs_path = self.vs_path9
+        elif self.vs_version == 2010:
+            self.vs_path = self.vs_path10
