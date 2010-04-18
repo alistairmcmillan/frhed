@@ -2,9 +2,9 @@
 echo Starting %0 ...
 REM Remove enclosing double quotes and trailing dir backslash.
 set ID=%~1
-set ID=%ID:~0,-1%
+set ID=%ID:~0,-0%
 set TD=%~2
-set TD=%TD:~0,-1%
+set TD=%TD:~0,-0%
 echo Temp dir: $(IntDir) = %ID%
 echo Target dir: $(TargetPath) = %TD%
 cd
