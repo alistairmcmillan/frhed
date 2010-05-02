@@ -128,12 +128,12 @@ msgstr "Gehe zu &erstem Sektor"
 #: heksedit.rc:75
 #, c-format
 msgid "Goto &Next Sector\tCtrl+Shift+PgDn"
-msgstr "Gehe zu &nächstem Sektor\Strg+Umschalt+Bild runter"
+msgstr "Gehe zu &nächstem Sektor\tStrg+Umschalt+Bild runter"
 
 #: heksedit.rc:76
 #, c-format
 msgid "Goto &Previous Sector\tCtrl+Shift+PgUp"
-msgstr "Gehe zu &vorherigem Sektor\Strg+Umschalt+Bild hoch"
+msgstr "Gehe zu &vorherigem Sektor\tStrg+Umschalt+Bild hoch"
 
 #: heksedit.rc:78
 #: heksedit.rc:220
