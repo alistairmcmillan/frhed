@@ -2112,7 +2112,7 @@ void HexEditorWindow::mark_char(HDC hdc)
 void HexEditorWindow::print_text(HDC hdc, int x, int y, TCHAR *pch, int cch)
 {
 	const RECT rc = { x * cxChar, y * cyChar,
-			rc.left + cch * cxChar, rc.top + cyChar + LineAdditionalSpace };
+			rc.left + cch * cxChar, rc.top + cyChar };
 	ExtTextOut(hdc, rc.left, rc.top + LineSpaceAbove, ETO_OPAQUE, &rc, pch, cch, 0);
 }
 
