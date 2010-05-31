@@ -124,7 +124,7 @@ STDAPI PathsEqual(LPCTSTR p0, LPCTSTR p1)
 	HRESULT hr;
 	if (SUCCEEDED(hr = SHGetDesktopFolder(&pFolder)))
 	{
-		LPITEMIDLIST pidl[2];
+		LPITEMIDLIST pidl[2] = { NULL, NULL };
 		ULONG chEaten;//only needed by parse dispname
 		// Convert the paths to ITEMIDLISTs.
 		if (SUCCEEDED(hr = pFolder->ParseDisplayName(NULL, NULL,
