@@ -25,17 +25,17 @@
 
 #include "Simparr.h"
 
-class LangArray : public SimpleArray<LPTSTR>
+class LangArray : public SimpleArray<char *>
 {
 public:
 	static const LANGID DefLangId;
 	struct StringData
 	{
 		int refcount;
-		TCHAR data[1];
-		static StringData *Create(LPCTSTR, size_t);
-		LPTSTR Share();
-		static void Unshare(LPTSTR);
+		char data[1];
+		static StringData *Create(const char *, size_t);
+		char *Share();
+		static void Unshare(char *);
 	};
 	HMODULE m_hLangDll;
 	unsigned m_codepage;

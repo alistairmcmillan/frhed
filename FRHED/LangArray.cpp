@@ -27,6 +27,7 @@
 #include "Simparr.h"
 #include "LangArray.h"
 #include "VersionData.h"
+#include <xstring>
 
 static const UINT ModifyableMenuFlags = MF_POPUP | MF_BITMAP | MF_DISABLED | MF_GRAYED | MF_MENUBARBREAK | MF_MENUBREAK;
 
@@ -40,31 +41,31 @@ const LANGID LangArray::DefLangId = MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US)
  * @note Function returns pointer to original string,
  *  it does not allocate a new string.
  */
-static TCHAR *EatPrefix(LPTSTR text, LPCTSTR prefix)
+static char *EatPrefix(char *text, const char *prefix)
 {
-	if (int len = _tcslen(prefix))
-		if (_tcsncicmp(text, prefix, len) == 0)
+	if (int len = strlen(prefix))
+		if (_memicmp(text, prefix, len) == 0)
 			return text + len;
 	return 0;
 }
 
-LangArray::StringData *LangArray::StringData::Create(LPCTSTR ps, size_t length)
+LangArray::StringData *LangArray::StringData::Create(const char *ps, size_t length)
 {
-	size_t cb = FIELD_OFFSET(StringData, data) + (length + 1) *sizeof(TCHAR);
-	StringData *psd = reinterpret_cast<StringData *>(new BYTE[cb]);
+	size_t cb = FIELD_OFFSET(StringData, data) + length + 1;
+	StringData *psd = reinterpret_cast<StringData *>(new char[cb]);
 	psd->refcount = 0;
-	_tcsncpy(psd->data, ps, length);
+	memcpy(psd->data, ps, length);
 	psd->data[length] = '\0';
 	return psd;
 }
 
-LPTSTR LangArray::StringData::Share()
+char *LangArray::StringData::Share()
 {
 	++refcount;
 	return data;
 }
 
-void LangArray::StringData::Unshare(LPTSTR  data)
+void LangArray::StringData::Unshare(char *data)
 {
 	data -= FIELD_OFFSET(StringData, data);
 	if (--reinterpret_cast<StringData *>(data)->refcount == 0)
@@ -92,9 +93,9 @@ void LangArray::ExpandToSize()
 void LangArray::ClearAll()
 {
 	while (m_nSize)
-		if (TCHAR *data = m_pT[--m_nSize])
+		if (char *data = m_pT[--m_nSize])
 			StringData::Unshare(data);
-	SimpleArray<LPTSTR>::ClearAll();
+	SimpleArray<char *>::ClearAll();
 }
 
 /**
@@ -102,13 +103,14 @@ void LangArray::ClearAll()
  * @param [in] codepage Codepage to use in conversion.
  * @param [in,out] s String to convert.
  */
-static void unslash(unsigned codepage, LPTSTR p)
+static void unslash(unsigned codepage, std::string &s)
 {
-	TCHAR *q = p;
-	TCHAR c;
+	char *p = &*s.begin();
+	char *q = p;
+	char c;
 	do
 	{
-		TCHAR *r = q + 1;
+		char *r = q + 1;
 		switch (c = *q)
 		{
 		case '\\':
@@ -136,10 +138,10 @@ static void unslash(unsigned codepage, LPTSTR p)
 				c = '\v';
 				break;
 			case 'x':
-				*p = (TCHAR)_tcstol(r, &q, 16);
+				*p = (char)strtol(r, &q, 16);
 				break;
 			default:
-				*p = (TCHAR)_tcstol(r - 1, &q, 8);
+				*p = (char)strtol(r - 1, &q, 8);
 				break;
 			}
 			if (q >= r)
@@ -147,14 +149,13 @@ static void unslash(unsigned codepage, LPTSTR p)
 			// fall through
 		default:
 			*p = c;
-#ifndef UNICODE
-			if ((*p & 0x80) && IsDBCSLeadByteEx(codepage, (BYTE) *p))
+			if ((*p & 0x80) && IsDBCSLeadByteEx(codepage, *p))
 				*++p = *r++;
-#endif
 			q = r;
 		}
 		++p;
 	} while (c != '\0');
+	s.resize(p - 1 - &*s.begin());
 }
 
 BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid, LPCTSTR langdir)
@@ -163,9 +164,9 @@ BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid, LPCTSTR langdir)
 		return TRUE;
 	m_langid = langid;
 	ClearAll();
-	TCHAR buf[1024];
-	SimpleString *ps = 0;
-	SimpleString msgid;
+	char buf[1024];
+	std::string *ps = 0;
+	std::string msgid;
 	SimpleArray<int> lines;
 	int unresolved = 0;
 	int mismatched = 0;
@@ -195,53 +196,47 @@ BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid, LPCTSTR langdir)
 		if (potfile == 0)
 			return FALSE;
 		size_t size = SizeofResource(m_hLangDll, potfile);
-		char *resdata = (char *) LoadResource(m_hLangDll, potfile);
-#ifdef UNICODE
-		WCHAR *data = new WCHAR [size +1], *newbuf = data; 
-		MultiByteToWideChar(CP_ACP, 0, resdata, size, data, size +1 );
-#else
-		char *data = resdata;
-#endif
-		while (TCHAR *eol = _tcschr(data, _T('\n') /*, size */))
+		const char *data = (const char *)LoadResource(m_hLangDll, potfile);
+		while (const char *eol = (const char *)memchr(data, '\n', size))
 		{
 			size_t len = eol - data;
-			if (len >= ((sizeof buf )/(sizeof TCHAR)))
+			if (len >= sizeof buf)
 			{
 				assert(FALSE);
 				break;
 			}
-			memcpy(buf, data, len * (sizeof TCHAR));
+			memcpy(buf, data, len);
 			buf[len++] = '\0';
 			data += len;
 			size -= len;
-			if (TCHAR *p = EatPrefix(buf, _T("#:")))
+			if (char *p = EatPrefix(buf, "#:"))
 			{
-				if (TCHAR *q = _tcschr(p, _T(':')))
+				if (char *q = strchr(p, ':'))
 				{
-					int line = _tcstol(q + 1, &q, 10);
+					int line = strtol(q + 1, &q, 10);
 					lines.Append(line);
 					++unresolved;
 				}
 			}
-			else if (EatPrefix(buf, _T("msgid ")))
+			else if (EatPrefix(buf, "msgid "))
 			{
 				ps = &msgid;
 			}
 			if (ps)
 			{
-				TCHAR *p = _tcschr(buf, '"');
-				TCHAR *q = _tcsrchr(buf, '"');
+				char *p = strchr(buf, '"');
+				char *q = strrchr(buf, '"');
 				if (q > p)
 				{
 					*q = '\0';
-					ps->AppendString(p + 1);
+					ps->append(p + 1);
 				}
 				else
 				{
 					ps = 0;
 					if (int i = lines.GetLength())
 					{
-						StringData *psd = StringData::Create(msgid, msgid.StrLen());
+						StringData *psd = StringData::Create(msgid.c_str(), msgid.length());
 						do
 						{
 							int line = lines[--i];
@@ -254,7 +249,7 @@ BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid, LPCTSTR langdir)
 						} while (i);
 					}
 					lines.ClearAll();
-					msgid.Clear();
+					msgid.clear();
 				}
 			}
 		}
@@ -284,10 +279,6 @@ BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid, LPCTSTR langdir)
 				break;
 			langid = MAKELANGID(PRIMARYLANGID(langid), SUBLANG_DEFAULT);
 		} while (f == 0);
-
-#ifdef UNICODE
-		delete [] newbuf;
-#endif
 	}
 	if (f == 0)
 	{
@@ -297,60 +288,60 @@ BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid, LPCTSTR langdir)
 		return FALSE;
 	}
 	ps = 0;
-	msgid.ClearAll();
+	msgid.clear();
 	lines.ClearAll();
-	SimpleString msgstr;
-	SimpleString format;
-	SimpleString directive;
-	while (_fgetts(buf, sizeof buf /sizeof TCHAR, f))
+	std::string msgstr;
+	std::string format;
+	std::string directive;
+	while (fgets(buf, sizeof buf, f))
 	{
-		if (TCHAR *p = EatPrefix(buf, _T("#:")))
+		if (char *p = EatPrefix(buf, "#:"))
 		{
-			if (TCHAR *q = _tcschr(p, ':'))
+			if (char *q = strchr(p, ':'))
 			{
-				int line = _tcstol(q + 1, &q, 10);
+				int line = strtol(q + 1, &q, 10);
 				if (line == 367)
 					line = line;
 				lines.Append(line);
 				--unresolved;
 			}
 		}
-		else if (TCHAR *p = EatPrefix(buf, _T("#,")))
+		else if (char *p = EatPrefix(buf, "#,"))
 		{
-			StrTrim(p, _T(" \t\r\n"));
+			StrTrimA(p, " \t\r\n");
 			format = p;
 		}
-		else if (TCHAR *p = EatPrefix(buf, _T("#.")))
+		else if (char *p = EatPrefix(buf, "#."))
 		{
-			StrTrim(p, _T(" \t\r\n"));
+			StrTrimA(p, " \t\r\n");
 			directive = p;
 		}
-		else if (EatPrefix(buf, _T("msgid ")))
+		else if (EatPrefix(buf, "msgid "))
 		{
 			ps = &msgid;
 		}
-		else if (EatPrefix(buf, _T("msgstr ")))
+		else if (EatPrefix(buf, "msgstr "))
 		{
 			ps = &msgstr;
 		}
 		if (ps)
 		{
-			TCHAR *p = _tcschr(buf, _T('"'));
-			TCHAR *q = _tcsrchr(buf, _T('"'));
+			char *p = strchr(buf, '"');
+			char *q = strrchr(buf, '"');
 			if (q > p)
 			{
 				*q = '\0';
-				ps->AppendString(p + 1);
+				ps->append(p + 1);
 			}
 			else
 			{
 				ps = 0;
-				if (msgstr.IsEmpty())
+				if (msgstr.empty())
 					msgstr = msgid;
 				unslash(m_codepage, msgstr);
 				if (int i = lines.GetLength())
 				{
-					StringData *psd = StringData::Create(msgstr, msgstr.StrLen());
+					StringData *psd = StringData::Create(msgstr.c_str(), msgstr.length());
 					do
 					{
 						int line = lines[--i];
@@ -359,8 +350,8 @@ BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid, LPCTSTR langdir)
 							SetSize(line + 1);
 							ExpandToSize();
 						}
-						LPTSTR data = GetAt(line);
-						if (data && _tcscmp(data, msgid) == 0)
+						char *data = GetAt(line);
+						if (data && strcmp(data, msgid.c_str()) == 0)
 						{
 							StringData::Unshare(data);
 							SetAt(line, psd->Share());
@@ -372,13 +363,13 @@ BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid, LPCTSTR langdir)
 					} while (i);
 				}
 				lines.ClearAll();
-				if (_tcsicmp(directive, _T("Codepage")) == 0)
+				if (strcmp(directive.c_str(), "Codepage") == 0)
 				{
-					m_codepage = _tcstol(msgstr, &p, 10);
-					directive.Clear();
+					m_codepage = strtol(msgstr.c_str(), &p, 10);
+					directive.clear();
 				}
-				msgid.Clear();
-				msgstr.Clear();
+				msgid.clear();
+				msgstr.clear();
 			}
 		}
 	}
@@ -400,11 +391,13 @@ PTSTR LangArray::TranslateString(int line)
 	BSTR ws = 0;
 	if (line > 0 && line < GetLength())
 	{
-		if (TCHAR *s = GetAt(line))
+		if (char *s = GetAt(line))
 		{
-			if (int len = _tcslen(s))
+			if (int len = strlen(s))
 			{
-				 ws = SysAllocStringLen( s, len);
+				ws = SysAllocStringLen(0, len);
+				len = MultiByteToWideChar(m_codepage, 0, s, -1, ws, len + 1);
+				SysReAllocStringLen(&ws, ws, len - 1);
 			}
 		}
 	}
