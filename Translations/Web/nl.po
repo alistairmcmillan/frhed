@@ -11,12 +11,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?atid=1100163&group_id=236485\n"
-"POT-Creation-Date: \n"
+"POT-Creation-Date: 2009-08-12 20:02+0000\n"
 "PO-Revision-Date: 2009-08-13 02:37-0700\n"
 "Last-Translator: Thomas De Rocker <thomasderocker@yahoo.com>\n"
 "Language-Team: Dutch <frhed-support@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -329,7 +329,7 @@ msgstr "Vertalers"
 #: index.php:11
 #, c-format
 msgid "Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially."
-msgstr "Frhed is een binaire bestandseditor voor Windows. Het is klein maar heeft vele geavanceerde functies zoals de mogelijkheid om grote bestanden gedeeltelijk te laden."
+msgstr "Frhed is een binaire bestandseditor voor Windows. Hij is klein maar heeft vele geavanceerde functies zoals de mogelijkheid om grote bestanden gedeeltelijk te laden."
 
 #: index.php:73
 #, c-format
@@ -444,5 +444,5 @@ msgstr "Frhed - Free hex editor"
 #: engine\page.inc:216
 #, c-format
 msgid "Mailing Lists"
-msgstr "Maillijsten"
+msgstr ""
 
