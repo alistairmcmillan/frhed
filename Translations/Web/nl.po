@@ -444,5 +444,5 @@ msgstr "Frhed - Free hex editor"
 #: engine\page.inc:216
 #, c-format
 msgid "Mailing Lists"
-msgstr ""
+msgstr "Maillijsten"
 
