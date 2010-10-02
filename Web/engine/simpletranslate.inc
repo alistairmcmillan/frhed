@@ -14,6 +14,12 @@
    */
   class SimpleTranslate {
     /**
+     * Language placeholder
+     * @var string
+     * @access private
+     */
+    private $_langplaceholder;
+    /**
      * URL parameter
      * @var string
      * @access private
@@ -54,12 +60,42 @@
      * Constructor
      */
     public function __construct() {
+      $this->_langplaceholder = '{lang}';
       $this->_urlparameter = 'lang';
       $this->_forceurlparameter = false;
       $this->_languages = array();
       $this->_baselanguageid = '';
       $this->_activelanguageid = '';
       $this->_translations = array();
+    }
+
+    /**
+     * get the language placeholder...
+     * @return string Language placeholder
+     */
+    public function getLanguagePlaceholder() {
+      return $this->_langplaceholder;
+    }
+
+    /**
+     * set the language placeholder...
+     * @param string $langplaceholder Language placeholder
+     */
+    public function setLanguagePlaceholder($langplaceholder) {
+      $this->_langplaceholder = $langplaceholder;
+    }
+
+    /**
+     * replace language placeholder...
+     * @param string $text Text
+     * @param string $id Language ID
+     * @return string Text without language placeholder
+     */
+    public function replaceLanguagePlaceholder($text, $id = '') {
+      if (empty($id)) { //if language ID NOT committed...
+        $id = $this->getActiveLanguageId();
+      }
+      return str_replace($this->_langplaceholder, $id, $text);
     }
 
     /**
@@ -320,6 +356,18 @@
         }
         return true;
       }
+    }
+
+    /**
+     * detect the language from the root directory...
+     * @return bool Detected?
+     */
+    public function detectLanguageFromRootDirectory() {
+      $parts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+      if (count($parts) > 0) { //if has parts...
+        return $this->setActiveLanguage($parts[0]);
+      }
+      return false;
     }
 
     /**
