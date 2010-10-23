@@ -474,19 +474,19 @@
      * @var string
      * @access private
      */
-    private $_id;
+    protected $_id;
     /**
      * Name
      * @var string
      * @access private
      */
-    private $_name;
+    protected $_name;
     /**
      * PO file
      * @var string
      * @access private
      */
-    private $_pofile;
+    protected $_pofile;
 
     /**
      * Constructor
