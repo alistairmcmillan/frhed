@@ -5186,12 +5186,11 @@ void HexEditorWindow::CMD_insertfile()
 	int inslen = _filelength(fhandle);
 	if (inslen != -1)
 	{
-		int rs,re,rl;//Remove start, end, len
+		int rs,rl;//Remove start, end, len
 		if (bSelected)
 		{
 			rs = iGetStartOfSelection();
-			re = iGetEndOfSelection();
-			rl = re + 1 - rs;
+			rl = iGetEndOfSelection() + 1 - rs;
 		}
 		else
 		{

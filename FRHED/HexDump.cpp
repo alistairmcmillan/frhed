@@ -38,6 +38,7 @@ HexDump::HexDump()
 , m_partialStats(false)
 , m_byteSpace(0)
 , m_charSpace(0)
+, m_charset(0)
 {
 }
 

@@ -62,7 +62,7 @@ BOOL GoToDlg::OnInitDialog(HWND hDlg)
 BOOL GoToDlg::Apply(HWND hDlg)
 {
 	TCHAR buffer[EditLen + 1];
-	int offset, i = 0, r = 0;
+	int offset, r = 0;
 	GetDlgItemText(hDlg, IDC_GOTO_OFFSET, buffer, RTL_NUMBER_OF(buffer));
 	// For a relative jump, read offset from 2nd character on.
 	if (buffer[0] == '+' || buffer[0] == '-')

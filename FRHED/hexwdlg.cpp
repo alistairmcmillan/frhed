@@ -145,7 +145,6 @@ INT_PTR ChangeInstDlg::DlgProc(HWND hw, UINT m, WPARAM w, LPARAM l)
 	{
 	case WM_INITDIALOG:
 		{
-			int i = 0;
 			HKEY hk;
 			int iLoadInst = -1;
 			int iSaveInst = 0;
