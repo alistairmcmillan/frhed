@@ -1,5 +1,5 @@
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RAWIO32", "rawio32\RAWIO32.vcproj", "{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Frhed", "FRHED\frhed.vcproj", "{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}"

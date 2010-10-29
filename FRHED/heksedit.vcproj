@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="heksedit"
 	ProjectGUID="{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}"
 	RootNamespace="heksedit"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -85,6 +86,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\..\Build\Debug/heksedit.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary=".\..\Build\Debug/heksedit.lib"
 				TargetMachine="1"
 			/>
@@ -107,9 +110,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -184,6 +184,8 @@
 				AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib"
 				ProgramDatabaseFile=".\..\Build\Release/heksedit.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary=".\..\Build\Release/heksedit.lib"
 				TargetMachine="1"
 			/>
@@ -206,9 +208,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -286,6 +285,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)\heksedit.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="$(OutDir)\hekseditU.lib"
 				TargetMachine="1"
 			/>
@@ -308,9 +309,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -386,6 +384,8 @@
 				AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib"
 				ProgramDatabaseFile="$(OutDir)\heksedit.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="$(OutDir)\hekseditU.lib"
 				TargetMachine="1"
 			/>
@@ -408,9 +408,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
