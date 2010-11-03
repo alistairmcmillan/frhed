@@ -15,9 +15,9 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="UnicodeDebug|Win32"
-			OutputDirectory=".\..\Build\UnicodeDebug"
-			IntermediateDirectory=".\..\BuildTmp\frhed\UnicodeDebug"
+			Name="Debug|Win32"
+			OutputDirectory=".\..\Build\Debug"
+			IntermediateDirectory=".\..\BuildTmp\frhed\Debug"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
@@ -111,9 +111,9 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="UnicodeRelease|Win32"
-			OutputDirectory=".\..\Build\UnicodeRelease"
-			IntermediateDirectory=".\..\BuildTmp\frhed\UnicodeRelease"
+			Name="Release|Win32"
+			OutputDirectory=".\..\Build\Release"
+			IntermediateDirectory=".\..\BuildTmp\frhed\Release"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"

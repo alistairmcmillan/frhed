@@ -16,9 +16,9 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="UnicodeDebug|Win32"
-			OutputDirectory=".\..\Build\UnicodeDebug"
-			IntermediateDirectory=".\..\BuildTmp\heksedit\UnicodeDebug"
+			Name="Debug|Win32"
+			OutputDirectory=".\..\Build\Debug"
+			IntermediateDirectory=".\..\BuildTmp\heksedit\Debug"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
@@ -117,9 +117,9 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="UnicodeRelease|Win32"
-			OutputDirectory=".\..\Build\UnicodeRelease"
-			IntermediateDirectory=".\..\BuildTmp\heksedit\UnicodeRelease"
+			Name="Release|Win32"
+			OutputDirectory=".\..\Build\Release"
+			IntermediateDirectory=".\..\BuildTmp\heksedit\Release"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"

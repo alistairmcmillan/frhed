@@ -12,22 +12,22 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "heksedit", "FRHED\heksedit.
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		UnicodeDebug|Win32 = UnicodeDebug|Win32
-		UnicodeRelease|Win32 = UnicodeRelease|Win32
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.UnicodeDebug|Win32.ActiveCfg = Debug|Win32
-		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.UnicodeDebug|Win32.Build.0 = Debug|Win32
-		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.UnicodeRelease|Win32.ActiveCfg = Release|Win32
-		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.UnicodeRelease|Win32.Build.0 = Release|Win32
-		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.UnicodeDebug|Win32.ActiveCfg = UnicodeDebug|Win32
-		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.UnicodeDebug|Win32.Build.0 = UnicodeDebug|Win32
-		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.UnicodeRelease|Win32.ActiveCfg = UnicodeDebug|Win32
-		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.UnicodeRelease|Win32.Build.0 = UnicodeDebug|Win32
-		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.UnicodeDebug|Win32.ActiveCfg = UnicodeDebug|Win32
-		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.UnicodeDebug|Win32.Build.0 = UnicodeDebug|Win32
-		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.UnicodeRelease|Win32.ActiveCfg = UnicodeRelease|Win32
-		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.UnicodeRelease|Win32.Build.0 = UnicodeRelease|Win32
+		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.Debug|Win32.Build.0 = Debug|Win32
+		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.Release|Win32.ActiveCfg = Release|Win32
+		{656F2AB1-194C-49C1-9BF2-A5DFB7A5155E}.Release|Win32.Build.0 = Release|Win32
+		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.Debug|Win32.Build.0 = Debug|Win32
+		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.Release|Win32.ActiveCfg = Release|Win32
+		{0CD12ACB-07F3-4DD5-967B-71BAEAAED49C}.Release|Win32.Build.0 = Release|Win32
+		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.Debug|Win32.Build.0 = Debug|Win32
+		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.Release|Win32.ActiveCfg = Release|Win32
+		{CA40E925-32C7-47E6-8C2C-75FBF3A9805C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
