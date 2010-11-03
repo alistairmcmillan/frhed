@@ -80,7 +80,7 @@
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib htmlhelp.lib"
-				OutputFile="$(OutDir)\hekseditU.dll"
+				OutputFile="$(OutDir)\heksedit.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib"
@@ -89,7 +89,7 @@
 				SubSystem="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary="$(OutDir)\hekseditU.lib"
+				ImportLibrary="$(OutDir)\heksedit.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -180,7 +180,7 @@
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib htmlhelp.lib"
-				OutputFile="$(OutDir)\hekseditU.dll"
+				OutputFile="$(OutDir)\heksedit.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(ProgramFiles)\Microsoft SDK\lib"
@@ -188,7 +188,7 @@
 				SubSystem="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary="$(OutDir)\hekseditU.lib"
+				ImportLibrary="$(OutDir)\heksedit.lib"
 				TargetMachine="1"
 			/>
 			<Tool

@@ -34,12 +34,7 @@
 
 static const TCHAR szMainClass[] = _T("frhed wndclass");
 static const TCHAR szHexClass[] = _T("heksedit");
-
-#ifdef UNICODE
-static const TCHAR szHexBinary[] = _T("hekseditU.dll");
-#else
 static const TCHAR szHexBinary[] = _T("heksedit.dll");
-#endif
 
 HINSTANCE hMainInstance;
 

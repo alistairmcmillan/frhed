@@ -75,7 +75,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib comctl32.lib wininet.lib shlwapi.lib"
-				OutputFile="$(OutDir)\FrhedU.exe"
+				OutputFile="$(OutDir)\Frhed.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
