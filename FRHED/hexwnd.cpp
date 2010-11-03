@@ -1225,9 +1225,6 @@ void HexEditorWindow::command(int cmd)
 		static_cast<dialog<DragDropOptionsDlg>*>(this)->DoModal(hwnd);
 		break;
 //Registry menu
-	case IDM_SHORTCUTS:
-		static_cast<dialog<ShortcutsDlg>*>(this)->DoModal(hwnd);
-		break;
 	case IDM_SAVEINI:
 		bSaveIni = !bSaveIni;//!(MF_CHECKED==GetMenuState(hMenu,IDM_SAVEINI,0));
 		break;

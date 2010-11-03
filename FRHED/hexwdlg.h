@@ -146,19 +146,6 @@ private:
 	BOOL OnOK(HWND, WPARAM, LPARAM);
 };
 
-class ShortcutsDlg : public HexEditorWindow
-{
-public:
-	enum { IDD = IDD_SHORTCUTS };
-	INT_PTR DlgProc(HWND, UINT, WPARAM, LPARAM);
-private:
-	BOOL OnInitDialog(HWND);
-	BOOL OnCommand(HWND, WPARAM, LPARAM);
-	BOOL OnNotify(HWND, WPARAM, LPARAM);
-	static int CALLBACK BrowseCallbackProc(HWND, UINT, LPARAM, LPARAM);
-	static int CALLBACK SearchCallbackProc(HWND, UINT, LPARAM, LPARAM);
-};
-
 class ChangeInstDlg : public HexEditorWindow
 {
 public:

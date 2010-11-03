@@ -456,10 +456,6 @@
 				>
 			</File>
 			<File
-				RelativePath="ShortcutsDlg.cpp"
-				>
-			</File>
-			<File
 				RelativePath="shtools.cpp"
 				>
 			</File>

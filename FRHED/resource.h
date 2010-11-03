@@ -39,7 +39,6 @@
 #define IDD_ENCODE_DECODE_DIALOG        135
 #define IDD_OPEN_DRIVE_DIALOG           136
 #define IDD_GOTO_TRACK_DIALOG           137
-#define IDD_SHORTCUTS                   138
 #define IDD_UPGRADE                     139
 #define IDD_CHANGEINST                  140
 #define IDB_TOOLBAR                     141
@@ -205,7 +204,6 @@
 #define IDM_UNKNOWN                     315
 #define IDM_DEFAULT                     316
 #define IDM_SAVEINI                     317
-#define IDM_SHORTCUTS                   320
 #define ID_DISK_CLOSEDRIVE              321
 #define IDC_MANIPBITS                   322
 #define IDC_NUMDIFFS                    323
