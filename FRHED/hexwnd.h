@@ -203,7 +203,7 @@ public:
 	void CMD_open();
 	int CMD_save();
 	int CMD_save_as();
-	int CMD_new(const char *title = 0);
+	int CMD_new(LPCTSTR title = 0);
 	void CMD_edit_enterdecimalvalue();
 	int CMD_copy_hexdump(int iCopyHexdumpMode, int iCopyHexdumpType, int iCopyHexdumpDlgStart, int iCopyHexdumpDlgEnd, char *mem = 0, int memlen = 0);
 	void CMD_copy_hexdump();

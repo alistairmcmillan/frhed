@@ -1576,7 +1576,7 @@ void HexEditorWindow::command(int cmd)
 		break;
 
 	case IDM_NEW:
-		CMD_new("New");
+		CMD_new(_T("New"));
 		break;
 
 	//GK20AUG2K
@@ -3215,7 +3215,7 @@ void HexEditorWindow::CMD_edit_clear()
  * @param [in] title Title of the new window.
  * @return 1
  */
-int HexEditorWindow::CMD_new(const char *title)
+int HexEditorWindow::CMD_new(LPCTSTR title)
 {
 	if (!close())
 		return 0;
@@ -4561,7 +4561,7 @@ void HexEditorWindow::OnContextMenu(LPARAM lParam)
 
 void HexEditorWindow::CMD_CloseDrive()
 {
-	CMD_new("Close Drive");
+	CMD_new(_T("Close Drive"));
 }
 
 void HexEditorWindow::CMD_DriveGotoFirstTrack()
@@ -5033,7 +5033,7 @@ void HexEditorWindow::CMD_revert()
 	if (bFileNeverSaved)
 	{
 		iFileChanged = FALSE;
-		CMD_new("Revert");
+		CMD_new(_T("Revert"));
 		return;
 	}
 	if (bPartialOpen)
@@ -5152,7 +5152,7 @@ void HexEditorWindow::CMD_deletefile()
 		_tcscpy(strMRU[i], strMRU[i + 1]);
 	save_ini_data();
 	iFileChanged = FALSE;
-	CMD_new("Delete file");//tricky-tricky
+	CMD_new(_T("Delete file"));//tricky-tricky
 }
 
 void HexEditorWindow::CMD_insertfile()
