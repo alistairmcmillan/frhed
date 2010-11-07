@@ -79,8 +79,8 @@
 		<Application_URLs>
 			<Application_Info_URL>http://frhed.sourceforge.net/</Application_Info_URL>
 			<Application_Order_URL>http://frhed.sourceforge.net/</Application_Order_URL>
-			<Application_Screenshot_URL>http://frhed.sourceforge.net/screenshots/frhed_main_window.png</Application_Screenshot_URL>
-			<Application_Icon_URL>http://frhed.sourceforge.net/screenshots/frhed_icon.png</Application_Icon_URL>
+			<Application_Screenshot_URL>http://frhed.sourceforge.net/sites/screenshots/frhed_main_window.png</Application_Screenshot_URL>
+			<Application_Icon_URL>http://frhed.sourceforge.net/sites/screenshots/frhed_icon.png</Application_Icon_URL>
 			<Application_XML_File_URL>http://frhed.sourceforge.net/frhed_pad.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>

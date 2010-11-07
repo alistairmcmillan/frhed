@@ -33,3 +33,7 @@ AddType image/vnd.microsoft.icon .ico
 
 #Redirect PAD download URL to current Frhed version...
 Redirect permanent /Frhed-Setup.exe http://downloads.sourceforge.net/frhed/Frhed-1.6.0-Setup.exe
+
+#Move screenshots...
+Redirect permanent /screenshots/frhed_main_window.png http://frhed.sourceforge.net/sites/screenshots/frhed_main_window.png
+Redirect permanent /screenshots/frhed_icon.png http://frhed.sourceforge.net/sites/screenshots/frhed_icon.png
