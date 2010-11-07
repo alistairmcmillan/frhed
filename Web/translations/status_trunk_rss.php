@@ -1,7 +1,7 @@
 <?php
   header('Content-type: application/rss+xml');
   
-  include('translations.inc');
+  include('../engine/translations.inc');
   
   try {
     $status = New TranslationsStatus('status_trunk.xml');

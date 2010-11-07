@@ -1,6 +1,6 @@
 <?php
   include('../engine/engine.inc');
-  include('translations.inc');
+  include('../engine/translations.inc');
 
   $page = new Page;
   $page->addRssFeed('status_trunk_rss.php');

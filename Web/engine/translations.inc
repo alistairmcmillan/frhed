@@ -78,11 +78,11 @@
       
       $temp = "";
       if ($wt > 0)
-        $temp .= "<img src=\"images/translated.png\" alt=\"" . __('Translated') . "\" title=\"" . __('Translated: %d%%', round($pt, 1)) . "\" width=\"$wt\" height=\"16\" />";
+        $temp .= "<img src=\"/engine/images/translated.png\" alt=\"" . __('Translated') . "\" title=\"" . __('Translated: %d%%', round($pt, 1)) . "\" width=\"$wt\" height=\"16\" />";
       if ($wf > 0)
-        $temp .= "<img src=\"images/fuzzy.png\" alt=\"" . __('Fuzzy') . "\" title=\"" . __('Fuzzy: %d%%', round($pf, 1)) . "\" width=\"$wf\" height=\"16\" />";
+        $temp .= "<img src=\"/engine/images/fuzzy.png\" alt=\"" . __('Fuzzy') . "\" title=\"" . __('Fuzzy: %d%%', round($pf, 1)) . "\" width=\"$wf\" height=\"16\" />";
       if ($wu > 0)
-        $temp .= "<img src=\"images/untranslated.png\" alt=\"" . __('Untranslated') . "\" title=\"" . __('Untranslated: %d%%', round($pu, 1)) . "\" width=\"$wu\" height=\"16\" />";
+        $temp .= "<img src=\"/engine/images/untranslated.png\" alt=\"" . __('Untranslated') . "\" title=\"" . __('Untranslated: %d%%', round($pu, 1)) . "\" width=\"$wu\" height=\"16\" />";
       
       return $temp;
     }
@@ -92,9 +92,9 @@
      */
     private function getStatusGraphLegend() {
       $temp = "<ul class=\"inline\">\n";
-      $temp .= "  <li><img src=\"images/translated.png\" alt=\"*\" width=\"16\" height=\"16\" /> " . __('Translated') . "</li>\n";
-      $temp .= "  <li><img src=\"images/fuzzy.png\" alt=\"*\" width=\"16\" height=\"16\" /> " . __('Fuzzy') . "</li>\n";
-      $temp .= "  <li><img src=\"images/untranslated.png\" alt=\"*\" width=\"16\" height=\"16\" /> " . __('Untranslated') . "</li>\n";
+      $temp .= "  <li><img src=\"/engine/images/translated.png\" alt=\"*\" width=\"16\" height=\"16\" /> " . __('Translated') . "</li>\n";
+      $temp .= "  <li><img src=\"/engine/images/fuzzy.png\" alt=\"*\" width=\"16\" height=\"16\" /> " . __('Fuzzy') . "</li>\n";
+      $temp .= "  <li><img src=\"/engine/images/untranslated.png\" alt=\"*\" width=\"16\" height=\"16\" /> " . __('Untranslated') . "</li>\n";
       $temp .= "</ul>\n";
       return $temp;
     }
