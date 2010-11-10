@@ -59,7 +59,7 @@ static HexEditorWindow *pHexWnd = 0;
 /**
  * @brief The application starting point.
  */
-int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, char *, int)
+int WINAPI WinMain(HINSTANCE hIconInstance, HINSTANCE, LPSTR, int)
 {
 	OleInitialize(NULL);
 	InitCommonControls();
