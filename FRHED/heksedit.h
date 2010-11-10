@@ -87,7 +87,7 @@ public:
 	};
 
 	virtual unsigned STDMETHODCALLTYPE get_interface_version() = 0;
-	virtual unsigned char *STDMETHODCALLTYPE get_buffer(int) = 0;
+	virtual BYTE *STDMETHODCALLTYPE get_buffer(int) = 0;
 	virtual int STDMETHODCALLTYPE get_length() = 0;
 	virtual void STDMETHODCALLTYPE set_sibling(IHexEditorWindow *) = 0;
 	virtual Colors *STDMETHODCALLTYPE get_colors() = 0;
