@@ -2263,33 +2263,61 @@ void HexEditorWindow::PrintBookmarkIndicators(HDC hdc, HBRUSH hbr, UINT64 startp
 	// Brush for bookmark borders.
 	for (int i = 0; i < iBmkCount; i++)
 	{
-		int offset = pbmkList[i].offset;
-		// Print the bookmark if it is within the file.
-		if (offset >= startpos && offset <= el && offset < length)
-		{
-			// Found a bookmark in this line.
-			// Mark hex num.
-			chpos = iMaxOffsetLen + iByteSpace + (offset % iBytesPerLine) * 3 - iHscrollPos;
-			RECT r;
-			r.left = chpos * cxChar;
-			r.top = (offset / iBytesPerLine - iVscrollPos) * cyChar;
-			r.right = r.left + 2 * cxChar;
-			r.bottom = (offset / iBytesPerLine - iVscrollPos + 1) * cyChar;
-			r.top--;
-			r.left -= 2;
-			r.right += 2;
-			FrameRect(hdc, &r, hbr);
+		int bmkstart = pbmkList[i].offset;
+		int bmkend   = pbmkList[i].length + bmkstart;
 
-			// Mark character.
-			chpos = iMaxOffsetLen + iByteSpace + iBytesPerLine * 3 + iCharSpace
-				+ (offset % iBytesPerLine) - iHscrollPos;
-			r.left = chpos * cxChar;
-			r.top = (offset / iBytesPerLine - iVscrollPos) * cyChar;
-			r.right = (chpos + 1) * cxChar;
-			r.bottom = (offset / iBytesPerLine - iVscrollPos + 1) * cyChar;
-			r.top--;
-			FrameRect(hdc, &r, hbr);
+		// invalid bookmark
+		if (bmkstart >= length)
+			continue;
+
+		if (el < bmkstart || startpos > bmkend) 
+			continue;
+
+		bookmark b = pbmkList[i];
+
+		bool bmkstartshere = bmkstart >= startpos && bmkstart <= el;
+		bool bmkendshere = bmkend >= startpos && bmkend <= el;
+
+		int offset, chlen;
+		// figure out where to start
+		if (bmkstartshere) {
+			offset = bmkstart;
+		} else {
+			offset = startpos;
 		}
+
+		// figure out where to end
+		if (bmkstartshere && bmkendshere)
+			chlen = b.length;
+		else if (bmkstartshere)
+			chlen = iBytesPerLine - (bmkstart % iBytesPerLine);
+		else if (bmkendshere)
+			chlen = bmkend % iBytesPerLine;
+		else
+			chlen = iBytesPerLine;
+
+		// Found a bookmark in this line.
+		// Mark hex num.
+		chpos = iMaxOffsetLen + iByteSpace + (offset % iBytesPerLine) * 3 - iHscrollPos;
+		RECT r;
+		r.left = chpos * cxChar;
+		r.top = (offset / iBytesPerLine - iVscrollPos) * cyChar;
+		r.right = r.left + ((2+1) * chlen * cxChar) - (cxChar / 2);
+		r.bottom = (offset / iBytesPerLine - iVscrollPos + 1) * cyChar;
+		r.top--;
+		r.left -= 2;
+		r.right += 2;
+		FrameRect(hdc, &r, hbr);
+
+		// Mark character.
+		chpos = iMaxOffsetLen + iByteSpace + iBytesPerLine * 3 + iCharSpace
+			+ (offset % iBytesPerLine) - iHscrollPos;
+		r.left = chpos * cxChar;
+		r.top = (offset / iBytesPerLine - iVscrollPos) * cyChar;
+		r.right = (chpos + chlen) * cxChar;
+		r.bottom = (offset / iBytesPerLine - iVscrollPos + 1) * cyChar;
+		r.top--;
+		FrameRect(hdc, &r, hbr);
 	}
 }
 
@@ -4185,6 +4213,12 @@ void HexEditorWindow::CMD_goto_bookmark(int i)
 		iCurByte = pbmkList[i].offset;
 		iCurNibble = 0;
 		bSelected = false;
+		if (pbmkList[i].length > 1)
+		{
+			iStartOfSelection = pbmkList[i].offset;
+			iEndOfSelection = pbmkList[i].offset + pbmkList[i].length - 1;
+			bSelected = true;
+		}
 		resize_window();
 		adjust_vscrollbar();
 	}

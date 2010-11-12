@@ -95,6 +95,7 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 		}
 		// No bookmark on that position yet.
 		pbmkList[iBmkCount].offset = offset;
+		pbmkList[iBmkCount].length = 1;
 		pbmkList[iBmkCount].name = GetDlgItemText(hDlg, IDC_BMKADD_NAME, name,
 				BMKTEXTMAX) ? _tcsdup(name) : 0;
 		iBmkCount++;

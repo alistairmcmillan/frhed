@@ -63,6 +63,7 @@ INT_PTR CALLBACK TmplDisplayDlgProc(HWND, UINT, WPARAM, LPARAM);
 typedef struct
 {
 	int offset; /**< Offset of the bookmark in bookmarks list. */
+	int length;
 	TCHAR* name; /**< Name of the bookmark. */
 } bookmark;
 
