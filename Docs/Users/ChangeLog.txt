@@ -11,6 +11,7 @@ Frhed 1.7.2
   Added MSI installer (r843)
   Full Unicode build (#2982935)
   Remove Shortcuts-dialog (r890)
+  Allow bookmarking range of bytes (#3105270)
   Bugfix: Could only load one custom encoder dll (#2834337)
   Bugfix: Read-only checkbox was inverted in View settings(r848)
   New translation:

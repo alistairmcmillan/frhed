@@ -27,6 +27,7 @@ Martin Hughes <martinhughes@users.sourceforge.net>
 Spencer Oliver <sjo@anglia.com>
 Peter Schaefer-Hutter <pschaefer@users.sourceforge.net>
 Song Pinewood <simcutie@hanmail.net> (Unicode build)
+Darell <geekman@sourceforge.net>
 
 Other contributors (old versions):
 Dario Bagnoli - bug reports and beta testing

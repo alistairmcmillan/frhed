@@ -2474,7 +2474,7 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 	case IDM_ADDBOOKMARK:
 		// "Add bookmark" is allowed if the file is not
 		// empty and there is no selection going on.
-		return m_dataArray.GetLength() && !bSelected;
+		return m_dataArray.GetLength();
 	case IDM_REMOVE_BKM:
 	case IDM_CLEARALL_BMK:
 		// "Remove bookmark" and "Clear all bookmarks" are allowed if there are bookmarks set.

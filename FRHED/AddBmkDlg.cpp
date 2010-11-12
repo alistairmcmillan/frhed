@@ -40,13 +40,25 @@ static const int OffsetLen = 16;
  */
 BOOL AddBmkDlg::OnInitDialog(HWND hDlg)
 {
-	TCHAR buf[OffsetLen + 1] = {0};
-	_sntprintf(buf, RTL_NUMBER_OF(buf), _T("0x%x"), iCurByte);
+	TCHAR buf[OffsetLen*2 + 3 + 1] = {0};
+	_sntprintf(buf, RTL_NUMBER_OF(buf), _T("0x%x"), 
+		bSelected ? min(iStartOfSelection, iEndOfSelection) : iCurByte);
 	SetDlgItemText(hDlg, IDC_BMKADD_OFFSET, buf);
 	
 	// Limit edit text lengths
 	HWND edit = GetDlgItem(hDlg, IDC_BMKADD_OFFSET);
 	SendMessage(edit, EM_SETLIMITTEXT, OffsetLen, 0);
+
+	// indicate when we're adding a selection
+	if (bSelected && abs(iStartOfSelection - iEndOfSelection) > 1) 
+	{
+		int ss = min(iStartOfSelection, iEndOfSelection);
+		int se = max(iStartOfSelection, iEndOfSelection);
+		EnableWindow(edit, FALSE);
+		_sntprintf(buf, RTL_NUMBER_OF(buf), _T("0x%x - 0x%x"), ss, se);
+		SetDlgItemText(hDlg, IDC_BMKADD_OFFSET, buf);
+	}
+
 	edit = GetDlgItem(hDlg, IDC_BMKADD_NAME);
 	SendMessage(edit, EM_SETLIMITTEXT, BMKTEXTMAX, 0);
 	return TRUE;
@@ -94,10 +106,21 @@ BOOL AddBmkDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		// No bookmark on that position yet.
-		pbmkList[iBmkCount].offset = offset;
-		pbmkList[iBmkCount].length = 1;
 		pbmkList[iBmkCount].name = GetDlgItemText(hDlg, IDC_BMKADD_NAME, name,
 				BMKTEXTMAX) ? _tcsdup(name) : 0;
+		if (bSelected)
+		{
+			int sstart = min(iStartOfSelection, iEndOfSelection);
+			int send = max(iStartOfSelection, iEndOfSelection);
+			pbmkList[iBmkCount].offset = sstart;
+			pbmkList[iBmkCount].length = send - sstart + 1;
+		}
+		else
+		{
+			pbmkList[iBmkCount].offset = offset;
+			pbmkList[iBmkCount].length = 1;
+		}
+
 		iBmkCount++;
 		repaint();
 		// fall through
