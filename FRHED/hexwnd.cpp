@@ -282,13 +282,7 @@ static LPTSTR NTAPI LoadResString(UINT uStringID)
 	if (LPWSTR p = LoadStringResource(hinst, uStringID))
 	{
 		UINT n = (WORD)*p++;
-#ifdef UNICODE
 		text = SysAllocStringLen(p, n);
-#else
-		UINT cb = WideCharToMultiByte(CP_ACP, 0, p, n, 0, 0, 0, 0);
-		text = (PSTR)SysAllocStringByteLen(0, cb);
-		WideCharToMultiByte(CP_ACP, 0, p, n, text, cb, 0, 0);
-#endif
 		if (langArray.m_hLangDll)
 		{
 			int line = 0;

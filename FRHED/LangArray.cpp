@@ -387,7 +387,6 @@ BOOL LangArray::Load(HINSTANCE hMainInstance, LANGID langid, LPCTSTR langdir)
 
 PTSTR LangArray::TranslateString(int line)
 {
-#ifdef UNICODE
 	BSTR ws = 0;
 	if (line > 0 && line < GetLength())
 	{
@@ -402,41 +401,6 @@ PTSTR LangArray::TranslateString(int line)
 		}
 	}
 	return ws;
-#else
-	PTSTR t = 0;
-	if (line > 0 && line < GetLength())
-	{
-		if (char *s = GetAt(line))
-		{
-			if (int len = strlen(s))
-			{
-				unsigned codepage = GetACP();
-				if (m_codepage != codepage)
-				{
-					// Attempt to convert to UI codepage
-					BSTR ws = SysAllocStringLen(0, len);
-					len = MultiByteToWideChar(m_codepage, 0, s, -1, ws, len + 1);
-					if (len)
-					{
-						SysReAllocStringLen(&ws, ws, len - 1);
-						len = WideCharToMultiByte(codepage, 0, ws, -1, 0, 0, 0, 0);
-						if (len)
-						{
-							t = (PTSTR)SysAllocStringByteLen(0, len - 1);
-							WideCharToMultiByte(codepage, 0, ws, -1, t, len, 0, 0);
-						}
-					}
-					SysFreeString(ws);
-				}
-				else
-				{
-					t = (PTSTR)SysAllocStringByteLen(s, len);
-				}
-			}
-		}
-	}
-	return t;
-#endif
 }
 
 void LangArray::TranslateDialog(HWND h)

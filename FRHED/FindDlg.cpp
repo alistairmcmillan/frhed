@@ -105,13 +105,8 @@ BOOL FindDlg::OnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
 			if (m_pFindCtxt->m_bUnicode)
 			{
 				pcFindstring = (BYTE*) new WCHAR[srclen +1];
-#ifdef UNICODE
 				wcscpy((LPWSTR) pcFindstring, (LPWSTR) m_pFindCtxt->GetText());
 				destlen = srclen* sizeof (WCHAR);
-#else
-				destlen = MultiByteToWideChar(CP_ACP, 0, m_pFindCtxt->GetText(),
-					srclen + 1, (WCHAR *)pcFindstring, srclen + 1) * sizeof (WCHAR);
-#endif
 			}
 			else
 			{

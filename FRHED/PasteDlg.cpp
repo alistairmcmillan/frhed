@@ -110,19 +110,11 @@ BOOL PasteDlg::Apply(HWND hDlg)
 	BYTE *pasteData = (BYTE*) pcPastestring;
 	int pasteSize = destlen * sizeof TCHAR;
 
-#ifdef UNICODE
 	if (bPasteAsUnicode)
 	{
 		pasteData = new BYTE[destlen * sizeof WCHAR];
 		pasteSize = WideCharToMultiByte(CP_ACP, 0, pcPastestring, destlen,
 				(LPSTR) pasteData, destlen, NULL, NULL);
-#else
-	if (!bPasteAsUnicode)
-	{
-		pasteData = new BYTE[destlen * sizeof WCHAR];
-		pasteSize = MultiByteToWideChar(CP_ACP, 0, pcPastestring, destlen,
-				(LPWSTR) pasteData, destlen) * sizeof WCHAR;
-#endif
 		if ( pasteSize > 0 ) {
 			delete [] pcPastestring;
 			pcPastestring = (TCHAR *) pasteData; // delete me later.

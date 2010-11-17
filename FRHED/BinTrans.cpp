@@ -416,16 +416,8 @@ int Text2BinTranslator::iCreateBcTranslation(BYTE* dest, LPCTSTR src, int srclen
 			}
 			else
 			{
-#ifdef UNICODE
 				di += WideCharToMultiByte( ((charmode ==  OEM_SET) ? CP_OEMCP : CP_ACP), 
 					0, src +i, 1, (LPSTR) dest + di, 3, NULL, NULL );
-#else
-				if ( charmode == OEM_SET )
-					CharToOem(&src[i], (LPSTR)&dest[di]);
-				else
-					dest[di] = (BYTE) src[i];
-				di++;
-#endif
 			}
 		}
 	}

@@ -73,14 +73,8 @@ public:
 
 typedef MakeWide A2W;
 typedef MakeAnsi W2A;
-#ifdef UNICODE
 typedef PCWSTR T2W, W2T;
 typedef MakeAnsi T2A;
 typedef MakeWide A2T;
-#else
-typedef PCSTR T2A, A2T;
-typedef MakeWide T2W;
-typedef MakeAnsi W2T;
-#endif
 
 #endif
