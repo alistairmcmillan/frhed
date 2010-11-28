@@ -35,11 +35,24 @@
       case '/{lang}/translations/status_trunk_rss.php':
           include('templates/translations/status_trunk_rss.php');
           break;
+      //Directories without / at the end...
       case '/{lang}':
       case '/{lang}/screenshots':
       case '/{lang}/translations':
           Send301($path . '/');
           break;
+      //Old "screenshots" and "translations" paths...
+      case '/{lang}reenshots':
+      case '/{lang}reenshots/':
+      case '/{lang}anslations':
+      case '/{lang}anslations/':
+      case '/{lang}anslations/status_branch.php':
+      case '/{lang}anslations/status_branch_rss.php':
+      case '/{lang}anslations/status_trunk.php':
+      case '/{lang}anslations/status_trunk_rss.php':
+          Send301('/en' . $path);
+          break;
+      //Unknown paths...
       default:
           header('HTTP/1.1 404 Not Found');
           header('Status: 404 Not Found');
