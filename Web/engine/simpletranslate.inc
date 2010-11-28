@@ -11,8 +11,16 @@
 
   /**
    * ...
+   * @todo Rename variables to camelCase and don't use _underscore?
+   * @todo Use 4 spaces for indent?
    */
   class SimpleTranslate {
+    /**
+     * Use root directory?
+     * @var string
+     * @access private
+     */
+    private $_userootdirectory;
     /**
      * Language placeholder
      * @var string
@@ -60,6 +68,7 @@
      * Constructor
      */
     public function __construct() {
+      $this->_userootdirectory = false;
       $this->_langplaceholder = '{lang}';
       $this->_urlparameter = 'lang';
       $this->_forceurlparameter = false;
@@ -67,6 +76,22 @@
       $this->_baselanguageid = '';
       $this->_activelanguageid = '';
       $this->_translations = array();
+    }
+
+    /**
+     * get using root directory...
+     * @return bool Use root directory?
+     */
+    public function getUseRootDirectory() {
+      return $this->_userootdirectory;
+    }
+
+    /**
+     * set using root directory...
+     * @param bool $userootdirectory Use root directory?
+     */
+    public function setUseRootDirectory($userootdirectory) {
+      $this->_userootdirectory = $userootdirectory;
     }
 
     /**
@@ -96,6 +121,21 @@
         $id = $this->getActiveLanguageId();
       }
       return str_replace($this->_langplaceholder, $id, $text);
+    }
+
+    /**
+     * replace root directory in link...
+     * @param string $link Link
+     * @param string $id Language ID
+     * @return string Link with replaced root directory
+     */
+    public function replaceRootDirectory($link, $id = '') {
+      if (!empty($id)) {
+        return preg_replace('/^\/[a-z][a-z](\/?)/', '/' . $id . '$1', $link);
+      }
+      else {
+        return preg_replace('/^\/[a-z][a-z](\/?)/', '/$1', $link);
+      }
     }
 
     /**
@@ -351,10 +391,19 @@
         return false;
       }
       else { //if language ID NOT committed...
-        if (isset($_GET[$this->_urlparameter])) {
-          return $this->existsLanguage(strtolower($_GET[$this->_urlparameter]));
+        if ($this->_userootdirectory) { //if use root directory...
+          $parts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+          if (count($parts) > 0) { //if has parts...
+            return $this->existsLanguage($parts[0]);
+          }
+          return false;
         }
-        return true;
+        else { //if use URL parameter...
+          if (isset($_GET[$this->_urlparameter])) {
+            return $this->existsLanguage(strtolower($_GET[$this->_urlparameter]));
+          }
+          return true;
+        }
       }
     }
 
@@ -374,7 +423,7 @@
      * detect the language from the url...
      * @return bool Detected?
      */
-    public function detectLanguageFromUrl() {
+    public function detectLanguageFromUrlParameter() {
       if (isset($_GET[$this->_urlparameter])) {
         return $this->setActiveLanguage($_GET[$this->_urlparameter]);
       }
@@ -418,6 +467,30 @@
      * @return string Prepared link
      */
     public function prepareLink($link) {
+      if ($this->_userootdirectory) { //if use root directory...
+        return $this->prepareLinkWithRootDirectory($link);
+      }
+      else { //if use URL parameter...
+        return $this->prepareLinkWithUrlParameter($link);
+      }
+    }
+
+    /**
+     * prepare link (with root directory)...
+     * @param string $link Link
+     * @return string Prepared link (with root directory)
+     */
+    private function prepareLinkWithRootDirectory($link) {
+      $activelanguage = $this->getActiveLanguage();
+      return $this->replaceLanguagePlaceholder($link, $activelanguage->getId());
+    }
+
+    /**
+     * prepare link (with URL parameter)...
+     * @param string $link Link
+     * @return string Prepared link (with URL parameter)
+     */
+    private function prepareLinkWithUrlParameter($link) {
       $activelanguage = $this->getActiveLanguage();
       if ((strtolower(get_class($activelanguage)) == 'simpletranslatelanguage') || ($this->_forceurlparameter == true)) { //if normal language OR forcing URL parameter...
         return $this->appendUrlParameter($link, $this->_urlparameter, $activelanguage->getId());
@@ -434,6 +507,34 @@
      * @return string Language link
      */
     public function getLink($language = null, $forceurlparameter = null) {
+      if ($this->_userootdirectory) { //if use root directory...
+        return $this->getLinkWithRootDirectory($language);
+      }
+      else { //if use URL parameter...
+        return $this->getLinkWithUrlParameter($language, $forceurlparameter);
+      }
+    }
+
+    /**
+     * get the language link (with root directory)...
+     * @param object $language Language
+     * @return string Language link (with root directory)
+     */
+    private function getLinkWithRootDirectory($language = null) {
+      $requesturi = str_replace('index.php', '', $_SERVER['REQUEST_URI']);
+      if (isset($language)) { //if language committed...
+        return $this->replaceRootDirectory($requesturi, $language->getId());
+      }
+      return $requesturi;
+    }
+
+    /**
+     * get the language link (with URL parameter)...
+     * @param object $language Language
+     * @param bool $forceurlparameter Force URL parameter?
+     * @return string Language link (with URL parameter)
+     */
+    private function getLinkWithUrlParameter($language = null, $forceurlparameter = null) {
       $phpself = str_replace('index.php', '', $_SERVER['PHP_SELF']);
       if (isset($language)) { //if language committed...
         $forceing = $this->_forceurlparameter;

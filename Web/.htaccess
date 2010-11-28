@@ -27,8 +27,8 @@ AddType image/vnd.microsoft.icon .ico
 </IfModule>
 
 <FilesMatch "\.inc$">
- Order Deny,Allow
- Deny from all
+  Order Deny,Allow
+  Deny from all
 </FilesMatch>
 
 #Redirect PAD download URL to current Frhed version...
@@ -37,3 +37,12 @@ Redirect permanent /Frhed-Setup.exe http://downloads.sourceforge.net/frhed/Frhed
 #Move screenshots...
 Redirect permanent /screenshots/frhed_main_window.png http://frhed.sourceforge.net/sites/screenshots/frhed_main_window.png
 Redirect permanent /screenshots/frhed_icon.png http://frhed.sourceforge.net/sites/screenshots/frhed_icon.png
+
+#...
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /router.php [L]
+</IfModule>

@@ -15,12 +15,12 @@
   $languagesdir = dirname(__FILE__) . '/languages/';
 
   $translations = new SimpleTranslate;
-  $translations->setUrlParameter('lang');
+  $translations->setUseRootDirectory(true);
   $translations->addLanguage('en', __('English'));
   $translations->addLanguage('de', __('German'), $languagesdir . 'de.po');
   $translations->addLanguage('fr', __('French'), $languagesdir . 'fr.po');
   $translations->addLanguage('nl', __('Dutch'), $languagesdir . 'nl.po');
-  if (!$translations->detectLanguageFromUrl()) { //if NOT detect language from URL...
+  if (!$translations->detectLanguageFromRootDirectory()) { //if NOT detect language from root directory...
     $translations->detectLanguageFromBrowser();
   }
 

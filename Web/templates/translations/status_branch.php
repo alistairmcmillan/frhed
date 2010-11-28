@@ -1,7 +1,4 @@
 <?php
-  include('../engine/engine.inc');
-  include('../engine/translations.inc');
-
   $page = new Page;
   $page->addRssFeed('status_branch_rss.php');
   $page->printHead(__('Translations Status (Stable Branch)'));

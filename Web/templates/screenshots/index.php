@@ -1,6 +1,4 @@
 <?php
-  include('../engine/engine.inc');
-  
   $page = new Page;
   $page->printHead(__('Screenshots'));
   $page->printHeading(__('Screenshots'));

@@ -1,8 +1,6 @@
 <?php
   header('Content-type: application/rss+xml');
   
-  include('../engine/translations.inc');
-  
   try {
     $status = New TranslationsStatus('status_trunk.xml');
     $status->version = 'Unstable Trunk';

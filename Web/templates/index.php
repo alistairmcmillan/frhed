@@ -1,7 +1,4 @@
 <?php
-  include('engine/engine.inc');
-  include('engine/simplepie/simplepie.inc');
-  
   $page = new Page;
   $page->setDescription(__('Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially.'));
   $page->setKeywords(__('Frhed, free, hex editor, binary file, load partially, hexdump, compare'));

@@ -1,7 +1,4 @@
 <?php
-  include('../engine/engine.inc');
-  include('../engine/translations.inc');
-
   $page = new Page;
   $page->addRssFeed('status_branch_rss.php', __('Frhed Translations Status (Stable Branch)'));
   $page->addRssFeed('status_trunk_rss.php', __('Frhed Translations Status (Unstable Trunk)'));

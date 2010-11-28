@@ -1,7 +1,4 @@
 <?php
-  include('../engine/engine.inc');
-  include('../engine/translations.inc');
-
   $page = new Page;
   $page->addRssFeed('status_trunk_rss.php');
   $page->printHead(__('Translations Status (Unstable Trunk)'));
