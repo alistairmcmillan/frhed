@@ -51,10 +51,8 @@
     
     <WixVariable Id="WixUILicenseRtf" Value="..\..\Docs\Users\GPL.rtf" />
     
-    <!-- TODO: Add graphics
     <WixVariable Id="WixUIBannerBmp" Value="Bitmaps\banner.bmp" /> 
     <WixVariable Id="WixUIDialogBmp" Value="Bitmaps\dialog.bmp" />
-    -->
     
     <UIRef Id="WixUI_Frhed" />
     
