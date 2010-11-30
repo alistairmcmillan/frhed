@@ -130,15 +130,17 @@
     /**
      * print a <h2> heading
      */
-    function printHeading($title) {
-      print("<h2>" . $title . "</h2>\n");
+    function printHeading($title, $id = '') {
+      $htmlId = empty($id) ? '' : ' id="' . $id. '"';
+      print("<h2" . $htmlId . ">" . $title . "</h2>\n");
     }
 
     /**
      * print a <h2> heading with a RSS feed link
      */
-    function printRssHeading($title, $rssfeedurl) {
-      print("<h2>" . $title . " " . $this->getRssFeedLink($rssfeedurl) . "</h2>\n");
+    function printRssHeading($title, $rssfeedurl, $id = '') {
+      $htmlId = empty($id) ? '' : ' id="' . $id. '"';
+      print("<h2" . $htmlId . ">" . $title . " " . $this->getRssFeedLink($rssfeedurl) . "</h2>\n");
     }
 
     /**

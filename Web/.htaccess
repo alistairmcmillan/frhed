@@ -26,6 +26,8 @@ AddType image/vnd.microsoft.icon .ico
   ExpiresDefault "access plus 24 hours"
 </IfModule>
 
+ErrorDocument 404 /404.php
+
 <FilesMatch "\.inc$">
   Order Deny,Allow
   Deny from all
