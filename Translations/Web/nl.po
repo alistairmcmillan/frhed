@@ -22,230 +22,432 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ../../Web/\n"
 
-#: engine\page.inc:208
+#: 404.php:13
 #, c-format
-msgid "Index"
-msgstr "Index"
+msgid "This site has recently undergone a major re-working, so that might explain why you got this page instead."
+msgstr ""
 
-#: index.php:17
-#, c-format
-msgid "Load files partially"
-msgstr "Bestanden gedeeltelijk laden"
-
-#: translations\translations.inc:169
-#, c-format
-msgid "Template"
-msgstr "Sjabloon"
-
-#: translations\status_branch.php:18
-#: translations\status_trunk.php:18
-#, c-format
-msgid "The translations status is currently not available..."
-msgstr "De status van de vertalingen is op dit moment niet beschikbaar..."
-
-#: screenshots\index.php:12
-#, c-format
-msgid "The main window from Frhed."
-msgstr "Het hoofdvenster van Frhed."
-
-#: index.php:65
-#: engine\page.inc:212
-#, c-format
-msgid "Support"
-msgstr "Ondersteuning"
-
-#: translations\translations.inc:85
-#: translations\translations.inc:97
-#: translations\translations.inc:135
-#, c-format
-msgid "Untranslated"
-msgstr "Onvertaald"
-
-#: engine\page.inc:210
-#, c-format
-msgid "Status (Unstable Trunk)"
-msgstr "Status (onstabiele \"Trunk\")"
-
-#: index.php:19
-#, c-format
-msgid "Search for any combination of text and binary values"
-msgstr "Zoek naar om het even welke combinatie van tekst en binaire waardes"
-
-#: engine\page.inc:109
+#: engine\page.inc:103
 #, c-format
 msgid "<b>Fr</b>ee <b>h</b>ex <b>ed</b>itor"
 msgstr "<b>Fr</b>ee <b>h</b>ex <b>ed</b>itor"
 
-#: translations\translations.inc:81
-#: translations\translations.inc:95
-#: translations\translations.inc:133
-#, c-format
-msgid "Translated"
-msgstr "Vertaald"
-
-#: translations\index.php:11
-#, c-format
-msgid "We currently have Frhed translated into the languages listed below:"
-msgstr "Op dit moment is Frhed vertaald in de onderstaande talen:"
-
-#: engine\page.inc:25
-#, c-format
-msgid "en"
-msgstr "en"
-
-#: translations\index.php:6
+#: templates\translations\index.php:3
 #, c-format
 msgid "Frhed Translations Status (Stable Branch)"
 msgstr "Frhey vertaalstatus (stabiele \"Branch\")"
 
-#: engine\page.inc:219
+#: engine\translations.inc:169
 #, c-format
-msgid "Original Version"
-msgstr "Originele versie"
+msgid "Template"
+msgstr "Sjabloon"
 
-#: index.php:39
+#: 404.php:18
 #, c-format
-msgid "Stable releases"
-msgstr "Stabiele releases"
+msgid "<a href=\"%s\">Download</a>?"
+msgstr ""
 
-#: translations\translations.inc:83
-#, c-format
-msgid "Fuzzy: %d%%"
-msgstr "Onduidelijk: %d%%"
-
-#: index.php:7
-#, c-format
-msgid "Frhed, free, hex editor, binary file, load partially, hexdump, compare"
-msgstr "Frhed, free, hex editor, binary file, load partially, hexdump, compare"
-
-#: translations\translations.inc:131
-#: translations\translations.inc:272
-#, c-format
-msgid "Language"
-msgstr "Taal"
-
-#: engine\page.inc:244
-#, c-format
-msgid "Donate"
-msgstr "Doneren"
-
-#: translations\translations.inc:81
-#, c-format
-msgid "Translated: %d%%"
-msgstr "Vertaald: %d%%"
-
-#: translations\index.php:27
+#: templates\translations\index.php:24
 #, c-format
 msgid "The following two pages inform you about the translations status of the stable and developer version of Frhed:"
 msgstr "De volgende twee pagina's geven informatie over de vertaalstatus van de stabiele en ontwikkelingsversie van Frhed:"
 
-#: translations\translations.inc:83
-#: translations\translations.inc:96
-#: translations\translations.inc:134
+#: engine\translations.inc:83
 #, c-format
-msgid "Fuzzy"
-msgstr "Onduidelijk"
+msgid "Fuzzy: %d%%"
+msgstr "Onduidelijk: %d%%"
 
-#: translations\index.php:26
-#, c-format
-msgid "Status"
-msgstr "Status"
-
-#: translations\translations.inc:171
-#, c-format
-msgid "Total: %d"
-msgstr "Totaal: %d"
-
-#: engine\page.inc:248
-#, c-format
-msgid "Website Language"
-msgstr "Taal van de website"
-
-#: translations\index.php:30
+#: templates\translations\index.php:27
 #, c-format
 msgid "Stable Version (Branch)"
 msgstr "Stabiele versie (Branch)"
 
-#: screenshots\index.php:8
-#: screenshots\index.php:10
+#: templates\screenshots\index.php:10
 #, c-format
-msgid "Main Window"
-msgstr "Hoofdvenster"
+msgid "The main window from Frhed."
+msgstr "Het hoofdvenster van Frhed."
 
-#: translations\status_trunk.php:7
-#: translations\status_trunk.php:9
+#: engine\engine.inc:21
 #, c-format
-msgid "Translations Status (Unstable Trunk)"
-msgstr "Vertaalstatus (onstabiele \"Trunk\")"
+msgid "French"
+msgstr ""
 
-#: translations\translations.inc:85
-#, c-format
-msgid "Untranslated: %d%%"
-msgstr "Onvertaald: %d%%"
-
-#: index.php:67
-#, c-format
-msgid "If you found bugs, please submit them to our <a href=\"%1$s\">bug tracker</a> or leave wishes at the <a href=\"%2$s\">feature requests</a> list."
-msgstr "Als u bugs vond, gelieve ze te sturen naar onze <a href=\"%1$s\">bug tracker</a> of uw wensen achter te laten op de <a href=\"%2$s\">functie-aanvragen</a>-lijst."
-
-#: engine\page.inc:207
-#: translations\index.php:8
-#: translations\index.php:10
-#, c-format
-msgid "Translations"
-msgstr "Vertalingen"
-
-#: engine\page.inc:204
-#, c-format
-msgid "Project Page"
-msgstr "Projectpagina"
-
-#: index.php:31
-#, c-format
-msgid "Y-m-d"
-msgstr "d-m-Y"
-
-#: engine\page.inc:245
-#, c-format
-msgid "Support this project by donating money."
-msgstr "Ondersteun dit project door geld te doneren."
-
-#: translations\index.php:7
-#, c-format
-msgid "Frhed Translations Status (Unstable Trunk)"
-msgstr "Frhed vertaalstatus (onstabiele \"Trunk\")"
-
-#: translations\translations.inc:132
-#, c-format
-msgid "Graph"
-msgstr "Grafiek"
-
-#: engine\page.inc:209
-#, c-format
-msgid "Status (Stable Branch)"
-msgstr "Status (stabiele Branch)"
-
-#: index.php:24
+#: templates\index.php:21
 #, c-format
 msgid "News"
 msgstr "Nieuws"
 
-#: index.php:74
+#: templates\index.php:71
 #, c-format
 msgid "Frhed is originally developed by <a href=\"%s\">Raihan Kibria</a>."
 msgstr "Frhed werd eerst ontwikkeld door <a href=\"%s\">Raihan Kibria</a>."
 
-#: translations\translations.inc:136
+#: templates\index.php:54
+#, c-format
+msgid "Alpha releases"
+msgstr "Alfa releases"
+
+#: engine\page.inc:207
+#, c-format
+msgid "Mailing Lists"
+msgstr "Maillijsten"
+
+#: 404.php:12
+#, c-format
+msgid "For some reason (mis-typed URL, faulty referral from another site, out-of-date search engine listing or we simply deleted a file) the page you were looking for could not be found."
+msgstr ""
+
+#: engine\page.inc:241
+#, c-format
+msgid "Support this project by donating money."
+msgstr "Ondersteun dit project door geld te doneren."
+
+#: templates\index.php:63
+#, c-format
+msgid "For support you can try the <a href=\"%1$s\">forums</a> or the <a href=\"%2$s\">mailing lists</a>."
+msgstr "Voor ondersteuning kan u de <a href=\"%1$s\">forums</a> of de <a href=\"%2$s\">maillijsten</a> proberen."
+
+#: engine\page.inc:214
+#, c-format
+msgid "Links"
+msgstr "Links"
+
+#: templates\index.php:71
+#, c-format
+msgid ""
+"Version 1.1 included many improvements and new features from versions that several other programmers had been working on.\n"
+"Unfortunately version 1.1 never matured to \"stable\" release. Latest 1.1 release is labeled as \"beta\" release."
+msgstr ""
+"Versie 1.1 bevatte veel verbeteringen en nieuwe functies van versies waar verschillende andere programmeurs aan gewerkt hadden.\n"
+"Spijtig genoeg groeide versie 1.1 nooit uit tot een \"stabiele\" release. De laatste 1.1 release wordt als \"beta\"-release gelabeld."
+
+#: templates\index.php:66
+#, c-format
+msgid ""
+"Frhed is <a href=\"%1$s\">open source</a> software and is licenced under the <a href=\"%2$s\">GNU General Public License</a>.\n"
+"This means everybody can download the source code and improve and modify them."
+msgstr ""
+"Frhed is <a href=\"%1$s\">open source</a> software en is gelicentieerd onder de <a href=\"%2$s\">GNU General Public License</a>.\n"
+"Dit betekent dat iedereen de broncode kan downloaden en ze verbeteren en wijzigen."
+
+#: templates\translations\index.php:28
+#, c-format
+msgid "Unstable Version (Trunk)"
+msgstr "Onstabiele versie (Trunk)"
+
+#: 404.php:21
+#, c-format
+msgid "<a href=\"%s\">Translations</a>?"
+msgstr ""
+
+#: engine\translations.inc:38
+#, c-format
+msgid "File not valid."
+msgstr "Ongeldig bestand."
+
+#: engine\page.inc:210
+#, c-format
+msgid "Index"
+msgstr "Index"
+
+#: 404.php:15
+#, c-format
+msgid "Were you looking for..."
+msgstr ""
+
+#: engine\page.inc:244
+#, c-format
+msgid "Website Language"
+msgstr "Taal van de website"
+
+#: 404.php:11
+#, c-format
+msgid "Page Not Found..."
+msgstr ""
+
+#: templates\index.php:64
+#, c-format
+msgid "If you found bugs, please submit them to our <a href=\"%1$s\">bug tracker</a> or leave wishes at the <a href=\"%2$s\">feature requests</a> list."
+msgstr "Als u bugs vond, gelieve ze te sturen naar onze <a href=\"%1$s\">bug tracker</a> of uw wensen achter te laten op de <a href=\"%2$s\">functie-aanvragen</a>-lijst."
+
+#: engine\page.inc:209
+#: templates\translations\index.php:5
+#: templates\translations\index.php:7
+#, c-format
+msgid "Translations"
+msgstr "Vertalingen"
+
+#: engine\page.inc:200
+#, c-format
+msgid "Project Page"
+msgstr "Projectpagina"
+
+#: engine\translations.inc:136
 #, c-format
 msgid "Last Update"
 msgstr "Laatste update"
 
-#: index.php:16
+#: templates\translations\status_branch.php:15
+#: templates\translations\status_trunk.php:15
+#, c-format
+msgid "The translations status is currently not available..."
+msgstr "De status van de vertalingen is op dit moment niet beschikbaar..."
+
+#: engine\page.inc:212
+#, c-format
+msgid "Status (Unstable Trunk)"
+msgstr "Status (onstabiele \"Trunk\")"
+
+#: templates\index.php:17
+#, c-format
+msgid "Compare files"
+msgstr "Bestanden vergelijken"
+
+#: engine\engine.inc:19
+#: templates\translations\index.php:19
+#, c-format
+msgid "English"
+msgstr "English"
+
+#: engine\translations.inc:81
+#: engine\translations.inc:95
+#: engine\translations.inc:133
+#, c-format
+msgid "Translated"
+msgstr "Vertaald"
+
+#: engine\page.inc:201
+#, c-format
+msgid "PAD File"
+msgstr "PAD-bestand"
+
+#: engine\page.inc:215
+#, c-format
+msgid "Original version from Raihan Kibria"
+msgstr "Originele versie van Raihan Kibria"
+
+#: engine\page.inc:205
+#, c-format
+msgid "Feature Requests"
+msgstr "Functie-aanvragen"
+
+#: templates\index.php:35
+#, c-format
+msgid "Download"
+msgstr "Downloaden"
+
+#: engine\page.inc:198
+#, c-format
+msgid "Home"
+msgstr "Home"
+
+#: engine\page.inc:199
+#: templates\screenshots\index.php:3
+#: templates\screenshots\index.php:4
+#, c-format
+msgid "Screenshots"
+msgstr "Screenshots"
+
+#: templates\index.php:14
+#, c-format
+msgid "Load files partially"
+msgstr "Bestanden gedeeltelijk laden"
+
+#: 404.php:9
+#, c-format
+msgid "Error 404 (Page Not Found)"
+msgstr ""
+
+#: engine\translations.inc:132
+#, c-format
+msgid "Graph"
+msgstr "Grafiek"
+
+#: engine\page.inc:203
+#: templates\index.php:62
+#, c-format
+msgid "Support"
+msgstr "Ondersteuning"
+
+#: templates\index.php:16
+#, c-format
+msgid "Search for any combination of text and binary values"
+msgstr "Zoek naar om het even welke combinatie van tekst en binaire waardes"
+
+#: engine\page.inc:215
+#, c-format
+msgid "Original Version"
+msgstr "Originele versie"
+
+#: templates\index.php:4
+#, c-format
+msgid "Frhed, free, hex editor, binary file, load partially, hexdump, compare"
+msgstr "Frhed, free, hex editor, binary file, load partially, hexdump, compare"
+
+#: engine\page.inc:240
+#, c-format
+msgid "Donate"
+msgstr "Doneren"
+
+#: engine\translations.inc:81
+#, c-format
+msgid "Translated: %d%%"
+msgstr "Vertaald: %d%%"
+
+#: templates\translations\index.php:23
+#, c-format
+msgid "Status"
+msgstr "Status"
+
+#: templates\screenshots\index.php:6
+#: templates\screenshots\index.php:8
+#, c-format
+msgid "Main Window"
+msgstr "Hoofdvenster"
+
+#: templates\translations\status_trunk.php:4
+#: templates\translations\status_trunk.php:6
+#, c-format
+msgid "Translations Status (Unstable Trunk)"
+msgstr "Vertaalstatus (onstabiele \"Trunk\")"
+
+#: engine\page.inc:211
+#, c-format
+msgid "Status (Stable Branch)"
+msgstr "Status (stabiele Branch)"
+
+#: engine\translations.inc:83
+#: engine\translations.inc:96
+#: engine\translations.inc:134
+#, c-format
+msgid "Fuzzy"
+msgstr "Onduidelijk"
+
+#: engine\translations.inc:41
+#, c-format
+msgid "File not found."
+msgstr "Bestand niet gevonden."
+
+#: templates\index.php:15
+#, c-format
+msgid "Export as hexdump to file or clipboard"
+msgstr "Exporteren als hexump naar een bestand of het klembord"
+
+#: engine\page.inc:204
+#, c-format
+msgid "Bugs"
+msgstr "Bugs"
+
+#: engine\translations.inc:269
+#, c-format
+msgid "Translators"
+msgstr "Vertalers"
+
+#: templates\index.php:3
+#: templates\index.php:8
+#, c-format
+msgid "Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially."
+msgstr "Frhed is een binaire bestandseditor voor Windows. Hij is klein maar heeft vele geavanceerde functies zoals de mogelijkheid om grote bestanden gedeeltelijk te laden."
+
+#: templates\index.php:70
+#, c-format
+msgid "History"
+msgstr "Geschiedenis"
+
+#: templates\index.php:5
+#, c-format
+msgid "Frhed News"
+msgstr "Frhed nieuws"
+
+#: templates\index.php:66
+#, c-format
+msgid "Open Source"
+msgstr "Open Source"
+
+#: templates\index.php:10
+#, c-format
+msgid "Features"
+msgstr "Functies"
+
+#: engine\engine.inc:20
+#, c-format
+msgid "German"
+msgstr "German"
+
+#: engine\page.inc:216
+#, c-format
+msgid "WinMerge"
+msgstr "WinMerge"
+
+#: engine\page.inc:206
+#, c-format
+msgid "Forums"
+msgstr "Forums"
+
+#: engine\page.inc:81
+#, c-format
+msgid "Frhed - Free hex editor"
+msgstr "Frhed - Free hex editor"
+
+#: templates\index.php:36
+#, c-format
+msgid "Stable releases"
+msgstr "Stabiele releases"
+
+#: engine\translations.inc:85
+#: engine\translations.inc:97
+#: engine\translations.inc:135
+#, c-format
+msgid "Untranslated"
+msgstr "Onvertaald"
+
+#: templates\translations\index.php:8
+#, c-format
+msgid "We currently have Frhed translated into the languages listed below:"
+msgstr "Op dit moment is Frhed vertaald in de onderstaande talen:"
+
+#: 404.php:20
+#, c-format
+msgid "<a href=\"%s\">Support</a>?"
+msgstr ""
+
+#: engine\engine.inc:22
+#, c-format
+msgid "Dutch"
+msgstr ""
+
+#: engine\translations.inc:171
+#, c-format
+msgid "Total: %d"
+msgstr "Totaal: %d"
+
+#: 404.php:19
+#, c-format
+msgid "<a href=\"%s\">Screenshots</a>?"
+msgstr ""
+
+#: engine\translations.inc:131
+#: engine\translations.inc:272
+#, c-format
+msgid "Language"
+msgstr "Taal"
+
+#: templates\index.php:28
+#, c-format
+msgid "Y-m-d"
+msgstr "d-m-Y"
+
+#: templates\translations\index.php:4
+#, c-format
+msgid "Frhed Translations Status (Unstable Trunk)"
+msgstr "Frhed vertaalstatus (onstabiele \"Trunk\")"
+
+#: templates\index.php:13
 #, c-format
 msgid "Editable file size limited only by available system memory"
 msgstr "Bewerkbare bestandsgrootte wordt alleen gelimiteerd door de beschikbare hoeveelheid systeemgeheugen"
 
-#: index.php:76
+#: templates\index.php:73
 #, c-format
 msgid ""
 "At autumn 2008 the <a href=\"%1$s\">WinMerge Team</a> decided to use Frhed as binary file editor component\n"
@@ -256,193 +458,41 @@ msgstr ""
 "voor WinMerge. Om Frhed verder te ontwikkelen wer een nieuw <a href=\"%2$s\">SourceForge-project</a>\n"
 "opgericht. Dit nieuwe project zal Frhed als een standalone product ontwikkelen."
 
-#: engine\page.inc:246
+#: engine\page.inc:242
 #, c-format
 msgid "Support this project"
 msgstr "Dit project ondersteunen"
 
-#: translations\translations.inc:41
-#, c-format
-msgid "File not found."
-msgstr "Bestand niet gevonden."
-
-#: index.php:18
-#, c-format
-msgid "Export as hexdump to file or clipboard"
-msgstr "Exporteren als hexump naar een bestand of het klembord"
-
-#: index.php:57
-#, c-format
-msgid "Alpha releases"
-msgstr "Alfa releases"
-
-#: engine\page.inc:213
-#, c-format
-msgid "Bugs"
-msgstr "Bugs"
-
-#: translations\status_branch.php:7
-#: translations\status_branch.php:9
+#: templates\translations\status_branch.php:4
+#: templates\translations\status_branch.php:6
 #, c-format
 msgid "Translations Status (Stable Branch)"
 msgstr "Vertaalstatus (stabiele Branch)"
 
-#: index.php:9
+#: templates\index.php:6
 #, c-format
 msgid "Frhed File Releases"
 msgstr "Frhed bestandsreleases"
 
-#: index.php:20
-#, c-format
-msgid "Compare files"
-msgstr "Bestanden vergelijken"
-
-#: engine\page.inc:84
-#: engine\page.inc:108
-#: engine\page.inc:201
+#: engine\page.inc:78
+#: engine\page.inc:102
+#: engine\page.inc:197
 #, c-format
 msgid "Frhed"
 msgstr "Frhed"
 
-#: engine\engine.inc:19
-#: translations\index.php:22
-#, c-format
-msgid "English"
-msgstr "English"
-
-#: index.php:33
+#: templates\index.php:30
 #, c-format
 msgid "View all news &hellip;"
 msgstr "Alle nieuws weergeven &hellip;"
 
-#: index.php:69
+#: engine\translations.inc:85
 #, c-format
-msgid "Open Source"
-msgstr "Open Source"
+msgid "Untranslated: %d%%"
+msgstr "Onvertaald: %d%%"
 
-#: translations\translations.inc:269
-#, c-format
-msgid "Translators"
-msgstr "Vertalers"
-
-#: index.php:6
-#: index.php:11
-#, c-format
-msgid "Frhed is an binary file editor for Windows. It is small but has many advanced features like ability to load big files partially."
-msgstr "Frhed is een binaire bestandseditor voor Windows. Hij is klein maar heeft vele geavanceerde functies zoals de mogelijkheid om grote bestanden gedeeltelijk te laden."
-
-#: index.php:73
-#, c-format
-msgid "History"
-msgstr "Geschiedenis"
-
-#: translations\translations.inc:38
-#, c-format
-msgid "File not valid."
-msgstr "Ongeldig bestand."
-
-#: index.php:8
-#, c-format
-msgid "Frhed News"
-msgstr "Frhed nieuws"
-
-#: engine\page.inc:205
-#, c-format
-msgid "PAD File"
-msgstr "PAD-bestand"
-
-#: index.php:66
-#, c-format
-msgid "For support you can try the <a href=\"%1$s\">forums</a> or the <a href=\"%2$s\">mailing lists</a>."
-msgstr "Voor ondersteuning kan u de <a href=\"%1$s\">forums</a> of de <a href=\"%2$s\">maillijsten</a> proberen."
-
-#: index.php:13
-#, c-format
-msgid "Features"
-msgstr "Functies"
-
-#: engine\page.inc:218
-#, c-format
-msgid "Links"
-msgstr "Links"
-
-#: engine\engine.inc:20
-#, c-format
-msgid "German"
-msgstr "German"
-
-#: engine\page.inc:215
-#, c-format
-msgid "Forums"
-msgstr "Forums"
-
-#: index.php:74
-#, c-format
-msgid ""
-"Version 1.1 included many improvements and new features from versions that several other programmers had been working on.\n"
-"Unfortunately version 1.1 never matured to \"stable\" release. Latest 1.1 release is labeled as \"beta\" release."
-msgstr ""
-"Versie 1.1 bevatte veel verbeteringen en nieuwe functies van versies waar verschillende andere programmeurs aan gewerkt hadden.\n"
-"Spijtig genoeg groeide versie 1.1 nooit uit tot een \"stabiele\" release. De laatste 1.1 release wordt als \"beta\"-release gelabeld."
-
-#: index.php:69
-#, c-format
-msgid ""
-"Frhed is <a href=\"%1$s\">open source</a> software and is licenced under the <a href=\"%2$s\">GNU General Public License</a>.\n"
-"This means everybody can download the source code and improve and modify them."
-msgstr ""
-"Frhed is <a href=\"%1$s\">open source</a> software en is gelicentieerd onder de <a href=\"%2$s\">GNU General Public License</a>.\n"
-"Dit betekent dat iedereen de broncode kan downloaden en ze verbeteren en wijzigen."
-
-#: engine\page.inc:219
-#, c-format
-msgid "Original version from Raihan Kibria"
-msgstr "Originele versie van Raihan Kibria"
-
-#: translations\index.php:31
-#, c-format
-msgid "Unstable Version (Trunk)"
-msgstr "Onstabiele versie (Trunk)"
-
-#: index.php:50
+#: templates\index.php:47
 #, c-format
 msgid "Beta releases"
 msgstr "Bèta releases"
-
-#: engine\page.inc:220
-#, c-format
-msgid "WinMerge"
-msgstr "WinMerge"
-
-#: engine\page.inc:214
-#, c-format
-msgid "Feature Requests"
-msgstr "Functie-aanvragen"
-
-#: index.php:38
-#, c-format
-msgid "Download"
-msgstr "Downloaden"
-
-#: engine\page.inc:202
-#, c-format
-msgid "Home"
-msgstr "Home"
-
-#: engine\page.inc:203
-#: screenshots\index.php:5
-#: screenshots\index.php:6
-#, c-format
-msgid "Screenshots"
-msgstr "Screenshots"
-
-#: engine\page.inc:87
-#, c-format
-msgid "Frhed - Free hex editor"
-msgstr "Frhed - Free hex editor"
-
-#: engine\page.inc:216
-#, c-format
-msgid "Mailing Lists"
-msgstr "Maillijsten"
 
