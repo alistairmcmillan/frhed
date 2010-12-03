@@ -17,6 +17,13 @@
       <ComponentRef Id="heksedit" />
       <ComponentRef Id="rawio32" />
       <ComponentRef Id="HexeditLang" />
+      <Feature Id="ExplorerContextMenu" 
+        AllowAdvertise="no" 
+        Description="Explorer context menu integration" 
+        Level="100" 
+        Title="Explorer context menu">
+        <ComponentRef Id="ExplorerContextMenu" />
+      </Feature>
       <Feature Id="StartMenuShortcuts" 
         AllowAdvertise="no" 
         Level="1" 

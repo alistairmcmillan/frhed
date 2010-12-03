@@ -39,6 +39,18 @@
       </Component>
     </DirectoryRef>
 
+    <!-- Shell Integration -->
+    <DirectoryRef Id="INSTALLDIR">
+      <Component Id="ExplorerContextMenu" Guid="*" Win64="$(var.Win64)">
+        <RegistryKey Root="HKCR" Key="*\shell\Frhed">
+          <RegistryValue Type="string" Value="Open in Frhed" />
+          <RegistryKey Key="Command">
+            <RegistryValue Type="string" Value="[INSTALLDIR]Frhed.exe %1" />
+          </RegistryKey>
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
     <!-- Startmenu shortcuts -->
     <DirectoryRef Id="FrhedMenuFolder">
       <Component Id="StartMenuShortcuts" Guid="$(var.StartMenuShortcutsGuid)" Win64="$(var.Win64)">
