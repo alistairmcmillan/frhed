@@ -3,7 +3,7 @@
   <?ifndef Platform ?> <!-- if platform NOT defined -->
     <?define Platform = "x86" ?>
   <?endif ?>
-  <?define Manufacturer = "Thingamahoochie Software" ?>
+  <?define Manufacturer = "Frhed Team" ?>
   <?define ProductName = "Frhed" ?>
   <?ifndef ProductVersion ?> <!-- if product version NOT defined -->
     <?define ProductVersion = "0.0.1" ?>
