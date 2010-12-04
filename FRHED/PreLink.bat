@@ -12,6 +12,6 @@ cscript /NOLOGO CreateMasterPotFile.vbs
 cscript /NOLOGO UpdatePoFilesFromPotFile.vbs
 cd ..\..\FRHED
 rc "/fo%ID%\lang.res" /i.. ..\Translations\Frhed\heksedit.rc
-mkdir "%TD%\..\Languages"
-link /NOLOGO /DLL /NOENTRY /MACHINE:IX86 "/OUT:%TD%\..\Languages\heksedit.lng" "%ID%\lang.res"
-copy ..\Translations\Frhed\*.po "%TD%\..\Languages"
+mkdir "%TD%\Languages"
+link /NOLOGO /DLL /NOENTRY /MACHINE:IX86 "/OUT:%TD%\Languages\heksedit.lng" "%ID%\lang.res"
+copy ..\Translations\Frhed\*.po "%TD%\Languages"
