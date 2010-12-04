@@ -54,6 +54,9 @@
     <WixVariable Id="WixUIBannerBmp" Value="Bitmaps\banner.bmp" /> 
     <WixVariable Id="WixUIDialogBmp" Value="Bitmaps\dialog.bmp" />
     
+    <Icon Id="Frhed.ico" SourceFile="..\..\FRHED\res\Frhed.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="Frhed.ico" />
+    
     <UIRef Id="WixUI_Frhed" />
     
     <UI />
