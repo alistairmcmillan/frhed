@@ -49,6 +49,16 @@
           </RegistryKey>
         </RegistryKey>
       </Component>
+      
+      <Component Id="DefaultForUnknownFiles" Guid="*" Win64="$(var.Win64)">
+        <RegistryKey Root="HKCR" Key="Unknown\shell\Frhed">
+          <RegistryValue Type="string" Value="Open in Frhed" />
+          <RegistryKey Key="Command">
+            <RegistryValue Type="string" Value="[INSTALLDIR]Frhed.exe %1" />
+          </RegistryKey>
+        </RegistryKey>
+        <RegistryValue Root="HKCR" Key="Unknown\shell" Type="string" Value="Frhed" />
+      </Component>
     </DirectoryRef>
 
     <!-- Startmenu shortcuts -->

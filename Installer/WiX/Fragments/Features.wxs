@@ -19,10 +19,17 @@
       <ComponentRef Id="HexeditLang" />
       <Feature Id="ExplorerContextMenu" 
         AllowAdvertise="no" 
-        Description="Explorer context menu integration" 
+        Description="Add Frhed to the Explorer context menu" 
         Level="100" 
         Title="Explorer context menu">
         <ComponentRef Id="ExplorerContextMenu" />
+      </Feature>
+      <Feature Id="DefaultForUnknownFiles" 
+        AllowAdvertise="no" 
+        Description="Add Frhed as default program for unknown files" 
+        Level="100" 
+        Title="Default for unknown files">
+        <ComponentRef Id="DefaultForUnknownFiles" />
       </Feature>
       <Feature Id="StartMenuShortcuts" 
         AllowAdvertise="no" 
