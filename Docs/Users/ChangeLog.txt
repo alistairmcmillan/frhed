@@ -13,6 +13,7 @@ Frhed 1.7.2
   Remove Shortcuts-dialog (r890)
   Allow bookmarking range of bytes (#3105270)
   Tweak icon for high dpi (#3120723)
+  Drop some registry menu items (#3127986)
   Bugfix: Could only load one custom encoder dll (#2834337)
   Bugfix: Read-only checkbox was inverted in View settings(r848)
   New translation:

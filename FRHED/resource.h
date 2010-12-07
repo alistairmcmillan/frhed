@@ -200,9 +200,6 @@
 #define IDM_OPEN_HEXDUMP                311
 #define IDM_MAKE_BACKUPS                312
 #define IDM_CHANGEINST                  313
-#define IDM_CONTEXT                     314
-#define IDM_UNKNOWN                     315
-#define IDM_DEFAULT                     316
 #define IDM_SAVEINI                     317
 #define ID_DISK_CLOSEDRIVE              321
 #define IDC_MANIPBITS                   322

@@ -1225,62 +1225,6 @@ void HexEditorWindow::command(int cmd)
 	case IDM_CHANGEINST: //switch instance
 		static_cast<dialog<ChangeInstDlg>*>(this)->DoModal(hwnd);
 		break;
-	case IDM_CONTEXT:
-		if (MF_CHECKED == GetMenuState(hMenu, IDM_CONTEXT, 0))
-		{
-			if (LONG err = RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed\\command"))) //WinNT requires the key to have no subkeys
-				hr = HRESULT_FROM_WIN32(err);
-			if (LONG err = RegDeleteKey(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed")))
-				hr = HRESULT_FROM_WIN32(err);
-		}
-		else
-		{
-			hr = CreateShellCommand(_T("*\\shell\\Open in Frhed\\command"));
-		}
-		break;
-	case IDM_UNKNOWN:
-		if (MF_CHECKED == GetMenuState(hMenu, IDM_UNKNOWN, 0))
-		{
-			HKEY hk;
-			if (LONG err = RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed\\command"))) //WinNT requires the key to have no subkeys
-				hr = HRESULT_FROM_WIN32(err);
-			if (LONG err = RegDeleteKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed")))
-				hr = HRESULT_FROM_WIN32(err);
-			if (LONG err = RegOpenKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), &hk))
-				hr = HRESULT_FROM_WIN32(err);
-			else
-			{
-				if (LONG err = RegDeleteValue(hk, NULL))
-					if (err != ERROR_FILE_NOT_FOUND) // No complaint for not having been the default command.
-						hr = HRESULT_FROM_WIN32(err);
-				RegCloseKey(hk);
-			}
-		}
-		else
-		{
-			hr = CreateShellCommand(_T("Unknown\\shell\\Open in Frhed\\command"));
-		}
-		break;
-	case IDM_DEFAULT:
-		if (MF_CHECKED == GetMenuState(hMenu, IDM_DEFAULT, 0))
-		{
-			HKEY hk;
-			if (LONG err = RegOpenKey(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), &hk))
-				hr = HRESULT_FROM_WIN32(err);
-			else
-			{
-				if (LONG err = RegDeleteValue(hk, NULL))
-					hr = HRESULT_FROM_WIN32(err);
-				RegCloseKey(hk);
-			}
-		}
-		else
-		{
-			if (LONG err = RegSetValue(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), REG_SZ, _T("Open in Frhed"), 13))
-				hr = HRESULT_FROM_WIN32(err);
-		}
-		break;
-//end
 	case IDM_REPLACE:
 		CMD_replace();
 		break;
@@ -2463,8 +2407,6 @@ BOOL HexEditorWindow::queryCommandEnabled(UINT id)
 		// "Apply template" is allowed if the caret is on a byte
 		// and there is no selection going on.
 		return iCurByte < m_dataArray.GetLength() && !bSelected;
-	case IDM_DEFAULT:
-		return unknownpresent();
 	case IDM_ADDBOOKMARK:
 		// "Add bookmark" is allowed if the file is not
 		// empty and there is no selection going on.
@@ -2515,10 +2457,7 @@ int HexEditorWindow::initmenupopup(WPARAM w, LPARAM l)
 		CheckMenuItem(h, IDM_MAKE_BACKUPS, bMakeBackups ? MF_CHECKED : MF_UNCHECKED);
 		break;
 	case Registry:
-		CheckMenuItem(h, IDM_CONTEXT, contextpresent() ? MF_CHECKED : MF_UNCHECKED);
-		CheckMenuItem(h, IDM_UNKNOWN, unknownpresent() ? MF_CHECKED : MF_UNCHECKED);
 		CheckMenuItem(h, IDM_SAVEINI, bSaveIni ? MF_CHECKED : MF_UNCHECKED);
-		CheckMenuItem(h, IDM_DEFAULT, defaultpresent() ? MF_CHECKED : MF_UNCHECKED);
 		break;
 	case Bookmarks:
 		// Create the bookmark list.

@@ -30,50 +30,6 @@
 #include "shtools.h"
 #include "regtools.h"
 
-BOOL contextpresent()
-{
-	HKEY key1;
-	LONG res = RegOpenKeyEx(HKEY_CLASSES_ROOT, _T("*\\shell\\Open in Frhed\\command"), 0, KEY_READ, &key1);
-	if (res == ERROR_SUCCESS) //succeeded check if has the required keys & data
-	{
-		TCHAR stringval[MAX_PATH];
-		long len = sizeof stringval;
-		RegQueryValue(key1, NULL, stringval, &len);
-		PathRemoveArgs(stringval);
-		PathUnquoteSpaces(stringval);
-		RegCloseKey(key1);
-		if (PathPointsToMe(stringval) == 0)
-			return 1;
-	}
-	return 0;
-}
-
-BOOL defaultpresent()
-{
-	TCHAR stringval[MAX_PATH];
-	long len = sizeof stringval;
-	LONG res = RegQueryValue(HKEY_CLASSES_ROOT, _T("Unknown\\shell"), stringval, &len);
-	return res == ERROR_SUCCESS && _tcscmp(stringval, _T("Open in Frhed")) == 0;
-}
-
-BOOL unknownpresent()
-{
-	HKEY key1;
-	LONG res = RegOpenKeyEx(HKEY_CLASSES_ROOT, _T("Unknown\\shell\\Open in Frhed\\command"), 0, KEY_READ, &key1);
-	if (res == ERROR_SUCCESS) //succeeded check if has the required keys & data
-	{
-		TCHAR stringval[MAX_PATH];
-		long len = sizeof stringval;
-		RegQueryValue(key1, NULL, stringval, &len);
-		PathRemoveArgs(stringval);
-		PathUnquoteSpaces(stringval);
-		RegCloseKey(key1);
-		if (PathPointsToMe(stringval) == 0)
-			return 1;
-	}
-	return 0;
-}
-
 /**
  * @brief Check if Frhed settings key already exist.
  */

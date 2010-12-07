@@ -10,39 +10,6 @@
   of the below yourself.</para>
 
   <section>
-    <title>In all context menu</title>
-
-    <para>When checked this item indicates that in the context menu of all
-    files there appears an item named <guimenuitem>Open in Frhed</guimenuitem>
-    which will launch Frhed with the file opened.</para>
-  </section>
-
-  <section>
-    <title>In unknown context menu</title>
-
-    <para>The same is true of this item except that the item appears only in
-    the context menu of files that have an extension that has not yet been
-    registered with Windows. NOTE that if both are checked both will appear on
-    the menu of unregistered files and that these files generally have an
-    <guimenuitem>Open with…</guimenuitem> command.</para>
-  </section>
-
-  <section>
-    <title>Is default in unknown context</title>
-
-    <para>When this item is checked the "Open in Frhed" command for
-    unregistered files becomes the default action when double clicking or
-    pressing enter on these files in explorer. This may not work properly but
-    it should. The reason a similar option was not provided for the all
-    context is that then you would not be able to open your files with the
-    proper applications. It is not recommended but if you wish you may do this
-    yourself - just set the default value in the key
-    "HKEY_CLASSES_ROOT\*\shell" to "<guimenuitem>Open in Frhed</guimenuitem>.
-    This is disabled if the above option is not checked. Unchecking the above
-    option unchecks and disables this one.</para>
-  </section>
-
-  <section>
     <title>Save ini when required</title>
 
     <para>When this item is unchecked Frhed will not save data to the registry

@@ -26,10 +26,7 @@
 #ifndef _REGISTRY_H_
 #define _REGISTRY_H_
 
-BOOL contextpresent();
 BOOL linkspresent();
-BOOL defaultpresent();
-BOOL unknownpresent();
 BOOL frhedpresent();
 
 #endif // _REGISTRY_H_
