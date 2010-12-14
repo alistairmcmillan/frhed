@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _HG_STREAM_H_
-#define _HG_STREAM_H_
+#ifndef FRHED_HG_STREAM_H_0ED333C227A34E8180EDFA5FAECE8BEE
+#define FRHED_HG_STREAM_H_0ED333C227A34E8180EDFA5FAECE8BEE
 
 /**
  * @brief a streaming class using global memory.
@@ -79,4 +79,4 @@ private:
 	unsigned _escfilt:1;
 };
 
-#endif // _HG_STREAM_H_
+#endif

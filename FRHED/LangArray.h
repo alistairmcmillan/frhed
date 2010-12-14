@@ -23,6 +23,9 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
+#ifndef FRHED_LANG_ARRAY_H_AF999CA3D8994ADD8D5F66F0DCA80762
+#define FRHED_LANG_ARRAY_H_AF999CA3D8994ADD8D5F66F0DCA80762
+
 #include "Simparr.h"
 
 class LangArray : public SimpleArray<char *>
@@ -52,3 +55,5 @@ public:
 	static int LangCodeMajor(LANGID, LPTSTR);
 	static int LangCodeMinor(LANGID, LPTSTR);
 };
+
+#endif

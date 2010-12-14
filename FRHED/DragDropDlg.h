@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _DRAG_DROP_DLG_H_
-#define _DRAG_DROP_DLG_H_
+#ifndef FRHED_DRAG_DROP_DLG_H_F19ADC1A93094D95A38A19D358920D6D
+#define FRHED_DRAG_DROP_DLG_H_F19ADC1A93094D95A38A19D358920D6D
 
 #include "resource.h"
 
@@ -51,4 +51,4 @@ protected:
 	BOOL OnCommand(HWND, WPARAM, LPARAM);
 };
 
-#endif // _DRAG_DROP_DLG_H_
+#endif

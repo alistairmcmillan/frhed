@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _HEKSEDIT_H_
-#define _HEKSEDIT_H_
+#ifndef FRHED_HEKSEDIT_H_597300F6BC434DBA8AF76E5DD3E8BD1E
+#define FRHED_HEKSEDIT_H_597300F6BC434DBA8AF76E5DD3E8BD1E
 
 #ifndef HEKSEDIT_INTERFACE_VERSION
 #define HEKSEDIT_INTERFACE_VERSION 1
@@ -113,4 +113,4 @@ public:
 	virtual void STDMETHODCALLTYPE CMD_select_all() = 0;
 };
 
-#endif // _HEKSEDIT_H_
+#endif

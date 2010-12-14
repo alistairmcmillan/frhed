@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _HEXFILE_STREAM_H_
-#define _HEXFILE_STREAM_H_
+#ifndef FRHED_HEXFILE_STREAM_H_DBC3177782454FB8B3655E0600AA6C0A
+#define FRHED_HEXFILE_STREAM_H_DBC3177782454FB8B3655E0600AA6C0A
 
 /**
  * @brief Hex streaming interface.
@@ -164,4 +164,4 @@ public:
 	}
 };
 
-#endif // _HEXFILE_STREAM_H_
+#endif

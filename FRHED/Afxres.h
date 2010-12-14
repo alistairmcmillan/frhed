@@ -8,8 +8,8 @@
 // See these sources for detailed information regarding the
 // Microsoft Foundation Classes product.
 
-#ifndef __AFXRES_H__
-#define __AFXRES_H__
+#ifndef FRHED_AFXRES_H_7904889B1FB94DF493293AA43628C76D
+#define FRHED_AFXRES_H_7904889B1FB94DF493293AA43628C76D
 
 #ifdef RC_INVOKED
 #ifndef _INC_WINDOWS
@@ -769,6 +769,6 @@
 #pragma component(minrebuild, on)
 #endif
 
-#endif //__AFXRES_H__
+#endif
 
 /////////////////////////////////////////////////////////////////////////////

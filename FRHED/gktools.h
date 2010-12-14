@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef gktools_h
-#define gktools_h
+#ifndef FRHED_GKTOOLS_H_1BBCB83800EC460BAB1983F8B08477A0
+#define FRHED_GKTOOLS_H_1BBCB83800EC460BAB1983F8B08477A0
 
 BOOL WINAPI GetDllExportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize);
 BOOL WINAPI GetDllImportNames(LPCTSTR pszFilename, ULONG* lpulOffset, ULONG* lpulSize);
@@ -52,4 +52,4 @@ public:
 };
 
 
-#endif // gktools_h
+#endif

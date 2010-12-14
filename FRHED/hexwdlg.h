@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _HEXW_DLG_H_
-#define _HEXW_DLG_H_
+#ifndef FRHED_HEXW_DLG_H_3E1C8BA9BBF64B099DDB253E8E8FC1F5
+#define FRHED_HEXW_DLG_H_3E1C8BA9BBF64B099DDB253E8E8FC1F5
 
 #include "Simparr.h"
 #include "UnicodeString.h"
@@ -430,4 +430,4 @@ private:
 	BOOL Apply(HWND);
 };
 
-#endif // _HEXW_DLG_H_
+#endif

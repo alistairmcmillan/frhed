@@ -23,10 +23,10 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _REGISTRY_H_
-#define _REGISTRY_H_
+#ifndef FRHED_REGISTRY_H_98C11ECD2500495796B53E1F6FD5546B
+#define FRHED_REGISTRY_H_98C11ECD2500495796B53E1F6FD5546B
 
 BOOL linkspresent();
 BOOL frhedpresent();
 
-#endif // _REGISTRY_H_
+#endif

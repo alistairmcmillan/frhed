@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _LANG_STRING_H_
-#define _LANG_STRING_H_
+#ifndef FRHED_LANG_STRING_H_1358A9E6F4A2455DB2C1F36955A44907
+#define FRHED_LANG_STRING_H_1358A9E6F4A2455DB2C1F36955A44907
 
 #include "StringTable.h"
 
@@ -45,4 +45,4 @@ public:
 	operator PCTSTR() { return m_str; }
 };
 
-#endif // _LANG_STRING_H_
+#endif

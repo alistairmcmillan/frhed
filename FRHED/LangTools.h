@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _LANG_TOOLS_H_
-#define _LANG_TOOLS_H_
+#ifndef FRHED_LANG_TOOLS_H_FC9B9C7930B14218869471711D3CB16F
+#define FRHED_LANG_TOOLS_H_FC9B9C7930B14218869471711D3CB16F
 
 class LangArray;
 extern LangArray langArray;
@@ -32,4 +32,4 @@ extern LangArray langArray;
 void NTAPI TranslateDialog(HWND);
 INT_PTR NTAPI ShowModalDialog(UINT, HWND, DLGPROC, LPVOID);
 
-#endif // _LANG_TOOLS_H_
+#endif

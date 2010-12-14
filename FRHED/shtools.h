@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _SHTOOLS_H_
-#define _SHTOOLS_H_
+#ifndef FRHED_SHTOOLS_H_D011422EE0B24F18859141A774CD385C
+#define FRHED_SHTOOLS_H_D011422EE0B24F18859141A774CD385C
 
 STDAPI CreateLink(LPCTSTR lpszPathObj, LPCTSTR lpszPathLink);
 STDAPI CreateLinkToMe(LPCTSTR lpszPathLink);
@@ -34,4 +34,4 @@ STDAPI PathPointsToMe(LPCTSTR);
 STDAPI CreateShellCommand(LPCTSTR);
 STDAPI GetLongPathNameWin32(LPCTSTR lpszShortPath, LPTSTR lpszLongPath);
 
-#endif // _SHTOOLS_H_
+#endif

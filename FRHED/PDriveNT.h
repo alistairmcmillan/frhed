@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef PDriveNT_h
-#define PDriveNT_h
+#ifndef FRHED_PDRIVENT_H_4156BCA65FB74F50BC0FF91F24019793
+#define FRHED_PDRIVENT_H_4156BCA65FB74F50BC0FF91F24019793
 
 #include "physicaldrive.h"
 
@@ -48,6 +48,6 @@ public:
 	INT64 m_BytesPerSector;
 };
 
-#endif // PDriveNT_h
+#endif
 
 

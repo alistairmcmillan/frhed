@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _ENCODER_LIB_H_
-#define _ENCODER_LIB_H_
+#ifndef FRHED_ENCODER_LIB_H_0F657EE4088A43A983FAC504D9AFFB78
+#define FRHED_ENCODER_LIB_H_0F657EE4088A43A983FAC504D9AFFB78
 
 #include "UnicodeString.h"
 
@@ -61,4 +61,4 @@ typedef LPMEMORY_CODING_DESCRIPTION (WINAPI* LPFNGetMemoryCodings)();
 void WINAPI XorEncoder(MEMORY_CODING* p);
 void WINAPI Rot13Encoder(LPMEMORY_CODING p);
 
-#endif // _ENCODER_LIB_H_
+#endif

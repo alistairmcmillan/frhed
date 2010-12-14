@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef ids_h
-#define ids_h
+#ifndef FRHED_IDS_H_770C0C0CE6514332B68A5FCA9B823320
+#define FRHED_IDS_H_770C0C0CE6514332B68A5FCA9B823320
 
 class CDropSource: public IDropSource
 {
@@ -46,4 +46,4 @@ public:
 	STDMETHODIMP QueryContinueDrag(BOOL fEscapePressed, DWORD grfKeyState);
 };
 
-#endif // ids_h
+#endif

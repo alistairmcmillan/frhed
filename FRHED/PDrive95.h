@@ -1,5 +1,5 @@
-#ifndef PDrive95_h
-#define PDrive95_h
+#ifndef FRHED_PDRIVE95_H_0BE3497DEDEB43E89828D24BCC844DAD
+#define FRHED_PDRIVE95_H_0BE3497DEDEB43E89828D24BCC844DAD
 
 #include "RAWIO32.h"
 #include "physicaldrive.h"
@@ -41,4 +41,4 @@ private:
 	static struct RAWIO32 *RAWIO32;
 };
 
-#endif // PDrive95_h
+#endif

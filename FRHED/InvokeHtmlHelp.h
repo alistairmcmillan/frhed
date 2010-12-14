@@ -23,9 +23,9 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _INVOKE_HTML_HELP_H_
-#define _INVOKE_HTML_HELP_H_
+#ifndef FRHED_INVOKE_HTML_HELP_H_E59E782F9C2E47E785631E48A50B72C1
+#define FRHED_INVOKE_HTML_HELP_H_E59E782F9C2E47E785631E48A50B72C1
 
 void ShowHtmlHelp( UINT uCommand, LPCTSTR path, HWND hParentWindow );
 
-#endif // _INVOKE_HTML_HELP_H_
+#endif

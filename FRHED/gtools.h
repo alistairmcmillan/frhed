@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef gtools_h
-#define gtools_h
+#ifndef FRHED_GTOOLS_H_CEF4CC415DF24F70B19694B86E48240E
+#define FRHED_GTOOLS_H_CEF4CC415DF24F70B19694B86E48240E
 
 class PNode : public LIST_ENTRY
 {
@@ -97,4 +97,4 @@ public:
 
 void TRACE(const char* pszFormat,...);
 
-#endif // gtools_h
+#endif

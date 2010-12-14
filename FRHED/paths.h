@@ -23,12 +23,12 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _PATHS_H_
-#define _PATHS_H_
+#ifndef FRHED_PATHS_H_AEFBD4A1A5CE4F4D9AC111A880C6B127
+#define FRHED_PATHS_H_AEFBD4A1A5CE4F4D9AC111A880C6B127
 
 bool paths_DoesFileExist(LPCTSTR file);
 void paths_GetFullPath(LPCTSTR path, LPTSTR fullpath, int size);
 void paths_GetModulePath(HMODULE hModule, LPTSTR path, int size);
 void paths_OpenFile(HWND hwnd, LPCTSTR file);
 
-#endif // _PATHS_H_
+#endif

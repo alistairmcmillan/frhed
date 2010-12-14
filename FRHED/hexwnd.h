@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef hexwnd_h
-#define hexwnd_h
+#ifndef FRHED_HEXWND_H_0B6B1AAACEA247D08DC102238FC06041
+#define FRHED_HEXWND_H_0B6B1AAACEA247D08DC102238FC06041
 
 #include "Simparr.h"
 #include "IDT.h"
@@ -389,4 +389,4 @@ enum OPTYP { OPTYP_MOVE, OPTYP_COPY };
 extern OPTYP iMoveOpTyp;
 extern const CLIPFORMAT CF_BINARYDATA;
 extern const CLIPFORMAT CF_RICH_TEXT_FORMAT;
-#endif // hexwnd_h
+#endif

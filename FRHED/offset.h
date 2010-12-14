@@ -23,10 +23,10 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _OFFSET_H_
-#define _OFFSET_H_
+#ifndef FRHED_OFFSET_H_B21FEFC3C1A34B72B23A1754B2DC9D95
+#define FRHED_OFFSET_H_B21FEFC3C1A34B72B23A1754B2DC9D95
 
 bool offset_parse(LPCTSTR str, int &offset);
 bool offset_parse64(LPCTSTR str, INT64 &offset);
 
-#endif _OFFSET_H_
+#endif

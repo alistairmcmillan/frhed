@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _STRING_TABLE_H_
-#define _STRING_TABLE_H_
+#ifndef FRHED_STRING_TABLE_H_DAE283F7C052430C9937B1D563BC5D3D
+#define FRHED_STRING_TABLE_H_DAE283F7C052430C9937B1D563BC5D3D
 
 /**
  * @brief A struct holding resource strings (translated).
@@ -45,4 +45,4 @@ extern StringTable<WORD> IDS;
 
 #define GetLangString(id) ::S.m_##id
 
-#endif // _STRING_TABLE_H_
+#endif

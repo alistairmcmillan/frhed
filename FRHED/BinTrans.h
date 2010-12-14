@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef BinTrans_h
-#define BinTrans_h
+#ifndef FRHED_BINTRANS_H_E0E5C979B2AA49F3A56D46EF2BC3C74D
+#define FRHED_BINTRANS_H_E0E5C979B2AA49F3A56D46EF2BC3C74D
 
 #include "UnicodeString.h"
 #include "Simparr.h"
@@ -53,4 +53,4 @@ private:
 	String m_str; /**< String for conversion. */
 };
 
-#endif // BinTrans_h
+#endif

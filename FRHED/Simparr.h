@@ -7,8 +7,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef simplearr_h
-#define simplearr_h
+#ifndef FRHED_SIMPLEARR_H_80F70DE188054EBFA1C3979C01099475
+#define FRHED_SIMPLEARR_H_80F70DE188054EBFA1C3979C01099475
 
 const int ARR_EMPTY = -1;
 
@@ -110,4 +110,4 @@ public:
 SimpleString operator+(const SimpleString &ps1, LPCTSTR ps2);
 SimpleString operator+(LPCTSTR ps1, const SimpleString &ps2);
 
-#endif // simplearr_h
+#endif

@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _ANSI_CONVERT_H_
-#define _ANSI_CONVERT_H_
+#ifndef FRHED_ANSI_CONVERT_H_04C718D4726843F4AFFCDE8B07EFAEEA
+#define FRHED_ANSI_CONVERT_H_04C718D4726843F4AFFCDE8B07EFAEEA
 
 /**
  * @brief Convert string from wide char to ANSI.

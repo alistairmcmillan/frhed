@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _FIND_CTXT_H_
-#define _FIND_CTXT_H_
+#ifndef FRHED_FIND_CTXT_H_C37B7BA9F3D740C19A93B2FFC7856804
+#define FRHED_FIND_CTXT_H_C37B7BA9F3D740C19A93B2FFC7856804
 
 class FindCtxt
 {
@@ -47,4 +47,4 @@ private:
 	TCHAR *m_pText; /**< Text to find. */
 };
 
-#endif // _FIND_CTXT_H_
+#endif

@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _REGTOOLS_H_
-#define _REGTOOLS_H_
+#ifndef FRHED_REGTOOLS_H_D96E5653E8724027A4284C194B8606DA
+#define FRHED_REGTOOLS_H_D96E5653E8724027A4284C194B8606DA
 
 /*Recursively delete key for WinNT
 Don't use this under Win9x
@@ -34,4 +34,4 @@ returns the return value of RegDeleteKey(basekey,keynam)*/
 LONG RegDeleteWinNTKey(HKEY basekey, LPCTSTR keynam);
 LONG RegCopyValues(HKEY src, LPCTSTR skey, HKEY dst, LPCTSTR dkey);
 
-#endif // _REGTOOLS_H_
+#endif

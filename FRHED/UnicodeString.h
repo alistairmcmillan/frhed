@@ -24,8 +24,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _UNICODE_STRING_
-#define _UNICODE_STRING_
+#ifndef FRHED_UNICODE_STRING_H_1A66CF8DDEFC4FA19374B787BE7AA9F6
+#define FRHED_UNICODE_STRING_H_1A66CF8DDEFC4FA19374B787BE7AA9F6
 
 #include <string>
 
@@ -52,4 +52,4 @@ String string_trim_ws_end(const String & str);
 // Formatting
 String string_format(const TCHAR *fmt, ...);
 
-#endif // _UNICODE_STRING_
+#endif

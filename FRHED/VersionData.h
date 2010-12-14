@@ -3,6 +3,9 @@ This code has been released into the public domain and may be used
 for any purposes whatsoever without acknowledgment.
 */
 
+#ifndef FRHED_VERSIONDATA_H_9FF3081142A84DD7AB23B9EFE4B68E03
+#define FRHED_VERSIONDATA_H_9FF3081142A84DD7AB23B9EFE4B68E03
+
 class CVersionData
 {
 private:
@@ -55,3 +58,5 @@ public:
 		return (const CVersionData *)LoadResource(hModule, hRes);
 	}
 };
+
+#endif

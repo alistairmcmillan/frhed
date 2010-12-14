@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef PMemoryBlock_h
-#define PMemoryBlock_h
+#ifndef FRHED_PMEMORYBLOCK_H_61BD94AE4F3345ABA7E5A17C16118F1C
+#define FRHED_PMEMORYBLOCK_H_61BD94AE4F3345ABA7E5A17C16118F1C
 
 /**
  * @brief A class handling dynamically allocated memory block. The maximum
@@ -52,4 +52,4 @@ protected:
 	DWORD m_dwSize;
 };
 
-#endif // PMemoryBlock_h
+#endif

@@ -23,9 +23,9 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _OS_TOOLS_H_
-#define _OS_TOOLS_H_
+#ifndef FRHED_OS_TOOLS_H_FB8FBF6E40514208B201147C34859332
+#define FRHED_OS_TOOLS_H_FB8FBF6E40514208B201147C34859332
 
 BOOL ostools_HaveAdminAccess();
 
-#endif // _OS_TOOLS_H_
+#endif

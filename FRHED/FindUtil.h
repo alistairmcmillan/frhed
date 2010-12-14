@@ -23,9 +23,9 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _FIND_UTIL_H_
-#define _FIND_UTIL_H_
+#ifndef FRHED_FIND_UTIL_H_0E97FF14A9C143B9B4213CEA2A6399E4
+#define FRHED_FIND_UTIL_H_0E97FF14A9C143B9B4213CEA2A6399E4
 
 int findutils_FindBytes(BYTE* ps, int ls, BYTE* pb, int lb, int mode, bool case_sensitive);
 
-#endif // _FIND_UTIL_H_
+#endif

@@ -7,8 +7,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _TEMPLATE_H_
-#define _TEMPLATE_H_
+#ifndef FRHED_TEMPLATE_H_8C962AF6E3C04862BA0BD7D2D76A6C7C
+#define FRHED_TEMPLATE_H_8C962AF6E3C04862BA0BD7D2D76A6C7C
 
 #include "Simparr.h"
 #include "UnicodeString.h"
@@ -52,4 +52,4 @@ private:
 	SimpleArray<BYTE> *m_pDataArray; /**< Original data. */
 };
 
-#endif // _TEMPLATE_H_
+#endif

@@ -23,11 +23,11 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _CLIPBOARD_H_
-#define _CLIPBOARD_H_
+#ifndef FRHED_CLIPBOARD_H_1C40192F862A4A9FB62DF59616630B9B
+#define FRHED_CLIPBOARD_H_1C40192F862A4A9FB62DF59616630B9B
 
 void TextToClipboard(HWND hwnd, TCHAR *text);
 void TextToClipboard(HWND hwnd, TCHAR *text, int len);
 void MessageCopyBox(HWND hwnd, LPTSTR text, UINT type);
 
-#endif // _CLIPBOARD_H_
+#endif

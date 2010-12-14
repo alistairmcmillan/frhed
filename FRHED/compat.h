@@ -1,5 +1,5 @@
-#ifndef compat_h
-#define compat_h
+#ifndef FRHED_COMPAT_H_19941B3C3FE245A59A83B8979D02F1E8
+#define FRHED_COMPAT_H_19941B3C3FE245A59A83B8979D02F1E8
 
 //For cygwin and those with old SDKs
 #ifndef DD_DEFSCROLLINSET
@@ -121,4 +121,4 @@ typedef LPOSVERSIONINFOEXW LPOSVERSIONINFOEX;
 
 #endif //__CYGWIN__
 
-#endif //compat_h
+#endif

@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _HEX_DUMP_H_
-#define _HEX_DUMP_H_
+#ifndef FRHED_HEX_DUMP_H_D7B0E1BCDD464F8C81F5719A075917A9
+#define FRHED_HEX_DUMP_H_D7B0E1BCDD464F8C81F5719A075917A9
 
 #include "simparr.h"
 
@@ -58,4 +58,4 @@ private:
 };
 
 
-#endif // _HEX_DUMP_H_
+#endif

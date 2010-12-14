@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef ido_h
-#define ido_h
+#ifndef FRHED_IDO_H_7B65DBA00107409188C6E9646B62EE73
+#define FRHED_IDO_H_7B65DBA00107409188C6E9646B62EE73
 
 struct DataSpecifier
 {
@@ -97,4 +97,4 @@ public:
 	STDMETHODIMP Clone(IEnumFORMATETC ** ppenum);
 };
 
-#endif // ido_h
+#endif

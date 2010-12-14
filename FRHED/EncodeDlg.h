@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef ENCODE_DECODE_DLG_H
-#define ENCODE_DECODE_DLG_H
+#ifndef FRHED_ENCODE_DECODE_DLG_H_0B1AF174F4814C4BB53DBF93DC225FEA
+#define FRHED_ENCODE_DECODE_DLG_H_0B1AF174F4814C4BB53DBF93DC225FEA
 
 #include "hexwnd.h"
 #include "resource.h"
@@ -43,4 +43,4 @@ private:
 	BOOL OnOK(HWND, WPARAM, LPARAM);
 };
 
-#endif // ENCODE_DECODE_DLG_H
+#endif

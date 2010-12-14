@@ -1,5 +1,5 @@
-#ifndef diskio32_H
-#define diskio32_H
+#ifndef FRHED_DISKIO32_H_83C1AAB720AD467DB165FC1CB3CC2EBE
+#define FRHED_DISKIO32_H_83C1AAB720AD467DB165FC1CB3CC2EBE
 
 #ifdef __cplusplus
 extern "C" {
@@ -102,4 +102,4 @@ typedef DWORD (WINAPI* LPFNEI13WriteSector)(LPBlockInfo b, LPBYTE lpBuffer, DWOR
 } // extern "C" 
 #endif
 
-#endif // diskio32_H
+#endif

@@ -1,5 +1,5 @@
-#ifndef idt_h
-#define idt_h
+#ifndef FRHED_IDT_H_3C7D4FBFCA9C4071B414648DE7FA280F
+#define FRHED_IDT_H_3C7D4FBFCA9C4071B414648DE7FA280F
 
 class HexEditorWindow;
 
@@ -30,4 +30,4 @@ public:
 	STDMETHODIMP Drop(IDataObject* pDataObject, DWORD grfKeyState, POINTL pt, DWORD * pdwEffect);
 };
 
-#endif // idt_h
+#endif

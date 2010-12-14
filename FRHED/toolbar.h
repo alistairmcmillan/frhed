@@ -1,4 +1,4 @@
-#ifndef toolbar_h
-#define toolbar_h
+#ifndef FRHED_TOOLBAR_H_EAC832FF17384AB9B78CE0758F9AE89C
+#define FRHED_TOOLBAR_H_EAC832FF17384AB9B78CE0758F9AE89C
 HWND CreateTBar(HWND, HINSTANCE);
-#endif // toolbar_h
+#endif

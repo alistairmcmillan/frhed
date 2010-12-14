@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef _HEX_FILE_H_
-#define _HEX_FILE_H_
+#ifndef FRHED_HEX_FILE_H_6C2A02E8DAC346138624D7F930E785A3
+#define FRHED_HEX_FILE_H_6C2A02E8DAC346138624D7F930E785A3
 
 #include "HexFileStream.h"
 
@@ -88,4 +88,4 @@ private:
 	int m_charset;
 };
 
-#endif // _HEX_FILE_H_
+#endif

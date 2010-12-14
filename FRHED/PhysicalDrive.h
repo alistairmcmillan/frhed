@@ -23,8 +23,8 @@
 // ID line follows -- this is updated by SVN
 // $Id$
 
-#ifndef PNtPhysicalDrive_h
-#define PNtPhysicalDrive_h
+#ifndef FRHED_PNTPHYSICALDRIVE_H_0B75F1A46FB746868BC3CA494235D967
+#define FRHED_PNTPHYSICALDRIVE_H_0B75F1A46FB746868BC3CA494235D967
 
 #include <WinIoCtl.h>
 
@@ -64,6 +64,6 @@ public:
 
 IPhysicalDrive* CreatePhysicalDriveInstance();
 
-#endif // PNtPhysicalDrive_h
+#endif
 
 
