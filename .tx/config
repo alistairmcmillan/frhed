@@ -1,0 +1,18 @@
+[main]
+host = https://www.transifex.net
+
+[frhed.frhed]
+file_filter = Translations\Frhed\<lang>.po
+source_file = Translations\Frhed\en-US.pot
+source_lang = en
+trans.de = Translations\Frhed\de.po
+trans.fr = Translations\Frhed\fr.po
+trans.nl = Translations\Frhed\nl.po
+
+[frhed.web]
+file_filter = Translations\Web\<lang>.po
+source_file = Translations\Web\en-US.pot
+source_lang = en
+trans.de = Translations\Web\de.po
+trans.fr = Translations\Web\fr.po
+trans.nl = Translations\Web\nl.po
