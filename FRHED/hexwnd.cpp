@@ -3654,7 +3654,7 @@ void HexEditorWindow::save_ini_data()
 		for (i = 1; i <= MRUMAX; i++)
 		{
 			_sntprintf(fname, keyname_size - 1, _T("MRU_File%d"), i );
-			RegSetValueEx(key1, fname, 0, REG_SZ, (CONST BYTE*) &(strMRU[i-1][0]), _tcslen(&(strMRU[i-1][0])) + 1);
+			RegSetValueEx(key1, fname, 0, REG_SZ, (CONST BYTE*) &(strMRU[i-1][0]), (_tcslen(&(strMRU[i-1][0])) + 1)*sizeof(TCHAR));
 		}
 
 		// Close registry.
