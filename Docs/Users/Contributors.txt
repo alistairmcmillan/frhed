@@ -5,7 +5,7 @@ Original developer:
 Raihan Kibria <raihan@kibria.de>
 
 Current project (@SourceForge) lead:
-Kimmo Varis <kimmov@winmerge.org>
+Kimmo Varis <kimmov@gmail.com>
 
 Developers (@SourceForge):
 Tim Gerundt <gerundt@users.sourceforge.net>
