@@ -40,8 +40,7 @@
   <li><a href="#Environment">Environment</a></li>
   <li><a href="#ProjectFiles">Project Files</a></li>
   <li><a href="#Compiling">Compiling</a></li>
-  <li><a href="#VS2005">Visual Studio 2005 &amp; 2008 Manifest Files</a>
- </ol>
+</ol>
 
 <h3><a name="GettingSources">Getting Sources</a></h3>
 <p>
@@ -52,23 +51,21 @@ Frhed homepage</a>. Direct link to SourceForge.net downloads: <a href=
 "https://sourceforge.net/project/showfiles.php?group_id=236485">Frhed downloads</a>.
 </p>
 
-<p>The latest codes are available from Frhed Subversion repository. Instructions
-for accessing Frhed Subversion repository can be fround
-<a href="https://sourceforge.net/svn/?group_id=236485">here</a>. In short,
-checkout from url <a href="https://frhed.svn.sourceforge.net/svnroot/frhed/trunk">
-https://frhed.svn.sourceforge.net/svnroot/frhed/trunk</a>. 
-</p>
+<p>The latest codes are available from Mercurial repository at
+<a href="http://bitbucket.org/kimmov/frhed">https://bitbucket.org/kimmov/frhed</a>.
+You can either clone the repository using <a href="http://mercurial.selenic.com/">
+Mercurial</a> software or download the source archive.</p>
 
 <h3><a name="Environment">Environment</a></h3>
 <h4>Supported Compilers</h4>
 <ul>
-  <li>Visual Studio 2003.Net + Service Pack 1</li>
-  <li>Visual Studio 2005 (Service Pack 1 recommended)- Used for releases</li>
-  <li>Visual Studio 2008 (Service Pack 1 recommended)</li>
-  <li>Visual Studio C++ 2008 Express Edition</li>
+  <li>Visual Studio 2005 (Service Pack 1 recommended)</li>
+  <li>Visual Studio 2008 (Service Pack 1 recommended) - Used for releases</li>
+  <li>Visual Studio C++ 2010</li>
+  <li>Visual Studio C++ 2010 Express Edition</li>
 </ul>
 
-<p><b>Visual Studio c++ 2008 Express Edition</b> is a free compiler available
+<p><b>Visual Studio c++ 2010 Express Edition</b> is a free compiler available
 from <a href="http://www.microsoft.com/Express/">http://www.microsoft.com/Express/</a>.
 You don't need to buy commercial Visual Studio edition for compiling Frhed.
 Express Edition does not countain resource editor but you can use any of the
@@ -87,7 +84,7 @@ The HtmlHelp library is available as a part of <i>HTML Help Workshop</i> and as
 part of <i>Platform SDK</i> (PSDK).</p>
 
 <h3><a name="ProjectFiles">Project Files</a></h3>
-<p>The sources contain solution and project files for Visual Studio 2003. But
+<p>The sources contain solution and project files for Visual Studio 2008. But
 later Visual Studio versions convert those files to new format.</p>
 
 <p>Frhed consist of three projects:
@@ -110,32 +107,6 @@ The dependencies are such that:
   <li>Select the <code>frhed</code> project as a startup project</li>
   <li>Select <code>Rebuild all</code> to compile
 </ul>
-
-<h3><a name="VS2005">Visual Studio 2005 &amp; 2008 Manifest Files</a></h3>
-<p>When VS2003 project file (.vcproj) is converted to a Visual Studio 2005 or
-2008 project, the visual styles do not get enabled. The problem is Visual
-Studio 2005 and 2008 automatically generate and embed a manifest file for the
-executable, but that generated manifest file does not include all needed
-properties to enable visual styles. The solution is to add extended manifest
-file as an additional manifest.</p>
-
-<p>From project properties, set<br>
-  <code>Manifest Tool / Input and Output / Additional Manifest Files</code>
-   -property value to:<br>
-  <code>$(InputDir)\res\Frhed.exe.manifest</code><br>
-  More general form of:<br>
-  <code>$(InputDir)\res\$(TargetFileName).manifest</code><br>
-  should work too but currently it does not for some reason.
-</p>
-
-<p>There is a Python script <code>Tools/fix_manifest.py</code> which
-does the conversion. Note that the script re-formats the project file XML
-structure when saving so do not generate patches without first opening and
-saving the project file with Visual Studio.</p>
-
-<p>See also <a href="http://forums.microsoft.com/MSDN/ShowPost.aspx?PostID=143306&amp;SiteID=1">
-Manifests in VS2005-- What are they?</a> -thread in Microsoft forum.
-</p>
 
 </body>
 </html>
