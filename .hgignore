@@ -2,6 +2,9 @@ syntax: glob
 *.suo
 *.bak
 *.user
+*.ncb
+*.sdf
+*.orig
 
 syntax: regexp
 ^Build$
