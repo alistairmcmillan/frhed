@@ -16,6 +16,7 @@ Frhed 1.7.2
   Drop some registry menu items (#3127986)
   Bugfix: Could only load one custom encoder dll (#2834337)
   Bugfix: Read-only checkbox was inverted in View settings(r848)
+  Bugfix: Allow upper-case hex numbers for byte format (#3175775)
   New translation:
   - Dutch (r822)
 

@@ -179,7 +179,8 @@ int Text2BinTranslator::iIsBytecode(LPCTSTR src, int len)
 
 		case 'h':
 			if ((src[k] >= '0' && src[k] <= '9') ||
-					(src[k] >= 'a' && src[k] <= 'f'))
+					(src[k] >= 'a' && src[k] <= 'f') ||
+					(src[k] >= 'A' && src[k] <= 'F'))
 				continue;
 			else
 				return 0; // Non-hex-digit.
@@ -221,7 +222,7 @@ int Text2BinTranslator::iTranslateOneBytecode(BYTE* dest, LPCTSTR src, int srcle
 			break;
 		else
 		{
-			buf[k++] = src[i];
+			buf[k++] = _totlower(src[i]);
 		}
 	}
 	buf[k] = 0;
