@@ -198,6 +198,7 @@
       $sidenaventry->addSubEntry($translations->prepareLink('/{lang}/'), __('Home'));
       $sidenaventry->addSubEntry($translations->prepareLink('/{lang}/screenshots/'), __('Screenshots'));
       $sidenaventry->addSubEntry('http://sourceforge.net/projects/frhed', __('Project Page'));
+      $sidenaventry->addSubEntry('https://bitbucket.org/kimmov/frhed', __('Source Code Repository'));
       $sidenaventry->addSubEntry('/frhed_pad.xml', __('PAD File'));
       $sidenaventries[] = $sidenaventry;
       $sidenaventry = new SideNavEntry('', __('Support'));
