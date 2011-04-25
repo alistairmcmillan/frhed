@@ -68,7 +68,7 @@
 This means everybody can download the source code and improve and modify them.', 'http://www.opensource.org/', 'http://www.gnu.org/licenses/gpl-2.0.html'));
   
   $page->printHeading(__('History'));
-  $page->printPara(__('Frhed is originally developed by <a href="%s">Raihan Kibria</a>.', 'http://www.kibria.de/frhed.html'));
+  $page->printPara(__('Frhed is originally developed by <strong>Raihan Kibria</strong>.'));
   $page->printPara(__('Version 1.1 included many improvements and new features from versions that several other programmers had been working on.
 Unfortunately version 1.1 never matured to "stable" release. Latest 1.1 release is labeled as "beta" release.'));
   $page->printPara(__('At autumn 2008 the <a href="%1$s">WinMerge Team</a> decided to use Frhed as binary file editor component

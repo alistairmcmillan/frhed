@@ -212,7 +212,6 @@
       $sidenaventry->addSubEntry($translations->prepareLink('/{lang}/translations/status_trunk.php'), __('Status (Unstable Trunk)'));
       $sidenaventries[] = $sidenaventry;
       $sidenaventry = new SideNavEntry('', __('Links'));
-      $sidenaventry->addSubEntry('http://www.kibria.de/frhed.html', __('Original Version'), __('Original version from Raihan Kibria'));
       $sidenaventry->addSubEntry('http://winmerge.org/', __('WinMerge'));
       $sidenaventries[] = $sidenaventry;
       

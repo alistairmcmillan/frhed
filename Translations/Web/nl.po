@@ -79,8 +79,8 @@ msgstr "Nieuws"
 
 #: templates\index.php:71
 #, c-format
-msgid "Frhed is originally developed by <a href=\"%s\">Raihan Kibria</a>."
-msgstr "Frhed werd eerst ontwikkeld door <a href=\"%s\">Raihan Kibria</a>."
+msgid "Frhed is originally developed by <strong>Raihan Kibria</strong>."
+msgstr "Frhed werd eerst ontwikkeld door <strong>Raihan Kibria</strong>."
 
 #: templates\index.php:54
 #, c-format
