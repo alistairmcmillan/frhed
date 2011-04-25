@@ -47,15 +47,16 @@ msgstr "Modèle"
 msgid "<a href=\"%s\">Download</a>?"
 msgstr ""
 
-#: templates\translations\index.php:24
+#: templates\index.php:71
 #, c-format
-msgid "The following two pages inform you about the translations status of the stable and developer version of Frhed:"
-msgstr "Les deux pages suivantes vous informent sur le statut de la traduction des versions stables et du développeur de Frhed:"
+msgid "Frhed is originally developed by <strong>Raihan Kibria</strong>."
+msgstr "Frhed a été développé à l'origine par <strong>Raihan Kibria</strong>."
 
-#: engine\translations.inc:83
+#: templates\translations\status_branch.php:15
+#: templates\translations\status_trunk.php:15
 #, c-format
-msgid "Fuzzy: %d%%"
-msgstr "Confus: %d%%"
+msgid "The translations status is currently not available..."
+msgstr "Le statut de l'a traduction est actuellement indisponible..."
 
 #: templates\translations\index.php:27
 #, c-format
@@ -77,17 +78,12 @@ msgstr ""
 msgid "News"
 msgstr "News"
 
-#: templates\index.php:71
-#, c-format
-msgid "Frhed is originally developed by <strong>Raihan Kibria</strong>."
-msgstr "Frhed a été développé à l'origine par <strong>Raihan Kibria</strong>."
-
 #: templates\index.php:54
 #, c-format
 msgid "Alpha releases"
 msgstr "Versions alpha"
 
-#: engine\page.inc:207
+#: engine\page.inc:208
 #, c-format
 msgid "Mailing Lists"
 msgstr ""
@@ -107,7 +103,7 @@ msgstr "Supportez ce projet en donnant de l'argent."
 msgid "For support you can try the <a href=\"%1$s\">forums</a> or the <a href=\"%2$s\">mailing lists</a>."
 msgstr "Pour le support vous pouvez essayer les <a href=\"%1$s\">forums</a> ou les <a href=\"%2$s\">listes de diffusion</a>."
 
-#: engine\page.inc:214
+#: engine\page.inc:215
 #, c-format
 msgid "Links"
 msgstr "Liens"
@@ -145,7 +141,12 @@ msgstr ""
 msgid "File not valid."
 msgstr "Le fichiers n'est pas valide."
 
-#: engine\page.inc:210
+#: engine\page.inc:201
+#, c-format
+msgid "Source Code Repository"
+msgstr ""
+
+#: engine\page.inc:211
 #, c-format
 msgid "Index"
 msgstr "Index"
@@ -170,7 +171,7 @@ msgstr ""
 msgid "If you found bugs, please submit them to our <a href=\"%1$s\">bug tracker</a> or leave wishes at the <a href=\"%2$s\">feature requests</a> list."
 msgstr "Si vous trouvez des bogues, veuillez nous les soumettre <a href=\"%1$s\">traqueur de bogues</a>ou exprimez vos souhaits à la liste de<a href=\"%2$s\">requête de fonction</a>."
 
-#: engine\page.inc:209
+#: engine\page.inc:210
 #: templates\translations\index.php:5
 #: templates\translations\index.php:7
 #, c-format
@@ -182,18 +183,22 @@ msgstr "Traductions"
 msgid "Project Page"
 msgstr "Page du projet"
 
+#: templates\translations\index.php:24
+#, c-format
+msgid "The following two pages inform you about the translations status of the stable and developer version of Frhed:"
+msgstr "Les deux pages suivantes vous informent sur le statut de la traduction des versions stables et du développeur de Frhed:"
+
 #: engine\translations.inc:136
 #, c-format
 msgid "Last Update"
 msgstr "Dernière mise à jour"
 
-#: templates\translations\status_branch.php:15
-#: templates\translations\status_trunk.php:15
+#: engine\translations.inc:83
 #, c-format
-msgid "The translations status is currently not available..."
-msgstr "Le statut de l'a traduction est actuellement indisponible..."
+msgid "Fuzzy: %d%%"
+msgstr "Confus: %d%%"
 
-#: engine\page.inc:212
+#: engine\page.inc:213
 #, c-format
 msgid "Status (Unstable Trunk)"
 msgstr "Statut (Tronçon instable)"
@@ -216,17 +221,12 @@ msgstr "Anglais"
 msgid "Translated"
 msgstr "traduit"
 
-#: engine\page.inc:201
+#: engine\page.inc:202
 #, c-format
 msgid "PAD File"
 msgstr "Fichier PAD"
 
-#: engine\page.inc:215
-#, c-format
-msgid "Original version from Raihan Kibria"
-msgstr "Version originale de Raihan Kibria"
-
-#: engine\page.inc:205
+#: engine\page.inc:206
 #, c-format
 msgid "Feature Requests"
 msgstr "Requêtes de fonctions"
@@ -263,7 +263,7 @@ msgstr ""
 msgid "Graph"
 msgstr "Graphique"
 
-#: engine\page.inc:203
+#: engine\page.inc:204
 #: templates\index.php:62
 #, c-format
 msgid "Support"
@@ -273,11 +273,6 @@ msgstr "Support"
 #, c-format
 msgid "Search for any combination of text and binary values"
 msgstr "Recherche de toute combinaison de texte et valeurs binaires"
-
-#: engine\page.inc:215
-#, c-format
-msgid "Original Version"
-msgstr "Version originale"
 
 #: templates\index.php:4
 #, c-format
@@ -311,7 +306,7 @@ msgstr "Fenêtre principale"
 msgid "Translations Status (Unstable Trunk)"
 msgstr "Statut de la traduction (Tronçon instable)"
 
-#: engine\page.inc:211
+#: engine\page.inc:212
 #, c-format
 msgid "Status (Stable Branch)"
 msgstr "Statut (Branche stable)"
@@ -333,7 +328,7 @@ msgstr "Fichier non trouvé."
 msgid "Export as hexdump to file or clipboard"
 msgstr "Exporter comme hexdump vers le fichier ou le presse-papier"
 
-#: engine\page.inc:204
+#: engine\page.inc:205
 #, c-format
 msgid "Bugs"
 msgstr "Bogues"
@@ -379,7 +374,7 @@ msgstr "Allemand"
 msgid "WinMerge"
 msgstr "WinMerge"
 
-#: engine\page.inc:206
+#: engine\page.inc:207
 #, c-format
 msgid "Forums"
 msgstr "Forums"

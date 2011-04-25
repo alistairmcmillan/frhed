@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?atid=1100163&group_id=236485\n"
-"POT-Creation-Date: 2010-12-01 15:21+0000\n"
+"POT-Creation-Date: 2011-04-25 17:43+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: English <frhed-support@lists.sourceforge.net>\n"
@@ -44,14 +44,15 @@ msgstr ""
 msgid "<a href=\"%s\">Download</a>?"
 msgstr ""
 
-#: templates\translations\index.php:24
+#: templates\index.php:71
 #, c-format
-msgid "The following two pages inform you about the translations status of the stable and developer version of Frhed:"
+msgid "Frhed is originally developed by <strong>Raihan Kibria</strong>."
 msgstr ""
 
-#: engine\translations.inc:83
+#: templates\translations\status_branch.php:15
+#: templates\translations\status_trunk.php:15
 #, c-format
-msgid "Fuzzy: %d%%"
+msgid "The translations status is currently not available..."
 msgstr ""
 
 #: templates\translations\index.php:27
@@ -74,17 +75,12 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: templates\index.php:71
-#, c-format
-msgid "Frhed is originally developed by <strong>Raihan Kibria</strong>."
-msgstr ""
-
 #: templates\index.php:54
 #, c-format
 msgid "Alpha releases"
 msgstr ""
 
-#: engine\page.inc:207
+#: engine\page.inc:208
 #, c-format
 msgid "Mailing Lists"
 msgstr ""
@@ -104,7 +100,7 @@ msgstr ""
 msgid "For support you can try the <a href=\"%1$s\">forums</a> or the <a href=\"%2$s\">mailing lists</a>."
 msgstr ""
 
-#: engine\page.inc:214
+#: engine\page.inc:215
 #, c-format
 msgid "Links"
 msgstr ""
@@ -134,7 +130,12 @@ msgstr ""
 msgid "File not valid."
 msgstr ""
 
-#: engine\page.inc:210
+#: engine\page.inc:201
+#, c-format
+msgid "Source Code Repository"
+msgstr ""
+
+#: engine\page.inc:211
 #, c-format
 msgid "Index"
 msgstr ""
@@ -159,7 +160,7 @@ msgstr ""
 msgid "If you found bugs, please submit them to our <a href=\"%1$s\">bug tracker</a> or leave wishes at the <a href=\"%2$s\">feature requests</a> list."
 msgstr ""
 
-#: engine\page.inc:209
+#: engine\page.inc:210
 #: templates\translations\index.php:5
 #: templates\translations\index.php:7
 #, c-format
@@ -171,18 +172,22 @@ msgstr ""
 msgid "Project Page"
 msgstr ""
 
+#: templates\translations\index.php:24
+#, c-format
+msgid "The following two pages inform you about the translations status of the stable and developer version of Frhed:"
+msgstr ""
+
 #: engine\translations.inc:136
 #, c-format
 msgid "Last Update"
 msgstr ""
 
-#: templates\translations\status_branch.php:15
-#: templates\translations\status_trunk.php:15
+#: engine\translations.inc:83
 #, c-format
-msgid "The translations status is currently not available..."
+msgid "Fuzzy: %d%%"
 msgstr ""
 
-#: engine\page.inc:212
+#: engine\page.inc:213
 #, c-format
 msgid "Status (Unstable Trunk)"
 msgstr ""
@@ -205,17 +210,12 @@ msgstr ""
 msgid "Translated"
 msgstr ""
 
-#: engine\page.inc:201
+#: engine\page.inc:202
 #, c-format
 msgid "PAD File"
 msgstr ""
 
-#: engine\page.inc:215
-#, c-format
-msgid "Original version from Raihan Kibria"
-msgstr ""
-
-#: engine\page.inc:205
+#: engine\page.inc:206
 #, c-format
 msgid "Feature Requests"
 msgstr ""
@@ -252,7 +252,7 @@ msgstr ""
 msgid "Graph"
 msgstr ""
 
-#: engine\page.inc:203
+#: engine\page.inc:204
 #: templates\index.php:62
 #, c-format
 msgid "Support"
@@ -261,11 +261,6 @@ msgstr ""
 #: templates\index.php:16
 #, c-format
 msgid "Search for any combination of text and binary values"
-msgstr ""
-
-#: engine\page.inc:215
-#, c-format
-msgid "Original Version"
 msgstr ""
 
 #: templates\index.php:4
@@ -300,7 +295,7 @@ msgstr ""
 msgid "Translations Status (Unstable Trunk)"
 msgstr ""
 
-#: engine\page.inc:211
+#: engine\page.inc:212
 #, c-format
 msgid "Status (Stable Branch)"
 msgstr ""
@@ -322,7 +317,7 @@ msgstr ""
 msgid "Export as hexdump to file or clipboard"
 msgstr ""
 
-#: engine\page.inc:204
+#: engine\page.inc:205
 #, c-format
 msgid "Bugs"
 msgstr ""
@@ -368,7 +363,7 @@ msgstr ""
 msgid "WinMerge"
 msgstr ""
 
-#: engine\page.inc:206
+#: engine\page.inc:207
 #, c-format
 msgid "Forums"
 msgstr ""

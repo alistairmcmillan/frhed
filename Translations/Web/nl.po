@@ -2,7 +2,7 @@
 # Released under the "GNU General Public License"
 #
 # Translators:
-# * Thomas De Rocker <thomasderocker@yahoo.com>
+# * Thomas De Rocker <thomasderocker@hotmail.com>
 #
 # ID line follows -- this is updated by SVN
 # $Id$
@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?atid=1100163&group_id=236485\n"
 "POT-Creation-Date: 2009-08-12 20:02+0000\n"
 "PO-Revision-Date: 2009-08-13 02:37-0700\n"
-"Last-Translator: Thomas De Rocker <thomasderocker@yahoo.com>\n"
+"Last-Translator: Thomas De Rocker <thomasderocker@hotmail.com>\n"
 "Language-Team: Dutch <frhed-support@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,15 +47,16 @@ msgstr "Sjabloon"
 msgid "<a href=\"%s\">Download</a>?"
 msgstr ""
 
-#: templates\translations\index.php:24
+#: templates\index.php:71
 #, c-format
-msgid "The following two pages inform you about the translations status of the stable and developer version of Frhed:"
-msgstr "De volgende twee pagina's geven informatie over de vertaalstatus van de stabiele en ontwikkelingsversie van Frhed:"
+msgid "Frhed is originally developed by <strong>Raihan Kibria</strong>."
+msgstr "Frhed werd eerst ontwikkeld door <strong>Raihan Kibria</strong>."
 
-#: engine\translations.inc:83
+#: templates\translations\status_branch.php:15
+#: templates\translations\status_trunk.php:15
 #, c-format
-msgid "Fuzzy: %d%%"
-msgstr "Onduidelijk: %d%%"
+msgid "The translations status is currently not available..."
+msgstr "De status van de vertalingen is op dit moment niet beschikbaar..."
 
 #: templates\translations\index.php:27
 #, c-format
@@ -77,17 +78,12 @@ msgstr ""
 msgid "News"
 msgstr "Nieuws"
 
-#: templates\index.php:71
-#, c-format
-msgid "Frhed is originally developed by <strong>Raihan Kibria</strong>."
-msgstr "Frhed werd eerst ontwikkeld door <strong>Raihan Kibria</strong>."
-
 #: templates\index.php:54
 #, c-format
 msgid "Alpha releases"
 msgstr "Alfa releases"
 
-#: engine\page.inc:207
+#: engine\page.inc:208
 #, c-format
 msgid "Mailing Lists"
 msgstr "Maillijsten"
@@ -107,7 +103,7 @@ msgstr "Ondersteun dit project door geld te doneren."
 msgid "For support you can try the <a href=\"%1$s\">forums</a> or the <a href=\"%2$s\">mailing lists</a>."
 msgstr "Voor ondersteuning kan u de <a href=\"%1$s\">forums</a> of de <a href=\"%2$s\">maillijsten</a> proberen."
 
-#: engine\page.inc:214
+#: engine\page.inc:215
 #, c-format
 msgid "Links"
 msgstr "Links"
@@ -145,7 +141,12 @@ msgstr ""
 msgid "File not valid."
 msgstr "Ongeldig bestand."
 
-#: engine\page.inc:210
+#: engine\page.inc:201
+#, c-format
+msgid "Source Code Repository"
+msgstr ""
+
+#: engine\page.inc:211
 #, c-format
 msgid "Index"
 msgstr "Index"
@@ -170,7 +171,7 @@ msgstr ""
 msgid "If you found bugs, please submit them to our <a href=\"%1$s\">bug tracker</a> or leave wishes at the <a href=\"%2$s\">feature requests</a> list."
 msgstr "Als u bugs vond, gelieve ze te sturen naar onze <a href=\"%1$s\">bug tracker</a> of uw wensen achter te laten op de <a href=\"%2$s\">functie-aanvragen</a>-lijst."
 
-#: engine\page.inc:209
+#: engine\page.inc:210
 #: templates\translations\index.php:5
 #: templates\translations\index.php:7
 #, c-format
@@ -182,18 +183,22 @@ msgstr "Vertalingen"
 msgid "Project Page"
 msgstr "Projectpagina"
 
+#: templates\translations\index.php:24
+#, c-format
+msgid "The following two pages inform you about the translations status of the stable and developer version of Frhed:"
+msgstr "De volgende twee pagina's geven informatie over de vertaalstatus van de stabiele en ontwikkelingsversie van Frhed:"
+
 #: engine\translations.inc:136
 #, c-format
 msgid "Last Update"
 msgstr "Laatste update"
 
-#: templates\translations\status_branch.php:15
-#: templates\translations\status_trunk.php:15
+#: engine\translations.inc:83
 #, c-format
-msgid "The translations status is currently not available..."
-msgstr "De status van de vertalingen is op dit moment niet beschikbaar..."
+msgid "Fuzzy: %d%%"
+msgstr "Onduidelijk: %d%%"
 
-#: engine\page.inc:212
+#: engine\page.inc:213
 #, c-format
 msgid "Status (Unstable Trunk)"
 msgstr "Status (onstabiele \"Trunk\")"
@@ -216,17 +221,12 @@ msgstr "English"
 msgid "Translated"
 msgstr "Vertaald"
 
-#: engine\page.inc:201
+#: engine\page.inc:202
 #, c-format
 msgid "PAD File"
 msgstr "PAD-bestand"
 
-#: engine\page.inc:215
-#, c-format
-msgid "Original version from Raihan Kibria"
-msgstr "Originele versie van Raihan Kibria"
-
-#: engine\page.inc:205
+#: engine\page.inc:206
 #, c-format
 msgid "Feature Requests"
 msgstr "Functie-aanvragen"
@@ -263,7 +263,7 @@ msgstr ""
 msgid "Graph"
 msgstr "Grafiek"
 
-#: engine\page.inc:203
+#: engine\page.inc:204
 #: templates\index.php:62
 #, c-format
 msgid "Support"
@@ -273,11 +273,6 @@ msgstr "Ondersteuning"
 #, c-format
 msgid "Search for any combination of text and binary values"
 msgstr "Zoek naar om het even welke combinatie van tekst en binaire waardes"
-
-#: engine\page.inc:215
-#, c-format
-msgid "Original Version"
-msgstr "Originele versie"
 
 #: templates\index.php:4
 #, c-format
@@ -311,7 +306,7 @@ msgstr "Hoofdvenster"
 msgid "Translations Status (Unstable Trunk)"
 msgstr "Vertaalstatus (onstabiele \"Trunk\")"
 
-#: engine\page.inc:211
+#: engine\page.inc:212
 #, c-format
 msgid "Status (Stable Branch)"
 msgstr "Status (stabiele Branch)"
@@ -333,7 +328,7 @@ msgstr "Bestand niet gevonden."
 msgid "Export as hexdump to file or clipboard"
 msgstr "Exporteren als hexump naar een bestand of het klembord"
 
-#: engine\page.inc:204
+#: engine\page.inc:205
 #, c-format
 msgid "Bugs"
 msgstr "Bugs"
@@ -379,7 +374,7 @@ msgstr "German"
 msgid "WinMerge"
 msgstr "WinMerge"
 
-#: engine\page.inc:206
+#: engine\page.inc:207
 #, c-format
 msgid "Forums"
 msgstr "Forums"
