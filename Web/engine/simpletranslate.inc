@@ -130,12 +130,23 @@
      * @return string Link with replaced root directory
      */
     public function replaceRootDirectory($link, $id = '') {
-      if (!empty($id)) {
-        return preg_replace('/^\/[a-z][a-z](\/?)/', '/' . $id . '$1', $link);
+      if (preg_match('#^\/[a-z]{2,3}\/?$#', $link)) { //if "/de/"...
+        $replacement = !empty($id) ? '/' . $id . '$1' : '/';
+        return preg_replace('#^\/[a-z]{2,3}(\/?)#', $replacement, $link);
       }
-      else {
-        return preg_replace('/^\/[a-z][a-z](\/?)/', '/$1', $link);
+      elseif (preg_match('#^\/[a-z]{2,3}-[a-z]+\/?$#', $link)) { //if "/de-at/"...
+        $replacement = !empty($id) ? '/' . $id . '$1' : '/';
+        return preg_replace('#^\/[a-z]{2,3}-[a-z]+(\/?)#', $replacement, $link);
       }
+      elseif (preg_match('#^\/[a-z]{2,3}\/.+#', $link)) { //if "/de/test/"...
+        $replacement = !empty($id) ? '/' . $id . '/' : '/';
+        return preg_replace('#^\/[a-z]{2,3}\/#', $replacement, $link);
+      }
+      elseif (preg_match('#^\/[a-z]{2,3}-[a-z]+\/.+#', $link)) { //if "/de-at/test/"...
+        $replacement = !empty($id) ? '/' . $id . '/' : '/';
+        return preg_replace('#^\/[a-z]{2,3}-[a-z]+\/#', $replacement, $link);
+      }
+      return $link;
     }
 
     /**

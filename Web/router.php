@@ -42,14 +42,14 @@
           Send301($path . '/');
           break;
       //Old "screenshots" and "translations" paths...
-      case '/{lang}reenshots':
-      case '/{lang}reenshots/':
-      case '/{lang}anslations':
-      case '/{lang}anslations/':
-      case '/{lang}anslations/status_branch.php':
-      case '/{lang}anslations/status_branch_rss.php':
-      case '/{lang}anslations/status_trunk.php':
-      case '/{lang}anslations/status_trunk_rss.php':
+      case '/screenshots':
+      case '/screenshots/':
+      case '/translations':
+      case '/translations/':
+      case '/translations/status_branch.php':
+      case '/translations/status_branch_rss.php':
+      case '/translations/status_trunk.php':
+      case '/translations/status_trunk_rss.php':
           Send301('/en' . $path);
           break;
       //Unknown paths...
