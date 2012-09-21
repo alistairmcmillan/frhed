@@ -80,7 +80,7 @@ def main():
     for php_file in php_files: #For all php files...
         getTranslationsFromPhpFile(php_file, translations)
     
-    potfile = open('en-US.pot', 'w')
+    potfile = open('en-US.pot', 'wb')
     potfile.write('# This file is part from Frhed <http://frhed.sf.net/>\n')
     potfile.write('# Released under the "GNU General Public License"\n')
     potfile.write('#\n')
