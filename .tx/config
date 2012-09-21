@@ -16,3 +16,5 @@ source_lang = en
 trans.de = Translations\Web\de.po
 trans.fr = Translations\Web\fr.po
 trans.nl = Translations\Web\nl.po
+trans.pt_BR = Translations\Web\pt.po
+trans.ja = Translations\Web\ja.po

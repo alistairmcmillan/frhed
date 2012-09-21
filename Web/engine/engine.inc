@@ -20,6 +20,8 @@
   $translations->addLanguage('de', __('German'), $languagesdir . 'de.po');
   $translations->addLanguage('fr', __('French'), $languagesdir . 'fr.po');
   $translations->addLanguage('nl', __('Dutch'), $languagesdir . 'nl.po');
+  $translations->addLanguage('pt', __('Portuguese'), $languagesdir . 'pt.po');
+  $translations->addLanguage('ja', __('Japanese'), $languagesdir . 'ja.po');
   if (!$translations->detectLanguageFromRootDirectory()) { //if NOT detect language from root directory...
     $translations->detectLanguageFromBrowser();
   }

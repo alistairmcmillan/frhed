@@ -1,14 +1,11 @@
 # This file is part from Frhed <http://frhed.sf.net/>
 # Released under the "GNU General Public License"
 #
-# ID line follows -- this is updated by SVN
-# $Id$
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?atid=1100163&group_id=236485\n"
-"POT-Creation-Date: 2011-04-25 17:43+0000\n"
+"POT-Creation-Date: 2012-09-21 22:11+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: English <frhed-support@lists.sourceforge.net>\n"
@@ -49,10 +46,9 @@ msgstr ""
 msgid "Frhed is originally developed by <strong>Raihan Kibria</strong>."
 msgstr ""
 
-#: templates\translations\status_branch.php:15
-#: templates\translations\status_trunk.php:15
+#: engine\translations.inc:83
 #, c-format
-msgid "The translations status is currently not available..."
+msgid "Fuzzy: %d%%"
 msgstr ""
 
 #: templates\translations\index.php:27
@@ -80,7 +76,7 @@ msgstr ""
 msgid "Alpha releases"
 msgstr ""
 
-#: engine\page.inc:208
+#: engine\page.inc:207
 #, c-format
 msgid "Mailing Lists"
 msgstr ""
@@ -90,17 +86,12 @@ msgstr ""
 msgid "For some reason (mis-typed URL, faulty referral from another site, out-of-date search engine listing or we simply deleted a file) the page you were looking for could not be found."
 msgstr ""
 
-#: engine\page.inc:241
+#: engine\page.inc:240
 #, c-format
 msgid "Support this project by donating money."
 msgstr ""
 
-#: templates\index.php:63
-#, c-format
-msgid "For support you can try the <a href=\"%1$s\">forums</a> or the <a href=\"%2$s\">mailing lists</a>."
-msgstr ""
-
-#: engine\page.inc:215
+#: engine\page.inc:214
 #, c-format
 msgid "Links"
 msgstr ""
@@ -135,7 +126,7 @@ msgstr ""
 msgid "Source Code Repository"
 msgstr ""
 
-#: engine\page.inc:211
+#: engine\page.inc:210
 #, c-format
 msgid "Index"
 msgstr ""
@@ -145,7 +136,7 @@ msgstr ""
 msgid "Were you looking for..."
 msgstr ""
 
-#: engine\page.inc:244
+#: engine\page.inc:243
 #, c-format
 msgid "Website Language"
 msgstr ""
@@ -160,7 +151,7 @@ msgstr ""
 msgid "If you found bugs, please submit them to our <a href=\"%1$s\">bug tracker</a> or leave wishes at the <a href=\"%2$s\">feature requests</a> list."
 msgstr ""
 
-#: engine\page.inc:210
+#: engine\page.inc:209
 #: templates\translations\index.php:5
 #: templates\translations\index.php:7
 #, c-format
@@ -182,12 +173,13 @@ msgstr ""
 msgid "Last Update"
 msgstr ""
 
-#: engine\translations.inc:83
+#: templates\translations\status_branch.php:15
+#: templates\translations\status_trunk.php:15
 #, c-format
-msgid "Fuzzy: %d%%"
+msgid "The translations status is currently not available..."
 msgstr ""
 
-#: engine\page.inc:213
+#: engine\page.inc:212
 #, c-format
 msgid "Status (Unstable Trunk)"
 msgstr ""
@@ -268,7 +260,7 @@ msgstr ""
 msgid "Frhed, free, hex editor, binary file, load partially, hexdump, compare"
 msgstr ""
 
-#: engine\page.inc:240
+#: engine\page.inc:239
 #, c-format
 msgid "Donate"
 msgstr ""
@@ -295,7 +287,7 @@ msgstr ""
 msgid "Translations Status (Unstable Trunk)"
 msgstr ""
 
-#: engine\page.inc:212
+#: engine\page.inc:211
 #, c-format
 msgid "Status (Stable Branch)"
 msgstr ""
@@ -358,14 +350,9 @@ msgstr ""
 msgid "German"
 msgstr ""
 
-#: engine\page.inc:216
+#: engine\page.inc:215
 #, c-format
 msgid "WinMerge"
-msgstr ""
-
-#: engine\page.inc:207
-#, c-format
-msgid "Forums"
 msgstr ""
 
 #: engine\page.inc:81
@@ -383,6 +370,11 @@ msgstr ""
 #: engine\translations.inc:135
 #, c-format
 msgid "Untranslated"
+msgstr ""
+
+#: templates\index.php:63
+#, c-format
+msgid "For support you can try the <a href=\"%1$s\">mailing lists</a>."
 msgstr ""
 
 #: templates\translations\index.php:8
@@ -436,7 +428,7 @@ msgstr ""
 msgid "At autumn 2008 the <a href=\"%1$s\">WinMerge Team</a> decided to use Frhed as binary file editor component\nfor WinMerge. For developing Frhed further new <a href=\"%2$s\">SourceForge project</a>\nwas created. This new project will develop Frhed as stand alone product."
 msgstr ""
 
-#: engine\page.inc:242
+#: engine\page.inc:241
 #, c-format
 msgid "Support this project"
 msgstr ""
@@ -467,6 +459,16 @@ msgstr ""
 #: engine\translations.inc:85
 #, c-format
 msgid "Untranslated: %d%%"
+msgstr ""
+
+#: engine\engine.inc:23
+#, c-format
+msgid "Portuguese"
+msgstr ""
+
+#: engine\engine.inc:24
+#, c-format
+msgid "Japanese"
 msgstr ""
 
 #: templates\index.php:47

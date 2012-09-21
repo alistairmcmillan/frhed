@@ -2,20 +2,20 @@
 # Released under the "GNU General Public License"
 #
 # Translators:
-# Tim Gerundt <tim@gerundt.de>, 2011.
+# Tadashi Jokagi <elf2000@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Frhed\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?atid=1100163&group_id=236485&func=browse\n"
 "POT-Creation-Date: 2012-09-21 21:38+0000\n"
-"PO-Revision-Date: 2012-09-21 20:03+0000\n"
+"PO-Revision-Date: 2012-09-21 19:57+0000\n"
 "Last-Translator: Tim Gerundt <tim@gerundt.de>\n"
-"Language-Team: German (http://www.transifex.com/projects/p/frhed/language/de/)\n"
+"Language-Team: Japanese (http://www.transifex.com/projects/p/frhed/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Basepath: ../../Web/\n"
 "X-Poedit-Language: English\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -25,67 +25,67 @@ msgstr ""
 msgid ""
 "This site has recently undergone a major re-working, so that might explain "
 "why you got this page instead."
-msgstr "Diese Seite wurde kürzlich einer großen Überarbeitung unterzogen, was erklären könnte, warum Sie diese Seite angezeigt bekommen."
+msgstr ""
 
 #: engine\page.inc:103
 #, c-format
 msgid "<b>Fr</b>ee <b>h</b>ex <b>ed</b>itor"
-msgstr "<b>Fr</b>eier <b>H</b>ex<b>ed</b>itor"
+msgstr "<b>Fr</b>ee <b>h</b>ex <b>ed</b>itor"
 
 #: templates\translations\index.php:3
 #, c-format
 msgid "Frhed Translations Status (Stable Branch)"
-msgstr "Frhed Übersetzungs-Status (Stabiler „Branch“)"
+msgstr "Frhed の翻訳状況 (安定版ブランチ)"
 
 #: engine\translations.inc:169
 #, c-format
 msgid "Template"
-msgstr "Vorlage"
+msgstr "テンプレート"
 
 #: 404.php:18
 #, c-format
 msgid "<a href=\"%s\">Download</a>?"
-msgstr "<a href=\"%s\">Download</a>?"
+msgstr "<a href=\"%s\">ダウンロード</a>しますか?"
 
 #: templates\index.php:71
 #, c-format
 msgid "Frhed is originally developed by <strong>Raihan Kibria</strong>."
-msgstr "Frhed ist ursprünglich von <strong>Raihan Kibria</strong> entwickelt worden."
+msgstr ""
 
 #: engine\translations.inc:83
 #, c-format
 msgid "Fuzzy: %d%%"
-msgstr "Unklar: %d%%"
+msgstr "揺らぎ: %d%%"
 
 #: templates\translations\index.php:27
 #, c-format
 msgid "Stable Version (Branch)"
-msgstr "Stabile Version (Branch)"
+msgstr "安定版 (ブランチ)"
 
 #: templates\screenshots\index.php:10
 #, c-format
 msgid "The main window from Frhed."
-msgstr "Das Hauptfenster von Frhed."
+msgstr "Frhed のメイン ウィンドウです。"
 
 #: engine\engine.inc:21
 #, c-format
 msgid "French"
-msgstr "Französisch"
+msgstr "フランス語"
 
 #: templates\index.php:21
 #, c-format
 msgid "News"
-msgstr "Neuigkeiten"
+msgstr "お知らせ"
 
 #: templates\index.php:54
 #, c-format
 msgid "Alpha releases"
-msgstr "Alpha-Freigaben"
+msgstr "αリリース"
 
 #: engine\page.inc:207
 #, c-format
 msgid "Mailing Lists"
-msgstr "Verteilerlisten"
+msgstr "メーリングリスト"
 
 #: 404.php:12
 #, c-format
@@ -93,71 +93,71 @@ msgid ""
 "For some reason (mis-typed URL, faulty referral from another site, out-of-"
 "date search engine listing or we simply deleted a file) the page you were "
 "looking for could not be found."
-msgstr "Aus irgendeinem Grund (vertippte URL, fehlerhafte Verlinkung von einer anderen Seite, nicht mehr aktuelle Einträge in Suchmaschinen oder wir haben einfach eine Datei gelöscht) konnte die Seite, die Sie suchen, nicht gefunden werden."
+msgstr ""
 
 #: engine\page.inc:240
 #, c-format
 msgid "Support this project by donating money."
-msgstr "Unterstützen Sie dieses Projekt mit Geldspenden."
+msgstr "お金の寄付でこのプロジェクトをサポートします。"
 
 #: engine\page.inc:214
 #, c-format
 msgid "Links"
-msgstr "Links"
+msgstr "リンク"
 
 #: templates\index.php:71
 #, c-format
 msgid ""
 "Version 1.1 included many improvements and new features from versions that several other programmers had been working on.\n"
 "Unfortunately version 1.1 never matured to \"stable\" release. Latest 1.1 release is labeled as \"beta\" release."
-msgstr "Version 1.1 enthielt viele Verbesserungen und neue Funktionen aus verschiedenen andere Versionen, an denen Programmierer gearbeitet hatten.\nLeider hat es Version 1.1 nie zu einer \"stabilen\" Freigabe geschafft. Die Version 1.1 ist nur als \"Beta\" freigeben."
+msgstr ""
 
 #: templates\index.php:66
 #, c-format
 msgid ""
 "Frhed is <a href=\"%1$s\">open source</a> software and is licenced under the <a href=\"%2$s\">GNU General Public License</a>.\n"
 "This means everybody can download the source code and improve and modify them."
-msgstr "Frhed ist <a href=\"%1$s\">Open-Source</a> Software und ist unter der <a href=\"%2$s\">GNU General Public License</a> lizenziert.\nDas bedeutet, dass sich jeder die Quelltexte zum Modifizieren und Verbessern herunterladen kann."
+msgstr "Frhed は <a href=\"%2$s\">GNU 一般公衆ライセンス</a> のもとでライセンスされた <a href=\"%1$s\">オープンソース</a> ソフトウェアです。\nこれは誰もがソースコードをダウンロードし、それらを変更、改善できることを意味します。"
 
 #: templates\translations\index.php:28
 #, c-format
 msgid "Unstable Version (Trunk)"
-msgstr "Unstabile Version (Trunk)"
+msgstr "開発版 (Trunk)"
 
 #: 404.php:21
 #, c-format
 msgid "<a href=\"%s\">Translations</a>?"
-msgstr "<a href=\"%s\">Übersetzungen</a>?"
+msgstr "<a href=\"%s\">翻訳</a>しますか?"
 
 #: engine\translations.inc:38
 #, c-format
 msgid "File not valid."
-msgstr "Datei nicht gültig."
+msgstr "ファイルが正しくありません。"
 
 #: engine\page.inc:201
 #, c-format
 msgid "Source Code Repository"
-msgstr "Quelltext-Repository"
+msgstr ""
 
 #: engine\page.inc:210
 #, c-format
 msgid "Index"
-msgstr "Index"
+msgstr ""
 
 #: 404.php:15
 #, c-format
 msgid "Were you looking for..."
-msgstr "Suchten Sie..."
+msgstr ""
 
 #: engine\page.inc:243
 #, c-format
 msgid "Website Language"
-msgstr "Webseiten-Sprache"
+msgstr "ウェブ サイトの言語"
 
 #: 404.php:11
 #, c-format
 msgid "Page Not Found..."
-msgstr "Seite nicht gefunden..."
+msgstr "ページが見つかりません。"
 
 #: templates\index.php:64
 #, c-format
@@ -165,177 +165,177 @@ msgid ""
 "If you found bugs, please submit them to our <a href=\"%1$s\">bug "
 "tracker</a> or leave wishes at the <a href=\"%2$s\">feature requests</a> "
 "list."
-msgstr "Melden Sie bitte Fehler in unserer <a href=\"%1$s\">Fehlerverwaltung</a> oder hinterlassen einen Wunsch auf unserer <a href=\"%2$s\">Funktionsanfragen</a>-Liste."
+msgstr ""
 
 #: engine\page.inc:209
 #: templates\translations\index.php:5
 #: templates\translations\index.php:7
 #, c-format
 msgid "Translations"
-msgstr "Übersetzungen"
+msgstr "翻訳"
 
 #: engine\page.inc:200
 #, c-format
 msgid "Project Page"
-msgstr "Projektseite"
+msgstr "プロジェクトのページ"
 
 #: templates\translations\index.php:24
 #, c-format
 msgid ""
 "The following two pages inform you about the translations status of the "
 "stable and developer version of Frhed:"
-msgstr "Die beiden folgenden Seiten informieren Sie über den Übersetzungs-Status der stabilen sowie der Entwickler-Version von Frhed:"
+msgstr ""
 
 #: engine\translations.inc:136
 #, c-format
 msgid "Last Update"
-msgstr "Letztes Update"
+msgstr "最終更新"
 
 #: templates\translations\status_branch.php:15
 #: templates\translations\status_trunk.php:15
 #, c-format
 msgid "The translations status is currently not available..."
-msgstr "Der Übersetzungs-Status ist derzeit nicht verfügbar..."
+msgstr "翻訳状況は現在利用できません…"
 
 #: engine\page.inc:212
 #, c-format
 msgid "Status (Unstable Trunk)"
-msgstr "Status (Unstabiler „Trunk“)"
+msgstr "状況 (開発版 Trunk)"
 
 #: templates\index.php:17
 #, c-format
 msgid "Compare files"
-msgstr "Dateien vergleichen"
+msgstr "ファイルの比較"
 
 #: engine\engine.inc:19
 #: templates\translations\index.php:19
 #, c-format
 msgid "English"
-msgstr "Englisch"
+msgstr "英語"
 
 #: engine\translations.inc:81
 #: engine\translations.inc:95
 #: engine\translations.inc:133
 #, c-format
 msgid "Translated"
-msgstr "Übersetzt"
+msgstr "翻訳済み"
 
 #: engine\page.inc:202
 #, c-format
 msgid "PAD File"
-msgstr "PAD-Datei"
+msgstr "PAD ファイル"
 
 #: engine\page.inc:206
 #, c-format
 msgid "Feature Requests"
-msgstr "Funktionsanfragen"
+msgstr "機能の要望"
 
 #: templates\index.php:35
 #, c-format
 msgid "Download"
-msgstr "Download"
+msgstr "ダウンロード"
 
 #: engine\page.inc:198
 #, c-format
 msgid "Home"
-msgstr "Home"
+msgstr "ホーム"
 
 #: engine\page.inc:199
 #: templates\screenshots\index.php:3
 #: templates\screenshots\index.php:4
 #, c-format
 msgid "Screenshots"
-msgstr "Screenshots"
+msgstr "スクリーンショット"
 
 #: templates\index.php:14
 #, c-format
 msgid "Load files partially"
-msgstr "Dateien teilweise laden"
+msgstr "ファイルの部分読み込み"
 
 #: 404.php:9
 #, c-format
 msgid "Error 404 (Page Not Found)"
-msgstr "Fehler 404 (Seite nicht gefunden)"
+msgstr "404 エラー (ページが見つかりません)"
 
 #: engine\translations.inc:132
 #, c-format
 msgid "Graph"
-msgstr "Diagramm"
+msgstr "グラフ"
 
 #: engine\page.inc:204
 #: templates\index.php:62
 #, c-format
 msgid "Support"
-msgstr "Support"
+msgstr "サポート"
 
 #: templates\index.php:16
 #, c-format
 msgid "Search for any combination of text and binary values"
-msgstr "Suche nach einer beliebigen Kombination von Text und Binärwerten"
+msgstr "テキストとバイナリ―の値を組み合わせての検索"
 
 #: templates\index.php:4
 #, c-format
 msgid "Frhed, free, hex editor, binary file, load partially, hexdump, compare"
-msgstr "Frhed, frei, hexeditor, binärdatei, teilweise laden, hexdump, vergleichen"
+msgstr ""
 
 #: engine\page.inc:239
 #, c-format
 msgid "Donate"
-msgstr "Spenden"
+msgstr "寄付"
 
 #: engine\translations.inc:81
 #, c-format
 msgid "Translated: %d%%"
-msgstr "Übersetzt: %d%%"
+msgstr "翻訳済み: %d%%"
 
 #: templates\translations\index.php:23
 #, c-format
 msgid "Status"
-msgstr "Status"
+msgstr "状況"
 
 #: templates\screenshots\index.php:6
 #: templates\screenshots\index.php:8
 #, c-format
 msgid "Main Window"
-msgstr "Hauptfenster"
+msgstr "メイン ウィンドウ"
 
 #: templates\translations\status_trunk.php:4
 #: templates\translations\status_trunk.php:6
 #, c-format
 msgid "Translations Status (Unstable Trunk)"
-msgstr "Übersetzungs-Status (Unstabiler „Trunk“)"
+msgstr "翻訳状況 (開発版 Trunk)"
 
 #: engine\page.inc:211
 #, c-format
 msgid "Status (Stable Branch)"
-msgstr "Status (Stabiler „Branch“)"
+msgstr "状態 (安定板ブランチ)"
 
 #: engine\translations.inc:83
 #: engine\translations.inc:96
 #: engine\translations.inc:134
 #, c-format
 msgid "Fuzzy"
-msgstr "Unklar"
+msgstr "揺らぎ"
 
 #: engine\translations.inc:41
 #, c-format
 msgid "File not found."
-msgstr "Datei nicht gefunden."
+msgstr "ファイルが見つかりません。"
 
 #: templates\index.php:15
 #, c-format
 msgid "Export as hexdump to file or clipboard"
-msgstr "Export als „Hexdump“ in Datei oder Zwischenablage"
+msgstr ""
 
 #: engine\page.inc:205
 #, c-format
 msgid "Bugs"
-msgstr "Fehler"
+msgstr "バグ"
 
 #: engine\translations.inc:269
 #, c-format
 msgid "Translators"
-msgstr "Übersetzer"
+msgstr "翻訳者"
 
 #: templates\index.php:3
 #: templates\index.php:8
@@ -343,32 +343,32 @@ msgstr "Übersetzer"
 msgid ""
 "Frhed is an binary file editor for Windows. It is small but has many "
 "advanced features like ability to load big files partially."
-msgstr "Frhed ist ein Binärdatei-Editor für Windows. Er ist klein aber hat viele fortgeschrittene Funktionen, wie z. B. die Fähigkeit große Dateien nur teilweise zuladen."
+msgstr ""
 
 #: templates\index.php:70
 #, c-format
 msgid "History"
-msgstr "Historie"
+msgstr "履歴"
 
 #: templates\index.php:5
 #, c-format
 msgid "Frhed News"
-msgstr "Frhed Neuigkeiten"
+msgstr "Frhed のお知らせ"
 
 #: templates\index.php:66
 #, c-format
 msgid "Open Source"
-msgstr "Open Source"
+msgstr "オープンソース"
 
 #: templates\index.php:10
 #, c-format
 msgid "Features"
-msgstr "Funktionen"
+msgstr "機能"
 
 #: engine\engine.inc:20
 #, c-format
 msgid "German"
-msgstr "Deutsch"
+msgstr "ドイツ語"
 
 #: engine\page.inc:215
 #, c-format
@@ -378,70 +378,70 @@ msgstr "WinMerge"
 #: engine\page.inc:81
 #, c-format
 msgid "Frhed - Free hex editor"
-msgstr "Frhed - Freier Hexeditor"
+msgstr "Frhed - フリーの16進数エディター"
 
 #: templates\index.php:36
 #, c-format
 msgid "Stable releases"
-msgstr "Stabile Freigaben"
+msgstr "安定版のリリース"
 
 #: engine\translations.inc:85
 #: engine\translations.inc:97
 #: engine\translations.inc:135
 #, c-format
 msgid "Untranslated"
-msgstr "Unübersetzt"
+msgstr "未翻訳"
 
 #: templates\index.php:63
 #, c-format
 msgid "For support you can try the <a href=\"%1$s\">mailing lists</a>."
-msgstr "Für Support können Sie die <a href=\"%1$s\">Verteilerlisten</a> verwenden."
+msgstr ""
 
 #: templates\translations\index.php:8
 #, c-format
 msgid "We currently have Frhed translated into the languages listed below:"
-msgstr "Wir haben derzeit Frhed in folgende Sprachen übersetzt:"
+msgstr ""
 
 #: 404.php:20
 #, c-format
 msgid "<a href=\"%s\">Support</a>?"
-msgstr "<a href=\"%s\">Support</a>?"
+msgstr "<a href=\"%s\">サポート</a>しますか?"
 
 #: engine\engine.inc:22
 #, c-format
 msgid "Dutch"
-msgstr "Niederländisch"
+msgstr "オランダ語"
 
 #: engine\translations.inc:171
 #, c-format
 msgid "Total: %d"
-msgstr "Gesamt: %d"
+msgstr "合計: %d"
 
 #: 404.php:19
 #, c-format
 msgid "<a href=\"%s\">Screenshots</a>?"
-msgstr "<a href=\"%s\">Screenshots</a>?"
+msgstr ""
 
 #: engine\translations.inc:131
 #: engine\translations.inc:272
 #, c-format
 msgid "Language"
-msgstr "Sprache"
+msgstr "言語"
 
 #: templates\index.php:28
 #, c-format
 msgid "Y-m-d"
-msgstr "d.m.Y"
+msgstr "Y-m-d"
 
 #: templates\translations\index.php:4
 #, c-format
 msgid "Frhed Translations Status (Unstable Trunk)"
-msgstr "Frhed Übersetzungs-Status (Unstabiler „Trunk“)"
+msgstr "Frhed の翻訳状況 (開発版 Trunk)"
 
 #: templates\index.php:13
 #, c-format
 msgid "Editable file size limited only by available system memory"
-msgstr "Editierbare Dateigröße nur durch den verfügbaren Arbeitsspeicher begrenzt"
+msgstr "利用できるシステム メモリーに限定したファイルサイズの編集"
 
 #: templates\index.php:73
 #, c-format
@@ -449,23 +449,23 @@ msgid ""
 "At autumn 2008 the <a href=\"%1$s\">WinMerge Team</a> decided to use Frhed as binary file editor component\n"
 "for WinMerge. For developing Frhed further new <a href=\"%2$s\">SourceForge project</a>\n"
 "was created. This new project will develop Frhed as stand alone product."
-msgstr "Im Herbst 2008 hat das <a href=\"%1$s\">WinMerge-Team</a> beschlossen, Frhed als Binärdatei-Editorkomponente für WinMerge zu verwenden.\nFür die weitere Entwicklung von Frhed wurde ein <a href=\"%2$s\">SourceForge-Projekt</a> erstellt.\nDieses neue Projekt wird Frhed als eigenständiges Produkt fortführen."
+msgstr ""
 
 #: engine\page.inc:241
 #, c-format
 msgid "Support this project"
-msgstr "Unterstützen Sie dieses Projekt"
+msgstr "このプロジェクトのサポート"
 
 #: templates\translations\status_branch.php:4
 #: templates\translations\status_branch.php:6
 #, c-format
 msgid "Translations Status (Stable Branch)"
-msgstr "Übersetzungs-Status (Stabiler „Branch“)"
+msgstr "翻訳の状況 (安定板のブランチ)"
 
 #: templates\index.php:6
 #, c-format
 msgid "Frhed File Releases"
-msgstr "Frhed Dateifreigaben"
+msgstr "Frhed のファイル リリース"
 
 #: engine\page.inc:78
 #: engine\page.inc:102
@@ -477,25 +477,25 @@ msgstr "Frhed"
 #: templates\index.php:30
 #, c-format
 msgid "View all news &hellip;"
-msgstr "Alle Neuigkeiten anzeigen&hellip;"
+msgstr "すべてのお知らせを見る &hellip;"
 
 #: engine\translations.inc:85
 #, c-format
 msgid "Untranslated: %d%%"
-msgstr "Unübersetzt: %d%%"
+msgstr "未翻訳: %d%%"
 
 #: engine\engine.inc:23
 #, c-format
 msgid "Portuguese"
-msgstr "Portugiesisch"
+msgstr ""
 
 #: engine\engine.inc:24
 #, c-format
 msgid "Japanese"
-msgstr "Japanisch"
+msgstr ""
 
 #: templates\index.php:47
 #, c-format
 msgid "Beta releases"
-msgstr "Beta-Freigaben"
+msgstr ""
 
