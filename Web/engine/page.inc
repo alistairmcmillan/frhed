@@ -204,7 +204,6 @@
       $sidenaventry = new SideNavEntry('', __('Support'));
       $sidenaventry->addSubEntry('http://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485', __('Bugs'));
       $sidenaventry->addSubEntry('http://sourceforge.net/tracker/?atid=1100166&amp;group_id=236485', __('Feature Requests'));
-      $sidenaventry->addSubEntry('http://apps.sourceforge.net/phpbb/frhed/', __('Forums'));
       $sidenaventry->addSubEntry('http://sourceforge.net/mail/?group_id=236485', __('Mailing Lists'));
       $sidenaventries[] = $sidenaventry;
       $sidenaventry = new SideNavEntry('', __('Translations'));

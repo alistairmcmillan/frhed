@@ -60,7 +60,7 @@
 
 <?php
   $page->printHeading(__('Support'), 'support');
-  $page->printPara(__('For support you can try the <a href="%1$s">forums</a> or the <a href="%2$s">mailing lists</a>.', 'http://apps.sourceforge.net/phpbb/frhed/', 'https://sourceforge.net/mail/?group_id=236485'),
+  $page->printPara(__('For support you can try the <a href="%1$s">mailing lists</a>.', 'https://sourceforge.net/mail/?group_id=236485'),
                    __('If you found bugs, please submit them to our <a href="%1$s">bug tracker</a> or leave wishes at the <a href="%2$s">feature requests</a> list.', 'https://sourceforge.net/tracker/?atid=1100163&amp;group_id=236485', 'https://sourceforge.net/tracker/?atid=1100166&amp;group_id=236485'));
   
   $page->printHeading(__('Open Source'));
